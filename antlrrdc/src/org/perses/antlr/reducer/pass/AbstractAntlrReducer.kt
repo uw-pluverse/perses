@@ -31,21 +31,22 @@ abstract class AbstractAntlrReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractReducer<PersesGrammar, LanguageKind, GrammarReductionIOManager>(
-  nameAndDesc,
-  ioManager,
-  testScriptExecutorService,
-) {
-
+    nameAndDesc,
+    ioManager,
+    testScriptExecutorService,
+  ) {
   abstract fun reduce(state: ListenableReductionState<PersesGrammar>)
 
   fun testProgram(program: PersesGrammar): Boolean {
     try {
-      return executorService.testProgramAsync(
-        TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
-        IDENTITY_POST_CHECK,
-        ioManager.createOutputManager(program),
-        payload = "dummy payload",
-      ).getWithTimeoutWarnings().isInteresting
+      return executorService
+        .testProgramAsync(
+          TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
+          IDENTITY_POST_CHECK,
+          ioManager.createOutputManager(program),
+          payload = "dummy payload",
+        ).getWithTimeoutWarnings()
+        .isInteresting
     } catch (e: Throwable) {
       var exception: Throwable? = e
       while (exception != null && exception !is AntlrToolWrapper.AntlrException) {

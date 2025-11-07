@@ -27,7 +27,6 @@ import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class DeltaFolderTest {
-
   private val workingDir = Files.createTempDirectory(this::class.java.name)
 
   @After
@@ -37,12 +36,13 @@ class DeltaFolderTest {
 
   @Test
   fun testDeltaFolderInfo() {
-    val info = DeltaFolder.DeltaFolderInfo(
-      scriptFileName = "r.sh",
-      programFileName = "t.c",
-      reducedFileName = "reduced.c",
-      buggyCompilerVersionFileName = "compiler_version.txt",
-    )
+    val info =
+      DeltaFolder.DeltaFolderInfo(
+        scriptFileName = "r.sh",
+        programFileName = "t.c",
+        reducedFileName = "reduced.c",
+        buggyCompilerVersionFileName = "compiler_version.txt",
+      )
 
     val file = workingDir.resolve("info.properties")
     info.saveTo(file.toFile())

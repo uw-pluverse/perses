@@ -27,36 +27,37 @@ import org.perses.spartree.LexerRuleSparTreeNode
 
 @RunWith(JUnit4::class)
 class IdentifierReplacementReducerTest {
-
   private val parserFacade = TestUtility.getFacade(LanguageC)
 
-  val tokens = createTokens(
-    """
-        int f();
-        int a();
-        int b();
-        int a;
-    """.trimIndent(),
-  )
+  val tokens =
+    createTokens(
+      """
+      int f();
+      int a();
+      int b();
+      int a;
+      """.trimIndent(),
+    )
 
-  internal val candidates = IdentifierReplacementReducer.Candidates.compute(
-    { tokens.asSequence() },
-    { it.type in parserFacade.identifierTokenTypes },
-  )
+  internal val candidates =
+    IdentifierReplacementReducer.Candidates.compute(
+      tokens.asSequence(),
+      { it.tokenType in parserFacade.identifierTokenTypes },
+    )
 
   @Test
   fun testOrderInCandidates() {
-    assertThat(candidates.lexerNodeClusterWithSameLexemes).hasSize(3)
-    candidates.lexerNodeClusterWithSameLexemes.first().let {
+    assertThat(candidates.tokenClusterWithSameLexemes).hasSize(3)
+    candidates.tokenClusterWithSameLexemes.first().let {
       assertThat(it.lexeme).isEqualTo("b")
     }
-    candidates.lexerNodeClusterWithSameLexemes[1].let {
+    candidates.tokenClusterWithSameLexemes[1].let {
       assertThat(it.lexeme).isEqualTo("f")
     }
-    candidates.lexerNodeClusterWithSameLexemes.last().let {
+    candidates.tokenClusterWithSameLexemes.last().let {
       assertThat(it.lexeme).isEqualTo("a")
       assertThat(it.lexerNodes).containsExactlyElementsIn(
-        tokens.filter { t -> t.token.text == "a" },
+        tokens.filter { t -> t.token.lexemeText == "a" },
       )
     }
   }
@@ -79,10 +80,11 @@ class IdentifierReplacementReducerTest {
   }
 
   private fun createTokens(sourceCode: String): ImmutableList<LexerRuleSparTreeNode> {
-    val tree = TestUtility.createSparTreeFromString(
-      sourceCode,
-      parserFacade.language,
-    )
+    val tree =
+      TestUtility.createSparTreeFromString(
+        sourceCode,
+        parserFacade.language,
+      )
     return tree.remainingLexerRuleNodes
   }
 }

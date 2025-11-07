@@ -20,7 +20,7 @@ kt_jvm_test(
         "//:truth",
         "//src/org/perses/antlr:util",
         "//src/org/perses/grammar/python3:parser_facade",
+        "//src/org/perses/program/printer",
         "//test/org/perses:test_util",
-        "//test/org/perses/program:LanguageKindTestUtil",
     ],
 )

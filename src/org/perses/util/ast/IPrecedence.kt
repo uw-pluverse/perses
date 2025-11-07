@@ -17,18 +17,11 @@
 package org.perses.util.ast
 
 interface IPrecedence {
+  fun gt(other: IPrecedence): Boolean = value > other.value
 
-  fun gt(other: IPrecedence): Boolean {
-    return value > other.value
-  }
+  fun lt(other: IPrecedence): Boolean = value < other.value
 
-  fun lt(other: IPrecedence): Boolean {
-    return value < other.value
-  }
-
-  fun eq(other: IPrecedence): Boolean {
-    return value == other.value
-  }
+  fun eq(other: IPrecedence): Boolean = value == other.value
 
   val value: Int
 }

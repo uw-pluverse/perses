@@ -21,42 +21,46 @@ rules_jvm_external_setup()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-jackson_version = "2.18.2"
+jackson_version = "2.19.1"
 
 antlr_version = "4.13.2"
 
 flogger_version = "0.8"
 
-kotlin_lib_version = "1.9.10"
+kotlin_lib_version = "2.1.21"
+
+arrow_kt_version = "2.1.0"
 
 maven_install(
     name = "maven",
     artifacts = [
-        "com.beust:jcommander:1.82",
+        "org.jcommander:jcommander:2.0",
         "com.fasterxml.jackson.core:jackson-core:%s" % jackson_version,
         "com.fasterxml.jackson.core:jackson-databind:%s" % jackson_version,
         "com.fasterxml.jackson.core:jackson-annotations:%s" % jackson_version,
         "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:%s" % jackson_version,
         "com.fasterxml.jackson.datatype:jackson-datatype-guava:%s" % jackson_version,
         "com.fasterxml.jackson.module:jackson-module-kotlin:%s" % jackson_version,
-        "com.google.errorprone:error_prone_annotations:2.3.4",
+        "com.github.ben-manes.caffeine:caffeine:3.2.2",
         "com.google.flogger:flogger-system-backend:%s" % flogger_version,
         "com.google.flogger:flogger:%s" % flogger_version,
         "com.google.googlejavaformat:google-java-format:1.15.0",
-        "com.google.guava:guava:32.0.0-jre",
+        "com.google.guava:guava:33.4.8-jre",
         "com.google.truth:truth:1.1.4",
         "com.googlecode.java-diff-utils:diffutils:1.3.0",
         "com.guardsquare:proguard-base:7.2.1",
         "com.github.gumtreediff:core:3.0.0",
-        "com.pinterest:ktlint:0.50.0",
+        "com.pinterest.ktlint:ktlint-cli:1.6.0",
         "io.gitlab.arturbosch.detekt:detekt-cli:1.23.1",
+        "io.arrow-kt:arrow-core:%s" % arrow_kt_version,
+        "io.arrow-kt:arrow-fx-coroutines:%s" % arrow_kt_version,
         "io.netty:netty-all:4.1.66.Final",
         "it.unimi.dsi:fastutil:8.5.12",
         "me.lemire.integercompression:JavaFastPFOR:0.1.9",
         "org.antlr:antlr4-runtime:%s" % antlr_version,
         "org.antlr:antlr4:%s" % antlr_version,
         "org.apache.commons:commons-csv:1.10.0",
-        "org.apache.commons:commons-exec:1.4.0",
+        "org.apache.commons:commons-exec:1.5.0",
         "org.apache.commons:commons-lang3:3.9",
         "org.apache.commons:commons-text:1.9",
         "org.jetbrains.kotlin:kotlin-stdlib-jdk8:%s" % kotlin_lib_version,
@@ -77,8 +81,6 @@ maven_install(
         "https://repo1.maven.org/maven2",
     ],
 )
-
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 rules_kotlin_version = "v2.0.0"
 

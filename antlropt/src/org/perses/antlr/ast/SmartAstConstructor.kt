@@ -20,7 +20,6 @@ import com.google.common.collect.ImmutableList
 import org.perses.util.toImmutableList
 
 object SmartAstConstructor {
-
   fun createForAlternatives(
     origAlternatives: List<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {
@@ -29,34 +28,35 @@ object SmartAstConstructor {
     if (alternatives.size == 1) {
       return alternatives.single()
     }
-    val hasStarOrEpsilon = alternatives.any {
-      it.tag == AstTag.EPSILON || it.tag == AstTag.STAR
-    }
+    val hasStarOrEpsilon =
+      alternatives.any {
+        it.tag == AstTag.EPSILON || it.tag == AstTag.STAR
+      }
     if (!hasStarOrEpsilon) {
       return PersesAlternativeBlockAst(alternatives.toImmutableList())
     }
 
-    val nonEpsilonAlternatives = alternatives
-      .asSequence()
-      .filter { it.tag != AstTag.EPSILON }
-      .map {
-        if (it.tag == AstTag.STAR) {
-          createPlusFromStarByCopyingBody(it as PersesStarAst)
-        } else {
-          it
-        }
-      }.toImmutableList()
+    val nonEpsilonAlternatives =
+      alternatives
+        .asSequence()
+        .filter { it.tag != AstTag.EPSILON }
+        .map {
+          if (it.tag == AstTag.STAR) {
+            createPlusFromStarByCopyingBody(it as PersesStarAst)
+          } else {
+            it
+          }
+        }.toImmutableList()
     val body = createForAlternatives(nonEpsilonAlternatives)
     return createForOptional(body, isGreedy = true)
   }
 
-  fun createForSequence(
-    sequence: Iterable<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement {
-    val nonEpsilon = sequence
-      .asSequence()
-      .filter { it.tag != AstTag.EPSILON }
-      .toMutableList()
+  fun createForSequence(sequence: Iterable<AbstractPersesRuleElement>): AbstractPersesRuleElement {
+    val nonEpsilon =
+      sequence
+        .asSequence()
+        .filter { it.tag != AstTag.EPSILON }
+        .toMutableList()
     removeRedundantQuantifiedNodesInPlace(nonEpsilon)
     return when (nonEpsilon.size) {
       0 -> PersesEpsilonAst()
@@ -69,12 +69,14 @@ object SmartAstConstructor {
     sequence: MutableList<AbstractPersesRuleElement>,
   ) {
     while (true) {
-      val candidate = sequence.withIndex()
-        .asSequence()
-        .zipWithNext()
-        .firstOrNull { (first, second) ->
-          areMergeableQuantifiedNodesInSequence(first.value, second.value)
-        } ?: return
+      val candidate =
+        sequence
+          .withIndex()
+          .asSequence()
+          .zipWithNext()
+          .firstOrNull { (first, second) ->
+            areMergeableQuantifiedNodesInSequence(first.value, second.value)
+          } ?: return
       val first = candidate.first.value as AbstractPersesQuantifiedAst
       val second = candidate.second.value as AbstractPersesQuantifiedAst
       assert(first.body.isEquivalent(second.body))
@@ -87,9 +89,7 @@ object SmartAstConstructor {
   fun areMergeableQuantifiedNodesInSequence(
     first: AbstractPersesRuleElement,
     second: AbstractPersesRuleElement,
-  ): Boolean {
-    return tryToMergeQuantifiedNodesInSequence(first, second) != null
-  }
+  ): Boolean = tryToMergeQuantifiedNodesInSequence(first, second) != null
 
   private fun tryToMergeQuantifiedNodesInSequence(
     first: AbstractPersesRuleElement,
@@ -118,8 +118,8 @@ object SmartAstConstructor {
   fun createForStar(
     body: AbstractPersesRuleElement,
     isGreedy: Boolean,
-  ): AbstractPersesRuleElement {
-    return when (body.tag) {
+  ): AbstractPersesRuleElement =
+    when (body.tag) {
       AstTag.STAR -> body
       AstTag.PLUS -> {
         val plus = body as PersesPlusAst
@@ -131,36 +131,33 @@ object SmartAstConstructor {
       }
       else -> PersesStarAst(body, isGreedy)
     }
-  }
 
   fun createForOptional(
     optionalBody: AbstractPersesRuleElement,
     isGreedy: Boolean,
-  ): AbstractPersesRuleElement {
-    return when (optionalBody.tag) {
+  ): AbstractPersesRuleElement =
+    when (optionalBody.tag) {
       AstTag.STAR, AstTag.OPTIONAL -> optionalBody
-      AstTag.PLUS -> (optionalBody as PersesPlusAst).let {
-        PersesStarAst(it.body, it.isGreedy)
-      }
+      AstTag.PLUS ->
+        (optionalBody as PersesPlusAst).let {
+          PersesStarAst(it.body, it.isGreedy)
+        }
       AstTag.EPSILON -> optionalBody
       else -> PersesOptionalAst(optionalBody, isGreedy)
     }
-  }
 
-  fun createPlusFromStarByCopyingBody(star: PersesStarAst): PersesPlusAst {
-    return PersesPlusAst(body = star.body, isGreedy = star.isGreedy)
-  }
+  fun createPlusFromStarByCopyingBody(star: PersesStarAst): PersesPlusAst =
+    PersesPlusAst(body = star.body, isGreedy = star.isGreedy)
 
   fun createWithNewChildren(
     elementToCopy: AbstractPersesRuleElement,
     children: List<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement {
-    return when (elementToCopy.tag) {
+  ): AbstractPersesRuleElement =
+    when (elementToCopy.tag) {
       AstTag.ALTERNATIVE_BLOCK -> createForAlternatives(children)
       AstTag.SEQUENCE -> createForSequence(children)
       else -> elementToCopy.createWithNewChildren(children)
     }
-  }
 
   fun deduplicate(
     alternatives: List<AbstractPersesRuleElement>,

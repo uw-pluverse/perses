@@ -23,7 +23,6 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class PixelTest {
-
   val pixel = Pixel.create(x = 0, y = 0, red = 0, green = 0, blue = 0, alpha = 0)
   val pixel2 = Pixel.create(x = 1, y = 2, red = 3, green = 4, blue = 5, alpha = 6)
 
@@ -50,10 +49,12 @@ class PixelTest {
 
   @Test
   fun testSuperpixel() {
-    val superpixel = Superpixel.Builder()
-      .add(pixel)
-      .add(pixel2)
-      .build()
+    val superpixel =
+      Superpixel
+        .Builder()
+        .add(pixel)
+        .add(pixel2)
+        .build()
 
     assertThat(superpixel.get(0).longValue).isEqualTo(pixel.longValue)
     assertThat(superpixel.get(1).longValue).isEqualTo(pixel2.longValue)

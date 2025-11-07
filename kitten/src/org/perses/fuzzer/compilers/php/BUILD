@@ -8,8 +8,6 @@ kt_jvm_library(
     name = "php",
     srcs = glob(["*.kt"]),
     deps = [
-        "//:flogger",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
-        "//src/org/perses/grammar/php:language_kind",
     ],
 )

@@ -16,8 +16,11 @@ Currently, Perses supports reduction for the following programming languages:
 
 + c: `*.c`
 + cpp: `*.cc`, `*.cpp`, `*.cxx`
++ dyck-brace-parenthesis: `*.dyck_brace_parenthesis`
++ dyck-brace: `*.dyck_brace`
 + glsl: `*.glsl`, `*.comp`, `*.frag`, `*.vert`
 + go: `*.go`
++ jackson-yaml: `*.jackson`, `*.yaml`, `*.yml`
 + java: `*.java`
 + javascript: `*.javascript`, `*.js`
 + line: `*.line`
@@ -32,6 +35,7 @@ Currently, Perses supports reduction for the following programming languages:
 + solidity: `*.sol`
 + sqlite: `*.sqlite`
 + system_verilog: `*.v`, `*.sv`
++ web assembly: `*.wat`, `*.wasm`
 + xml: `*.xml`
 
 Support for other languages is coming soon.
@@ -44,7 +48,7 @@ There are three ways to obtain Perses.
   for example,
 
   ```bash
-  wget https://github.com/uw-pluverse/perses/releases/download/v2.4/perses_deploy.jar
+  wget https://github.com/uw-pluverse/perses/releases/download/v2.5/perses_deploy.jar
   java -jar perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
   ```
 
@@ -102,15 +106,18 @@ Usage: org.perses.Main [options]
       The output directory to save the reduced result.
 
 [General Reduction Control]  Options:
+    --global-fixpoint
+      iterative reduction till fixpoint, globally
+      Default: false
     --fixpoint
-      iterative reduction till fixpoint
-      Default: true
+      iterative reduction till fixpoint, for the main reducer only
+      Default: false
     --threads
       Number of reduction threads: a positive integer, or 'auto'.
       Default: auto
     --code-format
       The format of the reduced program.
-      Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT, PYTHON3_FORMAT, COMPACT_PYTHON3_FORMAT]
+      Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT, PYTHON3_FORMAT, COMPACT_PYTHON3_FORMAT, YAML_FORMAT]
     --script-execution-timeout-in-seconds
       the interval in seconds to timeout the test script executions. the 
       default timeout is 600 seconds.
@@ -138,6 +145,9 @@ Usage: org.perses.Main [options]
       reduction algorithm: use --list-algs to list all available algorithms
     --list-algs
       list all the reduction algorithms.
+    --reparse-each-iteration
+      Reparse the program before the start of each fixpoint iteration.
+      Default: true
     --enable-token-slicer
       Enable token slicer after syntax-guided reduction is done. Maybe slow.
       Default: false
@@ -149,10 +159,16 @@ Usage: org.perses.Main [options]
       Enable line slicer after syntax-guided reduction, and before token 
       slicer 
       Default: false
-    --default-delta-debugger-for-kleene
-      The default delta debugger algorithm to reduce kleene nodes.
+    --default-list-minimizer-for-kleene
+      The default list minimizer algorithm to reduce kleene nodes.
       Default: DFS
-      Possible Values: [PRISTINE, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, PROBDD, WDD, WPROBDD]
+      Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION]
+    --min-slicing-window-size
+      The minimum window size of the windowed slicer.
+      Default: 1
+    --max-slicing-window-size
+      The maximum window size of the windowed slicer.
+      Default: 14
 
 [Language Control]  Options:
     --list-langs
@@ -189,7 +205,7 @@ Usage: org.perses.Main [options]
     --enable-trec
       enable T-Rec (a lexical-syntax guided fine-grained reduction process to 
       reduce and canonicalize each token)
-      Default: false
+      Default: true
 
 [Profiling]  Options:
     --progress-dump-file
@@ -208,21 +224,30 @@ Usage: org.perses.Main [options]
       The file to save the profiling data of the query cache.
     --profile-actionset
       The file to save information of all the created edit action sets.
-    --profile-delta-debugger
-      The file to save the reduction process of the delta debugger.
+    --profile-list-minimizer
+      The file to save the reduction process of the list minimizer.
 
 [Cache Control]  Options:
     --query-caching
       Enable query caching for test script executions.
-      Default: AUTO
+      Default: TRUE
       Possible Values: [TRUE, FALSE, AUTO]
     --query-cache-type
       the algorithm of the query cache
-      Default: CONTENT_SHA512
-      Possible Values: [AUTO, COMPACT_QUERY_CACHE, COMPACT_QUERY_CACHE_FORMAT_SENSITIVE, PERSES_FAST_LINEAR_SCAN_NO_COMPRESSION, PERSES_LEXEME_ID, CONFIG_BASED, ORIG_CONTENT_STRING_BASED, CONTENT_LEXEME_LIST_BASE, CONTENT_SHA512, CONTENT_SHA512_FORMAT, CONTENT_ZIP, RCC_MEM_LIT]
+      Default: CONTENT_SHA_HASH_FORMAT
+      Possible Values: [AUTO, COMPACT_QUERY_CACHE, COMPACT_QUERY_CACHE_FORMAT_SENSITIVE, PERSES_FAST_LINEAR_SCAN_NO_COMPRESSION, PERSES_LEXEME_ID, CONFIG_BASED, ORIG_CONTENT_STRING_BASED, CONTENT_LEXEME_LIST_BASE, CONTENT_SHA_HASH, CONTENT_SHA_HASH_FORMAT, CONTENT_ZIP, RCC_MEM_LIT]
     --enable-lightweight-refreshing
       Whether to enable lightweight refreshing
       Default: true
+    --default-sha-alg-type
+      The SHA algorithm used in the reduction process
+      Default: SHA256
+      Possible Values: [SHA512, SHA256]
+
+[Experiment Control]  Options:
+    --keep-reduction-history
+      keep all the reduction folders generated during reduction
+      Default: false
 
 [LPR Reducer Control]  Options:
     --enable-lpr
@@ -235,12 +260,28 @@ Usage: org.perses.Main [options]
     --llm-client-script
       The script to invoke LLM.
 
+[Latra Reducer Control]  Options:
+    --enable-latra
+      Enable Latra (language-specific transformations to produce smaller 
+      reduction output).
+      Default: true
+    --latra-fixpoint
+      Enable fixpoint mode for running Latra reducers.
+      Default: true
+    --latra-transformation-list-minimizer
+      The list minimizer algorithm to reduce with the found transformations
+      Default: WPROBDD
+      Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION]
+
 [Verbosity]  Options:
     --verbosity
       verbosity of logging
       Default: INFO
     --list-verbosity-levels
       list all verbosity levels
+    --hide-timestamps
+      hide the timestamps in the log messages
+      Default: false
 
 [Version]  Options:
     --version

@@ -24,7 +24,6 @@ class PersesLexerCommandAst(
   val commands: ImmutableList<AbstractLexerCommand>,
   val body: AbstractPersesRuleElement,
 ) : AbstractPersesRuleElement() {
-
   init {
     require(!commands.isEmpty())
   }
@@ -47,7 +46,11 @@ class PersesLexerCommandAst(
   override val childCount: Int
     get() = 1
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     if (body.precedence.lt(precedence)) {
       stream.print('(')
       body.toSourceCode(stream, indent, multiLineMode)
@@ -59,8 +62,9 @@ class PersesLexerCommandAst(
   }
 
   protected val fullCommandNameForSourceCodePrinting: String
-    get() = commands
-      .asSequence()
-      .map { it.toSourceCode() }
-      .joinToString(", ")
+    get() =
+      commands
+        .asSequence()
+        .map { it.toSourceCode() }
+        .joinToString(", ")
 }

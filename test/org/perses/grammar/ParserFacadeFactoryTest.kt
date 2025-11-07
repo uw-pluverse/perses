@@ -28,27 +28,32 @@ import org.perses.util.transformToImmutableList
 
 @RunWith(JUnit4::class)
 class ParserFacadeFactoryTest {
-
   val pnfc = PnfCParserFacade::class
   val optc = CParserFacade::class
 
-  val pnfFactory = SingleParserFacadeFactory.Builder()
-    .add(LanguageC, pnfc)
-    .build()
+  val pnfFactory =
+    SingleParserFacadeFactory
+      .Builder()
+      .add(LanguageC, pnfc)
+      .build()
 
-  val optFactory = SingleParserFacadeFactory.Builder()
-    .add(LanguageC, optc)
-    .build()
+  val optFactory =
+    SingleParserFacadeFactory
+      .Builder()
+      .add(LanguageC, optc)
+      .build()
 
-  val pnfBuilintFactory = CompositeParserFacadeFactory(
-    builtinFactory = pnfFactory,
-    extFactory = optFactory,
-  )
+  val pnfBuilintFactory =
+    CompositeParserFacadeFactory(
+      builtinFactory = pnfFactory,
+      extFactory = optFactory,
+    )
 
-  val optBuiltinFactory = CompositeParserFacadeFactory(
-    builtinFactory = optFactory,
-    extFactory = pnfFactory,
-  )
+  val optBuiltinFactory =
+    CompositeParserFacadeFactory(
+      builtinFactory = optFactory,
+      extFactory = pnfFactory,
+    )
 
   @Test
   fun testCompositeFactoryForCreatingFacade() {
@@ -75,8 +80,10 @@ class ParserFacadeFactoryTest {
 
   @Test
   fun testComputeLanguageKindWithLanguageNameIgnoreCasesForBuiltin() {
-    val factory = SingleParserFacadeFactory
-      .builderWithBuiltinLanguages().build()
+    val factory =
+      SingleParserFacadeFactory
+        .builderWithBuiltinLanguages()
+        .build()
     assertThat(factory.computeLanguageKindWithLanguageNameIgnoreCase("java"))
       .isSameInstanceAs(LanguageJava)
     assertThat(factory.computeLanguageKindWithLanguageNameIgnoreCase("JAva"))
@@ -85,16 +92,18 @@ class ParserFacadeFactoryTest {
 
   @Test
   fun testParserFacadeList() {
-    val list = AbstractParserFacadeFactory.ParserFacadeList.create(
-      defaultParserFacade = pnfc,
-      otherParserFacades = listOf(optc),
-    )
+    val list =
+      AbstractParserFacadeFactory.ParserFacadeList.create(
+        defaultParserFacade = pnfc,
+        otherParserFacades = listOf(optc),
+      )
     assertThat(list.numberOfParserFacades()).isEqualTo(2)
     assertThat(list.defaultParserFacade.klass).isEqualTo(pnfc)
     assertThat(list.otherParserFacades.transformToImmutableList { it.klass }).containsExactly(optc)
-    assertThat(list.sequenceOfCreators().transformToImmutableList { it.klass }).containsExactly(
-      pnfc,
-      optc,
-    ).inOrder()
+    assertThat(list.sequenceOfCreators().transformToImmutableList { it.klass })
+      .containsExactly(
+        pnfc,
+        optc,
+      ).inOrder()
   }
 }

@@ -25,15 +25,13 @@ import org.perses.fuzzer.compilers.solidity.SolidityCrashDetector
 
 @RunWith(JUnit4::class)
 class SolidityCrashDetectorTest {
-
   val detector = SolidityCrashDetector()
 
-  private fun computeSignature(path: String): List<String> {
-    return CrashDetectorHelper.computeSignature(
+  private fun computeSignature(path: String): List<String> =
+    CrashDetectorHelper.computeSignature(
       "kitten/test/org/perses/fuzzer/compiler/solidity/$path",
       detector,
     )
-  }
 
   @Test
   fun test_asan() {

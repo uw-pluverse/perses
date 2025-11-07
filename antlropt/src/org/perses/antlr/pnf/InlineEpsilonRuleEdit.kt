@@ -24,9 +24,9 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 class InlineEpsilonRuleEdit(
   private val epsilonRuleName: RuleNameHandle,
 ) : ReplaceEdit(
-  oldPredicate = {
-    it.tag == AstTag.RULE_REF &&
-      (it as PersesRuleReferenceAst).ruleNameHandle == epsilonRuleName
-  },
-  newValueComputer = { PersesEpsilonAst() },
-)
+    oldPredicate = {
+      it.tag == AstTag.RULE_REF &&
+        (it as PersesRuleReferenceAst).ruleNameHandle == epsilonRuleName
+    },
+    newValueComputer = { PersesEpsilonAst() },
+  )

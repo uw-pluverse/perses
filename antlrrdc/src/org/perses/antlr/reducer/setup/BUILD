@@ -10,11 +10,9 @@ kt_jvm_library(
         "Setup.kt",
     ],
     deps = [
-        "//antlrrdc/src/org/perses/antlr/reducer:command_options",
         "//antlrrdc/src/org/perses/antlr/reducer/codegen:templates",
         "//src/org/perses/antlr:antlr_compiler",
         "//src/org/perses/util",
-        "//src/org/perses/util:auto_deltable_folder",
         "//src/org/perses/util:auto_increment_dir",
     ],
 )

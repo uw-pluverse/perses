@@ -25,8 +25,9 @@ object LanguageAntlr : LanguageKind(
   extensions = ImmutableSet.of("g4"),
   defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.ORIG_FORMAT,
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-  ),
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.ORIG_FORMAT,
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+    ),
 )

@@ -34,12 +34,13 @@ class JavaSparTreeBuildTest {
   fun testBuildHelloWorldTree() {
     val tree = createSparTreeFromFile(FOLDER.resolve("t.java"))
     val treeStructure = tree.printTreeStructure().trim { it <= ' ' }
-    val goldenContent = Files.asCharSource(
-      FOLDER.resolve("t_java.spart_tree.golden.txt").toFile(),
-      StandardCharsets.UTF_8,
-    )
-      .read()
-      .trim { it <= ' ' }
+    val goldenContent =
+      Files
+        .asCharSource(
+          FOLDER.resolve("t_java.spart_tree.golden.txt").toFile(),
+          StandardCharsets.UTF_8,
+        ).read()
+        .trim { it <= ' ' }
     assertThat(treeStructure).isEqualTo(goldenContent)
   }
 

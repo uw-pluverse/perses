@@ -19,38 +19,38 @@ package org.perses.fuzzer.compilers.scala
 import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 
 class ScalaCrashDetector : AbstractCompilerCrashDetector() {
-
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
-    val containsStackOverflowError = stderr.any {
-      it.contains("StackOverflowError")
-    }
-    val lines = stderr
-      .asSequence()
-      .filter { it.isNotBlank() }
-      .map { it.trim() }
-      .filter {
-        isException(it) ||
-          isError(it) ||
-          (isStacktraceLine(it) && !containsStackOverflowError)
-        // The stacktrace of StackOverflowError is unstable. Discard the stacktrace.
+    val containsStackOverflowError =
+      stderr.any {
+        it.contains("StackOverflowError")
       }
-      .flatMap {
-        if (isError(it) || isException(it)) {
-          splitOnSystemHashCode(it)
-        } else if (isStacktraceLine(it) && it.last() == ')') {
-          // Remove line numbers.
-          val left = it.lastIndexOf('(')
-          val result = if (left > 0) {
-            it.substring(0, left)
+    val lines =
+      stderr
+        .asSequence()
+        .filter { it.isNotBlank() }
+        .map { it.trim() }
+        .filter {
+          isException(it) ||
+            isError(it) ||
+            (isStacktraceLine(it) && !containsStackOverflowError)
+          // The stacktrace of StackOverflowError is unstable. Discard the stacktrace.
+        }.flatMap {
+          if (isError(it) || isException(it)) {
+            splitOnSystemHashCode(it)
+          } else if (isStacktraceLine(it) && it.last() == ')') {
+            // Remove line numbers.
+            val left = it.lastIndexOf('(')
+            val result =
+              if (left > 0) {
+                it.substring(0, left)
+              } else {
+                it
+              }
+            sequenceOf(result)
           } else {
-            it
+            sequenceOf(it)
           }
-          sequenceOf(result)
-        } else {
-          sequenceOf(it)
-        }
-      }
-      .toList()
+        }.toList()
 
     var i = 0
     val size = lines.size
@@ -74,30 +74,25 @@ class ScalaCrashDetector : AbstractCompilerCrashDetector() {
   }
 
   companion object {
-
     const val STACKTRACE_CONTEXT_SIZE = 3
 
-    fun splitOnSystemHashCode(string: String): Sequence<String> {
-      return string.split(Regex("@[a-fA-F0-9]+"))
+    fun splitOnSystemHashCode(string: String): Sequence<String> =
+      string
+        .split(Regex("@[a-fA-F0-9]+"))
         .asSequence()
         .filter { it.isNotBlank() }
-    }
 
-    fun isStacktraceLine(line: String): Boolean {
-      return line.startsWith("at ")
-    }
+    fun isStacktraceLine(line: String): Boolean = line.startsWith("at ")
 
-    fun isException(line: String): Boolean {
-      return isErrorOrException(line, "Exception")
-    }
+    fun isException(line: String): Boolean = isErrorOrException(line, "Exception")
 
-    fun isError(line: String): Boolean {
-      return isErrorOrException(line, "Error")
-    }
+    fun isError(line: String): Boolean = isErrorOrException(line, "Error")
 
-    private fun isErrorOrException(line: String, type: String): Boolean {
-      return line.contains(Regex("(\\w+\\.)+([A-Z]\\w*)?$type[^a-zA-Z0-9_]")) ||
+    private fun isErrorOrException(
+      line: String,
+      type: String,
+    ): Boolean =
+      line.contains(Regex("(\\w+\\.)+([A-Z]\\w*)?$type[^a-zA-Z0-9_]")) ||
         line.contains(Regex("(\\w+\\.)+([A-Z]\\w*)?$type$"))
-    }
   }
 }

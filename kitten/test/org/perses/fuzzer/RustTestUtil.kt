@@ -32,7 +32,6 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.io.path.writeText
 
 class RustTestUtil : AutoCloseable {
-
   val parserFacadeFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
   val mockRustcCommand = ShellCommandOnPath("kitten/test/mock_scripts/mock_rustc.py")
 
@@ -41,66 +40,78 @@ class RustTestUtil : AutoCloseable {
 
   private val findingFolderFile = File(workingDir, "finding_folder")
 
-  val testingConfiguration = TestingConfiguration(
-    language = "RUST",
-    seedFolders = listOf(
-      SeedFolder(
-        path = File(workingDir, "seed_folder").apply {
-          check(mkdirs())
-          File(this, "seed_1.rs").apply {
-            this.toPath().writeText(
-              """
-              fn main() {
-                  println!("Hello World!");
-              }
-              """.trimIndent(),
-            )
-          }
-        }.absolutePath,
-        fileExtentions = listOf(".rs"),
-      ),
-    ),
-    programsUnderTest = listOf(
-      ProgramUnderTest(
-        command = mockRustcCommand.normalizedCommand,
-        flagsToTest = listOf(CmdFlags.EMPTY),
-        versionFlags = CmdFlags(listOf("--version", "--verbose")),
-        crashDetectorClassName = RustcCrashDetector::class.java.canonicalName,
-      ),
-    ),
-  )
+  val testingConfiguration =
+    TestingConfiguration(
+      language = "RUST",
+      seedFolders =
+        listOf(
+          SeedFolder(
+            path =
+              File(workingDir, "seed_folder")
+                .apply {
+                  check(mkdirs())
+                  File(this, "seed_1.rs").apply {
+                    this.toPath().writeText(
+                      """
+                      fn main() {
+                          println!("Hello World!");
+                      }
+                      """.trimIndent(),
+                    )
+                  }
+                }.absolutePath,
+            fileExtentions = listOf(".rs"),
+          ),
+        ),
+      programsUnderTest =
+        listOf(
+          ProgramUnderTest(
+            command = mockRustcCommand.normalizedCommand,
+            flagsToTest = listOf(CmdFlags.EMPTY),
+            versionFlags = CmdFlags(listOf("--version", "--verbose")),
+            crashDetectorClassName = RustcCrashDetector::class.java.canonicalName,
+          ),
+        ),
+    )
 
-  val facade = DefaultCompilationConfigurationFacade(
-    languageKind = parserFacadeFactory.computeLanguageKindWithLanguageNameIgnoreCase(
-      testingConfiguration.language,
-    )!!,
-    programUnderTest = testingConfiguration.programsUnderTest[0],
-  )
+  val facade =
+    DefaultCompilationConfigurationFacade(
+      languageKind =
+        parserFacadeFactory.computeLanguageKindWithLanguageNameIgnoreCase(
+          testingConfiguration.language,
+        )!!,
+      programUnderTest = testingConfiguration.programsUnderTest[0],
+    )
   val action = facade.compilationActions[0]
   val mockRustcAction = facade.compilationActions[0]
 
-  val fuzzerDriver = FuzzerDriver(
-    CommandOptions().also {
-      it.generalFlags.setFindingFolder(findingFolderFile.absoluteFile)
-      it.compilerFlags.testingConfiguration = testingConfiguration
-    },
-    AdditionalFuzzerControl(1),
-  )
+  val fuzzerDriver =
+    FuzzerDriver(
+      CommandOptions().also {
+        it.generalFlags.setFindingFolder(findingFolderFile.absoluteFile)
+        it.compilerFlags.testingConfiguration = testingConfiguration
+      },
+      AdditionalFuzzerControl(1),
+    )
 
   private val processingFolderFile = File(workingDir, "processing_folder")
   private val reportedFolderFile = File(workingDir, "reported_folder")
   private val duplicateBugFolderFile = File(workingDir, "duplicate_folder")
-  val organizer = OrganizerDriver(
-    org.perses.fuzzer.organizer.CommandOptions().apply {
-      findingFolder = findingFolderFile
-      processingFolder = processingFolderFile
-      reportedFolder = reportedFolderFile
-      duplicateBugFolder = duplicateBugFolderFile
-      setLang("RUST")
-    },
-  )
+  val organizer =
+    OrganizerDriver(
+      org.perses.fuzzer.organizer.CommandOptions().apply {
+        findingFolder = findingFolderFile
+        processingFolder = processingFolderFile
+        reportedFolder = reportedFolderFile
+        duplicateBugFolder = duplicateBugFolderFile
+        setLang("RUST")
+      },
+    )
 
-  fun testWithProgram(sourceFileName: String, sourceCode: String) {
+  fun testWithProgram(
+    sourceFileName: String,
+    sourceCode: String,
+  ) {
     val mutantFile = File(workingDir, sourceFileName).apply { writeText(sourceCode) }
     val seedFile = createTempFile().apply { writeText(sourceCode) }
     val seedProgram = FuzzerDriverTest.getTokenizedProgram(seedFile, LanguageRust)
@@ -133,10 +144,11 @@ class RustTestUtil : AutoCloseable {
 
   fun getDuplicateFolder() = organizer.duplicateBugFolder
 
-  private fun createTempFile() = File(
-    workingDir,
-    fileCounter.getAndIncrement().toString() + ".rs",
-  )
+  private fun createTempFile() =
+    File(
+      workingDir,
+      fileCounter.getAndIncrement().toString() + ".rs",
+    )
 
   override fun close() {
     fuzzerDriver.close()
@@ -170,20 +182,21 @@ class RustTestUtil : AutoCloseable {
       bugResolution: CrashInstanceFolder.BugResolution,
     ) {
       val info = crash.info()
-      val newInfo = CrashInstanceFolder.Info(
-        seedFileName = info.seedFileName,
-        mutantFileName = info.mutantFileName,
-        language = info.language,
-        stdoutFileName = info.stdoutFileName,
-        stderrFileName = info.stderrFileName,
-        reproduceScriptFileName = info.reproduceScriptFileName,
-        crashSignatureFileName = info.crashSignatureFileName,
-        deltaFolderName = info.deltaFolderName,
-        bugReportUrl = bugReportUrl,
-        bugId = bugReportId.toString(),
-        bugResolution = bugResolution,
-        crashDetectorClassName = info.crashDetectorClassName,
-      )
+      val newInfo =
+        CrashInstanceFolder.Info(
+          seedFileName = info.seedFileName,
+          mutantFileName = info.mutantFileName,
+          language = info.language,
+          stdoutFileName = info.stdoutFileName,
+          stderrFileName = info.stderrFileName,
+          reproduceScriptFileName = info.reproduceScriptFileName,
+          crashSignatureFileName = info.crashSignatureFileName,
+          deltaFolderName = info.deltaFolderName,
+          bugReportUrl = bugReportUrl,
+          bugId = bugReportId.toString(),
+          bugResolution = bugResolution,
+          crashDetectorClassName = info.crashDetectorClassName,
+        )
       newInfo.save(File(crash.folder, CrashInstanceFolder.FILE_NAME_BUG_DESCRIPTOR))
     }
   }

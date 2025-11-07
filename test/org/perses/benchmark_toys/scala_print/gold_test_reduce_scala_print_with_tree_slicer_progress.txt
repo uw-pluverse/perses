@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,12 +22,13 @@ inputFlags:
   sourceFile: "Hello.sc"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "reduce_scala_print_with_tree_slicer_output_dir"
+  outputDir: "result_golden_test_reduce_scala_print_with_tree_slicer_node-dfs_Hello.sc"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
-  codeFormat: null
+  codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
   testScriptExecutionKeepWaitingAfterTimeout: true
 outputRefiningFlags:
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_with_dfs_delta"
+  reductionAlgorithm: "node-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: true
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,17 +68,17 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
-  progressDumpFile: "reduce_scala_print_with_tree_slicer_reduction_progress.txt"
+  progressDumpFile: "_golden_test_reduce_scala_print_with_tree_slicer_by_default_progress.txt"
   appendToProgressDumpFile: true
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "TRUE"
@@ -80,46 +86,56 @@ cacheControlFlags:
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
-  globalCacheFile: null
-  pathToSaveUpdatedGlobalCache: null
+  enablePassCache: true
+  enableGlobalCache: true
+  globalCacheFile: "golden_global_cache_for_tree_slicer.csv"
+  pathToSaveUpdatedGlobalCache: "golden_test_reduce_scala_print_with_tree_slicer_updated_global_cache_file.csv"
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: true
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<sequence>
-reducers:
-- !<fixpoint>
-  body: !<atomic>
-    reducer: perses_node_with_dfs_delta
-  condition: smaller
-- !<fixpoint>
-  body: !<if>
-    condition: !<atomic>
-      reducer: tree_slicer
-    then: !<fixpoint>
-      body: !<atomic>
-        reducer: perses_node_with_dfs_delta
-      condition: smaller
-  condition: smaller
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=COMPACT_QUERY_CACHE_FORMAT_SENSITIVE
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 20
+(29/29)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node-dfs
+    }
+    fixpoint (smaller) {
+        if (tree_slicer) {
+            fixpoint (smaller) {
+                node-dfs
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_with_dfs_delta==
+(29/29)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+==========Fixpoint iteration 1. Reducer: node-dfs===========
 
 The spar-tree is the following.
 compilationUnit {id=1,slot_type=compilationUnit}
@@ -320,7 +336,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node-dfs][DFS](29/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Testing the empty input. Global ratio:29/29=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello
@@ -329,6 +347,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](29/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 13
@@ -664,7 +684,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node-dfs][DFS](29/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Testing the empty input. Global ratio:29/29=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -685,6 +707,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](29/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 138
@@ -875,7 +899,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -890,7 +914,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -905,7 +929,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -994,9 +1018,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](27/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:27/29=93.10%
+FixPt[1][node-dfs][DFS](27/29)  Testing the empty input. Global ratio:27/29=93.10%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__paramClause_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__paramClause_2]dd@1
     --file: Hello.sc--
     object Hello {
         def main(                   ) =
@@ -1014,6 +1040,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](27/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/29=93.10%
+FixPt[1][node-dfs][DFS](27/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/29=93.10%
 ===================Node reduction is done===================
 
 Failed to reduce node 141
@@ -1074,27 +1102,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-                    "line 1"
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-                    "line 1"
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
 ===========TestScriptExecutionCacheEntryEviction============
 
 5 entries are removed: 10 --> 5.
@@ -1133,7 +1140,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node-dfs][DFS](24/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:24/29=82.76%
+FixPt[1][node-dfs][DFS](24/29)  Testing the empty input. Global ratio:24/29=82.76%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -1148,6 +1157,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](24/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/29=82.76%
+FixPt[1][node-dfs][DFS](24/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/29=82.76%
 ===================Node reduction is done===================
 
 Failed to reduce node 53
@@ -1332,7 +1343,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node-dfs][DFS](24/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:24/29=82.76%
+FixPt[1][node-dfs][DFS](24/29)  Testing the empty input. Global ratio:24/29=82.76%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -1351,6 +1364,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](24/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/29=82.76%
+FixPt[1][node-dfs][DFS](24/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/29=82.76%
 ===================Node reduction is done===================
 
 Failed to reduce node 146
@@ -1467,27 +1482,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println
-                   ("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println
-                   ("line 2")
-    }
-------------------------------------------------------------
-
-
 ===========TestScriptExecutionCacheEntryEviction============
 
 7 entries are removed: 12 --> 5.
@@ -1562,7 +1556,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -1691,9 +1685,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[1][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__simpleExpr1_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__simpleExpr1_1]dd@1
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
@@ -1709,6 +1705,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[1][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 91
@@ -1766,7 +1764,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[1][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -1783,6 +1783,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[1][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 158
@@ -1890,9 +1892,8 @@ Failed to reduce node 163
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 2. Reducer: perses_node_with_dfs_delta==
+(20/29)  Rebuilding spar-tree: The spartree is rebuilt.
+==========Fixpoint iteration 2. Reducer: node-dfs===========
 
 The spar-tree is the following.
 compilationUnit {id=180,slot_type=compilationUnit}
@@ -2013,7 +2014,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello
@@ -2060,7 +2061,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello
@@ -2069,6 +2072,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 192
@@ -2170,7 +2175,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2363,7 +2368,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2380,6 +2387,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 253
@@ -2418,7 +2427,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2433,7 +2442,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2527,7 +2536,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2542,6 +2553,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 217
@@ -2580,9 +2593,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__paramClause_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__paramClause_2]dd@1
     --file: Hello.sc--
     object Hello {
         def main(                   ) =
@@ -2598,6 +2613,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 256
@@ -2667,7 +2684,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2740,7 +2757,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2795,7 +2812,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2812,6 +2831,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 261
@@ -2850,7 +2871,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2867,6 +2890,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 228
@@ -2968,7 +2993,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2985,7 +3010,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -3040,7 +3065,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -3057,6 +3084,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 273
@@ -3209,6 +3238,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 181
@@ -3228,6 +3269,47 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object
+    --file: <formatted tokenized program in its original format>--
+    object
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+           Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+           Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 187
@@ -3247,6 +3329,48 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object
+    --file: <formatted tokenized program in its original format>--
+    object
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello
+    --file: <formatted tokenized program in its original format>--
+    object Hello
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object       {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object       {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 189
@@ -3285,15 +3409,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+==============Node edit action set cache hit.===============
 
-    --file: Hello.sc--
-    object Hello
-    --file: <formatted tokenized program in its original format>--
-    object Hello
+    NodeDeletionAction{target_node=194}
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 192
@@ -3332,12 +3457,81 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=194}
+    --file: Hello.sc--
+    object Hello
+    --file: <formatted tokenized program in its original format>--
+    object Hello
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
+    --file: Hello.sc--
+    object Hello
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello
+        def main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 194
@@ -3376,6 +3570,21 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 196
@@ -3414,6 +3623,55 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+            main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+            main(args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 202
@@ -3433,6 +3691,57 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String])
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String])
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def                           =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def                           =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 205
@@ -3446,24 +3755,6 @@ The current best program is the following
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: tree_slicer
-    --file: Hello.sc--
-    object Hello {
-            main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-            main(args: Array[String]) =
             println
             println("Hello, world")
     }
@@ -3489,9 +3780,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: tree_slicer
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String])
@@ -3503,6 +3795,42 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String])
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String])
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 208
@@ -3522,6 +3850,64 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def                           =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def                           =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main                      =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main                      =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def     (args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def     (args: Array[String]) =
+            println
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 206
@@ -3541,38 +3927,87 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+FixPt[3][tree_slicer][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:20/29=68.97%
+FixPt[3][tree_slicer][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
-Failed to reduce node 215
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+    }
 ------------------------------------------------------------
 
 
-=================Reducing node 209, size=20=================
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](20/29)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:20/29=68.97%
+===========TestScriptExecutionCacheEntryEviction============
+
+18 entries are removed: 31 --> 13.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 56
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 20 -> 19
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:19/29=65.52%
+===================Node reduction is done===================
+
+Succeeded to reduce node 215 from 20 to 19
+------------------------------------------------------------
+
+
+=================Reducing node 209, size=19=================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: tree_slicer
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String])
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String])
-            println
             println("Hello, world")
     }
 ------------------------------------------------------------
@@ -3584,50 +4019,51 @@ Failed to reduce node 209
 ------------------------------------------------------------
 
 
-=================Reducing node 253, size=20=================
+=================Reducing node 253, size=19=================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
-            println
             println("Hello, world")
     }
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
 
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
     --file: Hello.sc--
     object Hello {
         def main                      =
-            println
             println("Hello, world")
     }
     --file: <formatted tokenized program in its original format>--
     object Hello {
         def main                      =
-            println
             println("Hello, world")
     }
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 253
 ------------------------------------------------------------
 
 
-=================Reducing node 251, size=20=================
+=================Reducing node 251, size=19=================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
-            println
             println("Hello, world")
     }
 ------------------------------------------------------------
@@ -3639,90 +4075,38 @@ Failed to reduce node 251
 ------------------------------------------------------------
 
 
-=================Reducing node 217, size=20=================
+=================Reducing node 217, size=19=================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
-            println
             println("Hello, world")
     }
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
-            println
     }
     --file: <formatted tokenized program in its original format>--
     object Hello {
         def main(args: Array[String]) =
-            println
     }
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 217
-------------------------------------------------------------
-
-
-=================Reducing node 250, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: pass=============
-
-// edit action set type: tree_slicer
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-12 entries are removed: 19 --> 7.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 48
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 20 -> 19
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Succeeded to reduce node 250 from 20 to 19
 ------------------------------------------------------------
 
 
@@ -3738,9 +4122,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: tree_slicer
     --file: Hello.sc--
     object Hello {
         def main                      =
@@ -3754,6 +4139,76 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]  =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]  =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
+    --file: Hello.sc--
+    object Hello {
+        def main                    ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main                    ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(                   ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(                   ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main args: Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main args: Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 254
@@ -3772,6 +4227,55 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 218
@@ -3808,9 +4312,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: tree_slicer
     --file: Hello.sc--
     object Hello {
         def main(                   ) =
@@ -3824,6 +4329,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 256
@@ -3860,7 +4367,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -3875,6 +4384,76 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println("Hello, world"
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println("Hello, world"
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println               )
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println               )
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println(              )
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println(              )
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println "Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println "Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 226
@@ -3889,21 +4468,6 @@ The current best program is the following
     object Hello {
         def main(args: Array[String]) =
             println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
     }
 ------------------------------------------------------------
 
@@ -3926,7 +4490,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -3941,6 +4507,42 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args               ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args               ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(    : Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(    : Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 259
@@ -3977,9 +4579,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: tree_slicer
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
@@ -3993,6 +4596,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 228
@@ -4029,9 +4634,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: tree_slicer
     --file: Hello.sc--
     object Hello {
         def main(args               ) =
@@ -4045,6 +4651,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 261
@@ -4081,21 +4689,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println(              )
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println(              )
-    }
-------------------------------------------------------------
-
-
 ===================Node reduction is done===================
 
 Failed to reduce node 243
@@ -4114,7 +4707,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4129,6 +4724,42 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args:              ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args:              ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args  Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args  Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 262
@@ -4147,6 +4778,59 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args:              ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args:              ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array        ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array        ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args:      [String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args:      [String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 271
@@ -4183,9 +4867,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: tree_slicer
     --file: Hello.sc--
     object Hello {
         def main(args: Array        ) =
@@ -4199,6 +4884,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 273
@@ -4235,7 +4922,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4250,6 +4939,76 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array       ]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array       ]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[      ]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[      ]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[3][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+FixPt[3][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 275
@@ -4310,9 +5069,8 @@ Failed to reduce node 276
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 4. Reducer: perses_node_with_dfs_delta==
+(19/29)  Rebuilding spar-tree: The spartree is rebuilt.
+==========Fixpoint iteration 4. Reducer: node-dfs===========
 
 The spar-tree is the following.
 compilationUnit {id=295,slot_type=compilationUnit}
@@ -4427,7 +5185,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello
@@ -4472,7 +5230,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello
@@ -4481,6 +5241,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node-dfs][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 307
@@ -4577,7 +5339,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4590,7 +5352,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4671,7 +5433,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4756,7 +5518,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4771,6 +5535,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node-dfs][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 363
@@ -4807,7 +5573,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4822,7 +5588,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4897,7 +5663,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4912,6 +5680,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node-dfs][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 336
@@ -4948,7 +5718,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -4963,6 +5735,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node-dfs][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 366
@@ -5029,7 +5803,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -5096,7 +5870,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -5111,6 +5887,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node-dfs][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 343
@@ -5165,7 +5943,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -5180,6 +5960,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node-dfs][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 371
@@ -5258,7 +6040,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -5325,7 +6107,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -5340,6 +6124,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node-dfs][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[4][node-dfs][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 383
@@ -5485,6 +6271,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 296
@@ -5503,6 +6300,44 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object
+    --file: <formatted tokenized program in its original format>--
+    object
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+           Hello {
+        def main(args: Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+           Hello {
+        def main(args: Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 302
@@ -5521,6 +6356,46 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object
+    --file: <formatted tokenized program in its original format>--
+    object
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello
+    --file: <formatted tokenized program in its original format>--
+    object Hello
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object       {
+        def main(args: Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object       {
+        def main(args: Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 304
@@ -5557,15 +6432,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+==============Node edit action set cache hit.===============
 
-    --file: Hello.sc--
-    object Hello
-    --file: <formatted tokenized program in its original format>--
-    object Hello
+    NodeDeletionAction{target_node=309}
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 307
@@ -5602,12 +6478,75 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=309}
+    --file: Hello.sc--
+    object Hello
+    --file: <formatted tokenized program in its original format>--
+    object Hello
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println("Hello, world")
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println("Hello, world")
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello
+        def main(args: Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello
+        def main(args: Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 309
@@ -5644,6 +6583,21 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 311
@@ -5680,6 +6634,52 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+            main(args: Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+            main(args: Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 317
@@ -5698,6 +6698,54 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String])
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String])
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def                           =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def                           =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 320
@@ -5711,22 +6759,6 @@ The current best program is the following
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: tree_slicer
-    --file: Hello.sc--
-    object Hello {
-            main(args: Array[String]) =
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-            main(args: Array[String]) =
             println("Hello, world")
     }
 ------------------------------------------------------------
@@ -5750,7 +6782,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -5763,6 +6797,39 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String])
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String])
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 323
@@ -5781,6 +6848,58 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def                           =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def                           =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main                      =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main                      =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: Hello.sc--
+    object Hello {
+        def     (args: Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def     (args: Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 321
@@ -5799,6 +6918,55 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+                   ("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 334
@@ -5812,22 +6980,6 @@ The current best program is the following
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: tree_slicer
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String])
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String])
             println("Hello, world")
     }
 ------------------------------------------------------------
@@ -5851,21 +7003,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+==============Node edit action set cache hit.===============
 
-    --file: Hello.sc--
-    object Hello {
-        def main                      =
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main                      =
-            println("Hello, world")
-    }
+    NodeDeletionAction{target_node=364}
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 363
@@ -5902,21 +7049,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+==============Node edit action set cache hit.===============
 
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
+    NodeDeletionAction{target_node=339}
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 336
@@ -5931,21 +7073,6 @@ The current best program is the following
     object Hello {
         def main(args: Array[String]) =
             println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
     }
 ------------------------------------------------------------
 
@@ -5968,12 +7095,89 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=364}
+    --file: Hello.sc--
+    object Hello {
+        def main                      =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main                      =
+            println("Hello, world")
+    }
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]  =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]  =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main                    ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main                    ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(                   ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(                   ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main args: Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main args: Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 364
@@ -5992,12 +7196,89 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=339}
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println
+    }
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println("Hello, world"
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println("Hello, world"
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println               )
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println               )
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println(              )
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println(              )
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String]) =
+            println "Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String]) =
+            println "Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 339
@@ -6034,21 +7315,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+==============Node edit action set cache hit.===============
 
-    --file: Hello.sc--
-    object Hello {
-        def main(                   ) =
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(                   ) =
-            println("Hello, world")
-    }
+    NodeDeletionAction{target_node=369}
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 366
@@ -6103,21 +7379,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+==============Node edit action set cache hit.===============
 
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println(              )
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println(              )
-    }
+    NodeDeletionAction{target_node=357}
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 343
@@ -6154,12 +7425,57 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=369}
+    --file: Hello.sc--
+    object Hello {
+        def main(                   ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(                   ) =
+            println("Hello, world")
+    }
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args               ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args               ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(    : Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(    : Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 369
@@ -6175,12 +7491,6 @@ The current best program is the following
         def main(args: Array[String]) =
             println("Hello, world")
     }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=357}
 ------------------------------------------------------------
 
 
@@ -6202,21 +7512,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+==============Node edit action set cache hit.===============
 
-    --file: Hello.sc--
-    object Hello {
-        def main(args               ) =
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args               ) =
-            println("Hello, world")
-    }
+    NodeDeletionAction{target_node=372}
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 371
@@ -6253,12 +7558,57 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=372}
+    --file: Hello.sc--
+    object Hello {
+        def main(args               ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args               ) =
+            println("Hello, world")
+    }
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args:              ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args:              ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args  Array[String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args  Array[String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 372
@@ -6277,6 +7627,57 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args:              ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args:              ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array        ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array        ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args:      [String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args:      [String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 381
@@ -6313,21 +7714,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+==============Node edit action set cache hit.===============
 
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array        ) =
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array        ) =
-            println("Hello, world")
-    }
+    NodeDeletionAction{target_node=385}
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 383
@@ -6364,12 +7760,89 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Testing the empty input. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=385}
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array        ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array        ) =
+            println("Hello, world")
+    }
 ------------------------------------------------------------
 
 
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[String ) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[String ) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array       ]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array       ]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array[      ]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array[      ]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+        def main(args: Array String]) =
+            println("Hello, world")
+    }
+    --file: <formatted tokenized program in its original format>--
+    object Hello {
+        def main(args: Array String]) =
+            println("Hello, world")
+    }
+------------------------------------------------------------
+
+
+FixPt[5][tree_slicer][DFS](19/29)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
+FixPt[5][tree_slicer][DFS](19/29)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:19/29=65.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 385
@@ -6430,129 +7903,78 @@ Failed to reduce node 386
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 29
-  characterCount: 100
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+====Fixpoint iteration 6. Reducer: FineGritLatraReducer=====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+The spar-tree is the following.
+compilationUnit {id=295,slot_type=compilationUnit}
+|___(+) {id=296,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=302,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=303,slot_type=Token}
+        |___objectDef {id=304,slot_type=objectDef}
+            |___Token:Hello {id=305,slot_type=Id}
+            |___(?) {id=307,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=309,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=310,slot_type=Token}
+                    |___(+) {id=311,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=317,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=318,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=320,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=321,slot_type=funSig}
+                    |           |   |___Token:main {id=361,slot_type=Id}
+                    |           |   |___(*) {id=363,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=364,slot_type=paramClause}
+                    |           |           |___Token:( {id=365,slot_type=Token}
+                    |           |           |___(?) {id=366,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=369,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=370,slot_type=Id}
+                    |           |           |       |___(?) {id=371,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=372,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=373,slot_type=Token}
+                    |           |           |               |___simpleType {id=381,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=403,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=383,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=385,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=386,slot_type=Token}
+                    |           |           |                           |___Token:String {id=399,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=388,slot_type=Token}
+                    |           |           |___Token:) {id=367,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=323,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=324,slot_type=Token}
+                    |               |___simpleExpr1 {id=334,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |___Token:println {id=360,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=336,slot_type=kleene_star__simpleExpr1_4}
+                    |                       |___aux_rule__argumentExprs_7 {id=339,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                           |___Token:( {id=340,slot_type=Token}
+                    |                           |___(?) {id=343,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                           |   |___Token:"Hello, world" {id=357,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                           |___Token:) {id=342,slot_type=Token}
+                    |___Token:} {id=312,slot_type=Token}
+------------------------------------------------------------
 
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 20
-  characterCount: 71
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
 
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+FixPt[6][FineGritLatraReducer](19/29)  Latra does not support LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+(19/29)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0             node-dfs      -9    -29             0
+ 1             node-dfs       0      0             0
+ 2          tree_slicer      -1     -7             0
+ 3             node-dfs       0      0             0
+ 4          tree_slicer       0      0             0
+ 5 FineGritLatraReducer       0      0             0
 
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 20
-  characterCount: 71
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[5]: ReducerCallEvent
----
-reducer:
-  shortName: "tree_slicer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[6]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 19
-  characterCount: 64
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[7]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[8]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 19
-  characterCount: 64
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[9]: ReducerCallEvent
----
-reducer:
-  shortName: "tree_slicer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[10]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 19
-  characterCount: 64
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+            node-dfs     3      -9    -29
+         tree_slicer     2      -1     -7
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 4
-#test failure = 45
-#test result cache hits = 56
-#test execution cancelled = 2
+#test failure = 77
+#test result cache hits = 108
+#test execution cancelled = 0
 #node edit action set cache hits = 23
-#external test execution cache hits = 0
+#external test execution cache hits = 84

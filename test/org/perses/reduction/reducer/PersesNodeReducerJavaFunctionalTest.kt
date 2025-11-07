@@ -19,24 +19,25 @@ package org.perses.reduction.reducer
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 
 /** Test for the Java version of perses node reducer.  */
 @RunWith(JUnit4::class)
-class PersesNodeReducerJavaFunctionalTest : AbstractReducerFunctionalTest() {
-
+class PersesNodeReducerJavaFunctionalTest {
   @Test
   fun testFunctionalTest() {
-    runJavaTestSubject(
-      "test_data/java_helloworld",
-      PersesNodePrioritizedDfsReducer.META,
-      """class t { 
+    ReducerFunctionalTestUtility.runJavaTestSubject(
+      reductionFolder = "test_data/java_helloworld",
+      reducerAnnotation = PersesNodePrioritizedDfsReducer.META,
+      cmdCustomizer = {},
+      expected =
+        """class t { 
         |   public static void main (String[] args) { 
         |       System.out.println ("helloworld");
         |   }
         |}
         |
-      """.trimMargin(),
+        """.trimMargin(),
     )
   }
 }

@@ -20,5 +20,6 @@ import org.antlr.v4.runtime.tree.ParseTree
 
 interface ISparTreeAntlrTreeMapping {
   fun getMappedNodeFor(antlrNode: ParseTree): AbstractSparTreeNode?
+
   fun getMappedNodeFor(sparTreeNode: AbstractSparTreeNode): ParseTree?
 }

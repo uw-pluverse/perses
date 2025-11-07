@@ -16,10 +16,6 @@ kt_jvm_library(
         "Superpixel.kt",
     ],
     deps = [
-        "//src/org/perses/cmd:reduction_flags",
-        "//src/org/perses/program:source_file",
-        "//src/org/perses/reduction/io:reduction_inputs_interface",
         "//src/org/perses/spartree",
-        "//src/org/perses/util/cmd",
     ],
 )

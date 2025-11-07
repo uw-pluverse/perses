@@ -25,12 +25,14 @@ import org.perses.fuzzer.compilers.ICompilerCrashDetector.AbstractResult
 import org.perses.fuzzer.compilers.c.GccCrashDetector
 import org.perses.util.shell.Shells
 import java.io.File
+import java.nio.charset.StandardCharsets
 
 @RunWith(JUnit4::class)
 class ReductionScriptGeneratorTest {
-
-  private val workingDirectory = java.nio.file.Files
-    .createTempDirectory(javaClass.simpleName).toFile()
+  private val workingDirectory =
+    java.nio.file.Files
+      .createTempDirectory(javaClass.simpleName)
+      .toFile()
   private val crashDetector = GccCrashDetector()
 
   @After
@@ -55,17 +57,20 @@ class ReductionScriptGeneratorTest {
   @Test
   fun testCreateReductionScriptForMultiLineSignature() {
     testReductionScript(
-      cmd = "(echo -e 'hello\\nworld' ; false)", // exit code is 1
+      // exit code is 1
+      cmd = "(echo -e 'hello\\nworld' ; false)",
       crashSignature = listOf("hello", "world"),
       expectedExitCode = 0,
     )
     testReductionScript(
-      cmd = "(echo -e '\\${'$'}' ; false)", // exit code is 1
+      // exit code is 1
+      cmd = "(echo -e '\\${'$'}' ; false)",
       crashSignature = listOf("${'$'}"),
       expectedExitCode = 0,
     )
     testReductionScript(
-      cmd = "echo -e 'hello\\nworld'", // exit code is 0
+      // exit code is 0
+      cmd = "echo -e 'hello\\nworld'",
       crashSignature = listOf("hello", "world"),
       expectedExitCode = 1,
     )
@@ -81,25 +86,27 @@ class ReductionScriptGeneratorTest {
     crashSignature: List<String>,
     expectedExitCode: Int,
   ) {
-    val generator = ReductionScriptGenerator(
-      cmd,
-      AbstractResult.CrashResult.create(
-        crashDetector.javaClass,
-        exitCode = 1,
-        rawSignature = crashSignature,
-      ),
-    )
+    val generator =
+      ReductionScriptGenerator(
+        cmd,
+        AbstractResult.CrashResult.create(
+          crashDetector.javaClass,
+          exitCode = 1,
+          rawSignature = crashSignature,
+        ),
+      )
     val script = generator.generate()
     println(script)
     val file = File(workingDirectory, "t.sh")
-    file.writeText(script, Charsets.UTF_8)
+    file.writeText(script, StandardCharsets.UTF_8)
     check(file.setExecutable(true))
 
-    val cmdOutput = Shells.singleton.run(
-      file.absolutePath,
-      captureOutput = true,
-      environment = Shells.CURRENT_ENV,
-    )
+    val cmdOutput =
+      Shells.singleton.run(
+        file.absolutePath,
+        captureOutput = true,
+        environment = Shells.CURRENT_ENV,
+      )
     assertThat(cmdOutput.exitCode.intValue).isEqualTo(expectedExitCode)
   }
 }

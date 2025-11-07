@@ -5,6 +5,26 @@ package(default_visibility = [
 ])
 
 kt_jvm_test(
+    name = "SubTreeReplacementReducerTest",
+    srcs = [
+        "SubTreeReplacementReducerTest.kt",
+    ],
+    associates = [
+        "//src/org/perses/reduction/reducer/vulcan",
+    ],
+    data = [
+        "bug_for_subtree_on_wat/r.sh",
+        "bug_for_subtree_on_wat/small.wat",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//test/org/perses:test_util",
+        "//test/org/perses/reduction:reducer_functional_test_base",
+    ],
+)
+
+kt_jvm_test(
     name = "IdentifierReplacementReducerTest",
     srcs = [
         "IdentifierReplacementReducerTest.kt",

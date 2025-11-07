@@ -25,19 +25,16 @@ class ReturnsReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractParserRuleAttributeReducer(
-  nameAndDesc = object : AbstractReducerNameAndDesc(
-    shortName = ReturnsReducer::class.simpleName!!,
-    description = "",
-  ) {},
-  ioManager = ioManager,
-  testScriptExecutorService = testScriptExecutorService,
-) {
+    nameAndDesc =
+      object : AbstractReducerNameAndDesc(
+        shortName = ReturnsReducer::class.simpleName!!,
+        description = "",
+      ) {},
+    ioManager = ioManager,
+    testScriptExecutorService = testScriptExecutorService,
+  ) {
+  override fun hasAttribute(attributes: ParserRuleAttributes): Boolean = attributes.hasReturn()
 
-  override fun hasAttribute(attributes: ParserRuleAttributes): Boolean {
-    return attributes.hasReturn()
-  }
-
-  override fun removeAttribute(attributes: ParserRuleAttributes): ParserRuleAttributes {
-    return attributes.copyWithReturn(null)
-  }
+  override fun removeAttribute(attributes: ParserRuleAttributes): ParserRuleAttributes =
+    attributes.copyWithReturn(null)
 }

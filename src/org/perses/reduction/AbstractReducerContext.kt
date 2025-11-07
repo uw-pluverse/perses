@@ -25,13 +25,14 @@ abstract class AbstractReducerContext<
   K : AbstractDataKind,
   M : AbstractReductionIOManager<P, K, M>,
   I : AbstractReducerContext<P, K, M, I>,
-  >(
+>(
   val ioManager: M,
   val executorService: TestScriptExecutorService,
 ) {
   private val piggybackPayload = HashMap<Any, Any>()
 
-  fun computePiggybackPayloadIfAbsent(key: Any, valueComputer: (Any) -> Any): Any {
-    return piggybackPayload.computeIfAbsent(key, valueComputer)
-  }
+  fun computePiggybackPayloadIfAbsent(
+    key: Any,
+    valueComputer: (Any) -> Any,
+  ): Any = piggybackPayload.computeIfAbsent(key, valueComputer)
 }

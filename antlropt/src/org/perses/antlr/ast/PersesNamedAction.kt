@@ -23,17 +23,23 @@ class PersesNamedAction(
   private val name: String,
   private val body: String,
 ) : AbstractPersesAst() {
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
-    stream.append('@').append(name).append(' ').append(body).append('\n')
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
+    stream
+      .append('@')
+      .append(name)
+      .append(' ')
+      .append(body)
+      .append('\n')
   }
 
   override val childCount: Int
     get() = 0
 
-  override fun getChild(index: Int): AbstractPersesAst {
-    throw UnsupportedOperationException()
-  }
+  override fun getChild(index: Int): AbstractPersesAst = throw UnsupportedOperationException()
 
   override val tag: AstTag?
     get() = null

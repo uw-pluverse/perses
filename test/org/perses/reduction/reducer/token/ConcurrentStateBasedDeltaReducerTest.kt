@@ -20,22 +20,22 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 
 @RunWith(JUnit4::class)
-class ConcurrentStateBasedDeltaReducerTest : AbstractReducerFunctionalTest() {
-
+class ConcurrentStateBasedDeltaReducerTest {
   @Test
   fun testReduceDelta() {
-    runCTestSubject(
-      "test_data/delta_3",
-      ConcurrentStateBasedDeltaReducer.META,
-      """
+    ReducerFunctionalTestUtility.runCTestSubject(
+      reductionFolder = "test_data/delta_3",
+      reducerAnnotation = ConcurrentStateBasedDeltaReducer.META,
+      expected =
+        """
         |int main() {
         |  int a = 99;
         |  return a;
         |}
-      """.trimMargin(),
+        """.trimMargin(),
     )
   }
 

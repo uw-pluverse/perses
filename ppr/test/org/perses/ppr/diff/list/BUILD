@@ -4,6 +4,7 @@ kt_jvm_test(
     name = "ListDiffOutputManagerFactoryTest",
     srcs = ["ListDiffOutputManagerFactoryTest.kt"],
     deps = [
+        "//:truth",
         "//ppr/src/org/perses/ppr/diff:ppr_diff_utils",
         "//ppr/src/org/perses/ppr/diff/list:output_manager",
         "//ppr/src/org/perses/ppr/diff/list:reduction_inputs",

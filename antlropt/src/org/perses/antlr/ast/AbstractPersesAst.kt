@@ -21,7 +21,6 @@ import org.perses.util.ast.IPrecedence
 
 /** The Perses ASTs are IMMUTABLE.  */
 abstract class AbstractPersesAst : AbstractCommonAst<AbstractPersesAst>() {
-
   abstract val tag: AstTag?
 
   override val precedence: IPrecedence

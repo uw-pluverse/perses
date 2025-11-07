@@ -25,12 +25,11 @@ import org.antlr.v4.runtime.atn.StarLoopEntryState
 import java.util.concurrent.ConcurrentHashMap
 
 class StateSimulatorRegistry {
-
   private val simulators =
     ConcurrentHashMap<ATNState, AbstractATNStateSimulator>()
 
-  fun getSimulator(state: ATNState): AbstractATNStateSimulator {
-    return simulators.computeIfAbsent(state) {
+  fun getSimulator(state: ATNState): AbstractATNStateSimulator =
+    simulators.computeIfAbsent(state) {
       when {
         isOptional(it) -> OptionalStateSimulator.create(it as BasicBlockStartState)
         isAlternativeBlock(it) -> AlternativeBlockStateSimulator(it as BasicBlockStartState)
@@ -40,11 +39,9 @@ class StateSimulatorRegistry {
         else -> error("unhandled ${it::class.java}")
       }
     }
-  }
 
-  private fun isAlternativeBlock(state: ATNState): Boolean {
-    return !(isOptional(state)) && state::class.java == BasicBlockStartState::class.java
-  }
+  private fun isAlternativeBlock(state: ATNState): Boolean =
+    !(isOptional(state)) && state::class.java == BasicBlockStartState::class.java
 
   private fun isOptional(state: ATNState): Boolean {
     if (state::class.java != BasicBlockStartState::class.java) {

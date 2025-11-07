@@ -25,14 +25,14 @@ import org.perses.fuzzer.compilers.javascript.JerryScriptCrashDetector
 
 @RunWith(JUnit4::class)
 class JerryScriptCrashDetectorTest {
-
   val jerryDetector = JerryScriptCrashDetector()
 
   private fun computeSignature(path: String): List<String> {
-    val signatureLines = CrashDetectorHelper.computeSignature(
-      "kitten/test/org/perses/fuzzer/compiler/javascript/$path",
-      jerryDetector,
-    )
+    val signatureLines =
+      CrashDetectorHelper.computeSignature(
+        "kitten/test/org/perses/fuzzer/compiler/javascript/$path",
+        jerryDetector,
+      )
     return signatureLines
   }
 

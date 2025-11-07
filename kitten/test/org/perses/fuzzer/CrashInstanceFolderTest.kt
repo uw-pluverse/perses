@@ -29,9 +29,10 @@ import java.io.File
 
 @RunWith(JUnit4::class)
 class CrashInstanceFolderTest {
-
-  private val workingDirectory = java.nio.file.Files
-    .createTempDirectory(javaClass.simpleName).toFile()
+  private val workingDirectory =
+    java.nio.file.Files
+      .createTempDirectory(javaClass.simpleName)
+      .toFile()
 
   private val crashDetector = GccCrashDetector()
 
@@ -45,30 +46,35 @@ class CrashInstanceFolderTest {
     val findingFolder = FindingFolder(File(workingDirectory, "findings").apply { mkdir() })
     assertThat(findingFolder.getChildren()).isEmpty()
 
-    val seedFile = File(workingDirectory, "seed.c").apply {
-      writeText("int a; // seed")
-    }
+    val seedFile =
+      File(workingDirectory, "seed.c").apply {
+        writeText("int a; // seed")
+      }
 
     val seedProgram = FuzzerDriverTest.getTokenizedProgram(seedFile, LanguageC)
-    val mutantFile = File(workingDirectory, "mutant.c").apply {
-      writeText("int a; // mutant")
-    }
+    val mutantFile =
+      File(workingDirectory, "mutant.c").apply {
+        writeText("int a; // mutant")
+      }
     val action = FakeCompilationAction
     val actionResult = action.compile(mutantFile)
-    val crashSignature = ICompilerCrashDetector.AbstractResult.CrashResult.create(
-      crashDetector.javaClass,
-      actionResult.cmdOutput.exitCode.intValue,
-      listOf("internal compiler error", "this is a bug"),
-    )
+    val crashSignature =
+      ICompilerCrashDetector.AbstractResult.CrashResult.create(
+        crashDetector.javaClass,
+        actionResult.cmdOutput.exitCode.intValue,
+        listOf("internal compiler error", "this is a bug"),
+      )
 
-    val bugFolder = CrashInstanceFolder.create(
-      findingFolder,
-      seedProgram,
-      mutantFile,
-      actionResult,
-      action,
-      crashSignature,
-    ).folder
+    val bugFolder =
+      CrashInstanceFolder
+        .create(
+          findingFolder,
+          seedProgram,
+          mutantFile,
+          actionResult,
+          action,
+          crashSignature,
+        ).folder
 
     assertThat(findingFolder.getChildren()).hasSize(1)
     assertThat(findingFolder.getChildren()[0].name).isEqualTo(bugFolder.name)
@@ -111,12 +117,13 @@ class CrashInstanceFolderTest {
       assertThat(File(it, "r.sh").canExecute()).isTrue()
       assertThat(File(it, "mutant.c").isFile).isTrue()
 
-      val cmdOutput = Shells.singleton.run(
-        "./r.sh",
-        it.toPath(),
-        captureOutput = false,
-        environment = Shells.CURRENT_ENV,
-      )
+      val cmdOutput =
+        Shells.singleton.run(
+          "./r.sh",
+          it.toPath(),
+          captureOutput = false,
+          environment = Shells.CURRENT_ENV,
+        )
       assertThat(cmdOutput.exitCode.intValue).isEqualTo(0)
     }
 
@@ -131,31 +138,33 @@ class CrashInstanceFolderTest {
 
   @Test
   fun testBugInfoWithEmptyBugResolution() {
-    val info = CrashInstanceFolder.Info(
-      seedFileName = "seed.rs",
-      mutantFileName = "mutant.rs",
-      language = "rust",
-      stdoutFileName = "stdout.txt",
-      stderrFileName = "stderr.txt",
-      reproduceScriptFileName = "reproduce.sh",
-      crashSignatureFileName = "crash_signature.sh",
-      deltaFolderName = "delta",
-      bugReportUrl = "",
-      bugId = "",
-      bugResolution = CrashInstanceFolder.BugResolution.NEW,
-      crashDetectorClassName = crashDetector.javaClass.canonicalName,
-    )
+    val info =
+      CrashInstanceFolder.Info(
+        seedFileName = "seed.rs",
+        mutantFileName = "mutant.rs",
+        language = "rust",
+        stdoutFileName = "stdout.txt",
+        stderrFileName = "stderr.txt",
+        reproduceScriptFileName = "reproduce.sh",
+        crashSignatureFileName = "crash_signature.sh",
+        deltaFolderName = "delta",
+        bugReportUrl = "",
+        bugId = "",
+        bugResolution = CrashInstanceFolder.BugResolution.NEW,
+        crashDetectorClassName = crashDetector.javaClass.canonicalName,
+      )
     val file = File(workingDirectory, "temp.properties")
     info.save(file)
-    val lines = file
-      .readLines()
-      .filter {
-        !(
-          it.startsWith(CrashInstanceFolder.Info.KEY_BUG_ID) ||
-            it.startsWith(CrashInstanceFolder.Info.KEY_BUG_REPORT_URL) ||
-            it.startsWith(CrashInstanceFolder.Info.KEY_BUG_RESOLUTION)
+    val lines =
+      file
+        .readLines()
+        .filter {
+          !(
+            it.startsWith(CrashInstanceFolder.Info.KEY_BUG_ID) ||
+              it.startsWith(CrashInstanceFolder.Info.KEY_BUG_REPORT_URL) ||
+              it.startsWith(CrashInstanceFolder.Info.KEY_BUG_RESOLUTION)
           )
-      }
+        }
     val fileWithoutBugInfo = File(workingDirectory, "info_without_bug_info.properties")
     fileWithoutBugInfo.writeText(lines.joinToString("\n"))
     val infoFromFile = CrashInstanceFolder.Info.readFrom(fileWithoutBugInfo)

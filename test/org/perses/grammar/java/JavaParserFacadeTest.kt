@@ -25,22 +25,24 @@ import org.perses.grammar.AbstractParserFacade
 
 @RunWith(JUnit4::class)
 class JavaParserFacadeTest {
-
   val pnfFacade: AbstractParserFacade = Java8ParserFacade()
 
   @Test
   fun testUsingThisAsMethodParameter() {
-    val result = pnfFacade.parseString(
-      """
+    val result =
+      pnfFacade.parseString(
+        """
       class Test {
         void test(String this) {}
       }
       """,
-      filename = "Test.java",
-    )
+        filename = "Test.java",
+      )
     assertThat(
-      AntlrGrammarUtil.convertParseTreeToProgram(result.tree, LanguageJava)
-        .tokens.joinToString(separator = " ") { it.text },
+      AntlrGrammarUtil
+        .convertParseTreeToProgram(result.tree, LanguageJava)
+        .tokens
+        .joinToString(separator = " ") { it.lexemeText },
     ).contains("this")
   }
 
@@ -48,12 +50,15 @@ class JavaParserFacadeTest {
   fun test() {
     val origFacade: AbstractParserFacade = OrigJava8ParserFacade()
 
-    val origMethods = origFacade.parserClass.declaredMethods
-      .map { it.name }
-      .sorted()
-    val pnfMethods = pnfFacade.parserClass.declaredMethods.toList()
-      .map { it.name }
-      .sorted()
+    val origMethods =
+      origFacade.parserClass.declaredMethods
+        .map { it.name }
+        .sorted()
+    val pnfMethods =
+      pnfFacade.parserClass.declaredMethods
+        .toList()
+        .map { it.name }
+        .sorted()
     assertThat(origMethods).isNotEqualTo(pnfMethods)
   }
 }

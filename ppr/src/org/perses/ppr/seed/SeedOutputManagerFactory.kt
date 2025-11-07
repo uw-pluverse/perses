@@ -16,56 +16,55 @@
  */
 package org.perses.ppr.seed
 
-import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.token.AbstractTokenOutputManagerFactory
 import org.perses.util.ListAlignment
+import org.perses.util.hashing.EnumShaAlgorithm
 
 class SeedOutputManagerFactory(
   private val reductionInputs: SeedReductionInputs,
   programFormatControl: EnumFormatControl,
-  val listAlignment: ListAlignment<PersesToken>,
-  lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
+  val listAlignment: ListAlignment<AbstractPersesToken>,
+  lexerAtnWrapper: LexerAtnWrapper,
+  val shaAlgorithmType: EnumShaAlgorithm,
 ) : AbstractTokenOutputManagerFactory(programFormatControl, lexerAtnWrapper) {
-
-  override fun createManagerFor(program: TokenizedProgram, format: EnumFormatControl):
-    AbstractOutputManager {
-    return OutputManager(
+  override fun createManagerFor(
+    program: TokenizedProgram,
+    format: EnumFormatControl,
+  ): AbstractOutputManager =
+    OutputManager(
       program,
       PrinterRegistry.getPrinter(format, lexerAtnWrapper),
       listAlignment,
     )
-  }
 
-  override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager {
-    return OutputManager(program, defaultProgramPrinter, listAlignment)
-  }
+  override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager =
+    OutputManager(program, defaultProgramPrinter, listAlignment)
 
   inner class OutputManager(
     private val seedProgram: TokenizedProgram,
     private val printer: AbstractTokenizedProgramPrinter,
-    val listAlignment: ListAlignment<PersesToken>,
-  ) : AbstractOutputManager(reductionInputs) {
-
+    val listAlignment: ListAlignment<AbstractPersesToken>,
+  ) : AbstractOutputManager(reductionInputs, shaAlgorithmType) {
     override fun internalComputeContentForFile(
       origReductionFile: AbstractReductionFile<*, *>,
-    ): String {
-      return when (origReductionFile) {
+    ): String =
+      when (origReductionFile) {
         reductionInputs.seedFile -> {
           printer.print(seedProgram).sourceCode
         }
         reductionInputs.variantFile -> {
           // compute variant program by applying the pre-computed diff
-          // note that variantTokens is List<PersesToken>
+          // note that variantTokens is List<PersesAntlrToken>
           val seedTokens = seedProgram.tokens.toMutableList()
-          val variantTokens = listAlignment.computeRevision(seedTokens)
+          val variantTokens = listAlignment.computeRevision(seedTokens.map { it.asAntlrToken() })
           val variantTokenizedProgram = TokenizedProgram(variantTokens, seedProgram.factory)
 
           // write variant program to given folder
@@ -73,6 +72,5 @@ class SeedOutputManagerFactory(
         }
         else -> error("unhandled file $origReductionFile")
       }
-    }
   }
 }

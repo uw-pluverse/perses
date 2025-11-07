@@ -11,11 +11,6 @@ htmlDocument
     : optional__htmlDocument_1 kleene_star__htmlDocument_3 EOF
     ;
 
-inlineHtml
-    : kleene_plus__inlineHtml_1
-    | scriptText
-    ;
-
 htmlElement
     : HtmlDtd
     | HtmlClose
@@ -45,7 +40,7 @@ scriptText
     ;
 
 phpBlock
-    : kleene_star__phpBlock_1 kleene_plus__phpBlock_2
+    : PHPStart kleene_star__phpBlock_1 kleene_star__phpBlock_2 optional__phpBlock_3
     ;
 
 importStatement
@@ -59,6 +54,7 @@ topStatement
     | functionDeclaration
     | classDeclaration
     | globalConstantDeclaration
+    | enumDeclaration
     ;
 
 useDeclaration
@@ -170,11 +166,10 @@ statement
     | throwStatement
     | gotoStatement
     | declareStatement
-    | emptyStatement
-    | inlineHtmlStatement
+    | emptyStatement_
     ;
 
-emptyStatement
+emptyStatement_
     : SemiColon
     ;
 
@@ -239,7 +234,11 @@ returnStatement
     ;
 
 expressionStatement
-    : expression SemiColon
+    : expression altnt_block__expressionStatement_1
+    ;
+
+phpInlineHtml
+    : PHPEnd kleene_star__htmlDocument_3
     ;
 
 unsetStatement
@@ -255,7 +254,7 @@ tryCatchFinally
     ;
 
 catchClause
-    : Catch '(' qualifiedStaticTypeRef kleene_star__catchClause_2 VarName ')' blockStatement
+    : Catch '(' qualifiedStaticTypeRef kleene_star__catchClause_2 optional__catchClause_3 ')' blockStatement
     ;
 
 finallyStatement
@@ -274,12 +273,14 @@ declareStatement
     : Declare '(' declareList ')' altnt_block__declareStatement_1
     ;
 
-inlineHtmlStatement
-    : inlineHtml+
+declareList
+    : directive kleene_star__declareList_2
     ;
 
-declareList
-    : identifierInitializer kleene_star__globalConstantDeclaration_3
+directive
+    : aux_rule__directive_2
+    | aux_rule__directive_3
+    | aux_rule__directive_4
     ;
 
 formalParameterList
@@ -287,7 +288,7 @@ formalParameterList
     ;
 
 formalParameter
-    : optional__functionDeclaration_1 optional__formalParameter_2 optional__functionDeclaration_4 optional__classStatement_2 optional__functionDeclaration_2 optional__formalParameter_6 variableInitializer
+    : optional__functionDeclaration_1 kleene_star__formalParameter_2 optional__functionDeclaration_4 optional__classStatement_2 optional__functionDeclaration_2 optional__formalParameter_6 variableInitializer
     ;
 
 globalStatement
@@ -308,8 +309,8 @@ staticVariableStatement
     ;
 
 classStatement
-    : aux_rule__classStatement_14
-    | aux_rule__classStatement_15
+    : aux_rule__classStatement_15
+    | aux_rule__classStatement_16
     ;
 
 traitAdaptations
@@ -364,6 +365,16 @@ globalConstantDeclaration
     : optional__functionDeclaration_1 Const identifierInitializer kleene_star__globalConstantDeclaration_3 SemiColon
     ;
 
+enumDeclaration
+    : Enum_ identifier optional__enumDeclaration_2 optional__classDeclaration_9 OpenCurlyBracket kleene_star__enumDeclaration_5 CloseCurlyBracket
+    ;
+
+enumItem
+    : aux_rule__enumItem_4
+    | aux_rule__enumItem_5
+    | aux_rule__enumItem_6
+    ;
+
 expressionList
     : expression kleene_star__expressionList_2
     ;
@@ -381,8 +392,20 @@ arrayCreation
     : altnt_block__arrayCreation_5 optional__arrayCreation_4
     ;
 
+arrayDestructuring
+    : '[' altnt_block__arrayDestructuring_10 ']'
+    ;
+
+indexedDestructItem
+    : optional__functionDeclaration_2 chain
+    ;
+
+keyedDestructItem
+    : optional__keyedDestructItem_2 optional__functionDeclaration_2 chain
+    ;
+
 matchExpr
-    : Match '(' expression ')' OpenCurlyBracket matchItem kleene_star__matchExpr_2 optional__formalParameterList_4 CloseCurlyBracket
+    : Match_ '(' expression ')' OpenCurlyBracket matchItem kleene_star__matchExpr_2 optional__formalParameterList_4 CloseCurlyBracket
     ;
 
 matchItem
@@ -477,6 +500,13 @@ actualArgument
     | aux_rule__actualArgument_4
     ;
 
+numericConstant
+    : Octal
+    | Decimal
+    | Hex
+    | Binary
+    ;
+
 classConstant
     : aux_rule__classConstant_5
     | aux_rule__classConstant_6
@@ -528,7 +558,7 @@ functionCallName
     ;
 
 actualArguments
-    : optional__qualifiedStaticTypeRef_1 arguments kleene_star__keyedVariable_2
+    : optional__qualifiedStaticTypeRef_1 kleene_plus__actualArguments_2 kleene_star__keyedVariable_2
     ;
 
 chainBase
@@ -624,6 +654,7 @@ identifier
     | Interface
     | IntType
     | IsSet
+    | LambdaFn
     | List
     | LogicalAnd
     | LogicalOr
@@ -638,6 +669,7 @@ identifier
     | Private
     | Protected
     | Public
+    | Readonly
     | Require
     | RequireOnce
     | Resource
@@ -657,6 +689,11 @@ identifier
     | While
     | Yield
     | From
+    | Enum_
+    | Match_
+    | Ticks
+    | Encoding
+    | StrictTypes
     | Get
     | Set
     | Call
@@ -690,6 +727,7 @@ memberModifier
     | Static
     | Abstract
     | Final
+    | Readonly
     ;
 
 primitiveType
@@ -726,11 +764,6 @@ optional__htmlDocument_1
     : Shebang?
     ;
 
-aux_rule__htmlDocument_2
-    : inlineHtml
-    | phpBlock
-    ;
-
 kleene_star__htmlDocument_3
     : aux_rule__htmlDocument_2*
     ;
@@ -747,8 +780,12 @@ kleene_star__phpBlock_1
     : importStatement*
     ;
 
-kleene_plus__phpBlock_2
-    : topStatement+
+kleene_star__phpBlock_2
+    : topStatement*
+    ;
+
+optional__phpBlock_3
+    : PHPEnd?
     ;
 
 aux_rule__useDeclaration_1
@@ -968,6 +1005,18 @@ kleene_star__catchClause_2
     : aux_rule__catchClause_1*
     ;
 
+optional__catchClause_3
+    : VarName?
+    ;
+
+aux_rule__declareList_1
+    : ',' directive
+    ;
+
+kleene_star__declareList_2
+    : aux_rule__declareList_1*
+    ;
+
 optional__formalParameterList_1
     : formalParameter?
     ;
@@ -984,8 +1033,8 @@ optional__formalParameterList_4
     : ','?
     ;
 
-optional__formalParameter_2
-    : memberModifier?
+kleene_star__formalParameter_2
+    : memberModifier*
     ;
 
 optional__formalParameter_6
@@ -1016,12 +1065,21 @@ optional__classStatement_5
     : memberModifiers?
     ;
 
-optional__classStatement_11
-    : baseCtorCall?
+aux_rule__classStatement_11
+    : baseCtorCall
+    | aux_rule__functionDeclaration_5
+    ;
+
+optional__classStatement_12
+    : aux_rule__classStatement_11?
     ;
 
 kleene_star__traitAdaptations_1
     : traitAdaptationStatement*
+    ;
+
+optional__traitAlias_1
+    : memberModifier?
     ;
 
 aux_rule__traitMethodReference_1
@@ -1048,6 +1106,26 @@ kleene_star__globalConstantDeclaration_3
     : aux_rule__globalConstantDeclaration_2*
     ;
 
+aux_rule__enumDeclaration_1
+    : Colon altnt_block__enumDeclaration_6
+    ;
+
+optional__enumDeclaration_2
+    : aux_rule__enumDeclaration_1?
+    ;
+
+kleene_star__enumDeclaration_5
+    : enumItem*
+    ;
+
+aux_rule__enumItem_1
+    : Eq expression
+    ;
+
+optional__enumItem_2
+    : aux_rule__enumItem_1?
+    ;
+
 aux_rule__expressionList_1
     : ',' expression
     ;
@@ -1066,6 +1144,38 @@ aux_rule__arrayCreation_3
 
 optional__arrayCreation_4
     : aux_rule__arrayCreation_3?
+    ;
+
+kleene_star__arrayDestructuring_1
+    : ','*
+    ;
+
+kleene_plus__arrayDestructuring_2
+    : ','+
+    ;
+
+aux_rule__arrayDestructuring_3
+    : kleene_plus__arrayDestructuring_2 indexedDestructItem
+    ;
+
+kleene_star__arrayDestructuring_4
+    : aux_rule__arrayDestructuring_3*
+    ;
+
+aux_rule__arrayDestructuring_7
+    : kleene_plus__arrayDestructuring_2 keyedDestructItem
+    ;
+
+kleene_star__arrayDestructuring_8
+    : aux_rule__arrayDestructuring_7*
+    ;
+
+aux_rule__keyedDestructItem_1
+    : expression '=>'
+    ;
+
+optional__keyedDestructItem_2
+    : aux_rule__keyedDestructItem_1?
     ;
 
 optional__lambdaFunctionExpr_1
@@ -1106,14 +1216,6 @@ aux_rule__arrayItemList_1
 
 kleene_star__arrayItemList_2
     : aux_rule__arrayItemList_1*
-    ;
-
-aux_rule__arrayItem_3
-    : expression '=>'
-    ;
-
-optional__arrayItem_4
-    : aux_rule__arrayItem_3?
     ;
 
 aux_rule__lambdaFunctionUseVars_1
@@ -1205,6 +1307,14 @@ optional__constantInitializer_3
     : aux_rule__constantInitializer_2?
     ;
 
+aux_rule__constantInitializer_7
+    : '.' altnt_block__constantInitializer_12
+    ;
+
+kleene_star__constantInitializer_8
+    : aux_rule__constantInitializer_7*
+    ;
+
 kleene_plus__string_1
     : HereDocText+
     ;
@@ -1227,6 +1337,10 @@ kleene_star__chain_1
 
 optional__memberAccess_1
     : actualArguments?
+    ;
+
+kleene_plus__actualArguments_2
+    : arguments+
     ;
 
 aux_rule__chainBase_1
@@ -1258,7 +1372,7 @@ kleene_star__assignmentList_4
     ;
 
 aux_rule__expression_1
-    : aux_rule__expression_17
+    : aux_rule__expression_18
     | parentheses
     ;
 
@@ -1285,8 +1399,8 @@ typeHint
     ;
 
 aux_rule__expression_7
-    : aux_rule__expression_18
-    | aux_rule__expression_19
+    : aux_rule__expression_19
+    | aux_rule__expression_20
     ;
 
 kleene_star__expression_6
@@ -1297,24 +1411,25 @@ expression
     : aux_rule__expression_8 kleene_star__expression_6
     ;
 
-aux_rule__constantInitializer_8
+aux_rule__constantInitializer_10
     : '+'
     | '-'
     ;
 
-kleene_star__constantInitializer_7
-    : aux_rule__constantInitializer_8*
+kleene_star__constantInitializer_9
+    : aux_rule__constantInitializer_10*
     ;
 
-aux_rule__constantInitializer_9
+aux_rule__constantInitializer_11
     : constant
     | string
-    | aux_rule__constantInitializer_10
-    | aux_rule__constantInitializer_11
+    | aux_rule__constantInitializer_14
+    | aux_rule__constantInitializer_15
+    | aux_rule__constantInitializer_16
     ;
 
 constantInitializer
-    : kleene_star__constantInitializer_7 aux_rule__constantInitializer_9
+    : kleene_star__constantInitializer_9 aux_rule__constantInitializer_11
     ;
 
 aux_rule__namespaceNameList_5
@@ -1352,6 +1467,11 @@ altnt_block__ifStatement_5
     | aux_rule__ifStatement_7
     ;
 
+altnt_block__expressionStatement_1
+    : SemiColon
+    | phpInlineHtml
+    ;
+
 altnt_block__expression_11
     : '**'
     | '*'
@@ -1375,7 +1495,7 @@ altnt_block__expression_11
     | '|'
     | '&&'
     | '||'
-    | aux_rule__expression_20
+    | aux_rule__expression_21
     | '??'
     | '<=>'
     | LogicalAnd
@@ -1384,9 +1504,14 @@ altnt_block__expression_11
     ;
 
 altnt_block__expression_13
-    : aux_rule__expression_21
-    | aux_rule__expression_22
+    : aux_rule__expression_22
     | aux_rule__expression_23
+    | aux_rule__expression_24
+    ;
+
+altnt_block__arrayDestructuring_10
+    : aux_rule__arrayDestructuring_11
+    | aux_rule__arrayDestructuring_12
     ;
 
 altnt_block__globalVar_1
@@ -1394,24 +1519,47 @@ altnt_block__globalVar_1
     | aux_rule__globalVar_3
     ;
 
+altnt_block__expression_14
+    : aux_rule__expression_25
+    | arrayDestructuring
+    ;
+
 aux_rule__expression_8
     : newExpr
-    | aux_rule__expression_24
-    | aux_rule__expression_25
     | aux_rule__expression_26
+    | aux_rule__expression_27
+    | aux_rule__expression_28
+    | arrayCreation
     | constant
     | string
     | Label
     | BackQuoteString
     | parentheses
-    | arrayCreation
     | Yield
-    | aux_rule__expression_27
-    | aux_rule__expression_28
-    | matchExpr
     | aux_rule__expression_29
     | aux_rule__expression_30
+    | matchExpr
     | aux_rule__expression_31
+    | aux_rule__expression_32
+    | aux_rule__expression_33
+    ;
+
+constant
+    : Null
+    | Real
+    | BooleanConstant
+    | numericConstant
+    | stringConstant
+    | Namespace__
+    | Class__
+    | Traic__
+    | Function__
+    | Method__
+    | Line__
+    | File__
+    | Dir__
+    | classConstant
+    | qualifiedNamespaceName
     ;
 
 altnt_block__namespaceDeclaration_3
@@ -1450,7 +1598,7 @@ altnt_block__foreachStatement_8
 
 altnt_block__foreachStatement_9
     : statement
-    | aux_rule__foreachStatement_12
+    | aux_rule__foreachStatement_13
     ;
 
 altnt_block__tryCatchFinally_4
@@ -1463,9 +1611,14 @@ altnt_block__declareStatement_1
     | aux_rule__declareStatement_2
     ;
 
-altnt_block__classStatement_12
-    : aux_rule__classStatement_16
-    | aux_rule__classStatement_17
+altnt_block__directive_1
+    : numericConstant
+    | Real
+    ;
+
+altnt_block__classStatement_13
+    : aux_rule__classStatement_17
+    | aux_rule__classStatement_18
     ;
 
 altnt_block__traitAlias_2
@@ -1541,14 +1694,24 @@ altnt_block__switchBlock_4
     | SemiColon
     ;
 
-altnt_block__expression_15
+altnt_block__enumDeclaration_6
+    : IntType
+    | StringType
+    ;
+
+altnt_block__constantInitializer_12
+    : string
+    | constant
+    ;
+
+altnt_block__expression_16
     : chain
     | newExpr
     ;
 
 altnt_block__foreachStatement_10
-    : aux_rule__foreachStatement_13
-    | aux_rule__foreachStatement_14
+    : aux_rule__foreachStatement_14
+    | aux_rule__foreachStatement_15
     ;
 
 altnt_block__string_4
@@ -1557,53 +1720,43 @@ altnt_block__string_4
     ;
 
 altnt_block__foreachStatement_11
-    : aux_rule__foreachStatement_15
+    : arrayDestructuring
     | aux_rule__foreachStatement_16
     ;
 
-altnt_block__expression_16
-    : aux_rule__expression_32
+altnt_block__foreachStatement_12
+    : aux_rule__foreachStatement_17
+    | aux_rule__foreachStatement_18
+    ;
+
+aux_rule__htmlDocument_2
+    : kleene_plus__inlineHtml_1
+    | scriptText
+    | phpBlock
+    ;
+
+altnt_block__expression_17
+    : aux_rule__expression_34
     | Clone
-    | aux_rule__expression_33
+    | aux_rule__expression_35
     | '~'
     | '@'
     | '!'
     | '+'
     | '-'
     | Print
-    | aux_rule__expression_34
     | Include
     | IncludeOnce
     | Require
     | RequireOnce
     | Throw
-    | aux_rule__expression_35
+    | aux_rule__expression_36
+    | aux_rule__expression_37
     ;
 
-constant
-    : Null
-    | Real
-    | BooleanConstant
-    | Octal
-    | Decimal
-    | Hex
-    | Binary
-    | stringConstant
-    | Namespace__
-    | Class__
-    | Traic__
-    | Function__
-    | Method__
-    | Line__
-    | File__
-    | Dir__
-    | classConstant
-    | qualifiedNamespaceName
-    ;
-
-altnt_block__classStatement_13
-    : aux_rule__classStatement_18
-    | aux_rule__classStatement_19
+altnt_block__classStatement_14
+    : aux_rule__classStatement_19
+    | aux_rule__classStatement_20
     ;
 
 aux_rule__htmlElement_2
@@ -1618,15 +1771,27 @@ aux_rule__statement_2
     : yieldExpression SemiColon
     ;
 
+aux_rule__directive_2
+    : Ticks Eq altnt_block__directive_1
+    ;
+
+aux_rule__directive_3
+    : Encoding Eq SingleQuoteString
+    ;
+
+aux_rule__directive_4
+    : StrictTypes Eq numericConstant
+    ;
+
 aux_rule__globalVar_2
     : Dollar altnt_block__globalVar_1
     ;
 
-aux_rule__classStatement_14
-    : optional__functionDeclaration_1 altnt_block__classStatement_12
+aux_rule__classStatement_15
+    : optional__functionDeclaration_1 altnt_block__classStatement_13
     ;
 
-aux_rule__classStatement_15
+aux_rule__classStatement_16
     : Use qualifiedNamespaceNameList traitAdaptations
     ;
 
@@ -1634,12 +1799,24 @@ aux_rule__traitAdaptations_2
     : OpenCurlyBracket kleene_star__traitAdaptations_1 CloseCurlyBracket
     ;
 
+aux_rule__enumItem_4
+    : Case identifier optional__enumItem_2 SemiColon
+    ;
+
+aux_rule__enumItem_5
+    : optional__classStatement_5 functionDeclaration
+    ;
+
+aux_rule__enumItem_6
+    : Use qualifiedNamespaceNameList traitAdaptations
+    ;
+
 aux_rule__arrayItem_5
     : expression optional__yieldExpression_2
     ;
 
 aux_rule__arrayItem_6
-    : optional__arrayItem_4 '&' chain
+    : optional__keyedDestructItem_2 '&' chain
     ;
 
 aux_rule__qualifiedStaticTypeRef_2
@@ -1710,24 +1887,28 @@ aux_rule__arguments_6
     : actualArgument kleene_star__arguments_2
     ;
 
-aux_rule__expression_17
+aux_rule__expression_18
     : '(' ')'
     ;
 
-aux_rule__expression_18
+aux_rule__expression_19
     : InstanceOf typeRef
     ;
 
-aux_rule__expression_19
+aux_rule__expression_20
     : altnt_block__expression_11 expression
     ;
 
-aux_rule__constantInitializer_10
+aux_rule__constantInitializer_14
     : Array '(' optional__constantInitializer_3 ')'
     ;
 
-aux_rule__constantInitializer_11
+aux_rule__constantInitializer_15
     : '[' optional__constantInitializer_3 ']'
+    ;
+
+aux_rule__constantInitializer_16
+    : altnt_block__constantInitializer_12 kleene_star__constantInitializer_8
     ;
 
 aux_rule__typeParameterListInBrackets_4
@@ -1742,56 +1923,68 @@ aux_rule__ifStatement_7
     : ':' innerStatementList kleene_star__ifStatement_3 optional__ifStatement_4 EndIf SemiColon
     ;
 
-aux_rule__expression_20
+aux_rule__expression_21
     : QuestionMark optional__breakStatement_1 ':'
     ;
 
-aux_rule__expression_21
+aux_rule__expression_22
     : IsSet '(' chainList
     ;
 
-aux_rule__expression_22
+aux_rule__expression_23
     : Empty '(' chain
     ;
 
-aux_rule__expression_23
+aux_rule__expression_24
     : Eval '(' expression
+    ;
+
+aux_rule__arrayDestructuring_11
+    : kleene_star__arrayDestructuring_1 indexedDestructItem kleene_star__arrayDestructuring_4 kleene_star__arrayDestructuring_1
+    ;
+
+aux_rule__arrayDestructuring_12
+    : keyedDestructItem kleene_star__arrayDestructuring_8 optional__formalParameterList_4
     ;
 
 aux_rule__globalVar_3
     : OpenCurlyBracket expression CloseCurlyBracket
     ;
 
-aux_rule__expression_24
-    : stringConstant '[' expression ']'
-    ;
-
 aux_rule__expression_25
-    : optional__expression_10 chain
+    : List '(' assignmentList ')'
     ;
 
 aux_rule__expression_26
-    : chain altnt_block__expression_9
+    : stringConstant '[' expression ']'
     ;
 
 aux_rule__expression_27
-    : Exit optional__expression_2
+    : optional__expression_10 chain
     ;
 
 aux_rule__expression_28
-    : optional__lambdaFunctionExpr_1 Function_ optional__functionDeclaration_2 '(' formalParameterList ')' optional__lambdaFunctionExpr_3 optional__lambdaFunctionExpr_5 blockStatement
+    : chain altnt_block__expression_9
     ;
 
 aux_rule__expression_29
-    : assignable Eq optional__functionDeclaration_1 '&' altnt_block__expression_15
+    : Exit optional__expression_2
     ;
 
 aux_rule__expression_30
-    : altnt_block__expression_13 ')'
+    : optional__lambdaFunctionExpr_1 Function_ optional__functionDeclaration_2 '(' formalParameterList ')' optional__lambdaFunctionExpr_3 optional__lambdaFunctionExpr_5 blockStatement
     ;
 
 aux_rule__expression_31
-    : altnt_block__expression_16 expression
+    : assignable Eq optional__functionDeclaration_1 '&' altnt_block__expression_16
+    ;
+
+aux_rule__expression_32
+    : altnt_block__expression_13 ')'
+    ;
+
+aux_rule__expression_33
+    : altnt_block__expression_17 expression
     ;
 
 aux_rule__namespaceDeclaration_4
@@ -1826,7 +2019,7 @@ aux_rule__switchStatement_7
     : ':' optional__switchStatement_1 kleene_star__switchStatement_2 EndSwitch SemiColon
     ;
 
-aux_rule__foreachStatement_12
+aux_rule__foreachStatement_13
     : ':' innerStatementList EndForeach SemiColon
     ;
 
@@ -1842,16 +2035,16 @@ aux_rule__declareStatement_2
     : ':' innerStatementList EndDeclare SemiColon
     ;
 
-aux_rule__classStatement_16
+aux_rule__classStatement_17
     : propertyModifiers optional__classStatement_2 variableInitializer kleene_star__classStatement_4 SemiColon
     ;
 
-aux_rule__classStatement_17
-    : optional__classStatement_5 altnt_block__classStatement_13
+aux_rule__classStatement_18
+    : optional__classStatement_5 altnt_block__classStatement_14
     ;
 
 aux_rule__traitAlias_3
-    : optional__formalParameter_2 identifier
+    : optional__traitAlias_1 identifier
     ;
 
 aux_rule__arrayCreation_6
@@ -1890,43 +2083,47 @@ aux_rule__switchBlock_5
     : Case expression
     ;
 
-aux_rule__foreachStatement_13
-    : expression As assignable optional__foreachStatement_4
-    ;
-
 aux_rule__foreachStatement_14
-    : chain As altnt_block__foreachStatement_11
+    : expression As altnt_block__foreachStatement_11
     ;
 
 aux_rule__foreachStatement_15
-    : optional__functionDeclaration_2 assignable optional__foreachStatement_4
+    : chain As altnt_block__foreachStatement_12
     ;
 
 aux_rule__foreachStatement_16
+    : assignable optional__foreachStatement_4
+    ;
+
+aux_rule__foreachStatement_17
+    : optional__functionDeclaration_2 assignable optional__foreachStatement_4
+    ;
+
+aux_rule__foreachStatement_18
     : List '(' assignmentList ')'
     ;
 
-aux_rule__expression_32
+aux_rule__expression_34
     : LambdaFn '(' formalParameterList ')' '=>'
     ;
 
-aux_rule__expression_33
+aux_rule__expression_35
     : '(' castOperation ')'
     ;
 
-aux_rule__expression_34
-    : List '(' assignmentList ')' Eq
-    ;
-
-aux_rule__expression_35
+aux_rule__expression_36
     : assignable assignmentOperator optional__functionDeclaration_1
     ;
 
-aux_rule__classStatement_18
-    : Const optional__classStatement_2 identifierInitializer kleene_star__globalConstantDeclaration_3 SemiColon
+aux_rule__expression_37
+    : altnt_block__expression_14 Eq
     ;
 
 aux_rule__classStatement_19
-    : Function_ optional__functionDeclaration_2 identifier optional__functionDeclaration_3 '(' formalParameterList ')' optional__classStatement_11 methodBody
+    : Const optional__classStatement_2 identifierInitializer kleene_star__globalConstantDeclaration_3 SemiColon
+    ;
+
+aux_rule__classStatement_20
+    : Function_ optional__functionDeclaration_2 identifier optional__functionDeclaration_3 '(' formalParameterList ')' optional__classStatement_12 methodBody
     ;
 

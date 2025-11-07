@@ -26,13 +26,14 @@ object LanguageCpp : LanguageKind(
   extensions = ImmutableSet.of("cc", "cpp", "cxx"),
   defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  defaultFormatterCommandCreators = createPotentialCodeFormatterList(
-    { CommonShellCommands.CLANG_FORMAT_IN_PLACE },
-  ),
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT,
-  ),
-
+  defaultFormatterCommandCreators =
+    createPotentialCodeFormatterList(
+      { CommonShellCommands.CLANG_FORMAT_IN_PLACE },
+    ),
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.ORIG_FORMAT,
+    ),
 )

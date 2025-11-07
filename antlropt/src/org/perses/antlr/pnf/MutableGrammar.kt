@@ -38,29 +38,25 @@ class MutableGrammar(
   private val parserRuleAttributesMap: ImmutableMap<RuleNameHandle, ParserRuleAttributes> =
     ImmutableMap.of(),
 ) {
-
   // [LinkedHashMap] is for deterministic iteration order.
   private val map = LinkedHashMap<RuleNameHandle, MutableAltBlock>()
 
-  fun ruleNameAltPairSequence(): Sequence<Map.Entry<RuleNameHandle, AbstractPersesRuleElement>> {
-    return map.entries
+  fun ruleNameAltPairSequence(): Sequence<Map.Entry<RuleNameHandle, AbstractPersesRuleElement>> =
+    map.entries
       .asSequence()
       .flatMap { entry ->
         entry.value.asSequence().map { AbstractMap.SimpleEntry(entry.key, it) }
       }
-  }
 
-  fun alternativeSequence(): Sequence<AbstractPersesRuleElement> {
-    return map.values
+  fun alternativeSequence(): Sequence<AbstractPersesRuleElement> =
+    map.values
       .asSequence()
       .flatMap { it.asSequence() }
-  }
 
-  fun nonEmptyAltBlockSequence(): Sequence<Map.Entry<RuleNameHandle, MutableAltBlock>> {
-    return map.entries
+  fun nonEmptyAltBlockSequence(): Sequence<Map.Entry<RuleNameHandle, MutableAltBlock>> =
+    map.entries
       .asSequence()
       .filter { it.value.isNotEmpty }
-  }
 
   inline fun forEachAlt(action: (RuleNameHandle, AbstractPersesRuleElement) -> Unit) {
     ruleNameAltPairSequence().forEach { action(it.key, it.value) }
@@ -77,16 +73,16 @@ class MutableGrammar(
     return !result.isEmpty
   }
 
-  fun getAltBlock(key: RuleNameHandle): MutableAltBlock {
-    return map.computeIfAbsent(key) {
+  fun getAltBlock(key: RuleNameHandle): MutableAltBlock =
+    map.computeIfAbsent(key) {
       MutableAltBlock()
     }
-  }
 
-  fun ruleNameSequence(): Sequence<RuleNameHandle> = map.entries
-    .asSequence()
-    .filter { it.value.isNotEmpty }
-    .map { it.key }
+  fun ruleNameSequence(): Sequence<RuleNameHandle> =
+    map.entries
+      .asSequence()
+      .filter { it.value.isNotEmpty }
+      .map { it.key }
 
   fun removeRule(key: RuleNameHandle): MutableAltBlock? {
     val oldValue = map.remove(key) ?: return null
@@ -97,20 +93,19 @@ class MutableGrammar(
     }
   }
 
-  fun toImmutableMultiMap(): ImmutableListMultimap<RuleNameHandle, AbstractPersesRuleElement> {
-    return ImmutableListMultimap.copyOf(ruleNameAltPairSequence().asIterable())
-  }
+  fun toImmutableMultiMap(): ImmutableListMultimap<RuleNameHandle, AbstractPersesRuleElement> =
+    ImmutableListMultimap.copyOf(ruleNameAltPairSequence().asIterable())
 
-  fun toParserRuleAstList(): ImmutableList<PersesParserRuleAst> {
-    return nonEmptyAltBlockSequence()
+  fun toParserRuleAstList(): ImmutableList<PersesParserRuleAst> =
+    nonEmptyAltBlockSequence()
       .map { (name, altBlock) ->
-        val parserRuleAttributes: ParserRuleAttributes = parserRuleAttributesMap.getOrDefault(
-          name,
-          ParserRuleAttributes.EMPTY,
-        )!!
+        val parserRuleAttributes: ParserRuleAttributes =
+          parserRuleAttributesMap.getOrDefault(
+            name,
+            ParserRuleAttributes.EMPTY,
+          )!!
         PersesParserRuleAst(name, altBlock.asRuleBody(), parserRuleAttributes)
       }.toImmutableList()
-  }
 
   fun copyFrom(defMap: Multimap<RuleNameHandle, AbstractPersesRuleElement>): MutableGrammar {
     defMap.forEach { key, value ->
@@ -119,17 +114,18 @@ class MutableGrammar(
     return this
   }
 
-  override fun toString(): String {
-    return MoreObjects
-      .toStringHelper(this).add("keys", map.keys).add("values", map.values).toString()
-  }
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
+      .add("keys", map.keys)
+      .add("values", map.values)
+      .toString()
 
-  fun toSourceCodeForDebugging(): String {
-    return ruleNameAltPairSequence()
+  fun toSourceCodeForDebugging(): String =
+    ruleNameAltPairSequence()
       .map {
         "${it.key.ruleName}: ${it.value.sourceCode}"
       }.joinToString(separator = "\n")
-  }
 
   fun validate() {
     val result = validateNoThrow()
@@ -161,8 +157,10 @@ class MutableGrammar(
       when (val decision = transformer.invoke(ruleName, oldDef)) {
         is TransformDecision.Keep -> copy.getAltBlock(ruleName).addIfNotEquivalent(oldDef)
         is TransformDecision.Delete -> Unit // do nothing.
-        is TransformDecision.Replace -> copy.getAltBlock(ruleName)
-          .addIfNotEquivalent(decision.newValue)
+        is TransformDecision.Replace ->
+          copy
+            .getAltBlock(ruleName)
+            .addIfNotEquivalent(decision.newValue)
         else -> error("Unhandled case $decision")
       }
     }
@@ -175,14 +173,15 @@ class MutableGrammar(
     newDef: AbstractPersesRuleElement,
   ): MutableGrammar {
     val found = AtomicBoolean(false)
-    val newGrammar = transform { name, existingDef ->
-      if (name == ruleName && existingDef === oldDef) {
-        found.set(true)
-        return@transform TransformDecision.Replace(oldValue = oldDef, newValue = newDef)
-      } else {
-        return@transform TransformDecision.Keep(oldDef)
+    val newGrammar =
+      transform { name, existingDef ->
+        if (name == ruleName && existingDef === oldDef) {
+          found.set(true)
+          return@transform TransformDecision.Replace(oldValue = oldDef, newValue = newDef)
+        } else {
+          return@transform TransformDecision.Keep(oldDef)
+        }
       }
-    }
     check(found.get())
     return newGrammar
   }
@@ -190,11 +189,12 @@ class MutableGrammar(
   companion object {
     @JvmStatic
     fun createParserRulesFrom(grammar: PersesGrammar): MutableGrammar {
-      val parserRuleAttributesMap = grammar.parserRules
-        .asSequence()
-        .map {
-          it.ruleNameHandle to it.attributes
-        }.toImmutableMap()
+      val parserRuleAttributesMap =
+        grammar.parserRules
+          .asSequence()
+          .map {
+            it.ruleNameHandle to it.attributes
+          }.toImmutableMap()
 
       return createRulesFrom(grammar.parserRules, parserRuleAttributesMap)
     }

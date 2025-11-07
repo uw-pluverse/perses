@@ -18,8 +18,7 @@ kt_jvm_library(
     ],
     deps = [
         "//kitten/src/org/perses/fuzzer/config:testing_configuration",
-        "//src/org/perses/program:language_kind",
+        "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/util",
-        "//src/org/perses/util/shell",
     ],
 )

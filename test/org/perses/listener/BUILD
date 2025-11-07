@@ -23,6 +23,5 @@ kt_jvm_test(
         "//:truth",
         "//src/org/perses/listener:listeners",
         "//src/org/perses/reduction:abstract_reducer",
-        "//src/org/perses/reduction/reducer:node_based_reducer",
     ],
 )

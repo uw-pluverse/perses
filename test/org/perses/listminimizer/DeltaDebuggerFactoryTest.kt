@@ -21,40 +21,41 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.listminimizer.xfs.BfsDeltaDebugger
+import org.perses.listminimizer.xfs.BfsListMinimizer
 import org.perses.listminimizer.xfs.DeltaDebugger
 import org.perses.reduction.PropertyTestResult
 
 @RunWith(JUnit4::class)
 class DeltaDebuggerFactoryTest {
-
-  val args = AbstractListInputMinimizer.Arguments(
-    needToTestEmpty = true,
-    input = ImmutableList.of("a"),
-    propertyTester = IPropertyTester {
-      PropertyTestResultWithPayload(PropertyTestResult.INTERESTING_RESULT, "payload")
-    },
-    onBestUpdateHandler = { _, _ -> },
-    descriptionPrefix = "",
-  )
+  val args =
+    ListMinimizerArguments(
+      needToTestEmpty = true,
+      input = ImmutableList.of("a"),
+      propertyTester = {
+        LMPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "payload")
+      },
+      onBestUpdateHandler = { _, _ -> },
+      descriptionPrefix = "",
+    )
 
   @Test
   fun testCreationWithEnum() {
-    ListInputMinimizerFactory.create(EnumListInputMinimizerType.BFS, args).let {
-      assertThat(it).isInstanceOf(BfsDeltaDebugger::class.java)
+    ListMinimizerFactory.create(EnumListMinimizerType.BFS, args).let {
+      assertThat(it).isInstanceOf(BfsListMinimizer::class.java)
     }
-    ListInputMinimizerFactory.create(
-      EnumListInputMinimizerType.PERSES_VARIANT_OF_PRISTINE,
-      args,
-    ).let {
-      assertThat(it).isInstanceOf(DeltaDebugger::class.java)
-    }
+    ListMinimizerFactory
+      .create(
+        EnumListMinimizerType.PERSES_VARIANT_OF_PRISTINE,
+        args,
+      ).let {
+        assertThat(it).isInstanceOf(DeltaDebugger::class.java)
+      }
   }
 
   @Test
   fun testCreationWithClassName() {
-    ListInputMinimizerFactory.create(BfsDeltaDebugger::class.java.canonicalName, args).let {
-      assertThat(it).isInstanceOf(BfsDeltaDebugger::class.java)
+    ListMinimizerFactory.create(BfsListMinimizer::class.java.canonicalName, args).let {
+      assertThat(it).isInstanceOf(BfsListMinimizer::class.java)
     }
   }
 }

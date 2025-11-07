@@ -25,8 +25,9 @@ object LanguageLine : LanguageKind(
   extensions = ImmutableSet.of("line"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT,
-  ),
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.ORIG_FORMAT,
+    ),
 )

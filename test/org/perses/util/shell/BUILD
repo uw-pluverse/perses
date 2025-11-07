@@ -5,7 +5,6 @@ kt_jvm_test(
     srcs = ["ShellTest.kt"],
     data = ["fake_creduce.sh"],
     deps = [
-        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/util/shell",
     ],
@@ -36,7 +35,6 @@ kt_jvm_test(
     name = "ShellOutputLinesTest",
     srcs = ["ShellOutputLinesTest.kt"],
     deps = [
-        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/util/shell",
     ],
@@ -46,7 +44,6 @@ kt_jvm_test(
     name = "ExitCodeTest",
     srcs = [":ExitCodeTest.kt"],
     deps = [
-        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/util/shell:ExitCode",
     ],

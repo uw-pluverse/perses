@@ -37,6 +37,14 @@ java_library(
     ],
 )
 
+java_library(
+    name = "arrow_kt",
+    exports = [
+        "@maven//:io_arrow_kt_arrow_core",
+        "@maven//:io_arrow_kt_arrow_fx_coroutines",
+    ],
+)
+
 alias(
     name = "fastutil",
     actual = "@maven//:it_unimi_dsi_fastutil",
@@ -46,7 +54,7 @@ java_binary(
     name = "ktlint",
     main_class = "com.pinterest.ktlint.Main",
     runtime_deps = [
-        "@maven//:com_pinterest_ktlint",
+        "@maven//:com_pinterest_ktlint_ktlint_cli",
     ],
 )
 
@@ -95,7 +103,7 @@ alias(
 
 alias(
     name = "jcommander",
-    actual = "@maven//:com_beust_jcommander",
+    actual = "@maven//:org_jcommander_jcommander",
 )
 
 java_library(
@@ -128,10 +136,10 @@ kt_kotlinc_options(
 
 define_kt_toolchain(
     name = "kotlin_toolchain",
-    api_version = "1.9",
+    api_version = "2.0",
     jvm_target = "1.8",
     kotlinc_options = ":perses_kotlinc_options",
-    language_version = "1.9",
+    language_version = "2.0",
 )
 
 exports_files(["README.md"])

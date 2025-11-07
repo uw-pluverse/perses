@@ -27,7 +27,6 @@ class FuzzingScheduler(
   private val mutationFrequencyController: MutationFrequencyController,
   private val interestingFolder: File,
 ) {
-
   var numberOfObsoletedInstances: Int = 0
     private set
 
@@ -53,18 +52,23 @@ class FuzzingScheduler(
     return nextInstance
   }
 
-  @Synchronized fun update(tree: SparTree, program: File) {
+  @Synchronized fun update(
+    tree: SparTree,
+    program: File,
+  ) {
     val featureOfSparTree = model.updateModelAndGetFeatureOfSparTree(tree)
     if (model.allowToEnableGuidance && fuzzerInstances.getSize() < maxSeedPoolSize) {
       if (model.isRare(featureOfSparTree)) {
-        val newTreeFuzzer = SparTreeFuzzer
-          .fromSparTree(model.parserFacade, program, tree)
+        val newTreeFuzzer =
+          SparTreeFuzzer
+            .fromSparTree(model.parserFacade, program, tree)
         newTreeFuzzer.featureOfTheSparTree = featureOfSparTree
         fuzzerInstances.add(newTreeFuzzer)
-        val interestingMutant = File(
-          interestingFolder.path,
-          "interesting_${numberOfAddedInstances++}." + program.extension,
-        )
+        val interestingMutant =
+          File(
+            interestingFolder.path,
+            "interesting_${numberOfAddedInstances++}." + program.extension,
+          )
         newTreeFuzzer.moveSeedFile(interestingMutant)
       }
     }
@@ -76,8 +80,8 @@ class FuzzingScheduler(
   fun getTreeLevelMutationTimes(treeFuzzer: SparTreeFuzzer): Int =
     mutationFrequencyController.computeTreeLevelMutationTimes(treeFuzzer)
 
-  private fun isObsoleted(treeFuzzer: SparTreeFuzzer): Boolean {
-    return if (!treeFuzzer.isInitial &&
+  private fun isObsoleted(treeFuzzer: SparTreeFuzzer): Boolean =
+    if (!treeFuzzer.isInitial &&
       model.isVeryCommon(treeFuzzer.featureOfTheSparTree!!)
     ) {
       numberOfObsoletedInstances++
@@ -85,5 +89,4 @@ class FuzzingScheduler(
     } else {
       false
     }
-  }
 }

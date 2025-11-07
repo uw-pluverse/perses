@@ -20,7 +20,7 @@ import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.CommonTokenStream
 import org.perses.antlr.ParseTreeWithParser
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.StringReader
@@ -28,21 +28,28 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 
-class PnfScalaParserFacade : AbstractDefaultParserFacade<PnfScalaLexer, PnfScalaParser>(
-  LanguageScala,
-  createCombinedAntlrGrammar(
-    startRuleName = "compilationUnit",
-    antlrGrammarFileName = "PnfScala.g4",
-    classUnderSamePkg = PnfScalaParserFacade::class.java,
-  ),
-  PnfScalaLexer::class.java,
-  PnfScalaParser::class.java,
-  ImmutableIntArray.of(PnfScalaLexer.Id, PnfScalaLexer.BoundVarid, PnfScalaLexer.Varid),
-) {
-
+class PnfScalaParserFacade :
+  AbstractParserFacade(
+    language = LanguageScala,
+    antlrGrammar =
+      createCombinedAntlrGrammar(
+        startRuleName = "compilationUnit",
+        antlrGrammarFileName = "PnfScala.g4",
+        classUnderSamePkg = PnfScalaParserFacade::class.java,
+      ),
+    identifierTokenTypes =
+      ImmutableIntArray.of(
+        PnfScalaLexer.Id,
+        PnfScalaLexer.BoundVarid,
+        PnfScalaLexer.Varid,
+      ),
+    lexerClass = PnfScalaLexer::class.java,
+    parserClass = PnfScalaParser::class.java,
+  ) {
   @Throws(IOException::class)
   fun parseWithOrigScalaParser(file: Path): ParseTreeWithParser {
-    Files.newBufferedReader(file, StandardCharsets.UTF_8)
+    Files
+      .newBufferedReader(file, StandardCharsets.UTF_8)
       .use { reader -> return parseWithOrigScalaParser(reader, file.toString()) }
   }
 
@@ -54,7 +61,10 @@ class PnfScalaParserFacade : AbstractDefaultParserFacade<PnfScalaLexer, PnfScala
   }
 
   @Throws(IOException::class)
-  fun parseWithOrigScalaParser(goProgram: String?, fileName: String): ParseTreeWithParser {
+  fun parseWithOrigScalaParser(
+    goProgram: String?,
+    fileName: String,
+  ): ParseTreeWithParser {
     BufferedReader(
       StringReader(goProgram),
     ).use { reader -> return parseWithOrigScalaParser(reader, fileName) }
@@ -65,13 +75,12 @@ class PnfScalaParserFacade : AbstractDefaultParserFacade<PnfScalaLexer, PnfScala
     private fun parseWithOrigScalaParser(
       reader: BufferedReader,
       fileName: String,
-    ): ParseTreeWithParser {
-      return parseReader(
+    ): ParseTreeWithParser =
+      parseReader(
         fileName,
         reader,
         { charStream: CharStream? -> ScalaLexer(charStream) },
         { commonTokenStream: CommonTokenStream? -> ScalaParser(commonTokenStream) },
       ) { obj: ScalaParser -> obj.compilationUnit() }
-    }
   }
 }

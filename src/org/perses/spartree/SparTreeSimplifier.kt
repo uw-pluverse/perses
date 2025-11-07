@@ -24,7 +24,6 @@ import org.perses.util.Util.lazyAssert
  * single-entry-single-exit path
  */
 object SparTreeSimplifier {
-
   fun simplify(tree: SparTree) {
     simplify(tree.realRoot)
   }
@@ -79,9 +78,10 @@ object SparTreeSimplifier {
       do {
         lazyAssert { isSESENode(current) }
         val childOfCurrent = current.getChild(0)
-        val payload = current.payload!!.createByAppending(
-          childOfCurrent.payload!!,
-        )
+        val payload =
+          current.payload!!.createByAppending(
+            childOfCurrent.payload!!,
+          )
         childOfCurrent.resetParent()
         childOfCurrent.resetPayload()
         parent.replaceChild(current, childOfCurrent, payload)
@@ -107,9 +107,7 @@ object SparTreeSimplifier {
     }
   }
 
-  fun assertSingleEntrySingleExitPathProperty(
-    root: AbstractSparTreeNode,
-  ): Boolean {
+  fun assertSingleEntrySingleExitPathProperty(root: AbstractSparTreeNode): Boolean {
     root.forEachChild { immediateChild: AbstractSparTreeNode ->
       immediateChild.preOrderVisit { node: AbstractSparTreeNode ->
         val result = node.immutableChildView

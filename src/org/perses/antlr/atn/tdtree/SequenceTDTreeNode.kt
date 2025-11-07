@@ -18,11 +18,11 @@ package org.perses.antlr.atn.tdtree
 
 import org.perses.spartree.ErrorMessage
 
-class SequenceTDTreeNode(nodeId: Int) : AbstractTDTreeNode(nodeId) {
-
+class SequenceTDTreeNode(
+  nodeId: Int,
+) : AbstractTDTreeNode(nodeId) {
   override fun checkNodeIntegrity(): ErrorMessage? = null
 
-  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractTDTreeNode {
-    return SequenceTDTreeNode(computedNewNodeId)
-  }
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractTDTreeNode =
+    SequenceTDTreeNode(computedNewNodeId)
 }

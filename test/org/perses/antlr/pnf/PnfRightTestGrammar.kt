@@ -22,6 +22,7 @@ import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.RuleNameRegistry
 import org.perses.util.toImmutableMap
 
+@Suppress("ktlint:standard:property-naming")
 open class PnfRightTestGrammar protected constructor() {
   protected val grammar: PersesGrammar
   protected val a: RuleNameRegistry.RuleNameHandle
@@ -36,21 +37,24 @@ open class PnfRightTestGrammar protected constructor() {
   protected val def_d_d: AbstractPersesRuleElement
 
   init {
-    grammar = createPersesGrammarFromString(
-      "a : c b | d;",
-      "b : d a | c d;",
-      "c : 'c';",
-      "d : 'd';",
-    )
+    grammar =
+      createPersesGrammarFromString(
+        "a : c b | d;",
+        "b : d a | c d;",
+        "c : 'c';",
+        "d : 'd';",
+      )
     val ruleNameRegistry = grammar.symbolTable.ruleNameRegistry
     a = ruleNameRegistry.getOrThrow("a")
     b = ruleNameRegistry.getOrThrow("b")
     c = ruleNameRegistry.getOrThrow("c")
     d = ruleNameRegistry.getOrThrow("d")
-    val codeToDef = grammar.flattenedParserRulesSequence()
-      .map {
-        it.second.sourceCode to it.second
-      }.toImmutableMap()
+    val codeToDef =
+      grammar
+        .flattenedParserRulesSequence()
+        .map {
+          it.second.sourceCode to it.second
+        }.toImmutableMap()
     def_a_cb = codeToDef["c b"]!!
     def_a_d = codeToDef["d"]!!
     def_b_da = codeToDef["d a"]!!

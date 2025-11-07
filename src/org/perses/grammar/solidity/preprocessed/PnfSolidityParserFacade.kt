@@ -20,7 +20,7 @@ import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.CommonTokenStream
 import org.perses.antlr.ParseTreeWithParser
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.solidity.LanguageSolidity
 import java.io.BufferedReader
 import java.io.IOException
@@ -29,21 +29,23 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 
-class PnfSolidityParserFacade : AbstractDefaultParserFacade<SolidityLexer, PnfSolidityParser>(
-  LanguageSolidity,
-  createSeparateAntlrGrammar(
-    startRuleName = "sourceUnit",
-    antlrParserGrammarFileName = "PnfSolidity.g4",
-    antlrLexerGrammarFileName = "SolidityLexer.g4",
-    PnfSolidityParserFacade::class.java,
-  ),
-  SolidityLexer::class.java,
-  PnfSolidityParser::class.java,
-  ImmutableIntArray.of(SolidityLexer.Identifier),
-) {
-
+class PnfSolidityParserFacade :
+  AbstractParserFacade(
+    language = LanguageSolidity,
+    antlrGrammar =
+      createSeparateAntlrGrammar(
+        startRuleName = "sourceUnit",
+        antlrParserGrammarFileName = "PnfSolidity.g4",
+        antlrLexerGrammarFileName = "SolidityLexer.g4",
+        PnfSolidityParserFacade::class.java,
+      ),
+    identifierTokenTypes = ImmutableIntArray.of(SolidityLexer.Identifier),
+    lexerClass = SolidityLexer::class.java,
+    parserClass = PnfSolidityParser::class.java,
+  ) {
   fun parseWithOrigSolidityParser(file: Path): ParseTreeWithParser {
-    Files.newBufferedReader(file, StandardCharsets.UTF_8)
+    Files
+      .newBufferedReader(file, StandardCharsets.UTF_8)
       .use { reader -> return parseWithOrigSolidityParser(reader, file.toString()) }
   }
 
@@ -53,7 +55,10 @@ class PnfSolidityParserFacade : AbstractDefaultParserFacade<SolidityLexer, PnfSo
     ).use { reader -> return parseWithOrigSolidityParser(reader, "<in-memory>") }
   }
 
-  fun parseWithOrigSolidityParser(goProgram: String?, fileName: String): ParseTreeWithParser {
+  fun parseWithOrigSolidityParser(
+    goProgram: String?,
+    fileName: String,
+  ): ParseTreeWithParser {
     BufferedReader(
       StringReader(goProgram),
     ).use { reader -> return parseWithOrigSolidityParser(reader, fileName) }
@@ -64,13 +69,12 @@ class PnfSolidityParserFacade : AbstractDefaultParserFacade<SolidityLexer, PnfSo
     private fun parseWithOrigSolidityParser(
       reader: BufferedReader,
       fileName: String,
-    ): ParseTreeWithParser {
-      return parseReader(
+    ): ParseTreeWithParser =
+      parseReader(
         fileName,
         reader,
         { input: CharStream? -> SolidityLexer(input) },
         { input: CommonTokenStream? -> SolidityParser(input) },
       ) { obj: SolidityParser -> obj.sourceUnit() }
-    }
   }
 }

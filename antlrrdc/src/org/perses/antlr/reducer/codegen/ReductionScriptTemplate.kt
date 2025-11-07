@@ -27,7 +27,6 @@ class ReductionScriptTemplate(
   val mainClassFullName: String,
   val extraClasspath: ImmutableList<Path>,
 ) : AbstractBashScriptGenerator() {
-
   init {
     extraClasspath.forEach {
       check(it.isAbsolute)
@@ -37,13 +36,14 @@ class ReductionScriptTemplate(
 
   override fun generateCode(lines: ArrayList<String>) {
     // The jarFileName has to be relative, the simple name.
-    val classpath = if (extraClasspath.isEmpty()) {
-      jarFileName
-    } else {
-      val extraPathShellVar = "EXTRA_CLASSPATH"
-      lines.add("readonly $extraPathShellVar=${extraClasspath.joinToString(pathSeparator)}")
-      """$jarFileName$pathSeparator${'$'}{$extraPathShellVar} """
-    }
+    val classpath =
+      if (extraClasspath.isEmpty()) {
+        jarFileName
+      } else {
+        val extraPathShellVar = "EXTRA_CLASSPATH"
+        lines.add("readonly $extraPathShellVar=${extraClasspath.joinToString(pathSeparator)}")
+        """$jarFileName$pathSeparator${'$'}{$extraPathShellVar} """
+      }
     lines.add("""if ! java -cp "$classpath" $mainClassFullName ; then""")
     lines.add("  exit 1")
     lines.add("fi")

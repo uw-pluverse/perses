@@ -18,7 +18,9 @@ package org.perses.antlr.ast
 
 import org.perses.util.ast.IPrecedence
 
-enum class Precedence(override val value: Int) : IPrecedence {
+enum class Precedence(
+  override val value: Int,
+) : IPrecedence {
   UNIT(100),
   QUANTIFIER(90),
   NOT(70),

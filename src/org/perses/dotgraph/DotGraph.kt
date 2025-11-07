@@ -32,20 +32,27 @@ class DotGraph<T> {
     edges = LinkedHashSet()
   }
 
-  fun addEdge(source: T, target: T) {
+  fun addEdge(
+    source: T,
+    target: T,
+  ) {
     edges.add(Edge(source, target))
   }
 
-  fun dotify(outputFile: Path, labelProvider: NodeLabelProvider<T>) {
+  fun dotify(
+    outputFile: Path,
+    labelProvider: NodeLabelProvider<T>,
+  ) {
     val dotContent = dotifyToString(labelProvider)
     val dotFile = outputFile.parent.resolve(outputFile.name + ".dot")
     dotFile.writeText(dotContent)
-    val (_, _, stderr) = singleton
-      .run(
-        "dot -Tpdf " + dotFile.absolute() + " -o " + outputFile.absolute(),
-        true,
-        Shells.CURRENT_ENV,
-      )
+    val (_, _, stderr) =
+      singleton
+        .run(
+          "dot -Tpdf " + dotFile.absolute() + " -o " + outputFile.absolute(),
+          true,
+          Shells.CURRENT_ENV,
+        )
     println(stderr)
   }
 
@@ -96,7 +103,7 @@ class DotGraph<T> {
     fun getID(node: T): String {
       var id = ids[node]
       if (id == null) {
-        id = "n" + NODE_ID_SEQ++
+        id = "n" + nodeIdSequence++
         ids[node] = id
       }
       return id
@@ -114,12 +121,14 @@ class DotGraph<T> {
     protected abstract fun computeNodeLabel(node: T): String?
 
     companion object {
-      private var NODE_ID_SEQ = 0
+      private var nodeIdSequence = 0
     }
   }
 
-  private class Edge<T>(val source: T, val target: T) {
-
+  private class Edge<T>(
+    val source: T,
+    val target: T,
+  ) {
     override fun equals(other: Any?): Boolean {
       if (this === other) return true
       if (other == null || javaClass != other.javaClass) return false

@@ -30,11 +30,11 @@ class RegularReductionInputs(
   mainFile: SourceFile,
   dependencyFiles: ImmutableList<BinaryReductionFile>,
 ) : AbstractSingleFileReductionInputs<LanguageKind, SourceFile, RegularReductionInputs>(
-  testScript,
-  mainFile,
-  otherMutableFiles = ImmutableList.of(),
-  immutableDependencyFiles = dependencyFiles,
-) {
+    testScript,
+    mainFile,
+    otherMutableFiles = ImmutableList.of(),
+    immutableDependencyFiles = dependencyFiles,
+  ) {
   init {
     require(mainFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
       "The source file and the test script should reside in the same folder. " +
@@ -53,13 +53,15 @@ class RegularReductionInputs(
       val mainFileAbsPath = mainFilePath.toAbsolutePath()
       return RegularReductionInputs(
         testScript = ScriptFile(testScriptAbsPath),
-        mainFile = SourceFile(
-          mainFileAbsPath,
-          languageKind = languageKindComputer(mainFileAbsPath),
-        ),
-        dependencyFiles = dependencyFiles.transformToImmutableList { path ->
-          BinaryReductionFile(path, AbstractDataKind.UnknownDataKind)
-        },
+        mainFile =
+          SourceFile(
+            mainFileAbsPath,
+            languageKind = languageKindComputer(mainFileAbsPath),
+          ),
+        dependencyFiles =
+          dependencyFiles.transformToImmutableList { path ->
+            BinaryReductionFile(path, AbstractDataKind.UnknownDataKind)
+          },
       )
     }
   }

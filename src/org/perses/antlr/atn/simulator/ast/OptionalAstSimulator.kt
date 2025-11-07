@@ -25,7 +25,6 @@ class OptionalAstSimulator(
   ast: PersesOptionalAst,
   private val childSimulator: AbstractASTSimulator<*>,
 ) : AbstractASTSimulator<PersesOptionalAst>(ast) {
-
   override fun simulate(
     decisionMaker: AbstractDecisionMaker,
     tree: TDTree,

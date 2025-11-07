@@ -17,14 +17,42 @@
 package org.perses.antlr
 
 import com.google.common.collect.ImmutableList
+import org.perses.antlr.ast.AbstractPersesLexerRuleAst
 import org.perses.antlr.ast.AbstractPersesRuleDefAst
 import org.perses.antlr.ast.PersesGrammar
+import org.perses.antlr.ast.PersesLexerRuleAst
+import org.perses.antlr.ast.PersesParserRuleAst
+import org.perses.util.toImmutableList
 
-abstract class AbstractAntlrGrammar(val startRuleName: String) {
-
+abstract class AbstractAntlrGrammar(
+  val startRuleName: String,
+) {
   abstract val isCombined: Boolean
 
-  abstract fun getCombinedRules(): ImmutableList<AbstractPersesRuleDefAst>
+  val parserRules: ImmutableList<PersesParserRuleAst> by lazy {
+    computeParserRules()
+  }
+
+  val allLexerRules: ImmutableList<AbstractPersesLexerRuleAst> by lazy {
+    computeLexerRules()
+  }
+
+  val lexerRules: ImmutableList<PersesLexerRuleAst> by lazy {
+    allLexerRules.filterIsInstance<PersesLexerRuleAst>().toImmutableList()
+  }
+
+  val combinedRules: ImmutableList<AbstractPersesRuleDefAst> by lazy {
+    val builder =
+      ImmutableList
+        .builderWithExpectedSize<AbstractPersesRuleDefAst>(parserRules.size + allLexerRules.size)
+    builder.addAll(allLexerRules)
+    builder.addAll(parserRules)
+    builder.build()
+  }
+
+  abstract fun computeParserRules(): ImmutableList<PersesParserRuleAst>
+
+  abstract fun computeLexerRules(): ImmutableList<AbstractPersesLexerRuleAst>
 
   open fun asCombined(): CombinedAntlrGrammar {
     check(isCombined)
@@ -40,14 +68,19 @@ abstract class AbstractAntlrGrammar(val startRuleName: String) {
     startRuleName: String,
     val grammar: PersesGrammar,
   ) : AbstractAntlrGrammar(startRuleName) {
-
     override val isCombined = true
 
     init {
-      require(grammar.grammarType == PersesGrammar.GrammarType.COMBINED)
+      require(grammar.grammarType == PersesGrammar.GrammarType.COMBINED) {
+        "The given grammar is ${grammar.grammarType}, " +
+          "but expected to be ${PersesGrammar.GrammarType.COMBINED}"
+      }
     }
 
-    override fun getCombinedRules() = grammar.flattenedAllRules
+    override fun computeLexerRules(): ImmutableList<AbstractPersesLexerRuleAst> =
+      grammar.lexerRules.flattenedLexerRules
+
+    override fun computeParserRules(): ImmutableList<PersesParserRuleAst> = grammar.parserRules
 
     override fun asCombined() = this
   }
@@ -57,7 +90,6 @@ abstract class AbstractAntlrGrammar(val startRuleName: String) {
     val parserGrammar: PersesGrammar,
     val lexerGrammar: PersesGrammar,
   ) : AbstractAntlrGrammar(startRuleName) {
-
     override val isCombined = false
 
     init {
@@ -70,12 +102,11 @@ abstract class AbstractAntlrGrammar(val startRuleName: String) {
       require(lexerGrammar.grammarType == PersesGrammar.GrammarType.LEXER)
     }
 
-    override fun getCombinedRules(): ImmutableList<AbstractPersesRuleDefAst> {
-      val builder = ImmutableList.builder<AbstractPersesRuleDefAst>()
-      builder.addAll(lexerGrammar.flattenedAllRules)
-      builder.addAll(parserGrammar.flattenedAllRules)
-      return builder.build()
-    }
+    override fun computeParserRules(): ImmutableList<PersesParserRuleAst> =
+      parserGrammar.parserRules
+
+    override fun computeLexerRules(): ImmutableList<AbstractPersesLexerRuleAst> =
+      lexerGrammar.lexerRules.flattenedLexerRules
 
     override fun asSeparate() = this
   }

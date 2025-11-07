@@ -21,17 +21,33 @@ import com.google.common.collect.ImmutableList
 
 /** A program represented by a list of tokens.  */
 class TokenizedProgram(
-  val tokens: ImmutableList<PersesTokenFactory.PersesToken>,
+  val tokens: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
   val factory: TokenizedProgramFactory,
 ) {
-
   val tokenCount: Int
     get() = tokens.size
 
   val totalCharacterCount: Int by lazy {
-    tokens.sumOf { it.text.length }
+    tokens.sumOf { it.lexemeText.length }
   }
 
-  override fun toString() =
-    MoreObjects.toStringHelper(this).add("tokens", tokens).toString()
+  override fun toString() = MoreObjects.toStringHelper(this).add("tokens", tokens).toString()
+
+  // TODO(cnsun): needs to be tested.
+  fun haveSameLexemeSequence(that: TokenizedProgram): Boolean {
+    val thisTokens = tokens
+    val size = thisTokens.size
+    val otherTokens = that.tokens
+    if (size != otherTokens.size) {
+      return false
+    }
+    for (i in 0 until size) {
+      val thisToken = thisTokens[i]
+      val otherToken = otherTokens[i]
+      if (thisToken.lexemeText != otherToken.lexemeText) {
+        return false
+      }
+    }
+    return true
+  }
 }

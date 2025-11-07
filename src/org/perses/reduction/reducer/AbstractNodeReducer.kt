@@ -40,7 +40,6 @@ abstract class AbstractNodeReducer(
   private val reductionQueueStrategy: IReductionQueueStrategy,
   protected val requiresParsableTree: Boolean,
 ) : AbstractTokenReducer(reducerAnnotation, reducerContext) {
-
   final override fun internalReduce(fixpointReductionState: FixpointReductionState) {
     val listenerManager = reducerContext.listenerManager
     if (requiresParsableTree && !fixpointReductionState.sparTree.parsable) {
@@ -55,9 +54,21 @@ abstract class AbstractNodeReducer(
       )
       return
     }
-    val tree = fixpointReductionState.sparTree.getParsableTreeOrFail()
+    val tree =
+      if (requiresParsableTree) {
+        // TODO(cnsun): We should be permissive, and tolerate parsing failures.
+        fixpointReductionState.sparTree.getParsableTreeOrFail()
+      } else {
+        fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+      }
     val root = tree.realRoot
-    lazyAssert { SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(root) }
+    lazyAssert({ SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(root) }) {
+      """The spar-tree was successfully simplified. 
+        |
+        |${tree.printTreeStructure()}
+        |
+      """.trimMargin()
+    }
     val queue = createReductionQueue()
     initializeReductionQueue(queue, tree)
     while (!queue.isEmpty()) {
@@ -68,7 +79,9 @@ abstract class AbstractNodeReducer(
           program = tree.programSnapshot,
           node = node,
           outputCreator = {
-            ioManager.createOutputManager(it).fileContentList
+            ioManager
+              .createOutputManager(it)
+              .fileContentList
               .transformToImmutableList {
                 FileNameContentPair(
                   fileName = it.fileName.baseName,
@@ -78,7 +91,10 @@ abstract class AbstractNodeReducer(
           },
         )
       listenerManager.onNodeReductionStart(nodeReductionStartEvent)
-      val pendingNodes = reduceOneNode(tree, node)
+      val pendingNodes =
+        kotlin.runCatching {
+          reduceOneNode(tree, node, fixpointReductionState)
+        }
       listenerManager.onNodeReductionEnd(
         nodeReductionStartEvent.createEndEvent(
           currentTimeMillis = System.currentTimeMillis(),
@@ -86,11 +102,19 @@ abstract class AbstractNodeReducer(
           program = tree.programSnapshot,
         ),
       )
-      queue.addAll(pendingNodes)
+      pendingNodes
+        .onSuccess { pendingNodes ->
+          queue.addAll(pendingNodes)
+        }.onFailure {
+          throw it
+        }
     }
   }
 
-  protected open fun initializeReductionQueue(queue: Queue<AbstractSparTreeNode>, tree: SparTree) {
+  protected open fun initializeReductionQueue(
+    queue: Queue<AbstractSparTreeNode>,
+    tree: SparTree,
+  ) {
     queue.addAll(tree.realRoot.immutableChildView)
   }
 
@@ -99,34 +123,33 @@ abstract class AbstractNodeReducer(
   protected abstract fun reduceOneNode(
     tree: SparTree,
     node: AbstractSparTreeNode,
+    fixpointReductionState: FixpointReductionState,
   ): ImmutableList<AbstractSparTreeNode>
 
   protected fun testSparTreeEdit(edit: AbstractSparTreeEdit<*>) =
-    testAllTreeEditsAndReturnTheBest(ImmutableList.of(edit))
+    testOneTreeEditAndReturnTheBest(edit)
 
   protected fun optionallyCreateDeletionEditAndLog(
     actionSet: NodeDeletionActionSet,
     tree: SparTree,
-  ): NodeDeletionTreeEdit? {
-    return if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+  ): NodeDeletionTreeEdit? =
+    if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
       reducerContext.listenerManager.onNodeEditActionSetCacheHit(actionSet)
       null
     } else {
       tree.createNodeDeletionEdit(actionSet)
     }
-  }
 
   protected fun optionallyCreateReplacementEditAndLog(
     actionSet: NodeReplacementActionSet,
     tree: SparTree,
-  ): DescendantHoistingTreeEdit? {
-    return if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+  ): DescendantHoistingTreeEdit? =
+    if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
       reducerContext.listenerManager.onNodeEditActionSetCacheHit(actionSet)
       null
     } else {
       tree.createNodeReplacementEdit(actionSet)
     }
-  }
 
   protected fun computePendingNodes(
     currentNode: AbstractSparTreeNode,
@@ -162,10 +185,14 @@ abstract class AbstractNodeReducer(
   }
 
   object TreeNodeComparatorInLeafTokenCount : Comparator<AbstractSparTreeNode> {
-    private val comparator = compareByDescending<AbstractSparTreeNode> { it.leafTokenCount }
-      .thenByDescending { it.nodeId }
+    private val comparator =
+      compareByDescending<AbstractSparTreeNode> { it.leafTokenCount }
+        .thenByDescending { it.nodeId }
 
-    override fun compare(o1: AbstractSparTreeNode, o2: AbstractSparTreeNode): Int {
+    override fun compare(
+      o1: AbstractSparTreeNode,
+      o2: AbstractSparTreeNode,
+    ): Int {
       val result = comparator.compare(o1, o2)
       check(result != 0) { "Cannot guarantee determinism." }
       return result
@@ -176,15 +203,17 @@ abstract class AbstractNodeReducer(
     fun createQueue(): Queue<AbstractSparTreeNode>
 
     companion object {
-      val FOR_REGULAR_QUEUE = IReductionQueueStrategy {
-        java.util.ArrayDeque(DEFAULT_INITIAL_QUEUE_CAPACITY)
-      }
-      val FOR_PRIORITY_QUEUE = IReductionQueueStrategy {
-        java.util.PriorityQueue(
-          DEFAULT_INITIAL_QUEUE_CAPACITY,
-          TreeNodeComparatorInLeafTokenCount,
-        )
-      }
+      val FOR_REGULAR_QUEUE =
+        IReductionQueueStrategy {
+          java.util.ArrayDeque(DEFAULT_INITIAL_QUEUE_CAPACITY)
+        }
+      val FOR_PRIORITY_QUEUE =
+        IReductionQueueStrategy {
+          java.util.PriorityQueue(
+            DEFAULT_INITIAL_QUEUE_CAPACITY,
+            TreeNodeComparatorInLeafTokenCount,
+          )
+        }
     }
   }
 }

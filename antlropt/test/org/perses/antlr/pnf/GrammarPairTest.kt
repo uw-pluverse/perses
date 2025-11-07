@@ -24,21 +24,22 @@ import org.perses.antlr.GrammarTestingUtility
 
 @RunWith(JUnit4::class)
 class GrammarPairTest {
-
   @Test
   fun test() {
-    val parserGrammar = GrammarTestingUtility.loadGrammarFromString(
-      """
-      parser grammar T;
-      start: INT;
-      """.trimIndent(),
-    )
-    val lexerGrammar = GrammarTestingUtility.loadGrammarFromString(
-      """
-      lexer grammar T;
-      INT: '9';
-      """.trimIndent(),
-    )
+    val parserGrammar =
+      GrammarTestingUtility.loadGrammarFromString(
+        """
+        parser grammar T;
+        start: INT;
+        """.trimIndent(),
+      )
+    val lexerGrammar =
+      GrammarTestingUtility.loadGrammarFromString(
+        """
+        lexer grammar T;
+        INT: '9';
+        """.trimIndent(),
+      )
     val pair = GrammarPair(parserGrammar, lexerGrammar)
     GrammarPair(parserGrammar, null).let { other ->
       assertThat(pair.isEquivalentTo(other)).isFalse()

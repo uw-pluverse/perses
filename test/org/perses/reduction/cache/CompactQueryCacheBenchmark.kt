@@ -21,27 +21,38 @@ import org.perses.TestUtility.createTokenizedProgramFromFile
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
-import org.perses.reduction.cache.QueryCacheConfiguration.Companion.withLightweightRefreshing
+import org.perses.reduction.io.CommonReductionIOManagerData
 import org.perses.util.Fraction
+import org.perses.util.hashing.EnumShaAlgorithm
+import org.perses.util.transformToImmutableList
 import java.util.Random
 
-class CompactQueryCacheBenchmark {
+class CompactQueryCacheBenchmark :
+  CommonReductionIOManagerData(CompactQueryCacheBenchmark::class.java) {
   val random = Random(1999)
 
   private fun run() {
     println("parsing the base program.")
     val baseProgram =
       createTokenizedProgramFromFile("test/org/perses/reduction/cache/clang-22704.c")
-    val rcc = RccQueryCache(
-      baseProgram,
-      NullQueryCacheProfiler(),
-      withLightweightRefreshing(Fraction(0, 100)),
-    )
-    val rccLit = RccMemLitQueryCache(
-      baseProgram,
-      NullQueryCacheProfiler(),
-      withLightweightRefreshing(Fraction(0, 100)),
-    )
+    val configuration =
+      QueryCacheConfiguration(
+        refreshStepFraction = Fraction(0, 100),
+        enableLightweightRefreshing = true,
+        shaAlgorithm = EnumShaAlgorithm.SHA256,
+      )
+    val rcc =
+      RccQueryCache(
+        baseProgram,
+        NullQueryCacheProfiler(),
+        configuration,
+      )
+    val rccLit =
+      RccMemLitQueryCache(
+        baseProgram,
+        NullQueryCacheProfiler(),
+        configuration,
+      )
     var currentBaseProgram = baseProgram
     println("Start to run...")
     var totalIterations = 0
@@ -53,12 +64,20 @@ class CompactQueryCacheBenchmark {
       println("A new iteration...$totalIterations")
       for (i in 0..999) {
         val program = randomDelete(currentBaseProgram, random, 200)
-        val rccCacheResult = rcc.getCachedResult(program)
+        val rccCacheResult =
+          rcc.getCachedResult(
+            program,
+            outputManager = outputManagerFactory.createManagerFor(program),
+          )
         if (rccCacheResult.isHit()) {
           continue
         }
         rcc.cacheProgramAndResult(rccCacheResult.asCacheMiss(), PropertyTestResult.of(1, 0))
-        val rcclitCacheResult = rccLit.getCachedResult(program)
+        val rcclitCacheResult =
+          rccLit.getCachedResult(
+            program,
+            outputManager = outputManagerFactory.createManagerFor(program),
+          )
         rccLit.cacheProgramAndResult(rcclitCacheResult.asCacheMiss(), PropertyTestResult.of(1, 0))
       }
       currentBaseProgram = randomDelete(currentBaseProgram, random, 50)
@@ -75,7 +94,7 @@ class CompactQueryCacheBenchmark {
 
     @JvmStatic
     fun main(args: Array<String>) {
-      CompactQueryCacheBenchmark().run()
+      CompactQueryCacheBenchmark().use { it.run() }
     }
 
     private fun randomDelete(
@@ -83,11 +102,12 @@ class CompactQueryCacheBenchmark {
       random: Random,
       maxDeleteLength: Int,
     ): TokenizedProgram {
-      val tokens = base.tokens
+      val tokens = base.tokens.transformToImmutableList { it.asAntlrToken() }
       val position = random.nextInt(tokens.size - 3)
       val length = Math.max(1, random.nextInt(Math.min(maxDeleteLength, tokens.size - position)))
       return TokenizedProgram(
-        ImmutableList.builder<PersesTokenFactory.PersesToken>()
+        ImmutableList
+          .builder<PersesTokenFactory.PersesAntlrToken>()
           .addAll(tokens.subList(0, position))
           .addAll(tokens.subList(position + length, tokens.size))
           .build(),

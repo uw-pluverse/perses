@@ -20,19 +20,25 @@ import org.jfree.chart.labels.XYItemLabelGenerator
 import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
 
-class LabeledXYSeriesCollection(seriesName: String?) {
+class LabeledXYSeriesCollection(
+  seriesName: String?,
+) {
   private val series = XYSeries(seriesName)
-  val collection = XYSeriesCollection().apply {
-    addSeries(this@LabeledXYSeriesCollection.series)
-  }
+  val collection =
+    XYSeriesCollection().apply {
+      addSeries(this@LabeledXYSeriesCollection.series)
+    }
   private val labels = mutableListOf<String>()
 
-  fun add(x: Double, y: Double, label: String) {
+  fun add(
+    x: Double,
+    y: Double,
+    label: String,
+  ) {
     series.add(x, y)
     labels.add(label)
   }
 
-  fun createLabelGenerator(): XYItemLabelGenerator {
-    return XYItemLabelGenerator { _, _, item -> labels[item] }
-  }
+  fun createLabelGenerator(): XYItemLabelGenerator =
+    XYItemLabelGenerator { _, _, item -> labels[item] }
 }

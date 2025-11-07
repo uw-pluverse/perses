@@ -24,17 +24,20 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.util.transformToImmutableList
 
 @RunWith(JUnit4::class)
 class IntervalArrayExpanderTest {
-
-  private val tokens = TestUtility.createTokenizedProgramFromString(
-    """
-    int a, b, c, d;
-    """.trimIndent(),
-    LanguageC,
-  ).tokens
+  private val tokens =
+    TestUtility
+      .createTokenizedProgramFromString(
+        """
+        int a, b, c, d;
+        """.trimIndent(),
+        LanguageC,
+      ).tokens
+      .transformToImmutableList { it.asAntlrToken() }
 
   @Test
   fun test_iterator_empty_interval() {
@@ -103,7 +106,8 @@ class IntervalArrayExpanderTest {
     val iter = IntervalArrayExpander.expand(intArrayOf(0, 2), tokens)
     val result = toLexemeList(iter)
     assertThat(result)
-      .containsExactly("int", "a").inOrder()
+      .containsExactly("int", "a")
+      .inOrder()
   }
 
   @Test
@@ -114,6 +118,10 @@ class IntervalArrayExpanderTest {
     assertThat(result).containsExactly("int", ",")
   }
 
-  fun toLexemeList(iter: Iterator<PersesToken>) =
-    ImmutableList.copyOf(iter).asSequence().map { it.text }.toList()
+  fun toLexemeList(iter: Iterator<AbstractPersesToken>) =
+    ImmutableList
+      .copyOf(iter)
+      .asSequence()
+      .map { it.lexemeText }
+      .toList()
 }

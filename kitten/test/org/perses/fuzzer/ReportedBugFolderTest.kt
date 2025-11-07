@@ -30,7 +30,6 @@ import java.io.File
 
 @RunWith(JUnit4::class)
 class ReportedBugFolderTest {
-
   private val util = RustTestUtil()
 
   @After
@@ -114,13 +113,14 @@ class ReportedBugFolderTest {
     assertThat(findingFolder.getAllCrashInstances()).hasSize(0)
     assertThat(util.getDuplicateFolder().getAllCrashInstances()).hasSize(2)
     assertThat(
-      util.getDuplicateFolder()
+      util
+        .getDuplicateFolder()
         .getAllCrashInstances()
         .asSequence()
         .map { it.folder.name }
-        .filter { it.startsWith("dup-") }.toList(),
-    )
-      .hasSize(2)
+        .filter { it.startsWith("dup-") }
+        .toList(),
+    ).hasSize(2)
   }
 
   @Test
@@ -155,7 +155,10 @@ class ReportedBugFolderTest {
     )
   }
 
-  private fun test_load_reported_bugs(path: String, detectorClasses: List<Class<*>>) {
+  private fun test_load_reported_bugs(
+    path: String,
+    detectorClasses: List<Class<*>>,
+  ) {
     val folder = ReportedBugFolder(File(path))
     val instances = folder.getAllCrashInstances()
     instances.forEach {

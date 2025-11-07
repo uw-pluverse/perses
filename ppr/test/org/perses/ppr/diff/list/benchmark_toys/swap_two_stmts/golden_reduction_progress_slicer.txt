@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -24,10 +25,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_list_diff_reduction_golden_test_slicer_swap_two_stmts_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_list_diff_reduction_golden_test_slicer_swap_two_stmts_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: null
   testScriptExecutionTimeoutInSeconds: 600
@@ -40,13 +42,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -57,6 +62,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -65,7 +71,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress_slicer.txt"
@@ -75,27 +81,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 listDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"

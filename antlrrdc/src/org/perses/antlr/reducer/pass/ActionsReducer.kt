@@ -34,14 +34,14 @@ class ActionsReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractRuleElementReducer(
-  nameAndDesc = object : AbstractReducerNameAndDesc(
-    shortName = ActionsReducer::class.simpleName!!,
-    description = "",
-  ) {},
-  ioManager = ioManager,
-  testScriptExecutorService = testScriptExecutorService,
-) {
-
+    nameAndDesc =
+      object : AbstractReducerNameAndDesc(
+        shortName = ActionsReducer::class.simpleName!!,
+        description = "",
+      ) {},
+    ioManager = ioManager,
+    testScriptExecutorService = testScriptExecutorService,
+  ) {
   override fun reduceRuleDef(
     origDef: AbstractPersesRuleElement,
     immutableRuleDefs: PersesGrammar,
@@ -70,9 +70,9 @@ class ActionsReducer(
     return editor.bottomUpApply(def)!!
   }
 
-  class ActionRemover(val action: PersesActionAst) :
-    AbstractAstEditor() {
-
+  class ActionRemover(
+    val action: PersesActionAst,
+  ) : AbstractAstEditor() {
     override fun visit(
       ast: PersesActionAst,
       newChildren: ImmutableList<AbstractPersesRuleElement>,

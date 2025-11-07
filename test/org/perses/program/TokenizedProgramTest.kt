@@ -25,13 +25,13 @@ import org.perses.grammar.c.LanguageC
 
 @RunWith(JUnit4::class)
 class TokenizedProgramTest {
-
   @Test
   fun testCountCharsOfAllTokens() {
-    val p = TestUtility.createTokenizedProgramFromString(
-      sourceCode = "int a ; ",
-      LanguageC,
-    )
+    val p =
+      TestUtility.createTokenizedProgramFromString(
+        sourceCode = "int a ; ",
+        LanguageC,
+      )
     assertThat(p.totalCharacterCount).isEqualTo(5)
   }
 }

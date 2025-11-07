@@ -24,11 +24,10 @@ kt_jvm_library(
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:guava",
-        "//:truth",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/antlr:util",
         "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/adhoc:adhoc_grammar_inaller_lib",
         "//src/org/perses/grammar/adhoc:command_options",
         "//src/org/perses/grammar/adhoc:language_kind",
@@ -182,9 +181,7 @@ kt_jvm_test(
         "//:README.md",
     ],
     deps = [
-        "//:guava",
         "//:truth",
-        "//readme_generator/org/pluverse/perses:SupportedLanguageDumpMain_lib",
     ],
 )
 
@@ -209,7 +206,6 @@ kt_jvm_test(
     deps = [
         ":perses_deploy_jar",
         "//:truth",
-        "//src/org/perses/reduction/event",
     ],
 )
 

@@ -33,35 +33,43 @@ abstract class AbstractReductionInputs<K : AbstractDataKind, S : AbstractReducti
   val mutableFiles: ImmutableList<out AbstractReductionFile<*, *>>,
   override val immutableDependencyFiles: ImmutableList<BinaryReductionFile>,
 ) : IReductionInputs<K, S> {
-
   val absoluteRootDirectory: Path = rootDirectory.toAbsolutePath()
   val orig2relativePathPairs: ImmutableList<OrigAndRelativePathPair>
-  val allFiles: ImmutableList<AbstractReductionFile<*, *>> = ImmutableList
-    .builder<AbstractReductionFile<*, *>>()
-    .addAll(mutableFiles)
-    .addAll(immutableDependencyFiles)
-    .build()
+  val allFiles: ImmutableList<AbstractReductionFile<*, *>> =
+    ImmutableList
+      .builder<AbstractReductionFile<*, *>>()
+      .addAll(mutableFiles)
+      .addAll(immutableDependencyFiles)
+      .build()
 
   init {
     check(mutableFiles.any { it.dataKind == initiallyDeterminedMainDataKind }) { mutableFiles }
-    mutableFiles.zip(immutableDependencyFiles).filter {
-      Files.isSameFile(it.first.file, it.second.file)
-    }.let { overlappedFiles ->
-      check(overlappedFiles.isEmpty()) {
-        "The mutable and immutable file lists should not overlap: $overlappedFiles"
+    mutableFiles
+      .zip(immutableDependencyFiles)
+      .filter {
+        Files.isSameFile(it.first.file, it.second.file)
+      }.let { overlappedFiles ->
+        check(overlappedFiles.isEmpty()) {
+          "The mutable and immutable file lists should not overlap: $overlappedFiles"
+        }
       }
-    }
-    orig2relativePathPairs = allFiles.asSequence()
-      .map { it to it.file.toAbsolutePath() }
-      .onEach { check(it.second.startsWith(absoluteRootDirectory)) }
-      .map {
-        OrigAndRelativePathPair(it.first, absoluteRootDirectory.relativize(it.second))
-      }.toImmutableList()
+    orig2relativePathPairs =
+      allFiles
+        .asSequence()
+        .map { it to it.file.toAbsolutePath() }
+        .onEach { check(it.second.startsWith(absoluteRootDirectory)) }
+        .map {
+          OrigAndRelativePathPair(it.first, absoluteRootDirectory.relativize(it.second))
+        }.toImmutableList()
     check(orig2relativePathPairs.size < 8) {
       "Consider using a hash map for many elements. $orig2relativePathPairs"
     }
     check(
-      orig2relativePathPairs.asSequence().map { it.relativePath }.distinct().count() ==
+      orig2relativePathPairs
+        .asSequence()
+        .map { it.relativePath }
+        .distinct()
+        .count() ==
         orig2relativePathPairs.size,
     ) {
       """
@@ -88,13 +96,12 @@ abstract class AbstractReductionInputs<K : AbstractDataKind, S : AbstractReducti
   inline fun computeAbsPathListWrt(
     newFolder: Path,
     crossinline reductionFileSelectionPredicate: (OrigAndRelativePathPair) -> Boolean,
-  ): Sequence<Path> {
-    return orig2relativePathPairs
+  ): Sequence<Path> =
+    orig2relativePathPairs
       .asSequence()
       .filter { pair ->
         reductionFileSelectionPredicate(pair)
       }.map { newFolder.resolve(it.relativePath) }
-  }
 
   private fun isMutableFile(pathPair: OrigAndRelativePathPair): Boolean {
     val origFile = pathPair.origFile
@@ -107,28 +114,26 @@ abstract class AbstractReductionInputs<K : AbstractDataKind, S : AbstractReducti
     }
   }
 
-  fun sequenceOfMutableFiles(): Sequence<OrigAndRelativePathPair> {
-    return orig2relativePathPairs.asSequence().filter {
+  fun sequenceOfMutableFiles(): Sequence<OrigAndRelativePathPair> =
+    orig2relativePathPairs.asSequence().filter {
       isMutableFile(it)
     }
-  }
 
   fun computeAbsPathWrt(
     origFile: AbstractReductionFile<*, *>,
     newFolder: Path,
-  ): Path {
-    return newFolder.resolve(orig2relativePathPairs.first { it.origFile == origFile }.relativePath)
-  }
+  ): Path = newFolder.resolve(orig2relativePathPairs.first { it.origFile == origFile }.relativePath)
 
-  fun relativePathSequence(): Sequence<Path> {
-    return orig2relativePathPairs
+  fun relativePathSequence(): Sequence<Path> =
+    orig2relativePathPairs
       .asSequence()
       .map { it.relativePath }
-  }
 
-  fun getRelativePathForOrigFile(origFile: AbstractReductionFile<*, *>): Path {
-    return orig2relativePathPairs.single { it.origFile === origFile }.relativePath
-  }
+  fun getRelativePathForOrigFile(origFile: AbstractReductionFile<*, *>): Path =
+    orig2relativePathPairs
+      .single {
+        it.origFile === origFile
+      }.relativePath
 
   data class OrigAndRelativePathPair(
     val origFile: AbstractReductionFile<*, *>,

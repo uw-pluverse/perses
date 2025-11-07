@@ -29,11 +29,10 @@ abstract class AbstractParserRuleAttributeReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractAntlrReducer(
-  nameAndDesc,
-  ioManager,
-  testScriptExecutorService,
-) {
-
+    nameAndDesc,
+    ioManager,
+    testScriptExecutorService,
+  ) {
   final override fun reduce(state: ListenableReductionState<PersesGrammar>) {
     val rules = state.bestEntity.parserRules
     for (origRule in rules) {
@@ -61,7 +60,5 @@ abstract class AbstractParserRuleAttributeReducer(
   open fun createNewGrammarWithNewDef(
     bestProgram: PersesGrammar,
     newDef: PersesParserRuleAst,
-  ): PersesGrammar {
-    return bestProgram.copyWithNewRuleDef(newDef)
-  }
+  ): PersesGrammar = bestProgram.copyWithNewRuleDef(newDef)
 }

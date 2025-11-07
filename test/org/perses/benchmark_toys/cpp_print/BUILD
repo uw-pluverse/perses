@@ -14,7 +14,7 @@ reduction_golden_test(
     golden_reduced_file = "golden_reduced_t.cpp",
     log_file = "reduction_golden_test.log",
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.cpp",
     test_script = "r.sh",
 )

@@ -45,14 +45,16 @@ import org.perses.antlr.toTokenType
 import org.perses.grammar.AbstractParserFacade
 import org.perses.program.PersesTokenFactory
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
+import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableList
+import org.perses.util.toImmutableMap
+import org.perses.util.transformToImmutableList
 import java.util.Random
 
 class MinimalSparTreeGenerator(
   val parserFacade: AbstractParserFacade,
   private val sparTreeNodeFactory: SparTreeNodeFactory,
 ) {
-
   private val random = Random(0)
   private val persesTokenFactory = sparTreeNodeFactory.tokenizedProgramFactory.tokenFactory
 
@@ -65,54 +67,100 @@ class MinimalSparTreeGenerator(
     indexOfAlternative: Int,
   ): AbstractSparTreeNode? {
     check(originalLexerRuleNodeList.isNotEmpty())
-    val preGeneratedNode =
-      ruleToPreGeneratedCandidateSparTreeNodeMap[ruleNameHandle]?.getOrNull(indexOfAlternative)
-        ?.recursiveDeepCopy(ReuseNodeIdStrategy)?.result ?: return null
-    var lineNumber = originalLexerRuleNodeList.first().token.position.line
-    preGeneratedNode.leafNodeSequence().forEach {
-      // Fail if any placeholder cannot be filled with a matched original token
-      val newLexerNode = if (it.token.isPlaceholder()) {
-        val matchedNode = originalLexerRuleNodeList.find { lexerNode ->
-          lexerNode.token.type == it.token.type
-        } ?: return null
-        sparTreeNodeFactory.createLexerRuleSparTreeNode(
-          matchedNode.token,
-        ).also { lineNumber = matchedNode.token.position.line }
-      } else {
-        val tokenWithUpdatedLineNumber = it.token.copyWithNewPosition(
-          PersesTokenFactory.TokenPosition(lineNumber, it.token.position.charPositionInLine),
-        )
-        sparTreeNodeFactory.createLexerRuleSparTreeNode(
-          tokenWithUpdatedLineNumber,
-        )
+    var preGeneratedNode =
+      ruleToPreGeneratedCandidateSparTreeNodeMap[ruleNameHandle]
+        ?.getOrNull(indexOfAlternative)
+        ?.recursiveDeepCopy(ReuseNodeIdStrategy)
+        ?.result ?: return null
+    var lineNumber =
+      originalLexerRuleNodeList
+        .first()
+        .token
+        .asAntlrToken()
+        .position.line
+    preGeneratedNode
+      .leafNodeSequence()
+      // To avoid any potential bug, materialize the leaves into a list first, as we will modify
+      // them during traversal.
+      .toList()
+      .forEach { preGeneratedLeaf ->
+        // Fail if any placeholder cannot be filled with a matched original token
+        val preGeneratedLeafToken = preGeneratedLeaf.token
+        val newLexerNode =
+          if (preGeneratedLeafToken is PersesTokenFactory.PersesTokenPlaceholder) {
+            val matchedNode =
+              originalLexerRuleNodeList.find { lexerNode ->
+                lexerNode.token.asAntlrToken().type == preGeneratedLeafToken.type
+              } ?: return null
+            sparTreeNodeFactory
+              .createLexerRuleSparTreeNode(
+                matchedNode.token,
+              ).also {
+                lineNumber =
+                  matchedNode.token
+                    .asAntlrToken()
+                    .position.line
+              }
+          } else {
+            val tokenWithUpdatedLineNumber =
+              preGeneratedLeaf.token.asAntlrToken().copyWithNewPosition(
+                PersesTokenFactory.TokenPosition(
+                  lineNumber,
+                  preGeneratedLeaf.token
+                    .asAntlrToken()
+                    .position.charPositionInLine,
+                ),
+              )
+            sparTreeNodeFactory.createLexerRuleSparTreeNode(
+              tokenWithUpdatedLineNumber,
+            )
+          }
+        val parentOfLeaf = preGeneratedLeaf.parent
+        if (parentOfLeaf == null) {
+          check(preGeneratedNode.isTokenNode()) {
+            preGeneratedNode.printTreeStructure()
+          }
+          preGeneratedNode = newLexerNode
+        } else {
+          parentOfLeaf.replaceChild(
+            preGeneratedLeaf,
+            newLexerNode,
+            AbstractNodePayload.SinglePayload(newLexerNode.antlrRule),
+          )
+        }
       }
-      it.parent!!.replaceChild(
-        it,
-        newLexerNode,
-        AbstractNodePayload.SinglePayload(newLexerNode.antlrRule),
-      )
-    }
     preGeneratedNode.linkLeafNodes()
     preGeneratedNode.buildTokenIntervalInfoRecursive()
-    check(preGeneratedNode.leafNodeSequence().all { it.token.isPlaceholder().not() })
+    check(
+      preGeneratedNode.leafNodeSequence().all {
+        it.token !is PersesTokenFactory.PersesTokenPlaceholder
+      },
+    ) {
+      """
+        |preGeneratedNode: ${preGeneratedNode.printTreeStructure()}
+        |originalLexerRuleNodeList: ${originalLexerRuleNodeList.map { it.token.lexemeText }}
+        |ruleNameHandle: $ruleNameHandle
+        |indexOfAlternative: $indexOfAlternative
+      """.trimMargin()
+    }
     return preGeneratedNode
   }
 
   fun getIndicesOfAlternativesWithSameSize(
     ruleNameHandle: RuleNameHandle,
     originalSize: Int,
-  ): ImmutableIntArray {
-    return getIndicesOfQualifiedAlternatives(ruleNameHandle, originalSize, Int::equals)
-  }
+  ): ImmutableIntArray =
+    getIndicesOfQualifiedAlternatives(ruleNameHandle, originalSize, Int::equals)
 
   fun getIndicesOfAlternativesWithSmallerSize(
     ruleNameHandle: RuleNameHandle,
     originalSize: Int,
-  ): ImmutableIntArray {
-    return getIndicesOfQualifiedAlternatives(ruleNameHandle, originalSize) { a, b -> a < b }
-  }
+  ): ImmutableIntArray =
+    getIndicesOfQualifiedAlternatives(ruleNameHandle, originalSize) { size, originalSize ->
+      size < originalSize
+    }
 
-  private fun getIndicesOfQualifiedAlternatives(
+  private inline fun getIndicesOfQualifiedAlternatives(
     rule: RuleNameHandle,
     originalSize: Int,
     predicate: (size: Int, originalSize: Int) -> Boolean,
@@ -120,6 +168,16 @@ class MinimalSparTreeGenerator(
     val nodeList = ruleToPreGeneratedCandidateSparTreeNodeMap[rule] ?: return ImmutableIntArray.of()
     val indices = ImmutableIntArray.builder()
     for (i in 0 until nodeList.size) {
+      lazyAssert({ nodeList[i].leafTokenCount == nodeList[i].tokenListCostlyComputed.size }) {
+        """
+          |leafTokenCount: ${nodeList[i].leafTokenCount}
+          |nodelist: ${
+          nodeList[i].leafNodeSequence().transformToImmutableList { it.token.lexemeText }
+        }
+          |
+          |actual: ${nodeList[i].tokenListCostlyComputed}     
+        """.trimMargin()
+      }
       if (predicate(nodeList[i].leafTokenCount, originalSize)) {
         indices.add(i)
       }
@@ -127,16 +185,23 @@ class MinimalSparTreeGenerator(
     return indices.build()
   }
 
-  private fun generateCandidateSparTreeNode(parserFacade: AbstractParserFacade):
-    ImmutableMap<RuleNameHandle, ImmutableList<AbstractSparTreeNode>> {
+  private fun generateCandidateSparTreeNode(
+    parserFacade: AbstractParserFacade,
+  ): ImmutableMap<RuleNameHandle, ImmutableList<AbstractSparTreeNode>> {
     val mapToBuild = mutableMapOf<RuleNameHandle, ImmutableList<AbstractSparTreeNode>>()
     val rules = parserFacade.ruleHierarchy.ruleList
-    val (lexerRules, parserRules) = rules.partition {
-      it.ruleDef.isLexerRule
-    }
+    val (lexerRules, parserRules) =
+      rules.partition { it.ruleDef.isLexerRule }
     // filter out the fragment lexer rules
     lexerRules.filter { it.ruleDef.tag == AstTag.RULE_DEFINITION_LEXER }.forEach {
-      preBuildLexerRuleSparTreeNode(it, mapToBuild)
+      val ruleName = it.ruleDef.ruleNameHandle
+      check(!mapToBuild.containsKey(ruleName)) {
+        """$ruleName
+          |$mapToBuild
+        """.trimMargin()
+      }
+      val preGeneratedNode = generateSkeletonLexerRuleSparTreeNode(it)
+      check(mapToBuild.put(ruleName, ImmutableList.of(preGeneratedNode)) == null)
     }
     var changed = true
     while (changed) {
@@ -145,35 +210,33 @@ class MinimalSparTreeGenerator(
         changed = preBuildParserRuleSparTreeNode(it, mapToBuild) || changed
       }
     }
-    return ImmutableMap.copyOf(mapToBuild)
+    return ImmutableMap.copyOf(mapToBuild).also { map ->
+      map.values.forEach { list ->
+        list.forEach { node ->
+          node.fixLinkIntegrity()
+          node.updateLeafTokenCount()
+        }
+      }
+    }
   }
 
-  private fun preBuildLexerRuleSparTreeNode(
-    antlrRule: RuleHierarchyEntry,
-    mapToBuild: MutableMap<RuleNameHandle, ImmutableList<AbstractSparTreeNode>>,
-  ) {
-    val preGeneratedNode = generateSkeletonLexerRuleSparTreeNode(antlrRule)
-    check(
-      mapToBuild
-        .containsKey(antlrRule.ruleDef.ruleNameHandle).not(),
-    )
-    mapToBuild[antlrRule.ruleDef.ruleNameHandle] =
-      ImmutableList.of(preGeneratedNode)
-  }
-
+  // TODO(cnsun): need tests.
   // Generate for explicit token definitions, used for pre-building node for lexer rule
   private fun generateSkeletonLexerRuleSparTreeNode(
     antlrRule: RuleHierarchyEntry,
   ): LexerRuleSparTreeNode {
-    val tokenType = parserFacade.lexerAtnWrapper.metaTokenInfoDB
-      .getTokenInfoWithName(antlrRule.ruleName)!!.tokenType
+    val tokenType =
+      parserFacade.lexerAtnWrapper.metaTokenInfoDB
+        .getTokenInfoWithName(antlrRule.ruleName)!!
+        .tokenType
     val literal = getLiteralFromType(tokenType)
-    val persesToken = if (literal == null) {
-      persesTokenFactory.generatePlaceholderTokenForGivenType(tokenType)
-    } else {
-      val token = parserFacade.transformLiteralIntoSingleToken(literal)
-      persesTokenFactory.createPersesToken(token)
-    }
+    val persesToken =
+      if (literal == null) {
+        persesTokenFactory.createPlaceholderTokenForGivenType(tokenType)
+      } else {
+        val token = parserFacade.transformLiteralIntoSingleToken(literal)
+        persesTokenFactory.createPersesToken(token)
+      }
     return sparTreeNodeFactory.createLexerRuleSparTreeNode(persesToken)
   }
 
@@ -189,12 +252,13 @@ class MinimalSparTreeGenerator(
     // if this got fixed, generateTokenRec is not needed
     val tokenType = parserFacade.transformLiteralIntoSingleToken(tokenText).type.toTokenType()
     val literal = getLiteralFromType(tokenType)
-    val persesToken = if (literal == null) {
-      persesTokenFactory.generatePlaceholderTokenForGivenType(tokenType)
-    } else {
-      val token = parserFacade.transformLiteralIntoSingleToken(literal)
-      persesTokenFactory.createPersesToken(token)
-    }
+    val persesToken =
+      if (literal == null) {
+        persesTokenFactory.createPlaceholderTokenForGivenType(tokenType)
+      } else {
+        val token = parserFacade.transformLiteralIntoSingleToken(literal)
+        persesTokenFactory.createPersesToken(token)
+      }
     return sparTreeNodeFactory.createLexerRuleSparTreeNode(persesToken)
   }
 
@@ -202,11 +266,12 @@ class MinimalSparTreeGenerator(
     antlrRule: RuleHierarchyEntry,
     mapToBuild: MutableMap<RuleNameHandle, ImmutableList<AbstractSparTreeNode>>,
   ): Boolean {
-    val preGeneratedNodeList = preBuildSparTreeNodeRec(
-      antlrRule.ruleDef.body,
-      mapToBuild,
-      antlrRule,
-    )
+    val preGeneratedNodeList =
+      preBuildSparTreeNodeRec(
+        antlrRule.ruleDef.body,
+        mapToBuild,
+        antlrRule,
+      )
     if (preGeneratedNodeList.isNullOrEmpty()) {
       return false
     }
@@ -235,14 +300,16 @@ class MinimalSparTreeGenerator(
       is PersesAlternativeBlockAst -> {
         val nodeList = mutableListOf<AbstractSparTreeNode>()
         ruleBody.foreachChildRuleElement { alternative ->
-          val nodesBuiltFromAlternative = preBuildSparTreeNodeRec(
-            alternative,
-            mapToBuild,
-          ) ?: return@foreachChildRuleElement
-          val nodeForTheAlternative = generateParserNodeWithGivenRuleAndChildren(
-            antlrRule!!,
-            nodesBuiltFromAlternative,
-          )
+          val nodesBuiltFromAlternative =
+            preBuildSparTreeNodeRec(
+              alternative,
+              mapToBuild,
+            ) ?: return@foreachChildRuleElement
+          val nodeForTheAlternative =
+            generateParserNodeWithGivenRuleAndChildren(
+              antlrRule!!,
+              nodesBuiltFromAlternative,
+            )
           if (nodeList.any { existingNode ->
               areEquivalentNodes(nodeForTheAlternative, existingNode)
             }
@@ -257,11 +324,13 @@ class MinimalSparTreeGenerator(
           nodeList.toImmutableList()
         }
       }
+
       is PersesSequenceAst -> {
         val children = mutableListOf<AbstractSparTreeNode>()
         ruleBody.foreachChildRuleElement { element ->
-          val nodes = preBuildSparTreeNodeRec(element, mapToBuild)
-            ?: return null
+          val nodes =
+            preBuildSparTreeNodeRec(element, mapToBuild)
+              ?: return null
           check(nodes.size <= 1) {
             "Each element should only generate one node."
           }
@@ -276,13 +345,15 @@ class MinimalSparTreeGenerator(
           )
         }
       }
+
       is AbstractPersesQuantifiedAst -> {
-        val children = if (ruleBody is PersesPlusAst) {
-          preBuildSparTreeNodeRec(ruleBody.body, mapToBuild) ?: return null
-        } else {
-          // FIXME(zy): maybe should also generate for PersesStarAst and PersesQuestionAst
-          ImmutableList.of()
-        }
+        val children =
+          if (ruleBody is PersesPlusAst) {
+            preBuildSparTreeNodeRec(ruleBody.body, mapToBuild) ?: return null
+          } else {
+            // FIXME(zy): maybe should also generate for PersesStarAst and PersesQuestionAst
+            ImmutableList.of()
+          }
         if (antlrRule == null) {
           children
         } else {
@@ -291,18 +362,23 @@ class MinimalSparTreeGenerator(
           )
         }
       }
+
       is PersesRuleReferenceAst -> {
         val ruleNameHandle = ruleBody.ruleNameHandle
         val nodes = mapToBuild[ruleNameHandle] ?: return null
-        val nodeFromReference = if (nodes.size > 1) {
-          ImmutableList.of(
-            nodes.minByOrNull {
-              it.updateLeafTokenCount()
-            }!!.recursiveDeepCopy(ReuseNodeIdStrategy).result,
-          )
-        } else {
-          nodes.map { it.recursiveDeepCopy(ReuseNodeIdStrategy).result }.toImmutableList()
-        }
+        val nodeFromReference =
+          if (nodes.size > 1) {
+            ImmutableList.of(
+              nodes
+                .minByOrNull {
+                  it.updateLeafTokenCount()
+                }!!
+                .recursiveDeepCopy(ReuseNodeIdStrategy)
+                .result,
+            )
+          } else {
+            nodes.map { it.recursiveDeepCopy(ReuseNodeIdStrategy).result }.toImmutableList()
+          }
         if (antlrRule == null) {
           nodeFromReference
         } else {
@@ -311,20 +387,23 @@ class MinimalSparTreeGenerator(
           )
         }
       }
+
       is PersesRuleElementLabel -> {
         TODO("Not supported yet")
       }
+
       else -> {
         if (!canBeTerminal(ruleBody)) {
           error("Unreachable rule element type: ${ruleBody.sourceCode}")
         }
 
         val lexerRuleName = extractTokenReferenceNameOrNull(ruleBody)
-        val lexerNode = if (lexerRuleName != null) {
-          mapToBuild[lexerRuleName]!!.first().recursiveDeepCopy(ReuseNodeIdStrategy).result
-        } else {
-          generateLexerRuleSparTreeNode(ruleBody)
-        }
+        val lexerNode =
+          if (lexerRuleName != null) {
+            mapToBuild[lexerRuleName]!!.first().recursiveDeepCopy(ReuseNodeIdStrategy).result
+          } else {
+            generateLexerRuleSparTreeNode(ruleBody)
+          }
         if (lexerNode == null) {
           ImmutableList.of()
         } else {
@@ -337,8 +416,8 @@ class MinimalSparTreeGenerator(
   private fun generateParserNodeWithGivenRuleAndChildren(
     antlrRule: RuleHierarchyEntry,
     children: ImmutableList<AbstractSparTreeNode>,
-  ): ParserRuleSparTreeNode {
-    return sparTreeNodeFactory.createParserRuleSparTreeNode(antlrRule.ruleName).apply {
+  ): ParserRuleSparTreeNode =
+    sparTreeNodeFactory.createParserRuleSparTreeNode(antlrRule.ruleName).apply {
       for (child in children) {
         this.addChild(
           child.recursiveDeepCopy(ReuseNodeIdStrategy).result,
@@ -348,11 +427,8 @@ class MinimalSparTreeGenerator(
       this.linkLeafNodes()
       this.buildTokenIntervalInfoRecursive()
     }
-  }
 
-  private fun generateTokenRec(
-    ruleBody: AbstractPersesRuleElement,
-  ): String {
+  private fun generateTokenRec(ruleBody: AbstractPersesRuleElement): String {
     return when (ruleBody) {
       is PersesTerminalAst -> {
         if (ruleBody.text.startsWith('\'') && ruleBody.text.endsWith('\'')) {
@@ -370,22 +446,26 @@ class MinimalSparTreeGenerator(
           generateTokenRec(subRuleBody)
         }
       }
+
       is PersesLexerCharSet -> {
         // Stripe the bracket
         val charSet = getCharsetFromLexerCharset(ruleBody.text)
         val index = random.nextInt(charSet.size)
         charSet[index].toString()
       }
+
       is PersesTokenSetAst -> {
         val index = random.nextInt(ruleBody.childCount)
         generateTokenRec(ruleBody.getChild(index))
       }
+
       is PersesRangeAst -> {
         generateRandomChar(
           ruleBody.getChild(0) as PersesTerminalAst,
           ruleBody.getChild(1) as PersesTerminalAst,
         )
       }
+
       is PersesNotAst -> {
         when (val subRuleBody = ruleBody.getChild(0)) {
           is PersesLexerCharSet -> {
@@ -399,9 +479,11 @@ class MinimalSparTreeGenerator(
             val index = random.nextInt(candidateChars.size)
             candidateChars[index].toString()
           }
+
           is PersesRuleReferenceAst -> {
             TODO("It seems that negation can also be followed by a reference")
           }
+
           is PersesTokenSetAst -> {
             val matchedTokens = mutableListOf<String>()
             val candidateTokens = mutableListOf<String>()
@@ -418,15 +500,17 @@ class MinimalSparTreeGenerator(
             val index = random.nextInt(candidateTokens.size)
             candidateTokens[index]
           }
+
           is PersesTerminalAst -> {
             var text = subRuleBody.text
             if (text == "EOF") {
               (random.nextInt(96) + 32).toChar().toString()
             } else {
               if (text.startsWith('\'') && text.endsWith('\'')) {
-                text = StringEscapeUtils.unescapeJava(
-                  text.subSequence(1, text.length - 1).toString(),
-                )
+                text =
+                  StringEscapeUtils.unescapeJava(
+                    text.subSequence(1, text.length - 1).toString(),
+                  )
               }
               check(text.length == 1)
               val randomNum = random.nextInt(95) + 32
@@ -437,15 +521,18 @@ class MinimalSparTreeGenerator(
               }
             }
           }
+
           else -> {
             throw AssertionError("Cannot generate token text with the given ruleBody.")
           }
         }
       }
+
       is PersesAlternativeBlockAst -> {
         val alternative = ruleBody.alternatives[random.nextInt(ruleBody.childCount)]
         return generateTokenRec(alternative)
       }
+
       is PersesSequenceAst -> {
         val textBuilder = StringBuilder()
         for (child in ruleBody.children) {
@@ -453,9 +540,11 @@ class MinimalSparTreeGenerator(
         }
         textBuilder.toString()
       }
+
       is PersesEpsilonAst -> {
         ""
       }
+
       is PersesLexerCommandAst -> {
         // if commands contains "skip", the generator should ignore it
         var isSkip = false
@@ -470,28 +559,35 @@ class MinimalSparTreeGenerator(
           generateTokenRec(ruleBody.body)
         }
       }
+
       is AbstractPersesQuantifiedAst -> {
-        val times = when (ruleBody) {
-          is PersesStarAst -> random.nextInt(5)
-          is PersesOptionalAst -> random.nextInt(2)
-          else -> random.nextInt(4) + 1
-        }
+        val times =
+          when (ruleBody) {
+            is PersesStarAst -> random.nextInt(5)
+            is PersesOptionalAst -> random.nextInt(2)
+            else -> random.nextInt(4) + 1
+          }
         val textBuilder = StringBuilder()
         for (i in 0 until times) {
           textBuilder.append(generateTokenRec(ruleBody.body))
         }
         textBuilder.toString()
       }
+
       is PersesActionAst -> {
         ""
       }
+
       else -> {
         throw AssertionError("Cannot generate token text with the given ruleBody.")
       }
     }
   }
 
-  private fun generateRandomChar(start: PersesTerminalAst, end: PersesTerminalAst): String {
+  private fun generateRandomChar(
+    start: PersesTerminalAst,
+    end: PersesTerminalAst,
+  ): String {
     val sb = StringBuilder()
     sb.append('[')
     sb.append(start.text.substring(1, start.text.length - 1))
@@ -537,17 +633,10 @@ class MinimalSparTreeGenerator(
     return charset.toList()
   }
 
-  private fun parseLexerCharset(text: String, offset: Int): Pair<Char?, Int> {
-    val ANTLRLiteralEscapedCharValue = mapOf(
-      'n' to '\n',
-      'r' to '\r',
-      't' to '\t',
-      'b' to '\b',
-      'f' to '\u000C',
-      '\\' to '\\',
-      '-' to '-',
-      ']' to ']',
-    )
+  private fun parseLexerCharset(
+    text: String,
+    offset: Int,
+  ): Pair<Char?, Int> {
     // This function refers to grammarinator and org/antlr/v4/misc/EscapeSequenceParsing.java
     if (text[offset] != '\\') {
       return Pair(text[offset], offset + 1)
@@ -572,6 +661,7 @@ class MinimalSparTreeGenerator(
         val codePoint = Integer.valueOf(text.substring(hexStartOffset, hexEndOffset), 16)
         return Pair(codePoint.toChar(), hexEndOffset)
       }
+
       'p', 'P' -> {
         var newOffset = offset
         while (text[newOffset] != '}') {
@@ -579,9 +669,11 @@ class MinimalSparTreeGenerator(
         }
         return Pair(null, newOffset + 1)
       }
-      in ANTLRLiteralEscapedCharValue.keys -> {
-        return Pair(ANTLRLiteralEscapedCharValue[escaped]!!, offset + 2)
+
+      in ANTLR_LITERAL_ESCAPE_CHAR_VALUES.keys -> {
+        return Pair(ANTLR_LITERAL_ESCAPE_CHAR_VALUES[escaped]!!, offset + 2)
       }
+
       else -> throw AssertionError("Invalid escaped value")
     }
   }
@@ -599,12 +691,25 @@ class MinimalSparTreeGenerator(
     }
     return parserFacade.ruleHierarchy
       .getRuleHierarchyEntryOrNull((ruleBody as PersesTerminalAst).text)
-      ?.ruleDef?.ruleNameHandle
+      ?.ruleDef
+      ?.ruleNameHandle
   }
 
   companion object {
-    private fun canBeTerminal(ruleBody: AbstractPersesRuleElement): Boolean {
-      return when (ruleBody.tag) {
+    val ANTLR_LITERAL_ESCAPE_CHAR_VALUES =
+      listOf(
+        'n' to '\n',
+        'r' to '\r',
+        't' to '\t',
+        'b' to '\b',
+        'f' to '\u000C',
+        '\\' to '\\',
+        '-' to '-',
+        ']' to ']',
+      ).asSequence().toImmutableMap()
+
+    private fun canBeTerminal(ruleBody: AbstractPersesRuleElement): Boolean =
+      when (ruleBody.tag) {
         AstTag.LEXER_CHAR_SET,
         AstTag.UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE,
         AstTag.TERMINAL,
@@ -615,9 +720,9 @@ class MinimalSparTreeGenerator(
         AstTag.EPSILON,
         AstTag.LEXER_RANGE_OPERATOR,
         -> true
+
         else -> false
       }
-    }
 
     private fun areEquivalentNodes(
       node1: AbstractSparTreeNode,
@@ -629,7 +734,7 @@ class MinimalSparTreeGenerator(
         return false
       } else {
         for (i in lexerNodeList1.indices) {
-          if (lexerNodeList1[i].token.text != lexerNodeList2[i].token.text) {
+          if (lexerNodeList1[i].token.lexemeText != lexerNodeList2[i].token.lexemeText) {
             return false
           }
         }

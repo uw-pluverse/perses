@@ -17,51 +17,51 @@
 package org.perses.reduction.cache
 
 import com.google.common.collect.ImmutableList
-import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.AbstractOutputManager
 
 class ContentLexemeListQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<
-  ContentLexemeListQueryCache.ContentLexemeListEncoding,
-  ContentLexemeListQueryCache.ContentLexemeListEncoder,
+    ContentLexemeListQueryCache.ContentLexemeListEncoding,
+    ContentLexemeListQueryCache.ContentLexemeListEncoder,
   >(
-  tokenizedProgram,
-  profiler,
-  configuration,
-) {
-
+    tokenizedProgram,
+    profiler,
+    configuration,
+  ) {
   override fun createEncoder(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ): ContentLexemeListEncoder {
-    return ContentLexemeListEncoder(baseProgram, profiler)
-  }
+  ): ContentLexemeListEncoder = ContentLexemeListEncoder(baseProgram, profiler)
 
   class ContentLexemeListEncoder(
     tokenizedProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
   ) : AbstractTokenizedProgramEncoder<ContentLexemeListEncoding>(
-    tokenizedProgram,
-    profiler,
-    supportsRccReEncoding = true,
-  ) {
-
-    override fun encode(program: TokenizedProgram): ContentLexemeListEncoding? {
-      return encode(
-        program.tokens.stream().map { obj: PersesTokenFactory.PersesToken -> obj.text }
+      tokenizedProgram,
+      profiler,
+      supportsRccReEncoding = true,
+    ) {
+    override fun encode(
+      program: TokenizedProgram,
+      outputManager: AbstractOutputManager,
+    ): ContentLexemeListEncoding? =
+      encode(
+        program.tokens
+          .asSequence()
+          .map { it.lexemeText }
           .iterator(),
         program.tokenCount,
       )
-    }
 
     private fun encode(
       lexemeIterator: Iterator<String>,
       tokenCount: Int,
     ): ContentLexemeListEncoding? {
-      val baseTokens: ImmutableList<PersesTokenFactory.PersesToken> = tokensInBaseProgram
+      val baseTokens = tokensInBaseProgram
       val baseSize = baseTokens.size
       if (tokenCount > baseSize) {
         return null
@@ -76,7 +76,7 @@ class ContentLexemeListQueryCache(
           }
           val baseToken = baseTokens[baseIndex]
           ++baseIndex
-          if (baseToken.text == lexeme) {
+          if (baseToken.lexemeText == lexeme) {
             builder.add(lexeme)
             break
           }
@@ -87,18 +87,15 @@ class ContentLexemeListQueryCache(
 
     override fun reEncode(
       previousEncoding: ContentLexemeListEncoding,
-    ): ContentLexemeListEncoding? {
-      return encode(previousEncoding.tokens.iterator(), previousEncoding.tokenCount)
-    }
+    ): ContentLexemeListEncoding? =
+      encode(previousEncoding.tokens.iterator(), previousEncoding.tokenCount)
 
     override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {}
   }
 
-  class ContentLexemeListEncoding(val tokens: ImmutableList<String>) :
-    AbstractProgramEncoding<ContentLexemeListEncoding>(tokens.hashCode(), tokens.size) {
-
-    override fun extraEquals(other: ContentLexemeListEncoding): Boolean {
-      return tokens == other.tokens
-    }
+  class ContentLexemeListEncoding(
+    val tokens: ImmutableList<String>,
+  ) : AbstractProgramEncoding<ContentLexemeListEncoding>(tokens.hashCode(), tokens.size) {
+    override fun extraEquals(other: ContentLexemeListEncoding): Boolean = tokens == other.tokens
   }
 }

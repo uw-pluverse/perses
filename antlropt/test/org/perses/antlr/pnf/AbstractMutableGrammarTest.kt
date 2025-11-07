@@ -29,6 +29,6 @@ open class AbstractMutableGrammarTest {
   val refC = PersesRuleReferenceAst.create(nameC)
   val nameD = createName("d")
   val refD = PersesRuleReferenceAst.create(nameD)
-  fun createName(name: String) =
-    symbolTable.ruleNameRegistry.createOrThrow(name)
+
+  fun createName(name: String) = symbolTable.ruleNameRegistry.createOrThrow(name)
 }

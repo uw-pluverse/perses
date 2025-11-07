@@ -27,12 +27,12 @@ data class ParseTreeWithParser(
   val parser: Parser,
   val lexer: Lexer,
 ) {
-
   val lazyAllTokens by lazy {
     lexer.reset()
-    lexer.allTokens.filter {
-      it.channel == Token.DEFAULT_CHANNEL && it.type != Token.EOF
-    }.toImmutableList()
+    lexer.allTokens
+      .filter {
+        it.channel == Token.DEFAULT_CHANNEL && it.type != Token.EOF
+      }.toImmutableList()
   }
 
   /**

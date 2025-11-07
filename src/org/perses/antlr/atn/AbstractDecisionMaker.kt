@@ -22,7 +22,6 @@ import org.antlr.v4.runtime.atn.Transition
 import java.util.Random
 
 abstract class AbstractDecisionMaker {
-
   protected abstract fun nextBoolean(): Boolean
 
   abstract fun nextInt(bound: Int): Int
@@ -48,24 +47,18 @@ abstract class AbstractDecisionMaker {
   }
 
   // TODO: List<Char> can be replaced with a String object.
-  open fun sampleChar(list: List<Char>): Char {
-    return list[nextInt(list.size)]
-  }
+  open fun sampleChar(list: List<Char>): Char = list[nextInt(list.size)]
 
-  open fun sampleChar(char: Char): Char {
-    return char
-  }
+  open fun sampleChar(char: Char): Char = char
 
-  class DefaultDecisionMaker(seed: Long) : AbstractDecisionMaker() {
+  class DefaultDecisionMaker(
+    seed: Long,
+  ) : AbstractDecisionMaker() {
     private val random = Random(seed)
 
-    override fun nextBoolean(): Boolean {
-      return random.nextBoolean()
-    }
+    override fun nextBoolean(): Boolean = random.nextBoolean()
 
-    override fun nextInt(bound: Int): Int {
-      return random.nextInt(bound)
-    }
+    override fun nextInt(bound: Int): Int = random.nextInt(bound)
   }
 
   enum class EnumKleeneDecision {

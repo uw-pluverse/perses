@@ -16,7 +16,9 @@
  */
 package org.perses.program.printer
 
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.PersesTokenFactory.PersesAntlrToken
 import org.perses.program.TokenizedProgram
 import org.perses.util.FastStringBuilder
 
@@ -26,22 +28,31 @@ abstract class AbstractOrigFormatPrintingVisitor(
   tokenPositionProvider: AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider,
   tokenPlacementListener: AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener?,
 ) : AbstractOrigFormatVisitor(
-  program,
-  tokenPositionProvider,
-  tokenPlacementListener,
-) {
-
+    program,
+    tokenPositionProvider,
+    tokenPlacementListener,
+  ) {
   private var currentLineNumber = 1
 
-  override fun visitLine(line: List<PersesToken>) {
+  private fun getLineNumber(line: List<AbstractPersesToken>): Int? =
+    line.firstOrNull { it is PersesAntlrToken }?.let {
+      tokenPositionProvider.getLine(it)
+    }
+
+  override fun visitLine(line: List<AbstractPersesToken>) {
     if (line.isEmpty()) {
       return
     }
 
-    val lineNumber = tokenPositionProvider.getLine(line.first())
+    val lineNumber: Int? = getLineNumber(line)
+    if (lineNumber == null) {
+      printNonEmptyLine(line, result)
+      ++currentLineNumber
+      return
+    }
     val builder = result
     while (lineNumber > currentLineNumber) {
-      if (keepBlankLines || (builder.isNotEmpty() && builder.lastChar() != '\n')) {
+      if (keepBlankLines || (builder.isNotEmpty() && builder.lastCharOrThrow() != '\n')) {
         builder.append('\n')
       }
       ++currentLineNumber
@@ -51,43 +62,86 @@ abstract class AbstractOrigFormatPrintingVisitor(
     ++currentLineNumber
   }
 
-  protected abstract fun printNonEmptyLine(line: List<PersesToken>, builder: FastStringBuilder)
+  protected abstract fun printNonEmptyLine(
+    line: List<AbstractPersesToken>,
+    builder: FastStringBuilder,
+  )
+
+  private fun computeMinSpacingBetweenAntlrTokens(
+    line: List<AbstractPersesToken>,
+    tokenIndex: Int,
+  ): Int {
+    if (tokenIndex == 0) {
+      return 0
+    }
+    val token = line[tokenIndex]
+    if (token !is PersesAntlrToken) {
+      return 0
+    }
+    val prev = line[tokenIndex - 1]
+    if (prev !is PersesAntlrToken) {
+      return 0
+    }
+    val prevEndPosition = prev.position.charPositionInLine + prev.text.length
+    return (token.position.charPositionInLine - prevEndPosition).coerceAtLeast(0)
+  }
 
   protected fun printNonEmptyLine(
     startPositionInLine: Int,
-    line: List<PersesToken>,
+    line: List<AbstractPersesToken>,
     builder: FastStringBuilder,
   ) {
     var positionInLineCurrent = startPositionInLine
-    var previousTokenInLine: PersesToken? = null
-    line.forEach { token ->
-      var tokenPositionInLine = tokenPositionProvider
-        .getCharPositionInLine(token, positionInLineCurrent, null)
-      // Only deduce a proper position when the position extracted from token is unavailable
-      if (positionInLineCurrent > tokenPositionInLine) {
-        tokenPositionInLine = tokenPositionProvider
-          .getCharPositionInLine(token, positionInLineCurrent, previousTokenInLine)
+    var previousTokenInLine: AbstractPersesToken? = null
+    for ((tokenIndex, token) in line.withIndex()) {
+      if (token is PersesTokenFactory.PersesPlainText) {
+        tokenPlacementListener?.onTokenPlacement(
+          token,
+          builder.currentLineNo,
+          builder.charPositionInLine,
+        )
+        builder.append(token.lexemeText)
+        continue
       }
-      check(positionInLineCurrent <= tokenPositionInLine) {
+      var computedTokenPositionInLine =
+        tokenPositionProvider
+          .getCharPositionInLine(token, positionInLineCurrent, null)
+      // Only deduce a proper position when the position extracted from token is unavailable
+      if (positionInLineCurrent > computedTokenPositionInLine) {
+        computedTokenPositionInLine =
+          tokenPositionProvider
+            .getCharPositionInLine(token, positionInLineCurrent, previousTokenInLine)
+      }
+      val minimumSpacingBasedOnTokenPositions =
+        computeMinSpacingBetweenAntlrTokens(line, tokenIndex)
+      computedTokenPositionInLine =
+        computedTokenPositionInLine.coerceAtLeast(
+          positionInLineCurrent + minimumSpacingBasedOnTokenPositions,
+        )
+      check(positionInLineCurrent <= computedTokenPositionInLine) {
         """This printing algorithm is designed for program reduction only.
             |token: $token
             |  positionInLineCurrent: $positionInLineCurrent
-            |  tokenPositionInLine: $tokenPositionInLine
+            |  tokenPositionInLine: $computedTokenPositionInLine
             |program:
-            |${program.tokens.joinToString("\n") { it.text + ":" + it.type }}
+            |${program.tokens.joinToString(
+          "\n",
+        ) { it.lexemeText }}
         """.trimMargin()
       }
-      while (positionInLineCurrent < tokenPositionInLine) {
+
+      while (positionInLineCurrent < computedTokenPositionInLine) {
         ++positionInLineCurrent
         builder.append(' ')
       }
       tokenPlacementListener?.onTokenPlacement(
         token,
+        // TODO(cnsun): Can we use builder to track the line number and charposition?
         builder.currentLineNo,
         builder.charPositionInLine,
       )
-      builder.append(token.text)
-      positionInLineCurrent += token.text.length
+      builder.append(token.lexemeText)
+      positionInLineCurrent += token.lexemeText.length
       previousTokenInLine = token
     }
   }

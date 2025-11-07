@@ -20,26 +20,30 @@ import com.google.common.collect.ImmutableList
 import org.perses.util.Util.lazyAssert
 import java.util.Arrays
 
-class SortedIntArrayReference(expectedSize: Int) {
-
+class SortedIntArrayReference(
+  expectedSize: Int,
+) {
   private var array: AbstractSortedIntArray
 
   init {
     lazyAssert { expectedSize > 0 }
-    array = if (expectedSize == 1) {
-      SingleInteger()
-    } else {
-      lazyAssert { expectedSize > 1 }
-      MultipleIntegers(expectedSize)
-    }
+    array =
+      if (expectedSize == 1) {
+        SingleInteger()
+      } else {
+        lazyAssert { expectedSize > 1 }
+        MultipleIntegers(expectedSize)
+      }
   }
 
   fun size() = array.size()
 
   fun getInt(index: Int) = array.getInt(index)
 
-  fun binarySearch(fromIndex: Int, key: Int) =
-    array.binarySearch(fromIndex, key)
+  fun binarySearch(
+    fromIndex: Int,
+    key: Int,
+  ) = array.binarySearch(fromIndex, key)
 
   fun resetWithNewExpectedSize(newExpectedSize: Int) {
     lazyAssert { newExpectedSize > 0 }
@@ -64,7 +68,6 @@ class SortedIntArrayReference(expectedSize: Int) {
   fun toList() = array.toList()
 
   abstract class AbstractSortedIntArray {
-
     abstract fun size(): Int
 
     abstract fun add(value: Int)
@@ -73,7 +76,10 @@ class SortedIntArrayReference(expectedSize: Int) {
 
     abstract fun reset(newExpectedSize: Int)
 
-    abstract fun binarySearch(fromIndex: Int, key: Int): Int
+    abstract fun binarySearch(
+      fromIndex: Int,
+      key: Int,
+    ): Int
 
     abstract fun getInt(index: Int): Int
 
@@ -81,16 +87,14 @@ class SortedIntArrayReference(expectedSize: Int) {
   }
 
   class SingleInteger : AbstractSortedIntArray() {
-
     private var value: Int = INVALID_INT
 
-    override fun size(): Int {
-      return if (value == INVALID_INT) {
+    override fun size(): Int =
+      if (value == INVALID_INT) {
         0
       } else {
         1
       }
-    }
 
     override fun add(value: Int) {
       check(this.value == INVALID_INT)
@@ -105,7 +109,10 @@ class SortedIntArrayReference(expectedSize: Int) {
       value = INVALID_INT
     }
 
-    override fun binarySearch(fromIndex: Int, key: Int): Int {
+    override fun binarySearch(
+      fromIndex: Int,
+      key: Int,
+    ): Int {
       check(isFull())
       if (fromIndex == 0) {
         val value = this.value
@@ -137,8 +144,9 @@ class SortedIntArrayReference(expectedSize: Int) {
       }
   }
 
-  class MultipleIntegers(private var expectedSize: Int) : AbstractSortedIntArray() {
-
+  class MultipleIntegers(
+    private var expectedSize: Int,
+  ) : AbstractSortedIntArray() {
     init {
       require(expectedSize > 1)
     }
@@ -169,7 +177,10 @@ class SortedIntArrayReference(expectedSize: Int) {
       lazyAssert { expectedSize == newExpectedSize }
     }
 
-    override fun binarySearch(fromIndex: Int, key: Int): Int {
+    override fun binarySearch(
+      fromIndex: Int,
+      key: Int,
+    ): Int {
       check(isFull())
       return Arrays.binarySearch(array, fromIndex, expectedSize, key)
     }
@@ -191,7 +202,6 @@ class SortedIntArrayReference(expectedSize: Int) {
   }
 
   companion object {
-
     private const val INVALID_INT = Integer.MIN_VALUE
   }
 }

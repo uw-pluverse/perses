@@ -33,17 +33,19 @@ class ReadmeTest {
   fun testDownloadLinkIsForLatestVersion() {
     val majorVersion = "majorVersion"
     val minorVersion = "minorVersion"
-    val pattern = Regex(
-      ".*https://github.com/uw-pluverse/perses/releases/download/" +
-        "v(?<$majorVersion>\\d+).(?<$minorVersion>\\d+)" +
-        "/perses_deploy.jar.*",
-    )
-    val matchedLines = readmeFile
-      .readLines()
-      .mapNotNull { pattern.matchEntire(it) }
-      .map { matchResult ->
-        matchResult.groups[majorVersion] to matchResult.groups["minorVersion"]
-      }
+    val pattern =
+      Regex(
+        ".*https://github.com/uw-pluverse/perses/releases/download/" +
+          "v(?<$majorVersion>\\d+).(?<$minorVersion>\\d+)" +
+          "/perses_deploy.jar.*",
+      )
+    val matchedLines =
+      readmeFile
+        .readLines()
+        .mapNotNull { pattern.matchEntire(it) }
+        .map { matchResult ->
+          matchResult.groups[majorVersion] to matchResult.groups["minorVersion"]
+        }
     assertWithMessage("The $readmeFile does not have a line matching the pattern $pattern")
       .that(matchedLines)
       .hasSize(1)

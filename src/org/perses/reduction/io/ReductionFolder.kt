@@ -24,6 +24,7 @@ import org.perses.reduction.PropertyTestResult
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
 import java.io.IOException
+import java.lang.RuntimeException
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
 import java.nio.file.Path
@@ -38,7 +39,6 @@ class ReductionFolder(
   private val reductionInputs: AbstractReductionInputs<*, *>,
   val folder: Path,
 ) {
-
   private var inUse = true
 
   @VisibleForTesting
@@ -54,33 +54,39 @@ class ReductionFolder(
     return Files.exists(folder.resolve(baseName))
   }
 
-  fun computeAbsPathForOrigFile(origFile: AbstractReductionFile<*, *>): Path {
-    return reductionInputs.computeAbsPathWrt(origFile, folder)
-  }
+  fun computeAbsPathForOrigFile(origFile: AbstractReductionFile<*, *>): Path =
+    reductionInputs.computeAbsPathWrt(origFile, folder)
 
   fun deleteAllOtherFiles() {
     checkThisFolderIsStillInUse()
-    val fileToKeep = ImmutableList
-      .builder<Path>()
-      .add(testScript.scriptFile)
-      .addAll(
-        reductionInputs.computeAbsPathListWrt(
-          folder,
-          reductionFileSelectionPredicate = { true },
-        ).asIterable(),
-      )
-      .build()
+    val fileToKeep =
+      ImmutableList
+        .builder<Path>()
+        .add(testScript.scriptFile)
+        .addAll(
+          reductionInputs
+            .computeAbsPathListWrt(
+              folder,
+              reductionFileSelectionPredicate = { true },
+            ).asIterable(),
+        ).build()
     Files.walkFileTree(
       folder,
       object : SimpleFileVisitor<Path>() {
-        override fun visitFile(file: Path, attrs: BasicFileAttributes?): FileVisitResult {
+        override fun visitFile(
+          file: Path,
+          attrs: BasicFileAttributes?,
+        ): FileVisitResult {
           if (!fileToKeep.any { Files.isSameFile(it, file) }) {
             Files.delete(file)
           }
           return super.visitFile(file, attrs)
         }
 
-        override fun postVisitDirectory(dir: Path, exc: IOException?): FileVisitResult {
+        override fun postVisitDirectory(
+          dir: Path,
+          exc: IOException?,
+        ): FileVisitResult {
           if (Util.isEmptyDirectory(dir)) {
             Files.delete(dir)
           }
@@ -94,7 +100,34 @@ class ReductionFolder(
   fun deleteThisDirectoryRecursively() {
     checkThisFolderIsStillInUse()
     inUse = false
-    folder.deleteRecursively()
+    val result = kotlin.runCatching { folder.deleteRecursively() }
+    if (result.isSuccess) {
+      return
+    }
+    try {
+      /* Try to delete this again.
+       *
+       * There is a bug. There is another thread trying to write something to this directory,
+       * but we are trying to delete the folder. So as a workaround, let's try to delete the
+       * folder again. If there is another exception, then the caller will handle it.
+       */
+      folder.deleteRecursively()
+    } catch (e: Exception) {
+      throw RuntimeException(
+        """There are still files in this folder.
+        |folder: ${this.folder.fileName}
+        |
+        |The following are the files in this folder.
+        |${Util.listFilesInFolder(folder).joinToString(separator = "\n") {it.toString()}}
+        |----------------------------------------------------------
+        |
+        |There was an exception previously.
+        |${result.exceptionOrNull()!!.stackTraceToString()}
+        |
+        """.trimMargin(),
+        e,
+      )
+    }
   }
 
   private fun checkThisFolderIsStillInUse() {
@@ -105,9 +138,8 @@ class ReductionFolder(
     Util.copyDirectory(folder, destFolder.folder, StandardCopyOption.REPLACE_EXISTING)
   }
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("working directory", folder).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("working directory", folder).toString()
 
   init {
     lazyAssert({ Files.isRegularFile(testScript.scriptFile) }) {

@@ -22,7 +22,7 @@ import org.perses.CommandOptions
 import org.perses.TokenCounterMain
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.listminimizer.EnumListInputMinimizerType
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.ppr.diff.PPRDiffUtils
 import org.perses.ppr.diff.list.ListDiffCmdOptions
 import org.perses.ppr.diff.list.ListDiffMain
@@ -42,10 +42,9 @@ class PPRMetaReductionDriver private constructor(
   val cmd: CmdOptions,
   val parserFacadeFactory: AbstractParserFacadeFactory,
 ) : IReductionDriver {
-
-  override val cachedSanityCheckResult: IReductionDriver.AbstractSanityCheckResult by lazy {
+  override val cachedSanityCheckResult: IReductionDriver.SanityCheckResult by lazy {
     // TODO(max): need to run sanity check
-    IReductionDriver.PassingSanityCheckResult
+    IReductionDriver.SanityCheckResult.Passing
   }
 
   override fun reduce() {
@@ -62,13 +61,19 @@ class PPRMetaReductionDriver private constructor(
     val testPath = Util.copyFileToDirectory(cmd.overallInputFlags.getTestScript(), workingDir)
     val filesToBeKept = Util.listFilesInFolder(workingDir)
 
-    val languageKind = parserFacadeFactory.computeLanguage(
-      cmd.languageControlFlags.languageName,
-      seedPath,
-    )
+    // TODO(cnsun): need to move this logic to the Main class.
+    val languageKind =
+      parserFacadeFactory.computeLanguage(
+        specifiedLanguageName = cmd.languageControlFlags.languageName,
+        designatedParserFacadeClassName = cmd.languageControlFlags.designatedParserFacadeClassName,
+        sourceFileAbsPath = seedPath,
+      )
 
-    val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(languageKind)!!
-      .defaultParserFacade.create()
+    val parserFacade =
+      parserFacadeFactory
+        .getParserFacadeListForOrNull(languageKind)!!
+        .defaultParserFacade
+        .create()
 
     var seedSizeBefore: Int
     var variantSizeBefore: Int
@@ -92,8 +97,8 @@ class PPRMetaReductionDriver private constructor(
         logger.ktInfo { "Start tree-based diff reduction on both trees." }
         printCurrentState(parserFacade, seedPath, variantPath, languageKind.name, iteration)
         TreeDiffMain(
-          flagGenerator.generateTreeDiffCmdOptions(seedPath, variantPath),
-          globalContext,
+          cmd = flagGenerator.generateTreeDiffCmdOptions(seedPath, variantPath),
+          globalContext = globalContext,
         ).use { it.run() }
       }
 
@@ -173,11 +178,10 @@ class PPRMetaReductionDriver private constructor(
     private val testPath: Path,
     val workingDir: Path,
   ) {
-
     private fun updateAlgorithmControlFlags(cmd: CommandOptions) {
       cmd.algorithmControlFlags.rebuildParseTreeEachIteration = false
-      cmd.algorithmControlFlags.defaultDeltaDebuggerTypeForKleene =
-        EnumListInputMinimizerType.PERSES_VARIANT_OF_PRISTINE
+      cmd.algorithmControlFlags.defaultListMinimizerTypeForKleene =
+        EnumListMinimizerType.PERSES_VARIANT_OF_PRISTINE
       cmd.algorithmControlFlags.reductionAlgorithm =
         originalCmd.algorithmControlFlags.reductionAlgorithm
     }
@@ -187,7 +191,7 @@ class PPRMetaReductionDriver private constructor(
     }
 
     private fun updateReductionControlFlags(cmd: CommandOptions) {
-      cmd.reductionControlFlags.fixpoint = false
+      cmd.reductionControlFlags.fixpointForMainReducer = false
       cmd.reductionControlFlags.setNumOfThreads(
         originalCmd.reductionControlFlags.getNumOfThreads(),
       )
@@ -214,6 +218,9 @@ class PPRMetaReductionDriver private constructor(
       enableListDiff: Boolean,
     ): ListDiffCmdOptions {
       val listDiffCmdOptions = ListDiffCmdOptions()
+      // TRec is not compatible with PPR.
+      listDiffCmdOptions.trecFlags.enableTRec = false
+      listDiffCmdOptions.latraFlags.enableLatra = false
       listDiffCmdOptions.inputFlags.inputFile = seedPath
       listDiffCmdOptions.listDiffInputFlags.variantFile = variantPath.toString()
       listDiffCmdOptions.inputFlags.testScript = testPath
@@ -236,6 +243,9 @@ class PPRMetaReductionDriver private constructor(
       variantPath: Path,
     ): TreeDiffCmdOptions {
       val treeDiffCmdOptions = TreeDiffCmdOptions()
+      // TRec is not compatible with PPR.
+      treeDiffCmdOptions.trecFlags.enableTRec = false
+      treeDiffCmdOptions.latraFlags.enableLatra = false
       treeDiffCmdOptions.inputFlags.inputFile = seedPath
       treeDiffCmdOptions.treeDiffInputFlags.variantFile = variantPath
       treeDiffCmdOptions.inputFlags.testScript = testPath
@@ -255,6 +265,9 @@ class PPRMetaReductionDriver private constructor(
       variantPath: Path,
     ): SeedCmdOptions {
       val seedCmdOptions = SeedCmdOptions()
+      // TRec is not compatible with PPR.
+      seedCmdOptions.trecFlags.enableTRec = false
+      seedCmdOptions.latraFlags.enableLatra = false
       seedCmdOptions.inputFlags.inputFile = seedPath
       seedCmdOptions.seedInputFlags.variantFile = variantPath
       seedCmdOptions.inputFlags.testScript = testPath
@@ -308,11 +321,12 @@ class PPRMetaReductionDriver private constructor(
     ): ListAlignment<Token> {
       val seedTokenList = parserFacade.tokenizeFile(seedPath)
       val variantTokenList = parserFacade.tokenizeFile(variantPath)
-      val listAlignment = ListAlignment.create(
-        seedTokenList,
-        variantTokenList,
-        PPRDiffUtils.EQUALIZER_TOKEN,
-      )
+      val listAlignment =
+        ListAlignment.create(
+          seedTokenList,
+          variantTokenList,
+          PPRDiffUtils.EQUALIZER_ANTLR_TOKEN,
+        )
       return ListAlignment.mergeIntoReplace(listAlignment)
     }
 
@@ -321,8 +335,6 @@ class PPRMetaReductionDriver private constructor(
       globalContext: GlobalContext,
       cmd: CmdOptions,
       parserFacadeFactory: AbstractParserFacadeFactory,
-    ): PPRMetaReductionDriver {
-      return PPRMetaReductionDriver(globalContext, cmd, parserFacadeFactory)
-    }
+    ): PPRMetaReductionDriver = PPRMetaReductionDriver(globalContext, cmd, parserFacadeFactory)
   }
 }

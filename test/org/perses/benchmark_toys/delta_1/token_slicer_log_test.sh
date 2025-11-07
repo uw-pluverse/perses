@@ -16,7 +16,7 @@ if ! grep --quiet "Fixpoint iteration finished. delete 0 tokens, ratio=21/56=37.
   exit 1
 fi
 
-if ! grep --quiet "Reducer\[concurrent_token_slicer.* granularity=1, delete 0 tokens, ratio=21/56=37.50" "${FILE}"; then
+if ! grep --quiet "\[concurrent_token_slicer.* granularity=1, delete 0 tokens, ratio=21/56=37.50" "${FILE}"; then
   exit 1
 fi
 

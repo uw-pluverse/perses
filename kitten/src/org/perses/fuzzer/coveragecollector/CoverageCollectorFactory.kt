@@ -19,9 +19,8 @@ package org.perses.fuzzer.coveragecollector
 import org.perses.fuzzer.CommandOptions
 
 class CoverageCollectorFactory {
-
-  fun getCoverageCollector(coverageFlags: CommandOptions.CoverageFlagGroup): ICoverageCollector {
-    return if (coverageFlags.aflCoverageMode) {
+  fun getCoverageCollector(coverageFlags: CommandOptions.CoverageFlagGroup): ICoverageCollector =
+    if (coverageFlags.aflCoverageMode) {
       AFLCoverageCollector(
         coverageFlags.coverageMonitorInterval,
         coverageFlags.getCoverageResultFile()!!,
@@ -52,5 +51,4 @@ class CoverageCollectorFactory {
         coverageFlags.getCoverageResultFile()!!,
       )
     }
-  }
 }

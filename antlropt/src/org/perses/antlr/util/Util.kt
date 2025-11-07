@@ -20,7 +20,6 @@ import java.nio.file.Paths
 import kotlin.io.path.name
 
 object Util {
-
   @JvmStatic
   fun extractGrammarNameFromGrammarFileName(fileName: String): String {
     require(fileName.endsWith(".g4"))

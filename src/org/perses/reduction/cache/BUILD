@@ -15,9 +15,10 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "sha512_cache",
+    name = "sha_hash_cache",
     srcs = [
-        "ContentSHA512BasedQueryCache.kt",
+        "ContentShaHashBasedFormatQueryCache.kt",
+        "ContentShaHashBasedQueryCache.kt",
     ],
     deps = [
         ":query_cache",
@@ -31,6 +32,7 @@ kt_jvm_library(
     ],
     deps = [
         "//src/org/perses/util:percentage",
+        "//src/org/perses/util/hashing",
     ],
 )
 
@@ -66,7 +68,7 @@ kt_jvm_library(
         ":content_based_cache",
         ":linear_scan_cache",
         ":query_cache",
-        ":sha512_cache",
+        ":sha_hash_cache",
         ":test_execution_cache_type",
         ":zip_cache",
     ],
@@ -82,6 +84,7 @@ kt_jvm_library(
         ":program_encoding_interface",
         "//src/org/perses/program",
         "//src/org/perses/reduction:test_script",
+        "//src/org/perses/reduction/io:output_manager_interface",
     ],
 )
 
@@ -121,7 +124,6 @@ kt_jvm_library(
     deps = [
         ":int_array_compressor",
         ":interval_expander",
-        ":null_query_cache",
         ":program_encoding_interface",
         ":query_cache_configuration",
         ":query_cache_interface",
@@ -132,6 +134,7 @@ kt_jvm_library(
         "//src/org/perses/reduction:property_test_result",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/util:percentage",
+        "@maven//:com_github_ben_manes_caffeine_caffeine",
         "@maven//:com_google_errorprone_error_prone_annotations",
     ],
 )

@@ -19,9 +19,15 @@ package org.perses.fuzzer.compilers.rust
 import com.google.common.base.Splitter
 
 object RustcVersions {
-
-  val VERSION_STRINGS = RustcVersions::class.java
-    .getResource("/scripts/rust_versions.txt").readText().let {
-      Splitter.on('\n').trimResults().omitEmptyStrings().split(it)
-    }
+  val VERSION_STRINGS =
+    RustcVersions::class.java
+      .getResource("/scripts/rust_versions.txt")
+      .readText()
+      .let {
+        Splitter
+          .on('\n')
+          .trimResults()
+          .omitEmptyStrings()
+          .split(it)
+      }
 }

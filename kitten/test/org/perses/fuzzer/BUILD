@@ -1,6 +1,6 @@
-package(default_visibility = ["//kitten/test:__subpackages__"])
-
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+
+package(default_visibility = ["//kitten/test:__subpackages__"])
 
 kt_jvm_library(
     name = "RustTestUtil",
@@ -15,6 +15,8 @@ kt_jvm_library(
         "//kitten/src/org/perses/fuzzer/compilers/rust",
         "//kitten/src/org/perses/fuzzer/config:testing_configuration",
         "//kitten/src/org/perses/fuzzer/organizer:organizer_lib",
+        "//src/org/perses/grammar/c:language_kind",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/util",
         "//src/org/perses/util/shell",
     ],
@@ -35,7 +37,7 @@ kt_jvm_test(
         "//kitten/src/org/perses/fuzzer:perses_fuzzer",
         "//src/org/perses/antlr:util",
         "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/grammar/c:optc_parser_facade",
         "//src/org/perses/grammar/c:parser_facade",
@@ -45,7 +47,6 @@ kt_jvm_test(
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/spartree",
-        "//test/org/perses:test_util",
     ],
 )
 
@@ -114,8 +115,8 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//kitten/src/org/perses/fuzzer:perses_fuzzer",
-        "//src/org/perses/util:timeutil",
+        "//kitten/src/org/perses/fuzzer:command_options",
+        "//src/org/perses/grammar:parser_facade_interface",
     ],
 )
 
@@ -123,7 +124,9 @@ kt_jvm_library(
     name = "FakeCompilationAction",
     srcs = ["FakeCompilationAction.kt"],
     deps = [
-        "//kitten/src/org/perses/fuzzer:perses_fuzzer",
+        "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar/rust:language_kind",
     ],
 )
 
@@ -155,6 +158,7 @@ kt_jvm_test(
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/c",
         "//kitten/src/org/perses/fuzzer/compilers/scala",
+        "//kitten/src/org/perses/fuzzer/compilers/solidity",
         "//kitten/src/org/perses/fuzzer/organizer:organizer_lib",
     ],
 )
@@ -163,12 +167,11 @@ kt_jvm_test(
     name = "ExtensionScriptTest",
     srcs = ["ExtensionScriptTest.kt"],
     deps = [
-        ":RustTestUtil",
         "//:flogger",
         "//:guava",
         "//:truth",
-        "//kitten/src/org/perses/fuzzer:kira_lib",
-        "//kitten/src/org/perses/fuzzer/organizer:organizer_lib",
+        "//kitten/src/org/perses/fuzzer:perses_fuzzer",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/util",
     ],
 )
@@ -177,12 +180,11 @@ kt_jvm_test(
     name = "DistributionTableTest",
     srcs = ["DistributionTableTest.kt"],
     deps = [
-        ":RustTestUtil",
         "//:flogger",
         "//:guava",
         "//:truth",
-        "//kitten/src/org/perses/fuzzer:kira_lib",
-        "//kitten/src/org/perses/fuzzer/organizer:organizer_lib",
+        "//kitten/src/org/perses/fuzzer:perses_fuzzer",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/util",
     ],
 )
@@ -212,7 +214,6 @@ kt_jvm_test(
     deps = [
         "//:truth",
         "//kitten/src/org/perses/fuzzer:perses_fuzzer",
-        "//test/org/perses:test_util",
     ],
 )
 

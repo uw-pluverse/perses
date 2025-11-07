@@ -22,10 +22,9 @@ abstract class AbstractInternalSparTreeNode(
   nodeId: Int,
   antlrRule: RuleHierarchyEntry?,
 ) : AbstractSparTreeNode(
-  nodeId = nodeId,
-  antlrRule = antlrRule,
-) {
-
+    nodeId = nodeId,
+    antlrRule = antlrRule,
+  ) {
   override var beginToken: LexerRuleSparTreeNode? = null
 
   override var endToken: LexerRuleSparTreeNode? = null
@@ -58,5 +57,8 @@ abstract class AbstractInternalSparTreeNode(
     endToken = computeRightmostTokenBasedOnChildren()
   }
 
-  override fun onChildRemoved(index: Int, child: AbstractSparTreeNode) = Unit
+  override fun onChildRemoved(
+    index: Int,
+    child: AbstractSparTreeNode,
+  ) = Unit
 }

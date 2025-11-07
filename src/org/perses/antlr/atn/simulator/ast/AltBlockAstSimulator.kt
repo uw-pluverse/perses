@@ -26,7 +26,6 @@ class AltBlockAstSimulator(
   ast: PersesAlternativeBlockAst,
   private val altSimulators: ImmutableList<AbstractASTSimulator<*>>,
 ) : AbstractASTSimulator<PersesAlternativeBlockAst>(ast) {
-
   init {
     require(altSimulators.size == ast.alternatives.size)
     require(altSimulators.isNotEmpty())

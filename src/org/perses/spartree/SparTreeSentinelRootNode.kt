@@ -19,14 +19,12 @@ package org.perses.spartree
 class SparTreeSentinelRootNode(
   nodeId: Int,
 ) : AbstractInternalSparTreeNode(
-  nodeId = nodeId,
-  antlrRule = null,
-) {
-
+    nodeId = nodeId,
+    antlrRule = null,
+  ) {
   override val labelPrefix: String
     get() = "SentinelRoot"
 
-  override fun internalCopyCurrentNode(computedNewNodeId: Int): SparTreeSentinelRootNode {
-    return SparTreeSentinelRootNode(computedNewNodeId)
-  }
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): SparTreeSentinelRootNode =
+    SparTreeSentinelRootNode(computedNewNodeId)
 }

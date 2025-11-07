@@ -24,16 +24,12 @@ import org.perses.antlr.pnf.AstUtil.replaceGapInSequence
 import org.perses.util.Interval
 
 abstract class AbstractPnfPass {
-
-  abstract fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair
+  abstract fun processGrammar(grammar: GrammarPair): GrammarPair
 
   companion object {
     @JvmStatic
-    protected fun getSortedRuleNames(map: MutableGrammar): List<RuleNameHandle> {
-      return map.ruleNameSequence().sorted().toList()
-    }
+    protected fun getSortedRuleNames(map: MutableGrammar): List<RuleNameHandle> =
+      map.ruleNameSequence().sorted().toList()
 
     @JvmStatic
     protected fun replaceGapWithRuleReference(

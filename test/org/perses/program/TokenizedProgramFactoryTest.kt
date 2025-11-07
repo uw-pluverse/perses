@@ -29,24 +29,25 @@ import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class TokenizedProgramFactoryTest {
-
-  val factory = createAntlrTokens(
-    ImmutableList.of("a", "b", "c", "d", "e"),
-  ).let {
-    createFactory(it, LanguageC)
-  }
+  val factory =
+    createAntlrTokens(
+      ImmutableList.of("a", "b", "c", "d", "e"),
+    ).let {
+      createFactory(it, LanguageC)
+    }
 
   @Test
   fun testCreateEmptyTokenizedProgramFactory() {
     val factory = TokenizedProgramFactory.createEmptyFactory(LanguageC)
     val tokenFactory = factory.tokenFactory
-    val tokens = createAntlrTokens(listOf("a")).also { tokens ->
-      // The perses tokens must be created first.
-      tokens.forEach { token -> tokenFactory.createPersesToken(token) }
-    }
+    val tokens =
+      createAntlrTokens(listOf("a")).also { tokens ->
+        // The perses tokens must be created first.
+        tokens.forEach { token -> tokenFactory.createPersesToken(token) }
+      }
     val program = factory.create(tokens).tokens
     assertThat(program).hasSize(1)
-    assertThat(program.single().text).isEqualTo("a")
+    assertThat(program.single().lexemeText).isEqualTo("a")
   }
 
   @Test
@@ -69,12 +70,13 @@ class TokenizedProgramFactoryTest {
   fun testCopyPersesToken() {
     val tokens = createAntlrTokens(listOf("b"))
     val program = factory.create(tokens)
-    val token = program.tokens.single()
-    val copy = program.factory.tokenFactory.copyPersesTokenWithNewText(
-      newText = "z",
-      token,
-    )
-    assertThat(copy.text).isEqualTo("z")
+    val token = program.tokens.single().asAntlrToken()
+    val copy =
+      program.factory.tokenFactory.copyPersesTokenWithNewText(
+        newText = "z",
+        token,
+      )
+    assertThat(copy.lexemeText).isEqualTo("z")
     assertThat(copy.position).isEqualTo(
       token.position,
     )
@@ -88,9 +90,9 @@ class TokenizedProgramFactoryTest {
     assertThat(histogram).asList().containsExactly(0, 2, 0, 0, 1)
   }
 
-  private fun createAntlrTokens(lexemes: List<String>): ImmutableList<Token> {
-    return lexemes.asSequence()
+  private fun createAntlrTokens(lexemes: List<String>): ImmutableList<Token> =
+    lexemes
+      .asSequence()
       .map { createAntlrToken(it) }
       .toImmutableList()
-  }
 }

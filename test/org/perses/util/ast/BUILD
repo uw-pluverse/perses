@@ -4,7 +4,6 @@ kt_jvm_test(
     name = "CommonAstTest",
     srcs = ["CommonAstTest.kt"],
     deps = [
-        "//:guava",
         "//:truth",
         "//src/org/perses/util/ast",
     ],

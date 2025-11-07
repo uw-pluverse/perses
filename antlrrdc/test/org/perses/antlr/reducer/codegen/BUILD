@@ -5,7 +5,6 @@ kt_jvm_test(
     srcs = ["ReductionScriptTemplateTest.kt"],
     deps = [
         "//:guava",
-        "//:kotlin_stdib",
         "//:truth",
         "//antlrrdc/src/org/perses/antlr/reducer/codegen:templates",
         "//test/org/perses/antlr:AbstractAntlrrdcTest",

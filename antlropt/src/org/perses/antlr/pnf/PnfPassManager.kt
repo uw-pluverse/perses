@@ -30,11 +30,23 @@ class PnfPassManager(
   ) -> ImmutableList<AbstractPnfPass> = ::createDefaultRepetitivePasses,
   val finalizingPassCreator: () -> ImmutableList<AbstractPnfPass> = ::createDefaultFinalizingPasses,
 ) {
-
   abstract class Listener {
-    open fun start(grammar: GrammarPair, startRuleName: String) {}
-    open fun beforePass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {}
-    open fun afterPass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {}
+    open fun start(
+      grammar: GrammarPair,
+      startRuleName: String,
+    ) {}
+
+    open fun beforePass(
+      grammar: GrammarPair,
+      passClass: Class<*>,
+      iteration: Int,
+    ) {}
+
+    open fun afterPass(
+      grammar: GrammarPair,
+      passClass: Class<*>,
+      iteration: Int,
+    ) {}
   }
 
   fun process(
@@ -45,11 +57,12 @@ class PnfPassManager(
     logger.ktInfo { "Checking whether the original grammar can be accepted by Antlr." }
     checkAntlrAcceptsTheGrammar(origGrammar)
     var currentGrammar = origGrammar
-    val allListeners = ImmutableList
-      .builder<Listener>()
-      .add(*listeners)
-      .add(LoggingListener())
-      .build()
+    val allListeners =
+      ImmutableList
+        .builder<Listener>()
+        .add(*listeners)
+        .add(LoggingListener())
+        .build()
     allListeners.forEach { it.start(origGrammar, startRuleName) }
     for (i in 0..19) {
       val iterationBefore = currentGrammar
@@ -87,24 +100,35 @@ class PnfPassManager(
   }
 
   private class LoggingListener : Listener() {
-
     private val stopwatch = Stopwatch.createUnstarted()
 
-    override fun start(grammar: GrammarPair, startRuleName: String) {
+    override fun start(
+      grammar: GrammarPair,
+      startRuleName: String,
+    ) {
       logger.ktInfo {
-        val grammarName = grammar.grammarSequence().joinToString(separator = ",") {
-          it.grammarName
-        }
+        val grammarName =
+          grammar.grammarSequence().joinToString(separator = ",") {
+            it.grammarName
+          }
         "Starting to process grammar $grammarName with start rule $startRuleName"
       }
     }
 
-    override fun beforePass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {
+    override fun beforePass(
+      grammar: GrammarPair,
+      passClass: Class<*>,
+      iteration: Int,
+    ) {
       stopwatch.reset().start()
       logger.ktInfo { "Pass $passClass at iteration $iteration" }
     }
 
-    override fun afterPass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {
+    override fun afterPass(
+      grammar: GrammarPair,
+      passClass: Class<*>,
+      iteration: Int,
+    ) {
       logger.ktInfo { "Pass $passClass takes ${stopwatch.elapsed(TimeUnit.SECONDS)} seconds." }
     }
   }
@@ -112,12 +136,12 @@ class PnfPassManager(
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
 
-    fun createDefaultFinalizingPasses(): ImmutableList<AbstractPnfPass> {
-      return ImmutableList.of(
+    fun createDefaultFinalizingPasses(): ImmutableList<AbstractPnfPass> =
+      ImmutableList.of(
         ConvertAllAltToRuleReferenceOrTerminalPass(),
         PnfCheckPass(),
       )
-    }
+
     fun createDefaultRepetitivePasses(startRuleName: String): ImmutableList<AbstractPnfPass> {
       val result = ImmutableList.builder<AbstractPnfPass>()
       result.add(RemoveUnusedLabelPass())

@@ -12,8 +12,9 @@ reduction_golden_test(
     name = "reduction_golden_test",
     enable_edit_caching = True,
     enable_query_caching = True,
+    enable_token_reducer = True,
     golden_reduced_file = "golden_t.vert",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.vert",
     test_script = "grep_based_r.sh",
 )

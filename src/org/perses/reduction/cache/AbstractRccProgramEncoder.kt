@@ -19,6 +19,7 @@ package org.perses.reduction.cache
 import it.unimi.dsi.fastutil.ints.IntArrayList
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.util.Util.lazyAssert
 import kotlin.system.measureNanoTime
 
@@ -27,25 +28,28 @@ abstract class AbstractRccProgramEncoder protected constructor(
   profiler: AbstractQueryCacheProfiler,
   private val enableCompression: Boolean,
 ) : AbstractTokenizedProgramEncoder<RccProgramEncoding>(
-  program,
-  profiler,
-  supportsRccReEncoding = true,
-) {
-
-  override fun encode(program: TokenizedProgram): RccProgramEncoding? {
+    program,
+    profiler,
+    supportsRccReEncoding = true,
+  ) {
+  override fun encode(
+    program: TokenizedProgram,
+    outputManager: AbstractOutputManager,
+  ): RccProgramEncoding? {
     var optionalEncoding: RccProgramEncoding?
-    val nanoDuration = measureNanoTime {
-      val tokens = program.tokens
-      val tokenCount = tokens.size
-      optionalEncoding = encode(tokens.iterator(), tokenCount)
-    }
+    val nanoDuration =
+      measureNanoTime {
+        val tokens = program.tokens
+        val tokenCount = tokens.size
+        optionalEncoding = encode(tokens.iterator(), tokenCount)
+      }
     profiler.afterEncodeProgram(baseProgram.tokens, program, nanoDuration)
     lazyAssert { optionalEncoding == null || assertEncodingIsCorrect(program, optionalEncoding!!) }
     return optionalEncoding
   }
 
   protected fun encode(
-    tokenIterator: Iterator<PersesTokenFactory.PersesToken>,
+    tokenIterator: Iterator<PersesTokenFactory.AbstractPersesToken>,
     tokenCount: Int,
   ): RccProgramEncoding? {
     val interval = encodeUncompressed(tokenIterator, tokenCount) ?: return null
@@ -65,14 +69,11 @@ abstract class AbstractRccProgramEncoder protected constructor(
     }
   }
 
-  override fun reEncode(
-    previousEncoding: RccProgramEncoding,
-  ): RccProgramEncoding? {
-    return encode(previousEncoding.tokenIterator(), previousEncoding.tokenCount)
-  }
+  override fun reEncode(previousEncoding: RccProgramEncoding): RccProgramEncoding? =
+    encode(previousEncoding.tokenIterator(), previousEncoding.tokenCount)
 
   protected abstract fun encodeUncompressed(
-    tokenIterator: Iterator<PersesTokenFactory.PersesToken>,
+    tokenIterator: Iterator<PersesTokenFactory.AbstractPersesToken>,
     tokenCount: Int,
   ): IntArrayList?
 

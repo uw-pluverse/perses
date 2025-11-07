@@ -25,9 +25,11 @@ import org.perses.version.Version.STATUS
 import java.io.PrintStream
 
 object VersionHelper {
-
   @JvmStatic
-  fun printVersionInfo(programName: String, stream: PrintStream) {
+  fun printVersionInfo(
+    programName: String,
+    stream: PrintStream,
+  ) {
     stream.println("$programName version $MAJOR_VERSION.$MINOR_VERSION")
     if (COMMIT_HASH.isNotBlank()) {
       stream.println("Git Version: $COMMIT_HASH")

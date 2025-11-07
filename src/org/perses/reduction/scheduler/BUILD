@@ -7,8 +7,10 @@ package(default_visibility = [
 kt_jvm_library(
     name = "scheduler",
     srcs = [
+        "AbstractSchedulerEvent.kt",
         "ExecutionPlanYamlDefinition.kt",
         "ReducerExecutionPlan.kt",
+        "ReducerHistoryAndStatistics.kt",
         "ReducerScheduler.kt",
     ],
     deps = [

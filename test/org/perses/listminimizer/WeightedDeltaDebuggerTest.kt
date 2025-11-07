@@ -25,12 +25,11 @@ import org.perses.reduction.PropertyTestResult
 
 @RunWith(JUnit4::class)
 class WeightedDeltaDebuggerTest {
-
   val input: ImmutableList<Int> = ImmutableList.of(1, 2, 3, 5, 10)
 
-  val dummyHandler = { _:
-  ImmutableList<AbstractListInputMinimizer.ElementWrapper<Int>>,
-      _: String,
+  val dummyHandler = {
+    _: ImmutableList<ElementWrapper<Int>>,
+    _: String,
     ->
   }
 
@@ -41,14 +40,30 @@ class WeightedDeltaDebuggerTest {
     testWdd(property = listOf(1), expected = listOf(1))
     testWdd(property = listOf(3), expected = listOf(3))
     testWdd(property = listOf(2, 5, 10), expected = listOf(2, 5, 10)).let { testHistory ->
-      assertThat(testHistory).containsExactly(
-        "",
-        "1235", "10", "10", "1235",
-        "123", "5", "510", "12310",
-        "12", "3", "3510", "12510", "510",
-        "1", "2", "2510", "510",
-        "510", "210", "25",
-      ).inOrder()
+      assertThat(testHistory)
+        .containsExactly(
+          "",
+          "1235",
+          "10",
+          "10",
+          "1235",
+          "123",
+          "5",
+          "510",
+          "12310",
+          "12",
+          "3",
+          "3510",
+          "12510",
+          "510",
+          "1",
+          "2",
+          "2510",
+          "510",
+          "510",
+          "210",
+          "25",
+        ).inOrder()
     }
   }
 
@@ -66,14 +81,25 @@ class WeightedDeltaDebuggerTest {
       expected = listOf(2, 5, 10),
       enableCache = true,
     ).let { testHistory ->
-      assertThat(testHistory).containsExactly(
-        "",
-        "1235", "10",
-        "123", "5", "510", "12310",
-        "12", "3", "3510", "12510",
-        "1", "2", "2510",
-        "210", "25",
-      ).inOrder()
+      assertThat(testHistory)
+        .containsExactly(
+          "",
+          "1235",
+          "10",
+          "123",
+          "5",
+          "510",
+          "12310",
+          "12",
+          "3",
+          "3510",
+          "12510",
+          "1",
+          "2",
+          "2510",
+          "210",
+          "25",
+        ).inOrder()
     }
   }
 
@@ -86,26 +112,27 @@ class WeightedDeltaDebuggerTest {
 
     val propertyTest =
       IPropertyTester<Int, String> { configuration ->
-        val candidate = configuration.candidate
+        val candidate = configuration.getCandidateOrFail()
         testHistory.add(candidate.joinToString(""))
         if (candidate.containsAll(property)) {
-          PropertyTestResultWithPayload(PropertyTestResult.INTERESTING_RESULT, "")
+          LMPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "")
         } else {
-          PropertyTestResultWithPayload(PropertyTestResult.NON_INTERESTING_RESULT, "")
+          LMPropertyTestResult.Completed(PropertyTestResult.NON_INTERESTING_RESULT, "")
         }
       }
 
-    val debugger = WeightedDeltaDebugger(
-      AbstractListInputMinimizer.Arguments(
-        needToTestEmpty = true,
-        input = input,
-        propertyTester = propertyTest,
-        onBestUpdateHandler = dummyHandler,
-        descriptionPrefix = "prefix",
-        weightProvider = { it },
-      ),
-      enableCache = enableCache,
-    )
+    val debugger =
+      WeightedDeltaDebugger(
+        ListMinimizerArguments(
+          needToTestEmpty = true,
+          input = input,
+          propertyTester = propertyTest,
+          onBestUpdateHandler = dummyHandler,
+          descriptionPrefix = "prefix",
+          weightProvider = { it },
+        ),
+        enableCache = enableCache,
+      )
 
     val result = debugger.reduce()
     assertThat(result).isEqualTo(expected)

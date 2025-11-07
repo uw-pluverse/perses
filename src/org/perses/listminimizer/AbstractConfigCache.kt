@@ -19,7 +19,6 @@ package org.perses.listminimizer
 import com.google.common.collect.ImmutableList
 
 abstract class AbstractConfigCache<T> {
-
   abstract fun add(config: ConfigurationBasedOnElementSystemIdentity)
 
   abstract fun contains(config: ConfigurationBasedOnElementSystemIdentity): Boolean
@@ -28,12 +27,9 @@ abstract class AbstractConfigCache<T> {
 }
 
 class NullConfigCache<T> : AbstractConfigCache<T>() {
-
   override fun add(config: ConfigurationBasedOnElementSystemIdentity) {}
 
-  override fun contains(config: ConfigurationBasedOnElementSystemIdentity): Boolean {
-    return false
-  }
+  override fun contains(config: ConfigurationBasedOnElementSystemIdentity): Boolean = false
 
   override fun deleteStaleConfigs(newSize: Int) {}
 }
@@ -41,7 +37,6 @@ class NullConfigCache<T> : AbstractConfigCache<T>() {
 class ConfigCache<T>(
   private val enableRefresh: Boolean = false,
 ) : AbstractConfigCache<T>() {
-
   private val cache = HashSet<ConfigurationBasedOnElementSystemIdentity>()
 
   val size: Int
@@ -52,9 +47,8 @@ class ConfigCache<T>(
     cache.add(config)
   }
 
-  override fun contains(config: ConfigurationBasedOnElementSystemIdentity): Boolean {
-    return cache.contains(config)
-  }
+  override fun contains(config: ConfigurationBasedOnElementSystemIdentity): Boolean =
+    cache.contains(config)
 
   override fun deleteStaleConfigs(newSize: Int) {
     if (!enableRefresh) {
@@ -73,19 +67,17 @@ class ConfigCache<T>(
 data class ConfigurationBasedOnElementSystemIdentity(
   private val configList: ImmutableList<*>,
 ) {
-
   val size: Int
     get() = configList.size
 
-  private val hashcode = configList.let { list ->
-    var result = 17
-    list.forEach { result = 31 * result + System.identityHashCode(it) }
-    result
-  }
+  private val hashcode =
+    configList.let { list ->
+      var result = 17
+      list.forEach { result = 31 * result + System.identityHashCode(it) }
+      result
+    }
 
-  override fun hashCode(): Int {
-    return hashcode
-  }
+  override fun hashCode(): Int = hashcode
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

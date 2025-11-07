@@ -24,7 +24,6 @@ antlr_codegen_parser(
     parser_grammar_file = "Solidity.g4",
     parser_java_file_name = "SolidityParser.java",
     deps = [
-        ":solidity_lexer",
     ],
 )
 
@@ -50,11 +49,12 @@ kt_jvm_library(
     deps = [
         ":orig_solidity_parser",
         ":pnf_solidity_grammar",
+        ":solidity_lexer",
         "//:antlr_runtime",
         "//:flogger",
         "//:guava",
         "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/solidity:language_kind",
         "//src/org/perses/program:language_kind",
     ],

@@ -8,8 +8,6 @@ kt_jvm_library(
     name = "java",
     srcs = ["JavacCrashDetector.kt"],
     deps = [
-        "//:flogger",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
-        "//src/org/perses/grammar/java:language_kind",
     ],
 )

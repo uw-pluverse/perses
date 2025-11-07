@@ -31,7 +31,6 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class PnfCParserFacadeTest {
-
   private val facade = PnfCParserFacade()
   private val workingDir = Files.createTempDirectory("PnfCParserFacadeTest_")
 
@@ -42,18 +41,19 @@ class PnfCParserFacadeTest {
 
   @Test
   fun testDirective() {
-    val content = """
+    val content =
+      """
       #include <stdio.h>
       
       int main() {
         printf("hello\n");
         return 0;
       }
-    """.trimIndent()
+      """.trimIndent()
     val tree = facade.parseString(content).tree
     val tokenizedProgram = AntlrGrammarUtil.convertParseTreeToProgram(tree, facade.language).tokens
     assertThat(tokenizedProgram).isNotEmpty()
-    assertThat(tokenizedProgram.first().text).isEqualTo("#include <stdio.h>")
+    assertThat(tokenizedProgram.first().lexemeText).isEqualTo("#include <stdio.h>")
   }
 
   @Test
@@ -61,17 +61,17 @@ class PnfCParserFacadeTest {
     val contentList =
       listOf(
         """
-      void(f)();
-      void i(h) {
-        char j;
-        c = 2;
-        for (; c; f(c)) {
-          j = h;
-          b = g(j && d);
-          unsigned char k = h, l = b;
-          e = l ?: k % l;
+        void(f)();
+        void i(h) {
+          char j;
+          c = 2;
+          for (; c; f(c)) {
+            j = h;
+            b = g(j && d);
+            unsigned char k = h, l = b;
+            e = l ?: k % l;
+          }
         }
-      }
         """.trimIndent(),
         """
         struct {
@@ -90,7 +90,7 @@ class PnfCParserFacadeTest {
     contentList.forEach { content ->
       val tree = facade.parseString(content).tree
       val program = AntlrGrammarUtil.convertParseTreeToProgram(tree, facade.language).tokens
-      assertThat(program.last().text).isEqualTo("}")
+      assertThat(program.last().lexemeText).isEqualTo("}")
     }
   }
 
@@ -149,12 +149,14 @@ class PnfCParserFacadeTest {
   @Test
   fun testDefaultFormatterCommand() {
     val tempFile = workingDir.resolve("t.c")
-    val orig = """int
+    val orig =
+      """int
       |main(){
       |return 0;}
-    """.trimMargin()
+      """.trimMargin()
     tempFile.writeText(orig)
-    facade.language.getDefaultWorkingFormatter()!!
+    facade.language
+      .getDefaultWorkingFormatter()!!
       .runWith(ImmutableList.of(tempFile.toString()))
     val formatted = tempFile.readText()
     assertThat(orig).isNotEqualTo(formatted)

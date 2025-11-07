@@ -17,19 +17,10 @@
 package org.perses.reduction.cache
 
 import org.perses.util.Fraction
+import org.perses.util.hashing.EnumShaAlgorithm
 
 data class QueryCacheConfiguration(
   val refreshStepFraction: Fraction,
   val enableLightweightRefreshing: Boolean,
-) {
-
-  companion object {
-    @JvmStatic
-    fun noLightweightRefreshing(refreshStepFraction: Fraction) =
-      QueryCacheConfiguration(refreshStepFraction, enableLightweightRefreshing = false)
-
-    @JvmStatic
-    fun withLightweightRefreshing(refreshStepFraction: Fraction) =
-      QueryCacheConfiguration(refreshStepFraction, enableLightweightRefreshing = true)
-  }
-}
+  val shaAlgorithm: EnumShaAlgorithm,
+)

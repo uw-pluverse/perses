@@ -31,23 +31,24 @@ abstract class AbstractReductionDriver<
   Program,
   Kind : AbstractDataKind,
   IOManager : AbstractReductionIOManager<Program, Kind, IOManager>,
-  >(
+>(
   protected val globalContext: GlobalContext,
   protected val ioManager: IOManager,
   specifiedNumOfThreads: Int,
   scriptExecutionTimeoutInSeconds: Long,
   keepWaitingAfterScriptTimeout: Boolean,
+  protected val hideTimestampsInLog: Boolean,
 ) : IReductionDriver {
-
   private val closer = Closer.create()
 
-  protected val executorService = TestScriptExecutorService(
-    ioManager.lazilyInitializedReductionFolderManager,
-    specifiedNumOfThreads,
-    scriptExecutionTimeoutInSeconds,
-    keepWaitingAfterScriptTimeout,
-    globalContext.externalTestScriptExecutionCache,
-  ).also { closer.register(it) }
+  protected val executorService =
+    TestScriptExecutorService(
+      ioManager.lazilyInitializedReductionFolderManager,
+      specifiedNumOfThreads,
+      scriptExecutionTimeoutInSeconds,
+      keepWaitingAfterScriptTimeout,
+      globalContext.globalExecutionCache,
+    ).also { closer.register(it) }
 
   override fun close() {
     try {
@@ -58,24 +59,28 @@ abstract class AbstractReductionDriver<
     }
   }
 
-  protected fun <T : Closeable> registerToClose(toBeClosed: T): T {
-    return closer.register(toBeClosed)
-  }
+  protected fun <T : Closeable> registerToClose(toBeClosed: T): T = closer.register(toBeClosed)
 
   protected fun printStartTime() {
     logger.ktInfo {
-      "The reduction process started at ${formatDateForDisplay(System.currentTimeMillis())}"
+      val time =
+        if (hideTimestampsInLog) {
+          ""
+        } else {
+          formatDateForDisplay(System.currentTimeMillis())
+        }
+      "The reduction process started at $time"
     }
   }
 
-  override val cachedSanityCheckResult: IReductionDriver.AbstractSanityCheckResult by lazy {
+  override val cachedSanityCheckResult: IReductionDriver.SanityCheckResult by lazy {
     val program = getInitialProgram()
     try {
       sanityCheckOrThrow(program)
     } catch (e: SanityCheckFailedException) {
-      return@lazy IReductionDriver.FailingSanityCheckResult(e)
+      return@lazy IReductionDriver.SanityCheckResult.Failing(e)
     }
-    return@lazy IReductionDriver.PassingSanityCheckResult
+    return@lazy IReductionDriver.SanityCheckResult.Passing
   }
 
   protected abstract fun getInitialProgram(): Program
@@ -100,11 +105,12 @@ abstract class AbstractReductionDriver<
     val future = sanityChecker.invoke()
     if (future.getWithTimeoutWarnings().isNotInteresting) {
       logger.ktInfo { "The initial sanity check failed." }
-      val flakinessChecker = PropertyFlakinessChecker(
-        numberOfTrials = 5,
-        initialNumOfUninteresting = 1,
-        sanityChecker,
-      )
+      val flakinessChecker =
+        PropertyFlakinessChecker(
+          numberOfTrials = 5,
+          initialNumOfUninteresting = 1,
+          sanityChecker,
+        )
       logger.ktInfo {
         "Checking whether the script is flaky. #trials=${flakinessChecker.numberOfTrials}"
       }
@@ -113,7 +119,8 @@ abstract class AbstractReductionDriver<
       val cmdOutput = future.workingDirectory.testScript.runAndCaptureOutput()
       logger.ktFine { "The initial sanity check failed. Folder: ${future.workingDirectory}" }
       val tempDir = copyFilesToTempDir(future.workingDirectory.folder)
-      val message = """The initial sanity check failed. 
+      val message =
+        """The initial sanity check failed. 
         
         ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
         *
@@ -128,9 +135,10 @@ abstract class AbstractReductionDriver<
          
         ============= stdout =============
         ${cmdOutput.stdout.combinedLines.let { it.ifBlank { "<empty>" } }} 
-      """.lineSequence().map {
-        it.trimStart()
-      }.joinToString("\n")
+      """.lineSequence()
+          .map {
+            it.trimStart()
+          }.joinToString("\n")
 
       throw SanityCheckFailedException(message)
     }
@@ -141,7 +149,6 @@ abstract class AbstractReductionDriver<
     val initialNumOfUninteresting: Int,
     private val sanityChecker: () -> TestScriptExecResult<Any>,
   ) {
-
     private val results = mutableListOf<PropertyTestResult>()
 
     init {
@@ -157,16 +164,16 @@ abstract class AbstractReductionDriver<
       return this
     }
 
-    fun computeResult() = Result(
-      numOfInteresting = results.count { it.isInteresting },
-      numOfUninteresting = results.count { it.isNotInteresting } + initialNumOfUninteresting,
-    )
+    fun computeResult() =
+      Result(
+        numOfInteresting = results.count { it.isInteresting },
+        numOfUninteresting = results.count { it.isNotInteresting } + initialNumOfUninteresting,
+      )
 
     data class Result(
       val numOfInteresting: Int,
       val numOfUninteresting: Int,
     ) {
-
       init {
         require(numOfInteresting >= 0)
         require(numOfUninteresting >= 0)
@@ -177,8 +184,8 @@ abstract class AbstractReductionDriver<
 
       val isFlaky = numOfInteresting != 0 && numOfUninteresting != 0
 
-      fun describeResult(): String {
-        return buildString {
+      fun describeResult(): String =
+        buildString {
           append("The property test is")
           if (!isFlaky) {
             append(" not")
@@ -187,7 +194,6 @@ abstract class AbstractReductionDriver<
           append("#total runs: $totalNumber")
           append(", #interesting: $numOfInteresting, #uninteresting: $numOfUninteresting")
         }
-      }
     }
   }
 

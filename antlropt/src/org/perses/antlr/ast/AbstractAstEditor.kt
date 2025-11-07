@@ -20,11 +20,11 @@ import com.google.common.collect.ImmutableList
 
 // TODO: to be refined and tested.
 abstract class AbstractAstEditor {
-
   fun bottomUpApply(grammar: PersesGrammar): PersesGrammar {
     val rules = grammar.parserRules
-    val ruleBuilder = ImmutableList
-      .builderWithExpectedSize<PersesParserRuleAst>(rules.size)
+    val ruleBuilder =
+      ImmutableList
+        .builderWithExpectedSize<PersesParserRuleAst>(rules.size)
     for (rule in rules) {
       val newBody = bottomUpApply(rule.body)
       if (newBody != null) {
@@ -36,8 +36,9 @@ abstract class AbstractAstEditor {
 
   fun bottomUpApply(ast: AbstractPersesRuleElement): AbstractPersesRuleElement? {
     val childCount = ast.childCount
-    val newChildren = ImmutableList
-      .builderWithExpectedSize<AbstractPersesRuleElement>(childCount)
+    val newChildren =
+      ImmutableList
+        .builderWithExpectedSize<AbstractPersesRuleElement>(childCount)
     var nullChildFound = false
     for (i in 0 until childCount) {
       val origChild = ast.getChild(i)
@@ -57,8 +58,8 @@ abstract class AbstractAstEditor {
   fun dispatch(
     ast: AbstractPersesRuleElement,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return when (ast.tag) {
+  ): AbstractPersesRuleElement? =
+    when (ast.tag) {
       AstTag.RULE_REF -> visit(ast as PersesRuleReferenceAst, newChildren)
       AstTag.ACTION -> visit(ast as PersesActionAst, newChildren)
       AstTag.ALTERNATIVE_BLOCK -> visit(ast as PersesAlternativeBlockAst, newChildren)
@@ -77,125 +78,94 @@ abstract class AbstractAstEditor {
       AstTag.RULE_ELEMENT_LABEL -> visit(ast as PersesRuleElementLabel, newChildren)
       else -> throw RuntimeException("Unhandled type: $ast")
     }
-  }
 
   protected open fun visit(
     ast: PersesTokenSetAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesTerminalAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesSequenceAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return when (newChildren.size) {
+  ): AbstractPersesRuleElement? =
+    when (newChildren.size) {
       0 -> null
       1 -> newChildren.single()
       else -> SmartAstConstructor.createForSequence(PersesSequenceAst.flatten(newChildren))
     }
-  }
 
   protected open fun visit(
     ast: PersesPlusAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesStarAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesOptionalAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesNotAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesLexerCommandAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesLexerCharSet,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesEpsilonAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesAlternativeBlockAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return when (newChildren.size) {
+  ): AbstractPersesRuleElement? =
+    when (newChildren.size) {
       0 -> null
       1 -> newChildren.first()
       else -> SmartAstConstructor.createForAlternatives(newChildren)
     }
-  }
 
   protected open fun visit(
     ast: PersesActionAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesRuleElementOption,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesRuleReferenceAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesRuleElementLabel,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 
   protected open fun visit(
     ast: PersesRangeAst,
     newChildren: ImmutableList<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement? {
-    return ast.createWithNewChildren(newChildren)
-  }
+  ): AbstractPersesRuleElement? = ast.createWithNewChildren(newChildren)
 }

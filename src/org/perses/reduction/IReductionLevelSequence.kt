@@ -20,21 +20,21 @@ import com.google.common.collect.ImmutableList
 
 interface IReductionLevelSequence {
   fun reset()
+
   operator fun hasNext(): Boolean
+
   fun nextLevel(): Int
+
   class ContinuousLevelSequence : IReductionLevelSequence {
     private var current = 0
-    override fun hasNext(): Boolean {
-      return true
-    }
+
+    override fun hasNext(): Boolean = true
 
     override fun reset() {
       current = 0
     }
 
-    override fun nextLevel(): Int {
-      return ++current
-    }
+    override fun nextLevel(): Int = ++current
   }
 
   class FixedLevelSequence(
@@ -57,9 +57,7 @@ interface IReductionLevelSequence {
       iterator = sequence.iterator()
     }
 
-    override fun hasNext(): Boolean {
-      return continuousAfterFinish || iterator.hasNext()
-    }
+    override fun hasNext(): Boolean = continuousAfterFinish || iterator.hasNext()
 
     override fun nextLevel(): Int {
       if (iterator.hasNext()) {

@@ -21,16 +21,14 @@ class PlaceholderSparTreeNode internal constructor(
   private val source: String,
   private val predicateForCompatibility: CompatibilityPredicate,
 ) : AbstractSparTreeNode(nodeId, antlrRule = null) {
-
   override var beginToken: LexerRuleSparTreeNode? = null
   override var endToken: LexerRuleSparTreeNode? = null
 
   override val labelPrefix: String
     get() = "Placeholder: $source"
 
-  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractSparTreeNode {
-    return PlaceholderSparTreeNode(computedNewNodeId, source, predicateForCompatibility)
-  }
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractSparTreeNode =
+    PlaceholderSparTreeNode(computedNewNodeId, source, predicateForCompatibility)
 
   @Deprecated(
     "Should not be called on a placeholder node.",
@@ -52,7 +50,10 @@ class PlaceholderSparTreeNode internal constructor(
     "Should not be called on a placeholder node.",
     ReplaceWith("""error("Cannot call this method on a token node.")"""),
   )
-  override fun onChildRemoved(index: Int, child: AbstractSparTreeNode) {
+  override fun onChildRemoved(
+    index: Int,
+    child: AbstractSparTreeNode,
+  ) {
     error("Cannot call this method on a token node.")
   }
 

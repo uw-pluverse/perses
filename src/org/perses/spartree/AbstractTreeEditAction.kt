@@ -20,11 +20,11 @@ package org.perses.spartree
 sealed class AbstractTreeEditAction(
   val targetNode: AbstractSparTreeNode,
 ) : Comparable<AbstractTreeEditAction> {
-
   override fun compareTo(other: AbstractTreeEditAction): Int {
-    val classCmp = compareBy<AbstractTreeEditAction> {
-      it::class.java.canonicalName
-    }.compare(this, other)
+    val classCmp =
+      compareBy<AbstractTreeEditAction> {
+        it::class.java.canonicalName
+      }.compare(this, other)
     return if (classCmp != 0) {
       classCmp
     } else {
@@ -34,11 +34,10 @@ sealed class AbstractTreeEditAction(
   }
 
   protected abstract fun internalCompareTo(o: AbstractTreeEditAction): Int
+
   abstract val description: String
 
-  override fun toString(): String {
-    return description
-  }
+  override fun toString(): String = description
 
   override fun equals(other: Any?): Boolean {
     if (other == null) {
@@ -60,13 +59,13 @@ sealed class AbstractTreeEditAction(
 
   protected abstract fun specificEquals(other: AbstractTreeEditAction): Boolean
 
-  override fun hashCode(): Int {
-    return 31 * specificHashCode() + targetNode.nodeId + javaClass.hashCode() * 31 * 31
-  }
+  override fun hashCode(): Int =
+    31 * specificHashCode() + targetNode.nodeId + javaClass.hashCode() * 31 * 31
 
   protected abstract fun specificHashCode(): Int
 
   private var used = false
+
   fun apply() {
     check(!used)
     used = true

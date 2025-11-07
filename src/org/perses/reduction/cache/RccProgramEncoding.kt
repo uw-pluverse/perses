@@ -19,7 +19,7 @@ package org.perses.reduction.cache
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.IntArrayList
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.cache.IntervalArrayExpander.expand
 
@@ -28,14 +28,10 @@ abstract class RccProgramEncoding private constructor(
   protected val encoding: IntArray,
   tokenCount: Int,
 ) : AbstractProgramEncoding<RccProgramEncoding>(encoding.contentHashCode(), tokenCount) {
+  fun encodingSize(): Int = encoding.size
 
-  fun encodingSize(): Int {
-    return encoding.size
-  }
-
-  override fun extraEquals(other: RccProgramEncoding): Boolean {
-    return encoding.contentEquals(other.encoding)
-  }
+  override fun extraEquals(other: RccProgramEncoding): Boolean =
+    encoding.contentEquals(other.encoding)
 
   @VisibleForTesting
   fun restoreProgram(): TokenizedProgram {
@@ -44,7 +40,7 @@ abstract class RccProgramEncoding private constructor(
       if (expectedTokenCount <= 0) {
         ImmutableList.builder()
       } else {
-        ImmutableList.builderWithExpectedSize<PersesToken>(
+        ImmutableList.builderWithExpectedSize<PersesTokenFactory.AbstractPersesToken>(
           expectedTokenCount,
         )
       }
@@ -56,7 +52,7 @@ abstract class RccProgramEncoding private constructor(
     return TokenizedProgram(builder.build(), baseProgram.factory)
   }
 
-  fun tokenIterator(): Iterator<PersesToken> {
+  fun tokenIterator(): Iterator<PersesTokenFactory.AbstractPersesToken> {
     val intervals: IntArray = intervalsFromEncoding
     return expand(intervals, baseProgram.tokens)
   }

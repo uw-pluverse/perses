@@ -16,4 +16,6 @@
  */
 package org.perses.reduction.event
 
-abstract class AbstractReductionEvent(val currentTimeMillis: Long)
+abstract class AbstractReductionEvent(
+  val currentTimeMillis: Long,
+)

@@ -31,20 +31,18 @@ import org.perses.antlr.pnf.PnfUtil.getRuleTypeIfQuantifiedOrThrow
 import org.perses.util.exhaustive
 
 class QuantifiedAstNormalizationPass : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
 
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     val toAdd = LinkedHashMultimap.create<RuleNameHandle, AbstractPersesRuleElement>()
     val toReplace = ArrayList<RuleEditTriple>()
     mutable.ruleNameAltPairSequence().forEach { (ruleName, oldDef) ->
-      val factorEdit = FactorQuantifiedEdit(
-        ruleName,
-        isAlternativeBlock = mutable.getAltBlock(ruleName).size() > 1,
-      )
+      val factorEdit =
+        FactorQuantifiedEdit(
+          ruleName,
+          isAlternativeBlock = mutable.getAltBlock(ruleName).size() > 1,
+        )
       val decision = factorEdit.apply(oldDef)
       when (decision) {
         is TransformDecision.Keep -> {
@@ -73,7 +71,6 @@ class QuantifiedAstNormalizationPass : AbstractPnfPass() {
     val currentRuleName: RuleNameHandle,
     private val isAlternativeBlock: Boolean,
   ) : AstEdit() {
-
     val newRules = MutableGrammar()
 
     public override fun internalApply(
@@ -86,17 +83,19 @@ class QuantifiedAstNormalizationPass : AbstractPnfPass() {
 
       check(element.childCount == 1) { element.sourceCode }
       val child = element.getChild(0)
-      val possibleNewBody = if (isTerminalOrRuleRef(child)) {
-        element
-      } else {
-        check(child !is AbstractPersesQuantifiedAst)
-        val childRuleName = currentRuleName
-          .createAuxiliaryRuleName(RuleType.OTHER_RULE)
-        newRules.getAltBlock(childRuleName).decomposeAltBlockAndAddIfInequivalent(child)
-        element.createWithNewChildren(
-          ImmutableList.of(PersesRuleReferenceAst.create(childRuleName)),
-        )
-      }
+      val possibleNewBody =
+        if (isTerminalOrRuleRef(child)) {
+          element
+        } else {
+          check(child !is AbstractPersesQuantifiedAst)
+          val childRuleName =
+            currentRuleName
+              .createAuxiliaryRuleName(RuleType.OTHER_RULE)
+          newRules.getAltBlock(childRuleName).decomposeAltBlockAndAddIfInequivalent(child)
+          element.createWithNewChildren(
+            ImmutableList.of(PersesRuleReferenceAst.create(childRuleName)),
+          )
+        }
       if (isRoot && !isAlternativeBlock) { // If this is NOT an alternative block.
         // No need to change.
         return if (possibleNewBody === element) {
@@ -105,9 +104,10 @@ class QuantifiedAstNormalizationPass : AbstractPnfPass() {
           TransformDecision.Replace(oldValue = element, newValue = possibleNewBody)
         }
       }
-      val kleeneRuleName = currentRuleName.createAuxiliaryRuleName(
-        getRuleTypeIfQuantifiedOrThrow(element.tag!!),
-      )
+      val kleeneRuleName =
+        currentRuleName.createAuxiliaryRuleName(
+          getRuleTypeIfQuantifiedOrThrow(element.tag!!),
+        )
       newRules.getAltBlock(kleeneRuleName).addIfNotEquivalent(possibleNewBody)
 
       return TransformDecision.Replace(

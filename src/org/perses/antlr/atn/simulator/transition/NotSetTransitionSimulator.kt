@@ -22,10 +22,10 @@ import org.perses.antlr.atn.AbstractDecisionMaker
 class NotSetTransitionSimulator(
   transition: NotSetTransition,
 ) : AbstractAtnTransitionSimulator() {
-
-  private val allowedAsciiChars = SetTransitionSimulator.intersectPrintableCharacters(
-    transition.label().complement(0, Char.MAX_VALUE.code),
-  )
+  private val allowedAsciiChars =
+    SetTransitionSimulator.intersectPrintableCharacters(
+      transition.label().complement(0, Char.MAX_VALUE.code),
+    )
 
   override fun simulate(decisionMaker: AbstractDecisionMaker): Char {
     assert(allowedAsciiChars.isNotEmpty())

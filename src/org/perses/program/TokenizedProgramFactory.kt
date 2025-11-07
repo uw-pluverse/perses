@@ -26,37 +26,41 @@ import org.perses.util.transformToImmutableList
 class TokenizedProgramFactory private constructor(
   // TODO: build an inverted index for this original program.
   val tokenFactory: PersesTokenFactory,
-  val tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+  val tokensInOrigin: ImmutableList<PersesTokenFactory.PersesAntlrToken>,
   val languageKind: LanguageKind,
 ) {
-
-  val histogram = ImmutableIntArray.copyOf(
-    computeLexemeHistogram(tokenFactory, tokensInOrigin),
-  )
+  val histogram =
+    ImmutableIntArray.copyOf(
+      computeLexemeHistogram(tokenFactory, tokensInOrigin),
+    )
 
   fun computeHistogramFor(program: TokenizedProgram): IntArray {
     lazyAssert { program.factory === this }
     return computeLexemeHistogram(tokenFactory, program.tokens)
   }
 
+  fun createFromLeaves(
+    leaves: ImmutableList<PersesTokenFactory.AbstractPersesToken>,
+  ): TokenizedProgram = TokenizedProgram(leaves, factory = this)
+
   fun create(tokens: List<Token>): TokenizedProgram {
-    val persesTokens = tokens
-      .asSequence()
-      .map {
-        check(tokenFactory.doesLexemeExist(it.text)) {
-          "$it does not exist in the token factory $tokenFactory"
-        }
-        tokenFactory.createPersesToken(it)
-      }.toImmutableList()
-    return TokenizedProgram(persesTokens, this)
+    val persesTokens =
+      tokens
+        .asSequence()
+        .map {
+          check(tokenFactory.doesLexemeExist(it.text)) {
+            "$it does not exist in the token factory $tokenFactory"
+          }
+          tokenFactory.createPersesToken(it)
+        }.toImmutableList()
+    return TokenizedProgram(persesTokens, factory = this)
   }
 
   companion object {
-
     @JvmStatic
     fun computeLexemeHistogram(
       tokenFactory: PersesTokenFactory,
-      tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+      tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     ): IntArray {
       val histogram = IntArray(tokenFactory.numOfLexemes())
       for (token in tokensInOrigin) {
@@ -66,10 +70,11 @@ class TokenizedProgramFactory private constructor(
     }
 
     @JvmStatic
-    fun createEmptyFactory(languageKind: LanguageKind) = createFactory(
-      originalProgram = emptyList(),
-      languageKind,
-    )
+    fun createEmptyFactory(languageKind: LanguageKind) =
+      createFactory(
+        originalProgram = emptyList(),
+        languageKind,
+      )
 
     @JvmStatic
     fun createFactory(
@@ -77,8 +82,9 @@ class TokenizedProgramFactory private constructor(
       languageKind: LanguageKind,
     ): TokenizedProgramFactory {
       val tokenFactory = PersesTokenFactory()
-      val persesTokens = originalProgram
-        .transformToImmutableList { tokenFactory.createPersesToken(it) }
+      val persesTokens =
+        originalProgram
+          .transformToImmutableList { tokenFactory.createPersesToken(it) }
       return TokenizedProgramFactory(tokenFactory, persesTokens, languageKind)
     }
   }

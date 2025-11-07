@@ -21,28 +21,24 @@ import kotlin.math.min
 import kotlin.random.Random
 
 class CounterBasedDeltaDebugger<T : Any, PropertyPayload>(
-  arguments: Arguments<T, PropertyPayload>,
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
   random: Random? = null,
   private val initialProbability: Double = 0.25,
 ) : AbstractProbabilisticDeltaDebugger<
-  T,
-  PropertyPayload,
-  CounterBasedDeltaDebugger.CounterPayload,
+    T,
+    PropertyPayload,
+    CounterBasedDeltaDebugger.CounterPayload,
   >(
-  arguments,
-  random,
-) {
-
-  override fun shouldExcludeElementFromReduction(element: ElementWrapper<T>): Boolean {
-    return getCounter(element) == NO_NEED_TO_VISIT
-  }
+    arguments,
+    random,
+  ) {
+  override fun shouldExcludeElementFromReduction(element: ElementWrapper<T>): Boolean =
+    getCounter(element) == NO_NEED_TO_VISIT
 
   override val elementComparator =
     compareBy<ElementWrapper<T>>({ getCounter(it) }, { it.index })
 
-  override fun findNextTest(
-    copyBest: List<ElementWrapper<T>>,
-  ): MutableList<ElementWrapper<T>> {
+  override fun findNextTest(copyBest: List<ElementWrapper<T>>): MutableList<ElementWrapper<T>> {
     copyBest.sortedBy { getCounter(it) }
     val counterMin = copyBest.minOf { getCounter(it) }
     val currentSize = computeSize(counterMin)
@@ -89,34 +85,33 @@ class CounterBasedDeltaDebugger<T : Any, PropertyPayload>(
     return maxSize
   }
 
-  private fun getCounter(element: ElementWrapper<T>): Int {
-    return (element.elementPayload as CounterPayload).counter
-  }
+  private fun getCounter(element: ElementWrapper<T>): Int =
+    (element.elementPayload as CounterPayload).counter
 
   override fun updatePayload(toBeDeleted: List<ElementWrapper<T>>) {
     val size = toBeDeleted.count()
     for (element in toBeDeleted) {
       check(!shouldExcludeElementFromReduction(element))
       val payload = element.elementPayload as CounterPayload
-      val newCounter = if (size != 1) {
-        payload.counter + 1
-      } else {
-        NO_NEED_TO_VISIT
-      }
+      val newCounter =
+        if (size != 1) {
+          payload.counter + 1
+        } else {
+          NO_NEED_TO_VISIT
+        }
       element.elementPayload = payload.duplicateWithNewCounter(newCounter)
     }
   }
 
-  override fun createInitialPayload(): CounterPayload {
-    return CounterPayload(counter = 0)
-  }
+  override fun createInitialPayload(): CounterPayload = CounterPayload(counter = 0)
 
   open class CounterPayload(
     val counter: Int,
   ) {
-    open fun duplicateWithNewCounter(newCounter: Int) = CounterPayload(
-      counter = newCounter,
-    )
+    open fun duplicateWithNewCounter(newCounter: Int) =
+      CounterPayload(
+        counter = newCounter,
+      )
   }
 
   companion object {

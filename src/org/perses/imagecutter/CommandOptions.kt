@@ -20,6 +20,5 @@ import org.perses.cmd.InputFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 
 class CommandOptions : AbstractCommandOptions() {
-
   val inputFlags = registerFlags(InputFlagGroup())
 }

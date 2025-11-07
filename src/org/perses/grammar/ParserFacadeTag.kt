@@ -18,20 +18,21 @@ package org.perses.grammar
 
 import com.google.common.collect.ImmutableList
 
-data class ParserFacadeTag private constructor(val tagName: String) {
-
+data class ParserFacadeTag private constructor(
+  val tagName: String,
+) {
   init {
     check(tagName.lowercase() == tagName) { "The tag name should be in lower case." }
   }
 
   companion object {
-
     const val NAME_PNF = "pnf"
     const val NAME_ORIGINAL = "original"
-    private val BUILTIN_TAGS = ImmutableList.of(
-      ParserFacadeTag(NAME_PNF),
-      ParserFacadeTag(NAME_ORIGINAL),
-    )
+    private val BUILTIN_TAGS =
+      ImmutableList.of(
+        ParserFacadeTag(NAME_PNF),
+        ParserFacadeTag(NAME_ORIGINAL),
+      )
 
     val BUILTIN_TAG_PNF = BUILTIN_TAGS.single { it.tagName == NAME_PNF }
 

@@ -10,12 +10,12 @@ source "${SCRIPT_DIR}/constants.sh" || exit 1
 bazelisk build "//:ktlint_deploy.jar"
 
 KT_LINT_DIRS=""
-for bazel_dir in "${BAZEL_DIRS[@]}"; do
+for bazel_dir in "${ABS_BAZEL_DIRS[@]}"; do
   KT_LINT_DIRS="${KT_LINT_DIRS} ${bazel_dir}/**/*.kt"
 done
 # DON'T use 'bazelisk run //:ktlint_deploy.jar' due to its working directory
 #     is not the root of the workspace.
-java -jar bazel-bin/ktlint_deploy.jar --format ${KT_LINT_DIRS} || exit 1
+bazelisk run //:ktlint -- --format ${KT_LINT_DIRS} || exit 1
 
 echo "ktlint is done."
 

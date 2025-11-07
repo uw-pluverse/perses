@@ -26,21 +26,23 @@ import org.perses.antlr.ast.PersesRuleReferenceAst
 
 @RunWith(JUnit4::class)
 class ConvertAllAltToRuleReferenceOrTerminalPassTest {
-
   val pass = ConvertAllAltToRuleReferenceOrTerminalPass()
 
   @Test
   fun test() {
-    val orig = GrammarTestingUtility.createPersesGrammarFromString(
-      """
+    val orig =
+      GrammarTestingUtility.createPersesGrammarFromString(
+        """
         start: 'a' 'b' 
              | 'c' 'd'
              ;
-      """.trimIndent(),
-    )
-    val processed = pass.processGrammar(
-      GrammarPair(orig, lexerGrammar = null),
-    ).parserGrammar!!
+        """.trimIndent(),
+      )
+    val processed =
+      pass
+        .processGrammar(
+          GrammarPair(orig, lexerGrammar = null),
+        ).parserGrammar!!
     val body = processed.getRuleDefinition("start")!!.body
     assertThat(body).isInstanceOf(PersesAlternativeBlockAst::class.java)
     assertThat(body.childCount).isEqualTo(2)

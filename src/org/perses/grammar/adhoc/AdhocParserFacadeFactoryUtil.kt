@@ -22,12 +22,11 @@ import org.perses.grammar.adhoc.AdhocGrammarConfiguration.ParserFacadeJarFile
 import java.nio.file.Path
 
 object AdhocParserFacadeFactoryUtil {
-
-  fun createParserFacadeFactory(jarFileList: Iterable<Path>): AbstractParserFacadeFactory {
-    return jarFileList.asSequence()
+  fun createParserFacadeFactory(jarFileList: Iterable<Path>): AbstractParserFacadeFactory =
+    jarFileList
+      .asSequence()
       .map { AdhocGrammarConfiguration.ParserFacadeJarFile.from(it) }
       .toParserFacadeFactory()
-  }
 }
 
 fun Sequence<ParserFacadeJarFile>.toParserFacadeFactory(): AbstractParserFacadeFactory =

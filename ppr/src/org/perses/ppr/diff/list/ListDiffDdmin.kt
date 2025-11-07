@@ -17,12 +17,12 @@
 package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
-import org.perses.listminimizer.AbstractListInputMinimizer
-import org.perses.listminimizer.AbstractListInputMinimizer.OnBestUpdateHandler
 import org.perses.listminimizer.IPropertyTester
+import org.perses.listminimizer.LMPropertyTestResult
+import org.perses.listminimizer.ListMinimizerArguments
+import org.perses.listminimizer.OnBestUpdateHandler
 import org.perses.listminimizer.PristineDeltaDebugger
-import org.perses.listminimizer.PropertyTestResultWithPayload
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
@@ -34,43 +34,44 @@ class ListDiffDdmin(
   ioManager: ListDiffReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractListDiffReducer(
-  nameAndDesc = object : AbstractReducerNameAndDesc(
-    shortName = ListDiffDdmin::class.simpleName!!,
-    description = "DDmin-based diff minimizer.",
-  ) {},
-  ioManager = ioManager,
-  testScriptExecutorService = testScriptExecutorService,
-) {
-
+    nameAndDesc =
+      object : AbstractReducerNameAndDesc(
+        shortName = ListDiffDdmin::class.simpleName!!,
+        description = "DDmin-based diff minimizer.",
+      ) {},
+    ioManager = ioManager,
+    testScriptExecutorService = testScriptExecutorService,
+  ) {
   override fun reduce(state: ListDiffReductionState) {
     logger.ktInfo { "Start ${this::class}" }
     val debugger = createPristineDeltaDebugger(state)
     debugger.reduce()
   }
 
-  fun createPristineDeltaDebugger(
+  private fun createPristineDeltaDebugger(
     state: ListDiffReductionState,
-  ): PristineDeltaDebugger<AbstractEditOperation<PersesToken>, Any> {
+  ): PristineDeltaDebugger<AbstractEditOperation<AbstractPersesToken>, Any> {
     val onBestUpdateHandler =
-      OnBestUpdateHandler<AbstractEditOperation<PersesToken>, Any> { newBest, _ ->
+      OnBestUpdateHandler<AbstractEditOperation<AbstractPersesToken>, Any> { newBest, _ ->
         // TODO(cnsun): converting newBest to a new list is not efficient.
-        val newBestDiff: ImmutableList<AbstractEditOperation<PersesToken>> =
+        val newBestDiff: ImmutableList<AbstractEditOperation<AbstractPersesToken>> =
           newBest.transformToImmutableList { it.element }
         state.updateBestDiff(newBestDiff)
       }
 
     val propertyTest =
       IPropertyTester { configuration ->
-        val testTask = executorService.testProgramAsync(
-          TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
-          IDENTITY_POST_CHECK,
-          ioManager.createOutputManager(configuration.candidate),
-          payload = "dummy payload",
-        )
-        PropertyTestResultWithPayload(testTask.getWithTimeoutWarnings(), Any())
+        val testTask =
+          executorService.testProgramAsync(
+            TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
+            IDENTITY_POST_CHECK,
+            ioManager.createOutputManager(configuration.getCandidateOrFail()),
+            payload = "dummy payload",
+          )
+        LMPropertyTestResult.Completed(testTask.getWithTimeoutWarnings(), Any())
       }
     return PristineDeltaDebugger(
-      AbstractListInputMinimizer.Arguments(
+      ListMinimizerArguments(
         needToTestEmpty = true,
         input = state.bestDiff,
         propertyTest,

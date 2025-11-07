@@ -6,4 +6,7 @@ ulimit -t 60
 
 readonly SRC="hello.php"
 
-grep --quiet 'hello world' "${SRC}"
+grep --quiet 'hello world' "${SRC}" && \
+grep --quiet '<?php' "${SRC}" && \
+grep --quiet '?>' "${SRC}"
+

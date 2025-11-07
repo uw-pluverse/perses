@@ -22,9 +22,7 @@ kt_jvm_test(
         "//src/org/perses/grammar/sysverilog:orig_grammar_file",
     ],
     deps = [
-        # Note, do not add more test dependencies. This test is only used to test and debug Perses grammars.
         "//:truth",
-        "//:kotlin_stdib",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//src/org/perses/antlr:antlr_grammar_parser",

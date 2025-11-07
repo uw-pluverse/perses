@@ -87,9 +87,11 @@ class RuleEpsilonComputerTest {
 
   private fun getEpsilonableRuleNames(vararg lines: String): ImmutableList<String> {
     val grammar = createPersesGrammarFromString(*lines)
-    val rules: ImmutableSet<AbstractPersesRuleDefAst> = RuleEpsilonComputer.computeEpsilonableRules(
-      grammar.flattenedAllRules,
-    ).epsilonableRules
+    val rules: ImmutableSet<AbstractPersesRuleDefAst> =
+      RuleEpsilonComputer
+        .computeEpsilonableRules(
+          grammar.flattenedAllRules,
+        ).epsilonableRules
     return rules.asSequence().map { it.ruleNameHandle.ruleName }.toImmutableList()
   }
 }

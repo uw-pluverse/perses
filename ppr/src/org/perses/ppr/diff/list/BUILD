@@ -22,6 +22,7 @@ kt_jvm_library(
         ":reduction_driver",
         "//:flogger",
         "//:guava",
+        "//src/org/perses:HelperForPersesMain",
         "//src/org/perses:abstract_reduction_main",
         "//src/org/perses:perses_listener_manager_creator",
         "//src/org/perses/grammar:facade_factory",
@@ -54,8 +55,8 @@ kt_jvm_library(
         "ListDiffCmdOptions.kt",
     ],
     deps = [
+        "//ppr/src/org/perses/ppr:AbstractPPRCommandOptions",
         "//src/org/perses:command_options",
-        "//src/org/perses/reduction:reducer_factory",
     ],
 )
 
@@ -66,7 +67,6 @@ kt_jvm_library(
     ],
     deps = [
         ":reduction_inputs",
-        "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction/io/token:token_output_manager_factory_interface",
         "//src/org/perses/util:perses_diffutil",
     ],
@@ -88,7 +88,7 @@ kt_jvm_library(
     deps = [
         ":output_manager",
         ":reduction_inputs",
-        "//src/org/perses/reduction/io/token:token_reduction_io_manager",
+        "//src/org/perses/reduction/io",
     ],
 )
 
@@ -103,6 +103,7 @@ kt_jvm_library(
         ":diff_reduction_state",
         ":reduction_io_manager",
         "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//src/org/perses/spartree",
     ],
 )

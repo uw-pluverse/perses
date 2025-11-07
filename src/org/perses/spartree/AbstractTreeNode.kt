@@ -26,9 +26,12 @@ import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
 import java.util.function.Predicate
 
-abstract class AbstractTreeNode<T : AbstractTreeNode<T, Payload>, Payload>
-protected constructor(val nodeId: Int) : Comparable<T> {
-
+abstract class AbstractTreeNode<
+  T : AbstractTreeNode<T, Payload>,
+  Payload,
+> protected constructor(
+  val nodeId: Int,
+) : Comparable<T> {
   protected val children = ArrayList<T>()
 
   /**
@@ -58,9 +61,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
       field = value
     }
 
-  fun hasChildren(): Boolean {
-    return childCount > 0
-  }
+  fun hasChildren(): Boolean = childCount > 0
 
   fun hasNoChild() = !hasChildren()
 
@@ -68,9 +69,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     get() = children.size
 
   /** Return the child at the specified index.  */
-  fun getChild(index: Int): T {
-    return children[index]
-  }
+  fun getChild(index: Int): T = children[index]
 
   fun copyAndReverseChildren(): ImmutableList<T> {
     val builder: ImmutableList.Builder<T> = ImmutableList.builder()
@@ -81,9 +80,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     return builder.build()
   }
 
-  fun copyChildren(): ImmutableList<T> {
-    return ImmutableList.copyOf(children)
-  }
+  fun copyChildren(): ImmutableList<T> = ImmutableList.copyOf(children)
 
   fun cleanDeletedImmediateChildren() {
     lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
@@ -115,7 +112,10 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
   }
 
-  protected abstract fun onChildRemoved(index: Int, child: T)
+  protected abstract fun onChildRemoved(
+    index: Int,
+    child: T,
+  )
 
   /**
    * Permanently delete this node, and its children recursively.
@@ -142,11 +142,18 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     children.clear()
   }
 
-  fun addChild(child: T, payload: Payload) {
+  fun addChild(
+    child: T,
+    payload: Payload,
+  ) {
     addChildAtIndex(index = childCount, child, payload)
   }
 
-  open fun addChildAtIndex(index: Int, child: T, payload: Payload) {
+  open fun addChildAtIndex(
+    index: Int,
+    child: T,
+    payload: Payload,
+  ) {
     lazyAssert({ child.parent == null }) {
       "The parent of the parameter " + child + " is not null: " + child.parent
     }
@@ -160,23 +167,27 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     lazyAssert { child.payload === payload }
   }
 
-  fun addChildBeforeExistingChild(existingChild: T, newChild: T, payload: Payload) {
-    // TODO("TODO(Yiran), implement this and test it")
+  fun addChildBeforeExistingChild(
+    existingChild: T,
+    newChild: T,
+    payload: Payload,
+  ) {
     val index = children.indexOf(existingChild)
     check(index >= 0)
     addChildAtIndex(index, newChild, payload)
   }
 
-  open fun addChildAfterExistingChild(existingChild: T, newChild: T, payload: Payload) {
-    // TODO("TODO(Yiran), implement this and test it")
+  open fun addChildAfterExistingChild(
+    existingChild: T,
+    newChild: T,
+    payload: Payload,
+  ) {
     val index = children.indexOf(existingChild)
     check(index >= 0)
     addChildAtIndex(index + 1, newChild, payload)
   }
 
-  override fun compareTo(other: T): Int {
-    return nodeId.compareTo(other.nodeId)
-  }
+  override fun compareTo(other: T): Int = nodeId.compareTo(other.nodeId)
 
   /** Visit each child of this node.  */
   fun forEachChild(consumer: (node: T) -> Unit) {
@@ -212,7 +223,11 @@ protected constructor(val nodeId: Int) : Comparable<T> {
    * @param oldChild, the existing child to be removed from the list.
    * @param newChild, the new child to be added in the position of the old child.
    */
-  fun replaceChild(oldChild: T, newChild: T, payload: Payload) {
+  fun replaceChild(
+    oldChild: T,
+    newChild: T,
+    payload: Payload,
+  ) {
     lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
     lazyAssert { newChild.parent == null }
     lazyAssert { newChild.payload == null }
@@ -303,10 +318,10 @@ protected constructor(val nodeId: Int) : Comparable<T> {
   }
 
   inline fun postOrderVisit(
-    successorsFunction: SuccessorsFunction<T> = SuccessorsFunction {
-        node: T ->
-      node.immutableChildView
-    },
+    successorsFunction: SuccessorsFunction<T> =
+      SuccessorsFunction { node: T ->
+        node.immutableChildView
+      },
     visitor: (node: T) -> Unit,
   ) {
     @Suppress("UNCHECKED_CAST")
@@ -336,7 +351,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     )
   }
 
-  protected fun copyCurrentNode(nodeIdCopyStrategy: NodeIdCopyStrategy): T {
+  fun copyCurrentNode(nodeIdCopyStrategy: NodeIdCopyStrategy): T {
     val newNodeId = nodeIdCopyStrategy.computeNodeId(nodeId)
     return internalCopyCurrentNode(newNodeId).also {
       check(it.nodeId == newNodeId)
@@ -346,16 +361,12 @@ protected constructor(val nodeId: Int) : Comparable<T> {
   protected abstract fun internalCopyCurrentNode(computedNewNodeId: Int): T
 
   companion object {
+    @JvmStatic
+    fun <T : AbstractTreeNode<T, Payload>, Payload> findLowestAncestor(vararg descendants: T) =
+      findLowestAncestor(ImmutableList.copyOf(descendants))
 
     @JvmStatic
-    fun <T : AbstractTreeNode<T, Payload>, Payload> findLowestAncestor(
-      vararg descendants: T,
-    ) = findLowestAncestor(ImmutableList.copyOf(descendants))
-
-    @JvmStatic
-    fun <T : AbstractTreeNode<T, Payload>, Payload> findLowestAncestor(
-      descendants: List<T>,
-    ): T {
+    fun <T : AbstractTreeNode<T, Payload>, Payload> findLowestAncestor(descendants: List<T>): T {
       require(descendants.isNotEmpty())
       val pathList = ArrayList<ArrayList<T>>()
 
@@ -402,11 +413,12 @@ protected constructor(val nodeId: Int) : Comparable<T> {
             check = false
           }
         }
-        lowestAncestor = if (check) {
-          curNode
-        } else {
-          break
-        }
+        lowestAncestor =
+          if (check) {
+            curNode
+          } else {
+            break
+          }
       }
       return lowestAncestor!!
     }
@@ -414,9 +426,7 @@ protected constructor(val nodeId: Int) : Comparable<T> {
     fun <T : AbstractTreeNode<T, Payload>, Payload> findLowestAncestorPair(
       oneNode: T,
       anotherNode: T,
-    ): T {
-      return findLowestAncestor(ImmutableList.of(oneNode, anotherNode))
-    }
+    ): T = findLowestAncestor(ImmutableList.of(oneNode, anotherNode))
   }
 
   interface NodeIdCopyStrategy {

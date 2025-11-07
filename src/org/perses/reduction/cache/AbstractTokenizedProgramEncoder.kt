@@ -19,6 +19,7 @@ package org.perses.reduction.cache
 import com.google.common.collect.ImmutableList
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.util.Util.lazyAssert
 
 abstract class AbstractTokenizedProgramEncoder<Encoding> protected constructor(
@@ -26,8 +27,10 @@ abstract class AbstractTokenizedProgramEncoder<Encoding> protected constructor(
   protected val profiler: AbstractQueryCacheProfiler,
   val supportsRccReEncoding: Boolean,
 ) {
-
-  abstract fun encode(program: TokenizedProgram): Encoding?
+  abstract fun encode(
+    program: TokenizedProgram,
+    outputManager: AbstractOutputManager,
+  ): Encoding?
 
   abstract fun reEncode(previousEncoding: Encoding): Encoding?
 
@@ -39,6 +42,6 @@ abstract class AbstractTokenizedProgramEncoder<Encoding> protected constructor(
 
   protected abstract fun updateEncoderMore(encoderBaseProgram: TokenizedProgram)
 
-  val tokensInBaseProgram: ImmutableList<PersesTokenFactory.PersesToken>
+  val tokensInBaseProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>
     get() = baseProgram.tokens
 }

@@ -44,8 +44,9 @@ object TreeTransformations {
         if (currentDepth > maxBfsDepth) {
           return@boundedBFSChildren TreeNodeFilterResult.STOP
         }
-        val nodeRule = node.antlrRule
-          ?: return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
+        val nodeRule =
+          node.antlrRule
+            ?: return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
         val matched = expectedSuperRuleType.isEqualToOrSuperOf(nodeRule)
         if (matched) {
           yield(node)
@@ -75,10 +76,11 @@ object TreeTransformations {
     maxBfsDepth: Int,
   ): Sequence<AbstractSparTreeNode> {
     lazyAssert({ maxBfsDepth > 0 }) { "The max BFS depth must be positive: $maxBfsDepth" }
-    val parent = kleeneQuantifiedCurrentNode.parent
-      ?: error(
-        "The current node is a root node: ${kleeneQuantifiedCurrentNode.printTreeStructure()}",
-      )
+    val parent =
+      kleeneQuantifiedCurrentNode.parent
+        ?: error(
+          "The current node is a root node: ${kleeneQuantifiedCurrentNode.printTreeStructure()}",
+        )
     if (!parent.isKleeneStarRuleNode && !parent.isKleenePlusRuleNode) {
       return emptySequence()
     }
@@ -86,8 +88,10 @@ object TreeTransformations {
       "The current node must be Kleene-qualified. " +
         kleeneQuantifiedCurrentNode.printTreeStructure()
     }
-    val kleeneElementRule = kleeneQuantifiedCurrentNode
-      .payload!!.expectedAntlrRuleType!!
+    val kleeneElementRule =
+      kleeneQuantifiedCurrentNode
+        .payload!!
+        .expectedAntlrRuleType!!
 
     return kleeneQuantifiedCurrentNode.boundedBreadthFirstSearchForFirstQualifiedNodes(
       nodePredicate = { node: AbstractSparTreeNode ->

@@ -24,7 +24,12 @@ object ExistingLangParserFacadeStubTemplateDumpMain {
   fun main(args: Array<String>) {
     require(args.size == 1 || args.size == 2) { args.toList() }
     val output = Paths.get(args[0]).toAbsolutePath()
-    val lexerFile = if (args.size == 2) { Paths.get(args[1]) } else { null }
+    val lexerFile =
+      if (args.size == 2) {
+        Paths.get(args[1])
+      } else {
+        null
+      }
     val parent = output.parent!!
     ensureDirExists(parent)
     ExistingLangParserFacadeStubTemplate(

@@ -18,46 +18,41 @@ package org.perses.antlr
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.PnfCLexer
 import java.nio.file.Files
-import java.nio.file.Path
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class MetaTokenInfoDbTest {
+  private val tempDir = Files.createTempDirectory(this::class.java.name)
 
-  private lateinit var tempDir: Path
-
-  @Before
-  fun setup() {
-    tempDir = Files.createTempDirectory(this::class.java.name)
-  }
-
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     tempDir.deleteRecursively()
   }
 
   val lexerClass = PnfCLexer::class.java
-  val mapping = LexerRuleNameAndTypeMapping(lexerClass)
+  val mapping = TokenNameAndTokenTypeMapping(lexerClass)
 
   @Test
   fun testCGrammar() {
     assertThat(mapping.bimap.size).isEqualTo(124)
 
-    val inputs = listOf(
-      "And" to PnfCLexer.And,
-      "AndAnd" to PnfCLexer.AndAnd,
-      "For" to PnfCLexer.For,
-      "Int" to PnfCLexer.Int,
-      "Restrict" to PnfCLexer.Restrict,
-      "Sizeof" to PnfCLexer.Sizeof,
-    )
+    val inputs =
+      listOf(
+        "And" to PnfCLexer.And,
+        "AndAnd" to PnfCLexer.AndAnd,
+        "For" to PnfCLexer.For,
+        "Int" to PnfCLexer.Int,
+        "Restrict" to PnfCLexer.Restrict,
+        "Sizeof" to PnfCLexer.Sizeof,
+      )
 
     for (token in inputs) {
       val type = mapping.getTokenType(token.first)
@@ -67,23 +62,26 @@ class MetaTokenInfoDbTest {
     }
   }
 
-  @Test
-  fun testAdhocGrammar() {
-    val tokenNum = "Num"
-    val tokenLetter = "Letter"
-    val facade = TestUtility.generateAdhocFacade(
+  val tokenNum = "Num"
+  val tokenLetter = "Letter"
+  val facade =
+    TestUtility.generateAdhocFacade(
       combinedGrammarName = "Test",
-      combinedGrammarContent = """
+      combinedGrammarContent =
+        """
         $tokenLetter : 'a';
         $tokenNum : '9';
         start : $tokenLetter $tokenNum ;
-      """.trimIndent(),
+        """.trimIndent(),
       startRule = "start",
       tokenNamesOfIdentifiers = listOf(),
       workingDir = tempDir,
       enablePnfNormalization = false,
     )
-    val db = MetaTokenInfoDB.createFor(facade.lexerClass)
+  val db = MetaTokenInfoDB.createForLexerClass(facade.lexerClass).first
+
+  @Test
+  fun testAdhocGrammar() {
     assertThat(db.asSequence().count()).isEqualTo(2)
     db.getTokenInfoWithName(tokenLetter)!!.let {
       assertThat(it.ruleIndex.antlrRuleIndex).isEqualTo(0)
@@ -96,5 +94,10 @@ class MetaTokenInfoDbTest {
       assertThat(it.literalLexeme).isEqualTo("9")
     }
     assertThat(db.allLiteralLexemes).containsExactly("a", "9")
+  }
+
+  @Test
+  fun testHasToken() {
+    assertThat(db.hasToken(100000.toTokenType())).isFalse()
   }
 }

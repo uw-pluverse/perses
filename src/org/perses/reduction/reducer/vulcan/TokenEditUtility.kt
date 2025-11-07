@@ -23,7 +23,6 @@ import org.perses.spartree.SparTree
 import org.perses.util.Util.lazyAssert
 
 object TokenEditUtility {
-
   fun createEditToReplaceAllLexerNodesHavingSameLexeme(
     tree: SparTree,
     oldLexeme: String,
@@ -33,9 +32,12 @@ object TokenEditUtility {
     return createEditToReplaceMultiNodes(
       tree = tree,
       newLexeme = newLexeme,
-      nodesToBeReplaced = tree.leafNodeSequence().filter {
-        it.token.text == oldLexeme
-      }.toList(),
+      nodesToBeReplaced =
+        tree
+          .leafNodeSequence()
+          .filter {
+            it.token.lexemeText == oldLexeme
+          }.toList(),
     )
   }
 
@@ -56,16 +58,18 @@ object TokenEditUtility {
   ): AnyNodeReplacementTreeEdit {
     check(nodesToBeReplaced.isNotEmpty())
     val sparTreeNodeFactory = tree.sparTreeNodeFactory
-    val builder = NodeReplacementActionSet
-      .Builder("replace ${nodesToBeReplaced.size} lexer nodes with new lexeme '$newLexeme'")
+    val builder =
+      NodeReplacementActionSet
+        .Builder("replace ${nodesToBeReplaced.size} lexer nodes with new lexeme '$newLexeme'")
     val tokenFactory = tree.tokenizedProgramFactory.tokenFactory
     nodesToBeReplaced.forEach { targetNode ->
       check(!targetNode.isPermanentlyDeleted)
-      lazyAssert { newLexeme != targetNode.token.text }
-      val replacement = sparTreeNodeFactory.copyWithNewToken(
-        targetNode,
-        tokenFactory.copyPersesTokenWithNewText(newLexeme, targetNode.token),
-      )
+      lazyAssert { newLexeme != targetNode.token.lexemeText }
+      val replacement =
+        sparTreeNodeFactory.copyWithNewToken(
+          targetNode,
+          tokenFactory.copyPersesTokenWithNewText(newLexeme, targetNode.token.asAntlrToken()),
+        )
       builder.replaceNode(targetNode = targetNode, replacement = replacement)
     }
     return tree.createAnyNodeReplacementEdit(builder.build())

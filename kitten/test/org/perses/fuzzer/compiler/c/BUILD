@@ -16,7 +16,6 @@ kt_jvm_test(
         "crash_output_4.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/c",

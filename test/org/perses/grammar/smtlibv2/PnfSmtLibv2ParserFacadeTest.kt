@@ -25,7 +25,6 @@ import org.perses.antlr.ParseTreeWithParser
 
 @RunWith(JUnit4::class)
 class PnfSmtLibv2ParserFacadeTest {
-
   @Test
   fun test() {
     val pnfFacade = SmtLibV2ParserFacade()

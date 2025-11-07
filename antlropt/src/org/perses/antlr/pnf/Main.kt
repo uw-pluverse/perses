@@ -27,13 +27,17 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.io.path.writeText
 
-class Main(cmd: Options) : AbstractMain<Main.Options>(cmd) {
+class Main(
+  cmd: Options,
+) : AbstractMain<Main.Options>(cmd) {
   override fun internalRun() {
-    val parserGrammar = loadGrammarFromFile(cmd.sourceFile!!)
-      .copyWithNewName(extractGrammarNameFromGrammarFileName(cmd.outputFile!!))
-    val lexerGrammar = cmd.lexerFile?.let {
-      loadGrammarFromFile(it)
-    }
+    val parserGrammar =
+      loadGrammarFromFile(cmd.sourceFile!!)
+        .copyWithNewName(extractGrammarNameFromGrammarFileName(cmd.outputFile!!))
+    val lexerGrammar =
+      cmd.lexerFile?.let {
+        loadGrammarFromFile(it)
+      }
     val origGrammar = GrammarPair(parserGrammar, lexerGrammar)
     val passes = PnfPassManager()
     val processedGrammar = passes.process(origGrammar, cmd.startRuleName!!)
@@ -77,11 +81,12 @@ class Main(cmd: Options) : AbstractMain<Main.Options>(cmd) {
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val cmdProcessor = CommandLineProcessor(
-        cmdCreator = { Options() },
-        programName = "pnf",
-        args = args,
-      )
+      val cmdProcessor =
+        CommandLineProcessor(
+          cmdCreator = { Options() },
+          programName = "pnf",
+          args = args,
+        )
       if (cmdProcessor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }

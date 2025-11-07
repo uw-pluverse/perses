@@ -17,12 +17,13 @@ kt_jvm_test(
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:truth",
-        "//src/org/perses/antlr/atn",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
         "//src/org/perses/antlr/atn/nfa",
+        "//src/org/perses/antlr/atn/tdtree",
+        "//src/org/perses/program",
+        "//src/org/perses/spartree",
         "//test/org/perses/antlr/atn:OrigC",
-        "//test/org/perses/antlr/atn:RandomMock",
         "//test/org/perses/antlr/atn:TestLexer",
-        "//test/org/perses/antlr/atn:TestUtil",
     ],
 )
 
@@ -33,8 +34,11 @@ kt_jvm_library(
     ],
     deps = [
         "//:antlr_runtime",
-        "//src/org/perses/antlr/atn",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
         "//src/org/perses/antlr/atn/nfa",
+        "//src/org/perses/antlr/atn/tdtree",
+        "//src/org/perses/program",
+        "//src/org/perses/spartree",
         "//test/org/perses/antlr/atn:OrigC",
     ],
 )

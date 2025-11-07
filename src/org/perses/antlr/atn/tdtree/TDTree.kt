@@ -22,20 +22,18 @@ import org.perses.spartree.TreeNodeFilterResult
 import org.perses.util.toImmutableSet
 
 class TDTree {
-
   private var nodeIdGenerator = 0
 
   fun nextId() = ++nodeIdGenerator
 
   val root = SequenceTDTreeNode(nodeId = nextId())
 
-  fun createCharNode(char: Char, allowedAsciiChars: ImmutableList<Char>): CharTDTreeNode {
-    return CharTDTreeNode(nodeId = nextId(), char, allowedAsciiChars)
-  }
+  fun createCharNode(
+    char: Char,
+    allowedAsciiChars: ImmutableList<Char>,
+  ): CharTDTreeNode = CharTDTreeNode(nodeId = nextId(), char, allowedAsciiChars)
 
-  fun createOptionalTDTreeNode(): OptionalTDTreeNode {
-    return OptionalTDTreeNode(nodeId = nextId())
-  }
+  fun createOptionalTDTreeNode(): OptionalTDTreeNode = OptionalTDTreeNode(nodeId = nextId())
 
   fun deleteNodes(nodesToDelete: Set<AbstractTDTreeNode>) {
     root.preOrderVisit {
@@ -63,30 +61,25 @@ class TDTree {
 
   fun createPlusTDTreeNode(): PlusTDTreeNode = PlusTDTreeNode(nodeId = nextId())
 
-  fun createStarTDTreeNode(): StarTDTreeNode {
-    return StarTDTreeNode(nodeId = nextId())
-  }
+  fun createStarTDTreeNode(): StarTDTreeNode = StarTDTreeNode(nodeId = nextId())
 
-  fun toLexeme(
-    blanketedNodes: Set<AbstractTDTreeNode> = HashSet(),
-  ): String {
-    return root.toLexeme(blanketedNodes)
-  }
+  fun toLexeme(blanketedNodes: Set<AbstractTDTreeNode> = HashSet()): String =
+    root.toLexeme(blanketedNodes)
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("lexeme", toLexeme()).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("lexeme", toLexeme()).toString()
 
-  fun deletableNodesFromTopToBottomSequence(): Sequence<Set<AbstractTDTreeNode>> {
-    return sequence {
+  fun deletableNodesFromTopToBottomSequence(): Sequence<Set<AbstractTDTreeNode>> =
+    sequence {
       root.boundedBFSChildren { node, _ ->
         when (node) {
           is PlusTDTreeNode -> {
-            val value = node.immutableChildView
-              .asSequence()
-              .drop(1)
-              .toImmutableSet()
-              .also { check(it.size == node.childCount - 1) }
+            val value =
+              node.immutableChildView
+                .asSequence()
+                .drop(1)
+                .toImmutableSet()
+                .also { check(it.size == node.childCount - 1) }
             if (value.isNotEmpty()) {
               yield(value)
             }
@@ -112,5 +105,4 @@ class TDTree {
         TreeNodeFilterResult.CONTINUE
       }
     }
-  }
 }

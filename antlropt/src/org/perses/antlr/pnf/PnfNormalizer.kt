@@ -39,21 +39,25 @@ class PnfNormalizer(
   private val sourceAntlrFileContent = source.readText()
 
   private val origGrammar =
-    PersesAstBuilder.loadGrammarFromString(sourceAntlrFileContent)
+    PersesAstBuilder
+      .loadGrammarFromString(sourceAntlrFileContent)
       .copyWithNewName(Util.extractGrammarNameFromGrammarFileName(outputFile.toString()))
 
-  private val lexerGrammar = lexer?.let {
-    PersesAstBuilder.loadGrammarFromFile(it).also { grammar ->
-      check(grammar.grammarName + ".g4" == it.fileName.toString())
+  private val lexerGrammar =
+    lexer?.let {
+      PersesAstBuilder.loadGrammarFromFile(it).also { grammar ->
+        check(grammar.grammarName + ".g4" == it.fileName.toString())
+      }
     }
-  }
 
   fun run() {
     val passes = PnfPassManager()
-    val processedGrammar = passes.process(
-      GrammarPair(parserGrammar = origGrammar, lexerGrammar = lexerGrammar),
-      startRuleName,
-    ).parserGrammar!!
+    val processedGrammar =
+      passes
+        .process(
+          GrammarPair(parserGrammar = origGrammar, lexerGrammar = lexerGrammar),
+          startRuleName,
+        ).parserGrammar!!
     val output = processedGrammar.sourceCode
     outputFile.writeText(output)
   }

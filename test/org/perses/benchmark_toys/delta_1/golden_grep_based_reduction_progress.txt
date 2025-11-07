@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "t.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_grep_based_token_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c"
+  outputDir: "result_grep_based_token_reduction_golden_test_node_priority-dfs_t.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: true
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "grep_based_reduction_progress.txt"
@@ -72,54 +78,64 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<sequence>
-reducers:
-- !<fixpoint>
-  body: !<atomic>
-    reducer: perses_node_priority_with_dfs_delta
-  condition: smaller
-- !<fixpoint>
-  body: !<if>
-    condition: !<atomic>
-      reducer: concurrent_token_slicer
-    then: !<fixpoint>
-      body: !<atomic>
-        reducer: perses_node_priority_with_dfs_delta
-      condition: smaller
-  condition: smaller
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 27
+(56/56)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (smaller) {
+        if (concurrent_token_slicer) {
+            fixpoint (smaller) {
+                node_priority-dfs
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(56/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -286,15 +302,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](56/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:56/56=100.00%
+FixPt[1][node_priority-dfs][DFS](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@2
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=5}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@1
     --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
@@ -316,15 +344,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 1 --> 1.
+0 entries are removed: 2 --> 2.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 2
+    size before clearance = 3
 ------------------------------------------------------------
 
 
@@ -334,6 +363,7 @@ token count change 56 -> 46
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](46/56)  Minimizer DfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:46/56=82.14%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 2 from 56 to 46
@@ -363,6 +393,36 @@ The current best program is the following
                   ;
     --file: <formatted tokenized program in its original format>--
                   ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                           ;
+    --file: <formatted tokenized program in its original format>--
+                           ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                      ;
+    --file: <formatted tokenized program in its original format>--
+                      ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                ;
+    --file: <formatted tokenized program in its original format>--
+                ;
 ------------------------------------------------------------
 
 
@@ -430,9 +490,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](46/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:46/56=82.14%
+FixPt[1][node_priority-dfs][DFS](46/56)  Testing the empty input. Global ratio:46/56=82.14%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: t.c--
     int main (int argc, char *argv[]) {
     }
@@ -442,6 +504,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](46/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:46/56=82.14%
+FixPt[1][node_priority-dfs][DFS](46/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:46/56=82.14%
 ===================Node reduction is done===================
 
 Failed to reduce node 10
@@ -484,9 +548,23 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](46/56)  Minimizer DfsListMinimizer starts. Input=[0-5]#6. Global ratio:46/56=82.14%
+FixPt[1][node_priority-dfs][DFS](46/56)  Testing the empty input. Global ratio:46/56=82.14%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](46/56)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:46/56=82.14%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
@@ -502,9 +580,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](46/56)  Try deleting [3-5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:46/56=82.14%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
@@ -524,15 +603,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](46/56)  Try deleting [5]#1: Interesting. Local ratio: 6/6=100.00%. Global ratio:46/56=82.14%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 7 --> 7.
+0 entries are removed: 11 --> 11.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 12
+    size before clearance = 13
 ------------------------------------------------------------
 
 
@@ -542,7 +622,7 @@ token count change 46 -> 43
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int main (int argc, char *argv[]) {
@@ -559,9 +639,10 @@ token count change 46 -> 43
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](43/56)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:43/56=76.79%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
@@ -579,9 +660,10 @@ token count change 46 -> 43
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](43/56)  Try deleting [4]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:43/56=76.79%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     int main (int argc, char *argv[]) {
          int a = 1;
@@ -599,9 +681,10 @@ token count change 46 -> 43
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](43/56)  Try deleting [3]#1: Interesting. Local ratio: 5/6=83.33%. Global ratio:43/56=76.79%
 ===========TestScriptExecutionCacheEntryEviction============
 
-1 entries are removed: 8 --> 7.
+1 entries are removed: 12 --> 11.
 ------------------------------------------------------------
 
 
@@ -619,7 +702,7 @@ token count change 43 -> 38
 
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: t.c--
     int main (int argc, char *argv[]) {
      printf("world\n");
@@ -631,9 +714,10 @@ token count change 43 -> 38
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/56)  Try deleting [0-2]#3: Interesting. Local ratio: 4/6=66.67%. Global ratio:38/56=67.86%
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 7 --> 5.
+2 entries are removed: 11 --> 9.
 ------------------------------------------------------------
 
 
@@ -649,6 +733,7 @@ token count change 38 -> 19
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](19/56)  Minimizer DfsListMinimizer ends. Result=[4]#1. Local ratio: 1/6=16.67%. Global ratio:19/56=33.93%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 13 from 46 to 19
@@ -697,7 +782,7 @@ It took less than 1 second to cancel the task.
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 5 --> 3.
+2 entries are removed: 9 --> 7.
 ------------------------------------------------------------
 
 
@@ -773,7 +858,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](9/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:9/56=16.07%
+FixPt[1][node_priority-dfs][DFS](9/56)  Testing the empty input. Global ratio:9/56=16.07%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int main                          {
@@ -786,6 +873,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](9/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:9/56=16.07%
+FixPt[1][node_priority-dfs][DFS](9/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:9/56=16.07%
 ===================Node reduction is done===================
 
 Failed to reduce node 50
@@ -839,7 +928,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 6 --> 4.
+2 entries are removed: 10 --> 8.
 ------------------------------------------------------------
 
 
@@ -889,7 +978,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int main                          {
@@ -987,9 +1076,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](6/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:6/56=10.71%
+FixPt[1][node_priority-dfs][DFS](6/56)  Testing the empty input. Global ratio:6/56=10.71%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: t.c--
         main                          {
             "world\n" ;
@@ -1001,9 +1092,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](6/56)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:6/56=10.71%
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 4 --> 2.
+2 entries are removed: 8 --> 6.
 ------------------------------------------------------------
 
 
@@ -1019,15 +1111,15 @@ token count change 6 -> 5
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](5/56)  Minimizer DfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:5/56=8.93%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 6 from 6 to 5
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+(5/56)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=404,slot_type=translationUnit}
@@ -1075,7 +1167,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
                       ;
@@ -1118,9 +1210,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](5/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:5/56=8.93%
+FixPt[2][node_priority-dfs][DFS](5/56)  Testing the empty input. Global ratio:5/56=8.93%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: t.c--
         main                          {
     }
@@ -1130,6 +1224,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](5/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
+FixPt[2][node_priority-dfs][DFS](5/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
 ===================Node reduction is done===================
 
 Failed to reduce node 411
@@ -1170,7 +1266,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
         main                          {
@@ -1246,7 +1342,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](5/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:5/56=8.93%
+FixPt[2][node_priority-dfs][DFS](5/56)  Testing the empty input. Global ratio:5/56=8.93%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
         main                          {
@@ -1259,6 +1357,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](5/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
+FixPt[2][node_priority-dfs][DFS](5/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
 ===================Node reduction is done===================
 
 Failed to reduce node 419
@@ -1359,7 +1459,7 @@ translationUnit {id=404,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
         main                          {
@@ -1442,7 +1542,7 @@ translationUnit {id=404,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
         main                          {
@@ -1602,11 +1702,9 @@ translationUnit {id=404,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: token slicer@5
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -1790,388 +1888,138 @@ translationUnit {id=404,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 56
-  characterCount: 133
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+====Fixpoint iteration 17. Reducer: FineGritLatraReducer====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+The spar-tree is the following.
+translationUnit {id=404,slot_type=translationUnit}
+|___(+) {id=405,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=407,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___Token:main {id=443,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |___compoundStatement {id=409,slot_type=compoundStatement}
+            |___Token:{ {id=410,slot_type=LeftBrace}
+            |___(?) {id=411,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=414,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=418,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=419,slot_type=optional__postfixExpression_1}
+            |           |   |___(+) {id=439,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |       |___Token:"world\n" {id=440,slot_type=StringLiteral}
+            |           |___Token:; {id=420,slot_type=Semi}
+            |___Token:} {id=412,slot_type=RightBrace}
+------------------------------------------------------------
 
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
 
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+FixPt[17][FineGritLatraReducer](5/56)  For c, there are 46 transformations.
+FixPt[17][FineGritLatraReducer](5/56)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
 
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+0 entries are removed: 20 --> 20.
+------------------------------------------------------------
 
-[5]: ReducerCallEvent
----
-reducer:
-  granularity: 1
-  shortName: "concurrent_token_slicer@1"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
 
-[6]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+===========Node edit action set cache is cleared.===========
 
-[7]: ReducerCallEvent
----
-reducer:
-  granularity: 2
-  shortName: "concurrent_token_slicer@2"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
+    size before clearance = 20
+------------------------------------------------------------
 
-[8]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
 
-[9]: ReducerCallEvent
----
-reducer:
-  granularity: 3
-  shortName: "concurrent_token_slicer@3"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
+================The best program is updated.================
 
-[10]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+token count change 5 -> 5
+------------------------------------------------------------
 
-[11]: ReducerCallEvent
----
-reducer:
-  granularity: 4
-  shortName: "concurrent_token_slicer@4"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
 
-[12]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+FixPt[17][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](5/56)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[17][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](5/56)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[17][FineGritLatraReducer][DivideOperationSimplification](5/56)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[17][FineGritLatraReducer][MultiplyOperationSimplification](5/56)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[17][FineGritLatraReducer][MinusOperationSimplification](5/56)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[17][FineGritLatraReducer][PlusOperationSimplification](5/56)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[17][FineGritLatraReducer][LocalToGlobalTransformation](5/56)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[17][FineGritLatraReducer][UnionToStruct](5/56)  Found matches: 0 in transformation UnionToStruct
+FixPt[17][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](5/56)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[17][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](5/56)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[17][FineGritLatraReducer][FunctionInlining4Args](5/56)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[17][FineGritLatraReducer][FunctionInlining4ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[17][FineGritLatraReducer][FunctionInliningLatraTransformation](5/56)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[17][FineGritLatraReducer][FunctionInlining3ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[17][FineGritLatraReducer][FunctionInlining2Args](5/56)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[17][FineGritLatraReducer][FunctionInlining2ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[17][FineGritLatraReducer][FunctionInlining1Arg](5/56)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[17][FineGritLatraReducer][FunctionInlining1ArgNoType](5/56)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[17][FineGritLatraReducer][FunctionInliningNoArg](5/56)  Found matches: 0 in transformation FunctionInliningNoArg
+FixPt[17][FineGritLatraReducer][LiftAssignmentExpr](5/56)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[17][FineGritLatraReducer][CopyPropagation](5/56)  Found matches: 0 in transformation CopyPropagation
+FixPt[17][FineGritLatraReducer][CallExprToValue](5/56)  Found matches: 0 in transformation CallExprToValue
+FixPt[17][FineGritLatraReducer][ReplaceCallExpr1Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[17][FineGritLatraReducer][ReplaceCallExpr2Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[17][FineGritLatraReducer][ReplaceCallExpr3Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[17][FineGritLatraReducer][SimplifyCallExpr](5/56)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[17][FineGritLatraReducer][SimplifyIf](5/56)  Found matches: 0 in transformation SimplifyIf
+FixPt[17][FineGritLatraReducer][SimplifyIf2](5/56)  Found matches: 0 in transformation SimplifyIf2
+FixPt[17][FineGritLatraReducer][ReduceArrayDim3](5/56)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[17][FineGritLatraReducer][ReduceArrayDim2](5/56)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[17][FineGritLatraReducer][ReduceArrayDim](5/56)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[17][FineGritLatraReducer][MoveFuncDefToDecl](5/56)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[17][FineGritLatraReducer][MoveFuncDefToDecl2](5/56)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[17][FineGritLatraReducer][MoveFuncDefToDeclNoParam](5/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
+FixPt[17][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](5/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
+FixPt[17][FineGritLatraReducer][SimplifyComma](5/56)  Found matches: 0 in transformation SimplifyComma
+FixPt[17][FineGritLatraReducer][TypeDefTransform](5/56)  Found matches: 0 in transformation TypeDefTransform
+FixPt[17][FineGritLatraReducer][EmptyStructToInt](5/56)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[17][FineGritLatraReducer][RemoveAssignment](5/56)  Found matches: 0 in transformation RemoveAssignment
+FixPt[17][FineGritLatraReducer][RemoveAddrTaken](5/56)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[17][FineGritLatraReducer][ReplaceArrayAccessWithIndex](5/56)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[17][FineGritLatraReducer][SimplifyUnionDecl](5/56)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[17][FineGritLatraReducer][SimplifyStructDecl](5/56)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[17][FineGritLatraReducer][ReplaceDefByDecl](5/56)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[17][FineGritLatraReducer][CombineLocalVarDecl](5/56)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[17][FineGritLatraReducer][UnifyFunctionDecl](5/56)  Found matches: 0 in transformation UnifyFunctionDecl
+(5/56)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                    Reducer #Tokens #Chars #NonDeletions
+ 0          node_priority-dfs     -51   -117             0
+ 1          node_priority-dfs       0      0             0
+ 2  concurrent_token_slicer@1       0      0             0
+ 3  concurrent_token_slicer@2       0      0             0
+ 4  concurrent_token_slicer@3       0      0             0
+ 5  concurrent_token_slicer@4       0      0             0
+ 6  concurrent_token_slicer@5       0      0             0
+ 7  concurrent_token_slicer@6       0      0             0
+ 8  concurrent_token_slicer@7       0      0             0
+ 9  concurrent_token_slicer@8       0      0             0
+10  concurrent_token_slicer@9       0      0             0
+11 concurrent_token_slicer@10       0      0             0
+12 concurrent_token_slicer@11       0      0             0
+13 concurrent_token_slicer@12       0      0             0
+14 concurrent_token_slicer@13       0      0             0
+15 concurrent_token_slicer@14       0      0             0
+16       FineGritLatraReducer       0      0             0
 
-[13]: ReducerCallEvent
----
-reducer:
-  granularity: 5
-  shortName: "concurrent_token_slicer@5"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[14]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[15]: ReducerCallEvent
----
-reducer:
-  granularity: 6
-  shortName: "concurrent_token_slicer@6"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[16]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[17]: ReducerCallEvent
----
-reducer:
-  granularity: 7
-  shortName: "concurrent_token_slicer@7"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[18]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[19]: ReducerCallEvent
----
-reducer:
-  granularity: 8
-  shortName: "concurrent_token_slicer@8"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[20]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[21]: ReducerCallEvent
----
-reducer:
-  granularity: 9
-  shortName: "concurrent_token_slicer@9"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[22]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[23]: ReducerCallEvent
----
-reducer:
-  granularity: 10
-  shortName: "concurrent_token_slicer@10"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[24]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[25]: ReducerCallEvent
----
-reducer:
-  granularity: 11
-  shortName: "concurrent_token_slicer@11"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[26]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[27]: ReducerCallEvent
----
-reducer:
-  granularity: 12
-  shortName: "concurrent_token_slicer@12"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[28]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[29]: ReducerCallEvent
----
-reducer:
-  granularity: 13
-  shortName: "concurrent_token_slicer@13"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[30]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[31]: ReducerCallEvent
----
-reducer:
-  granularity: 14
-  shortName: "concurrent_token_slicer@14"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[32]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 5
-  characterCount: 16
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+                   Reducer Times #Tokens #Chars
+         node_priority-dfs     2     -51   -117
+ concurrent_token_slicer@1     1       0      0
+ concurrent_token_slicer@2     1       0      0
+ concurrent_token_slicer@3     1       0      0
+ concurrent_token_slicer@4     1       0      0
+ concurrent_token_slicer@5     1       0      0
+ concurrent_token_slicer@6     1       0      0
+ concurrent_token_slicer@7     1       0      0
+ concurrent_token_slicer@8     1       0      0
+ concurrent_token_slicer@9     1       0      0
+concurrent_token_slicer@10     1       0      0
+concurrent_token_slicer@11     1       0      0
+concurrent_token_slicer@12     1       0      0
+concurrent_token_slicer@13     1       0      0
+concurrent_token_slicer@14     1       0      0
+      FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 7
-#test failure = 26
-#test result cache hits = 8
+#test failure = 29
+#test result cache hits = 10
 #test execution cancelled = 1
 #node edit action set cache hits = 5
 #external test execution cache hits = 0

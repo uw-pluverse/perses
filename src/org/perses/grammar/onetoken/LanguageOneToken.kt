@@ -25,9 +25,10 @@ object LanguageOneToken : LanguageKind(
   extensions = ImmutableSet.of("onetoken"),
   defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT,
-    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-  ),
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.ORIG_FORMAT,
+      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+    ),
 )

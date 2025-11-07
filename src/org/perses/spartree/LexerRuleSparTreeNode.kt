@@ -18,14 +18,13 @@ package org.perses.spartree
 
 import com.google.common.base.MoreObjects
 import org.perses.antlr.RuleHierarchyEntry
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 
 class LexerRuleSparTreeNode internal constructor(
   nodeId: Int,
-  val token: PersesToken,
+  val token: AbstractPersesToken,
   antlrRule: RuleHierarchyEntry?,
 ) : AbstractSparTreeNode(nodeId, antlrRule) {
-
   @PublishedApi
   internal var prev: LexerRuleSparTreeNode? = null
 
@@ -39,15 +38,14 @@ class LexerRuleSparTreeNode internal constructor(
     get() = next
 
   override val labelPrefix: String
-    get() = "Token:" + token.text
+    get() = "Token:" + token.lexemeText
 
   override fun buildTokenIntervalInfoForCurrentNode() {
     // do nothing
   }
 
-  override fun internalCopyCurrentNode(computedNewNodeId: Int): LexerRuleSparTreeNode {
-    return LexerRuleSparTreeNode(computedNewNodeId, token, antlrRule)
-  }
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): LexerRuleSparTreeNode =
+    LexerRuleSparTreeNode(computedNewNodeId, token, antlrRule)
 
   override fun addChildAtIndex(
     index: Int,
@@ -57,11 +55,12 @@ class LexerRuleSparTreeNode internal constructor(
     error("Cannot call this method on a token node.")
   }
 
-  override fun asLexerRule(): LexerRuleSparTreeNode {
-    return this
-  }
+  override fun asLexerRule(): LexerRuleSparTreeNode = this
 
-  override fun onChildRemoved(index: Int, child: AbstractSparTreeNode) {
+  override fun onChildRemoved(
+    index: Int,
+    child: AbstractSparTreeNode,
+  ) {
     error("Cannot call this method on a token node.")
   }
 
@@ -73,8 +72,10 @@ class LexerRuleSparTreeNode internal constructor(
     get() = this
     set(_) = TODO()
 
-  override fun toString(): String {
-    return MoreObjects
-      .toStringHelper(this).add("token", token).addValue(super.toString()).toString()
-  }
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
+      .add("token", token)
+      .addValue(super.toString())
+      .toString()
 }

@@ -37,30 +37,37 @@ abstract class AbstractEditOperation<T> {
     return base == o.base && revision == o.revision
   }
 
-  final override fun hashCode(): Int {
-    return Objects.hashCode(javaClass, base, revision)
-  }
+  final override fun hashCode(): Int = Objects.hashCode(javaClass, base, revision)
 
-  final override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
+  final override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
       .add("base", base)
       .add("revision", revision)
       .toString()
-  }
 
-  class Insert<T>(override val revision: T) : AbstractEditOperation<T>() {
+  class Insert<T>(
+    override val revision: T,
+  ) : AbstractEditOperation<T>() {
     override val base: T? = null
   }
 
-  class Keep<T>(override val base: T) : AbstractEditOperation<T>() {
+  class Keep<T>(
+    override val base: T,
+  ) : AbstractEditOperation<T>() {
     override val revision = base
   }
 
-  class Delete<T>(override val base: T) : AbstractEditOperation<T>() {
+  class Delete<T>(
+    override val base: T,
+  ) : AbstractEditOperation<T>() {
     override val revision: T? = null
   }
 
-  class Replace<T>(override val base: T, override val revision: T) : AbstractEditOperation<T>() {
+  class Replace<T>(
+    override val base: T,
+    override val revision: T,
+  ) : AbstractEditOperation<T>() {
     init {
       lazyAssert { base != revision }
     }

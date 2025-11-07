@@ -23,18 +23,17 @@ class QueryCacheWithFastLinearScanWithoutCompression(
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<RccProgramEncoding, RccTokenizedProgramEncoder>(
-  tokenizedProgram,
-  profiler,
-  configuration,
-) {
+    tokenizedProgram,
+    profiler,
+    configuration,
+  ) {
   override fun createEncoder(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ): RccTokenizedProgramEncoder {
-    return RccTokenizedProgramEncoder(
+  ): RccTokenizedProgramEncoder =
+    RccTokenizedProgramEncoder(
       baseProgram,
       profiler,
       enableCompression = false,
     )
-  }
 }

@@ -18,23 +18,22 @@ package org.perses.reduction.cache
 
 import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.IntIterator
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 import org.perses.util.Util.lazyAssert
 
 object IntervalArrayExpander {
+  private val EMPTY_ITERATOR =
+    object : IntIterator {
+      override fun hasNext() = false
 
-  private val EMPTY_ITERATOR = object : IntIterator {
+      override fun nextInt(): Int {
+        TODO("Not yet implemented")
+      }
 
-    override fun hasNext() = false
-
-    override fun nextInt(): Int {
-      TODO("Not yet implemented")
+      override fun remove() {
+        TODO("Not supported")
+      }
     }
-
-    override fun remove() {
-      TODO("Not supported")
-    }
-  }
 
   @JvmStatic
   fun expand(intervals: IntArray): IntIterator {
@@ -45,7 +44,6 @@ object IntervalArrayExpander {
     }
 
     return object : IntIterator {
-
       var indexInArray = 0
       var currentIntervalStartValue = intervals[indexInArray]
       var currentIntervalEndValue = intervals[indexInArray + 1]
@@ -92,17 +90,14 @@ object IntervalArrayExpander {
   @JvmStatic
   fun expand(
     intervals: IntArray,
-    tokensInOrigin: ImmutableList<PersesToken>,
-  ): Iterator<PersesToken> = object : Iterator<PersesToken> {
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
+  ): Iterator<PersesTokenFactory.AbstractPersesToken> =
+    object : Iterator<PersesTokenFactory.AbstractPersesToken> {
+      private val iterator = expand(intervals)
 
-    private val iterator = expand(intervals)
+      override fun hasNext(): Boolean = iterator.hasNext()
 
-    override fun hasNext(): Boolean {
-      return iterator.hasNext()
+      override fun next(): PersesTokenFactory.AbstractPersesToken =
+        tokensInOrigin[iterator.nextInt()]
     }
-
-    override fun next(): PersesToken {
-      return tokensInOrigin[iterator.nextInt()]
-    }
-  }
 }

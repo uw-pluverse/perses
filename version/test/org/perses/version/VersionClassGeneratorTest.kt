@@ -23,8 +23,8 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class VersionClassGeneratorTest {
-
-  val data = """
+  val data =
+    """
     BUILD_TIMESTAMP 1699246047
     FORMATTED_DATE 2023 Nov 06 04 47 27 Mon 
     PERSES_GIT_BRANCH master

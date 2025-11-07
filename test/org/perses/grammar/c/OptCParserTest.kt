@@ -68,11 +68,13 @@ class OptCParserTest {
   @Test
   fun testIntegrityOfOptimizedCParser() {
     val persesGrammar = C_PARSER_FACADE.antlrGrammar.asCombined().grammar
-    val ruleNames = persesGrammar.flattenedAllRules.stream()
-      .filter(AbstractPersesRuleDefAst::isParserRule)
-      .map(AbstractPersesRuleDefAst::ruleNameHandle)
-      .map(RuleNameRegistry.RuleNameHandle::ruleName)
-      .collect(ImmutableList.toImmutableList())
+    val ruleNames =
+      persesGrammar.flattenedAllRules
+        .stream()
+        .filter(AbstractPersesRuleDefAst::isParserRule)
+        .map(AbstractPersesRuleDefAst::ruleNameHandle)
+        .map(RuleNameRegistry.RuleNameHandle::ruleName)
+        .collect(ImmutableList.toImmutableList())
     assertThat(ruleNames).containsExactlyElementsIn(TestUtility.OPT_C_PARSER_RULE_NAMES)
   }
 
@@ -80,6 +82,7 @@ class OptCParserTest {
     private val C_PARSER_FACADE = CParserFacade()
     private val ORIG_C_PARSER_FACADE = OrigCParserFacade()
     private val PNF_C_PARSER_FACADE = PnfCParserFacade()
+
     private fun testOneCFile(testFile: Path) {
       val origTokens = extractTokenTexts(ORIG_C_PARSER_FACADE.parseFile(testFile).tree)
       run {

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.datatype.guava.GuavaModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.google.common.collect.ImmutableList
 import java.nio.file.Path
@@ -30,7 +31,6 @@ import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 object Serialization {
-
   val TYPE_REFERENCE_LIST_OF_STRINGS = object : TypeReference<ImmutableList<String>>() {}
 
   @JvmStatic
@@ -43,6 +43,7 @@ object Serialization {
     yamlFactoryCustomizer.invoke(yamlFactory)
     val mapper = ObjectMapper(yamlFactory)
     mapper.registerKotlinModule()
+    mapper.registerModule(GuavaModule())
     objectMapperCustomizer(mapper)
     return mapper.writeValueAsString(value)
   }
@@ -53,7 +54,11 @@ object Serialization {
     module.addSerializer(
       Path::class.java,
       object : StdSerializer<Path>(Path::class.java) {
-        override fun serialize(path: Path?, generator: JsonGenerator, p2: SerializerProvider) {
+        override fun serialize(
+          path: Path?,
+          generator: JsonGenerator,
+          p2: SerializerProvider,
+        ) {
           // Only write the basename for a path object.
           generator.writeString(path?.fileName.toString())
         }
@@ -63,47 +68,67 @@ object Serialization {
   }
 
   @JvmStatic
-  fun toYamlFile(value: Any, destination: Path) {
+  fun toYamlFile(
+    value: Any,
+    destination: Path,
+  ) {
     destination.writeText(toYamlString(value))
   }
 
   @JvmStatic
-  fun <T> fromYamlString(yaml: String, typeReference: TypeReference<T>): T {
+  fun <T> fromYamlString(
+    yaml: String,
+    typeReference: TypeReference<T>,
+  ): T {
     val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
     mapper.findAndRegisterModules()
     return mapper.readValue(yaml, typeReference)
   }
 
   @JvmStatic
-  fun <T> fromYamlFile(yaml: Path, typeReference: TypeReference<T>): T {
-    return fromYamlString(yaml.readText(), typeReference)
-  }
+  fun <T> fromYamlFile(
+    yaml: Path,
+    typeReference: TypeReference<T>,
+  ): T = fromYamlString(yaml.readText(), typeReference)
 
   @JvmStatic
-  fun toJsonString(value: Any, objectMapperCustomizer: (ObjectMapper) -> Unit = {}): String {
+  fun toJsonString(
+    value: Any,
+    objectMapperCustomizer: (ObjectMapper) -> Unit = {},
+  ): String {
     val mapper = ObjectMapper()
     objectMapperCustomizer(mapper)
     return mapper.writeValueAsString(value)
   }
 
   @JvmStatic
-  fun toJsonFile(value: Any, destination: Path) {
+  fun toJsonFile(
+    value: Any,
+    destination: Path,
+  ) {
     destination.writeText(toJsonString(value))
   }
 
   @JvmStatic
-  fun <T> fromJsonFile(json: Path, typeReference: TypeReference<T>): T {
-    return fromJsonString(json.readText(), typeReference)
-  }
+  fun <T> fromJsonFile(
+    json: Path,
+    typeReference: TypeReference<T>,
+  ): T = fromJsonString(json.readText(), typeReference)
 
   @JvmStatic
-  fun <T> fromJsonString(json: String, typeReference: TypeReference<T>): T {
+  fun <T> fromJsonString(
+    json: String,
+    typeReference: TypeReference<T>,
+  ): T {
     val mapper = ObjectMapper().registerKotlinModule()
     mapper.findAndRegisterModules()
     return mapper.readValue(json, typeReference)
   }
 
-  fun <T> deepCopy(value: T, klass: Class<T>): T {
+  fun <T> deepCopy(
+    value: T,
+    klass: Class<T>,
+  ): T {
     val mapper = ObjectMapper().registerKotlinModule()
     val jsonString = mapper.writeValueAsString(value)
     return mapper.readValue(jsonString, klass)

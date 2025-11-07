@@ -20,7 +20,6 @@ class DescendantHoistingTreeEdit internal constructor(
   tree: SparTree,
   actionSet: NodeReplacementActionSet,
 ) : AbstractNodeReplacementTreeEdit(tree, actionSet) {
-
   init {
     require(actionSet.actions.size == 1) {
       "Only single action is allowed for not."

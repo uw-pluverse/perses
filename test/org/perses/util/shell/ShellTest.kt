@@ -38,7 +38,6 @@ import kotlin.time.Duration.Companion.seconds
 
 @RunWith(JUnit4::class)
 class ShellTest {
-
   private val tempDir = Files.createTempDirectory(this::class.qualifiedName)
 
   @OptIn(ExperimentalPathApi::class)
@@ -106,11 +105,12 @@ class ShellTest {
       """.trimMargin(),
     )
 
-    val cmdOutput = singleton.run(
-      script.toString(),
-      captureOutput = true,
-      environment = createNewEnvironmentVar("TEST_ENV_VALUE", "hello world"),
-    )
+    val cmdOutput =
+      singleton.run(
+        script.toString(),
+        captureOutput = true,
+        environment = createNewEnvironmentVar("TEST_ENV_VALUE", "hello world"),
+      )
     assertThat(cmdOutput.stdout.combinedLines.trim()).isEqualTo("hello world")
   }
 
@@ -119,79 +119,91 @@ class ShellTest {
     val markFile = tempDir.resolve("mark_file.sh")
     assertThat(Files.exists(markFile)).isFalse()
 
-    val scriptBodyForRunningForever = """
-        trap "SIGINT ignored" SIGINT
-        trap "SIGTERM ignored" SIGTERM
-        sleep 9999999
-    """.trimIndent()
+    val scriptBodyForRunningForever =
+      """
+      |trap "SIGINT ignored" SIGINT
+      |trap "SIGTERM ignored" SIGTERM
+      |sleep 9999999
+      """.trimMargin()
 
-    val grandChildScript = tempDir.resolve("run-forever-grandchild.sh").also {
-      it.writeText(
-        """$SHEBANG_BASH
-        $scriptBodyForRunningForever
-        """.trimIndent(),
-      )
-      Util.setExecutable(it)
-    }
-    val childScript = tempDir.resolve("run-forever-child.sh").also {
-      it.writeText(
-        """$SHEBANG_BASH
-          $grandChildScript & # running in the background.
-          $scriptBodyForRunningForever
-        """.trimIndent(),
-      )
-      Util.setExecutable(it)
-    }
+    val grandChildScript =
+      tempDir.resolve("run-forever-grandchild.sh").also {
+        it.writeText(
+          """
+          |$SHEBANG_BASH
+          |$scriptBodyForRunningForever
+          """.trimMargin(),
+        )
+        Util.setExecutable(it)
+      }
+    val childScript =
+      tempDir.resolve("run-forever-child.sh").also {
+        it.writeText(
+          """
+          |$SHEBANG_BASH
+          |$grandChildScript & # running in the background.
+          |$scriptBodyForRunningForever
+          """.trimMargin(),
+        )
+        Util.setExecutable(it)
+      }
     Util.setExecutable(childScript)
-    val mainScript = tempDir.resolve("run-forever-main.sh").also {
-      it.writeText(
-        """$SHEBANG_BASH
-        touch $markFile
-        $childScript & # running in the background
-        $scriptBodyForRunningForever
-        """.trimIndent(),
-      )
-    }
+    val mainScript =
+      tempDir.resolve("run-forever-main.sh").also {
+        it.writeText(
+          """
+          |$SHEBANG_BASH
+          |touch $markFile
+          |$childScript & # running in the background
+          |$scriptBodyForRunningForever
+          """.trimMargin(),
+        )
+      }
     Util.setExecutable(mainScript)
     val thread = DaemonThreadPool.createSingleThreadPool()
     try {
-      val future = thread.submit {
-        try {
-          singleton.run(
-            cmd = mainScript.toString(),
-            captureOutput = true,
-            environment = Shells.CURRENT_ENV,
-          )
-        } catch (e: InterruptedException) {
-          e.printStackTrace()
+      val future =
+        thread.submit {
+          try {
+            singleton.run(
+              cmd = mainScript.toString(),
+              captureOutput = true,
+              environment = Shells.CURRENT_ENV,
+            )
+          } catch (e: InterruptedException) {
+            e.printStackTrace()
+          }
         }
-      }
       Thread.sleep(2.seconds.inWholeMilliseconds) // to make sure the mark file is created.
       assertThat(Files.exists(markFile)).isTrue()
-      singleton.run(
-        cmd = "ps aux",
-        captureOutput = true,
-        environment = CURRENT_ENV,
-      ).stdout.combinedLines.let {
-        assertThat(it).contains(mainScript.toString())
-        assertThat(it).contains(childScript.toString())
-        assertThat(it).contains(grandChildScript.toString())
-      }
+      singleton
+        .run(
+          cmd = "ps aux",
+          captureOutput = true,
+          environment = CURRENT_ENV,
+        ).stdout.combinedLines
+        .let {
+          assertThat(it).contains(mainScript.toString())
+          assertThat(it).contains(childScript.toString())
+          assertThat(it).contains(grandChildScript.toString())
+        }
       future.cancel(true) // The argument true means to interrupt the thread.
     } finally {
       // Timeout here if the task cannot be cancelled.
       DaemonThreadPool.waitInfinitelyToShutdown(thread)
     }
 
-    singleton.run(
-      cmd = "ps aux",
-      captureOutput = true,
-      environment = CURRENT_ENV,
-    ).stdout.combinedLines.let {
-      // Get all the running processes in the system.
-      assertThat(it).doesNotContain(mainScript.toString())
-      assertThat(it).doesNotContain(childScript.toString())
-      assertThat(it).doesNotContain(grandChildScript.toString())
-    }
+    singleton
+      .run(
+        cmd = "ps aux",
+        captureOutput = true,
+        environment = CURRENT_ENV,
+      ).stdout.combinedLines
+      .let {
+        // Get all the running processes in the system.
+        assertThat(it).doesNotContain(mainScript.toString())
+        assertThat(it).doesNotContain(childScript.toString())
+        assertThat(it).doesNotContain(grandChildScript.toString())
+      }
   }
 }

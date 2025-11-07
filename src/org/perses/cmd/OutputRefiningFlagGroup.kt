@@ -20,9 +20,10 @@ import com.beust.jcommander.Parameter
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.shell.ShellCommandOnPath
 
-class OutputRefiningFlagGroup : AbstractCommandLineFlagGroup(
-  groupName = "Output Refining Control",
-) {
+class OutputRefiningFlagGroup :
+  AbstractCommandLineFlagGroup(
+    groupName = "Output Refining Control",
+  ) {
   @Parameter(
     names = ["--call-formatter"],
     description = "call a formatter on the final result",

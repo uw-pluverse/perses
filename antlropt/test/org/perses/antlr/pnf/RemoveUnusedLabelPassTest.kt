@@ -25,20 +25,25 @@ import org.perses.antlr.ast.PersesAstBuilder
 
 @RunWith(JUnit4::class)
 class RemoveUnusedLabelPassTest {
-
   val pass = RemoveUnusedLabelPass()
 
   @Test
   fun test() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      grammar T;
-      start : label=('a' | 'b') ;
-      """.trimIndent(),
-    )
-    val processed = pass.processGrammar(
-      GrammarPair(grammar, lexerGrammar = null),
-    ).parserGrammar!!.flattenedAllRules.single().body as PersesAlternativeBlockAst
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        grammar T;
+        start : label=('a' | 'b') ;
+        """.trimIndent(),
+      )
+    val processed =
+      pass
+        .processGrammar(
+          GrammarPair(grammar, lexerGrammar = null),
+        ).parserGrammar!!
+        .flattenedAllRules
+        .single()
+        .body as PersesAlternativeBlockAst
     processed.alternatives.let {
       assertThat(it).hasSize(2)
       assertThat(it.first().sourceCode).isEqualTo("'a'")

@@ -24,7 +24,6 @@ import java.util.concurrent.atomic.AtomicInteger
 
 @RunWith(JUnit4::class)
 class PristineHDDReducerTest {
-
   @Test
   fun test() {
 //    val tree = TestUtility.createSparTreeFromFile("test_data/delta_3/t.c")

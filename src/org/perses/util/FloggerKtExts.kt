@@ -47,7 +47,10 @@ inline fun FluentLogger.ktConfig(msg: () -> String) {
   ktAt(Level.CONFIG, msg)
 }
 
-inline fun FluentLogger.ktAt(level: Level, msg: () -> String) {
+inline fun FluentLogger.ktAt(
+  level: Level,
+  msg: () -> String,
+) {
   at(level).ifEnabled { it.log(msg()) }
 }
 

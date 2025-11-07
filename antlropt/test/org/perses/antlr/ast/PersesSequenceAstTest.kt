@@ -24,7 +24,6 @@ import org.perses.antlr.GrammarTestingUtility
 
 @RunWith(JUnit4::class)
 class PersesSequenceAstTest {
-
   @Test
   fun test() {
     val seq = GrammarTestingUtility.createSeqOfTerminals("a", "b", "c")

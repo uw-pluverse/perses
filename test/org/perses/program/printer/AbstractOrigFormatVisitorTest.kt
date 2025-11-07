@@ -22,38 +22,36 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 
 @RunWith(JUnit4::class)
 class AbstractOrigFormatVisitorTest {
-
-  val program = TestUtility.createTokenizedProgramFromString(
-    """int a;
+  val program =
+    TestUtility.createTokenizedProgramFromString(
+      """int a;
       |
       |int b;
       |
       |int c;
-    """.trimMargin(),
-    LanguageC,
-  )
+      """.trimMargin(),
+      LanguageC,
+    )
 
-  val visitor = object : AbstractOrigFormatVisitor(
-    program,
-    AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider.DefaultProvider,
-    tokenPlacementListener = null,
-  ) {
+  val visitor =
+    object : AbstractOrigFormatVisitor(
+      program,
+      AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider.DefaultProvider,
+      tokenPlacementListener = null,
+    ) {
+      override fun isControlToken(token: PersesTokenFactory.AbstractPersesToken): Boolean = false
 
-    override fun isControlToken(token: PersesToken): Boolean {
-      return false
+      override fun visitControlToken(token: PersesTokenFactory.AbstractPersesToken) {
+      }
+
+      override fun visitLine(line: List<PersesTokenFactory.AbstractPersesToken>) {
+        result.append(line.joinToString(" ") { it.lexemeText })
+      }
     }
-
-    override fun visitControlToken(token: PersesToken) {
-    }
-
-    override fun visitLine(line: List<PersesToken>) {
-      result.append(line.joinToString(" ") { it.text })
-    }
-  }
 
   @Test
   fun test() {

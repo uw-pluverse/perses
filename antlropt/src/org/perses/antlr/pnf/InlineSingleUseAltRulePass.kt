@@ -32,9 +32,7 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
    *
    * FIXME(cnsun): this needs to be rewritten with the current [MutableGrammar].
    */
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutableGrammar = MutableGrammar.createParserRulesFrom(parserGrammar)
     val ruleNameList = getSortedRuleNames(mutableGrammar)
@@ -47,9 +45,10 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
       // Note: we remove the old rule def, to make the alternatives in the new def have the same
       // order.
       mutableGrammar.removeRule(ruleName)
-      val oldAltToNewAlts = LinkedHashMap<
-        AbstractPersesRuleElement,
-        ArrayList<AbstractPersesRuleElement>,
+      val oldAltToNewAlts =
+        LinkedHashMap<
+          AbstractPersesRuleElement,
+          ArrayList<AbstractPersesRuleElement>,
         >()
       for (alternative in origAlternatives) {
         val list = ArrayList<AbstractPersesRuleElement>()
@@ -63,10 +62,11 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
         assert(!candidate.replacements.isEmpty())
         newAlts.addAll(candidate.replacements)
       }
-      val newAlternatives: List<AbstractPersesRuleElement> = oldAltToNewAlts.entries
-        .asSequence()
-        .flatMap { it.value.asSequence() }
-        .toImmutableList()
+      val newAlternatives: List<AbstractPersesRuleElement> =
+        oldAltToNewAlts.entries
+          .asSequence()
+          .flatMap { it.value.asSequence() }
+          .toImmutableList()
       for (alt in newAlternatives) {
         if (isEquivalentToAny(alt, mutableGrammar.getAltBlock(ruleName))) {
           continue

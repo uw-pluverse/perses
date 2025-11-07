@@ -6,6 +6,5 @@ kt_jvm_test(
     deps = [
         "//:truth",
         "//src/org/perses/reduction/scheduler",
-        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )

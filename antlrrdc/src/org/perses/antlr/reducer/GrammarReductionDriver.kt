@@ -36,6 +36,7 @@ import org.perses.reduction.AbstractReductionDriver
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.ListenableReductionState
 import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.ktInfo
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -50,20 +51,19 @@ class GrammarReductionDriver private constructor(
   val enableArgumentsReducer: Boolean,
   val enableLabelReducer: Boolean,
 ) : AbstractReductionDriver<PersesGrammar, LanguageKind, GrammarReductionIOManager>(
-  globalContext,
-  ioManager,
-  numberOfThreads,
-  scriptExecutionTimeoutInSeconds = 300L,
-  keepWaitingAfterScriptTimeout = true,
-) {
+    globalContext = globalContext,
+    ioManager = ioManager,
+    specifiedNumOfThreads = numberOfThreads,
+    scriptExecutionTimeoutInSeconds = 300L,
+    keepWaitingAfterScriptTimeout = true,
+    hideTimestampsInLog = false,
+  ) {
+  private val originalProgram =
+    PersesAstBuilder.loadGrammarFromString(
+      ioManager.getConcreteReductionInputs().parserFile.textualFileContent,
+    )
 
-  val originalProgram = PersesAstBuilder.loadGrammarFromString(
-    ioManager.getConcreteReductionInputs().parserFile.textualFileContent,
-  )
-
-  override fun getInitialProgram(): PersesGrammar {
-    return originalProgram
-  }
+  override fun getInitialProgram(): PersesGrammar = originalProgram
 
   override fun reduce() {
     printStartTime()
@@ -71,9 +71,10 @@ class GrammarReductionDriver private constructor(
     ioManager.backupAllMutableFiles()
 
     sanityCheckOrThrow(originalProgram)
-    val reductionState = ListenableReductionState(originalProgram) {
-      ioManager.updateBestResult(it)
-    }
+    val reductionState =
+      ListenableReductionState(originalProgram) {
+        ioManager.updateBestResult(it)
+      }
     // Force to write the best file.
     reductionState.updateBestProgram(reductionState.bestEntity)
 
@@ -102,24 +103,26 @@ class GrammarReductionDriver private constructor(
   }
 
   private fun createReducers(): ImmutableList<AbstractAntlrReducer> {
-    val builder = ImmutableList.builder<AbstractAntlrReducer>()
-      .apply {
-        if (enableActionReducer) {
-          add(ActionsReducer(ioManager, executorService))
+    val builder =
+      ImmutableList
+        .builder<AbstractAntlrReducer>()
+        .apply {
+          if (enableActionReducer) {
+            add(ActionsReducer(ioManager, executorService))
+          }
+          if (enableLocalsReducer) {
+            add(LocalsReducer(ioManager, executorService))
+          }
+          if (enableReturnsReducer) {
+            add(ReturnsReducer(ioManager, executorService))
+          }
+          if (enableArgumentsReducer) {
+            add(ArgumentsReducer(ioManager, executorService))
+          }
+          if (enableLabelReducer) {
+            add(RuleElementLabelReducer(ioManager, executorService))
+          }
         }
-        if (enableLocalsReducer) {
-          add(LocalsReducer(ioManager, executorService))
-        }
-        if (enableReturnsReducer) {
-          add(ReturnsReducer(ioManager, executorService))
-        }
-        if (enableArgumentsReducer) {
-          add(ArgumentsReducer(ioManager, executorService))
-        }
-        if (enableLabelReducer) {
-          add(RuleElementLabelReducer(ioManager, executorService))
-        }
-      }
     return builder.build()
   }
 
@@ -128,27 +131,34 @@ class GrammarReductionDriver private constructor(
       setup: Setup,
       outputDir: Path,
       testPrograms: ImmutableList<Path>,
+      shaAlgorithm: EnumShaAlgorithm,
     ): GrammarReductionIOManager {
-      val parserFile = SourceFile(
-        setup.parserFile,
-        LanguageAntlr,
-      )
+      val parserFile =
+        SourceFile(
+          setup.parserFile,
+          LanguageAntlr,
+        )
       val lexerFile = setup.lexerFile
 
-      val reductionInputs = SeparateGrammarReductionInput(
-        testScript = setup.testScript,
-        parserFile = parserFile,
-        lexerFile = SourceFile(lexerFile, LanguageAntlr),
-      )
+      val reductionInputs =
+        SeparateGrammarReductionInput(
+          testScript = setup.testScript,
+          parserFile = parserFile,
+          lexerFile = SourceFile(lexerFile, LanguageAntlr),
+        )
       return GrammarReductionIOManager(
         workingDir = setup.workingDir,
         reductionInputs = reductionInputs,
-        outputManagerFactory = GrammarOutputManagerFactory(
-          reductionInputs,
-          startRuleName = setup.startRuleName,
-          jarFileName = setup.jarFile.path.fileName.toString(),
-          testPrograms = testPrograms,
-        ),
+        outputManagerFactory =
+          GrammarOutputManagerFactory(
+            reductionInputs,
+            startRuleName = setup.startRuleName,
+            jarFileName =
+              setup.jarFile.path.fileName
+                .toString(),
+            testPrograms = testPrograms,
+            shaAlgorithmType = shaAlgorithm,
+          ),
         outputDirectory = outputDir,
       )
     }
@@ -160,18 +170,26 @@ class GrammarReductionDriver private constructor(
     ): GrammarReductionDriver {
       val parentWorkingDir = Paths.get(".").toAbsolutePath()
 
-      val setup = Setup(
-        parentWorkingDir,
-        parserGrammarPath = options.compulsoryFlags.parserGrammarPath!!,
-        lexerGrammarPath = options.compulsoryFlags.lexerGrammarPath!!,
-        startRuleName = options.compulsoryFlags.startRuleName,
-        testPrograms = Util.globWithFileNameExts(
-          options.compulsoryFlags.corpus!!,
-          ext = options.compulsoryFlags.fileExtName,
-        ),
-      )
+      val setup =
+        Setup(
+          parentWorkingDir,
+          parserGrammarPath = options.compulsoryFlags.parserGrammarPath!!,
+          lexerGrammarPath = options.compulsoryFlags.lexerGrammarPath!!,
+          startRuleName = options.compulsoryFlags.startRuleName,
+          testPrograms =
+            Util.globWithFileNameExts(
+              options.compulsoryFlags.corpus!!,
+              ext = options.compulsoryFlags.fileExtName,
+            ),
+        )
       val outputDir = options.resultOutputFlags.outputDir!!
-      val ioManager = createIOManager(setup, outputDir, setup.parseableTestPrograms)
+      val ioManager =
+        createIOManager(
+          setup,
+          outputDir,
+          setup.parseableTestPrograms,
+          shaAlgorithm = EnumShaAlgorithm.SHA512,
+        )
 
       return GrammarReductionDriver(
         globalContext,

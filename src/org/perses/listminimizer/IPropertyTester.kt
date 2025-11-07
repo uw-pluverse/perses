@@ -16,6 +16,7 @@
  */
 package org.perses.listminimizer
 
+import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.PropertyTestResult
 import org.perses.util.Util
@@ -23,53 +24,134 @@ import org.perses.util.Util.lazyAssert
 import org.perses.util.isSortedAscendinglyBy
 import org.perses.util.transformToImmutableList
 
-class Configuration<T : Any>(
-  val currentBest: ImmutableList<AbstractListInputMinimizer.ElementWrapper<T>>?,
-  private val candidate_: ImmutableList<AbstractListInputMinimizer.ElementWrapper<T>>?,
-  private val deleted_: ImmutableList<AbstractListInputMinimizer.ElementWrapper<T>>?,
-) {
-  init {
-    require(currentBest != null || candidate_ != null || deleted_ != null) {
-      "The three fields cannot be null at the same time."
-    }
-    require(candidate_ != null || deleted_ != null)
-    lazyAssert {
-      currentBest == null || currentBest.isSortedAscendinglyBy { it.index }
-    }
-    lazyAssert {
-      candidate_ == null || candidate_.isSortedAscendinglyBy { it.index }
-    }
-    lazyAssert {
-      deleted_ == null || deleted_.isSortedAscendinglyBy { it.index }
-    }
+sealed class Candidate<T : Any> {
+  val deletedWrappers: ImmutableList<ElementWrapper<T>> by lazy {
+    computeDeletedWrappers()
   }
 
-  val deletedWrappers: ImmutableList<AbstractListInputMinimizer.ElementWrapper<T>> by lazy {
-    deleted_ ?: Util.computeDifference(currentBest!!, candidate_!!)
-  }
-
-  val deleted: ImmutableList<T> by lazy {
+  val deletedElements: ImmutableList<T> by lazy {
     deletedWrappers.transformToImmutableList { it.element }
   }
 
-  val candidate: ImmutableList<T> by lazy {
-    candidate_?.transformToImmutableList { it.element }
-      ?: Util.computeDifference(currentBest!!, deleted_!!).transformToImmutableList { it.element }
+  protected abstract fun computeDeletedWrappers(): ImmutableList<ElementWrapper<T>>
+
+  abstract fun getCandidateOrFail(): ImmutableList<T>
+
+  class DeletionOnly<T : Any>(
+    private val deleted_: ImmutableList<ElementWrapper<T>>,
+  ) : Candidate<T>() {
+    init {
+      require(deleted_.isNotEmpty()) {
+        "There is no deletion set in $this"
+      }
+      lazyAssert { deleted_.isSortedAscendinglyBy { it.index } }
+    }
+
+    override fun computeDeletedWrappers(): ImmutableList<ElementWrapper<T>> = deleted_
+
+    override fun getCandidateOrFail(): ImmutableList<T> {
+      error("This configuration does not have a candidate.")
+    }
+  }
+
+  class DeletionsFromOriginal<T : Any>(
+    private val original: ImmutableList<ElementWrapper<T>>,
+    private val deleted_: ImmutableList<ElementWrapper<T>>,
+  ) : Candidate<T>() {
+    init {
+      require(original.isNotEmpty()) {
+        "The original is empty."
+      }
+      require(deleted_.isNotEmpty()) {
+        "The deleted is empty."
+      }
+      lazyAssert {
+        original.isSortedAscendinglyBy { it.index }
+      }
+      lazyAssert {
+        deleted_.isSortedAscendinglyBy { it.index }
+      }
+    }
+
+    override fun computeDeletedWrappers(): ImmutableList<ElementWrapper<T>> = deleted_
+
+    val candidateElements: ImmutableList<T> by lazy {
+      candidateWrappers.transformToImmutableList { it.element }
+    }
+
+    val candidateWrappers: ImmutableList<ElementWrapper<T>> by lazy {
+      Util.computeDifference(superList = original, subList = deleted_)
+    }
+
+    override fun getCandidateOrFail(): ImmutableList<T> = candidateElements
+  }
+
+  class SublistFromOriginal<T : Any>(
+    private val original: ImmutableList<ElementWrapper<T>>,
+    private val candidate_: ImmutableList<ElementWrapper<T>>,
+  ) : Candidate<T>() {
+    init {
+      require(original.isNotEmpty()) {
+        "The original is empty."
+      }
+      lazyAssert({ original.isSortedAscendinglyBy { it.index } }) {
+        "The original list is not sorted"
+      }
+      lazyAssert({ candidate_.isSortedAscendinglyBy { it.index } }) {
+        "The candidate list is not sorted"
+      }
+    }
+
+    override fun computeDeletedWrappers(): ImmutableList<ElementWrapper<T>> =
+      Util.computeDifference(
+        superList = original,
+        subList = candidate_,
+      )
+
+    val candidate: ImmutableList<T> by lazy {
+      candidate_.transformToImmutableList { it.element }
+    }
+
+    override fun getCandidateOrFail(): ImmutableList<T> = candidate
   }
 }
 
 fun interface IPropertyTester<T : Any, Payload> {
-  fun testProperty(
-    configuration: Configuration<T>,
-  ): AbstractPropertyTestResultWithPayload<Payload>
+  fun testProperty(configuration: Candidate<T>): LMPropertyTestResult<T, Payload>
 }
 
-// TODO(cnsun): make it sealed.
-sealed class AbstractPropertyTestResultWithPayload<Payload>
+sealed class LMPropertyTestResult<T : Any, Payload>(
+  val staleElementsToRemove: ImmutableList<ElementWrapper<T>>,
+) {
+  abstract fun toShortString(): String
 
-class SkipPropertyTestResult<Payload> : AbstractPropertyTestResultWithPayload<Payload>()
+  class Skipped<T : Any, Payload>(
+    private val result: String,
+    staleElementsToRemove: ImmutableList<ElementWrapper<T>> = ImmutableList.of(),
+  ) : LMPropertyTestResult<T, Payload>(staleElementsToRemove) {
+    override fun toShortString(): String = result
 
-data class PropertyTestResultWithPayload<Payload>(
-  val result: PropertyTestResult,
-  val payload: Payload,
-) : AbstractPropertyTestResultWithPayload<Payload>()
+    override fun toString(): String = MoreObjects.toStringHelper(this).addValue(result).toString()
+  }
+
+  class Completed<T : Any, Payload>(
+    val result: PropertyTestResult,
+    val payload: Payload,
+    staleElementsToRemove: ImmutableList<ElementWrapper<T>> = ImmutableList.of(),
+  ) : LMPropertyTestResult<T, Payload>(
+      staleElementsToRemove,
+    ) {
+    override fun toShortString(): String =
+      if (result.isInteresting) {
+        "Interesting"
+      } else {
+        "Uninteresting"
+      }
+
+    override fun toString(): String =
+      MoreObjects
+        .toStringHelper(this)
+        .add("interesting", result.isInteresting)
+        .toString()
+  }
+}

@@ -25,7 +25,6 @@ import org.perses.util.toImmutableList
 class SetTransitionSimulator(
   transition: SetTransition,
 ) : AbstractAtnTransitionSimulator() {
-
   private val allowedAsciiChars = intersectPrintableCharacters(transition.label())
 
   override fun simulate(decisionMaker: AbstractDecisionMaker): Char {
@@ -37,11 +36,11 @@ class SetTransitionSimulator(
   }
 
   companion object {
-
     @JvmStatic
     fun intersectPrintableCharacters(intervals: IntervalSet): ImmutableList<Char> {
       val ascii = PrintableCharacters.createPrintableIntervalSet()
-      return ascii.and(intervals)
+      return ascii
+        .and(intervals)
         .toArray()
         .asSequence()
         .distinct()

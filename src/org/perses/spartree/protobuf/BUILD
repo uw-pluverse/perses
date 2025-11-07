@@ -10,6 +10,5 @@ proto_library(
 java_proto_library(
     name = "spartree_java_proto",
     deps = [
-        ":spartree_proto",
     ],
 )

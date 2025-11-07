@@ -19,22 +19,22 @@ package org.perses.reduction.reducer.token
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 
 @RunWith(JUnit4::class)
-class DeltaDebuggingReducerTest : AbstractReducerFunctionalTest() {
-
+class DeltaDebuggingReducerTest {
   @Test
   fun testReduceDelta1() {
-    runCTestSubject(
-      "test_data/delta_3",
-      DeltaDebuggingReducer.META,
-      """
+    ReducerFunctionalTestUtility.runCTestSubject(
+      reductionFolder = "test_data/delta_3",
+      reducerAnnotation = DeltaDebuggingReducer.META,
+      expected =
+        """
         |int main() {
         |  int a = 99;
         |  return a;
         |}
-      """.trimMargin(),
+        """.trimMargin(),
     )
   }
 }

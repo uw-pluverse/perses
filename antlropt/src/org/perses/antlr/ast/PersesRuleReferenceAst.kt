@@ -25,12 +25,15 @@ class PersesRuleReferenceAst private constructor(
   val ruleNameHandle: RuleNameRegistry.RuleNameHandle,
   val arguments: PersesActionAst?,
 ) : AbstractPersesRuleElement() {
-
   init {
     require(RuleType.isParserRule(ruleNameHandle.ruleName))
   }
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.print(ruleNameHandle.ruleName)
     if (arguments != null) {
       stream.append("[")
@@ -40,9 +43,8 @@ class PersesRuleReferenceAst private constructor(
   }
 
   @Deprecated("")
-  override fun getChild(index: Int): AbstractPersesRuleElement {
+  override fun getChild(index: Int): AbstractPersesRuleElement =
     throw UnsupportedOperationException()
-  }
 
   override val childCount: Int
     get() = 0
@@ -53,32 +55,25 @@ class PersesRuleReferenceAst private constructor(
   override val tag: AstTag
     get() = AstTag.RULE_REF
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("ref", ruleNameHandle.ruleName).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("ref", ruleNameHandle.ruleName).toString()
 
   override fun createWithNewChildren(
     newChildren: List<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement {
-    return this
-  }
+  ): AbstractPersesRuleElement = this
 
-  override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean {
-    return ruleNameHandle.ruleName == (other as PersesRuleReferenceAst).ruleNameHandle.ruleName
-  }
+  override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean =
+    ruleNameHandle.ruleName == (other as PersesRuleReferenceAst).ruleNameHandle.ruleName
 
   companion object {
     @JvmStatic
     fun createWithArgs(
       ruleNameHandle: RuleNameRegistry.RuleNameHandle,
       arguments: PersesActionAst?,
-    ): PersesRuleReferenceAst {
-      return PersesRuleReferenceAst(ruleNameHandle, arguments)
-    }
+    ): PersesRuleReferenceAst = PersesRuleReferenceAst(ruleNameHandle, arguments)
 
     @JvmStatic
-    fun create(ruleNameHandle: RuleNameRegistry.RuleNameHandle): PersesRuleReferenceAst {
-      return PersesRuleReferenceAst(ruleNameHandle, arguments = null)
-    }
+    fun create(ruleNameHandle: RuleNameRegistry.RuleNameHandle): PersesRuleReferenceAst =
+      PersesRuleReferenceAst(ruleNameHandle, arguments = null)
   }
 }

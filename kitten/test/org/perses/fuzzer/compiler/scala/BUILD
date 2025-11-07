@@ -13,7 +13,6 @@ kt_jvm_test(
         "noncrash_output_2.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/scala",

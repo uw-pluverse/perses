@@ -16,7 +16,6 @@ kt_jvm_library(
         "IReductionInputs.kt",
     ],
     deps = [
-        "//src/org/perses/program",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/util",
     ],
@@ -29,7 +28,6 @@ kt_jvm_library(
     ],
     deps = [
         ":reduction_inputs_interface",
-        "//src/org/perses/program",
         "//src/org/perses/reduction:test_script",
     ],
 )
@@ -41,9 +39,8 @@ kt_jvm_library(
         "ReductionFolderManager.kt",
     ],
     deps = [
-        ":reduction_inputs",
+        ":reduction_inputs_interface",
         "//:guava",
-        "//src/org/perses/program",
         "//src/org/perses/util",
     ],
 )
@@ -56,8 +53,9 @@ kt_jvm_library(
     ],
     deps = [
         ":reduction_folder",
-        "//src/org/perses/program",
+        ":reduction_inputs",
         "//src/org/perses/util:file_name_content_pair",
+        "//src/org/perses/util/hashing",
     ],
 )
 
@@ -71,10 +69,8 @@ kt_jvm_library(
     deps = [
         ":output_manager_interface",
         ":reduction_folder",
-        ":reduction_inputs",
         ":reduction_inputs_interface",
         "//:guava",
-        "//src/org/perses/program",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/util:auto_increment_dir",
         "//src/org/perses/util:timeutil",

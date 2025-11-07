@@ -23,126 +23,116 @@ import org.perses.util.toImmutableList
 class ReducerExecutionPlan(
   val steps: AbstractExecutionPlanStep,
 ) {
+  companion object {
+    fun makeSureToWrapWithFixpoint(body: AbstractExecutionPlanStep): AbstractExecutionPlanStep {
+      if (body is FixpointLoopStep) {
+        return body
+      }
+      return fixpoint(AbstractCondition.ContinueOnSmallSize.INSTANCE) { body }
+    }
+
+    fun concatenate(steps: List<AbstractExecutionPlanStep>): AbstractExecutionPlanStep =
+      when (steps.size) {
+        0 -> error("Execution plan must have at least one step")
+        1 -> steps.single()
+        else -> UnconditionalSequentialSteps(reducers = steps.toImmutableList())
+      }
+
+    fun concatenate(vararg steps: AbstractExecutionPlanStep?): AbstractExecutionPlanStep =
+      concatenate(steps.filterNotNull())
+
+    fun fixpoint(
+      continueCondition: AbstractCondition = AbstractCondition.ContinueOnSmallSize.INSTANCE,
+      body: () -> AbstractExecutionPlanStep,
+    ): FixpointLoopStep = FixpointLoopStep(body = body(), continueCondition = continueCondition)
+
+    fun ifProgressed(
+      condition: AbstractExecutionPlanStep,
+      then: () -> AbstractExecutionPlanStep,
+    ): IfProgressedThenStep =
+      IfProgressedThenStep(
+        condition = condition,
+        then = then(),
+      )
+
+    fun ifProgressed(
+      condition: ReducerAnnotation,
+      then: () -> AbstractExecutionPlanStep,
+    ): IfProgressedThenStep = ifProgressed(atomic(condition), then)
+
+    fun atomic(
+      reducer: ReducerAnnotation,
+      actionBefore: () -> Unit = {},
+    ): AtomicReducerStep = AtomicReducerStep(reducer, actionBefore)
+  }
 
   sealed class AbstractExecutionPlanStep {
-
     abstract fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef
-
-    companion object {
-      fun concatenate(
-        steps: List<AbstractExecutionPlanStep>,
-      ): AbstractExecutionPlanStep {
-        return when (steps.size) {
-          0 -> error("Execution plan must have at least one step")
-          1 -> steps.single()
-          else -> UnconditionalSequentialSteps(reducers = steps.toImmutableList())
-        }
-      }
-
-      fun concatenate(vararg steps: AbstractExecutionPlanStep?): AbstractExecutionPlanStep {
-        return concatenate(steps.filterNotNull())
-      }
-    }
   }
 
   class FixpointLoopStep(
     val body: AbstractExecutionPlanStep,
-    val continueCondition: AbstractConditionCondition,
+    val continueCondition: AbstractCondition,
   ) : AbstractExecutionPlanStep() {
-
-    override fun toDefinition(): ExecutionPlanYamlDefinition.FixpointLoopStepDef {
-      return ExecutionPlanYamlDefinition.FixpointLoopStepDef(
+    override fun toDefinition(): ExecutionPlanYamlDefinition.FixpointLoopStepDef =
+      ExecutionPlanYamlDefinition.FixpointLoopStepDef(
         body = body.toDefinition(),
-        condition = when (continueCondition) {
-          is ContinueOnSmallSize -> "smaller"
-          is ContinueOnChange -> continueCondition.maxCountOfAllowedChanges.toString()
-        },
+        condition =
+          when (continueCondition) {
+            is AbstractCondition.ContinueOnSmallSize -> "smaller"
+            is AbstractCondition.ContinueOnChange ->
+              continueCondition.maxCountOfAllowedChanges
+                .toString()
+          },
       )
-    }
-  }
-
-  sealed class AbstractConditionCondition
-
-  /**
-   * Intentionally not using object but a regular class for YAML serialization.
-   */
-  class ContinueOnSmallSize : AbstractConditionCondition() {
-    companion object {
-      val INSTANCE = ContinueOnSmallSize()
-    }
-  }
-
-  class ContinueOnChange(val maxCountOfAllowedChanges: Int) : AbstractConditionCondition()
-
-  class UnconditionalSequentialSteps(
-    val reducers: ImmutableList<AbstractExecutionPlanStep>,
-  ) : AbstractExecutionPlanStep() {
-
-    init {
-      require(reducers.size > 1) { reducers }
-    }
-
-    override fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef {
-      return ExecutionPlanYamlDefinition.SequenceDef(
-        reducers = reducers.map { it.toDefinition() },
-      )
-    }
   }
 
   class AtomicReducerStep(
     val reducer: ReducerAnnotation,
     val actionBefore: () -> Unit,
   ) : AbstractExecutionPlanStep() {
-    override fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef {
-      return ExecutionPlanYamlDefinition.AtomicReducerStepDef(
+    override fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef =
+      ExecutionPlanYamlDefinition.AtomicReducerStepDef(
         reducer = reducer.shortName,
       )
-    }
   }
 
   class IfProgressedThenStep(
     val condition: AbstractExecutionPlanStep,
     val then: AbstractExecutionPlanStep,
   ) : AbstractExecutionPlanStep() {
-    override fun toDefinition(): ExecutionPlanYamlDefinition.IfProgressedThenStepDef {
-      return ExecutionPlanYamlDefinition.IfProgressedThenStepDef(
+    override fun toDefinition(): ExecutionPlanYamlDefinition.IfProgressedThenStepDef =
+      ExecutionPlanYamlDefinition.IfProgressedThenStepDef(
         condition = condition.toDefinition(),
         then = then.toDefinition(),
       )
-    }
   }
 
-  companion object {
-
-    fun fixpoint(
-      continueCondition: AbstractConditionCondition = ContinueOnSmallSize.INSTANCE,
-      body: () -> AbstractExecutionPlanStep,
-    ): FixpointLoopStep {
-      return FixpointLoopStep(body = body(), continueCondition = continueCondition)
+  class UnconditionalSequentialSteps(
+    val reducers: ImmutableList<AbstractExecutionPlanStep>,
+  ) : AbstractExecutionPlanStep() {
+    init {
+      require(reducers.size > 1) { reducers }
     }
 
-    fun ifProgressed(
-      condition: AbstractExecutionPlanStep,
-      then: () -> AbstractExecutionPlanStep,
-    ): IfProgressedThenStep {
-      return IfProgressedThenStep(
-        condition = condition,
-        then = then(),
+    override fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef =
+      ExecutionPlanYamlDefinition.SequenceDef(
+        reducers = reducers.map { it.toDefinition() },
       )
+  }
+
+  sealed class AbstractCondition {
+    /**
+     * Intentionally not using object but a regular class for YAML serialization.
+     */
+    class ContinueOnSmallSize : AbstractCondition() {
+      companion object {
+        val INSTANCE = ContinueOnSmallSize()
+      }
     }
 
-    fun ifProgressed(
-      condition: ReducerAnnotation,
-      then: () -> AbstractExecutionPlanStep,
-    ): IfProgressedThenStep {
-      return ifProgressed(atomic(condition), then)
-    }
-
-    fun atomic(
-      reducer: ReducerAnnotation,
-      actionBefore: () -> Unit = {},
-    ): AtomicReducerStep {
-      return AtomicReducerStep(reducer, actionBefore)
-    }
+    class ContinueOnChange(
+      val maxCountOfAllowedChanges: Int,
+    ) : AbstractCondition()
   }
 }

@@ -21,17 +21,13 @@ import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.reducer.token.AbstractConcurrentTokenSlicer
 
-class LocalExhaustivePatternReducerAnnotation internal constructor(patternSize: Int) :
-  AbstractConcurrentTokenSlicer.AbstractTokenSlicerAnnotation(
+class LocalExhaustivePatternReducerAnnotation internal constructor(
+  patternSize: Int,
+) : AbstractConcurrentTokenSlicer.AbstractTokenSlicerAnnotation(
     namePrefix = LocalExhaustivePatternReducer.NAME_PREFIX,
-    granularity = patternSize,
+    windowSize = patternSize,
     description = "local exhaustive pattern reducer",
   ) {
-
-  val patternSize: Int
-    get() = granularity
-
-  override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-    return ImmutableList.of(LocalExhaustivePatternReducer(this, reducerContext))
-  }
+  override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    ImmutableList.of(LocalExhaustivePatternReducer(this, reducerContext))
 }

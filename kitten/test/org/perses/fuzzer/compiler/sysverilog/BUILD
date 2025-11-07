@@ -9,7 +9,6 @@ kt_jvm_test(
         "slang_ice_1.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",

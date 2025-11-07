@@ -22,8 +22,11 @@ import java.io.PrintStream
 class PersesNotAst(
   private val tokens: AbstractPersesRuleElement,
 ) : AbstractPersesRuleElement() {
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.print("~")
     tokens.toSourceCode(stream, indent, false)
   }

@@ -29,9 +29,9 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses/antlr:util",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/c:parser_facade",
-        "//test/org/perses:test_util",
-        "//test/org/perses/program:LanguageKindTestUtil",
     ],
 )
 

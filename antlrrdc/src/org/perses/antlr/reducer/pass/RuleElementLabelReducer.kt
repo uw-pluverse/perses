@@ -33,14 +33,14 @@ class RuleElementLabelReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractRuleElementReducer(
-  nameAndDesc = object : AbstractReducerNameAndDesc(
-    shortName = RuleElementLabelReducer::class.simpleName!!,
-    description = "",
-  ) {},
-  ioManager,
-  testScriptExecutorService,
-) {
-
+    nameAndDesc =
+      object : AbstractReducerNameAndDesc(
+        shortName = RuleElementLabelReducer::class.simpleName!!,
+        description = "",
+      ) {},
+    ioManager,
+    testScriptExecutorService,
+  ) {
   // TODO: this can be merged with ActionReducer.
   override fun reduceRuleDef(
     origDef: AbstractPersesRuleElement,
@@ -69,9 +69,9 @@ class RuleElementLabelReducer(
     return editor.bottomUpApply(def)!!
   }
 
-  class LabelRemover(val label: PersesRuleElementLabel) :
-    AbstractAstEditor() {
-
+  class LabelRemover(
+    val label: PersesRuleElementLabel,
+  ) : AbstractAstEditor() {
     override fun visit(
       ast: PersesRuleElementLabel,
       newChildren: ImmutableList<AbstractPersesRuleElement>,

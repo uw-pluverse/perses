@@ -17,33 +17,42 @@
 package org.perses.reduction
 
 import com.google.common.io.Closer
-import org.perses.reduction.AbstractExternalTestScriptExecutionCache.ExternalTestScriptExecutionCache
+import org.perses.reduction.AbstractGlobalExecutionCache.GlobalExecutionCache
 import org.perses.util.FileStreamPool
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.io.Closeable
 import java.nio.file.Path
 
 class GlobalContext(
+  enableGlobalCache: Boolean,
   globalCacheFile: Path?,
   pathToSaveUpdatedGlobalCache: Path?,
+  shaAlgorithm: EnumShaAlgorithm,
 ) : Closeable {
-
   private val closer = Closer.create()
 
   val fileStreamPool: FileStreamPool = closer.register(FileStreamPool())
 
-  val externalTestScriptExecutionCache =
-    if (globalCacheFile != null) {
-      val cache = ExternalTestScriptExecutionCache.createFromHistoryCvsFile(globalCacheFile)
+  val globalExecutionCache =
+    if (enableGlobalCache) {
+      val cache =
+        if (globalCacheFile != null) {
+          GlobalExecutionCache.createFromHistoryCvsFile(shaAlgorithm, globalCacheFile)
+        } else {
+          GlobalExecutionCache.createEmpty(shaAlgorithm)
+        }
       if (pathToSaveUpdatedGlobalCache != null) {
-        closer.register(object : Closeable {
-          override fun close() {
-            cache.saveCacheEntriesToCsvFile(pathToSaveUpdatedGlobalCache)
-          }
-        })
+        closer.register(
+          object : Closeable {
+            override fun close() {
+              cache.saveCacheEntriesToCsvFile(pathToSaveUpdatedGlobalCache)
+            }
+          },
+        )
       }
       cache
     } else {
-      AbstractExternalTestScriptExecutionCache.NullCache()
+      AbstractGlobalExecutionCache.NullCache()
     }
 
   override fun close() {

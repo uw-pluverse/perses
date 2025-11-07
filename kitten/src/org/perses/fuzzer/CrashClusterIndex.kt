@@ -29,7 +29,6 @@ import java.io.Writer
 class CrashClusterIndex private constructor(
   val clusters: ImmutableMap<CrashSignature, Cluster>,
 ) {
-
   init {
     clusters.entries.forEach { check(it.key == it.value.signature) }
   }
@@ -39,7 +38,12 @@ class CrashClusterIndex private constructor(
 
   fun getCluster(index: Int) = Iterables.get(clusters.values, index)
 
-  val numberOfInstances = clusters.values.asSequence().map { it.instances }.map { it.size }.sum()
+  val numberOfInstances =
+    clusters.values
+      .asSequence()
+      .map { it.instances }
+      .map { it.size }
+      .sum()
 
   val crashSignatures
     get() = clusters.keys
@@ -81,19 +85,20 @@ class CrashClusterIndex private constructor(
       return this
     }
 
-    fun build() = CrashClusterIndex(
-      index.entries
-        .asSequence()
-        .fold(
-          ImmutableMap.builder<CrashSignature, Cluster>(),
-          { builder, entry -> builder.put(entry.key, entry.value.build()) },
-        )
-        .build(),
-    )
+    fun build() =
+      CrashClusterIndex(
+        index.entries
+          .asSequence()
+          .fold(
+            ImmutableMap.builder<CrashSignature, Cluster>(),
+            { builder, entry -> builder.put(entry.key, entry.value.build()) },
+          ).build(),
+      )
   }
 
-  class CrashInstanceList(val instances: ImmutableList<CrashInstanceFolder>) {
-
+  class CrashInstanceList(
+    val instances: ImmutableList<CrashInstanceFolder>,
+  ) {
     val size
       get() = instances.size
 
@@ -117,7 +122,6 @@ class CrashClusterIndex private constructor(
     val signature: CrashSignature,
     val instances: CrashInstanceList,
   ) {
-
     fun saveTo(writer: Writer) {
       writer.append("---Crash Signature---\n")
       writer.append(signature.toString()).append('\n')
@@ -146,7 +150,9 @@ class CrashClusterIndex private constructor(
       }
     }
 
-    class Builder(val signature: CrashSignature) {
+    class Builder(
+      val signature: CrashSignature,
+    ) {
       private val listBuilder = CrashInstanceList.Builder()
 
       fun add(instance: CrashInstanceFolder): Builder {

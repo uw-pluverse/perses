@@ -28,18 +28,19 @@ import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class PlaceholderSparTreeNodeTest {
-
   private val facade = CParserFacade()
-  private val nodeFactory = SparTreeNodeFactory(
-    facade.metaTokenInfoDb,
-    TokenizedProgramFactory.createEmptyFactory(LanguageC),
-    facade.ruleHierarchy,
-  )
-  private val tree = TestUtility.createSparTreeFromString(
-    sourceCode = "int a();",
-    facade = facade,
-    simplifyTree = true,
-  )
+  private val nodeFactory =
+    SparTreeNodeFactory(
+      facade.metaTokenInfoDb,
+      TokenizedProgramFactory.createEmptyFactory(LanguageC),
+      facade.ruleHierarchy,
+    )
+  private val tree =
+    TestUtility.createSparTreeFromString(
+      sourceCode = "int a();",
+      facade = facade,
+      simplifyTree = true,
+    )
 
   /* Tree structure
   translationUnit {id=1}
@@ -75,8 +76,9 @@ class PlaceholderSparTreeNodeTest {
 
   @Test
   fun testPlaceholderNodeCreationGivenAntlrRule() {
-    val antlrRule = nodeFactory.grammarHierarchy
-      .getRuleHierarchyEntryWithNameOrThrow("declaration")
+    val antlrRule =
+      nodeFactory.grammarHierarchy
+        .getRuleHierarchyEntryWithNameOrThrow("declaration")
     val placeholder = nodeFactory.createPlaceholderSparTreeNode(antlrRule)
     assertThat(placeholder.canBeReplacedBy(intNode)).isFalse()
     assertThat(placeholder.canBeReplacedBy(idNode)).isFalse()
@@ -90,8 +92,9 @@ class PlaceholderSparTreeNodeTest {
   // ;
   @Test
   fun testPlaceholderNodeCreationGivenRuleElement() {
-    val antlrRule = nodeFactory.grammarHierarchy
-      .getRuleHierarchyEntryWithNameOrThrow("gccAttribute")
+    val antlrRule =
+      nodeFactory.grammarHierarchy
+        .getRuleHierarchyEntryWithNameOrThrow("gccAttribute")
     val tokenSetNegation = antlrRule.ruleDef.body.getChild(0)
     val placeholder = nodeFactory.createPlaceholderSparTreeNode(tokenSetNegation)
     assertThat(placeholder.canBeReplacedBy(intNode)).isTrue()

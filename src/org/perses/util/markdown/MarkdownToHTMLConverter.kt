@@ -30,20 +30,16 @@ import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 object MarkdownToHTMLConverter {
+  fun Node.singleChild(): Node = childSequence().single()
 
-  fun Node.singleChild(): Node {
-    return childSequence().single()
-  }
-
-  fun Node.childSequence(): Sequence<Node> {
-    return sequence {
+  fun Node.childSequence(): Sequence<Node> =
+    sequence {
       var child: Node? = this@childSequence.firstChild
       while (child != null) {
         yield(child)
         child = child.next
       }
     }
-  }
 
   fun ListItem.computeStringRepresentation(): String {
     val child = this.firstChild
@@ -53,9 +49,7 @@ object MarkdownToHTMLConverter {
     return childChild.literal
   }
 
-  fun BulletList.listItemSequence(): Sequence<ListItem> {
-    return childSequence().map { it as ListItem }
-  }
+  fun BulletList.listItemSequence(): Sequence<ListItem> = childSequence().map { it as ListItem }
 
   fun findAllText(node: Node): List<Text> {
     val result = mutableListOf<Text>()
@@ -98,11 +92,13 @@ object MarkdownToHTMLConverter {
     node.childSequence().forEach { findAllNodes(it, acceptancePredicate, collector) }
   }
 
-  fun parseMarkdownDocument(markdownContent: String): Node {
-    return Parser.builder().build().parse(markdownContent)
-  }
+  fun parseMarkdownDocument(markdownContent: String): Node =
+    Parser.builder().build().parse(markdownContent)
 
-  fun convertMarkdownToHTML(markdownFile: Path, htmlResultFile: Path) {
+  fun convertMarkdownToHTML(
+    markdownFile: Path,
+    htmlResultFile: Path,
+  ) {
     val document = parseMarkdownDocument(markdownFile.readText())
     val html = HtmlRenderer.builder().build().render(document)
     htmlResultFile.writeText(html)

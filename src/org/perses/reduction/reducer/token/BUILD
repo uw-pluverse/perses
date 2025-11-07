@@ -9,7 +9,6 @@ kt_jvm_library(
     srcs = [
         "AbstractConcurrentTokenSlicer.kt",
         "AbstractStateBasedConcurrentReducer.kt",
-        "AbstractTokenSlicerReducer.kt",
         "ConcurrentStateBasedDeltaReducer.kt",
         "ConcurrentStateBasedLineSlicer.kt",
         "ConcurrentStateBasedTokenSlicer.kt",
@@ -17,15 +16,15 @@ kt_jvm_library(
         "ConcurrentTokenSlicerTaskDesc.kt",
         "DeltaDebuggingReducer.kt",
         "LineBasedConcurrentTokenSlicer.kt",
+        "LineBasedTokenSlicer.kt",
         "TokenSlicer.kt",
     ],
     deps = [
         ":concurrent_slicing_tasks",
         "//src/org/perses/listminimizer",
         "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:tree_edit_with_its_program",
-        "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/reducer:tree_transforms",
         "//src/org/perses/spartree",
     ],
 )
@@ -41,7 +40,9 @@ kt_jvm_library(
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:future_execution_result_triple",
         "//src/org/perses/reduction:reduction_configuration",
+        "//src/org/perses/reduction:test_script_executor_service",
         "//src/org/perses/reduction/cache:program_encoding_interface",
+        "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/spartree",
     ],
 )

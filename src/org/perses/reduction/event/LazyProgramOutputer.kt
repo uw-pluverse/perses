@@ -27,8 +27,10 @@ class LazyProgramOutputer(
   val textualContent: String by lazy {
     val outputList = outputCreator(program)
 
-    outputList.flatMap {
-      sequenceOf("--file: ${it.fileName}--", it.content)
-    }.joinToString(separator = "\n").trim()
+    outputList
+      .flatMap {
+        sequenceOf("--file: ${it.fileName}--", it.content)
+      }.joinToString(separator = "\n")
+      .trim()
   }
 }

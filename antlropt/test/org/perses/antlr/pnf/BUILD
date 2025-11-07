@@ -99,12 +99,7 @@ kt_jvm_library(
         "PnfPassCommandLine.kt",
     ],
     deps = [
-        "//:guava",
-        "//:jcommander",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
-        "//src/org/perses/util",
-        "//src/org/perses/util/cmd",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )
@@ -124,7 +119,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//antlropt/src/org/perses/antlr/pnf:pnf_pass_interface",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )
@@ -151,10 +145,7 @@ kt_jvm_test(
     srcs = ["PlusIntroducerLeftPassTest.kt"],
     data = ["//test_data/antlr_grammars"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
@@ -165,13 +156,9 @@ kt_jvm_test(
     name = "InlineFragmentPassTest",
     srcs = ["InlineFragmentPassTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "//test/org/perses/antlr/pnf:PnfTestGrammar",
     ],
 )
 
@@ -179,13 +166,9 @@ kt_jvm_test(
     name = "ConvertAllAltToRuleReferenceOrTerminalPassTest",
     srcs = ["ConvertAllAltToRuleReferenceOrTerminalPassTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "//test/org/perses/antlr/pnf:PnfTestGrammar",
     ],
 )
 
@@ -194,10 +177,7 @@ kt_jvm_test(
     srcs = ["RuleRefRenamingEditTest.kt"],
     data = ["//test_data/antlr_grammars"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
@@ -208,10 +188,7 @@ kt_jvm_test(
     name = "MutableRuleDefMapTest",
     srcs = ["MutableRuleDefMapTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
     ],
 )
@@ -226,7 +203,6 @@ kt_jvm_test(
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
-        "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )
 
@@ -240,7 +216,6 @@ kt_jvm_test(
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
-        "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )
 
@@ -248,10 +223,7 @@ kt_jvm_test(
     name = "MultiAltBlockExtractionPassTest",
     srcs = ["MultiAltBlockExtractionPassTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
@@ -261,12 +233,8 @@ kt_jvm_test(
     name = "PnfUtilTest",
     srcs = ["PnfUtilTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
-        "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )
 
@@ -275,10 +243,7 @@ kt_jvm_test(
     srcs = ["AltBlockExtractionPassTest.kt"],
     data = ["//test_data/antlr_grammars"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
@@ -288,10 +253,7 @@ kt_jvm_test(
     name = "AbstractAltBlockExtractionPassTest",
     srcs = ["AbstractAltBlockExtractionPassTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
@@ -301,10 +263,7 @@ kt_jvm_test(
     name = "IndirectLeftRecursionEliminationPassTest",
     srcs = ["IndirectLeftRecursionEliminationPassTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
@@ -325,10 +284,7 @@ kt_jvm_test(
     name = "IndirectRightRecursionEliminationPassTest",
     srcs = ["IndirectRightRecursionEliminationPassTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
@@ -339,12 +295,8 @@ kt_jvm_test(
     name = "QuantifiedAstNormalizationPassTest",
     srcs = ["QuantifiedAstNormalizationPassTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
-        "//antlropt/src/org/perses/antlr/pnf:pnf_grammar_checker",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
     ],
@@ -354,14 +306,9 @@ kt_jvm_test(
     name = "OutlineAltBlockPassTest",
     srcs = ["OutlineAltBlockPassTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
-        "//antlropt/src/org/perses/antlr/pnf:pnf_grammar_checker",
         "//test/org/perses/antlr:GrammarTestingUtility",
-        "//test/org/perses/antlr/pnf:PnfTestGrammar",
     ],
 )
 
@@ -375,7 +322,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )
@@ -392,7 +338,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//antlropt/src/org/perses/antlr/pnf:pnf_pass_manager",
         "//test/org/perses/antlr:GrammarTestingUtility",
         "//test/org/perses/antlr/pnf:PnfTestGrammar",
     ],

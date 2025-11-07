@@ -22,8 +22,9 @@ import java.io.File
 import java.nio.file.Files
 import java.util.Arrays
 
-class CrashClusterFolder(val folder: File) {
-
+class CrashClusterFolder(
+  val folder: File,
+) {
   fun getCrashInstances(): ImmutableList<CrashInstanceFolder> {
     val builder = ImmutableList.builder<CrashInstanceFolder>()
     val children = folder.listFiles()

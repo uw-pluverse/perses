@@ -19,21 +19,18 @@ package org.perses.listminimizer
 import com.google.common.collect.ImmutableList
 
 open class PristineDeltaDebugger<T : Any, PropertyPayload>(
-  arguments: AbstractListInputMinimizer.Arguments<T, PropertyPayload>,
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
   enableCache: Boolean = false,
   enableCacheRefresh: Boolean = false,
-) : AbstractDefaultDeltaDebugger<T, PropertyPayload, Any>(
-  arguments,
-  enableCache,
-  enableCacheRefresh,
-) {
-
+) : AbstractDefaultListMinimizer<T, PropertyPayload, Any>(
+    arguments,
+    enableCache,
+    enableCacheRefresh,
+  ) {
   override fun partition(
     list: ImmutableList<ElementWrapper<T>>,
     numberOfPartitions: Int,
-  ): PartitionList<ElementWrapper<T>> {
-    return countBasedPartition(list, numberOfPartitions)
-  }
+  ): PartitionList<ElementWrapper<T>> = countBasedPartition(list, numberOfPartitions)
 
   companion object {
     @JvmStatic
@@ -63,7 +60,10 @@ open class PristineDeltaDebugger<T : Any, PropertyPayload>(
     }
 
     @JvmStatic
-    fun computePartitionSize(listSize: Int, numberOfPartitions: Int): Int {
+    fun computePartitionSize(
+      listSize: Int,
+      numberOfPartitions: Int,
+    ): Int {
       require(listSize > 0)
       require(numberOfPartitions > 0)
       return listSize / numberOfPartitions

@@ -22,13 +22,18 @@ import org.perses.program.LanguageKind
 import org.perses.util.shell.CmdOutput
 import java.io.File
 
-data class ActionResult(val cmdOutput: CmdOutput, val cmd: String)
+data class ActionResult(
+  val cmdOutput: CmdOutput,
+  val cmd: String,
+)
 
 interface ICompilationAction {
-
   fun compile(file: File): ActionResult
 
-  fun compileWithExtraEnvironment(file: File, extraEnv: ImmutableMap<String, String>): ActionResult
+  fun compileWithExtraEnvironment(
+    file: File,
+    extraEnv: ImmutableMap<String, String>,
+  ): ActionResult
 
   fun getVersion(): String
 

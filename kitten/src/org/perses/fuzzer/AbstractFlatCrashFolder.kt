@@ -19,8 +19,9 @@ package org.perses.fuzzer
 import com.google.common.collect.ImmutableList
 import java.io.File
 
-abstract class AbstractFlatCrashFolder(val root: File) {
-
+abstract class AbstractFlatCrashFolder(
+  val root: File,
+) {
   init {
     if (!root.exists()) {
       check(root.mkdir())
@@ -36,13 +37,15 @@ abstract class AbstractFlatCrashFolder(val root: File) {
     return ImmutableList.sortedCopyOf(children.asIterable())
   }
 
-  fun getInstanceWithLargestMutantFile(): CrashInstanceFolder? {
-    return getAllCrashInstances().maxByOrNull { it.getMutantFile().length() }
-  }
+  fun getInstanceWithLargestMutantFile(): CrashInstanceFolder? =
+    getAllCrashInstances().maxByOrNull {
+      it.getMutantFile().length()
+    }
 
-  fun getInstanceWithSmallestMutantFile(): CrashInstanceFolder? {
-    return getAllCrashInstances().minByOrNull { it.getMutantFile().length() }
-  }
+  fun getInstanceWithSmallestMutantFile(): CrashInstanceFolder? =
+    getAllCrashInstances().minByOrNull {
+      it.getMutantFile().length()
+    }
 
   fun getAllCrashInstances(): ImmutableList<CrashInstanceFolder> {
     val builder = ImmutableList.builder<CrashInstanceFolder>()
@@ -65,6 +68,5 @@ abstract class AbstractFlatCrashFolder(val root: File) {
       .fold(
         ImmutableList.builder<CrashInstanceFolder>(),
         { builder, crash -> builder.add(crash) },
-      )
-      .build()
+      ).build()
 }

@@ -18,24 +18,30 @@ package org.perses.reduction.cache
 
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
-import org.perses.reduction.cache.AbstractCacheRetrievalResult.Companion.create
+import org.perses.reduction.cache.AbstractCacheRetrievalResult.CacheMiss
+import org.perses.reduction.io.AbstractOutputManager
 
 class NullQueryCache : AbstractQueryCache() {
-
-  override fun getCachedResult(program: TokenizedProgram): AbstractCacheRetrievalResult {
-    return create(owner = this, program = program, encoding = null, testResult = null)
-  }
+  override fun getCachedResult(
+    program: TokenizedProgram,
+    outputManager: AbstractOutputManager,
+  ): AbstractCacheRetrievalResult = CacheMiss(owner = this, program = program, encoding = null)
 
   override fun cacheProgramAndResult(
-    program: AbstractCacheRetrievalResult.CacheMiss,
+    program: CacheMiss,
     result: PropertyTestResult,
   ) {
     require(program.owner === this)
   }
 
-  override fun size() = 0
+  override fun cacheSize() = 0
 
   override fun evictEntriesLargerThan(best: TokenizedProgram) = Unit
 
   override fun triggerHeartBeat() = Unit
+
+  override fun clearCache() {
+  }
+
+  override fun constructObjectsForMemoryMeasurement(): Any = this
 }

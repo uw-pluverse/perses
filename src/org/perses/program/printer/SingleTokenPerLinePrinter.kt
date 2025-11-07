@@ -21,21 +21,17 @@ import org.perses.program.TokenizedProgram
 import org.perses.util.FastStringBuilder
 
 object SingleTokenPerLinePrinter : AbstractTokenizedProgramPrinter() {
-
   override fun print(
     program: TokenizedProgram,
     tokenPlacementListener: AbstractTokenPlacementListener?,
   ) = object : AbstractLazySourceCode() {
-    override fun computeStringBuilder() = program.tokens.fold(
-      FastStringBuilder(program.tokenCount * 5),
-    ) { builder, token -> builder.append(token.text).append('\n') }
+    override fun computeStringBuilder() =
+      program.tokens.fold(
+        FastStringBuilder(program.tokenCount * 5),
+      ) { builder, token -> builder.append(token.lexemeText).append('\n') }
   }
 
-  override fun extraEquals(other: Any): Boolean {
-    return this == other
-  }
+  override fun extraEquals(other: Any): Boolean = true
 
-  override fun extraHashCode(): Int {
-    return 0
-  }
+  override fun extraHashCode(): Int = 0
 }

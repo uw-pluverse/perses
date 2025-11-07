@@ -21,30 +21,29 @@ import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 
 class NullQueryCacheProfiler : AbstractQueryCacheProfiler(writer = null) {
-
   override fun afterEncodeProgram(
-    tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     program: TokenizedProgram,
     nanoDuration: Long,
   ) {
   }
 
   override fun onDecodingProgram(
-    tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     encoding: RccProgramEncoding,
     nanoDuration: Long,
   ) {
   }
 
   override fun onCreatingEncoder(
-    tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     nanoDuration: Long,
   ) {
   }
 
   override fun afterHeavyweightCacheRefreshing(
-    oldBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
-    newBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
+    oldBestProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
+    newBestProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
     nanoDuration: Long,

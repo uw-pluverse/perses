@@ -19,7 +19,7 @@ ppr_reduction_golden_test(
         "--code-format": "COMPACT_ORIG_FORMAT",
     },
     perses_bin = PPR_REDUCER_BIN,
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     seed_file = "seed.c",
     test_script = "r.sh",
     thread_count = 1,

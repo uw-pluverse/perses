@@ -54,26 +54,32 @@ class RuleDefMapTest {
     private fun test_toPersesGrammar(antlrFileName: String) {
       val persesGrammar = loadGrammarFromFile(antlrFileName)
       val mutableGrammar = createParserRulesFrom(persesGrammar)
-      val grammarRoundback = persesGrammar.copyWithNewParserRuleDefs(
-        mutableGrammar.toParserRuleAstList(),
-      )
-      val originalDefs = persesGrammar.flattenedAllRules.stream()
-        .sorted(Comparator.comparing(AbstractPersesRuleDefAst::ruleNameHandle))
-        .collect(Collectors.toList())
-      val afterDefs = grammarRoundback.flattenedAllRules.stream()
-        .sorted(Comparator.comparing(AbstractPersesRuleDefAst::ruleNameHandle))
-        .collect(Collectors.toList())
-      Truth.assertThat(
-        originalDefs.stream()
-          .map(AbstractPersesRuleDefAst::ruleNameHandle)
-          .collect(Collectors.toList()),
-      )
-        .containsExactlyElementsIn(
-          afterDefs.stream()
+      val grammarRoundback =
+        persesGrammar.copyWithNewParserRuleDefs(
+          mutableGrammar.toParserRuleAstList(),
+        )
+      val originalDefs =
+        persesGrammar.flattenedAllRules
+          .stream()
+          .sorted(Comparator.comparing(AbstractPersesRuleDefAst::ruleNameHandle))
+          .collect(Collectors.toList())
+      val afterDefs =
+        grammarRoundback.flattenedAllRules
+          .stream()
+          .sorted(Comparator.comparing(AbstractPersesRuleDefAst::ruleNameHandle))
+          .collect(Collectors.toList())
+      Truth
+        .assertThat(
+          originalDefs
+            .stream()
             .map(AbstractPersesRuleDefAst::ruleNameHandle)
             .collect(Collectors.toList()),
-        )
-        .inOrder()
+        ).containsExactlyElementsIn(
+          afterDefs
+            .stream()
+            .map(AbstractPersesRuleDefAst::ruleNameHandle)
+            .collect(Collectors.toList()),
+        ).inOrder()
       var i = 0
       val size = originalDefs.size
       while (i < size) {
@@ -81,16 +87,20 @@ class RuleDefMapTest {
         val after = afterDefs[i].body
         Truth.assertThat(orig.javaClass).isEqualTo(after.javaClass)
         if (orig.tag === AstTag.ALTERNATIVE_BLOCK) {
-          val origAlternatives = (orig as PersesAlternativeBlockAst)
-            .alternatives.stream()
-            .map(AbstractPersesRuleElement::sourceCode)
-            .sorted()
-            .collect(Collectors.toList())
-          val afterAlternatives = (after as PersesAlternativeBlockAst)
-            .alternatives.stream()
-            .map(AbstractPersesRuleElement::sourceCode)
-            .sorted()
-            .collect(Collectors.toList())
+          val origAlternatives =
+            (orig as PersesAlternativeBlockAst)
+              .alternatives
+              .stream()
+              .map(AbstractPersesRuleElement::sourceCode)
+              .sorted()
+              .collect(Collectors.toList())
+          val afterAlternatives =
+            (after as PersesAlternativeBlockAst)
+              .alternatives
+              .stream()
+              .map(AbstractPersesRuleElement::sourceCode)
+              .sorted()
+              .collect(Collectors.toList())
           Truth.assertThat(origAlternatives).containsExactlyElementsIn(afterAlternatives)
         } else {
           Truth.assertThat(orig).isSameInstanceAs(after)

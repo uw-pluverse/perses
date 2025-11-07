@@ -23,12 +23,13 @@ class TRecFlagGroup : AbstractCommandLineFlagGroup(groupName = "T-Rec Reducer Co
   @JvmField
   @Parameter(
     names = ["--enable-trec"],
-    description = "enable T-Rec (a lexical-syntax guided fine-grained reduction process to " +
-      "reduce and canonicalize each token)",
+    description =
+      "enable T-Rec (a lexical-syntax guided fine-grained reduction process to " +
+        "reduce and canonicalize each token)",
     arity = 1,
     order = 1,
   )
-  var enableTrec = false
+  var enableTRec = true
 
   override fun validate() {
   }

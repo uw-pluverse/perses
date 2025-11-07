@@ -16,24 +16,20 @@
  */
 package org.perses.grammar.c
 
-import com.google.common.flogger.FluentLogger
 import com.google.common.primitives.ImmutableIntArray
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 
-/** This is the facade for C parsers. TODO: clean up this class.  */
-class CParserFacade : AbstractDefaultParserFacade<OptCLexer, OptCParser>(
-  LanguageC,
-  createCombinedAntlrGrammar(
-    startRuleName = "translationUnit",
-    antlrGrammarFileName = "implicit_token_outlined_dir/OptC.g4",
-    CParserFacade::class.java,
-  ),
-  OptCLexer::class.java,
-  OptCParser::class.java,
-  ImmutableIntArray.of(OptCLexer.Identifier),
-) {
-
-  companion object {
-    private val logger = FluentLogger.forEnclosingClass()
-  }
-}
+/** This C parser facade is kept for testing only. */
+class CParserFacade :
+  AbstractParserFacade(
+    language = LanguageC,
+    antlrGrammar =
+      createCombinedAntlrGrammar(
+        startRuleName = "translationUnit",
+        antlrGrammarFileName = "implicit_token_outlined_dir/OptC.g4",
+        CParserFacade::class.java,
+      ),
+    identifierTokenTypes = ImmutableIntArray.of(OptCLexer.Identifier),
+    lexerClass = OptCLexer::class.java,
+    parserClass = OptCParser::class.java,
+  )

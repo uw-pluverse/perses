@@ -29,21 +29,25 @@ class EliminateUnreachableRulePassTest {
   @Test
   fun test() {
     val grammar = createPersesGrammarFromString("start:a;", "a:ID;", "b:ID;")
-    Truth.assertThat(
-      grammar.parserRuleNameList.stream()
-        .map(RuleNameRegistry.RuleNameHandle::ruleName)
-        .collect(Collectors.toList()),
-    )
-      .containsExactly("start", "a", "b")
+    Truth
+      .assertThat(
+        grammar.parserRuleNameList
+          .stream()
+          .map(RuleNameRegistry.RuleNameHandle::ruleName)
+          .collect(Collectors.toList()),
+      ).containsExactly("start", "a", "b")
     val pass = EliminateUnreachableRulePass("start")
-    val processedMap = pass.processGrammar(
-      GrammarPair(grammar, lexerGrammar = null),
-    ).parserGrammar!!
-    Truth.assertThat(
-      processedMap.parserRuleNameList.stream()
-        .map(RuleNameRegistry.RuleNameHandle::ruleName)
-        .collect(Collectors.toList()),
-    )
-      .containsExactly("start", "a")
+    val processedMap =
+      pass
+        .processGrammar(
+          GrammarPair(grammar, lexerGrammar = null),
+        ).parserGrammar!!
+    Truth
+      .assertThat(
+        processedMap.parserRuleNameList
+          .stream()
+          .map(RuleNameRegistry.RuleNameHandle::ruleName)
+          .collect(Collectors.toList()),
+      ).containsExactly("start", "a")
   }
 }

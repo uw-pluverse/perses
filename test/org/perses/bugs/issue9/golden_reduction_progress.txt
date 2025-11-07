@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "T.java.txt"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_T.java.txt"
+  outputDir: "result_reduction_golden_test_node_priority-dfs_T.java.txt"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "SINGLE_TOKEN_PER_LINE"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -72,43 +78,57 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.java.Java8ParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: perses_node_priority_with_dfs_delta
-condition: smaller
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 33
+(58/58)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(58/58)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 compilationUnit {id=1,slot_type=compilationUnit}
@@ -246,14 +266,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](58/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:58/58=100.00%
+FixPt[1][node_priority-dfs][DFS](58/58)  Testing the empty input. Global ratio:58/58=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__compilationUnit_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__compilationUnit_3]dd@1
     --file: T.java.txt--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](58/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:58/58=100.00%
+FixPt[1][node_priority-dfs][DFS](58/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:58/58=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
@@ -332,9 +356,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](58/58)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:58/58=100.00%
+FixPt[1][node_priority-dfs][DFS](58/58)  Testing the empty input. Global ratio:58/58=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__classBody_1]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@2
     --file: T.java.txt--
     public class T {
     }
@@ -344,9 +370,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](58/58)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:58/58=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@1
     --file: T.java.txt--
     public class T {
       private static int counter() {
@@ -362,9 +389,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](58/58)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:58/58=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@1
     --file: T.java.txt--
     public class T {
       public static void main(String[] args) {
@@ -384,6 +412,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](58/58)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:58/58=100.00%
+FixPt[1][node_priority-dfs][DFS](58/58)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:58/58=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 11
@@ -580,9 +610,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](40/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:40/58=68.97%
+FixPt[1][node_priority-dfs][DFS](40/58)  Testing the empty input. Global ratio:40/58=68.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__block_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
     --file: T.java.txt--
     public class T {
       private static int counter() {
@@ -604,6 +636,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](40/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:40/58=68.97%
+FixPt[1][node_priority-dfs][DFS](40/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:40/58=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 39
@@ -656,7 +690,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: T.java.txt--
     public class T {
@@ -887,9 +921,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__methodDeclarator_1]dd@1
     --file: T.java.txt--
     public class T {
       public static void main(             )
@@ -907,6 +943,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 195
@@ -953,9 +991,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__explicitConstructorInvocation_2]dd@1
     --file: T.java.txt--
     public class T {
       public static void main(String[] args)
@@ -973,6 +1013,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 57
@@ -1099,7 +1141,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: T.java.txt--
     public class T {
@@ -1118,6 +1162,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 70
@@ -1264,7 +1310,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: T.java.txt--
     public class T {
@@ -1283,6 +1331,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 97
@@ -1349,9 +1399,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@2
     --file: T.java.txt--
     public class T {
                     void main(String[] args)
@@ -1369,9 +1421,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:29/58=50.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@1
     --file: T.java.txt--
     public class T {
       public        void main(String[] args)
@@ -1389,9 +1442,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:29/58=50.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@1
     --file: T.java.txt--
     public class T {
              static void main(String[] args)
@@ -1409,6 +1463,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:29/58=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 16
@@ -1989,9 +2045,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority-dfs][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star:kleene_star__normalClassDeclaration_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__normalClassDeclaration_1]dd@1
     --file: T.java.txt--
            class T {
       public static void main(String[] args)
@@ -2009,6 +2067,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/58)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 3 entries are removed: 14 --> 11.
@@ -2027,15 +2086,15 @@ token count change 29 -> 28
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 6 from 29 to 28
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+(28/58)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 compilationUnit {id=272,slot_type=compilationUnit}
@@ -2112,13 +2171,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+=====Cache hit for the following uninteresting program:=====
 
     --file: T.java.txt--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 273
@@ -2185,9 +2248,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@1
     --file: T.java.txt--
            class T {
     }
@@ -2197,6 +2262,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 281
@@ -2281,9 +2348,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__block_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
     --file: T.java.txt--
            class T {
       public static void main(String[] args)
@@ -2299,6 +2368,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 290
@@ -2345,7 +2416,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: T.java.txt--
            class T {
@@ -2482,9 +2553,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__methodDeclarator_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__methodDeclarator_1]dd@1
     --file: T.java.txt--
            class T {
       public static void main(             )
@@ -2502,6 +2575,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 358
@@ -2548,9 +2623,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__explicitConstructorInvocation_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__explicitConstructorInvocation_2]dd@1
     --file: T.java.txt--
            class T {
       public static void main(String[] args)
@@ -2568,6 +2645,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 308
@@ -2694,7 +2773,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+=====Cache hit for the following uninteresting program:=====
 
     --file: T.java.txt--
            class T {
@@ -2713,6 +2794,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 321
@@ -2859,7 +2942,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+=====Cache hit for the following uninteresting program:=====
 
     --file: T.java.txt--
            class T {
@@ -2878,6 +2963,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 348
@@ -2944,9 +3031,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@2
     --file: T.java.txt--
            class T {
                     void main(String[] args)
@@ -2964,9 +3053,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:28/58=48.28%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@1
     --file: T.java.txt--
            class T {
       public        void main(String[] args)
@@ -2984,9 +3074,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:28/58=48.28%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__methodDeclaration_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@1
     --file: T.java.txt--
            class T {
              static void main(String[] args)
@@ -3004,6 +3095,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority-dfs][DFS](28/58)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:28/58=48.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 285
@@ -3570,61 +3663,83 @@ Failed to reduce node 277
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 58
-  characterCount: 141
-  fileContents:
-  - fileName: "T.java.txt"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+The spar-tree is the following.
+compilationUnit {id=272,slot_type=compilationUnit}
+|___(*) {id=273,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration {id=276,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class {id=277,slot_type=CLASS}
+        |___Token:T {id=278,slot_type=Identifier}
+        |___classBody {id=279,slot_type=classBody}
+            |___Token:{ {id=280,slot_type=LBRACE}
+            |___(*) {id=281,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration {id=284,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*) {id=285,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public {id=382,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static {id=381,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader {id=286,slot_type=methodHeader}
+            |       |   |___Token:void {id=378,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator {id=355,slot_type=methodDeclarator}
+            |       |       |___Token:main {id=356,slot_type=Identifier}
+            |       |       |___Token:( {id=357,slot_type=LPAREN}
+            |       |       |___(?) {id=358,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter {id=363,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType {id=367,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String {id=377,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+) {id=370,slot_type=[dims,kleene_plus__dims_5]}
+            |       |       |       |       |___aux_rule__dims_3 {id=371,slot_type=aux_rule__dims_3}
+            |       |       |       |           |___Token:[ {id=372,slot_type=LBRACK}
+            |       |       |       |           |___Token:] {id=373,slot_type=RBRACK}
+            |       |       |       |___Token:args {id=366,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:) {id=359,slot_type=RPAREN}
+            |       |___block {id=288,slot_type=[methodBody,block]}
+            |           |___Token:{ {id=289,slot_type=LBRACE}
+            |           |___(?) {id=290,slot_type=optional__block_1}
+            |           |   |___(+) {id=292,slot_type=blockStatements}
+            |           |       |___expressionStatement {id=296,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation {id=299,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18 {id=302,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName {id=303,slot_type=typeName}
+            |           |           |   |   |   |___(?) {id=348,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=350,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System {id=353,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:. {id=352,slot_type=DOT}
+            |           |           |   |   |   |___Token:out {id=349,slot_type=Identifier}
+            |           |           |   |   |___Token:. {id=304,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13 {id=305,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println {id=306,slot_type=Identifier}
+            |           |           |   |       |___Token:( {id=307,slot_type=LPAREN}
+            |           |           |   |       |___(?) {id=308,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___shiftExpression {id=319,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+            |           |           |   |               |___Token:1 {id=347,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |   |               |___(*) {id=321,slot_type=kleene_star__shiftExpression_1}
+            |           |           |   |                   |___aux_rule__shiftExpression_2 {id=322,slot_type=aux_rule__shiftExpression_2}
+            |           |           |   |                       |___aux_rule__shiftExpression_5 {id=335,slot_type=[altnt_block__shiftExpression_4,aux_rule__shiftExpression_5]}
+            |           |           |   |                       |   |___Token:< {id=336,slot_type=LT}
+            |           |           |   |                       |   |___Token:< {id=337,slot_type=LT}
+            |           |           |   |                       |___Token:2 {id=334,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |   |___Token:) {id=301,slot_type=RPAREN}
+            |           |           |___Token:; {id=298,slot_type=SEMI}
+            |           |___Token:} {id=291,slot_type=RBRACE}
+            |___Token:} {id=282,slot_type=RBRACE}
+------------------------------------------------------------
 
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 28
-  characterCount: 69
-  fileContents:
-  - fileName: "T.java.txt"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
 
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+FixPt[3][FineGritLatraReducer](28/58)  Latra does not support LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} langauge yet.
+(28/58)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs     -30    -72             0
+ 1    node_priority-dfs       0      0             0
+ 2 FineGritLatraReducer       0      0             0
 
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 28
-  characterCount: 69
-  fileContents:
-  - fileName: "T.java.txt"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     2     -30    -72
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 3

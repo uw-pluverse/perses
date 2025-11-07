@@ -26,8 +26,8 @@ class ImageReductionInput(
   testScript: ScriptFile,
   imageFile: BinaryReductionFile,
 ) : AbstractSingleFileReductionInputs<AbstractDataKind, BinaryReductionFile, ImageReductionInput>(
-  testScript,
-  mainFile = imageFile,
-  otherMutableFiles = ImmutableList.of(),
-  immutableDependencyFiles = ImmutableList.of(),
-)
+    testScript,
+    mainFile = imageFile,
+    otherMutableFiles = ImmutableList.of(),
+    immutableDependencyFiles = ImmutableList.of(),
+  )

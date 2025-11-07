@@ -18,7 +18,7 @@ package org.perses.reduction.cache
 
 import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.IntArrayList
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
@@ -29,7 +29,6 @@ class RccFormatSensitiveEncoder(
   profiler: AbstractQueryCacheProfiler,
   enableCompression: Boolean,
 ) : AbstractRccLinearScanEncoder(baseProgram, profiler, enableCompression) {
-
   private var indicesOfTokensThatStartLines =
     LogicalSizedArray.createWithSize(baseProgram.tokenCount)
 
@@ -39,17 +38,18 @@ class RccFormatSensitiveEncoder(
 
   override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {
     super.updateEncoderMore(encoderBaseProgram)
-    indicesOfTokensThatStartLines = shrinkLogicalArrayIfNecessary(
-      indicesOfTokensThatStartLines,
-      encoderBaseProgram,
-      refreshThreshold,
-    )
+    indicesOfTokensThatStartLines =
+      shrinkLogicalArrayIfNecessary(
+        indicesOfTokensThatStartLines,
+        encoderBaseProgram,
+        refreshThreshold,
+      )
     fillLineStartIndexArray(encoderBaseProgram.tokens, indicesOfTokensThatStartLines)
     lazyAssert { encoderBaseProgram.tokenCount >= indicesOfTokensThatStartLines.logicalSize }
   }
 
   override fun encodeUncompressed(
-    tokenIterator: Iterator<PersesToken>,
+    tokenIterator: Iterator<PersesTokenFactory.AbstractPersesToken>,
     tokenCount: Int,
   ): IntArrayList? {
     val intervalsResult = IntArrayList(20) // specify the initial capacity
@@ -98,12 +98,13 @@ class RccFormatSensitiveEncoder(
         encodingAttemptLoop@ while (indexOfBaseToken < indexOfBaseTokenThatEndsTheLineExclusive &&
           indexOfVariantToken < tokenCountInVariantLine
         ) {
-          indexOfBaseToken = searchForLexemeId(
-            startIndexInclusive = indexOfBaseToken,
-            stopIndexExclusive = indexOfBaseTokenThatEndsTheLineExclusive,
-            targetLexemeId = lineOfTokensInVariant.getInt(indexOfVariantToken),
-            persesLexemeIdInBaseProgram,
-          )
+          indexOfBaseToken =
+            searchForLexemeId(
+              startIndexInclusive = indexOfBaseToken,
+              stopIndexExclusive = indexOfBaseTokenThatEndsTheLineExclusive,
+              targetLexemeId = lineOfTokensInVariant.getInt(indexOfVariantToken),
+              persesLexemeIdInBaseProgram,
+            )
           if (indexOfBaseToken == NOT_FOUND) {
             ++currentLineNoInBase
             continue@lineLoop
@@ -174,38 +175,36 @@ class RccFormatSensitiveEncoder(
 
   @Suppress("NOTHING_TO_INLINE")
   private inline fun getLineOfTokensInVariant(
-    firstTokenInVariantLine: PersesToken,
-    tokenCursor: Iterator<PersesToken>,
+    firstTokenInVariantLine: PersesTokenFactory.AbstractPersesToken,
+    tokenCursor: Iterator<PersesTokenFactory.AbstractPersesToken>,
     result: IntArrayList,
-  ): PersesToken? {
+  ): PersesTokenFactory.AbstractPersesToken? {
     lazyAssert { result.isEmpty }
-    val lineNumberOfCurrentTokenInVariant = firstTokenInVariantLine.position.line
-    var currentVariantToken: PersesToken? = firstTokenInVariantLine
+    val lineNumberOfCurrentTokenInVariant = firstTokenInVariantLine.asAntlrToken().position.line
+    var currentVariantToken: PersesTokenFactory.AbstractPersesToken? = firstTokenInVariantLine
     do {
       result.add(currentVariantToken!!.persesLexemeId)
       currentVariantToken = tokenCursor.nextOrNull()
     } while (currentVariantToken != null &&
-      lineNumberOfCurrentTokenInVariant == currentVariantToken.position.line
+      lineNumberOfCurrentTokenInVariant == currentVariantToken.asAntlrToken().position.line
     )
     return currentVariantToken
   }
 
   companion object {
-
     @Suppress("NOTHING_TO_INLINE")
     inline fun isLineInBaseShorterThanLineInVariant(
       indexOfBaseTokenThatStartsTheLine: Int,
       indexOfBaseTokenThatEndsTheLine: Int,
       tokenCountInVariantLine: Int,
-    ): Boolean {
-      return Util.countElementsInList(
+    ): Boolean =
+      Util.countElementsInList(
         endIndexExclusive = indexOfBaseTokenThatEndsTheLine,
         startIndexInclusive = indexOfBaseTokenThatStartsTheLine,
       ) < tokenCountInVariantLine
-    }
 
     private fun fillLineStartIndexArray(
-      tokens: ImmutableList<PersesToken>,
+      tokens: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
       lineStartIndexArray: LogicalSizedArray,
     ) {
       val tokenCount = tokens.size
@@ -215,7 +214,7 @@ class RccFormatSensitiveEncoder(
       var currentLine = 0
       var lengthOfLineStartIndexArray = 0
       for (i in 0 until tokenCount) {
-        val lineNoOfToken = tokens[i].position.line
+        val lineNoOfToken = tokens[i].asAntlrToken().position.line
         if (currentLine != lineNoOfToken) {
           lineStartIndexArray[lengthOfLineStartIndexArray++] = i
           currentLine = lineNoOfToken

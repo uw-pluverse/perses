@@ -17,12 +17,15 @@ kt_jvm_test(
         "//test_data/rust_programs:whole_rust_repo",
     ],
     shard_count = 7,
+    tags = [
+        # TODO(cnsun): need to add a flag in presubmit.sh to enable this test.
+        "super_slow_parser_test",
+    ],
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:flogger",
         "//:guava",
-        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/antlr:util",
         "//src/org/perses/grammar/rust:orig_parser_facade",

@@ -23,13 +23,12 @@ enum class EnumQueryCachingControl {
   ;
 
   companion object {
-    fun convert(string: String): EnumQueryCachingControl? {
-      return when (string.lowercase()) {
+    fun convert(string: String): EnumQueryCachingControl? =
+      when (string.lowercase()) {
         "true" -> TRUE
         "false" -> FALSE
         "auto" -> AUTO
         else -> null
       }
-    }
   }
 }

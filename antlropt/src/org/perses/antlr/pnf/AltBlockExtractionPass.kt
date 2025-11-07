@@ -20,7 +20,6 @@ import com.google.common.annotations.VisibleForTesting
 import org.perses.antlr.ast.PersesSequenceAst
 
 class AltBlockExtractionPass : AbstractAltBlockExtractionPass() {
-
   override fun searchForCandidate(sequences: List<PersesSequenceAst>): AbstractCandidate? {
     val size = sequences.size
     for (i in 0 until size - 1) {
@@ -37,9 +36,11 @@ class AltBlockExtractionPass : AbstractAltBlockExtractionPass() {
   }
 
   companion object {
-
     @VisibleForTesting
-    fun searchForCandidate(s1: PersesSequenceAst, s2: PersesSequenceAst): AbstractCandidate? {
+    fun searchForCandidate(
+      s1: PersesSequenceAst,
+      s2: PersesSequenceAst,
+    ): AbstractCandidate? {
       val originalSequences = listOf(s1, s2)
       val left = searchAssumingCommonPrefix(s1, s2)
       val candidates = ArrayList<AbstractCandidate>()

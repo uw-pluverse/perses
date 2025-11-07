@@ -20,19 +20,22 @@ import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 import org.perses.fuzzer.compilers.SanitizerCrashSignatureExtractor
 
 class JerryScriptCrashDetector : AbstractCompilerCrashDetector() {
-
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
     val result = ArrayList<String>()
     val sanitizerCrashDetector = SanitizerCrashSignatureExtractor()
-    stderr.asSequence()
+    stderr
+      .asSequence()
       .filter {
         it.isNotBlank() && it.contains(KEYWORD_INTERNAL_COMPILER_ERROR)
-      }
-      .forEach {
+      }.forEach {
         result.add(it)
       }
     result.addAll(sanitizerCrashDetector.extractCrashSignatureFromStderr(stderr))
-    return result.asSequence().filter { it.isNotBlank() }.map { it.trim() }.toList()
+    return result
+      .asSequence()
+      .filter { it.isNotBlank() }
+      .map { it.trim() }
+      .toList()
   }
 
   companion object {

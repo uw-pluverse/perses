@@ -20,27 +20,30 @@ import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.CommonTokenStream
 import org.perses.antlr.ParseTreeWithParser
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 import java.io.BufferedReader
 import java.io.StringReader
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 
-class PnfGoParserFacade : AbstractDefaultParserFacade<GoLexer, PnfGoParser>(
-  LanguageGo,
-  createSeparateAntlrGrammar(
-    startRuleName = "sourceFile",
-    antlrParserGrammarFileName = "PnfGoParser.g4",
-    antlrLexerGrammarFileName = "GoLexer.g4",
-    classUnderSamePkg = PnfGoParserFacade::class.java,
-  ),
-  GoLexer::class.java,
-  PnfGoParser::class.java,
-  ImmutableIntArray.of(GoLexer.IDENTIFIER),
-) {
+class PnfGoParserFacade :
+  AbstractParserFacade(
+    language = LanguageGo,
+    antlrGrammar =
+      createSeparateAntlrGrammar(
+        startRuleName = "sourceFile",
+        antlrParserGrammarFileName = "PnfGoParser.g4",
+        antlrLexerGrammarFileName = "GoLexer.g4",
+        classUnderSamePkg = PnfGoParserFacade::class.java,
+      ),
+    lexerClass = GoLexer::class.java,
+    parserClass = PnfGoParser::class.java,
+    identifierTokenTypes = ImmutableIntArray.of(GoLexer.IDENTIFIER),
+  ) {
   fun parseWithOrigGoParser(file: Path): ParseTreeWithParser {
-    Files.newBufferedReader(file, StandardCharsets.UTF_8)
+    Files
+      .newBufferedReader(file, StandardCharsets.UTF_8)
       .use { reader -> return parseWithOrigGoParser(reader, file.toString()) }
   }
 
@@ -50,7 +53,10 @@ class PnfGoParserFacade : AbstractDefaultParserFacade<GoLexer, PnfGoParser>(
     ).use { reader -> return parseWithOrigGoParser(reader, "<in-memory>") }
   }
 
-  fun parseWithOrigGoParser(goProgram: String?, fileName: String): ParseTreeWithParser {
+  fun parseWithOrigGoParser(
+    goProgram: String?,
+    fileName: String,
+  ): ParseTreeWithParser {
     BufferedReader(
       StringReader(goProgram),
     ).use { reader -> return parseWithOrigGoParser(reader, fileName) }
@@ -60,13 +66,12 @@ class PnfGoParserFacade : AbstractDefaultParserFacade<GoLexer, PnfGoParser>(
     private fun parseWithOrigGoParser(
       reader: BufferedReader,
       fileName: String,
-    ): ParseTreeWithParser {
-      return parseReader(
+    ): ParseTreeWithParser =
+      parseReader(
         fileName,
         reader,
         { input: CharStream? -> GoLexer(input) },
         { input: CommonTokenStream? -> GoParser(input) },
       ) { obj: GoParser -> obj.sourceFile() }
-    }
   }
 }

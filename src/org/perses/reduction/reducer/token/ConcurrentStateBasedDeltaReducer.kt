@@ -27,27 +27,22 @@ import org.perses.spartree.SparTree
 class ConcurrentStateBasedDeltaReducer(
   reducerContext: ReducerContext,
 ) : AbstractStateBasedConcurrentReducer<ConcurrentDeltaDebuggingState, LexerRuleSparTreeNode>(
-  META,
-  reducerContext,
-) {
-
+    META,
+    reducerContext,
+  ) {
   override val parseCheckNeeded: Boolean
     get() = false
 
-  override fun createInputSequence(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> {
-    return tree.remainingLexerRuleNodes
-  }
+  override fun createInputSequence(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> =
+    tree.remainingLexerRuleNodes
 
-  override fun createInitialState(tree: SparTree): ConcurrentDeltaDebuggingState? {
-    return ConcurrentDeltaDebuggingState.create(tree.tokenCount)
-  }
+  override fun createInitialState(tree: SparTree): ConcurrentDeltaDebuggingState? =
+    ConcurrentDeltaDebuggingState.create(tree.tokenCount)
 
   override fun getStateOnSuccess(
     tree: SparTree,
     state: ConcurrentDeltaDebuggingState,
-  ): ConcurrentDeltaDebuggingState? {
-    return state.advanceOnSuccess(tree.tokenCount)
-  }
+  ): ConcurrentDeltaDebuggingState? = state.advanceOnSuccess(tree.tokenCount)
 
   override fun computeNodeActionSet(
     state: ConcurrentDeltaDebuggingState,
@@ -66,12 +61,11 @@ class ConcurrentStateBasedDeltaReducer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(ConcurrentStateBasedDeltaReducer(reducerContext))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(ConcurrentStateBasedDeltaReducer(reducerContext))
   }
-  companion object {
 
+  companion object {
     const val NAME = "concurrent_state_ddmin"
   }
 }
@@ -81,7 +75,6 @@ data class ConcurrentDeltaDebuggingState(
   val chunkSize: Int,
   private val tokenSize: Int,
 ) : IConcurrentState<ConcurrentDeltaDebuggingState> {
-
   val end: Int
     get() = minOf(index + chunkSize, tokenSize)
 

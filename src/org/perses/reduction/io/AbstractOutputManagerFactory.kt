@@ -17,6 +17,5 @@
 package org.perses.reduction.io
 
 abstract class AbstractOutputManagerFactory<Program> {
-
   abstract fun createManagerFor(program: Program): AbstractOutputManager
 }

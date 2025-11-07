@@ -13,14 +13,12 @@ kt_jvm_library(
 kt_jvm_library(
     name = "listeners",
     srcs = [
-        "DefaultReductionListener.kt",
         "LoggingListener.kt",
         "ProgressMonitorForNodeReducer.kt",
         "StatisticsListener.kt",
         "TestScriptExecutionListener.kt",
     ],
     deps = [
-        ":profile_event_interface",
         "//:flogger",
         "//:guava",
         "//src/org/perses/program",

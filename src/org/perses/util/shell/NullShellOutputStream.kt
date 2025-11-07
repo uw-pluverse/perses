@@ -25,7 +25,11 @@ object NullShellOutputStream : AbstractShellOutputStream() {
     // Discard all the input.
   }
 
-  override fun write(b: ByteArray, off: Int, len: Int) {
+  override fun write(
+    b: ByteArray,
+    off: Int,
+    len: Int,
+  ) {
     // Discard all the input.
   }
 

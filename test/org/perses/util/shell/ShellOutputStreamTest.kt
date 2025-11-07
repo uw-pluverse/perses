@@ -24,7 +24,6 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class ShellOutputStreamTest {
-
   @Test
   fun `new stream should return empty string`() {
     val stream = ShellOutputStream()

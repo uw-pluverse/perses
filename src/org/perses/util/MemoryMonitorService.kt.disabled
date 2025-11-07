@@ -1,0 +1,103 @@
+package org.perses.util
+
+import java.lang.management.GarbageCollectorMXBean
+import java.lang.management.ManagementFactory
+import java.lang.management.MemoryMXBean
+import java.lang.management.MemoryPoolMXBean
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
+
+// TODO(cnsun): need to implement this.
+class MemoryMonitorService<K, V> {
+  private val memoryBean: MemoryMXBean = ManagementFactory.getMemoryMXBean()
+  private val scheduler: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+  private val gcBeans: List<GarbageCollectorMXBean> =
+    ManagementFactory.getGarbageCollectorMXBeans()
+  private val oldGenPool: MemoryPoolMXBean? = findOldGenPool()
+
+  private var lastGcTime: Long = getTotalGcTime()
+
+  init {
+    if (oldGenPool == null) {
+      System.err.println(
+        "Warning: Could not find Old Generation memory pool. Monitoring will be less effective.",
+      )
+    }
+  }
+
+  fun startMonitoring() {
+    scheduler.scheduleAtFixedRate(this::monitorMemory, 0, 5, TimeUnit.SECONDS)
+  }
+
+  private fun findOldGenPool(): MemoryPoolMXBean? =
+    ManagementFactory.getMemoryPoolMXBeans().firstOrNull {
+      it.name.endsWith("Old Gen") || it.name.endsWith("Tenured Gen")
+    }
+
+  private fun getTotalGcTime(): Long = gcBeans.sumOf { it.collectionTime }
+
+  private fun monitorMemory() {
+    // --- 1. GC-Aware Check ---
+    val currentGcTime = getTotalGcTime()
+    val gcTimeDelta = currentGcTime - lastGcTime
+    lastGcTime = currentGcTime
+
+    val GC_TIME_THRESHOLD_MS = 1000L
+    if (gcTimeDelta > GC_TIME_THRESHOLD_MS) {
+      val newMaxWeight = (adaptiveCache.getMaximumWeight() * 0.7).toLong()
+      adaptiveCache.setMaximumWeight(newMaxWeight.coerceAtLeast(1024L * 1024L * 10L)) // 10MB min
+      println(
+        "🚨 High GC activity detected. Reducing cache size to ${adaptiveCache.getMaximumWeight()} bytes.",
+      )
+      return
+    }
+
+    // --- 2. Old Generation Check ---
+    oldGenPool?.let {
+      val oldGenUsed = it.usage.used
+      val oldGenMax = it.usage.max
+      val OLD_GEN_THRESHOLD = 0.9
+      if (oldGenUsed.toDouble() / oldGenMax > OLD_GEN_THRESHOLD) {
+        val newMaxWeight = (adaptiveCache.getMaximumWeight() * 0.7).toLong()
+        adaptiveCache.setMaximumWeight(newMaxWeight.coerceAtLeast(1024L * 1024L * 10L))
+        println(
+          "⚠️ Old Generation is filling up. Reducing cache size to ${adaptiveCache.getMaximumWeight()} bytes.",
+        )
+        return
+      }
+    }
+
+    // --- 3. Overall Heap Usage Check ---
+    val maxHeap = memoryBean.heapMemoryUsage.max
+    val usedHeap = memoryBean.heapMemoryUsage.used
+    val freeHeap = maxHeap - usedHeap
+    val usedPercentage = usedHeap.toDouble() / maxHeap
+
+    val LOW_MEMORY_THRESHOLD = 0.8
+    val HIGH_MEMORY_THRESHOLD = 0.5
+
+    when {
+      usedPercentage > LOW_MEMORY_THRESHOLD -> {
+        val newMaxWeight = (adaptiveCache.getMaximumWeight() * 0.9).toLong()
+        adaptiveCache.setMaximumWeight(newMaxWeight.coerceAtLeast(1024L * 1024L * 10L))
+        println(
+          "🚨 Overall heap usage is high. Reducing cache size to ${adaptiveCache.getMaximumWeight()} bytes.",
+        )
+      }
+      usedPercentage < HIGH_MEMORY_THRESHOLD -> {
+        val additionalWeight = (freeHeap * 0.5).toLong()
+        val newMaxWeight = adaptiveCache.getMaximumWeight() + additionalWeight
+        val maxAllowedWeight = (maxHeap * 0.4).toLong()
+        adaptiveCache.setMaximumWeight(newMaxWeight.coerceAtMost(maxAllowedWeight))
+        println(
+          "✅ Ample free memory. Increasing cache size to ${adaptiveCache.getMaximumWeight()} bytes.",
+        )
+      }
+    }
+  }
+
+  fun stopMonitoring() {
+    scheduler.shutdown()
+  }
+}

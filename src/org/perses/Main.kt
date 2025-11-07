@@ -16,6 +16,7 @@
  */
 package org.perses
 
+import org.apache.commons.lang3.StringUtils
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil.createParserFacadeFactory
 import org.perses.program.EnumFormatControl
@@ -34,9 +35,9 @@ class Main(
   cmd: CommandOptions,
   globalContext: GlobalContext,
 ) : AbstractMain<CommandOptions, RegularProgramReductionDriver, RegularReductionInputs>(
-  cmd,
-  globalContext,
-) {
+    cmd,
+    globalContext,
+  ) {
   override fun createExtFacadeFactory(): AbstractParserFacadeFactory {
     // Cannot close this file, as the file has class loader to load the parser facade classes.
     return createParserFacadeFactory(
@@ -57,7 +58,23 @@ class Main(
         "Invalid language name $lang"
       }
     }
+    cmd.languageControlFlags.designatedParserFacadeClassName.trim().let { klassName ->
+      check(
+        klassName.isBlank() ||
+          parserFacadeFactory.getParserFacadeClassForClassNameOrNull(klassName) != null,
+      ) {
+        "Invalid parser facade class $klassName"
+      }
+    }
   }
+
+  override fun computeLanguageAndParserConfiguration(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): LanguageAndParserConfiguration =
+    HelperForPersesMain.computeLanguageAndParserConfiguration(
+      parserFacadeFactory,
+      cmd.languageControlFlags,
+    )
 
   override fun processOtherHelpRequests(): HelpRequestProcessingDecision {
     if (cmd.algorithmControlFlags.listAllReductionAlgorithms) {
@@ -67,19 +84,31 @@ class Main(
     }
     if (cmd.languageControlFlags.listParserFacades) {
       println("All currently supported parser facade classes:\n")
-      parserFacadeFactory.languageSequence().sortedBy { it.name }.forEach { lang ->
-        val parserFacadeList = parserFacadeFactory.getParserFacadeListForOrNull(lang)!!
-        println("$lang (${parserFacadeList.numberOfParserFacades()} parser facades):")
-        val prefix = "    default: "
-        println("$prefix${parserFacadeList.defaultParserFacade.klass.qualifiedName}")
+      parserFacadeFactory
+        .languageSequence()
+        .sortedBy { it.name }
+        .withIndex()
+        .forEach { (index, lang) ->
+          val id = StringUtils.leftPad(index.toString(), 2, ' ')
+          val parserFacadeList = parserFacadeFactory.getParserFacadeListForOrNull(lang)!!
+          val numOfParserFacades = parserFacadeList.numberOfParserFacades()
+          val postfix = if (numOfParserFacades > 1) "s" else ""
+          println("$id: $lang ($numOfParserFacades parser facade$postfix):")
+          val prefix = "    Default: "
+          println("$prefix${parserFacadeList.defaultParserFacade.klass.qualifiedName}")
 
-        if (parserFacadeList.otherParserFacades.isNotEmpty()) {
-          println("    Alternatives: ")
-          parserFacadeList.otherParserFacades.forEach {
-            println("          " + it.klass.qualifiedName)
+          if (parserFacadeList.otherParserFacades.isNotEmpty()) {
+            val firstEntry =
+              parserFacadeList.otherParserFacades
+                .first()
+                .klass.qualifiedName
+            println("    Others : $firstEntry")
+            parserFacadeList.otherParserFacades.drop(1).forEach {
+              println("             ${it.klass.qualifiedName}")
+            }
           }
+          println()
         }
-      }
       return HelpRequestProcessingDecision.EXIT
     }
     if (cmd.languageControlFlags.listLangs) {
@@ -99,12 +128,7 @@ class Main(
   override fun createSequenceOfReductionDriverCreators(
     reductionInputs: RegularReductionInputs,
   ): Sequence<ReductionDriverCreator<RegularProgramReductionDriver>> {
-    val parserFacadeCreatorList = parserFacadeFactory.getParserFacadeListForOrNull(
-      reductionInputs.initiallyDeterminedMainDataKind,
-    )
-    checkNotNull(parserFacadeCreatorList) {
-      reductionInputs.initiallyDeterminedMainDataKind
-    }
+    val parserFacadeCreatorList = computePlausibleParserFacades()
     val allowedCodeFormatList = mutableListOf(getSpecifiedCodeFormatControl())
     for (allowedFormat in reductionInputs
       .initiallyDeterminedMainDataKind.allowedCodeFormatControl) {
@@ -113,29 +137,32 @@ class Main(
       }
       allowedCodeFormatList.add(allowedFormat)
     }
-    return parserFacadeCreatorList.sequenceOfCreators().flatMap { creator ->
-      allowedCodeFormatList.asSequence().map { format -> creator to format }
-    }.map { (facadeCreator, codeFormat) ->
-      ReductionDriverCreator(
-        creator = {
-          val parserFacade = facadeCreator.create()
-          RegularProgramReductionDriver.create(
-            globalContext,
-            cmd,
-            reductionInputs,
-            parserFacade,
-            codeFormat,
-            listenerManager = listenerManager,
-          )
-        },
-        descriptor = {
-          """
+    return parserFacadeCreatorList
+      .sequenceOfCreators()
+      .flatMap { creator ->
+        allowedCodeFormatList.map { format -> creator to format }
+      }.map { (facadeCreator, codeFormat) ->
+        ReductionDriverCreator(
+          creator = {
+            val parserFacade = facadeCreator.create()
+            RegularProgramReductionDriver.create(
+              globalContext,
+              cmd,
+              reductionInputs,
+              parserFacade,
+              codeFormat,
+              listenerManager = listenerManager,
+              shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
+            )
+          },
+          descriptor = {
+            """
             $codeFormat
             ${facadeCreator.klass}
-          """.trimIndent()
-        },
-      )
-    }
+            """.trimIndent()
+          },
+        )
+      }
   }
 
   private fun getSpecifiedCodeFormatControl(): EnumFormatControl {
@@ -161,29 +188,26 @@ class Main(
       mainFilePath = inputFlags.getSourceFile(),
       dependencyFiles = inputFlags.deps.toImmutableList(),
       languageKindComputer = { sourceFileAbsPath ->
-        parserFacadeFactory.computeLanguage(
-          cmd.languageControlFlags.languageName,
-          sourceFileAbsPath,
-        )
+        computeLanguageForFile(sourceFileAbsPath)
       },
     )
   }
 
-  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager {
-    return PersesListenerManagerCreator.createAsyncReductionListenerManager(
+  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager =
+    PersesListenerManagerCreator.createAsyncReductionListenerManager(
       cmd,
       globalContext.fileStreamPool,
     )
-  }
 
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { CommandOptions() },
-        programName = Main::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { CommandOptions() },
+          programName = Main::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == HelpRequestProcessingDecision.EXIT) {
         return
       }
@@ -191,8 +215,10 @@ class Main(
       Util.useResources(
         {
           GlobalContext(
+            enableGlobalCache = cmd.cacheControlFlags.enableGlobalCache,
             globalCacheFile = cmd.cacheControlFlags.globalCacheFile,
             pathToSaveUpdatedGlobalCache = cmd.cacheControlFlags.pathToSaveUpdatedGlobalCache,
+            shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
           )
         },
         { globalContext -> Main(cmd, globalContext) },

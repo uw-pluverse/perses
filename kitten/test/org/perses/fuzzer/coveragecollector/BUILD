@@ -8,9 +8,7 @@ kt_jvm_test(
     data = ["//kitten/test/fuzzer_test_data"],
     deps = [
         "//:truth",
-        "//kitten/src/org/perses/fuzzer:perses_fuzzer",
         "//kitten/src/org/perses/fuzzer/coveragecollector:coverage_collector",
-        "//test/org/perses:test_util",
     ],
 )
 
@@ -23,8 +21,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//kitten/src/org/perses/fuzzer:perses_fuzzer",
         "//kitten/src/org/perses/fuzzer/coveragecollector:coverage_collector",
-        "//test/org/perses:test_util",
     ],
 )

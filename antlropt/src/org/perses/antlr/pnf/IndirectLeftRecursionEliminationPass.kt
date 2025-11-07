@@ -25,15 +25,11 @@ import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 class IndirectLeftRecursionEliminationPass : AbstractIndirectRecursionEliminationPass() {
-
-  override fun createRuleTransitionGraph(grammar: PersesGrammar): RuleTransitionGraph {
-    return RuleTransitionGraph.createForLeftmostTransition(grammar)
-  }
+  override fun createRuleTransitionGraph(grammar: PersesGrammar): RuleTransitionGraph =
+    RuleTransitionGraph.createForLeftmostTransition(grammar)
 
   @VisibleForTesting
-  public override fun getRuleRefToInline(
-    def: AbstractPersesRuleElement,
-  ): RuleNameHandle? {
+  public override fun getRuleRefToInline(def: AbstractPersesRuleElement): RuleNameHandle? {
     require(def.tag !== AstTag.ALTERNATIVE_BLOCK)
     return getFirstOrLastRuleRef(def, seekingFirst = true)
   }

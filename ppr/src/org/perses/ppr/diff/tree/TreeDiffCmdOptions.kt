@@ -17,20 +17,18 @@
 package org.perses.ppr.diff.tree
 
 import com.beust.jcommander.Parameter
-import org.perses.CommandOptions
 import org.perses.cmd.InputFlagGroup
+import org.perses.ppr.AbstractPPRCommandOptions
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class TreeDiffCmdOptions : CommandOptions() {
-
+class TreeDiffCmdOptions : AbstractPPRCommandOptions() {
   override fun createInputFlags() = TreeDiffInputFlagGroup()
 
   val treeDiffInputFlags = inputFlags as TreeDiffInputFlagGroup
 
   class TreeDiffInputFlagGroup : InputFlagGroup() {
-
     @JvmField
     @Parameter(
       names = ["--variant-file", "--variant"],

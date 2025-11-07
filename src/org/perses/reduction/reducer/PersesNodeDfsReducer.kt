@@ -23,8 +23,7 @@ import org.perses.reduction.ReducerContext
 
 /** Perses node reducer, with dfs delta debugging  */
 object PersesNodeDfsReducer {
-
-  const val NAME = "perses_node_with_dfs_delta"
+  const val NAME = "node-dfs"
 
   object META : ReducerAnnotation(
     shortName = NAME,
@@ -32,12 +31,13 @@ object PersesNodeDfsReducer {
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext) = ImmutableList.of<AbstractTokenReducer>(
-      PersesNodeReducer(
-        this,
-        reducerContext,
-        AbstractNodeReducer.IReductionQueueStrategy.FOR_REGULAR_QUEUE,
-      ),
-    )
+    override fun create(reducerContext: ReducerContext) =
+      ImmutableList.of<AbstractTokenReducer>(
+        PersesNodeReducer(
+          this,
+          reducerContext,
+          AbstractNodeReducer.IReductionQueueStrategy.FOR_REGULAR_QUEUE,
+        ),
+      )
   }
 }

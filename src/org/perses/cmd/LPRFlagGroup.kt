@@ -33,8 +33,9 @@ class LPRFlagGroup : AbstractCommandLineFlagGroup(groupName = "LPR Reducer Contr
 
   @Parameter(
     names = ["--lpr-fixpoint"],
-    description = "Enable lpr fixpoint. Everytime a transformation makes progress, " +
-      "go to the next transformation.",
+    description =
+      "Enable lpr fixpoint. Everytime a transformation makes progress, " +
+        "go to the next transformation.",
     arity = 1,
     order = 1,
   )

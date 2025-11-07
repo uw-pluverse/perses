@@ -33,48 +33,82 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class SystemTest {
-
   val tempDir = Files.createTempDirectory(javaClass.simpleName)
   val rustTestUtil = RustTestUtil()
-  val configurationFile = tempDir.resolve("testing_configuration.yaml").apply {
-    rustTestUtil.testingConfiguration.writeToYamlFile(this)
-  }
-  val commonOptionsForNormalFuzzing = arrayOf(
-    "--random-seed", "1",
-    "--seed-limit", "1",
-    "--finding-folder", rustTestUtil.getFindingFolder().root.toString(),
-    "--temp-folder", tempDir.resolve("temp_folder").toString(),
-    "--threads", "1",
-    "--shuffle-seed", "true",
-    "--testing-config", configurationFile.toString(),
-    "--timeout", "5",
-    "--max-iterations", "1",
-    "--enable-deleting-on-random-positions", "true",
-    "--enable-inserting-on-random-positions", "true",
-    "--enable-splicing", "false",
-    "--enable-replacing-identifier", "false",
-    "--language-model", "N_DEPTH_TREE_MODEL",
-    "--generator", "GUIDED_GENERATOR",
-  )
-  val commonOptionsForOnlyGeneratingMutants = arrayOf(
-    "--random-seed", "1",
-    "--seed-limit", "1",
-    "--finding-folder", rustTestUtil.getFindingFolder().root.toString(),
-    "--temp-folder", tempDir.resolve("temp_folder").toString(),
-    "--threads", "1",
-    "--shuffle-seed", "true",
-    "--testing-config", configurationFile.toString(),
-    "--timeout", "5",
-    "--max-iterations", "1",
-    "--max-recursions", "5",
-    "--generator", "RANDOM_GENERATOR",
-    "--enable-deleting-on-continuous-positions", "true",
-    "--enable-inserting-on-continuous-positions", "true",
-    "--enable-splicing", "true",
-    "--enable-replacing-identifier", "true",
-    "--enable-replacing-same-type-token", "true",
-    "--fuzzer-mode", "ONLY_GENERATE_MUTANTS",
-  )
+  val configurationFile =
+    tempDir.resolve("testing_configuration.yaml").apply {
+      rustTestUtil.testingConfiguration.writeToYamlFile(this)
+    }
+  val commonOptionsForNormalFuzzing =
+    arrayOf(
+      "--random-seed",
+      "1",
+      "--seed-limit",
+      "1",
+      "--finding-folder",
+      rustTestUtil.getFindingFolder().root.toString(),
+      "--temp-folder",
+      tempDir.resolve("temp_folder").toString(),
+      "--threads",
+      "1",
+      "--shuffle-seed",
+      "true",
+      "--testing-config",
+      configurationFile.toString(),
+      "--timeout",
+      "5",
+      "--max-iterations",
+      "1",
+      "--enable-deleting-on-random-positions",
+      "true",
+      "--enable-inserting-on-random-positions",
+      "true",
+      "--enable-splicing",
+      "false",
+      "--enable-replacing-identifier",
+      "false",
+      "--language-model",
+      "N_DEPTH_TREE_MODEL",
+      "--generator",
+      "GUIDED_GENERATOR",
+    )
+  val commonOptionsForOnlyGeneratingMutants =
+    arrayOf(
+      "--random-seed",
+      "1",
+      "--seed-limit",
+      "1",
+      "--finding-folder",
+      rustTestUtil.getFindingFolder().root.toString(),
+      "--temp-folder",
+      tempDir.resolve("temp_folder").toString(),
+      "--threads",
+      "1",
+      "--shuffle-seed",
+      "true",
+      "--testing-config",
+      configurationFile.toString(),
+      "--timeout",
+      "5",
+      "--max-iterations",
+      "1",
+      "--max-recursions",
+      "5",
+      "--generator",
+      "RANDOM_GENERATOR",
+      "--enable-deleting-on-continuous-positions",
+      "true",
+      "--enable-inserting-on-continuous-positions",
+      "true",
+      "--enable-splicing",
+      "true",
+      "--enable-replacing-identifier",
+      "true",
+      "--enable-replacing-same-type-token",
+      "true",
+      "--fuzzer-mode",
+      "ONLY_GENERATE_MUTANTS",
+    )
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -95,30 +129,34 @@ class SystemTest {
   }
 
   private fun convertCmdObject(args: Array<String>): CommandOptions {
-    val processor = CommandLineProcessor<CommandOptions>(
-      cmdCreator = { CommandOptions() },
-      programName = "test",
-      args,
-    )
+    val processor =
+      CommandLineProcessor<CommandOptions>(
+        cmdCreator = { CommandOptions() },
+        programName = "test",
+        args,
+      )
     processor.process()
     return processor.cmd
   }
 
   @Test
   fun testExtension() {
-    val extensionScript = tempDir.resolve("extension-script.sh").apply {
-      this.writeText(
-        """#!/usr/bin/env bash
-        FILE=${'$'}1
-        FOLDER=${'$'}2
-        echo "hello" > ${'$'}{FOLDER}/result.txt
-        """.trimIndent(),
-      )
-      Util.setExecutable(this)
-    }
-    val extensionScriptResultFolder = tempDir.resolve("extension-script-result-folder").apply {
-      Files.createDirectory(this)
-    }
+    val extensionScript =
+      tempDir.resolve("extension-script.sh").apply {
+        this.writeText(
+          """
+          #!/usr/bin/env bash
+          FILE=${'$'}1
+          FOLDER=${'$'}2
+          echo "hello" > ${'$'}{FOLDER}/result.txt
+          """.trimIndent(),
+        )
+        Util.setExecutable(this)
+      }
+    val extensionScriptResultFolder =
+      tempDir.resolve("extension-script-result-folder").apply {
+        Files.createDirectory(this)
+      }
     for (
     options in listOf(
       commonOptionsForNormalFuzzing,
@@ -126,13 +164,14 @@ class SystemTest {
     )
     ) {
       extensionScriptResultFolder.resolve("result.txt").writeText("")
-      val cmd = options +
-        arrayOf(
-          "--extension-script",
-          extensionScript.toString(),
-          "--extension-result-folder",
-          extensionScriptResultFolder.toString(),
-        )
+      val cmd =
+        options +
+          arrayOf(
+            "--extension-script",
+            extensionScript.toString(),
+            "--extension-result-folder",
+            extensionScriptResultFolder.toString(),
+          )
       val main = Main(convertCmdObject(cmd))
       main.run()
       val result =

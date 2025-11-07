@@ -31,22 +31,24 @@ class NodeDeletionActionSetTest {
   private var node5 = tree.getNodeByTreeScanForId(5)
   private var node10 = tree.getNodeByTreeScanForId(10)
   private var node46 = tree.getNodeByTreeScanForId(46)
-  private var actionSet = run {
-    val builder = NodeDeletionActionSet.Builder("edit 1")
-    builder.deleteNode(node5!!)
-    builder.deleteNode(node10!!)
-    builder.build()
-  }.also {
-    assertThat(it.actionsDescription).isEqualTo("edit 1")
-  }
-  private var actionSet2 = run {
-    val builder = NodeDeletionActionSet.Builder("test 2")
-    builder.deleteNode(node10!!)
-    builder.deleteNode(node5!!)
-    builder.build()
-  }.also {
-    assertThat(it.actionsDescription).isEqualTo("test 2")
-  }
+  private var actionSet =
+    run {
+      val builder = NodeDeletionActionSet.Builder("edit 1")
+      builder.deleteNode(node5!!)
+      builder.deleteNode(node10!!)
+      builder.build()
+    }.also {
+      assertThat(it.actionsDescription).isEqualTo("edit 1")
+    }
+  private var actionSet2 =
+    run {
+      val builder = NodeDeletionActionSet.Builder("test 2")
+      builder.deleteNode(node10!!)
+      builder.deleteNode(node5!!)
+      builder.build()
+    }.also {
+      assertThat(it.actionsDescription).isEqualTo("test 2")
+    }
 
   @Test
   fun testContainsNodeAsTarget() {
@@ -58,13 +60,15 @@ class NodeDeletionActionSetTest {
   @Test
   fun testActionsAreSortedAndDistinct() {
     assertThat(
-      actionSet.actions.stream()
+      actionSet.actions
+        .stream()
         .map(NodeDeletionAction::targetNode)
         .collect(Collectors.toList()),
     ).containsExactly(node5, node10)
       .inOrder()
     assertThat(
-      actionSet2.actions.stream()
+      actionSet2.actions
+        .stream()
         .map(NodeDeletionAction::targetNode)
         .collect(Collectors.toList()),
     ).containsExactly(node5, node10)
@@ -85,10 +89,11 @@ class NodeDeletionActionSetTest {
 
   @Test
   fun testActionSetNotEqual() {
-    val other = createByDeleteSingleNode(
-      node5!!,
-      "",
-    )
+    val other =
+      createByDeleteSingleNode(
+        node5!!,
+        "",
+      )
     assertThat(actionSet).isNotEqualTo(other)
     assertThat(actionSet.hashCode()).isNotEqualTo(other.hashCode())
     assertThat(other.actionsDescription).isEqualTo("")

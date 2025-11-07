@@ -23,14 +23,13 @@ class RccMemLitQueryCache(
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<RccProgramEncoding, RccMemoryLitProgramEncoder>(
-  tokenizedProgram,
-  profiler,
-  configuration,
-) {
+    tokenizedProgram,
+    profiler,
+    configuration,
+  ) {
   override fun createEncoder(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ): RccMemoryLitProgramEncoder {
-    return RccMemoryLitProgramEncoder(baseProgram, profiler, enableCompression = true)
-  }
+  ): RccMemoryLitProgramEncoder =
+    RccMemoryLitProgramEncoder(baseProgram, profiler, enableCompression = true)
 }

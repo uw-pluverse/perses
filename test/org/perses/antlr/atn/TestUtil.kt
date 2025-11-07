@@ -23,7 +23,6 @@ import org.perses.antlr.atn.nfa.PersesTransitionAst
 import org.perses.antlr.atn.simulator.ast.AbstractASTSimulator
 
 object TestUtil {
-
   val dummyState = ATNDummyState(stateNumber = 1)
 
   fun createSimulatorForTransition(transition: Transition): AbstractASTSimulator<*> {
@@ -31,11 +30,8 @@ object TestUtil {
     return AbstractASTSimulator.create(ast)
   }
 
-  fun createAtomAst(char: Char): PersesTransitionAst {
-    return PersesTransitionAst(createAtomTransition(char))
-  }
+  fun createAtomAst(char: Char): PersesTransitionAst =
+    PersesTransitionAst(createAtomTransition(char))
 
-  fun createAtomTransition(char: Char): AtomTransition {
-    return AtomTransition(dummyState, char.code)
-  }
+  fun createAtomTransition(char: Char): AtomTransition = AtomTransition(dummyState, char.code)
 }

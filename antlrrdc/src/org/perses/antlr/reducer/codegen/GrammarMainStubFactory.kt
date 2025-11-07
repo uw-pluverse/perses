@@ -24,19 +24,17 @@ import java.nio.file.Path
 class GrammarMainStubFactory(
   val testPrograms: ImmutableList<Path>,
 ) : AbstractGrammarStubFactory() {
-
   override fun createStub(
     packageName: String,
     parserClassSimpleName: String,
     lexerClassSimpleName: String,
     startRuleName: String,
-  ): AbstractGrammarStub {
-    return GrammarMainStubTemplate(
+  ): AbstractGrammarStub =
+    GrammarMainStubTemplate(
       packageName,
       parserClassSimpleName,
       lexerClassSimpleName,
       startRuleName,
       testPrograms,
     )
-  }
 }

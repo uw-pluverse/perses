@@ -28,18 +28,17 @@ import org.perses.antlr.atn.simulator.AbstractSimulatorRegistry
 
 class TransitionSimulatorRegistry :
   AbstractSimulatorRegistry<Transition, AbstractAtnTransitionSimulator>() {
+  override fun createSimulatorFor(element: Transition): AbstractAtnTransitionSimulator =
+    Companion.createSimulatorFor(element)
 
-  override fun createSimulatorFor(element: Transition): AbstractAtnTransitionSimulator {
-    return Companion.createSimulatorFor(element)
-  }
-
-  fun simulate(element: Transition, decisionMaker: AbstractDecisionMaker): Char? {
-    return getOrCreateSimulatorFor(element).simulate(decisionMaker)
-  }
+  fun simulate(
+    element: Transition,
+    decisionMaker: AbstractDecisionMaker,
+  ): Char? = getOrCreateSimulatorFor(element).simulate(decisionMaker)
 
   companion object {
-    fun createSimulatorFor(element: Transition): AbstractAtnTransitionSimulator {
-      return when (element::class.java) {
+    fun createSimulatorFor(element: Transition): AbstractAtnTransitionSimulator =
+      when (element::class.java) {
         EpsilonTransition::class.java -> EpsilonTransitionSimulator
         AtomTransition::class.java -> AtomTransitionSimulator(element as AtomTransition)
         SetTransition::class.java -> SetTransitionSimulator(element as SetTransition)
@@ -48,6 +47,5 @@ class TransitionSimulatorRegistry :
         RangeTransition::class.java -> RangeTransitionSimulator(element as RangeTransition)
         else -> error("unhandled element ${element::class.java}, $element")
       }
-    }
   }
 }

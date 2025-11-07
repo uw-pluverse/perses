@@ -20,7 +20,6 @@ class PersesPlusAst(
   body: AbstractPersesRuleElement,
   isGreedy: Boolean,
 ) : AbstractPersesQuantifiedAst(body, isGreedy) {
-
   init {
     require(body !is PersesPlusAst)
   }
@@ -40,13 +39,11 @@ class PersesPlusAst(
 
   companion object {
     @JvmStatic
-    fun createGreedy(body: AbstractPersesRuleElement): PersesPlusAst {
-      return PersesPlusAst(body, isGreedy = true)
-    }
+    fun createGreedy(body: AbstractPersesRuleElement): PersesPlusAst =
+      PersesPlusAst(body, isGreedy = true)
 
     @JvmStatic
-    fun createNonGreedy(body: AbstractPersesRuleElement): PersesPlusAst {
-      return PersesPlusAst(body, isGreedy = false)
-    }
+    fun createNonGreedy(body: AbstractPersesRuleElement): PersesPlusAst =
+      PersesPlusAst(body, isGreedy = false)
   }
 }

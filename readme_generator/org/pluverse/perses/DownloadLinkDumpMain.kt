@@ -38,11 +38,12 @@ class DownloadLinkDumpMain(
     @Suppress("UNUSED_PARAMETER")
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { InputOutputOnlyCommandOptions() },
-        programName = DownloadLinkDumpMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { InputOutputOnlyCommandOptions() },
+          programName = DownloadLinkDumpMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }

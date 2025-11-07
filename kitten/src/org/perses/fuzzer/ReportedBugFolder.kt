@@ -18,8 +18,9 @@ package org.perses.fuzzer
 
 import java.io.File
 
-class ReportedBugFolder(root: File) : AbstractFlatCrashFolder(root) {
-
+class ReportedBugFolder(
+  root: File,
+) : AbstractFlatCrashFolder(root) {
   fun moveReportedCrashToThis(reportedInstance: CrashInstanceFolder) {
     require(reportedInstance.isReported()) {
       reportedInstance.folder
@@ -58,9 +59,7 @@ class ReportedBugFolder(root: File) : AbstractFlatCrashFolder(root) {
       .asSequence()
       .filter {
         it.info().bugResolution == CrashInstanceFolder.BugResolution.NEW
-      }
-      .filter {
+      }.filter {
         it.readCrashSignature() == crash.readCrashSignature()
-      }
-      .firstOrNull()
+      }.firstOrNull()
 }

@@ -16,13 +16,12 @@
  */
 package org.perses.util.ast
 
+import com.google.common.base.MoreObjects
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 
-abstract class AbstractCommonAst<Self : AbstractCommonAst<Self>> :
-  Comparable<Self> {
-
+abstract class AbstractCommonAst<Self : AbstractCommonAst<Self>> : Comparable<Self> {
   val sourceCode: String by lazy {
     val baos = ByteArrayOutputStream()
     PrintStream(baos, true, StandardCharsets.UTF_8.name()).use {
@@ -42,7 +41,11 @@ abstract class AbstractCommonAst<Self : AbstractCommonAst<Self>> :
 
   abstract val childCount: Int
 
-  abstract fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean)
+  abstract fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  )
 
   fun printTreeStructure(): String {
     val baos = ByteArrayOutputStream()
@@ -52,8 +55,12 @@ abstract class AbstractCommonAst<Self : AbstractCommonAst<Self>> :
     return baos.toString()
   }
 
-  fun printTreeStructure(stream: PrintStream, indent: Indent) {
-    indent.printIndent(stream)
+  fun printTreeStructure(
+    stream: PrintStream,
+    indent: Indent,
+  ) {
+    indent
+      .printIndent(stream)
       .append(javaClass.simpleName)
       .append(" ")
       .append(extraLabelForTreeStructurePrinting)
@@ -75,9 +82,9 @@ abstract class AbstractCommonAst<Self : AbstractCommonAst<Self>> :
     }
   }
 
-  override fun compareTo(other: Self): Int {
-    return sourceCode.compareTo(other.sourceCode)
-  }
+  override fun compareTo(other: Self): Int = sourceCode.compareTo(other.sourceCode)
+
+  override fun toString(): String = MoreObjects.toStringHelper(this).addValue(sourceCode).toString()
 
   companion object {
     @JvmStatic

@@ -16,23 +16,25 @@
  */
 package org.perses.listminimizer.xfs
 
-import org.perses.listminimizer.AbstractListInputMinimizer
-import org.perses.listminimizer.Configuration
+import org.perses.listminimizer.AbstractListMinimizer
+import org.perses.listminimizer.Candidate.DeletionOnly
+import org.perses.listminimizer.ElementWrapper
+import org.perses.listminimizer.LMPropertyTestResult
+import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.Partition
-import org.perses.listminimizer.PropertyTestResultWithPayload
 import org.perses.util.Util
 import org.perses.util.toImmutableList
 import java.util.LinkedList
 
 class DeltaDebugger<T : Any, PropertyPayload>(
-  arguments: Arguments<T, PropertyPayload>,
-) : AbstractListInputMinimizer<T, PropertyPayload>(arguments) {
-
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
+) : AbstractListMinimizer<T, PropertyPayload>(arguments) {
   override fun reduceNonEmptyInput() {
     val initialPartition = Partition(best)
-    var worklist = LinkedList<Partition<ElementWrapper<T>>>().apply {
-      addAll(initialPartition.splitEvently())
-    }
+    var worklist =
+      LinkedList<Partition<ElementWrapper<T>>>().apply {
+        addAll(initialPartition.splitEvently())
+      }
     while (worklist.isNotEmpty()) {
       var shouldContinue: Boolean
       do {
@@ -41,14 +43,9 @@ class DeltaDebugger<T : Any, PropertyPayload>(
         while (iterator.hasNext()) {
           val partition = iterator.next()
           val deletedInThisIteration = partition.asSequence().toImmutableList()
-          val testResult = testProperty(
-            Configuration(
-              currentBest = null,
-              candidate_ = null,
-              deleted_ = deletedInThisIteration,
-            ),
-          )
-          if (testResult !is PropertyTestResultWithPayload || testResult.result.isNotInteresting) {
+          val testResult =
+            testProperty(DeletionOnly(deleted_ = deletedInThisIteration))
+          if (testResult !is LMPropertyTestResult.Completed || testResult.result.isNotInteresting) {
             continue
           }
           val newBest = Util.computeDifference(best, deletedInThisIteration)

@@ -25,7 +25,6 @@ import java.io.PrintStream
 class PersesSequenceAst(
   val children: ImmutableList<AbstractPersesRuleElement>,
 ) : AbstractPersesRuleElement() {
-
   init {
     require(children.size > 1)
     for (child in children) {
@@ -51,11 +50,13 @@ class PersesSequenceAst(
 
   override fun createWithNewChildren(
     newChildren: List<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement {
-    return PersesSequenceAst(ImmutableList.copyOf(newChildren))
-  }
+  ): AbstractPersesRuleElement = PersesSequenceAst(ImmutableList.copyOf(newChildren))
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     var isFirst = true
     for (child in children) {
       if (isFirst) {
@@ -73,9 +74,7 @@ class PersesSequenceAst(
     }
   }
 
-  override fun getChild(index: Int): AbstractPersesRuleElement {
-    return children[index]
-  }
+  override fun getChild(index: Int): AbstractPersesRuleElement = children[index]
 
   val firstChild: AbstractPersesRuleElement
     get() = children[0]
@@ -89,12 +88,14 @@ class PersesSequenceAst(
   override val tag: AstTag
     get() = AstTag.SEQUENCE
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("code", sourceCode).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("code", sourceCode).toString()
 
   @JvmOverloads
-  fun subsequence(from: Int, toExcusive: Int = children.size): AbstractPersesRuleElement {
+  fun subsequence(
+    from: Int,
+    toExcusive: Int = children.size,
+  ): AbstractPersesRuleElement {
     val size = childCount
     require(from in 0 until size) { "Invalid index $from" }
     require(toExcusive in from..size) {
@@ -120,24 +121,24 @@ class PersesSequenceAst(
   fun deleteElements(
     toBeDeleted: Collection<AbstractPersesRuleElement?>,
   ): AbstractPersesRuleElement {
-    val remaining = children
-      .asSequence()
-      .filter { !toBeDeleted.contains(it) }
-      .toImmutableList()
+    val remaining =
+      children
+        .asSequence()
+        .filter { !toBeDeleted.contains(it) }
+        .toImmutableList()
     return SmartAstConstructor.createForSequence(remaining)
   }
 
   companion object {
-
     // TODO: need tests.
     @JvmStatic
     fun flatten(
       children: List<AbstractPersesRuleElement>,
-    ): ImmutableList<AbstractPersesRuleElement> {
-      return ImmutableList.builderWithExpectedSize<AbstractPersesRuleElement>(children.size)
+    ): ImmutableList<AbstractPersesRuleElement> =
+      ImmutableList
+        .builderWithExpectedSize<AbstractPersesRuleElement>(children.size)
         .apply { children.forEach { flatten(it, this) } }
         .build()
-    }
 
     private fun flatten(
       child: AbstractPersesRuleElement,

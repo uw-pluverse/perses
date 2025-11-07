@@ -20,8 +20,10 @@ import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 import java.nio.file.Paths
 
 object CrashDetectorHelper {
-
-  fun computeSignature(path: String, detector: AbstractCompilerCrashDetector): List<String> {
+  fun computeSignature(
+    path: String,
+    detector: AbstractCompilerCrashDetector,
+  ): List<String> {
     val file = Paths.get(path)
     val stderr = file.toFile().readLines()
     // Check raw signatures are in stderr

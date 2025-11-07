@@ -22,22 +22,22 @@ import org.perses.antlr.ast.PersesTerminalAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 class UsedRuleNameCollector : DefaultAstVisitor() {
-  private val _usedRules = LinkedHashSet<RuleNameHandle>()
-  private val _tokenReferences = LinkedHashSet<String>()
+  private val privateUsedRules = LinkedHashSet<RuleNameHandle>()
+  private val privateTokenReferences = LinkedHashSet<String>()
 
   val ruleReferences: Set<RuleNameHandle>
-    get() = _usedRules
+    get() = privateUsedRules
 
   val tokenReferences: Set<String>
-    get() = _tokenReferences
+    get() = privateTokenReferences
 
   override fun visit(ast: PersesRuleReferenceAst) {
-    _usedRules.add(ast.ruleNameHandle)
+    privateUsedRules.add(ast.ruleNameHandle)
   }
 
   override fun visit(ast: PersesTerminalAst) {
     if (ast.isTokenRef) {
-      _tokenReferences.add(ast.text)
+      privateTokenReferences.add(ast.text)
     }
   }
 }

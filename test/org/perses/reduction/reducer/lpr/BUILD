@@ -17,7 +17,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//test/org/perses:test_util",
     ],
 )
 
@@ -44,8 +43,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//test/org/perses:test_util",
-        "//test/org/perses/reduction:AbstractPersesReducerTest",
         "//test/org/perses/reduction:reducer_functional_test_base",
     ],
 )

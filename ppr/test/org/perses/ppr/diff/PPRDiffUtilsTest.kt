@@ -24,36 +24,41 @@ import com.github.gumtreediff.tree.Tree
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import com.google.common.truth.Truth.assertThat
-import org.antlr.v4.runtime.Token
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
+import org.perses.program.PersesTokenFactory
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.ListAlignment
 import org.perses.util.SimpleQueue
+import org.perses.util.transformToImmutableList
+import org.perses.util.transformToImmutableSet
 
 @RunWith(JUnit4::class)
 class PPRDiffUtilsTest {
-
   @Test
   fun testEqualizerToken() {
     val seedStr = "int a = 1;"
     val variantStr = "int a = 1 + 2;"
-    val seedProgram = TestUtility.createTokenizedProgramFromString(
-      seedStr,
-      LanguageC,
-    )
-    val variantProgram = TestUtility.createTokenizedProgramFromString(
-      variantStr,
-      LanguageC,
-    )
-    val listAlignment = ListAlignment.create(
-      seedProgram.tokens,
-      variantProgram.tokens,
-      PPRDiffUtils.EQUALIZER_TOKEN,
-    )
+    val seedProgram =
+      TestUtility.createTokenizedProgramFromString(
+        seedStr,
+        LanguageC,
+      )
+    val variantProgram =
+      TestUtility.createTokenizedProgramFromString(
+        variantStr,
+        LanguageC,
+      )
+    val listAlignment =
+      ListAlignment.create(
+        seedProgram.tokens.transformToImmutableList { it.asAntlrToken() },
+        variantProgram.tokens.transformToImmutableList { it.asAntlrToken() },
+        PPRDiffUtils.EQUALIZER_PERSES_TOKEN,
+      )
     assertThat(listAlignment.alignment).hasSize(7)
     assertThat(listAlignment.onlyInserts[0].revision!!.text).isEqualTo("+")
     assertThat(listAlignment.onlyInserts[1].revision!!.text).isEqualTo("2")
@@ -72,10 +77,11 @@ class PPRDiffUtilsTest {
       a++;
       }"""
 
-    val seedProgram = TestUtility.createTokenizedProgramFromString(
-      seedStr,
-      LanguageC,
-    )
+    val seedProgram =
+      TestUtility.createTokenizedProgramFromString(
+        seedStr,
+        LanguageC,
+      )
 
     val variantStr = """func() {
                      int a = 1;
@@ -83,28 +89,32 @@ class PPRDiffUtilsTest {
                      b++;
                      } """
 
-    val variantProgram = TestUtility.createTokenizedProgramFromString(
-      variantStr,
-      LanguageC,
-    )
-    val seedTokenLine = listOf(
-      seedProgram.tokens.subList(0, 4),
-      seedProgram.tokens.subList(4, 9),
-      seedProgram.tokens.subList(9, 12),
-      seedProgram.tokens.subList(12, 13),
-    )
-    val variantTokenLine = listOf(
-      variantProgram.tokens.subList(0, 4),
-      variantProgram.tokens.subList(4, 9),
-      variantProgram.tokens.subList(9, 14),
-      variantProgram.tokens.subList(14, 17),
-      variantProgram.tokens.subList(17, 18),
-    )
-    val listAlignment = ListAlignment.create(
-      seedTokenLine,
-      variantTokenLine,
-      PPRDiffUtils.EQUALIZER_LINE,
-    )
+    val variantProgram =
+      TestUtility.createTokenizedProgramFromString(
+        variantStr,
+        LanguageC,
+      )
+    val seedTokenLine =
+      listOf(
+        seedProgram.tokens.subList(0, 4),
+        seedProgram.tokens.subList(4, 9),
+        seedProgram.tokens.subList(9, 12),
+        seedProgram.tokens.subList(12, 13),
+      ).transformToImmutableList { it.transformToImmutableList { it.asAntlrToken() } }
+    val variantTokenLine =
+      listOf(
+        variantProgram.tokens.subList(0, 4),
+        variantProgram.tokens.subList(4, 9),
+        variantProgram.tokens.subList(9, 14),
+        variantProgram.tokens.subList(14, 17),
+        variantProgram.tokens.subList(17, 18),
+      ).transformToImmutableList { it.transformToImmutableList { it.asAntlrToken() } }
+    val listAlignment =
+      ListAlignment.create(
+        seedTokenLine,
+        variantTokenLine,
+        PPRDiffUtils.EQUALIZER_LINE,
+      )
     assertThat(listAlignment.alignment).hasSize(6)
     assertThat(listAlignment.onlyInserts[0].revision!![0].text).isEqualTo("int")
     assertThat(listAlignment.onlyInserts[0].revision!![1].text).isEqualTo("b")
@@ -136,10 +146,11 @@ class PPRDiffUtilsTest {
       int a = 1;
       a++;
       }"""
-    val sparTree = TestUtility.createSparTreeFromString(
-      seedStr,
-      LanguageC,
-    )
+    val sparTree =
+      TestUtility.createSparTreeFromString(
+        seedStr,
+        LanguageC,
+      )
     val treeContext = PPRDiffUtils.sparTreeNode2TreeContext(sparTree.realRoot).treeContext
 
     val mappingQueue = SimpleQueue<Pair<AbstractSparTreeNode, Tree>>()
@@ -153,7 +164,7 @@ class PPRDiffUtilsTest {
 
       var ruleName = sparTreeNode.ruleName
       if (sparTreeNode.childCount == 0) {
-        ruleName += sparTreeNode.beginToken!!.token.text
+        ruleName += sparTreeNode.beginToken!!.token.lexemeText
       }
       assertThat(ruleName).isEqualTo(treeContextNode.type.name)
 
@@ -172,10 +183,11 @@ class PPRDiffUtilsTest {
       int a = 1;
       a++;
       }"""
-    val sparTree = TestUtility.createSparTreeFromString(
-      seedStr,
-      LanguageC,
-    )
+    val sparTree =
+      TestUtility.createSparTreeFromString(
+        seedStr,
+        LanguageC,
+      )
     val treeContextInfo = PPRDiffUtils.sparTreeNode2TreeContext(sparTree.realRoot)
     val treeContext = treeContextInfo.treeContext
     val nodeMapping = treeContextInfo.nodeMapping
@@ -203,29 +215,36 @@ class PPRDiffUtilsTest {
   @Test
   fun testDifference() {
     val seedStr = "int a;"
-    val sparTreeSeed = TestUtility.createSparTreeFromString(
-      seedStr,
-      LanguageC,
-    )
+    val sparTreeSeed =
+      TestUtility.createSparTreeFromString(
+        seedStr,
+        LanguageC,
+      )
     val treeContextSeed = PPRDiffUtils.sparTreeNode2TreeContext(sparTreeSeed.realRoot).treeContext
 
     val variantStr = "int b;"
-    val sparTreeVariant = TestUtility.createSparTreeFromString(
-      variantStr,
-      LanguageC,
-    )
-    val treeContextVariant = PPRDiffUtils.sparTreeNode2TreeContext(
-      sparTreeVariant.realRoot,
-    ).treeContext
+    val sparTreeVariant =
+      TestUtility.createSparTreeFromString(
+        variantStr,
+        LanguageC,
+      )
+    val treeContextVariant =
+      PPRDiffUtils
+        .sparTreeNode2TreeContext(
+          sparTreeVariant.realRoot,
+        ).treeContext
 
     val commonStr = "int func();"
-    val sparTreeCommon = TestUtility.createSparTreeFromString(
-      commonStr,
-      LanguageC,
-    )
-    val treeContextCommon = PPRDiffUtils.sparTreeNode2TreeContext(
-      sparTreeCommon.realRoot,
-    ).treeContext
+    val sparTreeCommon =
+      TestUtility.createSparTreeFromString(
+        commonStr,
+        LanguageC,
+      )
+    val treeContextCommon =
+      PPRDiffUtils
+        .sparTreeNode2TreeContext(
+          sparTreeCommon.realRoot,
+        ).treeContext
 
     val seedNodesList = ImmutableList.Builder<Tree>()
     seedNodesList.add(treeContextSeed.root)
@@ -234,10 +253,11 @@ class PPRDiffUtilsTest {
     variantNodesList.add(treeContextVariant.root)
     variantNodesList.add(treeContextCommon.root)
 
-    val deduplicatedSeedList = PPRDiffUtils.difference(
-      seedNodesList.build(),
-      variantNodesList.build(),
-    )
+    val deduplicatedSeedList =
+      PPRDiffUtils.difference(
+        seedNodesList.build(),
+        variantNodesList.build(),
+      )
     assertThat(deduplicatedSeedList).hasSize(1)
     assertThat(deduplicatedSeedList.single().metrics.hash).isEqualTo(
       treeContextSeed.root.metrics.hash,
@@ -251,10 +271,11 @@ class PPRDiffUtilsTest {
       int a = 1;
       return a;
       }"""
-    val sparTreeSeed = TestUtility.createSparTreeFromString(
-      seedStr,
-      LanguageC,
-    )
+    val sparTreeSeed =
+      TestUtility.createSparTreeFromString(
+        seedStr,
+        LanguageC,
+      )
     val treeContextSeedInfo = PPRDiffUtils.sparTreeNode2TreeContext(sparTreeSeed.realRoot)
     val treeContextSeed = treeContextSeedInfo.treeContext
     val nodeMapping = treeContextSeedInfo.nodeMapping
@@ -263,13 +284,16 @@ class PPRDiffUtilsTest {
       """int main () {
       return a;
       }"""
-    val sparTreeVariant = TestUtility.createSparTreeFromString(
-      variantStr,
-      LanguageC,
-    )
-    val treeContextVariant = PPRDiffUtils.sparTreeNode2TreeContext(
-      sparTreeVariant.realRoot,
-    ).treeContext
+    val sparTreeVariant =
+      TestUtility.createSparTreeFromString(
+        variantStr,
+        LanguageC,
+      )
+    val treeContextVariant =
+      PPRDiffUtils
+        .sparTreeNode2TreeContext(
+          sparTreeVariant.realRoot,
+        ).treeContext
 
     // create and initialize matcher
     val matcher = Matchers.getInstance().getMatcherWithFallback(null)
@@ -284,31 +308,34 @@ class PPRDiffUtilsTest {
     // deduce edit script
     val editScript = SimplifiedChawatheScriptGenerator().computeActions(mappingStore)
 
-    val seedUnmappedNodes = PPRDiffUtils.extractUnmappedNodes(
-      treeContextSeed.root,
-      mappingStore,
-      editScript,
-    )
+    val seedUnmappedNodes =
+      PPRDiffUtils.extractUnmappedNodes(
+        treeContextSeed.root,
+        mappingStore,
+        editScript,
+      )
     assertThat(seedUnmappedNodes).hasSize(1)
-    val seedUnmappedSparTreeNode = PPRDiffUtils.treeContext2SparTreeNode(
-      seedUnmappedNodes.single(),
-      nodeMapping,
-    )
+    val seedUnmappedSparTreeNode =
+      PPRDiffUtils.treeContext2SparTreeNode(
+        seedUnmappedNodes.single(),
+        nodeMapping,
+      )
     assertThat(seedUnmappedSparTreeNode.updateLeafTokenCount()).isEqualTo(5)
   }
 
   @Test
   fun testSparTreeNode2Diff() {
     val tokensStr = "int a = 1;"
-    val sparTree = TestUtility.createSparTreeFromString(
-      tokensStr,
-      LanguageC,
-    )
+    val sparTree =
+      TestUtility.createSparTreeFromString(
+        tokensStr,
+        LanguageC,
+      )
     val tokenList = sparTree.programSnapshot.tokens
 
     // let's assume "int" is classified as diff
-    val tokenDiffSetBuilder = ImmutableSet.builder<Token>()
-    tokenDiffSetBuilder.add(tokenList[0])
+    val tokenDiffSetBuilder = ImmutableSet.builder<PersesTokenFactory.PersesAntlrToken>()
+    tokenDiffSetBuilder.add(tokenList[0].asAntlrToken())
 
     // build the map
     val node2Diff = mutableMapOf<AbstractSparTreeNode, Boolean>()
@@ -317,7 +344,10 @@ class PPRDiffUtilsTest {
     // check diff flag of each node
     node2Diff.forEach { (node, isDiff) ->
       if (node.updateLeafTokenCount() == 1 &&
-        node.beginToken?.token?.text.equals("int")
+        node.beginToken
+          ?.token
+          ?.lexemeText
+          .equals("int")
       ) {
         assertThat(isDiff).isEqualTo(true)
       } else {
@@ -334,23 +364,25 @@ class PPRDiffUtilsTest {
       double b = 2;
       return a;
       }"""
-    val sparTree = TestUtility.createSparTreeFromString(
-      tokensStr,
-      LanguageC,
-    )
+    val sparTree =
+      TestUtility.createSparTreeFromString(
+        tokensStr,
+        LanguageC,
+      )
     val tokenList = sparTree.programSnapshot.tokens
 
     // let's assume "a = 1" and "b" are classified as diff by line-diff
-    val tokenDiffSetBuilder = ImmutableSet.builder<Token>()
+    val tokenDiffSetBuilder = ImmutableSet.builder<AbstractPersesToken>()
     tokenDiffSetBuilder.add(tokenList[6])
     tokenDiffSetBuilder.add(tokenList[7])
     tokenDiffSetBuilder.add(tokenList[8])
     tokenDiffSetBuilder.add(tokenList[11])
 
-    val realDiffNodes = PPRDiffUtils.computeRealDiffNodes(
-      ImmutableList.of(sparTree.realRoot),
-      tokenDiffSetBuilder.build(),
-    )
+    val realDiffNodes =
+      PPRDiffUtils.computeRealDiffNodes(
+        ImmutableList.of(sparTree.realRoot),
+        tokenDiffSetBuilder.build().transformToImmutableSet { it.asAntlrToken() },
+      )
 
     assertThat(realDiffNodes).hasSize(2)
     assertThat(realDiffNodes[0].updateLeafTokenCount()).isEqualTo(3)
@@ -363,23 +395,25 @@ class PPRDiffUtilsTest {
                  int a = 1;
                  a++;
                  } """
-    val seedProgram = TestUtility.createTokenizedProgramFromString(
-      seedStr,
-      LanguageC,
-    )
+    val seedProgram =
+      TestUtility.createTokenizedProgramFromString(
+        seedStr,
+        LanguageC,
+      )
 
     val variantStr = """func() {
                      int a = 1;
                      int b = 2;
                      b++;
                      } """
-    val variantProgram = TestUtility.createTokenizedProgramFromString(
-      variantStr,
-      LanguageC,
-    )
+    val variantProgram =
+      TestUtility.createTokenizedProgramFromString(
+        variantStr,
+        LanguageC,
+      )
 
-    val seedTokens = seedProgram.tokens
-    val variantTokens = variantProgram.tokens
+    val seedTokens = seedProgram.tokens.transformToImmutableList { it.asAntlrToken() }
+    val variantTokens = variantProgram.tokens.transformToImmutableList { it.asAntlrToken() }
     val tokenDiffSet = PPRDiffUtils.computeTokenDiffSetByLine(seedTokens, variantTokens)
 
     var idx = 0
@@ -407,28 +441,31 @@ class PPRDiffUtilsTest {
 
   @Test
   fun testComputeRealDiffNodesOnBothTrees() {
-    val seedSparTree = TestUtility.createSparTreeFromString(
-      """func() {
+    val seedSparTree =
+      TestUtility.createSparTreeFromString(
+        """func() {
        int a = 1;
        add(1, 2);
        a++;
        } """,
-      LanguageC,
-    )
+        LanguageC,
+      )
 
-    val variantSparTree = TestUtility.createSparTreeFromString(
-      """func() {
+    val variantSparTree =
+      TestUtility.createSparTreeFromString(
+        """func() {
        int a = 1;
        int b = 2;
        a++;
        } """,
-      LanguageC,
-    )
+        LanguageC,
+      )
 
-    val realDiffNodesOnBothTrees = PPRDiffUtils.computeRealDiffNodesOnBothTrees(
-      seedSparTree,
-      variantSparTree,
-    )
+    val realDiffNodesOnBothTrees =
+      PPRDiffUtils.computeRealDiffNodesOnBothTrees(
+        seedSparTree,
+        variantSparTree,
+      )
     val realDiffNodesOnSeed = realDiffNodesOnBothTrees.diffNodesOnSeed
     val realDiffNodesOnVariant = realDiffNodesOnBothTrees.diffNodesOnVariant
     assertThat(realDiffNodesOnSeed).hasSize(1)
@@ -441,23 +478,23 @@ class PPRDiffUtilsTest {
     assertThat(diffNodeOnVariant.updateLeafTokenCount()).isEqualTo(5)
 
     val resultListOnSeed = mutableListOf<String>()
-    diffNodeOnSeed.postOrderVisit {
-        node ->
+    diffNodeOnSeed.postOrderVisit { node ->
       if (node.isTokenNode()) {
-        resultListOnSeed.add(node.asLexerRule().token.text)
+        resultListOnSeed.add(node.asLexerRule().token.lexemeText)
       }
     }
     assertThat(resultListOnSeed)
-      .containsExactly("add", "(", "1", ",", "2", ")", ";").inOrder()
+      .containsExactly("add", "(", "1", ",", "2", ")", ";")
+      .inOrder()
 
     val resultListOnVariant = mutableListOf<String>()
-    diffNodeOnVariant.postOrderVisit {
-        node ->
+    diffNodeOnVariant.postOrderVisit { node ->
       if (node.isTokenNode()) {
-        resultListOnVariant.add(node.asLexerRule().token.text)
+        resultListOnVariant.add(node.asLexerRule().token.lexemeText)
       }
     }
     assertThat(resultListOnVariant)
-      .containsExactly("int", "b", "=", "2", ";").inOrder()
+      .containsExactly("int", "b", "=", "2", ";")
+      .inOrder()
   }
 }

@@ -22,7 +22,6 @@ import java.nio.file.Path
 import kotlin.io.path.writeText
 
 abstract class AbstractBashScriptGenerator {
-
   fun writeTo(path: Path): ScriptFile {
     val lines = ArrayList<String>()
     lines.add(Shells.SHEBANG_BASH)

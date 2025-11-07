@@ -16,7 +16,7 @@
  */
 package org.perses.program.printer
 
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
 import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
@@ -27,12 +27,11 @@ abstract class AbstractOrigFormatVisitor(
   protected val tokenPositionProvider: AbstractTokenPositionProvider,
   protected val tokenPlacementListener: AbstractTokenPlacementListener?,
 ) {
+  abstract fun isControlToken(token: PersesTokenFactory.AbstractPersesToken): Boolean
 
-  abstract fun isControlToken(token: PersesToken): Boolean
+  abstract fun visitControlToken(token: PersesTokenFactory.AbstractPersesToken)
 
-  abstract fun visitControlToken(token: PersesToken)
-
-  abstract fun visitLine(line: List<PersesToken>)
+  abstract fun visitLine(line: List<PersesTokenFactory.AbstractPersesToken>)
 
   protected open fun onVisitEnd() {}
 
@@ -42,7 +41,7 @@ abstract class AbstractOrigFormatVisitor(
     val tokens = program.tokens
     val tokenCount = tokens.size
     var currentLineNumber = 1
-    val currentLine = ArrayList<PersesToken>()
+    val currentLine = ArrayList<PersesTokenFactory.AbstractPersesToken>()
 
     for (i in 0..tokenCount) {
       if (i == tokenCount) {
@@ -57,10 +56,16 @@ abstract class AbstractOrigFormatVisitor(
         currentLine.clear()
         continue
       }
-      val lineNo = tokenPositionProvider.getLine(token)
-      if (currentLineNumber >= lineNo) {
+      val lineNo =
+        if (token is PersesTokenFactory.PersesAntlrToken) {
+          tokenPositionProvider.getLine(token)
+        } else {
+          currentLineNumber
+        }
+      if (currentLineNumber == lineNo) {
         /*
-         * A token might be on a lower lines due to token insertion. Just be permissive.
+         * A token might be on a lower lines due to token insertion. Then we do not assume it is
+         * on the current line, but assume it starts a new line.
          */
         currentLine.add(token)
       } else {

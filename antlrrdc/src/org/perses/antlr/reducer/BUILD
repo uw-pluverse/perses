@@ -13,6 +13,7 @@ kt_jvm_library(
         "//:jcommander",
         "//src/org/perses/util:default_logging_configurations",
         "//src/org/perses/util/cmd",
+        "//src/org/perses/util/hashing",
         "//version/org/perses/version",
     ],
 )
@@ -31,6 +32,7 @@ kt_jvm_library(
         "GrammarReductionDriver.kt",
     ],
     deps = [
+        ":command_options",
         ":language_kind",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlrrdc/src/org/perses/antlr/reducer/io",

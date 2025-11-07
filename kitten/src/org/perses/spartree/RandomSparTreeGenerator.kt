@@ -42,7 +42,6 @@ class RandomSparTreeGenerator(
   parserFacade: AbstractParserFacade,
   random: Random,
 ) : AbstractSparTreeGenerator(parserFacade, random) {
-
   override fun internalGenerateParserRuleSparTreeNodeWithMaxDepth(
     ruleNameHandle: RuleNameHandle,
     maxDepth: Int,
@@ -114,9 +113,10 @@ class RandomSparTreeGenerator(
       }
       is PersesRuleReferenceAst -> {
         val ruleNameHandle = ruleBody.ruleNameHandle
-        val antlrRule = grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(
-          ruleNameHandle.ruleName,
-        )
+        val antlrRule =
+          grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(
+            ruleNameHandle.ruleName,
+          )
         val generatedNode = ParserRuleSparTreeNode(startNodeId++, antlrRule)
         node.addChild(generatedNode, AbstractNodePayload.SinglePayload(generatedNode.antlrRule))
         queue.add(generatedNode)
@@ -132,9 +132,10 @@ class RandomSparTreeGenerator(
     maxDepth: Int,
   ): AbstractPersesRuleElement {
     // Rule out alternatives whose minDepth is larger than the maxDepth
-    val filteredAlternatives = ruleBody.alternatives.filter {
-      ruleGenerationInfo.getMinDepth(it) <= maxDepth
-    }
+    val filteredAlternatives =
+      ruleBody.alternatives.filter {
+        ruleGenerationInfo.getMinDepth(it) <= maxDepth
+      }
     if (filteredAlternatives.isEmpty()) {
       throw Exception("The maxDepth is set too small")
     }

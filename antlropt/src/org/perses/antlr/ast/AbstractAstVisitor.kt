@@ -20,7 +20,6 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.util.exhaustive
 
 abstract class AbstractAstVisitor {
-
   fun postorder(ast: AbstractPersesRuleElement) {
     ast.foreachChildRuleElement { postorder(it) }
     dispatch(ast)
@@ -31,9 +30,7 @@ abstract class AbstractAstVisitor {
     ast.foreachChild { preorder(it) }
   }
 
-  fun preorderGrammar(
-    rules: Iterable<Map.Entry<RuleNameHandle, AbstractPersesRuleElement>>,
-  ) {
+  fun preorderGrammar(rules: Iterable<Map.Entry<RuleNameHandle, AbstractPersesRuleElement>>) {
     for ((_, value) in rules) {
       preorder(value)
     }
@@ -68,30 +65,52 @@ abstract class AbstractAstVisitor {
       AstTag.LEXER_RANGE_OPERATOR -> visit(ast as PersesRangeAst)
       AstTag.RULE_ELEMENT_OPTION -> visit(ast as PersesRuleElementOption)
       AstTag.RULE_ELEMENT_LABEL -> visit(ast as PersesRuleElementLabel)
+      AstTag.UNDEFINED -> visit(ast as PersesUndefinedRuleElement)
       else -> visitOthers(ast)
     }.exhaustive
   }
 
   protected abstract fun visit(ast: PersesTokenSetAst)
+
   protected abstract fun visit(ast: PersesTerminalAst)
+
   protected abstract fun visit(ast: PersesSequenceAst)
+
   protected abstract fun visit(ast: PersesPlusAst)
+
   protected abstract fun visit(ast: PersesStarAst)
+
   protected abstract fun visit(ast: PersesOptionalAst)
+
   protected abstract fun visit(ast: PersesNotAst)
+
   protected abstract fun visit(ast: PersesLexerCommandAst)
+
   protected abstract fun visit(ast: PersesLexerCharSet)
+
   protected abstract fun visit(ast: PersesEpsilonAst)
+
   protected abstract fun visit(ast: PersesAlternativeBlockAst)
+
   protected abstract fun visit(ast: PersesActionAst)
+
   protected abstract fun visit(ast: PersesRuleElementOption)
+
   protected abstract fun visit(ast: PersesFragmentLexerRuleAst)
+
   protected abstract fun visit(ast: PersesParserRuleAst)
+
   protected abstract fun visit(ast: PersesLexerRuleAst)
+
   protected abstract fun visit(ast: PersesRuleReferenceAst)
+
   protected abstract fun visit(ast: PersesGrammar)
+
   protected abstract fun visit(ast: PersesRuleElementLabel)
+
   protected abstract fun visit(ast: PersesRangeAst)
+
+  protected abstract fun visit(ast: PersesUndefinedRuleElement)
 
   protected open fun visitOthers(ast: AbstractPersesAst) {
     error("Unhandled type: $ast")

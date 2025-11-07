@@ -16,7 +16,7 @@ sanity_test(
     test_script = "format_sensitive_r.sh",
 )
 
-LOG_FILE = "reduction_golden_test.log"
+LOG_FILE = "stdout_for_reduction_golden_test.txt"
 
 reduction_golden_test(
     name = "reduction_golden_test",
@@ -25,8 +25,11 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_t.c",
     log_file = LOG_FILE,
+    other_flags = {
+        "--hide-timestamps": "true",
+    },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.c",
     test_script = "r.sh",
 )
@@ -39,7 +42,7 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_progress_with_fake_dependency.txt",
     golden_reduced_file = "golden_reduced_t.c",
     progress_dump_file = "reduction_progress_with_fake_dependency.txt",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.c",
     test_script = "r.sh",
 )
@@ -53,7 +56,35 @@ reduction_golden_test(
     other_flags = {
         "--lang": "c",
     },
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
+    source_file = "t.unknown_language",
+    test_script = "r_with_language_specified.sh",
+)
+
+reduction_golden_test(
+    name = "reduction_golden_test_with_brace_dyck_parser_facade",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_reduction_progress_with_brace_dyck_parser_facade.txt",
+    golden_reduced_file = "golden_reduced_t_with_brace_dyck_parser_facade.c",
+    other_flags = {
+        "--parser-facade-class-name": "org.perses.grammar.dyck.BraceDyckParserFacade",
+    },
+    source_file = "t.c",
+    test_script = "r.sh",
+)
+
+reduction_golden_test(
+    name = "reduction_golden_test_in_fully_deterministic_mode",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_reduction_golden_test_in_fully_deterministic_mode_progress.txt",
+    golden_reduced_file = "golden_reduction_golden_test_in_fully_deterministic_mode_reduced.txt",
+    other_flags = {
+        "--lang": "c",
+        "--fully-deterministic-mode": "true",
+    },
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.unknown_language",
     test_script = "r_with_language_specified.sh",
 )
@@ -129,7 +160,7 @@ reduction_golden_test(
         "--enable-token-slicer": "true",
     },
     progress_dump_file = "grep_based_reduction_progress.txt",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.c",
     test_script = "grep_based_r.sh",
 )
@@ -152,13 +183,30 @@ reduction_golden_test(
     test_script = "grep_based_r.sh",
 )
 
+reduction_golden_test(
+    name = "golden_reduction_test_sequential_line_slicer",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_sequential_line_slicer_progress.txt",
+    golden_reduced_file = "golden_sequential_line_slicer_reduced_t.c",
+    reduction_algorithm = "sequential_line_slicer",
+    source_file = "t.c",
+    test_script = "grep_based_r.sh",
+)
+
 sh_test(
     name = "check_fixpoint_iterations_are_printed",
     srcs = ["reduction_log_test.sh"],
     args = [
-        "$(location reduction_golden_test.log)",
+        "$(location %s)" % LOG_FILE,
     ],
-    data = ["reduction_golden_test.log"],
+    data = [LOG_FILE],
+)
+
+golden_test(
+    name = "reduction_stdout_log_golden_test",
+    golden_file = "golden_stdout_log.txt",
+    test_file = LOG_FILE,
 )
 
 reduction_golden_test(
@@ -174,15 +222,55 @@ reduction_golden_test(
 )
 
 reduction_golden_test(
+    name = "reduction_sequential_token_slicer_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_sequential_token_slicer.txt",
+    golden_reduced_file = "golden_reduced_sequential_token_slicer_t.c",
+    reduction_algorithm = "token_slicer",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 3,
+)
+
+reduction_golden_test(
     name = "reduction_using_pristine_ddmin_for_reducing_kleene_test",
     enable_edit_caching = True,
     enable_query_caching = True,
     golden_progress_file = "golden_reduction_using_pristine_ddmin_for_reducing_kleene_progress.txt",
     golden_reduced_file = "golden_reduced_pristine_ddmin_t.c",
     other_flags = {
-        "--default-delta-debugger-for-kleene": "PRISTINE",
+        "--default-list-minimizer-for-kleene": "PRISTINE_DDMIN",
     },
     progress_dump_file = "reduction_using_pristine_ddmin_for_reducing_kleene_progress.txt",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 1,
+)
+
+reduction_golden_test(
+    name = "reduction_using_local_exhaust_minimizer_for_reducing_kleene_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_reduction_using_local_exhaust_minimizer_for_reducing_kleene_progress.txt",
+    golden_reduced_file = "golden_reduced_local_exhaust_minimizer_t.c",
+    other_flags = {
+        "--default-list-minimizer-for-kleene": "LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION",
+    },
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 1,
+)
+
+reduction_golden_test(
+    name = "reduction_using_windowed_slicer_for_reducing_kleene_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_reduction_using_windowed_slicer_for_reducing_kleene_progress.txt",
+    golden_reduced_file = "golden_reduced_windowed_slicer_t.c",
+    other_flags = {
+        "--default-list-minimizer-for-kleene": "WINDOWED_SLICER",
+    },
     source_file = "t.c",
     test_script = "r.sh",
     thread_count = 1,
@@ -197,7 +285,7 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_using_cdd_for_reducing_kleene_progress.txt",
     golden_reduced_file = "golden_reduced_cdd_t.c",
     other_flags = {
-        "--default-delta-debugger-for-kleene": "CDD",
+        "--default-list-minimizer-for-kleene": "CDD",
     },
     progress_dump_file = "reduction_using_cdd_for_reducing_kleene_progress.txt",
     source_file = "t.c",
@@ -214,7 +302,7 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_using_wdd_for_reducing_kleene_progress.txt",
     golden_reduced_file = "golden_reduced_wdd_t.c",
     other_flags = {
-        "--default-delta-debugger-for-kleene": "WDD",
+        "--default-list-minimizer-for-kleene": "WDD",
     },
     progress_dump_file = "reduction_using_wdd_for_reducing_kleene_progress.txt",
     source_file = "t.c",
@@ -231,9 +319,21 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_using_wprobdd_for_reducing_kleene_progress.txt",
     golden_reduced_file = "golden_reduced_wprobdd_t.c",
     other_flags = {
-        "--default-delta-debugger-for-kleene": "WPROBDD",
+        "--default-list-minimizer-for-kleene": "WPROBDD",
     },
     progress_dump_file = "reduction_using_wprobdd_for_reducing_kleene_progress.txt",
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 1,
+)
+
+reduction_golden_test(
+    name = "reduction_golden_test_hdd",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_reduction_hdd_progress.txt",
+    golden_reduced_file = "golden_reduced_hdd_t.c",
+    reduction_algorithm = "hdd",
     source_file = "t.c",
     test_script = "r.sh",
     thread_count = 1,
@@ -248,7 +348,7 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_using_probdd_for_reducing_kleene_progress.txt",
     golden_reduced_file = "golden_reduced_probdd_t.c",
     other_flags = {
-        "--default-delta-debugger-for-kleene": "PROBDD",
+        "--default-list-minimizer-for-kleene": "PROBDD",
     },
     progress_dump_file = "reduction_using_probdd_for_reducing_kleene_progress.txt",
     source_file = "t.c",
@@ -292,6 +392,20 @@ reduction_golden_test(
     thread_count = 1,
 )
 
+reduction_golden_test(
+    name = "reduction_with_designated_parser_facade_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_with_designated_parser_facade_reduced_progress.txt",
+    golden_reduced_file = "golden_with_designated_parser_facade_reduced_t.c",
+    other_flags = {
+        "--parser-facade-class-name": "org.perses.grammar.c.CParserFacade",
+    },
+    source_file = "t.c",
+    test_script = "r.sh",
+    thread_count = 1,
+)
+
 sh_test(
     name = "token_slicer_log_should_print_the_correct_total_token_count",
     srcs = ["token_slicer_log_test.sh"],
@@ -313,7 +427,7 @@ reduce(
     enable_edit_caching = True,
     enable_query_caching = True,
     output_dir = output_dir_reduce_with_formatter,
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.c",
     test_script = "r.sh",
 )

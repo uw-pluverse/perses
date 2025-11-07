@@ -21,9 +21,14 @@ import org.antlr.v4.tool.ast.GrammarAST
 import org.perses.util.ast.Indent
 import java.io.PrintStream
 
-class PersesLexerCharSet(val text: String) : AbstractPersesTerminalAst() {
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+class PersesLexerCharSet(
+  val text: String,
+) : AbstractPersesTerminalAst() {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.print(text)
   }
 
@@ -43,8 +48,6 @@ class PersesLexerCharSet(val text: String) : AbstractPersesTerminalAst() {
 
   companion object {
     @JvmStatic
-    fun isLexerCharSet(ast: GrammarAST): Boolean {
-      return ast.getToken().type == ANTLRLexer.LEXER_CHAR_SET
-    }
+    fun isLexerCharSet(ast: GrammarAST): Boolean = ast.getToken().type == ANTLRLexer.LEXER_CHAR_SET
   }
 }

@@ -28,67 +28,73 @@ import java.lang.IllegalArgumentException
 
 @RunWith(JUnit4::class)
 class AbstractProgramReductionDriverTest {
-
   @Test
   fun testCachingShouldBeDisabledIfVulcanIsEnabled() {
     EnumFormatControl.entries.forEach { format ->
-      AbstractProgramReductionDriver.computeWhetherToEnableQueryCaching(
-        EnumQueryCachingControl.AUTO,
-        format,
-        vulcanEnabled = true,
-      ).let {
-        assertThat(it).isFalse()
-      }
+      AbstractProgramReductionDriver
+        .computeWhetherToEnableQueryCaching(
+          EnumQueryCachingControl.AUTO,
+          format,
+          vulcanEnabled = true,
+        ).let {
+          assertThat(it).isFalse()
+        }
     }
   }
 
   @Test
   fun testComputeQueryCacheType() {
-    AbstractProgramReductionDriver.computeQueryCacheType(
-      QueryCacheType.AUTO,
-      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-    ).let {
-      assertThat(it).isEqualTo(QueryCacheType.COMPACT_QUERY_CACHE)
-    }
-
-    AbstractProgramReductionDriver.computeQueryCacheType(
-      QueryCacheType.AUTO,
-      EnumFormatControl.ORIG_FORMAT,
-    ).let {
-      assertThat(it).isEqualTo(QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE)
-    }
-
-    AbstractProgramReductionDriver.computeQueryCacheType(
-      QueryCacheType.AUTO,
-      EnumFormatControl.COMPACT_ORIG_FORMAT,
-    ).let {
-      assertThat(it).isEqualTo(QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE)
-    }
-
-    AbstractProgramReductionDriver.computeQueryCacheType(
-      QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE,
-      EnumFormatControl.COMPACT_ORIG_FORMAT,
-    ).let {
-      assertThat(it).isEqualTo(QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE)
-    }
-
-    AbstractProgramReductionDriver.computeQueryCacheType(
-      QueryCacheType.CONTENT_SHA512,
-      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-    ).let {
-      assertThat(it).isEqualTo(QueryCacheType.CONTENT_SHA512)
-    }
-
-    Assert.assertThrows(IllegalArgumentException::class.java) {
-      AbstractProgramReductionDriver.computeQueryCacheType(
-        QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE,
+    AbstractProgramReductionDriver
+      .computeQueryCacheType(
+        QueryCacheType.AUTO,
         EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-      )
-    }.let {
-      assertThat(it.message).isEqualTo(
-        "Cache type ${QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE} " +
-          "is not compatible with the code format ${EnumFormatControl.SINGLE_TOKEN_PER_LINE}",
-      )
-    }
+      ).let {
+        assertThat(it).isEqualTo(QueryCacheType.COMPACT_QUERY_CACHE)
+      }
+
+    AbstractProgramReductionDriver
+      .computeQueryCacheType(
+        QueryCacheType.AUTO,
+        EnumFormatControl.ORIG_FORMAT,
+      ).let {
+        assertThat(it).isEqualTo(QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE)
+      }
+
+    AbstractProgramReductionDriver
+      .computeQueryCacheType(
+        QueryCacheType.AUTO,
+        EnumFormatControl.COMPACT_ORIG_FORMAT,
+      ).let {
+        assertThat(it).isEqualTo(QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE)
+      }
+
+    AbstractProgramReductionDriver
+      .computeQueryCacheType(
+        QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE,
+        EnumFormatControl.COMPACT_ORIG_FORMAT,
+      ).let {
+        assertThat(it).isEqualTo(QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE)
+      }
+
+    AbstractProgramReductionDriver
+      .computeQueryCacheType(
+        QueryCacheType.CONTENT_SHA_HASH,
+        EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+      ).let {
+        assertThat(it).isEqualTo(QueryCacheType.CONTENT_SHA_HASH)
+      }
+
+    Assert
+      .assertThrows(IllegalArgumentException::class.java) {
+        AbstractProgramReductionDriver.computeQueryCacheType(
+          QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE,
+          EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+        )
+      }.let {
+        assertThat(it.message).isEqualTo(
+          "Cache type ${QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE} " +
+            "is not compatible with the code format ${EnumFormatControl.SINGLE_TOKEN_PER_LINE}",
+        )
+      }
   }
 }

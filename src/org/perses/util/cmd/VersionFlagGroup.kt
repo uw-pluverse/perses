@@ -21,7 +21,6 @@ import org.perses.version.VersionHelper
 import java.io.PrintStream
 
 class VersionFlagGroup : AbstractCommandLineFlagGroup(groupName = "Version") {
-
   @JvmField
   @Parameter(
     names = ["--version"],
@@ -33,7 +32,10 @@ class VersionFlagGroup : AbstractCommandLineFlagGroup(groupName = "Version") {
 
   override fun validate() = Unit
 
-  fun printVersionInfo(programName: String, stream: PrintStream) {
+  fun printVersionInfo(
+    programName: String,
+    stream: PrintStream,
+  ) {
     VersionHelper.printVersionInfo(programName, stream)
   }
 }

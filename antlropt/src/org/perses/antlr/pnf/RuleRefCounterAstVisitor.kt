@@ -24,7 +24,6 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 class RuleRefCounterAstVisitor(
   private val target: RuleNameHandle,
 ) : DefaultAstVisitor() {
-
   var count = 0
     private set
 
@@ -36,7 +35,10 @@ class RuleRefCounterAstVisitor(
 
   companion object {
     @JvmStatic
-    fun countRuleRefences(target: RuleNameHandle, ast: AbstractPersesRuleElement): Int {
+    fun countRuleRefences(
+      target: RuleNameHandle,
+      ast: AbstractPersesRuleElement,
+    ): Int {
       val counter = RuleRefCounterAstVisitor(target)
       counter.preorder(ast)
       return counter.count

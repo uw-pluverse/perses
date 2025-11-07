@@ -29,7 +29,6 @@ import kotlin.io.path.bufferedWriter
 class SupportedLanguageDumpMain(
   cmd: OutputOnlyCommandOptions,
 ) : org.perses.util.cmd.AbstractMain<OutputOnlyCommandOptions>(cmd) {
-
   override fun internalRun() {
     val supportedLanguages = getActuallySupportedLanguages()
     val outputFile = cmd.flags.outputFile!!.absolute()
@@ -51,15 +50,13 @@ class SupportedLanguageDumpMain(
   }
 
   companion object {
-
-    fun getActuallySupportedLanguages(): ImmutableList<String> {
-      return AbstractMain
+    fun getActuallySupportedLanguages(): ImmutableList<String> =
+      AbstractMain
         .createBuiltinParserFacadeFactory()
         .languageSequence()
         .map { languageToString(it) }
         .sorted()
         .toImmutableList()
-    }
 
     private fun languageToString(language: LanguageKind): String {
       val extensions = language.extensions.joinToString(separator = ", ") { "`*.$it`" }
@@ -68,11 +65,12 @@ class SupportedLanguageDumpMain(
 
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { OutputOnlyCommandOptions() },
-        programName = SupportedLanguageDumpMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { OutputOnlyCommandOptions() },
+          programName = SupportedLanguageDumpMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }

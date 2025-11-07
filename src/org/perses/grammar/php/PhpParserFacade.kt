@@ -20,22 +20,23 @@ import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.CommonTokenStream
 import org.perses.antlr.ParseTreeWithParser
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 import java.io.StringReader
 
-class PhpParserFacade : AbstractDefaultParserFacade<PhpLexer, PnfPhpParser>(
-  languageKind = LanguagePhp,
-  antlrGrammar = createSeparateAntlrGrammar(
-    startRuleName = "htmlDocument",
-    antlrParserGrammarFileName = "PnfPhpParser.g4",
-    antlrLexerGrammarFileName = "PhpLexer.g4",
-    classUnderSamePkg = PhpParserFacade::class.java,
-  ),
-  lexerClass = PhpLexer::class.java,
-  parserClass = PnfPhpParser::class.java,
-  identifierTokenTypes = ImmutableIntArray.of(PhpLexer.VarName),
-) {
-
+class PhpParserFacade :
+  AbstractParserFacade(
+    language = LanguagePhp,
+    antlrGrammar =
+      createSeparateAntlrGrammar(
+        startRuleName = "htmlDocument",
+        antlrParserGrammarFileName = "PnfPhpParser.g4",
+        antlrLexerGrammarFileName = "PhpLexer.g4",
+        classUnderSamePkg = PhpParserFacade::class.java,
+      ),
+    identifierTokenTypes = ImmutableIntArray.of(PhpLexer.VarName),
+    lexerClass = PhpLexer::class.java,
+    parserClass = PnfPhpParser::class.java,
+  ) {
   fun parseWithOrigParser(program: String?): ParseTreeWithParser {
     StringReader(program).use { reader ->
       return parseReader(

@@ -17,13 +17,13 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
+import org.perses.util.Util
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.jar.JarFile
 
 class LanguageControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Language Control") {
-
   @JvmField
   @Parameter(
     names = ["--lang"],
@@ -72,12 +72,35 @@ class LanguageControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Langu
   )
   var languageJarFiles: List<Path> = listOf()
 
+  @JvmField
+  @Parameter(
+    names = ["--underlying-lexer-class-for-dyck"],
+    required = false,
+    description = "The class of the underlying lexer class to be used for a dyck parser.",
+    hidden = true,
+    order = 4000,
+  )
+  var underlyingLexerClassForDyckParser: String = ""
+
   override fun validate() {
     languageJarFiles.forEach {
       check(Files.isRegularFile(it))
       JarFile(it.toFile()).use {
-        /*to validate and close this file*/
+        // to validate and close this file
       }
+    }
+    check(languageName.isEmpty() || designatedParserFacadeClassName.isEmpty()) {
+      "The language name and the parser facade class cannot be set at the same time."
+    }
+    check(!Util.hasWhitespace(languageName)) {
+      "The language '$languageName' has whitespaces."
+    }
+    check(!Util.hasWhitespace(designatedParserFacadeClassName)) {
+      "The specified parser facade $designatedParserFacadeClassName has whitespaces."
+    }
+    check(!Util.hasWhitespace(underlyingLexerClassForDyckParser)) {
+      "The specified underlying lexer $underlyingLexerClassForDyckParser " +
+        "for the dyck parser has whitespaces."
     }
   }
 }

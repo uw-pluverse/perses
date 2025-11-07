@@ -18,20 +18,19 @@ package org.perses.fuzzer
 
 import com.google.common.collect.ImmutableList
 import com.google.common.primitives.ImmutableIntArray
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.spartree.AbstractSparTreeNode
 import java.io.File
+import java.nio.charset.StandardCharsets
 
 class MutatedProgram private constructor(
   val program: String,
 ) {
-
-  fun writeToFile(file: File) = file.writeText(program, Charsets.UTF_8)
+  fun writeToFile(file: File) = file.writeText(program, StandardCharsets.UTF_8)
 
   companion object {
-
     fun deleteTokens(
-      origin: ImmutableList<PersesToken>,
+      origin: ImmutableList<out AbstractPersesToken>,
       indicesToDelete: ImmutableIntArray,
     ): MutatedProgram {
       val builder = StringBuilder()
@@ -46,9 +45,9 @@ class MutatedProgram private constructor(
     }
 
     fun insertTokens(
-      origin: ImmutableList<PersesToken>,
+      origin: ImmutableList<out AbstractPersesToken>,
       indicesToInsert: ImmutableIntArray,
-      tokensToInsert: ImmutableList<PersesToken>,
+      tokensToInsert: ImmutableList<out AbstractPersesToken>,
     ): MutatedProgram {
       assert(indicesToInsert.length() == tokensToInsert.size)
       val builder = StringBuilder()
@@ -68,9 +67,9 @@ class MutatedProgram private constructor(
     }
 
     fun replaceTokens(
-      origin: ImmutableList<PersesToken>,
+      origin: ImmutableList<out AbstractPersesToken>,
       indicesToReplace: ImmutableIntArray,
-      tokensToReplace: ImmutableList<PersesToken>,
+      tokensToReplace: ImmutableList<out AbstractPersesToken>,
     ): MutatedProgram {
       val builder = StringBuilder()
       val currentLineNumber = 1
@@ -91,9 +90,9 @@ class MutatedProgram private constructor(
 
     // TODO: test.
     fun replaceToken(
-      origin: ImmutableList<PersesToken>,
+      origin: ImmutableList<out AbstractPersesToken>,
       indexToReplace: Int,
-      newToken: PersesToken,
+      newToken: AbstractPersesToken,
     ): MutatedProgram {
       val builder = StringBuilder()
       var currentLineNumber = 1
@@ -106,7 +105,7 @@ class MutatedProgram private constructor(
     }
 
     fun repeatRecursion(
-      origin: ImmutableList<PersesToken>,
+      origin: ImmutableList<out AbstractPersesToken>,
       recursiveNode: AbstractSparTreeNode,
       recursiveChild: AbstractSparTreeNode,
       repeatTimes: Int,
@@ -119,7 +118,7 @@ class MutatedProgram private constructor(
       var isRecursivePart = false
       var currentLineNumber = 1
       var lineNumberBeforeRepeat = 1
-      val recursiveList = mutableListOf<PersesToken>()
+      val recursiveList = mutableListOf<AbstractPersesToken>()
       for (token in origin) {
         if (token == recursionStart) {
           isRecursivePart = true
@@ -133,11 +132,12 @@ class MutatedProgram private constructor(
               for (i in 1..repeatTimes) {
                 lineNumberBeforeRepeat = tempLineNumber
                 for (recursiveToken in recursiveList) {
-                  lineNumberBeforeRepeat = addTokenText(
-                    builder,
-                    lineNumberBeforeRepeat,
-                    recursiveToken,
-                  )
+                  lineNumberBeforeRepeat =
+                    addTokenText(
+                      builder,
+                      lineNumberBeforeRepeat,
+                      recursiveToken,
+                    )
                 }
               }
               currentLineNumber = addTokenText(builder, currentLineNumber, token)
@@ -165,11 +165,12 @@ class MutatedProgram private constructor(
             for (i in 1..repeatTimes) {
               lineNumberBeforeRepeat = tempLineNumber
               for (recursiveToken in recursiveList) {
-                lineNumberBeforeRepeat = addTokenText(
-                  builder,
-                  lineNumberBeforeRepeat,
-                  recursiveToken,
-                )
+                lineNumberBeforeRepeat =
+                  addTokenText(
+                    builder,
+                    lineNumberBeforeRepeat,
+                    recursiveToken,
+                  )
               }
             }
           }
@@ -183,9 +184,9 @@ class MutatedProgram private constructor(
     }
 
     fun replaceNode(
-      origin: ImmutableList<PersesToken>,
+      origin: ImmutableList<out AbstractPersesToken>,
       nodeToBeReplaced: AbstractSparTreeNode,
-      replacement: ImmutableList<PersesToken>,
+      replacement: ImmutableList<out AbstractPersesToken>,
     ): MutatedProgram {
       val builder = StringBuilder()
       var currentLineNumber = 1
@@ -193,11 +194,15 @@ class MutatedProgram private constructor(
       for (token in origin) {
         if (token == nodeToBeReplaced.beginToken!!.token) {
           isUnderReplacedNode = true
-          currentLineNumber = replacement[0].position.line
+          currentLineNumber = replacement[0].asAntlrToken().position.line
           for (newToken in replacement) {
             currentLineNumber = addTokenText(builder, currentLineNumber, newToken)
           }
-          currentLineNumber = nodeToBeReplaced.endToken!!.token.position.line
+          currentLineNumber =
+            nodeToBeReplaced.endToken!!
+              .token
+              .asAntlrToken()
+              .position.line
         }
         if (!isUnderReplacedNode) {
           currentLineNumber = addTokenText(builder, currentLineNumber, token)
@@ -211,9 +216,9 @@ class MutatedProgram private constructor(
     }
 
     fun insertNodes(
-      origin: ImmutableList<PersesToken>,
-      tokenListsToInsert: ImmutableList<ImmutableList<PersesToken>>,
-      insertPositions: ImmutableList<PersesToken>,
+      origin: ImmutableList<out AbstractPersesToken>,
+      tokenListsToInsert: ImmutableList<ImmutableList<AbstractPersesToken>>,
+      insertPositions: ImmutableList<out AbstractPersesToken>,
     ): MutatedProgram {
       val builder = StringBuilder()
       var currentLineNumber = 1
@@ -234,19 +239,19 @@ class MutatedProgram private constructor(
     private fun addTokenText(
       builder: StringBuilder,
       currentLineNumber: Int,
-      token: PersesToken,
+      token: AbstractPersesToken,
     ): Int {
       var lineNumber = currentLineNumber
-      while (lineNumber < token.position.line) {
+      while (lineNumber < token.asAntlrToken().position.line) {
         if (builder.isNotEmpty() && builder[builder.length - 1] != '\n') {
           builder.append('\n')
         }
         ++lineNumber
       }
       if (builder.isEmpty() || builder[builder.length - 1] == '\n') {
-        builder.append(token.text)
+        builder.append(token.lexemeText)
       } else {
-        builder.append(' ').append((token.text))
+        builder.append(' ').append((token.lexemeText))
       }
       return lineNumber
     }

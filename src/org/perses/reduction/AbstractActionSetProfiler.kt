@@ -28,12 +28,14 @@ abstract class AbstractActionSetProfiler {
     kleeneDescendant: NodeReplacementAction,
   )
 
-  abstract fun onReplaceNodeWithNearestCompatibleDescendant(
-    replacement: NodeReplacementAction,
-  )
+  abstract fun onReplaceNodeWithNearestCompatibleDescendant(replacement: NodeReplacementAction)
 
-  class ActionSetProfiler(file: Path) : AbstractActionSetProfiler(), AutoCloseable {
+  class ActionSetProfiler(
+    file: Path,
+  ) : AbstractActionSetProfiler(),
+    AutoCloseable {
     private var writer: BufferedWriter?
+
     override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
       kleeneDescendant: NodeReplacementAction,
     ) {
@@ -48,9 +50,7 @@ abstract class AbstractActionSetProfiler {
       }
     }
 
-    override fun onReplaceNodeWithNearestCompatibleDescendant(
-      replacement: NodeReplacementAction,
-    ) {
+    override fun onReplaceNodeWithNearestCompatibleDescendant(replacement: NodeReplacementAction) {
       try {
         writer!!
           .append("onReplaceNodeWithNearestCompatibleDescendant: size=")
@@ -79,16 +79,17 @@ abstract class AbstractActionSetProfiler {
   }
 
   companion object {
-    val NULL_PROFILER = object : AbstractActionSetProfiler() {
-      override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
-        kleeneDescendant: NodeReplacementAction,
-      ) {
-      }
+    val NULL_PROFILER =
+      object : AbstractActionSetProfiler() {
+        override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
+          kleeneDescendant: NodeReplacementAction,
+        ) {
+        }
 
-      override fun onReplaceNodeWithNearestCompatibleDescendant(
-        replacement: NodeReplacementAction,
-      ) {
+        override fun onReplaceNodeWithNearestCompatibleDescendant(
+          replacement: NodeReplacementAction,
+        ) {
+        }
       }
-    }
   }
 }

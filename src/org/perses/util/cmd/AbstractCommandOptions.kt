@@ -28,8 +28,9 @@ import java.lang.StringBuilder
 import java.util.IdentityHashMap
 
 abstract class AbstractCommandOptions {
-
-  inner class CmdUsagePrinter(private val jCommander: JCommander) {
+  inner class CmdUsagePrinter(
+    private val jCommander: JCommander,
+  ) {
     fun printUsage(): String {
       val formatter = PersesCmdUsageFormatter(jCommander)
       val stringBuilder = StringBuilder()
@@ -47,12 +48,18 @@ abstract class AbstractCommandOptions {
         val value = description.parameterized[description.`object`] ?: continue
         result.put(optionNames, value.toString())
       }
-      return result.build().entries.asSequence().sortedBy { it.key }.toImmutableMap()
+      return result
+        .build()
+        .entries
+        .asSequence()
+        .sortedBy { it.key }
+        .toImmutableMap()
     }
   }
 
-  private inner class PersesCmdUsageFormatter(jCommander: JCommander) :
-    DefaultUsageFormatter(jCommander) {
+  private inner class PersesCmdUsageFormatter(
+    jCommander: JCommander,
+  ) : DefaultUsageFormatter(jCommander) {
     override fun appendAllParametersDetails(
       out: StringBuilder,
       indentCount: Int,
@@ -69,9 +76,10 @@ abstract class AbstractCommandOptions {
           ownerFlags.add(flag)
         } else {
           check(flagGroup is AbstractCommandLineFlagGroup) { "Flag group: ${flagGroup::class}" }
-          val groupFlagList = identityMap.computeIfAbsent(flagGroup) {
-            mutableListOf()
-          }
+          val groupFlagList =
+            identityMap.computeIfAbsent(flagGroup) {
+              mutableListOf()
+            }
           groupFlagList.add(flag)
         }
       }
@@ -80,14 +88,15 @@ abstract class AbstractCommandOptions {
       out.append("\n")
 
       val unimportantGroups = ImmutableList.of(verbosityFlags, versionFlags, helpFlags)
-      val sortedGroupedFlags = identityMap.entries
-        .partition { it.key in unimportantGroups }
-        .let { (unimportant, important) ->
-          important.sortedBy {
-            allFlags.indexOf(it.key)
-          } +
-            unimportant.sortedBy { unimportantGroups.indexOf(it.key) }
-        }
+      val sortedGroupedFlags =
+        identityMap.entries
+          .partition { it.key in unimportantGroups }
+          .let { (unimportant, important) ->
+            important.sortedBy {
+              allFlags.indexOf(it.key)
+            } +
+              unimportant.sortedBy { unimportantGroups.indexOf(it.key) }
+          }
 
       var isFirst = true
       sortedGroupedFlags.forEach { (group, flags) ->
@@ -129,7 +138,10 @@ abstract class AbstractCommandOptions {
     return flags
   }
 
-  fun parseArguments(programName: String, args: Array<String>): CmdUsagePrinter {
+  fun parseArguments(
+    programName: String,
+    args: Array<String>,
+  ): CmdUsagePrinter {
     val builder = JCommander.newBuilder().programName(programName)
     builder.addObject(this)
     builder.addObject(allFlags)

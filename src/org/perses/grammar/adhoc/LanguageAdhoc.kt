@@ -22,21 +22,23 @@ import org.perses.program.EnumFormatControl
 import org.perses.program.SerializableLanguageKind
 
 class LanguageAdhoc {
-
   companion object {
     @JvmField
-    val INSTANCE = SerializableLanguageKind.LanguageKindData(
-      name = "adhoc",
-      extensions = ImmutableSet.of("c", "h"),
-      defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-      origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-      allowedCodeFormatControl = ImmutableSet.copyOf(EnumFormatControl.values()),
-      defaultFormatterCommands = ImmutableList.of(
-        SerializableLanguageKind.ShellCommandData(
-          "clang-format",
-          ImmutableList.of("-i"),
-        ),
-      ),
-    ).toLanguageKind()
+    val INSTANCE =
+      SerializableLanguageKind
+        .LanguageKindData(
+          name = "adhoc",
+          extensions = ImmutableSet.of("c", "h"),
+          defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+          origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+          allowedCodeFormatControl = ImmutableSet.copyOf(EnumFormatControl.values()),
+          defaultFormatterCommands =
+            ImmutableList.of(
+              SerializableLanguageKind.ShellCommandData(
+                "clang-format",
+                ImmutableList.of("-i"),
+              ),
+            ),
+        ).toLanguageKind()
   }
 }

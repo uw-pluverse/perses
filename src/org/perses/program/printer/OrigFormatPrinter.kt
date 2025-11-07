@@ -23,21 +23,18 @@ import org.perses.util.FastStringBuilder
 class OrigFormatPrinter private constructor(
   val keepBlankLines: Boolean,
   val tokenPositionProvider: AbstractTokenPositionProvider,
-) :
-  AbstractTokenizedProgramPrinter() {
-
+) : AbstractTokenizedProgramPrinter() {
   override fun print(
     program: TokenizedProgram,
     tokenPlacementListener: AbstractTokenPlacementListener?,
   ) = object : AbstractLazySourceCode() {
-    override fun computeStringBuilder(): FastStringBuilder {
-      return OrigFormatPrintingVisitor(
+    override fun computeStringBuilder(): FastStringBuilder =
+      OrigFormatPrintingVisitor(
         program,
         keepBlankLines,
         tokenPositionProvider,
         tokenPlacementListener,
       ).visit().result
-    }
   }
 
   override fun extraEquals(other: Any): Boolean {
@@ -47,13 +44,12 @@ class OrigFormatPrinter private constructor(
     return keepBlankLines == other.keepBlankLines
   }
 
-  override fun extraHashCode(): Int {
-    return keepBlankLines.hashCode()
-  }
+  override fun extraHashCode(): Int = keepBlankLines.hashCode()
 
   companion object {
     fun getOrigFormat(tokenPositionProvider: AbstractTokenPositionProvider) =
       OrigFormatPrinter(keepBlankLines = true, tokenPositionProvider)
+
     fun getCompactOrigFormat(tokenPositionProvider: AbstractTokenPositionProvider) =
       OrigFormatPrinter(keepBlankLines = false, tokenPositionProvider)
   }

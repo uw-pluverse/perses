@@ -28,7 +28,6 @@ data class OptionalStateSimulator private constructor(
   private val endingTransition: EpsilonTransition,
   private val nonEndingTransition: EpsilonTransition,
 ) : AbstractATNStateSimulator() {
-
   init {
     require(endingTransition.target == state.endState)
     require(nonEndingTransition.target != state.endState)
@@ -45,13 +44,10 @@ data class OptionalStateSimulator private constructor(
   override val endState: BlockEndState
     get() = state.endState
 
-  override fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition {
-    return decisionMaker.sampleTransition(state)
-  }
+  override fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition =
+    decisionMaker.sampleTransition(state)
 
-  override fun createTreeNode(nodeId: Int): OptionalTDTreeNode {
-    return OptionalTDTreeNode(nodeId)
-  }
+  override fun createTreeNode(nodeId: Int): OptionalTDTreeNode = OptionalTDTreeNode(nodeId)
 
   companion object {
     fun create(state: BasicBlockStartState): OptionalStateSimulator {

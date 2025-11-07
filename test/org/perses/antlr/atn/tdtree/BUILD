@@ -7,8 +7,11 @@ kt_jvm_test(
     ],
     deps = [
         "//:truth",
-        "//src/org/perses/antlr/atn",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
         "//src/org/perses/antlr/atn/nfa",
+        "//src/org/perses/antlr/atn/tdtree",
+        "//src/org/perses/program",
+        "//src/org/perses/spartree",
         "//test/org/perses/antlr/atn:OrigC",
     ],
 )

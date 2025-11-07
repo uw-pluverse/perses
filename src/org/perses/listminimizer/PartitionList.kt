@@ -23,7 +23,6 @@ import org.perses.util.toImmutableList
 class PartitionList<T : Any>(
   val partitions: ImmutableList<Partition<T>>,
 ) {
-
   val input: ImmutableList<T> by lazy {
     partitions.asSequence().flatMap { it -> it.asSequence() }.toImmutableList()
   }
@@ -66,11 +65,16 @@ class PartitionList<T : Any>(
     return partitions == other.partitions
   }
 
-  class Builder<T : Any>(private val input: ImmutableList<T>) {
+  class Builder<T : Any>(
+    private val input: ImmutableList<T>,
+  ) {
     private var used = false
     private var intervalBuilder = ImmutableList.builder<Partition<T>>()
 
-    fun createPartition(leftInclusive: Int, rightExclusive: Int): Builder<T> {
+    fun createPartition(
+      leftInclusive: Int,
+      rightExclusive: Int,
+    ): Builder<T> {
       intervalBuilder.add(Partition(input.subList(leftInclusive, rightExclusive)))
       return this
     }

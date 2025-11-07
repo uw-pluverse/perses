@@ -17,7 +17,6 @@
 package org.perses.antlr
 
 abstract class AbstractGrammarStubFactory {
-
   abstract fun createStub(
     packageName: String,
     parserClassSimpleName: String,

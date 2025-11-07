@@ -20,21 +20,14 @@ class DecisionMakerMock(
   private val boolSequence: List<Boolean>,
   private val intSequence: List<Int>,
 ) : AbstractDecisionMaker() {
-
   private val intIterator = intSequence.iterator()
   private val boolIterator = boolSequence.iterator()
 
-  override fun nextBoolean(): Boolean {
-    return boolIterator.next()
-  }
+  override fun nextBoolean(): Boolean = boolIterator.next()
 
-  override fun nextInt(bound: Int): Int {
-    return intIterator.next() % bound
-  }
+  override fun nextInt(bound: Int): Int = intIterator.next() % bound
 
-  fun copyAndStartOver(): DecisionMakerMock {
-    return DecisionMakerMock(boolSequence, intSequence)
-  }
+  fun copyAndStartOver(): DecisionMakerMock = DecisionMakerMock(boolSequence, intSequence)
 
   companion object {
     fun createEmpty() = DecisionMakerMock(listOf(), listOf())

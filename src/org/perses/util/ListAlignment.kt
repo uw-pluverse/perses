@@ -20,8 +20,9 @@ import com.google.common.collect.ImmutableList
 import java.lang.RuntimeException
 import java.util.IdentityHashMap
 
-class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
-
+class ListAlignment<T : Any>(
+  val alignment: ImmutableList<AbstractEditOperation<T>>,
+) {
   init {
     checkElementsShouldBeDistinct(
       alignment
@@ -33,9 +34,12 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
     )
   }
 
-  fun toPairList(): ImmutableList<Pair<T?, T?>> {
-    return alignment.asSequence().map { it.toPair() }.toImmutableList()
-  }
+  fun toPairList(): ImmutableList<Pair<T?, T?>> =
+    alignment
+      .asSequence()
+      .map {
+        it.toPair()
+      }.toImmutableList()
 
   fun computeRevision(original: Iterable<T>): ImmutableList<T> {
     val builder = ImmutableList.builder<T>()
@@ -106,6 +110,7 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
 
   abstract class Edit {
     abstract override fun equals(other: Any?): Boolean
+
     abstract override fun hashCode(): Int
   }
 
@@ -140,17 +145,17 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
   }
 
   companion object {
-
-    fun <T> create(
+    fun <T : Any> create(
       baseList: List<T>,
       revisionList: List<T>,
       equalizer: (T, T) -> Boolean,
     ): ListAlignment<T> {
       val patch = PersesDiffUtil.diff(baseList, revisionList, equalizer)
-      val deltas = patch.deltas
-        .asSequence()
-        .sortedBy { it.original.position }
-        .toList()
+      val deltas =
+        patch.deltas
+          .asSequence()
+          .sortedBy { it.original.position }
+          .toList()
 
       val result = ImmutableList.builder<AbstractEditOperation<T>>()
       var index = 0
@@ -186,9 +191,7 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
     // to a REPLACE.
     // For example, (KEEP, DELETE, INSERT, KEEP) -> (KEEP, REPLACE, KEEP)
     // (KEEP, INSERT, DELETE, KEEP) -> (KEEP, REPLACE, KEEP)
-    fun <T> mergeIntoReplace(
-      listAlignment: ListAlignment<T>,
-    ): ListAlignment<T> {
+    fun <T : Any> mergeIntoReplace(listAlignment: ListAlignment<T>): ListAlignment<T> {
       val alignment = listAlignment.alignment
       var index = 0
       val alignmentWithReplace = ImmutableList.builder<AbstractEditOperation<T>>()
@@ -226,9 +229,8 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
             alignmentWithReplace.add(firstOp)
             index += 1
           }
-        }
-        // sliding window exceeds the list
-        else {
+        } else {
+          // sliding window exceeds the list
           alignmentWithReplace.add(firstOp)
           index += 1
         }
@@ -236,9 +238,7 @@ class ListAlignment<T>(val alignment: ImmutableList<AbstractEditOperation<T>>) {
       return ListAlignment(alignmentWithReplace.build())
     }
 
-    fun <T> splitReplace(
-      listAlignmentWithReplace: ListAlignment<T>,
-    ): ListAlignment<T> {
+    fun <T : Any> splitReplace(listAlignmentWithReplace: ListAlignment<T>): ListAlignment<T> {
       val alignmentWithReplace = listAlignmentWithReplace.alignment
       val alignmentWithoutReplace = ImmutableList.builder<AbstractEditOperation<T>>()
 

@@ -16,15 +16,13 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
-        "//src/org/perses/antlr:antlr_hierarchy",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:reduction_level",
+        "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
         "//src/org/perses/reduction:tree_edit_with_its_program",
         "//src/org/perses/reduction/event",
-        "//src/org/perses/reduction/partition",
-        "//src/org/perses/reduction/reducer:tree_transforms",
         "//src/org/perses/spartree",
     ],
 )

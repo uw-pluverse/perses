@@ -50,6 +50,7 @@ def ppr_reduction_golden_test(
         progress_dump_file = progress_dump_file,
         enable_query_caching = enable_query_caching,
         enable_edit_caching = enable_edit_caching,
+        enable_token_reducer = False,  # the token reducer does not work with
         log_file = log_file,
         other_flags = other_flags,
         perses_bin = perses_bin,

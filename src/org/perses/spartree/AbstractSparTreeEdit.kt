@@ -21,12 +21,10 @@ import com.google.common.collect.ComparisonChain
 import org.perses.program.TokenizedProgram
 import java.util.concurrent.atomic.AtomicInteger
 
-// FIXME: this should be a sealed class.
-sealed class AbstractSparTreeEdit<T : AbstractTreeEditAction> (
+sealed class AbstractSparTreeEdit<T : AbstractTreeEditAction>(
   val actionSet: AbstractActionSet<T>,
-  private val tree: SparTree,
+  val tree: SparTree,
 ) : Comparable<AbstractSparTreeEdit<*>> {
-
   private val id: Int = idGenerator.getAndIncrement()
   private val treeSnapshotVersion = tree.version
 
@@ -35,38 +33,31 @@ sealed class AbstractSparTreeEdit<T : AbstractTreeEditAction> (
     computeProgram(tree)
   }
 
-  fun asNodeDeleteEdit(): NodeDeletionTreeEdit {
-    return this as NodeDeletionTreeEdit
-  }
+  fun asNodeDeleteEdit(): NodeDeletionTreeEdit = this as NodeDeletionTreeEdit
 
-  fun asNodeReplacementEdit(): DescendantHoistingTreeEdit {
-    return this as DescendantHoistingTreeEdit
-  }
+  fun asNodeReplacementEdit(): DescendantHoistingTreeEdit = this as DescendantHoistingTreeEdit
 
-  fun asAnyNodeReplacementEdit(): AnyNodeReplacementTreeEdit {
-    return this as AnyNodeReplacementTreeEdit
-  }
+  fun asAnyNodeReplacementEdit(): AnyNodeReplacementTreeEdit = this as AnyNodeReplacementTreeEdit
 
   val numberOfActions: Int
     get() = actionSet.size()
 
-  fun isNodeATarget(node: AbstractSparTreeNode?): Boolean {
-    return actionSet.containsNodeAsTarget(node!!)
-  }
+  fun isNodeATarget(node: AbstractSparTreeNode?): Boolean = actionSet.containsNodeAsTarget(node!!)
 
-  override fun compareTo(other: AbstractSparTreeEdit<*>): Int {
-    return ComparisonChain.start()
+  override fun compareTo(other: AbstractSparTreeEdit<*>): Int =
+    ComparisonChain
+      .start()
       .compare(program.tokenCount, other.program.tokenCount)
       .compare(id, other.id)
       .result()
-  }
 
   abstract fun computeProgram(tree: SparTree): TokenizedProgram
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
-      .add("actions", actionSet).toString()
-  }
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
+      .add("actions", actionSet)
+      .toString()
 
   /**
    * This method is marked internal, because we do not want this method to be called
@@ -84,30 +75,22 @@ sealed class AbstractSparTreeEdit<T : AbstractTreeEditAction> (
     fun createDeletionSparTreeEdit(
       tree: SparTree,
       actionSet: NodeDeletionActionSet,
-    ): NodeDeletionTreeEdit {
-      return NodeDeletionTreeEdit(tree, actionSet)
-    }
+    ): NodeDeletionTreeEdit = NodeDeletionTreeEdit(tree, actionSet)
 
     fun createReplacementSparTreeEdit(
       tree: SparTree,
       actionSet: NodeReplacementActionSet,
-    ): DescendantHoistingTreeEdit {
-      return DescendantHoistingTreeEdit(tree, actionSet)
-    }
+    ): DescendantHoistingTreeEdit = DescendantHoistingTreeEdit(tree, actionSet)
 
     fun createAnyNodeReplacementTreeEdit(
       tree: SparTree,
       actionSet: NodeReplacementActionSet,
-    ): AnyNodeReplacementTreeEdit {
-      return AnyNodeReplacementTreeEdit(tree, actionSet)
-    }
+    ): AnyNodeReplacementTreeEdit = AnyNodeReplacementTreeEdit(tree, actionSet)
 
     fun createLatraGeneralTreeEdit(
       tree: SparTree,
       actionSet: LatraGeneralActionSet,
-    ): LatraGeneralTreeEdit {
-      return LatraGeneralTreeEdit(tree, actionSet)
-    }
+    ): LatraGeneralTreeEdit = LatraGeneralTreeEdit(tree, actionSet)
 
     private val idGenerator = AtomicInteger()
   }

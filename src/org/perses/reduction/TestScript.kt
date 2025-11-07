@@ -28,32 +28,34 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 /** Represents a test script, that specifies the property to preserve during reduction.  */
-class TestScript(val scriptFile: Path, private val scriptTemplate: ScriptFile) {
-
+class TestScript(
+  val scriptFile: Path,
+  private val scriptTemplate: ScriptFile,
+) {
   /** @return true if the test script passes.
    */
   fun test(): PropertyTestResult {
     val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
-    val output = singleton.run(
-      cmd = "${scriptTemplate.shebang}  ${scriptFile.fileName}",
-      workingDirectory = scriptFile.parent,
-      captureOutput = false,
-      environment = CURRENT_ENV,
-    )
+    val output =
+      singleton.run(
+        cmd = "${scriptTemplate.shebang}  ${scriptFile.fileName}",
+        workingDirectory = scriptFile.parent,
+        captureOutput = false,
+        environment = CURRENT_ENV,
+      )
     logger.ktFine { "test script stdout: " + output.stdout }
     logger.ktFine { "test script stderr: " + output.stderr }
     val timeSpan = timeSpanBuilder.end(System.currentTimeMillis())
-    return PropertyTestResult(output.exitCode, timeSpan.elapsedTimeInMillis)
+    return PropertyTestResult(output.exitCode, timeSpan.elapsedTimeInMillis.toInt())
   }
 
-  fun runAndCaptureOutput(): CmdOutput {
-    return singleton.run(
+  fun runAndCaptureOutput(): CmdOutput =
+    singleton.run(
       cmd = "${scriptTemplate.shebang}  ${scriptFile.fileName}",
       workingDirectory = scriptFile.parent,
       captureOutput = true,
       environment = CURRENT_ENV,
     )
-  }
 
   init {
     scriptTemplate.writeTo(scriptFile)

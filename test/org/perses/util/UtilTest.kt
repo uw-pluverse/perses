@@ -34,7 +34,6 @@ import org.perses.util.Util.createNonAppendablePrintStream
 import org.perses.util.Util.ensureDirExists
 import org.perses.util.Util.fixpoint
 import org.perses.util.Util.globWithFileNameExts
-import org.perses.util.Util.hashListOfStrings
 import org.perses.util.Util.isEmptyDirectory
 import org.perses.util.Util.lazyAssert
 import org.perses.util.Util.mergeContinuousElementsIntoRegions
@@ -44,6 +43,7 @@ import org.perses.util.Util.removeElementsFromLinkedList
 import org.perses.util.Util.removeElementsFromList
 import org.perses.util.Util.removeNullFromList
 import org.perses.util.Util.setExecutable
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.io.Closeable
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -60,7 +60,6 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class UtilTest {
-
   private var tempDir: Path = Files.createTempDirectory(this::class.qualifiedName)
 
   @OptIn(ExperimentalPathApi::class)
@@ -74,16 +73,17 @@ class UtilTest {
     val initial = 0
     val max = 2
     val history = mutableListOf<Int>()
-    val result = fixpoint(
-      initial = initial,
-    ) { value ->
-      history.add(value)
-      if (value == max) {
-        max
-      } else {
-        value + 1
+    val result =
+      fixpoint(
+        initial = initial,
+      ) { value ->
+        history.add(value)
+        if (value == max) {
+          max
+        } else {
+          value + 1
+        }
       }
-    }
     assertThat(result).isEqualTo(max)
     assertThat(history).isEqualTo(
       (0..max).toList(),
@@ -122,48 +122,58 @@ class UtilTest {
 
   @Test
   fun testSlideReverseSingleElement() {
-    val result = Util.slideReverseIfSlideable(
-      beginRangeInclusive = 0,
-      endRangeExclusive = 1,
-      slidingWindowSize = 1,
-    ).toList()
+    val result =
+      Util
+        .slideReverseIfSlideable(
+          beginRangeInclusive = 0,
+          endRangeExclusive = 1,
+          slidingWindowSize = 1,
+        ).toList()
     assertThat(result).containsExactly(NonEmptyInternal(0, 1))
   }
 
   @Test
   fun testSlideReverseTwoElements() {
-    val result = Util.slideReverseIfSlideable(
-      beginRangeInclusive = 1,
-      endRangeExclusive = 3,
-      slidingWindowSize = 1,
-    ).toList()
-    assertThat(result).containsExactly(
-      NonEmptyInternal(2, 3),
-      NonEmptyInternal(1, 2),
-    ).inOrder()
+    val result =
+      Util
+        .slideReverseIfSlideable(
+          beginRangeInclusive = 1,
+          endRangeExclusive = 3,
+          slidingWindowSize = 1,
+        ).toList()
+    assertThat(result)
+      .containsExactly(
+        NonEmptyInternal(2, 3),
+        NonEmptyInternal(1, 2),
+      ).inOrder()
   }
 
   @Test
   fun testSlideReverseThreeElements() {
-    val result = Util.slideReverseIfSlideable(
-      beginRangeInclusive = 1,
-      endRangeExclusive = 4,
-      slidingWindowSize = 1,
-    ).toList()
-    assertThat(result).containsExactly(
-      NonEmptyInternal(3, 4),
-      NonEmptyInternal(2, 3),
-      NonEmptyInternal(1, 2),
-    ).inOrder()
+    val result =
+      Util
+        .slideReverseIfSlideable(
+          beginRangeInclusive = 1,
+          endRangeExclusive = 4,
+          slidingWindowSize = 1,
+        ).toList()
+    assertThat(result)
+      .containsExactly(
+        NonEmptyInternal(3, 4),
+        NonEmptyInternal(2, 3),
+        NonEmptyInternal(1, 2),
+      ).inOrder()
   }
 
   @Test
   fun testSlideReverseNotEnoughElements() {
-    val result = Util.slideReverseIfSlideable(
-      beginRangeInclusive = 0,
-      endRangeExclusive = 2,
-      slidingWindowSize = 4,
-    ).toList()
+    val result =
+      Util
+        .slideReverseIfSlideable(
+          beginRangeInclusive = 0,
+          endRangeExclusive = 2,
+          slidingWindowSize = 4,
+        ).toList()
     assertThat(result).isEmpty()
   }
 
@@ -413,9 +423,14 @@ class UtilTest {
 
   @Test
   fun testComputePercentage() {
-    assertThat(computePercentage(100, 100)).isEqualTo("100.00%")
-    assertThat(computePercentage(50, 100)).isEqualTo("50.00%")
-    assertThat(computePercentage(2525, 10000)).isEqualTo("25.25%")
+    assertThat(computePercentage(100, 100, prefix = "")).isEqualTo("100.00%")
+    assertThat(computePercentage(50, 100, prefix = "")).isEqualTo("50.00%")
+    assertThat(computePercentage(2525, 10000, prefix = "")).isEqualTo("25.25%")
+    assertThat(computePercentage(1, 100, prefix = "")).isEqualTo("1.00%")
+    assertThat(computePercentage(1, 1000, prefix = "")).isEqualTo("0.10%")
+    assertThat(computePercentage(1, 10000, prefix = "")).isEqualTo("0.01%")
+    assertThat(computePercentage(1, 100000, prefix = "")).isEqualTo("0.0010%")
+    assertThat(computePercentage(1, 1000000)).isEqualTo("1/1000000=0.00010%")
   }
 
   @Test
@@ -437,9 +452,10 @@ class UtilTest {
   fun testEnsureDirExistsExceptionCase() {
     Files.createFile(tempDir.resolve("a"))
     val folder = tempDir.resolve("a")
-    val exception = assertThrows(Exception::class.java) {
-      ensureDirExists(folder)
-    }
+    val exception =
+      assertThrows(Exception::class.java) {
+        ensureDirExists(folder)
+      }
     assertThat(exception.message).startsWith("Fail")
   }
 
@@ -508,7 +524,7 @@ class UtilTest {
   @Test
   fun testComputeSha512ForString() {
     val string = "hello"
-    val sha512 = Util.SHA512HashCode.createFromString(string)
+    val sha512 = EnumShaAlgorithm.SHA512.createFromString(string)
     assertThat(sha512.numOfStrings).isEqualTo(1)
     assertThat(sha512.getLengthOfString(0)).isEqualTo(string.length)
     assertThat(sha512.digest.toString()).isEqualTo(
@@ -519,16 +535,18 @@ class UtilTest {
 
   @Test
   fun testComputeShaForListOfStrings() {
-    val list = listOf(
-      hashListOfStrings(emptyList()),
-      hashListOfStrings(listOf("")),
-      hashListOfStrings(listOf("", "")),
-      hashListOfStrings(listOf("ab", "")),
-      hashListOfStrings(listOf("", "ab")),
-      hashListOfStrings(listOf("", "", "")),
-      hashListOfStrings(listOf("a", "")),
-      hashListOfStrings(listOf("", "a")),
-    )
+    val sha = EnumShaAlgorithm.SHA512
+    val list =
+      listOf(
+        sha.hashListOfStrings(emptyList()),
+        sha.hashListOfStrings(listOf("")),
+        sha.hashListOfStrings(listOf("", "")),
+        sha.hashListOfStrings(listOf("ab", "")),
+        sha.hashListOfStrings(listOf("", "ab")),
+        sha.hashListOfStrings(listOf("", "", "")),
+        sha.hashListOfStrings(listOf("a", "")),
+        sha.hashListOfStrings(listOf("", "a")),
+      )
     assertThat(list.toSet()).containsExactlyElementsIn(list)
     assertThat(list.toSet().size).isEqualTo(list.size)
   }
@@ -536,8 +554,10 @@ class UtilTest {
   @Test
   fun testComputeZIP() {
     val input = "int\n".repeat(100000) // mimic large input
-    val zipBArray = Util.zipCompress(input)
-    assertThat(String(Util.zipDecompress(zipBArray), Charsets.UTF_8)).isEqualTo(input)
+    val zipBArray = Util.compressStringToZipByteArray(input)
+    assertThat(
+      String(Util.decompressZipByteArray(zipBArray), StandardCharsets.UTF_8),
+    ).isEqualTo(input)
   }
 
   @Test
@@ -569,7 +589,8 @@ class UtilTest {
     vararg expected: ImmutableList<Int>,
   ) {
     assertThat(mergeContinuousElementsIntoRegions(list, euqalizer))
-      .containsExactly(*expected).inOrder()
+      .containsExactly(*expected)
+      .inOrder()
   }
 
   @Test
@@ -686,17 +707,19 @@ class UtilTest {
       lazyAssert { false }
     }
     val goldenMessage = "this is the golden message"
-    val exception = assertThrows(Throwable::class.java) {
-      lazyAssert({ false }) { goldenMessage }
-    }
+    val exception =
+      assertThrows(Throwable::class.java) {
+        lazyAssert({ false }) { goldenMessage }
+      }
     assertThat(exception.message).contains(goldenMessage)
   }
 
   @Test
   fun test_copyFileToDirectory() {
-    val srcFilePath = Files.createTempFile(tempDir, "test_copy_file", ".txt").also {
-      it.writeText("test content", StandardCharsets.UTF_8)
-    }
+    val srcFilePath =
+      Files.createTempFile(tempDir, "test_copy_file", ".txt").also {
+        it.writeText("test content", StandardCharsets.UTF_8)
+      }
     val destDir = Files.createTempDirectory(tempDir, "test_copy_file")
     val destFilePath = Util.copyFileToDirectory(srcFilePath, destDir)
 
@@ -710,12 +733,14 @@ class UtilTest {
 
   @Test
   fun testCopyFileToDirectoryThrow() {
-    val originalFile = Files.createTempFile(tempDir, "test_copy_file", ".txt").also {
-      it.writeText("test content", StandardCharsets.UTF_8)
-    }
-    val exception = assertThrows(IllegalArgumentException::class.java) {
-      Util.copyFileToDirectory(originalFile, tempDir)
-    }
+    val originalFile =
+      Files.createTempFile(tempDir, "test_copy_file", ".txt").also {
+        it.writeText("test content", StandardCharsets.UTF_8)
+      }
+    val exception =
+      assertThrows(IllegalArgumentException::class.java) {
+        Util.copyFileToDirectory(originalFile, tempDir)
+      }
     assertThat(exception.message)
       .contains("Destination path cannot be the same as the original path.")
   }
@@ -798,9 +823,19 @@ class UtilTest {
     }
     SpaceSize.kiloBytes(kb = 1).let {
       assertThat(it.bytes).isEqualTo(1000)
+      assertThat(it.toKiloBytes()).isEqualTo(1)
+      assertThat(it.toMegaBytes()).isEqualTo(0)
+      assertThat(it.toGigaBytes()).isEqualTo(0)
     }
     SpaceSize.megaBytes(mb = 1).let {
       assertThat(it.bytes).isEqualTo(1000 * 1000)
+      assertThat(it.toKiloBytes()).isEqualTo(1000)
+      assertThat(it.toMegaBytes()).isEqualTo(1)
+      assertThat(it.toGigaBytes()).isEqualTo(0)
+    }
+    SpaceSize.megaBytes(mb = 1000).let {
+      assertThat(it.toMegaBytes()).isEqualTo(1000)
+      assertThat(it.toGigaBytes()).isEqualTo(1)
     }
   }
 
@@ -821,7 +856,9 @@ class UtilTest {
     assertThat(content.last()).isEqualTo("second")
   }
 
-  class FakeCloseable(var closed: Boolean = false) : Closeable {
+  class FakeCloseable(
+    var closed: Boolean = false,
+  ) : Closeable {
     override fun close() {
       closed = true
     }
@@ -857,5 +894,23 @@ class UtilTest {
     assertThat(a.closed).isTrue()
     assertThat(b.closed).isTrue()
     assertThat(c.closed).isTrue()
+  }
+
+  @Test
+  fun testFindUtfChars() {
+    val input = "，"
+    Util.findUtf16Chars(input).let {
+      assertThat(it).hasSize(1)
+      assertThat(it.first().char).isEqualTo('，')
+      assertThat(it.first().indexInString).isEqualTo(0)
+    }
+  }
+
+  @Test
+  fun testHasWhitespaceInString() {
+    assertThat(Util.hasWhitespace("")).isFalse()
+    assertThat(Util.hasWhitespace(" ")).isTrue()
+    assertThat(Util.hasWhitespace("ab \nc")).isTrue()
+    assertThat(Util.hasWhitespace("ab")).isFalse()
   }
 }

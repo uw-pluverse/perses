@@ -27,7 +27,6 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class CommandOptionsTest {
-
   val tempDir = Files.createTempDirectory(javaClass.simpleName)
 
   @After
@@ -38,14 +37,23 @@ class CommandOptionsTest {
   @Test
   fun testGetFindingFolder() {
     val options = CommandOptions()
-    options.compilerFlags.testingConfiguration = TestingConfiguration(
-      "RUST",
-      seedFolders = listOf(),
-      programsUnderTest = listOf(),
-    )
-    assertThat(options.generalFlags.getFindingFolder().name.lowercase())
-      .isEqualTo("default_finding_folder_rust")
-    assertThat(options.generalFlags.getTempFolder().name.lowercase())
-      .isEqualTo("default_temp_folder_rust")
+    options.compilerFlags.testingConfiguration =
+      TestingConfiguration(
+        "RUST",
+        seedFolders = listOf(),
+        programsUnderTest = listOf(),
+      )
+    assertThat(
+      options.generalFlags
+        .getFindingFolder()
+        .name
+        .lowercase(),
+    ).isEqualTo("default_finding_folder_rust")
+    assertThat(
+      options.generalFlags
+        .getTempFolder()
+        .name
+        .lowercase(),
+    ).isEqualTo("default_temp_folder_rust")
   }
 }

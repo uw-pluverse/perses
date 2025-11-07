@@ -31,7 +31,6 @@ import java.io.StringWriter
 
 @RunWith(JUnit4::class)
 class LogicalSizedArrayTest {
-
   @Test
   fun testEmptyLogicalSizedArray() {
     val empty = LogicalSizedArray.createWithSize(0)
@@ -101,12 +100,15 @@ class LogicalSizedArrayTest {
       )
     }
     val classContent = stringWriter.toString()
-    val assembly = classContent.lines().filter {
-      it.trim().lowercase().startsWith("invoke")
-    }.filter {
-      // make sure no calls to any methods in LogicalSizedArray.
-      it.contains(Regex("\\b" + LogicalSizedArray::class.java.simpleName + "\\b"))
-    }.distinct()
+    val assembly =
+      classContent
+        .lines()
+        .filter {
+          it.trim().lowercase().startsWith("invoke")
+        }.filter {
+          // make sure no calls to any methods in LogicalSizedArray.
+          it.contains(Regex("\\b" + LogicalSizedArray::class.java.simpleName + "\\b"))
+        }.distinct()
     assertWithMessage(classContent).that(assembly).hasSize(1)
     assertWithMessage(classContent).that(assembly.single()).contains(".constructor")
   }

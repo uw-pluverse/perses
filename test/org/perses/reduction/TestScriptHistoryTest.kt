@@ -23,9 +23,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.reduction.TestScriptHistory.Companion.NAME_COLUMN_ELLAPSED_MILLIES
 import org.perses.reduction.TestScriptHistory.Companion.NAME_COLUMN_EXIT_CODE
-import org.perses.reduction.TestScriptHistory.Companion.NAME_COLUMN_HASH_CODE
-import org.perses.reduction.TestScriptHistory.Result
-import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.ExitCode
 import java.nio.file.Files
 import kotlin.io.path.ExperimentalPathApi
@@ -35,11 +33,11 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class TestScriptHistoryTest {
-
+  private val shaAlgorithm = EnumShaAlgorithm.SHA512
   private val tempDir = Files.createTempDirectory(this::class.qualifiedName)
   private val file = tempDir.resolve("a.csv")
 
-  private val history = TestScriptHistory()
+  private val history = TestScriptHistory(shaAlgorithm)
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -53,32 +51,32 @@ class TestScriptHistoryTest {
     val text = file.readText().trim()
     assertThat(
       text,
-    ).isEqualTo("$NAME_COLUMN_HASH_CODE,$NAME_COLUMN_EXIT_CODE,$NAME_COLUMN_ELLAPSED_MILLIES")
+    ).isEqualTo("${shaAlgorithm.name},$NAME_COLUMN_EXIT_CODE,$NAME_COLUMN_ELLAPSED_MILLIES")
   }
 
   @Test
   fun testReadFromEmptyFile() {
     file.writeText("")
-    TestScriptHistory.loadFromCSV(file).let {
+    TestScriptHistory.loadFromCSV(shaAlgorithm, file).let {
       assertThat(history.asReadOnlyMap()).isEmpty()
     }
   }
 
   @Test
   fun testSerializeDeserialize() {
-    val result1 = Result(ExitCode.ZERO, 100)
-    val result2 = Result(ExitCode.ZERO, 200)
+    val result1 = PropertyTestResult(ExitCode.ZERO, 100)
+    val result2 = PropertyTestResult(ExitCode.ZERO, 200)
     history.cacheExecutionHistory(hash("AA"), result1)
     history.cacheExecutionHistory(hash("BB"), result2)
     assertThat(history.getExecutionHistoryFor(hash("AA"))).isEqualTo(result1)
     assertThat(history.getExecutionHistoryFor(hash("BB"))).isEqualTo(result2)
     history.saveToCSV(file)
 
-    TestScriptHistory.loadFromCSV(file).let {
+    TestScriptHistory.loadFromCSV(shaAlgorithm, file).let {
       assertThat(history.asReadOnlyMap()).isEqualTo(it.asReadOnlyMap())
       assertThat(it.asReadOnlyMap()).hasSize(2)
     }
   }
 
-  private fun hash(s: String) = Util.SHA512HashCode.createFromString(s).digest
+  private fun hash(s: String) = shaAlgorithm.createFromString(s).digest
 }

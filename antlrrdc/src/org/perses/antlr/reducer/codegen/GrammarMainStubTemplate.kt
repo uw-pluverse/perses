@@ -28,29 +28,30 @@ class GrammarMainStubTemplate(
   startRuleName: String,
   val testPrograms: ImmutableList<Path>,
 ) : AbstractGrammarStub(
-  packageName,
-  parserClassSimpleName,
-  lexerClassSimpleName,
-  startRuleName,
-) {
-
+    packageName,
+    parserClassSimpleName,
+    lexerClassSimpleName,
+    startRuleName,
+  ) {
   private val partitionedTestPrograms = partitionTestPrograms(testPrograms)
 
-  private val listPopulationCode = StringBuilder().apply {
-    for (partition in partitionedTestPrograms) {
-      append(
-        """
+  private val listPopulationCode =
+    StringBuilder().apply {
+      for (partition in partitionedTestPrograms) {
+        append(
+          """
         ${partition.methodName}(result); 
       """,
-      )
+        )
+      }
     }
-  }
 
   override fun classSimpleName() = parserClassSimpleName + "Main"
 
   override fun classFullName() = "$packageName.${classSimpleName()}"
 
-  override fun generateCode() = """
+  override fun generateCode() =
+    """
 package $packageName;
 
 import java.nio.file.*;
@@ -90,10 +91,10 @@ public class ${classSimpleName()} {
     return result;
   }
   ${
-    partitionedTestPrograms.asSequence().map {
-      it.generateCode()
-    }.joinToString("\n")
-  }
+      partitionedTestPrograms.asSequence().map {
+        it.generateCode()
+      }.joinToString("\n")
+    }
 }
   """
 
@@ -101,23 +102,22 @@ public class ${classSimpleName()} {
     id: Int,
     val programs: ImmutableList<Path>,
   ) {
-
     val methodName = "fillTestProgramList_$id"
 
-    fun generateCode(): String {
-      return StringBuilder().apply {
-        append("private static void $methodName(final ArrayList<Path> list) {\n")
-        for (p in programs) {
-          append(
-            """
+    fun generateCode(): String =
+      StringBuilder()
+        .apply {
+          append("private static void $methodName(final ArrayList<Path> list) {\n")
+          for (p in programs) {
+            append(
+              """
             list.add(Paths.get("${p.toAbsolutePath()}"));
            """,
-          )
-        }
-        append("}")
-        append("\n")
-      }.toString()
-    }
+            )
+          }
+          append("}")
+          append("\n")
+        }.toString()
   }
 
   companion object {
@@ -125,12 +125,14 @@ public class ${classSimpleName()} {
 
     internal fun partitionTestPrograms(list: ImmutableList<Path>): ImmutableList<Partition> {
       val partitions = Lists.partition(list, MAX_PARTITION_SIZE)
-      return partitions.withIndex().map {
-        Partition(it.index, ImmutableList.copyOf(it.value))
-      }.fold(
-        ImmutableList.builder<Partition>(),
-        { acc, e -> acc.add(e) },
-      ).build()
+      return partitions
+        .withIndex()
+        .map {
+          Partition(it.index, ImmutableList.copyOf(it.value))
+        }.fold(
+          ImmutableList.builder<Partition>(),
+          { acc, e -> acc.add(e) },
+        ).build()
     }
   }
 }

@@ -9,7 +9,6 @@ kt_jvm_test(
     deps = [
         "//:antlr_tool",
         "//:guava",
-        "//:kotlin_stdib",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/ast:ast_builder",
@@ -32,11 +31,7 @@ kt_jvm_test(
     name = "PersesSequenceAstTest",
     srcs = ["PersesSequenceAstTest.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
-        "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )

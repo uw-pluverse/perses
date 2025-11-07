@@ -27,21 +27,23 @@ class LexerRuleList(
   val defaultModeLexerRules: ImmutableList<AbstractPersesLexerRuleAst>,
   val nonDefaultModes: ImmutableList<LexerModeWithLexerRules>,
 ) : AbstractPersesAst() {
-
   init {
-    val modeNames = nonDefaultModes
-      .asSequence()
-      .map { obj: LexerModeWithLexerRules -> obj.modeName }
-      .distinct()
-      .toImmutableList()
+    val modeNames =
+      nonDefaultModes
+        .asSequence()
+        .map { obj: LexerModeWithLexerRules -> obj.modeName }
+        .distinct()
+        .toImmutableList()
     check(!modeNames.contains(DEFAULT_LEXER_MODe))
     check(modeNames.size == nonDefaultModes.size)
   }
 
-  private val allChildren = ImmutableList.builder<AbstractPersesAst>()
-    .addAll(defaultModeLexerRules)
-    .addAll(nonDefaultModes)
-    .build()
+  private val allChildren =
+    ImmutableList
+      .builder<AbstractPersesAst>()
+      .addAll(defaultModeLexerRules)
+      .addAll(nonDefaultModes)
+      .build()
 
   val flattenedLexerRules: ImmutableList<AbstractPersesLexerRuleAst> by lazy {
     val builder = ImmutableList.builder<AbstractPersesLexerRuleAst>()
@@ -53,7 +55,11 @@ class LexerRuleList(
     builder.build()
   }
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     for (defaultModeRule in defaultModeLexerRules) {
       defaultModeRule.toSourceCode(stream, indent, multiLineMode)
     }
@@ -78,9 +84,7 @@ class LexerRuleList(
   override val childCount: Int
     get() = allChildren.size
 
-  override fun getChild(index: Int): AbstractPersesAst {
-    return allChildren[index]
-  }
+  override fun getChild(index: Int): AbstractPersesAst = allChildren[index]
 
   override val tag: AstTag
     get() = AstTag.LEXER_RULE_LIST

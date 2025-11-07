@@ -26,7 +26,6 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class AutoIncrementDirectoryTest {
-
   private val tempDir = Files.createTempDirectory(javaClass.simpleName)
 
   private val autoDir = AutoIncrementDirectory("perses_result")

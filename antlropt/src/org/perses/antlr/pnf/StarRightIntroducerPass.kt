@@ -44,7 +44,5 @@ class StarRightIntroducerPass : AbstractStarIntroducerPass() {
   override fun constructNewSequenceDef(
     nonRecursiveDef: AbstractPersesRuleElement,
     starRuleRef: PersesRuleReferenceAst,
-  ): ImmutableList<AbstractPersesRuleElement> {
-    return ImmutableList.of(starRuleRef, nonRecursiveDef)
-  }
+  ): ImmutableList<AbstractPersesRuleElement> = ImmutableList.of(starRuleRef, nonRecursiveDef)
 }

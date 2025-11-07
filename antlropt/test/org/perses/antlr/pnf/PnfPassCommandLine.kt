@@ -30,18 +30,18 @@ import kotlin.io.path.writeText
 class PnfPassCommandLine(
   cmd: CommandOptions,
 ) : AbstractMain<PnfPassCommandLine.CommandOptions>(cmd) {
-
   override fun internalRun() {
     val parserGramamr = loadGrammarFromFile(cmd.flags.input!!)
 
     @Suppress("UNCHECKED_CAST")
     val passClass = Class.forName(cmd.flags.pass) as Class<AbstractPnfPass>
     val startRuleName = cmd.flags.startRuleName
-    val pass = if (Strings.isNullOrEmpty(startRuleName)) {
-      passClass.getConstructor().newInstance()
-    } else {
-      passClass.getConstructor(String::class.java).newInstance(startRuleName)
-    }
+    val pass =
+      if (Strings.isNullOrEmpty(startRuleName)) {
+        passClass.getConstructor().newInstance()
+      } else {
+        passClass.getConstructor(String::class.java).newInstance(startRuleName)
+      }
     val grammar = GrammarPair(parserGramamr, lexerGrammar = null)
     val output = pass.processGrammar(grammar)
     output.parserGrammar?.let {
@@ -67,6 +67,7 @@ class PnfPassCommandLine(
         description = "The name of the start rule in the input",
       )
       var startRuleName: String? = null
+
       override fun validate() {
         require(Files.isRegularFile(input!!))
         require(pass != null && pass!!.trim().isNotEmpty())
@@ -78,11 +79,12 @@ class PnfPassCommandLine(
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { CommandOptions() },
-        programName = PnfPassCommandLine::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { CommandOptions() },
+          programName = PnfPassCommandLine::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }

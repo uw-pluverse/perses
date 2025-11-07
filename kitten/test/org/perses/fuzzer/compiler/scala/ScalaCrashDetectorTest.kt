@@ -25,7 +25,6 @@ import org.perses.fuzzer.compilers.scala.ScalaCrashDetector
 
 @RunWith(JUnit4::class)
 class ScalaCrashDetectorTest {
-
   val detector = ScalaCrashDetector()
 
   @Test
@@ -51,50 +50,51 @@ class ScalaCrashDetectorTest {
         "at dotty.tools.dotc.parsing.Parsers${'$'}Parser.accept",
         "at dotty.tools.dotc.parsing.Parsers${'$'}Parser.enclosed",
         "at dotty.tools.dotc.parsing.Parsers${'$'}Parser.inBraces",
-      )
-      .inOrder()
+      ).inOrder()
   }
 
   @Test
   fun test_crash_output_2() {
     val signatureLines = computeSignature("crash_output_2.txt")
     assertThat(signatureLines).isNotEmpty()
-    assertThat(signatureLines).containsExactly(
-      "java.lang.StackOverflowError while compiling mutant.scala",
-      "Exception in thread \"main\" java.lang.StackOverflowError",
-    ).inOrder()
+    assertThat(signatureLines)
+      .containsExactly(
+        "java.lang.StackOverflowError while compiling mutant.scala",
+        "Exception in thread \"main\" java.lang.StackOverflowError",
+      ).inOrder()
   }
 
   @Test
   fun test_crash_output_3() {
     val signature = computeSignature("crash_output_3.txt")
 
-    assertThat(signature).containsExactly(
-      "Exception in thread \"main\" java.lang.AssertionError: assertion failed: " +
-        "no companion Test${'$'} in dotty.tools.dotc.core.Scopes${'$'}MutableScope",
-      "at scala.runtime.Scala3RunTime${'$'}.assertFailed",
-      "at dotty.tools.dotc.core.Decorators${'$'}.assertingErrorsReported",
-      "at dotty.tools.dotc.core.NamerOps${'$'}.findModuleBuddy",
-    ).inOrder()
+    assertThat(signature)
+      .containsExactly(
+        "Exception in thread \"main\" java.lang.AssertionError: assertion failed: " +
+          "no companion Test${'$'} in dotty.tools.dotc.core.Scopes${'$'}MutableScope",
+        "at scala.runtime.Scala3RunTime${'$'}.assertFailed",
+        "at dotty.tools.dotc.core.Decorators${'$'}.assertingErrorsReported",
+        "at dotty.tools.dotc.core.NamerOps${'$'}.findModuleBuddy",
+      ).inOrder()
   }
 
   @Test
   fun testSystemHashcodeSplit() {
-    val result = ScalaCrashDetector
-      .splitOnSystemHashCode(
-        "dotty.tools.dotc.core.Scopes${'$'}MutableScope@41522537",
-      )
-      .toList()
+    val result =
+      ScalaCrashDetector
+        .splitOnSystemHashCode(
+          "dotty.tools.dotc.core.Scopes${'$'}MutableScope@41522537",
+        ).toList()
     assertThat(result).hasSize(1)
-    assertThat(result).containsExactly(
-      "dotty.tools.dotc.core.Scopes${'$'}MutableScope",
-    ).inOrder()
+    assertThat(result)
+      .containsExactly(
+        "dotty.tools.dotc.core.Scopes${'$'}MutableScope",
+      ).inOrder()
   }
 
-  fun computeSignature(fileName: String): List<String> {
-    return CrashDetectorHelper.computeSignature(
+  fun computeSignature(fileName: String): List<String> =
+    CrashDetectorHelper.computeSignature(
       "kitten/test/org/perses/fuzzer/compiler/scala/$fileName",
       detector,
     )
-  }
 }

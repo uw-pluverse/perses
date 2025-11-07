@@ -34,20 +34,30 @@ import org.antlr.v4.runtime.atn.PredictionContextCache
 import org.antlr.v4.runtime.atn.PredictionMode
 import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.antlr.AbstractAntlrGrammar
+import org.perses.antlr.AntlrGrammarUtil
 import org.perses.antlr.GrammarHierarchy.Companion.createFromAntlrGrammar
 import org.perses.antlr.MetaTokenInfoDB
 import org.perses.antlr.ParseTreeWithParser
+import org.perses.antlr.ast.LexerRuleList
 import org.perses.antlr.ast.PersesAstBuilder.Companion.loadGrammarFromString
+import org.perses.antlr.ast.PersesChannelDefinitionAst
+import org.perses.antlr.ast.PersesGrammar
+import org.perses.antlr.ast.PersesGrammarOptionsAst
+import org.perses.antlr.ast.PersesLexerRuleAst
+import org.perses.antlr.ast.PersesTokenSpecificationAst
+import org.perses.antlr.ast.PersesUndefinedRuleElement
+import org.perses.antlr.ast.SymbolTable
 import org.perses.antlr.atn.LexerAtnWrapper
+import org.perses.antlr.pnf.UsedRuleNameCollector
 import org.perses.antlr.toTokenType
 import org.perses.program.LanguageKind
+import org.perses.util.ReflectionUtil
 import org.perses.util.Util
 import org.perses.util.ktFine
+import org.perses.util.toImmutableList
 import org.perses.util.transformToImmutableList
-import java.io.IOException
 import java.io.Reader
 import java.io.StringReader
-import java.io.UncheckedIOException
 import java.lang.reflect.Constructor
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
@@ -65,18 +75,21 @@ abstract class AbstractParserFacade protected constructor(
   val lexerClass: Class<out Lexer>,
   val parserClass: Class<out Parser>,
 ) {
-
   val ruleHierarchy = createFromAntlrGrammar(antlrGrammar)
 
   val identifierTokenTypes =
     identifierTokenTypes.toArray().asSequence().transformToImmutableList { it.toTokenType() }
 
+  val lexerAtnWrapper: LexerAtnWrapper by lazy {
+    if (ReflectionUtil.hasStaticFiled(lexerClass, FIELD_NAME_LEXER_WRAPPER)) {
+      ReflectionUtil.readStaticField(lexerClass, FIELD_NAME_LEXER_WRAPPER)
+    } else {
+      LexerAtnWrapper.createLexerWrapperFromLexerClass(lexerClass)
+    }
+  }
+
   val metaTokenInfoDb: MetaTokenInfoDB
     get() = lexerAtnWrapper.metaTokenInfoDB
-
-  val lexerAtnWrapper: LexerAtnWrapper<out Lexer> by lazy {
-    LexerAtnWrapper(lexerClass)
-  }
 
   init {
     require(identifierTokenTypes.toArray().distinct().size == identifierTokenTypes.length()) {
@@ -90,11 +103,8 @@ abstract class AbstractParserFacade protected constructor(
     }
   }
 
-  fun tokenizeFile(
-    file: Path,
-  ): ImmutableList<Token> {
-    return tokenizeString(content = file.readText(), fileName = file.absolute().toString())
-  }
+  fun tokenizeFile(file: Path): ImmutableList<Token> =
+    tokenizeString(content = file.readText(), fileName = file.absolute().toString())
 
   fun transformLiteralIntoSingleToken(literal: String): Token {
     val lexer = createLexerWithoutCache(CharStreams.fromString(literal))
@@ -115,49 +125,50 @@ abstract class AbstractParserFacade protected constructor(
     startRuleName: String? = null,
   ): ParseTreeWithParser {
     val reader = StringReader(string)
-    return parseReader(filename, reader, startRuleName)
+    try {
+      return parseReader(filename, reader, startRuleName)
+    } catch (e: Exception) {
+      val message =
+        """Failed to parse the following input.
+          |---------------------------------------
+          |$string
+          |---------------------------------------
+        """.trimMargin()
+      throw if (e is AntlrFailureException) {
+        AntlrFailureException(
+          cause = e,
+          file = e.file,
+          details = message + "\nThe following is the old details.\n" + e.details,
+        )
+      } else {
+        RuntimeException(message, e)
+      }
+    }
   }
 
-  fun isSourceCodeParsable(sourceCode: String): Boolean {
-    return try {
+  fun isSourceCodeParsable(sourceCode: String): Boolean =
+    try {
       parseString(sourceCode)
       true
     } catch (e: Exception) {
       logger.ktFine {
         """
-          The input source is not parsable.
-          
-          $e
+        The input source is not parsable.
+        
+        $e
         """.trimIndent()
       }
       false
     }
+
+  fun tokenizeString(
+    content: String,
+    fileName: String = DEFAULT_FILE_NAME,
+  ): ImmutableList<Token> {
+    val lexer: Lexer = createLexerWithoutCache(CharStreams.fromString(content, fileName))
+    return AntlrGrammarUtil.readAllTokensInDefaultChannel(lexer)
   }
 
-  fun tokenizeString(content: String, fileName: String = DEFAULT_FILE_NAME): ImmutableList<Token> {
-    val lexer: Lexer = createLexerWithoutCache(CharStreams.fromString(content, fileName))
-    val builder = ImmutableList.builder<Token>()
-    var token: Token = lexer.nextToken()
-    while (token.type != Token.EOF) {
-      if (token.channel == Token.DEFAULT_CHANNEL) {
-        builder.add(token)
-      }
-      token = lexer.nextToken()
-    }
-    return builder.build().also { tokens ->
-      Util.lazyAssert(test = {
-        if (tokens.isEmpty()) {
-          return@lazyAssert true
-        }
-        val distinctChannels = tokens.map { it.channel }.distinct()
-        distinctChannels.size == 1 && distinctChannels.single() == Token.DEFAULT_CHANNEL
-      }) {
-        tokens.joinToString(separator = "\n")
-      }
-    }
-  }
-  private val lexerConstructor: Constructor<out Lexer> =
-    lexerClass.getDeclaredConstructor(CharStream::class.java)
   private val parserConstructor: Constructor<out Parser> =
     parserClass.getDeclaredConstructor(TokenStream::class.java)
   private val startRuleParsingMethod: Method =
@@ -171,7 +182,10 @@ abstract class AbstractParserFacade protected constructor(
     return parseWithMethod(parser, method)
   }
 
-  private fun parseWithMethod(parser: Parser, method: Method): ParseTree {
+  private fun parseWithMethod(
+    parser: Parser,
+    method: Method,
+  ): ParseTree {
     try {
       return method.invoke(parser) as ParseTree
     } catch (e: InvocationTargetException) {
@@ -181,9 +195,11 @@ abstract class AbstractParserFacade protected constructor(
         throw AntlrFailureException(
           cause = targetException,
           file = targetException.file,
-          details = targetException.details + """\nThis is a rethrown exception to track the current stack trace.
+          details =
+            targetException.details +
+              """\nThis is a rethrown exception to track the current stack trace.
               |Method = $method
-          """.trimMargin(),
+              """.trimMargin(),
         )
       }
       throw RuntimeException(e.targetException)
@@ -195,11 +211,12 @@ abstract class AbstractParserFacade protected constructor(
     reader: Reader,
     startRuleName: String?,
   ): ParseTreeWithParser {
-    val parsingMethod = if (startRuleName == null) {
-      startRuleParsingMethod
-    } else {
-      parserClass.getDeclaredMethod(startRuleName)
-    }
+    val parsingMethod =
+      if (startRuleName == null) {
+        startRuleParsingMethod
+      } else {
+        parserClass.getDeclaredMethod(startRuleName)
+      }
     return Companion.parseReader(
       fileName,
       reader,
@@ -211,9 +228,12 @@ abstract class AbstractParserFacade protected constructor(
     )
   }
 
-  @Suppress("UNCHECKED_CAST")
-  private fun createLexer(inputStream: CharStream): Lexer {
-    return lexerConstructor.newInstance(inputStream)
+  protected open fun createLexer(inputStream: CharStream): Lexer {
+    val constructor = getCharStreamConstructorFromLexer(lexerClass)
+    val lexer = constructor.newInstance(inputStream) as Lexer
+    lexer.removeErrorListeners()
+    lexer.addErrorListener(FailOnErrorAntlrErrorListener(sourceFile = inputStream.sourceName))
+    return lexer
   }
 
   private fun createLexerWithoutCache(inputStream: CharStream): Lexer {
@@ -222,9 +242,12 @@ abstract class AbstractParserFacade protected constructor(
     return lexer
   }
 
-  @Suppress("UNCHECKED_CAST")
   private fun createParser(tokens: TokenStream): Parser {
-    return parserConstructor.newInstance(tokens) as Parser
+    val parser = parserConstructor.newInstance(tokens) as Parser
+    parser.removeErrorListeners()
+    parser.errorHandler = DefaultErrorStrategy()
+    parser.addErrorListener(FailOnErrorAntlrErrorListener(tokens.sourceName))
+    return parser
   }
 
   private fun createParserWithoutCache(tokens: TokenStream): Parser {
@@ -234,6 +257,11 @@ abstract class AbstractParserFacade protected constructor(
   }
 
   companion object {
+    val FIELD_NAME_LEXER_WRAPPER = "LEXER_WRAPPER"
+
+    fun getCharStreamConstructorFromLexer(lexerClass: Class<out Lexer>): Constructor<out Lexer> =
+      lexerClass.getDeclaredConstructor(CharStream::class.java)
+
     @JvmStatic
     fun readAntlrGrammarContent(
       antlrGrammarFileName: String,
@@ -245,23 +273,67 @@ abstract class AbstractParserFacade protected constructor(
     }
 
     @JvmStatic
+    protected fun createSeparateAntlrParserGrammarOnly(
+      startRuleName: String,
+      antlrParserGrammarFileName: String,
+      classUnderSamePkg: Class<*>,
+    ): AbstractAntlrGrammar.SeparateAntlrGrammar {
+      val parserGrammar =
+        loadGrammarFromString(
+          readAntlrGrammarContent(antlrParserGrammarFileName, classUnderSamePkg),
+        )
+      val lexerGrammar = computeDummyLexerGrammarForParserGrammar(parserGrammar)
+      return AbstractAntlrGrammar.SeparateAntlrGrammar(startRuleName, parserGrammar, lexerGrammar)
+    }
+
+    // TODO(cnsun): to be tested.
+    private fun computeDummyLexerGrammarForParserGrammar(
+      parserGrammar: PersesGrammar,
+    ): PersesGrammar {
+      require(parserGrammar.grammarType == PersesGrammar.GrammarType.PARSER)
+      val usedLexerRuleNameCollector = UsedRuleNameCollector()
+      usedLexerRuleNameCollector.preorderGrammar(parserGrammar)
+      val symbolTable = SymbolTable()
+      return PersesGrammar(
+        grammarType = PersesGrammar.GrammarType.LEXER,
+        grammarName = "JacksonLexer.g4",
+        channelDefinitions = PersesChannelDefinitionAst.EMPTY,
+        tokenSpecifications = PersesTokenSpecificationAst.EMPTY,
+        options = PersesGrammarOptionsAst.EMPTY,
+        namedActions = ImmutableList.of(),
+        lexerRules =
+          LexerRuleList(
+            defaultModeLexerRules =
+              usedLexerRuleNameCollector.tokenReferences
+                .map { lexerRuleName ->
+                  PersesLexerRuleAst(
+                    ruleNameHandle = symbolTable.ruleNameRegistry.getOrCreate(lexerRuleName),
+                    body = PersesUndefinedRuleElement(),
+                  )
+                }.toImmutableList(),
+            nonDefaultModes = ImmutableList.of(),
+          ),
+        parserRules = ImmutableList.of(),
+        symbolTable = SymbolTable(),
+      )
+    }
+
+    @JvmStatic
     protected fun createSeparateAntlrGrammar(
       startRuleName: String,
       antlrParserGrammarFileName: String,
       antlrLexerGrammarFileName: String,
       classUnderSamePkg: Class<*>,
     ): AbstractAntlrGrammar.SeparateAntlrGrammar {
-      return try {
-        val persesGrammar = loadGrammarFromString(
+      val parserGrammar =
+        loadGrammarFromString(
           readAntlrGrammarContent(antlrParserGrammarFileName, classUnderSamePkg),
         )
-        val lexerGrammar = loadGrammarFromString(
+      val lexerGrammar =
+        loadGrammarFromString(
           readAntlrGrammarContent(antlrLexerGrammarFileName, classUnderSamePkg),
         )
-        AbstractAntlrGrammar.SeparateAntlrGrammar(startRuleName, persesGrammar, lexerGrammar)
-      } catch (e: IOException) {
-        throw UncheckedIOException(e)
-      }
+      return AbstractAntlrGrammar.SeparateAntlrGrammar(startRuleName, parserGrammar, lexerGrammar)
     }
 
     @JvmStatic
@@ -270,13 +342,9 @@ abstract class AbstractParserFacade protected constructor(
       antlrGrammarFileName: String,
       classUnderSamePkg: Class<*>,
     ): AbstractAntlrGrammar.CombinedAntlrGrammar {
-      return try {
-        val content = readAntlrGrammarContent(antlrGrammarFileName, classUnderSamePkg)
-        val persesGrammar = loadGrammarFromString(content)
-        AbstractAntlrGrammar.CombinedAntlrGrammar(startRuleName, persesGrammar)
-      } catch (e: IOException) {
-        throw UncheckedIOException(e)
-      }
+      val content = readAntlrGrammarContent(antlrGrammarFileName, classUnderSamePkg)
+      val persesGrammar = loadGrammarFromString(content)
+      return AbstractAntlrGrammar.CombinedAntlrGrammar(startRuleName, persesGrammar)
     }
 
     private val logger = FluentLogger.forEnclosingClass()
@@ -284,33 +352,31 @@ abstract class AbstractParserFacade protected constructor(
     const val DISABLE_GLOBAL_CACHING_FOR_BETTER_MEMORY_THO_AFFECT_EFFICIENCY = true
 
     @JvmStatic
-    inline fun<L : Lexer, P : Parser> parseReader(
+    inline fun <L : Lexer, P : Parser> parseReader(
+      // TODO(cnsun): need to delete this fileName.
       fileName: String,
       reader: Reader,
       lexerCreator: (CharStream) -> L,
       parserCreator: (CommonTokenStream) -> P,
       parseFunction: (P) -> ParseTree,
     ): ParseTreeWithParser {
-      val listener = FailOnErrorAntlrErrorListener(fileName)
       val lexer = lexerCreator.invoke(CharStreams.fromReader(reader))
-      lexer.removeErrorListeners()
-      lexer.addErrorListener(listener)
       val tokenStream = CommonTokenStream(lexer)
       val parser = parserCreator.invoke(tokenStream)
       if (DISABLE_GLOBAL_CACHING_FOR_BETTER_MEMORY_THO_AFFECT_EFFICIENCY) {
-        parser.interpreter = ParserATNSimulator(
-          parser,
-          parser.atn,
-          parser.interpreter.decisionToDFA,
-          PredictionContextCache(),
-        )
+        parser.interpreter =
+          ParserATNSimulator(
+            parser,
+            parser.atn,
+            parser.interpreter.decisionToDFA,
+            PredictionContextCache(),
+          )
       }
-      parser.removeErrorListeners()
-      parser.errorHandler = DefaultErrorStrategy()
-      parser.addErrorListener(listener)
       val tree = parseFunction.invoke(parser)
-      lexer.interpreter.clearDFA()
-      lexer.interpreter.reset()
+      lexer.interpreter?.let { interpreter ->
+        interpreter.clearDFA()
+        interpreter.reset()
+      }
       parser.interpreter.clearDFA()
       parser.interpreter.reset()
       // TODO(cnsun): need to mark whether the entire input is parsed.
@@ -320,12 +386,14 @@ abstract class AbstractParserFacade protected constructor(
     @JvmStatic
     fun <LEXER : Lexer> disableGlobalCachingIfInstructed(lexer: LEXER): LEXER {
       if (DISABLE_GLOBAL_CACHING_FOR_BETTER_MEMORY_THO_AFFECT_EFFICIENCY) {
-        lexer.interpreter = LexerATNSimulator(
-          lexer,
-          lexer.atn,
-          lexer.interpreter.decisionToDFA,
-          PredictionContextCache(),
-        )
+        val oldIntepreter = lexer.interpreter ?: return lexer
+        lexer.interpreter =
+          LexerATNSimulator(
+            lexer,
+            lexer.atn,
+            oldIntepreter.decisionToDFA,
+            PredictionContextCache(),
+          )
       }
       return lexer
     }
@@ -335,12 +403,13 @@ abstract class AbstractParserFacade protected constructor(
       if (DISABLE_GLOBAL_CACHING_FOR_BETTER_MEMORY_THO_AFFECT_EFFICIENCY) {
         // The following code is from.
         // https://github.com/antlr/antlr4/issues/499#issuecomment-38159752
-        parser.interpreter = ParserATNSimulator(
-          parser,
-          parser.atn,
-          parser.interpreter.decisionToDFA,
-          PredictionContextCache(),
-        )
+        parser.interpreter =
+          ParserATNSimulator(
+            parser,
+            parser.atn,
+            parser.interpreter.decisionToDFA,
+            PredictionContextCache(),
+          )
         parser.interpreter.predictionMode = PredictionMode.LL
       }
       return parser

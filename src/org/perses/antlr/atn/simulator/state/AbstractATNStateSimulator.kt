@@ -22,7 +22,6 @@ import org.perses.antlr.atn.AbstractDecisionMaker
 import org.perses.antlr.atn.tdtree.AbstractTDTreeNode
 
 abstract class AbstractATNStateSimulator {
-
   abstract fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition
 
   abstract val endState: ATNState

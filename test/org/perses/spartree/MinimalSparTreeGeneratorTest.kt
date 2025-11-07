@@ -33,26 +33,91 @@ import org.perses.program.TokenizedProgramFactory
 @RunWith(JUnit4::class)
 class MinimalSparTreeGeneratorTest {
   private val parserFacade = PnfCParserFacade()
-  private val sparTreeNodeFactory = SparTreeNodeFactory(
-    metaTokenInfoDb = parserFacade.metaTokenInfoDb,
-    TokenizedProgramFactory.createEmptyFactory(
-      languageKind = parserFacade.language,
-    ),
-    grammarHierarchy = parserFacade.ruleHierarchy,
-  )
+  private val sparTreeNodeFactory =
+    SparTreeNodeFactory(
+      metaTokenInfoDb = parserFacade.metaTokenInfoDb,
+      TokenizedProgramFactory.createEmptyFactory(
+        languageKind = parserFacade.language,
+      ),
+      grammarHierarchy = parserFacade.ruleHierarchy,
+    )
   private val generator = MinimalSparTreeGenerator(parserFacade, sparTreeNodeFactory)
 
-  private val nonEmptyOriginalLexerRuleNodeList = ImmutableList.of(
-    LexerRuleSparTreeNode(
-      nodeId = 0,
-      PersesTokenFactory().createPersesToken(
-        parserFacade.transformLiteralIntoSingleToken("if"),
+  private val nonEmptyOriginalLexerRuleNodeList =
+    ImmutableList.of(
+      LexerRuleSparTreeNode(
+        nodeId = 0,
+        PersesTokenFactory().createPersesToken(
+          parserFacade.transformLiteralIntoSingleToken("if"),
+        ),
+        parserFacade.ruleHierarchy.getRuleHierarchyEntryWithNameOrThrow("If"),
       ),
-      parserFacade.ruleHierarchy.getRuleHierarchyEntryWithNameOrThrow("If"),
-    ),
-  )
+    )
 
   private val ruleList = parserFacade.ruleHierarchy.ruleList
+
+  @Test
+  fun testCanGenerateSingleTokens() {
+    val rulesWithSingleTokens =
+      generator.ruleToPreGeneratedCandidateSparTreeNodeMap.entries
+        .map { (ruleName, nodeList) ->
+          ruleName to
+            nodeList.withIndex().filter { node ->
+              node.value.isTokenNode() &&
+                node.value
+                  .asLexerRule()
+                  .token
+                  .isPlaceholder()
+                  .not()
+            }
+        }.filter { entry ->
+          entry.second.isNotEmpty()
+        }.flatMap { entry ->
+          entry.second.map { entry.first to it }
+        }
+    assertThat(rulesWithSingleTokens).isNotEmpty()
+    rulesWithSingleTokens.forEach { (ruleName, alternative) ->
+      check(alternative.value.isTokenNode()) {
+        alternative.value.printTreeStructure()
+      }
+      val generatedNode =
+        generator.generateNodeFromDesignatedAlternative(
+          originalLexerRuleNodeList =
+            ImmutableList.of(
+              alternative.value
+                .recursiveDeepCopy(
+                  AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy,
+                ).result
+                .asLexerRule(),
+            ),
+          ruleNameHandle = ruleName,
+          indexOfAlternative = alternative.index,
+        )
+      assertThat(generatedNode).isNotNull()
+      checkNotNull(generatedNode) { "This is null" }
+      assertThat(generatedNode.isTokenNode()).isTrue()
+      assertThat(
+        generatedNode.asLexerRule().token.lexemeText,
+      ).isEqualTo(
+        alternative.value
+          .asLexerRule()
+          .token.lexemeText,
+      )
+      assertThat(
+        generatedNode
+          .asLexerRule()
+          .token
+          .asAntlrToken()
+          .position,
+      ).isEqualTo(
+        alternative.value
+          .asLexerRule()
+          .token
+          .asAntlrToken()
+          .position,
+      )
+    }
+  }
 
   // statement
   //    : labeledStatement
@@ -64,121 +129,135 @@ class MinimalSparTreeGeneratorTest {
   //    | asmStatement
   //    | aux_rule__statement_5
   //    ;
-  private val statementRule = ruleList.single { entry ->
-    val body = entry.ruleDef.body
-    if (body !is PersesAlternativeBlockAst) {
-      return@single false
-    }
-    val alternatives = body.alternatives
-    listOf("labeledStatement", "compoundStatement", "expressionStatement")
-      .all { ruleName ->
-        alternatives.any { it is PersesRuleReferenceAst && it.ruleNameHandle.ruleName == ruleName }
-      }
-  }.ruleDef
+  private val statementRule =
+    ruleList
+      .single { entry ->
+        val body = entry.ruleDef.body
+        if (body !is PersesAlternativeBlockAst) {
+          return@single false
+        }
+        val alternatives = body.alternatives
+        listOf("labeledStatement", "compoundStatement", "expressionStatement")
+          .all { ruleName ->
+            alternatives.any {
+              it is PersesRuleReferenceAst && it.ruleNameHandle.ruleName == ruleName
+            }
+          }
+      }.ruleDef
 
   @Test
   fun testPreGeneratedCandidateSparTree() {
     assertThat(generator.ruleToPreGeneratedCandidateSparTreeNodeMap.size)
       .isEqualTo(ruleList.filter { it.ruleDef.tag != AstTag.RULE_DEFINITION_LEXER_FRAGMENT }.size)
-    val candidateSparTreeNodes = generator
-      .ruleToPreGeneratedCandidateSparTreeNodeMap[statementRule.ruleNameHandle]!!
+    val candidateSparTreeNodes =
+      generator
+        .ruleToPreGeneratedCandidateSparTreeNodeMap[statementRule.ruleNameHandle]!!
     assertThat(
-      candidateSparTreeNodes.map {
-        it.leafNodeSequence().joinToString(separator = "") { it.token.text }
-      }.toList(),
+      candidateSparTreeNodes
+        .map {
+          it.leafNodeSequence().joinToString(separator = "") { it.token.lexemeText }
+        }.toList(),
+    ).containsExactly(
+      "<!PLACEHOLDER!>:;",
+      ";",
+      "{}",
+      "if(<!PLACEHOLDER!>);",
+      "do;while(<!PLACEHOLDER!>);",
+      "continue;",
+      "asm();",
     )
-      .containsExactly(
-        ":;",
-        ";",
-        "{}",
-        "if();",
-        "do;while();",
-        "continue;",
-        "asm();",
-      )
   }
 
   @Test
   fun testGenerateCandidateSparTreeNodes() {
-    val indicesOfAlternativesWithSmallerSize = generator.getIndicesOfAlternativesWithSmallerSize(
-      statementRule.ruleNameHandle,
-      4,
-    )
-    val indicesOfAlternativesWithSameSize = generator.getIndicesOfAlternativesWithSameSize(
-      statementRule.ruleNameHandle,
-      4,
-    )
+    val indicesOfAlternativesWithSmallerSize =
+      generator.getIndicesOfAlternativesWithSmallerSize(
+        statementRule.ruleNameHandle,
+        4,
+      )
+    val indicesOfAlternativesWithSameSize =
+      generator.getIndicesOfAlternativesWithSameSize(
+        statementRule.ruleNameHandle,
+        4,
+      )
     assertThat(indicesOfAlternativesWithSmallerSize)
       .isEqualTo(ImmutableIntArray.of(0, 1, 2, 5))
     assertThat(indicesOfAlternativesWithSameSize)
       .isEqualTo(ImmutableIntArray.of(6))
     val abstractSparTreeNodes =
       generator.ruleToPreGeneratedCandidateSparTreeNodeMap[statementRule.ruleNameHandle]!!
-        .map { it.leafNodeSequence().map { it.token.text }.joinToString(separator = "") }
+        .map { it.leafNodeSequence().map { it.token.lexemeText }.joinToString(separator = "") }
     assertThat(
       abstractSparTreeNodes,
     ).containsExactly(
-      ":;",
+      "<!PLACEHOLDER!>:;",
       "{}",
       ";",
-      "if();",
-      "do;while();",
+      "if(<!PLACEHOLDER!>);",
+      "do;while(<!PLACEHOLDER!>);",
       "continue;",
       "asm();",
-//      "switch();" FIXME(zhenyang)
+//      "switch();" FIXME(zhenyang), TODO(cnsun)
 //      "while();"
     )
   }
 
   @Test
   fun testGenerateNodeFromDesignatedAlternatives() {
-    val tree = generator.generateNodeFromDesignatedAlternative(
-      nonEmptyOriginalLexerRuleNodeList,
-      statementRule.ruleNameHandle,
-      1,
-    )!!
-    assertThat(tree.leafNodeSequence().joinToString(separator = "") { it.token.text })
+    val tree =
+      generator.generateNodeFromDesignatedAlternative(
+        nonEmptyOriginalLexerRuleNodeList,
+        statementRule.ruleNameHandle,
+        1,
+      )!!
+    assertThat(tree.leafNodeSequence().joinToString(separator = "") { it.token.lexemeText })
       .isEqualTo("{}")
   }
 
   @Test
   fun testGenerateNodeFromDesignatedAlternativesUsesOriginalToken() {
-    val tree = generator.generateNodeFromDesignatedAlternative(
-      ImmutableList.of(
-        LexerRuleSparTreeNode(
-          nodeId = 0,
-          PersesTokenFactory().createPersesToken(
-            CommonTokenFactory().create(
-              parserFacade.identifierTokenTypes[0].antlrTokenType,
-              "test",
+    val tree =
+      generator.generateNodeFromDesignatedAlternative(
+        ImmutableList.of(
+          LexerRuleSparTreeNode(
+            nodeId = 0,
+            PersesTokenFactory().createPersesToken(
+              CommonTokenFactory().create(
+                parserFacade.identifierTokenTypes[0].antlrTokenType,
+                "test",
+              ),
             ),
+            parserFacade.ruleHierarchy.getRuleHierarchyEntryWithNameOrThrow("Identifier"),
           ),
-          parserFacade.ruleHierarchy.getRuleHierarchyEntryWithNameOrThrow("Identifier"),
         ),
-      ),
-      statementRule.ruleNameHandle,
-      0,
-    )!!
-    assertThat(tree.leafNodeSequence().joinToString(separator = "") { it.token.text })
+        statementRule.ruleNameHandle,
+        0,
+      )!!
+    assertThat(tree.leafNodeSequence().joinToString(separator = "") { it.token.lexemeText })
       .isEqualTo("test:;")
   }
 
-  private fun removeIdFromTreeDump(treeDump: String): String = treeDump.replace(
-    Regex("id=\\d+"),
-    "id=",
-  )
+  private fun removeIdFromTreeDump(treeDump: String): String =
+    treeDump.replace(
+      Regex("id=\\d+"),
+      "id=",
+    )
 
-  private fun assertEqualTreeDumps(dump1: String, dump2: String) {
+  private fun assertEqualTreeDumps(
+    dump1: String,
+    dump2: String,
+  ) {
     assertThat(removeIdFromTreeDump(dump1)).isEqualTo(removeIdFromTreeDump(dump2))
   }
 
   @Test
   fun testGenerateNodeFromDesignatedAlternativesWithInsufficientOriginalToken() {
-    val tree = generator.generateNodeFromDesignatedAlternative(
-      nonEmptyOriginalLexerRuleNodeList,
-      statementRule.ruleNameHandle,
-      0,
-    )
+    val tree =
+      generator.generateNodeFromDesignatedAlternative(
+        nonEmptyOriginalLexerRuleNodeList,
+        statementRule.ruleNameHandle,
+        0,
+      )
     assertThat(tree).isNull()
   }
 }

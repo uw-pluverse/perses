@@ -28,7 +28,6 @@ import org.perses.antlr.pnf.AstUtil.convertStarToPlus
 
 @RunWith(JUnit4::class)
 class AstUtilTest {
-
   @Test
   fun testConvertStarToPlusWithSingleTerminalAsBody() {
     val a = createTerminal("a")
@@ -64,9 +63,10 @@ class AstUtilTest {
   fun testConvertStarToPlusWithSeqAsBody() {
     val a = GrammarTestingUtility.createTerminal("a")
     val b = GrammarTestingUtility.createTerminal("b")
-    val star = PersesStarAst.createGreedy(
-      GrammarTestingUtility.createSeqOfTerminals("a", "b"),
-    )
+    val star =
+      PersesStarAst.createGreedy(
+        GrammarTestingUtility.createSeqOfTerminals("a", "b"),
+      )
     convertStarToPlus(listOf(a, b, star)).let { result ->
       assertThat(result).hasSize(1)
       val plus = result.single() as PersesPlusAst

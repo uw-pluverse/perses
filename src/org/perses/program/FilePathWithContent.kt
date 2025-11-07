@@ -21,7 +21,9 @@ import org.perses.util.AbstractFileContent.BinaryFileContent
 import java.nio.file.Files
 import java.nio.file.Path
 
-class FilePathWithContent(val file: Path) {
+class FilePathWithContent(
+  val file: Path,
+) {
   init {
     require(Files.isRegularFile(file)) {
       "The file should be a regular file $file"
@@ -46,9 +48,9 @@ class FilePathWithContent(val file: Path) {
     binaryContent.writeToFile(path)
   }
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
       .add("file", file)
       .toString()
-  }
 }

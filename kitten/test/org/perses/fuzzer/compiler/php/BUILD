@@ -9,7 +9,6 @@ kt_jvm_test(
         "php_crash.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",

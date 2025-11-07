@@ -25,14 +25,14 @@ import org.perses.fuzzer.compilers.javac.JavacCrashDetector
 
 @RunWith(JUnit4::class)
 class JavacCrashDetectorTest {
-
   val javaDetector = JavacCrashDetector()
 
   private fun computeSignature(path: String): List<String> {
-    val signatureLines = CrashDetectorHelper.computeSignature(
-      "kitten/test/org/perses/fuzzer/compiler/javac/$path",
-      javaDetector,
-    )
+    val signatureLines =
+      CrashDetectorHelper.computeSignature(
+        "kitten/test/org/perses/fuzzer/compiler/javac/$path",
+        javaDetector,
+      )
     return signatureLines
   }
 

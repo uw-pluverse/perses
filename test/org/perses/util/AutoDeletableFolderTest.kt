@@ -29,7 +29,6 @@ import kotlin.io.path.isDirectory
 
 @RunWith(JUnit4::class)
 class AutoDeletableFolderTest {
-
   private lateinit var workingDir: Path
 
   @Before

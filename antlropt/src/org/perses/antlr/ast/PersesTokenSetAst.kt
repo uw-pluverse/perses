@@ -24,7 +24,6 @@ import java.io.PrintStream
 class PersesTokenSetAst(
   private val terminals: ImmutableList<AbstractPersesTerminalAst>,
 ) : AbstractPersesRuleElement() {
-
   private val sortedTerminals =
     terminals.asSequence().sorted().toImmutableList()
 
@@ -33,7 +32,11 @@ class PersesTokenSetAst(
     check(sortedTerminals.size == terminals.size)
   }
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     val size = terminals.size
     val newIndent = indent.increasedIndent
     check(size > 1)
@@ -46,13 +49,10 @@ class PersesTokenSetAst(
     stream.print(")")
   }
 
-  override fun getChild(index: Int): AbstractPersesRuleElement {
-    return terminals[index]
-  }
+  override fun getChild(index: Int): AbstractPersesRuleElement = terminals[index]
 
-  override fun getChildForEquivalenceChecking(index: Int): AbstractPersesRuleElement {
-    return sortedTerminals[index]
-  }
+  override fun getChildForEquivalenceChecking(index: Int): AbstractPersesRuleElement =
+    sortedTerminals[index]
 
   override val childCount: Int
     get() = terminals.size
@@ -61,12 +61,11 @@ class PersesTokenSetAst(
 
   override fun createWithNewChildren(
     newChildren: List<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement {
-    return PersesTokenSetAst(
+  ): AbstractPersesRuleElement =
+    PersesTokenSetAst(
       newChildren
         .asSequence()
         .map { it as AbstractPersesTerminalAst }
         .toImmutableList(),
     )
-  }
 }

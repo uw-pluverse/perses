@@ -22,7 +22,6 @@ import org.perses.antlr.ast.PersesAlternativeBlockAst
 import org.perses.antlr.ast.SmartAstConstructor
 
 class MutableAltBlock : Iterable<AbstractPersesRuleElement> {
-
   private val alternatives = ArrayList<AbstractPersesRuleElement>()
 
   fun asSequence(): Sequence<AbstractPersesRuleElement> = alternatives.asSequence()
@@ -47,9 +46,10 @@ class MutableAltBlock : Iterable<AbstractPersesRuleElement> {
     return alternatives.add(newAlt)
   }
 
-  fun containsEquivalent(alt: AbstractPersesRuleElement): Boolean {
-    return alternatives.any { alt.isEquivalent(it) }
-  }
+  fun containsEquivalent(alt: AbstractPersesRuleElement): Boolean =
+    alternatives.any {
+      alt.isEquivalent(it)
+    }
 
   fun addAllIfInequivalent(newAlt: Iterable<AbstractPersesRuleElement>) {
     newAlt.forEach {
@@ -67,46 +67,47 @@ class MutableAltBlock : Iterable<AbstractPersesRuleElement> {
     }
   }
 
-  fun copy(): MutableAltBlock = MutableAltBlock().let { copy ->
-    copy.alternatives.addAll(alternatives)
-    copy
-  }
+  fun copy(): MutableAltBlock =
+    MutableAltBlock().let { copy ->
+      copy.alternatives.addAll(alternatives)
+      copy
+    }
 
   operator fun get(index: Int): AbstractPersesRuleElement = alternatives[index]
 
-  override fun iterator(): Iterator<AbstractPersesRuleElement> {
-    return alternatives.iterator()
-  }
+  override fun iterator(): Iterator<AbstractPersesRuleElement> = alternatives.iterator()
 
-  fun removeAlt(alt: AbstractPersesRuleElement): Boolean {
-    return alternatives.remove(alt)
-  }
+  fun removeAlt(alt: AbstractPersesRuleElement): Boolean = alternatives.remove(alt)
 
-  fun removeAltIf(criteria: (AbstractPersesRuleElement) -> Boolean): Boolean {
-    return alternatives.removeIf(criteria)
-  }
+  fun removeAltIf(criteria: (AbstractPersesRuleElement) -> Boolean): Boolean =
+    alternatives.removeIf(criteria)
 
   fun clear() {
     alternatives.clear()
   }
 
-  fun asRuleBody(): AbstractPersesRuleElement {
-    return SmartAstConstructor.createForAlternatives(alternatives)
-  }
+  fun asRuleBody(): AbstractPersesRuleElement =
+    SmartAstConstructor.createForAlternatives(alternatives)
 
-  fun replace(existingAlt: AbstractPersesRuleElement, newAlt: AbstractPersesRuleElement) {
+  fun replace(
+    existingAlt: AbstractPersesRuleElement,
+    newAlt: AbstractPersesRuleElement,
+  ) {
     require(existingAlt !== newAlt)
     require(!existingAlt.isEquivalent(newAlt)) {
       "existing=$existingAlt, new=$newAlt"
     }
-    val first = alternatives
-      .withIndex()
-      .first { it.value === existingAlt } // this can throw.
+    val first =
+      alternatives
+        .withIndex()
+        .first { it.value === existingAlt } // this can throw.
     alternatives[first.index] = newAlt
-    alternatives.withIndex()
+    alternatives
+      .withIndex()
       .asSequence()
       .filter { it.value.isEquivalent(newAlt) }
-      .toList().let {
+      .toList()
+      .let {
         check(it.size == 1) { it }
       }
   }
@@ -126,10 +127,12 @@ class MutableAltBlock : Iterable<AbstractPersesRuleElement> {
         result.add("Invalid tag type: ${it.tag}, expected=${AstTag.ALTERNATIVE_BLOCK}")
       }
     }
-    val equivalentAsts = AstUtil.findEquivalenceAst(alternatives)
-      .asSequence()
-      .filter { ec -> ec.size() > 1 }
-      .toList()
+    val equivalentAsts =
+      AstUtil
+        .findEquivalenceAst(alternatives)
+        .asSequence()
+        .filter { ec -> ec.size() > 1 }
+        .toList()
     if (equivalentAsts.isNotEmpty()) {
       result.add("Duplicate rules")
       for (i in equivalentAsts.indices) {

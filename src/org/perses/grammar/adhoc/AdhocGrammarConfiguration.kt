@@ -17,15 +17,15 @@
 package org.perses.grammar.adhoc
 
 import com.fasterxml.jackson.core.type.TypeReference
-import com.google.common.hash.Hashing
 import org.perses.PersesConstants
 import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.grammar.AbstractParserFacade
 import org.perses.program.LanguageKind
+import org.perses.util.ReflectionUtil
 import org.perses.util.Serialization
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.java.JarFile
 import org.perses.util.toImmutableList
-import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
@@ -44,17 +44,19 @@ class AdhocGrammarConfiguration(
   val existingLanguageKindClassFullName: String?,
   val startRuleName: String,
   tokenNamesOfIdentifiers: List<String>,
+  val shaAlgorithm: EnumShaAlgorithm,
 ) {
-
   val parserGrammar = readAntlrGrammar(parserFile)
   val packageName = packageName ?: computeGrammarPackageName(parserGrammar.grammarName)
-  val parserFacadeClassSimpleName = parserFacadeClassSimpleName
-    ?: parserGrammar.grammarName + "AdhocParserFacade"
-  val sortedDistinctTokenNamesOfIdentifiers = tokenNamesOfIdentifiers
-    .asSequence()
-    .sorted()
-    .distinct()
-    .toImmutableList()
+  val parserFacadeClassSimpleName =
+    parserFacadeClassSimpleName
+      ?: parserGrammar.grammarName + "AdhocParserFacade"
+  val sortedDistinctTokenNamesOfIdentifiers =
+    tokenNamesOfIdentifiers
+      .asSequence()
+      .sorted()
+      .distinct()
+      .toImmutableList()
 
   val parserFacadeClassFullName: String
     get() = "$packageName.$parserFacadeClassSimpleName"
@@ -71,21 +73,20 @@ class AdhocGrammarConfiguration(
     require(lexerBase == null || Files.isRegularFile(lexerBase))
   }
 
-  fun computeDirectoryForGrammar(
-    persesConstants: PersesConstants,
-  ): Path {
-    val adhocGrammarRoot = persesConstants
-      .getPersesRootFolderOrCreate().getPersesAdhocRootOrCreate()
+  fun computeDirectoryForGrammar(persesConstants: PersesConstants): Path {
+    val adhocGrammarRoot =
+      persesConstants
+        .getPersesRootFolderOrCreate()
+        .getPersesAdhocRootOrCreate()
     val hash = computeContentHashCode()
     return adhocGrammarRoot.file.resolve(
       "${parserGrammar.grammarName}/$hash",
     )
   }
 
-  fun computeJarFilePathPathForGrammar(persesConstants: PersesConstants): Path {
-    return computeDirectoryForGrammar(persesConstants)
+  fun computeJarFilePathPathForGrammar(persesConstants: PersesConstants): Path =
+    computeDirectoryForGrammar(persesConstants)
       .resolve("perses_adhoc_language_support.jar")
-  }
 
   fun loadJarFile(persesConstants: PersesConstants): ParserFacadeJarFile {
     val path = computeJarFilePathPathForGrammar(persesConstants)
@@ -96,23 +97,21 @@ class AdhocGrammarConfiguration(
   }
 
   fun computeContentHashCode(): String {
-    val combinedParserLexer = buildString {
-      append(parserFile.readText()).append("\n")
-      lexerFile?.readText()?.let { append(it).append("\n") }
-      append("package-name=").append("\n")
-      append("parser-facade-class-simple-name:").append(parserFacadeClassSimpleName).append("\n")
-      append("language-kind-yaml-file:").append(languageKindYamlFile).append("\n")
-      append("existing-language-kind-class-simple-name:")
-        .append(existingLanguageKindClassFullName)
-        .append("\n")
-      append("token-names-of-identifiers:")
-        .append(sortedDistinctTokenNamesOfIdentifiers)
-        .append("\n")
-    }
-    return Hashing.sha256().hashString(
-      combinedParserLexer,
-      StandardCharsets.UTF_8,
-    ).toString()
+    val combinedParserLexer =
+      buildString {
+        append(parserFile.readText()).append("\n")
+        lexerFile?.readText()?.let { append(it).append("\n") }
+        append("package-name=").append("\n")
+        append("parser-facade-class-simple-name:").append(parserFacadeClassSimpleName).append("\n")
+        append("language-kind-yaml-file:").append(languageKindYamlFile).append("\n")
+        append("existing-language-kind-class-simple-name:")
+          .append(existingLanguageKindClassFullName)
+          .append("\n")
+        append("token-names-of-identifiers:")
+          .append(sortedDistinctTokenNamesOfIdentifiers)
+          .append("\n")
+      }
+    return shaAlgorithm.hashString(combinedParserLexer).toString()
   }
 
   fun copyGrammarFilesToDirectory(dir: Path) {
@@ -145,8 +144,9 @@ class AdhocGrammarConfiguration(
   }
 
   companion object {
-    fun readAntlrGrammar(parserFile: Path) = PersesAstBuilder
-      .loadGrammarFromString(parserFile.readText())
+    fun readAntlrGrammar(parserFile: Path) =
+      PersesAstBuilder
+        .loadGrammarFromString(parserFile.readText())
 
     fun computeGrammarPackageName(grammarName: String) =
       "org.perses.grammar.adhoc.${grammarName.lowercase()}"
@@ -157,31 +157,28 @@ class AdhocGrammarConfiguration(
   ) {
     @Suppress("UNCHECKED_CAST")
     val klass = jarFile.loadMainClass().kotlin as KClass<out AbstractParserFacade>
-    val languageKind = klass.java.getField("LANGUAGE").get(null) as LanguageKind
-    fun createParserFacade(): AbstractParserFacade {
-      return klass.createInstance()
-    }
+    val languageKind = ReflectionUtil.readStaticField<LanguageKind>(klass.java, "LANGUAGE")
+
+    fun createParserFacade(): AbstractParserFacade = klass.createInstance()
 
     companion object {
       const val FIELD_NAME_LANGUAGE = "LANGUAGE"
       const val LANGUAGE_INFO_FILE_PATH = "META-INFO/language_info.yaml"
 
-      fun from(path: Path): ParserFacadeJarFile {
-        return ParserFacadeJarFile(
+      fun from(path: Path): ParserFacadeJarFile =
+        ParserFacadeJarFile(
           JarFile(path, readLanguageInfoOrNull(path)!!.parserFacadeClassFullName),
         )
-      }
 
-      fun isParserFacadeJarFile(path: Path): Boolean {
-        return readLanguageInfoOrNull(path) != null
-      }
+      fun isParserFacadeJarFile(path: Path): Boolean = readLanguageInfoOrNull(path) != null
 
       private fun readLanguageInfoOrNull(path: Path): LanguageInfo? {
         return try {
-          val yaml = JarFile.readTextFileInZipFile(
-            path,
-            LANGUAGE_INFO_FILE_PATH,
-          )
+          val yaml =
+            JarFile.readTextFileInZipFile(
+              path,
+              LANGUAGE_INFO_FILE_PATH,
+            )
           return Serialization.fromYamlString(yaml, object : TypeReference<LanguageInfo>() {})
         } catch (e: Exception) {
           null
@@ -189,10 +186,10 @@ class AdhocGrammarConfiguration(
       }
     }
 
-    data class LanguageInfo(val parserFacadeClassFullName: String) {
-      fun toYamlString(): String {
-        return Serialization.toYamlString(this)
-      }
+    data class LanguageInfo(
+      val parserFacadeClassFullName: String,
+    ) {
+      fun toYamlString(): String = Serialization.toYamlString(this)
     }
   }
 }

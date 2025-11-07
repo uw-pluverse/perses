@@ -33,27 +33,28 @@ import org.perses.antlr.ParseTreeUtil.getSymbolicTokenTypeName
 
 @RunWith(JUnit4::class)
 class ParseTreeUtilTest {
-
   @Test
   fun test() {
-    val lexerGrammar = LexerGrammar(
-      """
-          lexer grammar L;
-          A : 'a' ;
-          B : 'b' ;
-          C : 'c' ;
-          D : 'd' ;
-      """.trimIndent(),
-    )
-    val parserGrammar = Grammar(
-      """
-      parser grammar T;
-      start : other C ;
-      other: (A|B)* d ;
-      d: 'd' ;
-      """.trimIndent(),
-      lexerGrammar,
-    )
+    val lexerGrammar =
+      LexerGrammar(
+        """
+        lexer grammar L;
+        A : 'a' ;
+        B : 'b' ;
+        C : 'c' ;
+        D : 'd' ;
+        """.trimIndent(),
+      )
+    val parserGrammar =
+      Grammar(
+        """
+        parser grammar T;
+        start : other C ;
+        other: (A|B)* d ;
+        d: 'd' ;
+        """.trimIndent(),
+        lexerGrammar,
+      )
     val lexEngine = lexerGrammar.createLexerInterpreter(CharStreams.fromString("a b d c"))
     val tokens = CommonTokenStream(lexEngine)
     val parser: ParserInterpreter = parserGrammar.createParserInterpreter(tokens)

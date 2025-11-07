@@ -33,7 +33,6 @@ import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class OutlineImplicitTokenDefPassTest {
-
   val pass = OutlineImplicitTokenDefPass()
 
   @Test
@@ -46,10 +45,11 @@ class OutlineImplicitTokenDefPassTest {
 
   @Test
   fun testOutlineStringLiteralForCombinedWithLexerRules() {
-    val parserGrammar = GrammarTestingUtility.createPersesGrammarFromString(
-      "start: ID 'a' ;",
-      "ID: 'b' ; ",
-    )
+    val parserGrammar =
+      GrammarTestingUtility.createPersesGrammarFromString(
+        "start: ID 'a' ;",
+        "ID: 'b' ; ",
+      )
     val pairBefore = GrammarPair(parserGrammar, lexerGrammar = null)
     val pairAfter = pass.processGrammar(pairBefore)
     assertThat(pairAfter.lexerGrammar).isNull()
@@ -98,34 +98,39 @@ class OutlineImplicitTokenDefPassTest {
 
   @Test
   fun testLiteralDoesNotBecomeIdentifier() {
-    val parserGrammarBefore = PersesAstBuilder.loadGrammarFromString(
-      Paths.get("src/org/perses/grammar/c/OrigC.g4").readText(),
-    )
+    val parserGrammarBefore =
+      PersesAstBuilder.loadGrammarFromString(
+        Paths.get("src/org/perses/grammar/c/OrigC.g4").readText(),
+      )
     val program = "__attribute__ a int"
-    val parserGrammarAfter = pass.processGrammar(
-      GrammarPair(
-        parserGrammarBefore,
-        lexerGrammar = null,
-      ),
-    ).parserGrammar!!
+    val parserGrammarAfter =
+      pass
+        .processGrammar(
+          GrammarPair(
+            parserGrammarBefore,
+            lexerGrammar = null,
+          ),
+        ).parserGrammar!!
 
-    val interpreters = listOf(parserGrammarBefore, parserGrammarAfter)
-      .map {
-        Grammar(it.sourceCode).createLexerInterpreter(
-          CharStreams.fromString(program),
-        )
-      }
+    val interpreters =
+      listOf(parserGrammarBefore, parserGrammarAfter)
+        .map {
+          Grammar(it.sourceCode).createLexerInterpreter(
+            CharStreams.fromString(program),
+          )
+        }
     check(interpreters.size == 2)
 
-    val list = interpreters.map { lexerInterpreter ->
-      CommonTokenStream(lexerInterpreter).let { stream ->
-        stream.fill()
-        stream.tokens
-          .filter { token -> token.type != Token.EOF }
-          .map { token -> lexerInterpreter.vocabulary.getSymbolicName(token.type) }
-          .distinct() // calling distinct is important.
+    val list =
+      interpreters.map { lexerInterpreter ->
+        CommonTokenStream(lexerInterpreter).let { stream ->
+          stream.fill()
+          stream.tokens
+            .filter { token -> token.type != Token.EOF }
+            .map { token -> lexerInterpreter.vocabulary.getSymbolicName(token.type) }
+            .distinct() // calling distinct is important.
+        }
       }
-    }
     assertThat(list).hasSize(2)
     val before = list.first()
     val after = list.last()
@@ -135,15 +140,19 @@ class OutlineImplicitTokenDefPassTest {
     assertThat(before).hasSize(3)
     assertThat(after).hasSize(3)
 
-    val lexerInterpreterAfter = Grammar(
-      parserGrammarAfter.sourceCode,
-    ).createLexerInterpreter(
-      CharStreams.fromString(program),
-    )
-    val tokensAfter = CommonTokenStream(lexerInterpreterAfter).let {
-      it.fill()
-      it.tokens.filter { it.type != Token.EOF }
-    }.map { lexerInterpreterAfter.vocabulary.getSymbolicName(it.type) }.distinct()
+    val lexerInterpreterAfter =
+      Grammar(
+        parserGrammarAfter.sourceCode,
+      ).createLexerInterpreter(
+        CharStreams.fromString(program),
+      )
+    val tokensAfter =
+      CommonTokenStream(lexerInterpreterAfter)
+        .let {
+          it.fill()
+          it.tokens.filter { it.type != Token.EOF }
+        }.map { lexerInterpreterAfter.vocabulary.getSymbolicName(it.type) }
+        .distinct()
     assertThat(tokensAfter).hasSize(3)
 
     val interpreterBefore = interpreters.first()

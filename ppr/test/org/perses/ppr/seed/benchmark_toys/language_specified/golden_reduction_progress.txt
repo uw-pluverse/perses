@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -22,10 +23,11 @@ inputFlags:
   sourceFile: "seed.unknown_language"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_seed_reduction_golden_test_lang_perses_node_priority_with_dfs_delta_seed.unknown_language_variant.unknown_language"
+  outputDir: "result_seed_reduction_golden_test_lang_node_priority-dfs_seed.unknown_language_variant.unknown_language"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: null
   testScriptExecutionTimeoutInSeconds: 600
@@ -38,13 +40,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -55,6 +60,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -63,7 +69,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -73,27 +79,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 seedInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -106,15 +121,16 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: perses_node_priority_with_dfs_delta
-condition: smaller
+Cache setting: query-caching=false, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 23
+(38/38)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
 
 
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -305,15 +321,31 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/38)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:38/38=100.00%
+FixPt[1][node_priority-dfs][DFS](38/38)  Testing the empty input. Global ratio:38/38=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@2
+    --file: seed.unknown_language--
+    --file: variant.unknown_language--
+    b
+    ++
+    c
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](38/38)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:38/38=100.00%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=5}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/38)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:38/38=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@1
     --file: seed.unknown_language--
     int
     main
@@ -401,6 +433,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/38)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:38/38=100.00%
+FixPt[1][node_priority-dfs][DFS](38/38)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:38/38=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
@@ -522,42 +556,6 @@ The current best program is the following
     ;
     --file: variant.unknown_language--
     #include <stdio.h>
-    ;
-    b
-    ++
-    c
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-                 ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.unknown_language--
-    #include <stdio.h>
-    ;
-    --file: variant.unknown_language--
-    #include <stdio.h>
-    ;
-    b
-    ++
-    c
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-                 ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.unknown_language--
-    #include <stdio.h>
-    ;
-    --file: variant.unknown_language--
-    #include <stdio.h>
     b
     ++
     ;
@@ -583,24 +581,6 @@ The current best program is the following
     --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
                        ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.unknown_language--
-    #include <stdio.h>
-    ;
-    --file: variant.unknown_language--
-    #include <stdio.h>
-    b
-    ++
-    c
-    ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-                ;
 ------------------------------------------------------------
 
 
@@ -882,9 +862,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:38/38=100.00%
+FixPt[1][node_priority-dfs][DFS](38/38)  Testing the empty input. Global ratio:38/38=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -914,6 +896,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:38/38=100.00%
+FixPt[1][node_priority-dfs][DFS](38/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:38/38=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 10
@@ -1052,9 +1036,44 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/38)  Minimizer DfsListMinimizer starts. Input=[0-5]#6. Global ratio:38/38=100.00%
+FixPt[1][node_priority-dfs][DFS](38/38)  Testing the empty input. Global ratio:38/38=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@6
+    --file: seed.unknown_language--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    }
+    --file: variant.unknown_language--
+    #include <stdio.h>
+    int
+    main
+    (
+    void
+    )
+    {
+    b
+    ++
+    c
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(void)
+    {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](38/38)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:38/38=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1117,9 +1136,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/38)  Try deleting [3-5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:38/38=100.00%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1203,6 +1223,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](38/38)  Try deleting [5]#1: Interesting. Local ratio: 6/6=100.00%. Global ratio:38/38=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 0 --> 0.
@@ -1211,7 +1232,7 @@ The current best program is the following
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 16
+    size before clearance = 18
 ------------------------------------------------------------
 
 
@@ -1223,7 +1244,7 @@ token count change 38 -> 35
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1286,9 +1307,10 @@ token count change 38 -> 35
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1358,9 +1380,10 @@ token count change 38 -> 35
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [4]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1437,9 +1460,10 @@ token count change 38 -> 35
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [3]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1490,9 +1514,10 @@ token count change 38 -> 35
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1565,9 +1590,10 @@ token count change 38 -> 35
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [2]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1629,9 +1655,10 @@ token count change 38 -> 35
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [0-1]#2: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1704,9 +1731,10 @@ token count change 38 -> 35
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [1]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -1779,6 +1807,8 @@ token count change 38 -> 35
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [0]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
+FixPt[1][node_priority-dfs][DFS](35/38)  Minimizer DfsListMinimizer ends. Result=[0-4]#5. Local ratio: 5/6=83.33%. Global ratio:35/38=92.11%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 13 from 38 to 35
@@ -2026,9 +2056,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/38=92.11%
+FixPt[1][node_priority-dfs][DFS](35/38)  Testing the empty input. Global ratio:35/38=92.11%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -2101,6 +2133,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/38=92.11%
+FixPt[1][node_priority-dfs][DFS](35/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/38=92.11%
 ===================Node reduction is done===================
 
 Failed to reduce node 50
@@ -3193,9 +3227,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -3266,6 +3302,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 70
@@ -3585,9 +3623,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -3661,6 +3701,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 268
@@ -3825,9 +3867,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -3901,6 +3945,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 232
@@ -4143,9 +4189,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -4219,6 +4267,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 195
@@ -4461,9 +4511,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -4537,6 +4589,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 158
@@ -4779,9 +4833,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -4856,6 +4912,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 74
@@ -4938,85 +4996,6 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=76}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.unknown_language--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    int
-    b
-    =
-    2
-    ;
-    int
-    c
-    =
-    3
-    ;
-    ;
-    printf
-    (
-    "%d"
-    )
-    ;
-    }
-    --file: variant.unknown_language--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    int
-    b
-    =
-    2
-    ;
-    int
-    c
-    =
-    3
-    ;
-    b
-    ++
-    ;
-    printf
-    (
-    "%d"
-    c
-    )
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main(void)
-    {
-        int a = 1;
-        int b = 2;
-        int c = 3;
-                 ;
-        printf("%d"   );
-    }
 ------------------------------------------------------------
 
 
@@ -5256,9 +5235,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -5334,6 +5315,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 237
@@ -5498,9 +5481,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -5576,6 +5561,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 200
@@ -5740,9 +5727,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -5818,6 +5807,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 163
@@ -5982,9 +5973,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Testing the empty input. Global ratio:31/38=81.58%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__expression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__expression_1]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -6061,6 +6054,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](31/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
+FixPt[1][node_priority-dfs][DFS](31/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:31/38=81.58%
 ===================Node reduction is done===================
 
 Failed to reduce node 78
@@ -8945,9 +8940,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[1][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     main
@@ -9023,6 +9020,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[1][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 6
@@ -9189,7 +9188,7 @@ Failed to reduce node 288
 ------------------------------------------------------------
 
 
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -9350,15 +9349,31 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@2
+    --file: seed.unknown_language--
+    --file: variant.unknown_language--
+    b
+    ++
+    c
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:30/38=78.95%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=5}
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@1
     --file: seed.unknown_language--
     int
     main
@@ -9433,6 +9448,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
@@ -9527,42 +9544,6 @@ The current best program is the following
     b
     ++
     ;
-    c
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-                 ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.unknown_language--
-    #include <stdio.h>
-    ;
-    --file: variant.unknown_language--
-    #include <stdio.h>
-    ;
-    b
-    ++
-    c
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-                 ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.unknown_language--
-    #include <stdio.h>
-    ;
-    --file: variant.unknown_language--
-    #include <stdio.h>
-    ;
-    b
-    ++
     c
     --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
@@ -9838,9 +9819,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -9868,6 +9851,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 10
@@ -9992,9 +9977,42 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0-4]#5. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@5
+    --file: seed.unknown_language--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    }
+    --file: variant.unknown_language--
+    #include <stdio.h>
+    int
+    main
+    (
+    )
+    {
+    b
+    ++
+    c
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main(    )
+    {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10055,9 +10073,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10121,9 +10140,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10198,9 +10218,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10245,9 +10266,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10314,9 +10336,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10372,9 +10395,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0-1]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10441,9 +10465,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10510,6 +10535,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 13
@@ -10739,9 +10766,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -10808,6 +10837,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 50
@@ -11649,9 +11680,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -11720,6 +11753,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 70
@@ -12033,9 +12068,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -12107,6 +12144,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 232
@@ -12343,9 +12382,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -12417,6 +12458,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 195
@@ -12653,9 +12696,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -12727,6 +12772,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 158
@@ -12963,9 +13010,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -13038,6 +13087,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 74
@@ -13118,83 +13169,6 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=76}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.unknown_language--
-    #include <stdio.h>
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    int
-    b
-    =
-    2
-    ;
-    int
-    c
-    =
-    3
-    ;
-    ;
-    printf
-    (
-    "%d"
-    )
-    ;
-    }
-    --file: variant.unknown_language--
-    #include <stdio.h>
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    int
-    b
-    =
-    2
-    ;
-    int
-    c
-    =
-    3
-    ;
-    b
-    ++
-    ;
-    printf
-    (
-    "%d"
-    c
-    )
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main(    )
-    {
-        int a = 1;
-        int b = 2;
-        int c = 3;
-                 ;
-        printf("%d"   );
-    }
 ------------------------------------------------------------
 
 
@@ -13428,9 +13402,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -13504,6 +13480,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 268
@@ -13664,9 +13642,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -13740,6 +13720,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 237
@@ -13900,9 +13882,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -13976,6 +13960,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 200
@@ -14136,9 +14122,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -14212,6 +14200,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 163
@@ -14372,9 +14362,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__expression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__expression_1]dd@1
     --file: seed.unknown_language--
     #include <stdio.h>
     int
@@ -14449,6 +14441,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 78
@@ -17150,12 +17144,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Testing the empty input. Global ratio:30/38=78.95%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=284}
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](30/38)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
+FixPt[2][node_priority-dfs][DFS](30/38)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:30/38=78.95%
 ===================Node reduction is done===================
 
 Failed to reduce node 6
@@ -17322,77 +17320,21 @@ Failed to reduce node 288
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 38
-  characterCount: 84
-  fileContents:
-  - fileName: "seed.unknown_language"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.unknown_language"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(30/38)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID           Reducer #Tokens #Chars #NonDeletions
+ 0 node_priority-dfs      -8    -18             0
+ 1 node_priority-dfs       0      0             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 30
-  characterCount: 66
-  fileContents:
-  - fileName: "seed.unknown_language"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.unknown_language"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 30
-  characterCount: 66
-  fileContents:
-  - fileName: "seed.unknown_language"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.unknown_language"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+          Reducer Times #Tokens #Chars
+node_priority-dfs     2      -8    -18
+------------------------------------- End --------------------------------------
 
 
 #test success = 3
-#test failure = 94
+#test failure = 91
 #test result cache hits = 0
 #test execution cancelled = 0
 #node edit action set cache hits = 40

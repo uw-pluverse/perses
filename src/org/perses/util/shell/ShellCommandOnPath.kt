@@ -34,7 +34,6 @@ data class ShellCommandOnPath(
   val originalCommand: String,
   val defaultFlags: ImmutableList<String> = ImmutableList.of(),
 ) {
-
   val fileName = Paths.get(originalCommand).fileName.toString()
 
   val normalizedCommand: String = normalizeAndCheckExecutability(originalCommand)
@@ -58,19 +57,17 @@ data class ShellCommandOnPath(
   }
 
   companion object {
-
     private val logger = FluentLogger.forEnclosingClass()
 
     @JvmStatic
     fun tryCreating(
       command: String,
       defaultFlags: ImmutableList<String> = ImmutableList.of(),
-    ) =
-      try {
-        ShellCommandOnPath(command, defaultFlags)
-      } catch (e: Exception) {
-        null
-      }
+    ) = try {
+      ShellCommandOnPath(command, defaultFlags)
+    } catch (e: Exception) {
+      null
+    }
 
     @JvmStatic
     fun tryCreating(
@@ -78,12 +75,14 @@ data class ShellCommandOnPath(
       vararg defaultFlags: String,
     ) = tryCreating(command, ImmutableList.copyOf(defaultFlags))
 
-    val ELEMENTS_ON_ENV_PATH = System.getenv("PATH")
-      .split(pathSeparator.toRegex())
-      .toTypedArray()
-      .asSequence()
-      .map { Paths.get(it) }
-      .toImmutableList()
+    val ELEMENTS_ON_ENV_PATH =
+      System
+        .getenv("PATH")
+        .split(pathSeparator.toRegex())
+        .toTypedArray()
+        .asSequence()
+        .map { Paths.get(it) }
+        .toImmutableList()
 
     @JvmStatic
     fun normalizeAndCheckExecutability(cmdName: String): String {
@@ -116,9 +115,12 @@ data class ShellCommandOnPath(
       }
       check(Files.exists(cmdPath)) {
         val currentDir = Shells.CURRENT_DIR.absolute()
-        val children = if (cmdPath.parent != null) { Util.listFilesInFolder(cmdPath.parent) } else {
-          emptySet<Path>()
-        }
+        val children =
+          if (cmdPath.parent != null) {
+            Util.listFilesInFolder(cmdPath.parent)
+          } else {
+            emptySet<Path>()
+          }
         """The command $cmdPath does not exist. 
           |currentDir=$currentDir
           |children=$children
@@ -135,8 +137,11 @@ data class ShellCommandOnPath(
       return cmdPath.toAbsolutePath().toString()
     }
 
-    internal fun isCmdOnPATH(cmdName: String, elementsOnEnvPath: ImmutableList<Path>): Boolean {
-      return elementsOnEnvPath.any {
+    internal fun isCmdOnPATH(
+      cmdName: String,
+      elementsOnEnvPath: ImmutableList<Path>,
+    ): Boolean =
+      elementsOnEnvPath.any {
         if (Files.isRegularFile(it)) {
           it.endsWith(cmdName)
         } else {
@@ -145,6 +150,5 @@ data class ShellCommandOnPath(
           Files.isRegularFile(fullPath) && Files.isExecutable(fullPath)
         }
       }
-    }
   }
 }

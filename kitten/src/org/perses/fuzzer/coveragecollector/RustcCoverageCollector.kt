@@ -36,24 +36,25 @@ class RustcCoverageCollector(
   val monitorInterval: Long,
   val timeout: Long,
 ) : ICoverageCollector {
-
-  private val grcovCommand = ShellCommandOnPath("grcov").also {
-    val versionOutput = it.runWith(extraArguments = ImmutableList.of("--version"))
-    require(versionOutput.exitCode.isZero()) {
-      versionOutput
+  private val grcovCommand =
+    ShellCommandOnPath("grcov").also {
+      val versionOutput = it.runWith(extraArguments = ImmutableList.of("--version"))
+      require(versionOutput.exitCode.isZero()) {
+        versionOutput
+      }
     }
-  }
 
   private val profrawDirHistory = mutableListOf<Path>()
 
-  private val emptyCoverageReport = ICoverageCollector.CoverageReport(
-    branch_covered = 0,
-    branch_total = 0,
-    line_covered = 0,
-    line_total = 0,
-    aflMapDensity = 0.0,
-    aflHitCount = 0,
-  )
+  private val emptyCoverageReport =
+    ICoverageCollector.CoverageReport(
+      branch_covered = 0,
+      branch_total = 0,
+      line_covered = 0,
+      line_total = 0,
+      aflMapDensity = 0.0,
+      aflHitCount = 0,
+    )
   private var executedCount = 0
   private var collectCount = 0
   private var numDirs: Long = 0
@@ -97,14 +98,20 @@ class RustcCoverageCollector(
     }
     val oldProfrawDir = profrawDirHistory[collectCount++]
     ShellCommandOnPath("grcov").runWith(
-      extraArguments = ImmutableList.of(
-        oldProfrawDir.toString(),
-        "-s", rustcSourceDir.toString(),
-        "-b", rustcBinaryDir.toString(),
-        "--llvm-path", llvmBinaryDir.toString(),
-        "-t", "lcov",
-        "-o", "$coverageDir/cov_$collectCount.info",
-      ),
+      extraArguments =
+        ImmutableList.of(
+          oldProfrawDir.toString(),
+          "-s",
+          rustcSourceDir.toString(),
+          "-b",
+          rustcBinaryDir.toString(),
+          "--llvm-path",
+          llvmBinaryDir.toString(),
+          "-t",
+          "lcov",
+          "-o",
+          "$coverageDir/cov_$collectCount.info",
+        ),
     )
     oldProfrawDir.toFile().deleteRecursively()
     return emptyCoverageReport
@@ -116,10 +123,11 @@ class RustcCoverageCollector(
     threadId: Long,
   ): ActionResult {
     val llvmProfileFile = System.getProperty("LLVM_PROFILE_FILE")
-    val env = ImmutableMap.of(
-      "LLVM_PROFILE_FILE",
-      llvmProfileFile,
-    )
+    val env =
+      ImmutableMap.of(
+        "LLVM_PROFILE_FILE",
+        llvmProfileFile,
+      )
     return action.compileWithExtraEnvironment(file, env)
   }
 

@@ -17,7 +17,7 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.listminimizer.EnumListInputMinimizerType
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 
 class ReductionAlgorithmControlFlagGroup :
@@ -35,7 +35,7 @@ class ReductionAlgorithmControlFlagGroup :
     names = ["--list-algs"],
     description = "list all the reduction algorithms.",
     help = true,
-    order = 1,
+    order = 10,
   )
   var listAllReductionAlgorithms = false
 
@@ -43,8 +43,7 @@ class ReductionAlgorithmControlFlagGroup :
     names = ["--reparse-each-iteration"],
     description = "Reparse the program before the start of each fixpoint iteration.",
     arity = 1,
-    hidden = true,
-    order = 2,
+    order = 20,
   )
   var rebuildParseTreeEachIteration = true
 
@@ -52,7 +51,7 @@ class ReductionAlgorithmControlFlagGroup :
     names = ["--enable-token-slicer"],
     description = "Enable token slicer after syntax-guided reduction is done. Maybe slow.",
     arity = 1,
-    order = 3,
+    order = 30,
   )
   var enableTokenSlicer = false
 
@@ -60,7 +59,7 @@ class ReductionAlgorithmControlFlagGroup :
     names = ["--enable-tree-slicer"],
     description = "Enable tree slicer after syntax-guided reduction, and before token slicer",
     arity = 1,
-    order = 4,
+    order = 40,
   )
   var enableTreeSlicer = false
 
@@ -68,17 +67,42 @@ class ReductionAlgorithmControlFlagGroup :
     names = ["--enable-line-slicer"],
     description = "Enable line slicer after syntax-guided reduction, and before token slicer",
     arity = 1,
-    order = 5,
+    order = 50,
   )
   var enableLineSlicer = false
 
   @Parameter(
-    names = ["--default-delta-debugger-for-kleene"],
-    description = "The default delta debugger algorithm to reduce kleene nodes.",
+    names = ["--default-list-minimizer-for-kleene"],
+    description = "The default list minimizer algorithm to reduce kleene nodes.",
     arity = 1,
-    order = 6,
+    order = 60,
   )
-  var defaultDeltaDebuggerTypeForKleene = EnumListInputMinimizerType.DFS
+  var defaultListMinimizerTypeForKleene = EnumListMinimizerType.DFS
+
+  @Parameter(
+    names = ["--default-list-minimizer-for-hdd"],
+    description = "The default list minimizer algorithm to reduce kleene nodes.",
+    arity = 1,
+    hidden = true,
+    order = 65,
+  )
+  var defaultListMinimizerTypeForHDD = EnumListMinimizerType.CDD
+
+  @Parameter(
+    names = ["--min-slicing-window-size"],
+    description = "The minimum window size of the windowed slicer.",
+    arity = 1,
+    order = 70,
+  )
+  var minSlicingWindowSize = 1
+
+  @Parameter(
+    names = ["--max-slicing-window-size"],
+    description = "The maximum window size of the windowed slicer.",
+    arity = 1,
+    order = 80,
+  )
+  var maxSlicingWindowSize = 14
 
   @JvmField
   @Parameter(
@@ -86,7 +110,7 @@ class ReductionAlgorithmControlFlagGroup :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = 9,
+    order = 90,
   )
   var maxEditCountForRegularRuleNode = 100
 
@@ -96,7 +120,7 @@ class ReductionAlgorithmControlFlagGroup :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = 10,
+    order = 100,
   )
   var maxBfsDepthForRegularRuleNode = 5
 
@@ -106,10 +130,14 @@ class ReductionAlgorithmControlFlagGroup :
     description = "The max count of edit candidates for reducing a regular rule node.",
     arity = 1,
     hidden = true,
-    order = 11,
+    order = 110,
   )
   var stopAtFirstCompatibleChildForRegularRuleNode = false
 
   override fun validate() {
+    require(minSlicingWindowSize > 0) { "minSlicingWindowSize must be greater than 0" }
+    require(maxSlicingWindowSize >= minSlicingWindowSize) {
+      "maxSlicingWindowSize must be greater than or equal to minSlicingWindowSize"
+    }
   }
 }

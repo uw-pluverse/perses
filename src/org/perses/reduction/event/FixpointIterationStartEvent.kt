@@ -32,7 +32,6 @@ class FixpointIterationStartEvent internal constructor(
   private val treeStructureDumper: () -> String,
   val testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
 ) : AbstractStartEvent(currentTimeMillis, programSize) {
-
   /**
    * The tree dump might be outdated, because the spartree
    * here might have been modified by certain reducer, and the tree
@@ -42,6 +41,11 @@ class FixpointIterationStartEvent internal constructor(
   val oudatedTreeDump: String by lazy {
     treeStructureDumper()
   }
+
+  override val prefixLabelFromRootToHere: String
+    get() =
+      reductionStartEvent.prefixLabelFromRootToHere +
+        "FixPt[$iteration][${reducerClass.shortName}]"
 
   fun createEndEvent(
     currentTimeMillis: Long,
@@ -57,6 +61,17 @@ class FixpointIterationStartEvent internal constructor(
       testScriptStatistics = testScriptStatistics,
     )
   }
+
+  fun createAdHocMessageEvent(
+    programSize: Int,
+    messageComputer: () -> Any,
+    newPrefixLabelFromRootToHere: String? = null,
+  ): AdHocMessageEvent =
+    reductionStartEvent.createAdHocMessageEvent(
+      programSize = programSize,
+      prefixLabelFromRootToHere = newPrefixLabelFromRootToHere ?: prefixLabelFromRootToHere,
+      messageComputer = messageComputer,
+    )
 
   fun createBestProgramUpdatedEvent(
     currentTimeMillis: Long,
@@ -121,9 +136,7 @@ class FixpointIterationStartEvent internal constructor(
     )
   }
 
-  override fun initialProgramSize(): Int {
-    return reductionStartEvent.initialProgramSize()
-  }
+  override fun initialProgramSize(): Int = reductionStartEvent.initialProgramSize()
 
   fun createTokenSlicingStartEvent(
     currentTimeMillis: Long,

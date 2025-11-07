@@ -18,7 +18,7 @@ package org.perses.program.printer
 
 import org.perses.antlr.toTokenType
 import org.perses.grammar.python3.Python3Lexer
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
 import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
@@ -32,27 +32,30 @@ class PythonFormatPrintingVisitor(
   tokenPositionProvider: AbstractTokenPositionProvider,
   tokenPlacementListener: AbstractTokenPlacementListener?,
 ) : AbstractOrigFormatPrintingVisitor(
-  program,
-  keepBlankLines,
-  tokenPositionProvider,
-  tokenPlacementListener,
-) {
-
+    program,
+    keepBlankLines,
+    tokenPositionProvider,
+    tokenPlacementListener,
+  ) {
   init {
     require(numSpacesPerIndent > 0) { numSpacesPerIndent }
   }
 
   private var indentLevel = 0
 
-  override fun printNonEmptyLine(line: List<PersesToken>, builder: FastStringBuilder) {
+  override fun printNonEmptyLine(
+    line: List<PersesTokenFactory.AbstractPersesToken>,
+    builder: FastStringBuilder,
+  ) {
     lazyAssert { line.isNotEmpty() }
     printIndent(builder)
     printNonEmptyLine(
-      startPositionInLine = tokenPositionProvider.getCharPositionInLine(
-        line.first(),
-        currentCursorPositionInLine = 0,
-        previousToken = null,
-      ),
+      startPositionInLine =
+        tokenPositionProvider.getCharPositionInLine(
+          line.first(),
+          currentCursorPositionInLine = 0,
+          previousToken = null,
+        ),
       line = line,
       builder = builder,
     )
@@ -63,25 +66,24 @@ class PythonFormatPrintingVisitor(
     if (indentLevel == 0) {
       return
     }
-    lazyAssert({ builder.lastChar() == '\n' }) { builder }
+    lazyAssert({ builder.lastCharOrThrow() == '\n' }) { builder }
     val spaceCount = indentLevel * numSpacesPerIndent
     for (i in 1..spaceCount) {
       builder.append(' ')
     }
   }
 
-  override fun isControlToken(token: PersesToken): Boolean {
-    return when (token.type) {
+  override fun isControlToken(token: PersesTokenFactory.AbstractPersesToken): Boolean =
+    when (token.tokenType) {
       Python3Lexer.NEWLINE.toTokenType(),
       Python3Lexer.INDENT.toTokenType(),
       Python3Lexer.DEDENT.toTokenType(),
       -> true
       else -> false
     }
-  }
 
-  override fun visitControlToken(token: PersesToken) {
-    when (token.type) {
+  override fun visitControlToken(token: PersesTokenFactory.AbstractPersesToken) {
+    when (token.tokenType) {
       Python3Lexer.INDENT.toTokenType() -> ++indentLevel
       Python3Lexer.DEDENT.toTokenType() -> --indentLevel
     }

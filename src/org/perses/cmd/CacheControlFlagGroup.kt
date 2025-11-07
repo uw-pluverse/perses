@@ -23,6 +23,7 @@ import org.perses.reduction.cache.EnumQueryCachingControl
 import org.perses.reduction.cache.QueryCacheType
 import org.perses.util.Fraction
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -34,7 +35,7 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
     converter = QueryCachingControlConverter::class,
     order = 0,
   )
-  var queryCaching = EnumQueryCachingControl.AUTO
+  var queryCaching = EnumQueryCachingControl.TRUE
 
   @JvmField
   @Parameter(
@@ -42,7 +43,7 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
     description = "the algorithm of the query cache",
     order = 10,
   )
-  var cacheType: QueryCacheType = QueryCacheType.CONTENT_SHA512
+  var cacheType: QueryCacheType = QueryCacheType.CONTENT_SHA_HASH_FORMAT
 
   @Parameter(
     names = ["--edit-caching"],
@@ -55,13 +56,14 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
 
   @Parameter(
     names = ["--query-cache-refresh-threshold"],
-    description = "The threshold triggers a refresh of the query cache. " +
-      "The refresh follows the equation: t' - t'' >= t * threshold(%). " +
-      "t 	- original tokens. " +
-      "t' 	- tokens of the best program at last refresh. " +
-      "t''	- tokens of the current best program. " +
-      "Refresh threshold requires an integer input ranging [0, 100]. " +
-      "e.g. 0 represents 0%, 85 represents 85%.",
+    description =
+      "The threshold triggers a refresh of the query cache. " +
+        "The refresh follows the equation: t' - t'' >= t * threshold(%). " +
+        "t 	- original tokens. " +
+        "t' 	- tokens of the best program at last refresh. " +
+        "t''	- tokens of the current best program. " +
+        "Refresh threshold requires an integer input ranging [0, 100]. " +
+        "e.g. 0 represents 0%, 85 represents 85%.",
     order = 30,
     hidden = true,
   )
@@ -82,7 +84,16 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
     hidden = true,
     arity = 1,
   )
-  var enablePassCache = false
+  var enablePassCache = true
+
+  @Parameter(
+    names = ["--global-caching"],
+    description = "Whether to enable pass-level cache. If enabled, a reducer might be skipped",
+    order = 55,
+    hidden = true,
+    arity = 1,
+  )
+  var enableGlobalCache = false
 
   @Parameter(
     names = ["--global-cache-file"],
@@ -102,9 +113,16 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
   )
   var pathToSaveUpdatedGlobalCache: Path? = null
 
-  fun queryCacheRefreshThresholdAsFraction(): Fraction {
-    return Fraction(queryCacheRefreshThreshold, 100)
-  }
+  fun queryCacheRefreshThresholdAsFraction(): Fraction = Fraction(queryCacheRefreshThreshold, 100)
+
+  @Parameter(
+    names = ["--default-sha-alg-type"],
+    description = "The SHA algorithm used in the reduction process",
+    order = 100,
+    hidden = false,
+    arity = 1,
+  )
+  var defaultShaAlgorithm: EnumShaAlgorithm = EnumShaAlgorithm.SHA256
 
   override fun validate() {
     queryCacheRefreshThresholdAsFraction() // Should not throw exceptions.
@@ -112,15 +130,22 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
       check(Files.isRegularFile(it)) {
         "The global cache file $it is not a file."
       }
+      check(enableGlobalCache) {
+        "The global cache file is specified, but --global-caching is not specified."
+      }
+    }
+    if (!enableGlobalCache) {
+      check(globalCacheFile == null && pathToSaveUpdatedGlobalCache == null) {
+        "The global cache is disabled, and all global-cache-related flags should not specified."
+      }
     }
   }
 
   class QueryCachingControlConverter : IStringConverter<EnumQueryCachingControl> {
-    override fun convert(flagValue: String?): EnumQueryCachingControl {
-      return EnumQueryCachingControl.convert(flagValue!!)
+    override fun convert(flagValue: String?): EnumQueryCachingControl =
+      EnumQueryCachingControl.convert(flagValue!!)
         ?: throw ParameterException(
           "Cannot convert '$flagValue' to an instanceof ${EnumQueryCachingControl::class}",
         )
-    }
   }
 }

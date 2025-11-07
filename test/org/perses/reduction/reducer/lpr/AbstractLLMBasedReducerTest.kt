@@ -21,12 +21,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.program.EnumFormatControl
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
-class AbstractLLMBasedReducerTest : AbstractReducerFunctionalTest() {
-
+class AbstractLLMBasedReducerTest {
   @Test
   fun testDefaultLLMClientScript() {
     assertThat(AbstractLLMBasedReducer.defaultLLMClientScript.fileName)
@@ -35,63 +34,74 @@ class AbstractLLMBasedReducerTest : AbstractReducerFunctionalTest() {
 
   @Test
   fun testDataTypeElimination() {
-    test(
+    ReducerFunctionalTestUtility(
       reductionFolder = "test/org/perses/reduction/reducer/lpr",
       testScript = "test_data_type_elimination.sh",
       sourceFile = "test_data_type_elimination.c",
-      algorithmType = LLMBasedDataTypeEliminationReducer.META,
+      reducerAnnotation = LLMBasedDataTypeEliminationReducer.META,
       cmdCustomizer = { cmd ->
         cmd.lprFlags.llmClientPath =
           Paths.get("scripts/llm_scripts/llm_client_mock_to_test_workflow.py")
         cmd.reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
       },
-      expected = """
+    ).use {
+      it.runReducerAndTest(
+        expected =
+          """
       |int main() {
       |  int x = 1;
       |  int y = x + 1;
       |  printf("%d", y);
       |  return 0;
       |}
-      """.trimMargin(),
-    )
+          """.trimMargin(),
+      )
+    }
   }
 
   @Test
   fun testFunctionInlining() {
-    test(
+    ReducerFunctionalTestUtility(
       reductionFolder = "test/org/perses/reduction/reducer/lpr",
       testScript = "test_function_inlining.sh",
       sourceFile = "test_function_inlining.c",
-      algorithmType = LLMBasedFunctionInliningReducer.META,
+      reducerAnnotation = LLMBasedFunctionInliningReducer.META,
       cmdCustomizer = { cmd ->
         cmd.lprFlags.llmClientPath =
           Paths.get("scripts/llm_scripts/llm_client_mock_to_test_workflow.py")
         cmd.reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
       },
-      expected = """
+    ).use {
+      it.runReducerAndTest(
+        expected =
+          """
       |int main() {
       |  int a = 1;
       |  a = a + 1;
       |  printf("%d", a);
       |  return 0;
       |}
-      """.trimMargin(),
-    )
+          """.trimMargin(),
+      )
+    }
   }
 
   @Test
   fun testLoopUnrolling() {
-    test(
+    ReducerFunctionalTestUtility(
       reductionFolder = "test/org/perses/reduction/reducer/lpr",
       testScript = "test_loop_unrolling.sh",
       sourceFile = "test_loop_unrolling.c",
-      algorithmType = LLMBasedLoopUnrollingReducer.META,
+      reducerAnnotation = LLMBasedLoopUnrollingReducer.META,
       cmdCustomizer = { cmd ->
         cmd.lprFlags.llmClientPath =
           Paths.get("scripts/llm_scripts/llm_client_mock_to_test_workflow.py")
         cmd.reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
       },
-      expected = """
+    ).use {
+      it.runReducerAndTest(
+        expected =
+          """
       |int main() {
       |  int a = 1;
       |  a = a + 1;
@@ -100,50 +110,59 @@ class AbstractLLMBasedReducerTest : AbstractReducerFunctionalTest() {
       |  printf("%d", a);
       |  return 0;
       |}
-      """.trimMargin(),
-    )
+          """.trimMargin(),
+      )
+    }
   }
 
   @Test
   fun testVariableElimination() {
-    test(
+    ReducerFunctionalTestUtility(
       reductionFolder = "test/org/perses/reduction/reducer/lpr",
       testScript = "test_variable_elimination.sh",
       sourceFile = "test_variable_elimination.c",
-      algorithmType = LLMBasedVariableEliminationReducer.META,
+      reducerAnnotation = LLMBasedVariableEliminationReducer.META,
       cmdCustomizer = { cmd ->
         cmd.lprFlags.llmClientPath =
           Paths.get("scripts/llm_scripts/llm_client_mock_to_test_workflow.py")
         cmd.reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
       },
-      expected = """
+    ).use {
+      it.runReducerAndTest(
+        expected =
+          """
       |int main() {
       |  printf("%d", 1);
       |  return 0;
       |}
-      """.trimMargin(),
-    )
+          """.trimMargin(),
+      )
+    }
   }
 
   @Test
   fun testDataTypeSimplification() {
-    test(
+    ReducerFunctionalTestUtility(
       reductionFolder = "test/org/perses/reduction/reducer/lpr",
       testScript = "test_data_type_simplification.sh",
       sourceFile = "test_data_type_simplification.c",
-      algorithmType = LLMBasedDataTypeSimplificationReducer.META,
+      reducerAnnotation = LLMBasedDataTypeSimplificationReducer.META,
       cmdCustomizer = { cmd ->
         cmd.lprFlags.llmClientPath =
           Paths.get("scripts/llm_scripts/llm_client_mock_to_test_workflow.py")
         cmd.reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
       },
-      expected = """
+    ).use {
+      it.runReducerAndTest(
+        expected =
+          """
       |int main() {
       |  int x = 1;
       |  printf("%d", x);
       |  return 0;
       |}
-      """.trimMargin(),
-    )
+          """.trimMargin(),
+      )
+    }
   }
 }

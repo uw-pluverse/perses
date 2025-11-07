@@ -14,6 +14,7 @@ kt_jvm_library(
         "//:guava",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
         "//src/org/perses:perses_lib",
+        "//src/org/perses/grammar/adhoc:language_kind",
         "@maven//:org_apache_commons_commons_text",
     ],
 )

@@ -7,11 +7,11 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import com.google.common.io.BaseEncoding;
 import org.perses.program.LanguageKind;
 import org.perses.program.SerializableLanguageKind;
-import org.perses.grammar.AbstractDefaultParserFacade;
+import org.perses.grammar.AbstractParserFacade;
   
   
 public final class FakeParserFacade
-  extends AbstractDefaultParserFacade<FakeLexer, FakeParser> {
+  extends AbstractParserFacade {
   public FakeParserFacade() {
     super(
         LANGUAGE,
@@ -19,9 +19,9 @@ public final class FakeParserFacade
         "start_rule", 
         "Parser.g4", 
         FakeParserFacade.class),
+        com.google.common.primitives.ImmutableIntArray.of(FakeLexer.Identifier),
         CLASS_LEXER,
-        CLASS_PARSER,
-        com.google.common.primitives.ImmutableIntArray.of(FakeLexer.Identifier));
+        CLASS_PARSER);
   }
 
   public static LanguageKind LANGUAGE;

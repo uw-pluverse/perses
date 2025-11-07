@@ -26,23 +26,23 @@ abstract class AbstractSingleFileReductionInputs<
   K : AbstractDataKind,
   F : AbstractReductionFile<K, F>,
   S : AbstractSingleFileReductionInputs<K, F, S>,
-  >(
+>(
   testScript: ScriptFile,
   val mainFile: F,
   otherMutableFiles: ImmutableList<AbstractReductionFile<*, *>>,
   immutableDependencyFiles: ImmutableList<BinaryReductionFile>,
 ) : AbstractReductionInputs<K, S>(
-  testScript,
-  initiallyDeterminedMainDataKind = mainFile.dataKind,
-  rootDirectory = mainFile.parentFile,
-  mutableFiles = ImmutableList
-    .builderWithExpectedSize<AbstractReductionFile<*, *>>(otherMutableFiles.size + 1)
-    .add(mainFile)
-    .addAll(otherMutableFiles)
-    .build(),
-  immutableDependencyFiles,
-) {
-
+    testScript,
+    initiallyDeterminedMainDataKind = mainFile.dataKind,
+    rootDirectory = mainFile.parentFile,
+    mutableFiles =
+      ImmutableList
+        .builderWithExpectedSize<AbstractReductionFile<*, *>>(otherMutableFiles.size + 1)
+        .add(mainFile)
+        .addAll(otherMutableFiles)
+        .build(),
+    immutableDependencyFiles,
+  ) {
   init {
     require(otherMutableFiles.none { it === mainFile }) {
       "The main should file not be in the otherMutableFiles."

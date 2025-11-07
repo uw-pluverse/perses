@@ -22,7 +22,6 @@ class DuplicateBugFolder(
   root: File,
   val reportedBugFolder: ReportedBugFolder,
 ) : AbstractFlatCrashFolder(root) {
-
   init {
     if (!root.exists()) {
       check(root.mkdirs())
@@ -46,7 +45,11 @@ class DuplicateBugFolder(
 
   companion object {
     val DUP_FOLDER_PREFIX = "dup-"
-    fun computeDuplicateFolderName(masterReportId: Int, crashFolderName: String): String {
+
+    fun computeDuplicateFolderName(
+      masterReportId: Int,
+      crashFolderName: String,
+    ): String {
       require(!crashFolderName.startsWith(DUP_FOLDER_PREFIX)) {
         crashFolderName
       }

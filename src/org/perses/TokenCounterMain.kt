@@ -40,14 +40,14 @@ class TokenCounterMain(
   cmd: CommandOptions,
   private val printStream: PrintStream,
 ) : AbstractMain<CommandOptions>(cmd) {
-
   private var tokenCount by Delegates.notNull<Int>()
 
   private fun createParserFacadeFactory(): CompositeParserFacadeFactory {
     val builtin = builderWithBuiltinLanguages().build()
-    val ext = createParserFacadeFactory(
-      cmd.extFlags.languageJarFiles,
-    )
+    val ext =
+      createParserFacadeFactory(
+        cmd.extFlags.languageJarFiles,
+      )
     return CompositeParserFacadeFactory(builtin, ext)
   }
 
@@ -61,10 +61,18 @@ class TokenCounterMain(
   private fun countToken(): Int {
     val file = cmd.flags.file!!
     val parserFacadeFactory: AbstractParserFacadeFactory = createParserFacadeFactory()
-    val language = parserFacadeFactory.computeLanguage(cmd.extFlags.languageName, file)
+    val language =
+      parserFacadeFactory.computeLanguage(
+        specifiedLanguageName = cmd.extFlags.languageName,
+        designatedParserFacadeClassName = cmd.extFlags.designatedParserFacadeClassName,
+        sourceFileAbsPath = file,
+      )
     val sourceFile = SourceFile(file, language)
-    val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(sourceFile.dataKind)!!
-      .defaultParserFacade.create()
+    val parserFacade =
+      parserFacadeFactory
+        .getParserFacadeListForOrNull(sourceFile.dataKind)!!
+        .defaultParserFacade
+        .create()
     val tokens = parserFacade.tokenizeFile(sourceFile.file)
     var count = 0
     for (token in tokens) {
@@ -82,6 +90,7 @@ class TokenCounterMain(
     class RequiredFlagGroup : AbstractCommandLineFlagGroup(groupName = "Compulsory") {
       @Parameter(description = "source file", required = true, converter = PathConverter::class)
       var file: Path? = null
+
       override fun validate() {
         requireNotNull(file)
         require(Files.isRegularFile(file!!))
@@ -91,7 +100,10 @@ class TokenCounterMain(
 
   companion object {
     @JvmStatic
-    fun countTokensOfFile(file: Path, languageName: String): Int {
+    fun countTokensOfFile(
+      file: Path,
+      languageName: String,
+    ): Int {
       val cmd = CommandOptions()
       cmd.flags.file = file
       cmd.extFlags.languageName = languageName
@@ -103,11 +115,12 @@ class TokenCounterMain(
 
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { CommandOptions() },
-        programName = TokenCounterMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { CommandOptions() },
+          programName = TokenCounterMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }

@@ -17,7 +17,7 @@
 package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.util.AbstractEditOperation
@@ -28,19 +28,19 @@ class ListDiffSlicer(
   ioManagerList: ListDiffReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractListDiffReducer(
-  nameAndDesc = object : AbstractReducerNameAndDesc(
-    shortName = ListDiffSlicer::class.simpleName!!,
-    description = "Slicer-based diff minimizer.",
-  ) {},
-  ioManager = ioManagerList,
-  testScriptExecutorService = testScriptExecutorService,
-) {
-
+    nameAndDesc =
+      object : AbstractReducerNameAndDesc(
+        shortName = ListDiffSlicer::class.simpleName!!,
+        description = "Slicer-based diff minimizer.",
+      ) {},
+    ioManager = ioManagerList,
+    testScriptExecutorService = testScriptExecutorService,
+  ) {
   override fun reduce(state: ListDiffReductionState) {
     logger.ktInfo { "Start ${this::class}" }
 
     // try empty diff first
-    val emptyDiff: ImmutableList<AbstractEditOperation<PersesToken>> = ImmutableList.of()
+    val emptyDiff: ImmutableList<AbstractEditOperation<AbstractPersesToken>> = ImmutableList.of()
     if (testProgram(emptyDiff)) {
       state.updateBestDiff(emptyDiff)
       return

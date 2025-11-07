@@ -25,34 +25,33 @@ import java.io.Closeable
 abstract class AbstractQueryCacheProfiler(
   protected val writer: FileStreamPool.ManagedPrintStream?,
 ) : Closeable {
-
   override fun close() {
     writer?.close()
   }
 
   open fun afterEncodeProgram(
-    tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     program: TokenizedProgram,
     nanoDuration: Long,
   ) {
   }
 
   open fun onDecodingProgram(
-    tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     encoding: RccProgramEncoding,
     nanoDuration: Long,
   ) {
   }
 
   open fun onCreatingEncoder(
-    tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     nanoDuration: Long,
   ) {
   }
 
   open fun afterHeavyweightCacheRefreshing(
-    oldBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
-    newBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
+    oldBestProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
+    newBestProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
     nanoDuration: Long,
@@ -60,14 +59,13 @@ abstract class AbstractQueryCacheProfiler(
   }
 
   open fun onHeartBeat(cache: AbstractQueryCache) {}
+
   open fun afterCacheProgramAndResult(
     cache: AbstractQueryCache,
     nanoDuration: Long,
   ) {}
 
-  open fun beforeCacheEviction(
-    cache: AbstractQueryCache,
-  ) {}
+  open fun beforeCacheEviction(cache: AbstractQueryCache) {}
 
   open fun afterCacheEviction(
     cache: AbstractQueryCache,

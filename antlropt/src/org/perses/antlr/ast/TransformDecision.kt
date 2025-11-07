@@ -16,15 +16,20 @@
  */
 package org.perses.antlr.ast
 
-sealed class TransformDecision(val oldValue: AbstractPersesRuleElement) {
-
+sealed class TransformDecision(
+  val oldValue: AbstractPersesRuleElement,
+) {
   open class NonDeleteTransformDecision(
     oldValue: AbstractPersesRuleElement,
   ) : TransformDecision(oldValue)
 
-  class Keep(oldValue: AbstractPersesRuleElement) : NonDeleteTransformDecision(oldValue)
+  class Keep(
+    oldValue: AbstractPersesRuleElement,
+  ) : NonDeleteTransformDecision(oldValue)
 
-  class Delete(oldValue: AbstractPersesRuleElement) : TransformDecision(oldValue)
+  class Delete(
+    oldValue: AbstractPersesRuleElement,
+  ) : TransformDecision(oldValue)
 
   class Replace(
     val newValue: AbstractPersesRuleElement,

@@ -17,13 +17,12 @@
 package org.perses.util
 
 object DummyClassWithResource {
-
-  fun read(): String {
-    return Util.openResourceAsStream(
-      "test_data.txt",
-      this::class.java,
-    ).use {
-      it.bufferedReader().readText()
-    }
-  }
+  fun read(): String =
+    Util
+      .openResourceAsStream(
+        "test_data.txt",
+        this::class.java,
+      ).use {
+        it.bufferedReader().readText()
+      }
 }

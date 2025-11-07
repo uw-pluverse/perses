@@ -32,18 +32,21 @@ class AltRulesInlinePassTest {
   @Test
   fun test() {
     val grammar = createPersesGrammarFromString("a : b | c;", "b : d | e;")
-    val processed = pass.processGrammar(
-      GrammarPair(grammar, lexerGrammar = null),
-    ).parserGrammar!!
+    val processed =
+      pass
+        .processGrammar(
+          GrammarPair(grammar, lexerGrammar = null),
+        ).parserGrammar!!
     val a = processed.getRuleDefinition("a")!!.body
     Truth.assertThat(a).isInstanceOf(PersesAlternativeBlockAst::class.java)
     val altBlock = a as PersesAlternativeBlockAst
     Truth.assertThat(altBlock.alternatives).hasSize(3)
-    Truth.assertThat(
-      altBlock.alternatives.stream()
-        .map(AbstractPersesAst::sourceCode)
-        .collect(Collectors.toList()),
-    )
-      .containsExactly("d", "e", "c")
+    Truth
+      .assertThat(
+        altBlock.alternatives
+          .stream()
+          .map(AbstractPersesAst::sourceCode)
+          .collect(Collectors.toList()),
+      ).containsExactly("d", "e", "c")
   }
 }

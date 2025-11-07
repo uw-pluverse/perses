@@ -17,30 +17,35 @@
 package org.perses.listminimizer
 
 class WeightedProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
-  arguments: Arguments<T, PropertyPayload>,
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
   terminationThreshold: Double = 0.8,
   initialProbability: Double = 0.25,
 ) : PristineProbabilisticDeltaDebugger<
-  T,
-  PropertyPayload,
+    T,
+    PropertyPayload,
   >(
-  arguments,
-  random = null, // no random shuffling.
-  terminationThreshold,
-  initialProbability,
-) {
-  override fun createElementWrapperFor(index: Int, element: T): ElementWrapper<T> {
+    arguments,
+    // no random shuffling
+    random = null,
+    terminationThreshold,
+    initialProbability,
+  ) {
+  override fun createElementWrapperFor(
+    index: Int,
+    element: T,
+  ): ElementWrapper<T> {
     val weight = arguments.weightProvider.weight(element)
     val payload = WProbDDElementPayload(initialProbability, weight)
     return ElementWrapper(index, element, payload)
   }
 
-  override val elementComparator = compareBy<ElementWrapper<T>>(
-    { getProbability(it) >= terminationThreshold },
-    { (getProbability(it) - 1) * getWeight(it) },
-    { getProbability(it) },
-    { it.index },
-  )
+  override val elementComparator =
+    compareBy<ElementWrapper<T>>(
+      { getProbability(it) >= terminationThreshold },
+      { (getProbability(it) - 1) * getWeight(it) },
+      { getProbability(it) },
+      { it.index },
+    )
 
   override fun updatePayload(toBeDeleted: List<ElementWrapper<T>>) {
     var product = 1.0
@@ -54,9 +59,7 @@ class WeightedProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
     }
   }
 
-  override fun findNextTest(
-    copyBest: List<ElementWrapper<T>>,
-  ): MutableList<ElementWrapper<T>> {
+  override fun findNextTest(copyBest: List<ElementWrapper<T>>): MutableList<ElementWrapper<T>> {
     val toBeDeleted = mutableListOf<ElementWrapper<T>>()
     val finalToBeDeleted = mutableListOf<ElementWrapper<T>>()
     var product = 1.0
@@ -77,17 +80,17 @@ class WeightedProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
     return finalToBeDeleted
   }
 
-  private fun getWeight(element: ElementWrapper<T>): Int {
-    return (element.elementPayload as WProbDDElementPayload).weight
-  }
+  private fun getWeight(element: ElementWrapper<T>): Int =
+    (element.elementPayload as WProbDDElementPayload).weight
 
   open class WProbDDElementPayload(
     probability: Double,
     val weight: Int,
   ) : ProbabilityPayload(probability) {
-    override fun duplicateWithNewProbability(newProbability: Double) = WProbDDElementPayload(
-      probability = newProbability,
-      weight = weight,
-    )
+    override fun duplicateWithNewProbability(newProbability: Double) =
+      WProbDDElementPayload(
+        probability = newProbability,
+        weight = weight,
+      )
   }
 }

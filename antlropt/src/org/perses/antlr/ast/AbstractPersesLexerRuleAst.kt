@@ -23,7 +23,6 @@ abstract class AbstractPersesLexerRuleAst protected constructor(
   ruleNameHandle: RuleNameHandle,
   body: AbstractPersesRuleElement,
 ) : AbstractPersesRuleDefAst(ruleNameHandle, body) {
-
   init {
     require(RuleType.isLexerRule(ruleNameHandle.ruleName))
   }

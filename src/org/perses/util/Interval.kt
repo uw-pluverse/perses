@@ -16,11 +16,11 @@
  */
 package org.perses.util
 
-data class Interval(val leftInclusive: Int, val rightExclusive: Int) {
-
-  operator fun contains(i: Int): Boolean {
-    return i in leftInclusive until rightExclusive
-  }
+data class Interval(
+  val leftInclusive: Int,
+  val rightExclusive: Int,
+) {
+  operator fun contains(i: Int): Boolean = i in leftInclusive until rightExclusive
 
   val length: Int
     get() = rightExclusive - leftInclusive

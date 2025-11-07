@@ -26,12 +26,12 @@ import org.perses.program.printer.PrinterRegistry
 
 @RunWith(JUnit4::class)
 class Python3ParserFacadeTest {
-
   private val facade = Python3ParserFacade()
 
   @Test
   fun test() {
-    val program = """
+    val program =
+      """
       |
       |
       |
@@ -44,7 +44,7 @@ class Python3ParserFacadeTest {
       |        print("hello")
       |def main():
       |    pass    
-    """.trimMargin()
+      """.trimMargin()
 
     val origParseTree = facade.parseString(program)
     val antlrTokens = TestUtility.extractTokens(origParseTree.tree)

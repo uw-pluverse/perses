@@ -32,7 +32,6 @@ import org.perses.antlr.pnf.AltBlockExtractionPass.Companion.searchAssummingComm
 
 @RunWith(JUnit4::class)
 class AbstractAltBlockExtractionPassTest {
-
   val s1 = createSeqOfTerminalsFromChars("abc")
   val s2 = createSeqOfTerminalsFromChars("aec")
 
@@ -47,16 +46,18 @@ class AbstractAltBlockExtractionPassTest {
     val originalSequences = listOf(s1, s2)
     val prefix = searchAssumingCommonPrefix(s1, s2)!!
     val postfix = searchAssumingCommonPostfix(s1, s2)!!
-    val infix = searchAssummingCommonPrefixAndPostfix(
-      prefix,
-      postfix,
-      originalSequences,
-    )!!
+    val infix =
+      searchAssummingCommonPrefixAndPostfix(
+        prefix,
+        postfix,
+        originalSequences,
+      )!!
 
-    val result = selectBestCandidate(
-      listOf(prefix, postfix, infix),
-      originalSequences,
-    )
+    val result =
+      selectBestCandidate(
+        listOf(prefix, postfix, infix),
+        originalSequences,
+      )
     assertThat(result).isSameInstanceAs(infix)
   }
 

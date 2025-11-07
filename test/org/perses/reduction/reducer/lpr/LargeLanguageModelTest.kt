@@ -29,7 +29,6 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class LargeLanguageModelTest {
-
   val tempDir = Util.createTempDirFor(this)
 
   @OptIn(ExperimentalPathApi::class)
@@ -130,22 +129,24 @@ class LargeLanguageModelTest {
     assertThat(program).isEqualTo("int main() { return 0; }")
   }
 
-  val llmMock = LargeLanguageModel(
-    Paths.get("scripts/llm_scripts/llm_client_mock_to_test_functions.py"),
-    tempDirectoryCreator = {
-      AutoDeletableFolder(Util.ensureDirExists(tempDir.resolve("temp")))
-    },
-  )
+  val llmMock =
+    LargeLanguageModel(
+      Paths.get("scripts/llm_scripts/llm_client_mock_to_test_functions.py"),
+      tempDirectoryCreator = {
+        AutoDeletableFolder(Util.ensureDirExists(tempDir.resolve("temp")))
+      },
+    )
 
   @Test
   fun testCallLLMScript1() {
-    val message = """
+    val message =
+      """
       |int main() {
       |int a = 1;
       |printf("%d", a);
       |return 0;
       |}
-    """.trimMargin()
+      """.trimMargin()
 
     val output = llmMock.callLLMScript(message).llmOutput
 
@@ -155,7 +156,12 @@ class LargeLanguageModelTest {
   @Test
   fun testCallLLMScript2() {
     val message = "abcde"
-    val output = llmMock.callLLMScript(message).llmOutput.single().trim()
+    val output =
+      llmMock
+        .callLLMScript(message)
+        .llmOutput
+        .single()
+        .trim()
     assertThat(output).isEqualTo("abcde")
   }
 
@@ -166,12 +172,13 @@ class LargeLanguageModelTest {
     val promptTargetList = "this is promptTargetList"
     val primaryQuestion = "this is primaryQuestion"
 
-    val output = llmMock.getTargetListFromLLM(
-      program,
-      promptSystem,
-      promptTargetList,
-      primaryQuestion,
-    )
+    val output =
+      llmMock.getTargetListFromLLM(
+        program,
+        promptSystem,
+        promptTargetList,
+        primaryQuestion,
+      )
 
     assertThat(output.size).isEqualTo(1)
     assertThat(output[0]).isEqualTo("a")
@@ -184,12 +191,13 @@ class LargeLanguageModelTest {
     val promptTargetList = "this is promptTargetList"
     val primaryQuestion = "this is primaryQuestion"
 
-    val output = llmMock.getTargetListFromLLM(
-      program,
-      promptSystem,
-      promptTargetList,
-      primaryQuestion,
-    )
+    val output =
+      llmMock.getTargetListFromLLM(
+        program,
+        promptSystem,
+        promptTargetList,
+        primaryQuestion,
+      )
 
     assertThat(output.size).isEqualTo(2)
     assertThat(output[0]).isEqualTo("a")
@@ -203,12 +211,13 @@ class LargeLanguageModelTest {
     val promptTargetList = "this is promptTargetList"
     val primaryQuestion = "this is primaryQuestion"
 
-    val output = llmMock.getTargetListFromLLM(
-      program,
-      promptSystem,
-      promptTargetList,
-      primaryQuestion,
-    )
+    val output =
+      llmMock.getTargetListFromLLM(
+        program,
+        promptSystem,
+        promptTargetList,
+        primaryQuestion,
+      )
 
     assertThat(output.size).isEqualTo(3)
     assertThat(output[0]).isEqualTo("a")
@@ -223,12 +232,13 @@ class LargeLanguageModelTest {
     val promptTargetList = "this is promptTargetList"
     val primaryQuestion = "this is primaryQuestion"
 
-    val output = llmMock.getTargetListFromLLM(
-      program,
-      promptSystem,
-      promptTargetList,
-      primaryQuestion,
-    )
+    val output =
+      llmMock.getTargetListFromLLM(
+        program,
+        promptSystem,
+        promptTargetList,
+        primaryQuestion,
+      )
 
     assertThat(output.size).isEqualTo(0)
   }
@@ -240,12 +250,13 @@ class LargeLanguageModelTest {
     val promptTargetList = "this is promptTargetList"
     val primaryQuestion = "this is primaryQuestion"
 
-    val output = llmMock.getTargetListFromLLM(
-      program,
-      promptSystem,
-      promptTargetList,
-      primaryQuestion,
-    )
+    val output =
+      llmMock.getTargetListFromLLM(
+        program,
+        promptSystem,
+        promptTargetList,
+        primaryQuestion,
+      )
 
     assertThat(output.size).isEqualTo(4)
     assertThat(output[0]).isEqualTo("test other parameters")
@@ -259,7 +270,8 @@ class LargeLanguageModelTest {
     val promptSystem = "test get programs"
     val promptToGenerateProgram = "this is promptToGenerateProgram"
     val followupQuestion = "this is followupQuestion"
-    val program = """
+    val program =
+      """
       |program1:
       |```c
       |int a = 0;
@@ -286,14 +298,15 @@ class LargeLanguageModelTest {
       |```js
       |c = 3
       |```
-    """.trimMargin()
+      """.trimMargin()
 
-    val output = llmMock.getProgramsFromLLM(
-      program,
-      promptSystem,
-      promptToGenerateProgram,
-      followupQuestion,
-    )
+    val output =
+      llmMock.getProgramsFromLLM(
+        program,
+        promptSystem,
+        promptToGenerateProgram,
+        followupQuestion,
+      )
 
     assertThat(output.size).isEqualTo(4)
     assertThat(output[0].trim()).isEqualTo("int a = 0;")

@@ -19,7 +19,6 @@ package org.perses.antlr.pnf
 import org.perses.antlr.ast.PersesGrammar
 
 class ReplaceStringLiteralWithLexerRuleRefPass : AbstractPnfPass() {
-
   override fun processParserGrammar(
     parserGrammar: PersesGrammar,
     lexerGrammar: PersesGrammar?,

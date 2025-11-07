@@ -19,8 +19,9 @@ package org.perses.program
 import com.google.common.base.MoreObjects
 import java.nio.file.Path
 
-class ScriptFile(file: Path) {
-
+class ScriptFile(
+  file: Path,
+) {
   val fileWithContent = FilePathWithContent(file)
 
   val shebang = extractShebang(fileWithContent.textualFileContent).trim()
@@ -60,7 +61,6 @@ class ScriptFile(file: Path) {
     return result.toString()
   }
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("file", fileWithContent.file).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("file", fileWithContent.file).toString()
 }

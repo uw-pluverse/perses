@@ -17,18 +17,19 @@
 package org.perses.fuzzer.compilers
 
 class SanitizerCrashSignatureExtractor {
-
   fun extractCrashSignatureFromStderr(stderr: List<String>): List<String> {
     val result = ArrayList<String>()
-    stderr.asSequence()
+    stderr
+      .asSequence()
       .filter {
-        it.isNotBlank() && (
-          it.contains(KEYWORD_UBSAN_OUTPUT) || it.contains(
-            KEYWORD_ASAN_OUTPUT,
+        it.isNotBlank() &&
+          (
+            it.contains(KEYWORD_UBSAN_OUTPUT) ||
+              it.contains(
+                KEYWORD_ASAN_OUTPUT,
+              )
           )
-          )
-      }
-      .forEach {
+      }.forEach {
         when {
           it.contains(KEYWORD_UBSAN_OUTPUT) -> {
             val matchResult = UBSAN_PATTERN.matchEntire(it.trim())
@@ -56,7 +57,11 @@ class SanitizerCrashSignatureExtractor {
           }
         }
       }
-    return result.asSequence().filter { it.isNotBlank() }.map { it.trim() }.toList()
+    return result
+      .asSequence()
+      .filter { it.isNotBlank() }
+      .map { it.trim() }
+      .toList()
   }
 
   companion object {

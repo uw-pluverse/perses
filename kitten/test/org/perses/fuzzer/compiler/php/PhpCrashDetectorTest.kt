@@ -25,15 +25,13 @@ import org.perses.fuzzer.compilers.php.PhpCrashDetector
 
 @RunWith(JUnit4::class)
 class PhpCrashDetectorTest {
-
   val detector = PhpCrashDetector()
 
-  private fun computeSignature(path: String): List<String> {
-    return CrashDetectorHelper.computeSignature(
+  private fun computeSignature(path: String): List<String> =
+    CrashDetectorHelper.computeSignature(
       "kitten/test/org/perses/fuzzer/compiler/php/$path",
       detector,
     )
-  }
 
   @Test
   fun test_bug() {

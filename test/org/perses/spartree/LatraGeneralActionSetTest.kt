@@ -31,11 +31,17 @@ import java.util.stream.Collectors
 class LatraGeneralActionSetTest {
   private var tree = createSparTreeFromFile(Paths.get("test_data/parentheses/t.c"))
   private var nodePrintf = tree.getTokenNodeForText("printf")[0]
-  private var nodeSemicol = tree.getTokenNodeForText(";")[0]
-    .recursiveDeepCopy(ReuseNodeIdStrategy).result
+  private var nodeSemicol =
+    tree
+      .getTokenNodeForText(";")[0]
+      .recursiveDeepCopy(ReuseNodeIdStrategy)
+      .result
   private var nodeInt = tree.getTokenNodeForText("int")[0]
-  private var nodeMain = tree.getTokenNodeForText("main")[0]
-    .recursiveDeepCopy(ReuseNodeIdStrategy).result
+  private var nodeMain =
+    tree
+      .getTokenNodeForText("main")[0]
+      .recursiveDeepCopy(ReuseNodeIdStrategy)
+      .result
   private lateinit var actionSet: LatraGeneralActionSet
   private lateinit var actionSet2: LatraGeneralActionSet
   private lateinit var actionSet3: LatraGeneralActionSet
@@ -47,7 +53,7 @@ class LatraGeneralActionSetTest {
       builder.replaceNode(nodePrintf, nodeSemicol)
       builder.replaceNode(nodeInt, nodeMain)
       builder.deleteNode(nodeMain)
-      actionSet = builder.build()!!
+      actionSet = builder.buildOrNull()!!
       assertThat(actionSet.actionsDescription).isEqualTo("test 1")
     }
     run {
@@ -55,7 +61,7 @@ class LatraGeneralActionSetTest {
       builder.replaceNode(nodePrintf, nodeSemicol)
       builder.replaceNode(nodeInt, nodeMain)
       builder.deleteNode(nodeMain)
-      actionSet2 = builder.build()!!
+      actionSet2 = builder.buildOrNull()!!
       assertThat(actionSet2.actionsDescription).isEqualTo("test 2")
     }
 
@@ -63,7 +69,7 @@ class LatraGeneralActionSetTest {
       val builder = LatraGeneralActionSet.Builder("test 3")
       builder.replaceNode(nodePrintf, nodeSemicol)
       builder.replaceNode(nodeInt, nodeMain)
-      actionSet3 = builder.build()!!
+      actionSet3 = builder.buildOrNull()!!
       assertThat(actionSet3.actionsDescription).isEqualTo("test 3")
     }
   }
@@ -79,18 +85,18 @@ class LatraGeneralActionSetTest {
   @Test
   fun testActionsAreSortedAndDistinct() {
     assertThat(
-      actionSet.actions.stream()
+      actionSet.actions
+        .stream()
         .map { it.targetNode }
         .collect(Collectors.toList()),
-    )
-      .containsExactly(nodePrintf, nodeInt, nodeMain)
+    ).containsExactly(nodePrintf, nodeInt, nodeMain)
       .inOrder()
     assertThat(
-      actionSet2.actions.stream()
+      actionSet2.actions
+        .stream()
         .map { it.targetNode }
         .collect(Collectors.toList()),
-    )
-      .containsExactly(nodePrintf, nodeInt, nodeMain)
+    ).containsExactly(nodePrintf, nodeInt, nodeMain)
       .inOrder()
   }
 
@@ -136,11 +142,13 @@ class LatraGeneralActionSetTest {
     builder3.deleteNode(nodePrintf)
     builder3.replaceNode(nodeInt, nodeMain)
     assertThat(
-      builder3.build()!!.actions.stream()
+      builder3
+        .buildOrNull()!!
+        .actions
+        .stream()
         .map { it.targetNode }
         .collect(Collectors.toList()),
-    )
-      .containsExactly(nodePrintf, nodeInt)
+    ).containsExactly(nodePrintf, nodeInt)
       .inOrder()
   }
 }

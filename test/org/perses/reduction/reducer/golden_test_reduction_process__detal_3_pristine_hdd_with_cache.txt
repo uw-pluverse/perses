@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "CONFIG"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -24,7 +25,8 @@ resultOutputFlags:
   outputDir: null
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: null
   testScriptExecutionTimeoutInSeconds: 600
@@ -43,7 +45,10 @@ algorithmControlFlags:
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress_dump_t_pristine_hdd_with_cache.c"
@@ -72,42 +78,56 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: false
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: pristine_hdd
-condition: smaller
+Cache setting: query-caching=true, edit-caching=false, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 13
+(16/16)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        pristine_hdd
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            pristine_hdd
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
+(16/16)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ========Fixpoint iteration 1. Reducer: pristine_hdd=========
 
 The spar-tree is the following.
@@ -153,31 +173,45 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger starts. Input=[0]#1. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger starts. Input=[0]#1. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Testing the empty input. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger starts. Input=[0-2]#3. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Testing the empty input. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=2 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 2. [[0-1]#2, [2]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0, 1], [2]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -188,9 +222,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@2
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@2
     --file: t.c--
     {
     int
@@ -212,7 +247,9 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0, 1], [2]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     {
@@ -235,7 +272,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -247,9 +285,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=3 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 3. [[0]#1, [1]#1, [2]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0], [1], [2]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@2
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@2
     --file: t.c--
     int
     --file: <formatted tokenized program in its original format>--
@@ -257,9 +299,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1-2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@2
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@2
     --file: t.c--
     main
     (
@@ -269,7 +312,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     {
@@ -292,9 +336,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0], [1], [2]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     main
     (
@@ -319,9 +365,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     {
@@ -344,7 +391,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -356,7 +404,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger starts. Input=[0-4]#5. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Testing the empty input. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -365,9 +417,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=2 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 2. [[0-2]#3, [3-4]#2] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0, 1, 2], [3, 4]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@2
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@2
     --file: t.c--
     int
     main
@@ -379,9 +435,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     int
@@ -403,7 +460,9 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0, 1, 2], [3, 4]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -426,7 +485,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -439,7 +499,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=4 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 4. [[0-1]#2, [2]#1, [3]#1, [4]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0, 1], [2], [3], [4]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -451,9 +515,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2-4]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     {
@@ -462,9 +527,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1,3-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     int
@@ -484,9 +550,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     }
@@ -496,7 +563,9 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0, 1], [2], [3], [4]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -520,9 +589,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -547,9 +617,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -563,9 +634,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -589,9 +661,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=5 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 5. [[0]#1, [1]#1, [2]#1, [3]#1, [4]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0], [1], [2], [3], [4]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -600,9 +676,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     (
@@ -612,7 +689,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0,2-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -622,7 +700,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1,3-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -643,7 +722,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -654,9 +734,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0], [1], [2], [3], [4]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     (
@@ -681,9 +763,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -707,7 +790,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -733,7 +817,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -748,7 +833,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -773,9 +859,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -787,7 +877,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=2 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 2. [[0-1]#2, [2-3]#2] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0, 1], [2, 3]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -802,7 +896,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -827,7 +922,9 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0, 1], [2, 3]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -852,7 +949,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -867,9 +965,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=4 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0], [1], [2], [3]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -882,9 +984,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -897,9 +1000,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0,2-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -917,9 +1021,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1,3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -937,9 +1042,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0], [1], [2], [3]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -964,9 +1071,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -991,9 +1099,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1013,9 +1122,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1035,7 +1145,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger starts. Input=[0-4]#5. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Testing the empty input. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1050,70 +1164,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-      int a = 99;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-      return a + 0;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-      return a + 0;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=2 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 2. [[0-2]#3, [3-4]#2] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0, 1, 2], [3, 4]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1134,9 +1189,80 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0, 1, 2], [3, 4]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    +
+    0
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+      return a + 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+      int a = 99;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=4 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 4. [[0-1]#2, [2]#1, [3]#1, [4]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0, 1], [2], [3], [4]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -1155,9 +1281,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2-4]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -1173,9 +1300,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1,3-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -1194,7 +1322,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1211,9 +1340,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0, 1], [2], [3], [4]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@2
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@2
     --file: t.c--
     int
     main
@@ -1235,9 +1366,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1262,9 +1394,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1286,9 +1419,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1313,9 +1447,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=5 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 5. [[0]#1, [1]#1, [2]#1, [3]#1, [4]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0], [1], [2], [3], [4]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -1331,9 +1469,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -1351,7 +1490,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0,2-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1368,7 +1508,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1,3-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1388,7 +1529,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1405,9 +1547,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0], [1], [2], [3], [4]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1432,9 +1576,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1457,7 +1602,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1483,7 +1629,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1506,7 +1653,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1532,9 +1680,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -1553,7 +1705,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=2 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 2. [[0-1]#2, [2-3]#2] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0, 1], [2, 3]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1576,7 +1732,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1600,7 +1757,9 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0, 1], [2, 3]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1624,7 +1783,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1647,9 +1807,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=4 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0], [1], [2], [3]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -1669,9 +1833,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -1692,9 +1857,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0,2-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -1714,9 +1880,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1,3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -1738,9 +1905,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0], [1], [2], [3]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1765,9 +1934,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1791,9 +1961,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1818,9 +1989,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -1843,9 +2015,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -1866,7 +2042,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=2 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 2. [[0-1]#2, [2-3]#2] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0, 1], [2, 3]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1890,7 +2070,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1915,7 +2096,9 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0, 1], [2, 3]] Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1940,7 +2123,8 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -1964,9 +2148,13 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Number of partitions: n=4 Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Partition size: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing partitions: [[0], [1], [2], [3]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -1988,9 +2176,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -2012,9 +2201,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0,2-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -2036,9 +2226,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-1,3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -2061,9 +2252,11 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Reducing complements: [[0], [1], [2], [3]] Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -2088,9 +2281,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -2115,9 +2309,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -2142,9 +2337,10 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ============Testing the following program: pass=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -2168,6 +2364,7 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](16/16)  Try deleting [3]#1: Interesting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 16 entries are removed: 56 --> 40.
@@ -2186,7 +2383,10 @@ token count change 16 -> 14
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=3 Global ratio:14/16=87.50%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 3. [[0]#1, [1]#1, [2]#1] Global ratio:14/16=87.50%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0], [1], [2]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2209,7 +2409,8 @@ token count change 16 -> 14
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1-2]#2: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2232,7 +2433,8 @@ token count change 16 -> 14
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2255,9 +2457,11 @@ token count change 16 -> 14
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:14/16=87.50%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0], [1], [2]] Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -2280,9 +2484,10 @@ token count change 16 -> 14
 ------------------------------------------------------------
 
 
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -2305,7 +2510,8 @@ token count change 16 -> 14
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2329,8 +2535,9 @@ token count change 16 -> 14
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:14/16=87.50%
+FixPt[1][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/4=75.00%. Global ratio:14/16=87.50%
+(14/16)  Rebuilding spar-tree: The spartree is rebuilt.
 ========Fixpoint iteration 2. Reducer: pristine_hdd=========
 
 The spar-tree is the following.
@@ -2371,28 +2578,42 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger starts. Input=[0]#1. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger starts. Input=[0]#1. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger starts. Input=[0-2]#3. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=2 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 2. [[0-1]#2, [2]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0, 1], [2]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2407,9 +2628,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@2
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@2
     --file: t.c--
     {
     int
@@ -2435,7 +2657,9 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0, 1], [2]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     {
@@ -2462,7 +2686,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2477,7 +2702,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=3 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 3. [[0]#1, [1]#1, [2]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0], [1], [2]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2486,7 +2715,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1-2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     main
@@ -2499,7 +2729,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     {
@@ -2526,9 +2757,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0], [1], [2]] Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     main
     (
@@ -2560,9 +2793,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     {
@@ -2590,7 +2824,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2605,7 +2840,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger starts. Input=[0-4]#5. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2614,7 +2853,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=2 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 2. [[0-2]#3, [3-4]#2] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0, 1, 2], [3, 4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2631,9 +2874,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     int
@@ -2659,7 +2903,9 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0, 1, 2], [3, 4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2686,7 +2932,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2703,7 +2950,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=4 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 4. [[0-1]#2, [2]#1, [3]#1, [4]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0, 1], [2], [3], [4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2718,7 +2969,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2-4]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2729,9 +2981,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1,3-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     int
@@ -2755,7 +3008,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2766,7 +3020,9 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0, 1], [2], [3], [4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2795,9 +3051,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -2829,7 +3086,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2848,9 +3106,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -2882,7 +3141,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=5 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 5. [[0]#1, [1]#1, [2]#1, [3]#1, [4]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0], [1], [2], [3], [4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2893,7 +3156,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2906,7 +3170,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0,2-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2917,7 +3182,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1,3-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2942,7 +3208,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -2953,9 +3220,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0], [1], [2], [3], [4]] Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     (
@@ -2987,9 +3256,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -3019,7 +3289,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3052,7 +3323,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3071,7 +3343,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3104,7 +3377,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3119,7 +3396,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=2 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 2. [[0-1]#2, [2-3]#2] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0, 1], [2, 3]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3138,7 +3419,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3169,7 +3451,9 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0, 1], [2, 3]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3200,7 +3484,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3219,7 +3504,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=4 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0], [1], [2], [3]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3236,7 +3525,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3253,7 +3543,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0,2-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3278,9 +3569,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1,3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -3300,9 +3592,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0], [1], [2], [3]] Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -3334,9 +3628,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -3368,9 +3663,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -3394,7 +3690,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3423,7 +3720,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger starts. Input=[0-4]#5. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3442,7 +3743,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=2 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 2. [[0-2]#3, [3-4]#2] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0, 1, 2], [3, 4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3471,32 +3776,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3521,7 +3802,35 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0, 1, 2], [3, 4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3550,7 +3859,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=4 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 4. [[0-1]#2, [2]#1, [3]#1, [4]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0, 1], [2], [3], [4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3577,7 +3890,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2-4]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3598,9 +3912,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1,3-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@4
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@4
     --file: t.c--
     int
     main
@@ -3622,7 +3937,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3643,9 +3959,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0, 1], [2], [3], [4]] Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@2
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@2
     --file: t.c--
     int
     main
@@ -3671,9 +3989,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -3705,7 +4024,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3736,9 +4056,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -3770,7 +4091,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=5 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 5. [[0]#1, [1]#1, [2]#1, [3]#1, [4]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0], [1], [2], [3], [4]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3791,7 +4116,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3816,7 +4142,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0,2-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3837,7 +4164,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1,3-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3860,7 +4188,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3881,9 +4210,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0], [1], [2], [3], [4]] Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -3915,9 +4246,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -3945,7 +4277,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -3978,96 +4311,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4098,7 +4343,45 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    return
+    a
+    }
+------------------------------------------------------------
+
+
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4108,8 +4391,6 @@ translationUnit {id=105,slot_type=translationUnit}
     {
     int
     ;
-    return
-    a
     ;
     }
     --file: <formatted tokenized program in its original format>--
@@ -4120,43 +4401,16 @@ translationUnit {id=105,slot_type=translationUnit}
     {
     int
     ;
-    return
-    a
     ;
     }
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=2 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 2. [[0-1]#2, [2-3]#2] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0, 1], [2, 3]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4187,7 +4441,104 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0, 1], [2, 3]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=4 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0], [1], [2], [3]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4214,7 +4565,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4243,7 +4595,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0,2-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4270,9 +4623,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1,3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@3
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@3
     --file: t.c--
     int
     main
@@ -4298,9 +4652,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0], [1], [2], [3]] Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -4332,7 +4688,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4363,9 +4720,10 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
 ============Testing the following program: fail=============
 
-// edit action set type: [pristine-hdd]dd@1
+// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.hdd.PristineHDDReducerdd@1
     --file: t.c--
     int
     main
@@ -4397,7 +4755,8 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4430,7 +4789,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger starts. Input=[0-1]#2. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4461,106 +4824,11 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
-
-    --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    99
-    ;
-    return
-    a
-    ;
-    }
-------------------------------------------------------------
-
-
-=========Cache hit for the following program: fail==========
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Number of partitions: n=2 Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Partition size: 2. [[0]#1, [1]#1] Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing partitions: [[0], [1]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int
@@ -4593,65 +4861,307 @@ translationUnit {id=105,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 16
-  characterCount: 29
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "pristine_hdd"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
 
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 14
-  characterCount: 27
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
 
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "pristine_hdd"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Reducing complements: [[0], [1]] Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 14
-  characterCount: 27
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
+FixPt[2][pristine_hdd][PRISTINE_DDMIN](14/16)  Minimizer PristineDeltaDebugger ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
+
+The spar-tree is the following.
+translationUnit {id=105,slot_type=translationUnit}
+|___(+) {id=106,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=108,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=109,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=192,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=196,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=183,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=191,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=185,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=187,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=188,slot_type=LeftParen}
+        |           |___Token:) {id=190,slot_type=RightParen}
+        |___compoundStatement {id=111,slot_type=compoundStatement}
+            |___Token:{ {id=112,slot_type=LeftBrace}
+            |___(?) {id=113,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=116,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=147,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=148,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=182,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=149,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=152,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=178,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=154,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=155,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=156,slot_type=Assign}
+            |       |   |               |___Token:99 {id=175,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=150,slot_type=Semi}
+            |       |___jumpStatement {id=121,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=124,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=125,slot_type=Return}
+            |           |   |___(?) {id=126,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:a {id=145,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |___Token:; {id=123,slot_type=Semi}
+            |___Token:} {id=114,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer](14/16)  For c, there are 46 transformations.
+FixPt[3][FineGritLatraReducer](14/16)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 64 --> 64.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 14 -> 14
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](14/16)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[3][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](14/16)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[3][FineGritLatraReducer][DivideOperationSimplification](14/16)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[3][FineGritLatraReducer][MultiplyOperationSimplification](14/16)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[3][FineGritLatraReducer][MinusOperationSimplification](14/16)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[3][FineGritLatraReducer][PlusOperationSimplification](14/16)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation](14/16)  Found matches: 1 in transformation LocalToGlobalTransformation
+FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation](14/16)  Built a LatraGeneralActionSet subroot(id=211,#3) in LocalToGlobalTransformation
+============Testing the following program: fail=============
+
+// edit action set type: Latra Transformation LocalToGlobalTransformation created by FullFunctionalLatraRewriterBuilder
+    --file: t.c--
+    return
+    a
+    ;
+    int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    return 
+    a
+                    ;int
+    main
+    (
+    )
+    {
+    int
+    a
+    =
+    99
+    ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer][UnionToStruct](14/16)  Found matches: 0 in transformation UnionToStruct
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](14/16)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](14/16)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[3][FineGritLatraReducer][FunctionInlining4Args](14/16)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[3][FineGritLatraReducer][FunctionInlining4ArgsNoType](14/16)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInliningLatraTransformation](14/16)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[3][FineGritLatraReducer][FunctionInlining3ArgsNoType](14/16)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInlining2Args](14/16)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[3][FineGritLatraReducer][FunctionInlining2ArgsNoType](14/16)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInlining1Arg](14/16)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[3][FineGritLatraReducer][FunctionInlining1ArgNoType](14/16)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[3][FineGritLatraReducer][FunctionInliningNoArg](14/16)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[3][FineGritLatraReducer][FunctionInliningNoArg](14/16)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[3][FineGritLatraReducer][LiftAssignmentExpr](14/16)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[3][FineGritLatraReducer][CopyPropagation](14/16)  Found matches: 1 in transformation CopyPropagation
+FixPt[3][FineGritLatraReducer][CallExprToValue](14/16)  Found matches: 0 in transformation CallExprToValue
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr1Arg](14/16)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr2Arg](14/16)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr3Arg](14/16)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[3][FineGritLatraReducer][SimplifyCallExpr](14/16)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[3][FineGritLatraReducer][SimplifyIf](14/16)  Found matches: 0 in transformation SimplifyIf
+FixPt[3][FineGritLatraReducer][SimplifyIf2](14/16)  Found matches: 0 in transformation SimplifyIf2
+FixPt[3][FineGritLatraReducer][ReduceArrayDim3](14/16)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[3][FineGritLatraReducer][ReduceArrayDim2](14/16)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[3][FineGritLatraReducer][ReduceArrayDim](14/16)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl](14/16)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl2](14/16)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam](14/16)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam](14/16)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](14/16)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](14/16)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[3][FineGritLatraReducer][SimplifyComma](14/16)  Found matches: 0 in transformation SimplifyComma
+FixPt[3][FineGritLatraReducer][TypeDefTransform](14/16)  Found matches: 0 in transformation TypeDefTransform
+FixPt[3][FineGritLatraReducer][EmptyStructToInt](14/16)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[3][FineGritLatraReducer][RemoveAssignment](14/16)  Found matches: 1 in transformation RemoveAssignment
+FixPt[3][FineGritLatraReducer][RemoveAssignment](14/16)  Built a LatraGeneralActionSet subroot(id=244,#3) in RemoveAssignment
+============Testing the following program: fail=============
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    int
+    main
+    (
+    )
+    {
+    int
+    99
+    ;
+    return
+    a
+    ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int
+    main
+    (
+    )
+    {
+    int
+    99
+    ;
+    return
+    a
+    ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer][RemoveAddrTaken](14/16)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[3][FineGritLatraReducer][ReplaceArrayAccessWithIndex](14/16)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[3][FineGritLatraReducer][SimplifyUnionDecl](14/16)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[3][FineGritLatraReducer][SimplifyStructDecl](14/16)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[3][FineGritLatraReducer][ReplaceDefByDecl](14/16)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[3][FineGritLatraReducer][CombineLocalVarDecl](14/16)  Found matches: 1 in transformation CombineLocalVarDecl
+FixPt[3][FineGritLatraReducer][CombineLocalVarDecl](14/16)  Exception: There must be at least one match for this transformation CombineLocalVarDecl
+FixPt[3][FineGritLatraReducer][UnifyFunctionDecl](14/16)  Found matches: 0 in transformation UnifyFunctionDecl
+(14/16)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0         pristine_hdd      -2     -2             0
+ 1         pristine_hdd       0      0             0
+ 2 FineGritLatraReducer       0      0             0
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+        pristine_hdd     2      -2     -2
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 1
-#test failure = 80
+#test failure = 82
 #test result cache hits = 113
 #test execution cancelled = 0
 #node edit action set cache hits = 0

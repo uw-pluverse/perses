@@ -31,7 +31,6 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 class RuleTransitionGraph private constructor(
   val graph: Graph<RuleNameHandle, AbstractPersesRuleElement>,
 ) {
-
   fun computeSccSet(): List<Graph<RuleNameHandle, AbstractPersesRuleElement>> {
     // The scc set here is just a view of the graph.
     return KosarajuStrongConnectivityInspector(graph).stronglyConnectedComponents
@@ -56,16 +55,14 @@ class RuleTransitionGraph private constructor(
 
   companion object {
     @JvmStatic
-    fun createForLeftmostTransition(grammar: PersesGrammar): RuleTransitionGraph {
-      return create(grammar) {
+    fun createForLeftmostTransition(grammar: PersesGrammar): RuleTransitionGraph =
+      create(grammar) {
         it.firstChild
       }
-    }
 
     @JvmStatic
-    fun createForRightmostTransition(grammar: PersesGrammar): RuleTransitionGraph {
-      return create(grammar) { it.lastChild }
-    }
+    fun createForRightmostTransition(grammar: PersesGrammar): RuleTransitionGraph =
+      create(grammar) { it.lastChild }
 
     private fun create(
       grammar: PersesGrammar,
@@ -82,9 +79,8 @@ class RuleTransitionGraph private constructor(
       return RuleTransitionGraph(graph)
     }
 
-    private fun createGraph(): DirectedMultigraph<RuleNameHandle, AbstractPersesRuleElement> {
-      return DirectedMultigraph(AbstractPersesRuleElement::class.java)
-    }
+    private fun createGraph(): DirectedMultigraph<RuleNameHandle, AbstractPersesRuleElement> =
+      DirectedMultigraph(AbstractPersesRuleElement::class.java)
 
     private fun addEdge(
       graph: DirectedMultigraph<RuleNameHandle, AbstractPersesRuleElement>,
@@ -94,9 +90,10 @@ class RuleTransitionGraph private constructor(
       childSelector: (PersesSequenceAst) -> AbstractPersesRuleElement,
     ) {
       when (ast.tag) {
-        AstTag.ALTERNATIVE_BLOCK -> ast.childSequence().forEach { child ->
-          addEdge(graph, sourceVertex, edgeLabel, child, childSelector)
-        }
+        AstTag.ALTERNATIVE_BLOCK ->
+          ast.childSequence().forEach { child ->
+            addEdge(graph, sourceVertex, edgeLabel, child, childSelector)
+          }
         AstTag.RULE_REF -> {
           val targetVertex = (ast as PersesRuleReferenceAst).ruleNameHandle
           if (sourceVertex != targetVertex) {
@@ -111,7 +108,7 @@ class RuleTransitionGraph private constructor(
           addEdge(graph, sourceVertex, edgeLabel, childSelector(seq), childSelector)
         }
         else -> {
-          /* do nothing */
+          // do nothing
         }
       }
     }

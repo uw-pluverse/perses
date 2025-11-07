@@ -40,9 +40,10 @@ class NodeDeletionTreeEditTest {
     builder.deleteNode(parent)
     builder.deleteNode(nodeMain)
 
-    val edit = tree.createNodeDeletionEdit(
-      builder.build(),
-    )
+    val edit =
+      tree.createNodeDeletionEdit(
+        builder.build(),
+      )
     tree.applyEdit(edit)
     // Check printF is replaced, int is replaced
     assertThat(nodePrintf.isPermanentlyDeleted).isTrue()

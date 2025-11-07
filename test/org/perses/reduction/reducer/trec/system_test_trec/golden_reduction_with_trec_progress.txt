@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "t.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_trec_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c"
+  outputDir: "result_trec_reduction_golden_test_node_priority-dfs_t.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: true
+  enableTRec: true
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress_dump_trec.txt"
@@ -72,54 +78,64 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<sequence>
-reducers:
-- !<fixpoint>
-  body: !<atomic>
-    reducer: perses_node_priority_with_dfs_delta
-  condition: smaller
-- !<fixpoint>
-  body: !<if>
-    condition: !<atomic>
-      reducer: token_canonicalizer
-    then: !<fixpoint>
-      body: !<atomic>
-        reducer: perses_node_priority_with_dfs_delta
-      condition: smaller
-  condition: smaller
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 10
+(13/13)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (token_canonicalizer) {
+            fixpoint (smaller) {
+                node_priority-dfs
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(13/13)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -243,9 +259,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: t.c--
     int main() {
     }
@@ -255,6 +273,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 9
@@ -293,15 +313,30 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main() {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=17}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     int main() {
        return 0xff00ull;
@@ -313,6 +348,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 12
@@ -405,9 +442,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     int main() {
                          ;
@@ -421,6 +459,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 45
@@ -519,9 +559,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: t.c--
     int main   {
        longFunctionName();
@@ -535,6 +576,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 73
@@ -577,9 +620,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: t.c--
     int main() {
        longFunctionName  ;
@@ -593,6 +637,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 65
@@ -795,9 +841,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     int main() {
        longFunctionName();
@@ -811,6 +858,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 22
@@ -919,9 +968,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: t.c--
         main() {
        longFunctionName();
@@ -935,6 +986,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 5
@@ -1037,22 +1090,6 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme 'a'
-    --file: t.c--
-    int a   () {
-       longFunctionName();
-       return 0xff00ull;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int a   () {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
 ============Testing the following program: pass=============
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
@@ -1069,32 +1106,15 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xff00ull;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+1 entries are removed: 12 --> 11.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 15
+    size before clearance = 16
 ------------------------------------------------------------
 
 
@@ -1122,38 +1142,6 @@ token count change 13 -> 13
 
 ============Testing the following program: fail=============
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0        ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0        ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '1'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 1        ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 1        ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
 // edit action set type: replace 1 lexer nodes with new lexeme '1'
     --file: t.c--
     int main() {
@@ -1180,38 +1168,6 @@ token count change 13 -> 13
     int main() {
        a               ();
        return 0xfull   ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0xfull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xfull   ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xfull   ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0xff00'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xff00   ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff00   ;
     }
 ------------------------------------------------------------
 
@@ -1255,155 +1211,19 @@ It took less than 1 second to cancel the task.
     --file: t.c--
     int main() {
        a               ();
-       return 0xf00ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf00ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf00ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
        return 0xff0ull ;
     }
     --file: <formatted tokenized program in its original format>--
     int main() {
        a               ();
        return 0xff0ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xff0ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff0ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xff0ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff0ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xff0ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff0ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xff00   ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff00   ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xff00   ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff00   ;
     }
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+4 entries are removed: 15 --> 11.
 ------------------------------------------------------------
 
 
@@ -1437,38 +1257,6 @@ token count change 13 -> 13
 
 ============Testing the following program: fail=============
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0xfull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xfull   ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xfull   ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf00    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
 // edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
     --file: t.c--
     int main() {
@@ -1501,22 +1289,6 @@ token count change 13 -> 13
 
 ============Testing the following program: fail=============
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0x00ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x00ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x00ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
 // edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
     --file: t.c--
     int main() {
@@ -1527,86 +1299,6 @@ token count change 13 -> 13
     int main() {
        a               ();
        return 0xf0ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf0ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf0ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf0ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf0ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf0ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf0ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf00    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf00    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00    ;
     }
 ------------------------------------------------------------
 
@@ -1623,38 +1315,6 @@ token count change 13 -> 13
     int main() {
        a               ();
        return 0Xf00ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0Xf00ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0Xf00ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0Xf00ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x000ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x000ull ;
     }
 ------------------------------------------------------------
 
@@ -1698,40 +1358,6 @@ It took less than 1 second to cancel the task.
     --file: t.c--
     int main() {
        a               ();
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf00Ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00Ull ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int main() {
-       a               ();
        return 0xf00Ull ;
     }
     --file: <formatted tokenized program in its original format>--
@@ -1744,7 +1370,7 @@ It took less than 1 second to cancel the task.
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+6 entries are removed: 17 --> 11.
 ------------------------------------------------------------
 
 
@@ -1778,38 +1404,6 @@ token count change 13 -> 13
 
 ============Testing the following program: fail=============
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0X100ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0X100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0X100ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x000ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x000ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
 // edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
     --file: t.c--
     int main() {
@@ -1840,25 +1434,8 @@ token count change 13 -> 13
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x100Ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100Ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x100Ull ;
-    }
-------------------------------------------------------------
-
-
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 3. Reducer: perses_node_priority_with_dfs_delta
+(13/13)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 3. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=134,slot_type=translationUnit}
@@ -1926,9 +1503,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [regular node]compatible replacement
     --file: t.c--
                          ;
     --file: <formatted tokenized program in its original format>--
@@ -1936,9 +1512,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [regular node]compatible replacement
     --file: t.c--
                        ;
     --file: <formatted tokenized program in its original format>--
@@ -1982,9 +1557,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     --file: t.c--
     int main() {
     }
@@ -1994,6 +1570,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 142
@@ -2032,15 +1610,30 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main() {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main() {
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=150}
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     int main() {
        return 0x100ull ;
@@ -2052,6 +1645,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 145
@@ -2144,9 +1739,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     int main() {
                          ;
@@ -2160,6 +1756,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 178
@@ -2258,9 +1856,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: t.c--
     int main   {
        a               ();
@@ -2274,6 +1873,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 206
@@ -2316,9 +1917,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: t.c--
     int main() {
        a                 ;
@@ -2332,6 +1934,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 198
@@ -2534,9 +2138,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     int main() {
        a               ();
@@ -2550,6 +2155,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 155
@@ -2658,9 +2265,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: t.c--
         main() {
        a               ();
@@ -2674,6 +2283,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 138
@@ -2778,22 +2389,6 @@ translationUnit {id=134,slot_type=translationUnit}
 
 ============Testing the following program: fail=============
 
-// edit action set type: replace 1 lexer nodes with new lexeme 'a'
-    --file: t.c--
-    int a   () {
-       a               ();
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int a   () {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
 // edit action set type: replace 1 lexer nodes with new lexeme '0'
     --file: t.c--
     int main() {
@@ -2804,38 +2399,6 @@ translationUnit {id=134,slot_type=translationUnit}
     int main() {
        a               ();
        return 0        ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0        ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0        ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '1'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 1        ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 1        ;
     }
 ------------------------------------------------------------
 
@@ -2874,38 +2437,6 @@ translationUnit {id=134,slot_type=translationUnit}
 
 ============Testing the following program: fail=============
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0x1ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x1ull   ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x1ull   ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x100'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x100    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
 // edit action set type: replace 1 lexer nodes with new lexeme '0x100'
     --file: t.c--
     int main() {
@@ -2938,22 +2469,6 @@ translationUnit {id=134,slot_type=translationUnit}
 
 ============Testing the following program: fail=============
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0x00ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x00ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x00ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
 // edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
     --file: t.c--
     int main() {
@@ -2968,89 +2483,8 @@ translationUnit {id=134,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x10ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x10ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x10ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x10ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x10ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x10ull  ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x100'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x100    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x100'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x100    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0X100ull'
     --file: t.c--
     int main() {
        a               ();
@@ -3064,25 +2498,8 @@ translationUnit {id=134,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0X100ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0X100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0X100ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
     --file: t.c--
     int main() {
        a               ();
@@ -3096,25 +2513,8 @@ translationUnit {id=134,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x000ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x000ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '0x100Ull'
     --file: t.c--
     int main() {
        a               ();
@@ -3128,124 +2528,152 @@ translationUnit {id=134,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+====Fixpoint iteration 5. Reducer: FineGritLatraReducer=====
+
+The spar-tree is the following.
+translationUnit {id=134,slot_type=translationUnit}
+|___(+) {id=135,slot_type=kleene_plus__translationUnit_3}
+    |___functionDefinition {id=137,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=138,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=213,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=217,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=204,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=212,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=206,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=208,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=209,slot_type=LeftParen}
+        |           |___Token:) {id=211,slot_type=RightParen}
+        |___compoundStatement {id=140,slot_type=compoundStatement}
+            |___Token:{ {id=141,slot_type=LeftBrace}
+            |___(?) {id=142,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=145,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___expressionStatement {id=177,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=178,slot_type=optional__postfixExpression_1}
+            |       |   |   |___postfixExpression {id=196,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |       |   |       |___Token:a {id=203,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |___(*) {id=198,slot_type=kleene_star__postfixExpression_2}
+            |       |   |           |___aux_rule__postfixExpression_11 {id=200,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |       |   |               |___Token:( {id=201,slot_type=LeftParen}
+            |       |   |               |___Token:) {id=202,slot_type=RightParen}
+            |       |   |___Token:; {id=179,slot_type=Semi}
+            |       |___jumpStatement {id=150,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+            |           |___aux_rule__jumpStatement_4 {id=153,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+            |           |   |___Token:return {id=154,slot_type=Return}
+            |           |   |___(?) {id=155,slot_type=optional__postfixExpression_1}
+            |           |       |___Token:0x100ull {id=174,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |           |___Token:; {id=152,slot_type=Semi}
+            |___Token:} {id=143,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[5][FineGritLatraReducer](13/13)  For c, there are 46 transformations.
+FixPt[5][FineGritLatraReducer](13/13)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+10 entries are removed: 29 --> 19.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 16
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 13 -> 13
+------------------------------------------------------------
+
+
+FixPt[5][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](13/13)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[5][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](13/13)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[5][FineGritLatraReducer][DivideOperationSimplification](13/13)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[5][FineGritLatraReducer][MultiplyOperationSimplification](13/13)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[5][FineGritLatraReducer][MinusOperationSimplification](13/13)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[5][FineGritLatraReducer][PlusOperationSimplification](13/13)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](13/13)  Found matches: 1 in transformation LocalToGlobalTransformation
+FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](13/13)  Built a LatraGeneralActionSet subroot(id=256,#3) in LocalToGlobalTransformation
 ============Testing the following program: fail=============
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0x100Ull'
+// edit action set type: Latra Transformation LocalToGlobalTransformation created by FullFunctionalLatraRewriterBuilder
     --file: t.c--
-    int main() {
+       return  0x100ull
+                    ;int main() {
        a               ();
-       return 0x100Ull ;
     }
     --file: <formatted tokenized program in its original format>--
-    int main() {
+       return  0x100ull
+                    ;int main() {
        a               ();
-       return 0x100Ull ;
     }
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 13
-  characterCount: 46
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+FixPt[5][FineGritLatraReducer][UnionToStruct](13/13)  Found matches: 0 in transformation UnionToStruct
+FixPt[5][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](13/13)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[5][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](13/13)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[5][FineGritLatraReducer][FunctionInlining4Args](13/13)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[5][FineGritLatraReducer][FunctionInlining4ArgsNoType](13/13)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[5][FineGritLatraReducer][FunctionInliningLatraTransformation](13/13)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[5][FineGritLatraReducer][FunctionInlining3ArgsNoType](13/13)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[5][FineGritLatraReducer][FunctionInlining2Args](13/13)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[5][FineGritLatraReducer][FunctionInlining2ArgsNoType](13/13)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[5][FineGritLatraReducer][FunctionInlining1Arg](13/13)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[5][FineGritLatraReducer][FunctionInlining1ArgNoType](13/13)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[5][FineGritLatraReducer][FunctionInliningNoArg](13/13)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[5][FineGritLatraReducer][FunctionInliningNoArg](13/13)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[5][FineGritLatraReducer][LiftAssignmentExpr](13/13)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[5][FineGritLatraReducer][CopyPropagation](13/13)  Found matches: 0 in transformation CopyPropagation
+FixPt[5][FineGritLatraReducer][CallExprToValue](13/13)  Found matches: 0 in transformation CallExprToValue
+FixPt[5][FineGritLatraReducer][ReplaceCallExpr1Arg](13/13)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[5][FineGritLatraReducer][ReplaceCallExpr2Arg](13/13)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[5][FineGritLatraReducer][ReplaceCallExpr3Arg](13/13)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[5][FineGritLatraReducer][SimplifyCallExpr](13/13)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[5][FineGritLatraReducer][SimplifyIf](13/13)  Found matches: 0 in transformation SimplifyIf
+FixPt[5][FineGritLatraReducer][SimplifyIf2](13/13)  Found matches: 0 in transformation SimplifyIf2
+FixPt[5][FineGritLatraReducer][ReduceArrayDim3](13/13)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[5][FineGritLatraReducer][ReduceArrayDim2](13/13)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[5][FineGritLatraReducer][ReduceArrayDim](13/13)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[5][FineGritLatraReducer][MoveFuncDefToDecl](13/13)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[5][FineGritLatraReducer][MoveFuncDefToDecl2](13/13)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[5][FineGritLatraReducer][MoveFuncDefToDeclNoParam](13/13)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[5][FineGritLatraReducer][MoveFuncDefToDeclNoParam](13/13)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[5][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](13/13)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[5][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](13/13)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[5][FineGritLatraReducer][SimplifyComma](13/13)  Found matches: 0 in transformation SimplifyComma
+FixPt[5][FineGritLatraReducer][TypeDefTransform](13/13)  Found matches: 0 in transformation TypeDefTransform
+FixPt[5][FineGritLatraReducer][EmptyStructToInt](13/13)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[5][FineGritLatraReducer][RemoveAssignment](13/13)  Found matches: 0 in transformation RemoveAssignment
+FixPt[5][FineGritLatraReducer][RemoveAddrTaken](13/13)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[5][FineGritLatraReducer][ReplaceArrayAccessWithIndex](13/13)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[5][FineGritLatraReducer][SimplifyUnionDecl](13/13)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[5][FineGritLatraReducer][SimplifyStructDecl](13/13)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[5][FineGritLatraReducer][ReplaceDefByDecl](13/13)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](13/13)  Found matches: 1 in transformation CombineLocalVarDecl
+FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](13/13)  Exception: There must be at least one match for this transformation CombineLocalVarDecl
+FixPt[5][FineGritLatraReducer][UnifyFunctionDecl](13/13)  Found matches: 0 in transformation UnifyFunctionDecl
+(13/13)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs       0      0             0
+ 1  token_canonicalizer       0    -16             1
+ 2    node_priority-dfs       0      0             1
+ 3  token_canonicalizer       0      0             1
+ 4 FineGritLatraReducer       0      0             1
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 13
-  characterCount: 46
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "token_canonicalizer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_REMAIN"
-
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 13
-  characterCount: 30
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: true
-
-[5]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[6]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 13
-  characterCount: 30
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[7]: ReducerCallEvent
----
-reducer:
-  shortName: "token_canonicalizer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_REMAIN"
-
-[8]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 13
-  characterCount: 30
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     2       0      0
+ token_canonicalizer     2       0    -16
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 3
-#test failure = 86
-#test result cache hits = 0
-#test execution cancelled = 13
+#test failure = 41
+#test result cache hits = 16
+#test execution cancelled = 2
 #node edit action set cache hits = 16
 #external test execution cache hits = 0

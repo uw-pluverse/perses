@@ -28,36 +28,43 @@ object LanguageRust : LanguageKind(
   extensions = ImmutableSet.of("rs"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT,
-  ),
-  defaultFormatterCommandCreators = sequence {
-    val rustFmtName = "rustfmt"
-    yield(
-      ShellCommandOnPath.IShellCommandOnPathCreator { ShellCommandOnPath.tryCreating(rustFmtName) },
-    )
-    for (versionString in allStableVersionStrings) {
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.ORIG_FORMAT,
+    ),
+  defaultFormatterCommandCreators =
+    sequence {
+      val rustFmtName = "rustfmt"
       yield(
         ShellCommandOnPath.IShellCommandOnPathCreator {
           ShellCommandOnPath.tryCreating(
             rustFmtName,
-            "+$versionString",
           )
         },
       )
-    }
-  }.toImmutableList(),
+      for (versionString in allStableVersionStrings) {
+        yield(
+          ShellCommandOnPath.IShellCommandOnPathCreator {
+            ShellCommandOnPath.tryCreating(
+              rustFmtName,
+              "+$versionString",
+            )
+          },
+        )
+      }
+    }.toImmutableList(),
 ) {
-
   val stableVersionStrings: ImmutableList<String> = allStableVersionStrings
 }
 
-private val allStableVersionStrings: ImmutableList<String> = ImmutableList.builder<String>()
-  .apply {
-    (57 downTo 30).forEach { major ->
-      (2 downTo 0).forEach { minor ->
-        add("1.$major.$minor")
+private val allStableVersionStrings: ImmutableList<String> =
+  ImmutableList
+    .builder<String>()
+    .apply {
+      (57 downTo 30).forEach { major ->
+        (2 downTo 0).forEach { minor ->
+          add("1.$major.$minor")
+        }
       }
-    }
-  }.build()
+    }.build()

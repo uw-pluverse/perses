@@ -5,6 +5,18 @@ package(default_visibility = [
 ])
 
 kt_jvm_library(
+    name = "YamlTokenizedProgramPrinter",
+    srcs = [
+        "YamlTokenizedProgramPrinter.kt",
+    ],
+    deps = [
+        ":abstract_tokenized_program_printer",
+        "//:jackson",
+        "//src/org/perses/grammar/jackson:pnf_jackson_parser_codegen",
+    ],
+)
+
+kt_jvm_library(
     name = "printer",
     srcs = [
         "AbstractOrigFormatVisitor.kt",
@@ -14,10 +26,12 @@ kt_jvm_library(
         "SingleTokenPerLinePrinter.kt",
     ],
     deps = [
+        ":YamlTokenizedProgramPrinter",
         ":orig_format_visitor_interface",
         ":python_format_printer",
         "//:guava",
         "//src/org/perses/program",
+        "//src/org/perses/util:mutable_int",
     ],
 )
 
@@ -26,7 +40,7 @@ kt_jvm_library(
     srcs = ["AbstractTokenizedProgramPrinter.kt"],
     deps = [
         "//:antlr_runtime",
-        "//src/org/perses/antlr/atn",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
         "//src/org/perses/program",
     ],
 )

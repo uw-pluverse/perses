@@ -23,7 +23,6 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class MutableIntTest {
-
   @Test
   fun test() {
     val i = MutableInt(0)

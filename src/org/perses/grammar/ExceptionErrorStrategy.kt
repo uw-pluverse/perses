@@ -25,23 +25,29 @@ import org.antlr.v4.runtime.RecognitionException
  * taken from stackoverflow: https://stackoverflow.com/questions/18132078/handling-errors-in-antlr4
  */
 class ExceptionErrorStrategy : DefaultErrorStrategy() {
-  override fun recover(recognizer: Parser?, e: RecognitionException?) {
-    throw e!!
-  }
+  override fun recover(
+    recognizer: Parser?,
+    e: RecognitionException?,
+  ): Unit = throw e!!
 
-  public override fun reportInputMismatch(recognizer: Parser, e: InputMismatchException) {
-    val msg = buildString {
-      append("mismatched input " + getTokenErrorDisplay(e.offendingToken))
-      append('\n')
-      append(" expecting one of ")
-      append(e.expectedTokens.toString(recognizer.vocabulary))
-    }
-    val ex = RecognitionException(
-      msg,
-      recognizer,
-      recognizer.inputStream,
-      recognizer.context,
-    )
+  public override fun reportInputMismatch(
+    recognizer: Parser,
+    e: InputMismatchException,
+  ) {
+    val msg =
+      buildString {
+        append("mismatched input " + getTokenErrorDisplay(e.offendingToken))
+        append('\n')
+        append(" expecting one of ")
+        append(e.expectedTokens.toString(recognizer.vocabulary))
+      }
+    val ex =
+      RecognitionException(
+        msg,
+        recognizer,
+        recognizer.inputStream,
+        recognizer.context,
+      )
     ex.initCause(e)
     throw ex
   }
@@ -50,11 +56,12 @@ class ExceptionErrorStrategy : DefaultErrorStrategy() {
     beginErrorCondition(recognizer)
     val t = recognizer.currentToken
     val expecting = getExpectedTokens(recognizer)
-    val msg = buildString {
-      append("missing ")
-      append(expecting.toString(recognizer.vocabulary))
-      append(" at ").append(getTokenErrorDisplay(t))
-    }
+    val msg =
+      buildString {
+        append("missing ")
+        append(expecting.toString(recognizer.vocabulary))
+        append(" at ").append(getTokenErrorDisplay(t))
+      }
     throw RecognitionException(
       msg,
       recognizer,

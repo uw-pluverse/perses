@@ -24,7 +24,6 @@ import java.io.StringWriter
 
 @RunWith(JUnit4::class)
 class FastStringBuilderTest {
-
   @Test
   fun testPosition() {
     val builder = FastStringBuilder(capacity = 1)
@@ -73,21 +72,21 @@ class FastStringBuilderTest {
       builder.append('c')
       assertThat(builder.toString()).isEqualTo("abc")
       assertThat(builder.length()).isEqualTo(3)
-      assertThat(builder.capacity()).isEqualTo(3)
+      assertThat(builder.capacity()).isEqualTo(14)
       assertThat(toStringWithWriter(builder)).isEqualTo("abc")
     }
     run {
       builder.append('d')
       assertThat(builder.toString()).isEqualTo("abcd")
       assertThat(builder.length()).isEqualTo(4)
-      assertThat(builder.capacity()).isEqualTo(4)
+      assertThat(builder.capacity()).isEqualTo(14)
       assertThat(toStringWithWriter(builder)).isEqualTo("abcd")
     }
     run {
       builder.append('e')
       assertThat(builder.toString()).isEqualTo("abcde")
       assertThat(builder.length()).isEqualTo(5)
-      assertThat(builder.capacity()).isEqualTo(6)
+      assertThat(builder.capacity()).isEqualTo(14)
       assertThat(toStringWithWriter(builder)).isEqualTo("abcde")
     }
   }
@@ -113,21 +112,21 @@ class FastStringBuilderTest {
       builder.append("c")
       assertThat(builder.toString()).isEqualTo("abc")
       assertThat(builder.length()).isEqualTo(3)
-      assertThat(builder.capacity()).isEqualTo(3)
+      assertThat(builder.capacity()).isEqualTo(14)
       assertThat(toStringWithWriter(builder)).isEqualTo("abc")
     }
     run {
       builder.append("d")
       assertThat(builder.toString()).isEqualTo("abcd")
       assertThat(builder.length()).isEqualTo(4)
-      assertThat(builder.capacity()).isEqualTo(4)
+      assertThat(builder.capacity()).isEqualTo(14)
       assertThat(toStringWithWriter(builder)).isEqualTo("abcd")
     }
     run {
       builder.append("e")
       assertThat(builder.toString()).isEqualTo("abcde")
       assertThat(builder.length()).isEqualTo(5)
-      assertThat(builder.capacity()).isEqualTo(6)
+      assertThat(builder.capacity()).isEqualTo(14)
       assertThat(toStringWithWriter(builder)).isEqualTo("abcde")
     }
   }

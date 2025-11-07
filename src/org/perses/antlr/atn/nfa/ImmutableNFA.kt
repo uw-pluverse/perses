@@ -23,5 +23,5 @@ class ImmutableNFA internal constructor(
   override val acceptingState: PersesATNState,
   graph: Graph<PersesATNState, Edge>,
 ) : AbstractNFABasedOnJGraphT(
-  graph,
-)
+    graph,
+  )

@@ -23,13 +23,23 @@ class NodeReductionEndEvent internal constructor(
   startEvent: NodeReductionStartEvent,
   currentTimeMillis: Long,
   program: TokenizedProgram,
-  val node: AbstractSparTreeNode,
+  node: AbstractSparTreeNode,
   val remainingQueueSize: Int,
 ) : AbstractEndEvent<NodeReductionStartEvent>(startEvent, currentTimeMillis, program.tokenCount) {
-
   val iteration = startEvent.iteration
 
-  override fun initialProgramSize(): Int {
-    return startEvent.initialProgramSize()
-  }
+  val nodeInfo =
+    NodeReductionStartEvent.NodeInfo(
+      nodeId = node.nodeId,
+      antlrRuleName = node.ruleName,
+      childCount = node.childCount,
+      tokenCount =
+        if (node.isPermanentlyDeleted) {
+          0
+        } else {
+          node.leafTokenCount
+        },
+    )
+
+  override fun initialProgramSize(): Int = startEvent.initialProgramSize()
 }

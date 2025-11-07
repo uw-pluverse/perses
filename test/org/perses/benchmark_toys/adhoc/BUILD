@@ -28,7 +28,7 @@ reduction_golden_test(
     other_flags = {
         "--language-ext-jars": "$(location parser_facade.jar)",
     },
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.unique",
     test_script = "r.sh",
     deps = ["parser_facade.jar"],

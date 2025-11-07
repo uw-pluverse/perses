@@ -6,6 +6,7 @@ kt_jvm_test(
     name = "SeedOutputManagerFactoryTest",
     srcs = ["SeedOutputManagerFactoryTest.kt"],
     deps = [
+        "//:truth",
         "//ppr/src/org/perses/ppr/diff:ppr_diff_utils",
         "//ppr/src/org/perses/ppr/seed:output_manager",
         "//ppr/src/org/perses/ppr/seed:reduction_inputs",

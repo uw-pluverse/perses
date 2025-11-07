@@ -24,7 +24,6 @@ import org.perses.reduction.cache.EnumQueryCachingControl.Companion.convert
 
 @RunWith(JUnit4::class)
 class EnumQueryCachingControlTest {
-
   @Test
   fun testConvert() {
     assertThat(convert("TRUE")).isEqualTo(EnumQueryCachingControl.TRUE)

@@ -30,39 +30,41 @@ abstract class AbstractParserFacadeStubTemplate(
   val parserFacadeClassSimpleName: String,
   tokenNamesOfIdentifiers: List<String>,
 ) : AbstractGrammarStub(
-  packageName,
-  parserClassSimpleName,
-  lexerClassSimpleName,
-  startRuleName,
-) {
-
+    packageName,
+    parserClassSimpleName,
+    lexerClassSimpleName,
+    startRuleName,
+  ) {
   override fun classSimpleName() = parserFacadeClassSimpleName
+
   override fun classFullName() = "$packageName.${classSimpleName()}"
 
-  private val createAntlrGrammar = if (lexerFile == null) {
-    """createCombinedAntlrGrammar(
+  private val createAntlrGrammar =
+    if (lexerFile == null) {
+      """createCombinedAntlrGrammar(
         "$startRuleName", 
         "${parserFile.fileName}", 
         ${classSimpleName()}.class)"""
-  } else {
-    """createSeparateAntlrGrammar(
+    } else {
+      """createSeparateAntlrGrammar(
         "$startRuleName",
         "${parserFile.fileName}", 
         "${lexerFile.fileName}", 
         ${classSimpleName()}.class)"""
-  }
+    }
 
-  private val identifierTokens = tokenNamesOfIdentifiers
-    .asSequence()
-    .map { "$lexerClassSimpleName.$it" }
-    .joinToString(separator = ", ")
-    .let { "com.google.common.primitives.ImmutableIntArray.of($it)" }
+  private val identifierTokens =
+    tokenNamesOfIdentifiers
+      .asSequence()
+      .map { "$lexerClassSimpleName.$it" }
+      .joinToString(separator = ", ")
+      .let { "com.google.common.primitives.ImmutableIntArray.of($it)" }
 
   protected val fieldNameLanguage =
     AdhocGrammarConfiguration.ParserFacadeJarFile.FIELD_NAME_LANGUAGE
 
-  override fun generateCode(): String {
-    return """
+  override fun generateCode(): String =
+    """
 package $packageName;
 
 import org.antlr.v4.runtime.CharStream;
@@ -71,18 +73,18 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import com.google.common.io.BaseEncoding;
 import org.perses.program.LanguageKind;
 import org.perses.program.SerializableLanguageKind;
-import org.perses.grammar.AbstractDefaultParserFacade;
+import org.perses.grammar.AbstractParserFacade;
   
   
 public final class ${classSimpleName()}
-  extends AbstractDefaultParserFacade<$lexerClassSimpleName, $parserClassSimpleName> {
+  extends AbstractParserFacade {
   public ${classSimpleName()}() {
     super(
         LANGUAGE,
         $createAntlrGrammar,
+        $identifierTokens,
         CLASS_LEXER,
-        CLASS_PARSER,
-        $identifierTokens);
+        CLASS_PARSER);
   }
 
   public static LanguageKind $fieldNameLanguage;
@@ -94,7 +96,6 @@ public final class ${classSimpleName()}
   public static final Class<$parserClassSimpleName> CLASS_PARSER = $parserClassSimpleName.class;
 }
     """
-  }
 
   protected abstract fun createLanguageKind(): String
 }

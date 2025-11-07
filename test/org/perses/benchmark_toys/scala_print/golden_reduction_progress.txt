@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "Hello.sc"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_Hello.sc"
+  outputDir: "result_reduction_golden_test_node_priority-dfs_Hello.sc"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -72,7 +78,7 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "TRUE"
@@ -80,35 +86,49 @@ cacheControlFlags:
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: perses_node_priority_with_dfs_delta
-condition: smaller
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=COMPACT_QUERY_CACHE_FORMAT_SENSITIVE
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 20
+(29/29)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(29/29)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 compilationUnit {id=1,slot_type=compilationUnit}
@@ -267,7 +287,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](29/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/29=100.00%
+FixPt[1][node_priority-dfs][DFS](29/29)  Testing the empty input. Global ratio:29/29=100.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello
@@ -276,6 +298,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](29/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
+FixPt[1][node_priority-dfs][DFS](29/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 13
@@ -570,7 +594,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -585,7 +609,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -600,7 +624,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -729,7 +753,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](27/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:27/29=93.10%
+FixPt[1][node_priority-dfs][DFS](27/29)  Testing the empty input. Global ratio:27/29=93.10%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -748,6 +774,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](27/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/29=93.10%
+FixPt[1][node_priority-dfs][DFS](27/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/29=93.10%
 ===================Node reduction is done===================
 
 Failed to reduce node 138
@@ -794,7 +822,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](27/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:27/29=93.10%
+FixPt[1][node_priority-dfs][DFS](27/29)  Testing the empty input. Global ratio:27/29=93.10%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -809,6 +839,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](27/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/29=93.10%
+FixPt[1][node_priority-dfs][DFS](27/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/29=93.10%
 ===================Node reduction is done===================
 
 Failed to reduce node 53
@@ -1007,9 +1039,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](23/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:23/29=79.31%
+FixPt[1][node_priority-dfs][DFS](23/29)  Testing the empty input. Global ratio:23/29=79.31%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__paramClause_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__paramClause_2]dd@1
     --file: Hello.sc--
     object Hello {
         def main(                   ) =
@@ -1025,6 +1059,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](23/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/29=79.31%
+FixPt[1][node_priority-dfs][DFS](23/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/29=79.31%
 ===================Node reduction is done===================
 
 Failed to reduce node 141
@@ -1105,7 +1141,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](23/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:23/29=79.31%
+FixPt[1][node_priority-dfs][DFS](23/29)  Testing the empty input. Global ratio:23/29=79.31%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -1122,6 +1160,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](23/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/29=79.31%
+FixPt[1][node_priority-dfs][DFS](23/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/29=79.31%
 ===================Node reduction is done===================
 
 Failed to reduce node 146
@@ -1295,9 +1335,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[1][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__simpleType_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__simpleType_3]dd@1
     --file: Hello.sc--
     object Hello {
         def main(args: Array        ) =
@@ -1313,6 +1355,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[1][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 158
@@ -1603,9 +1647,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[1][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__simpleExpr1_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__simpleExpr1_1]dd@1
     --file: Hello.sc--
     object Hello {
         def main(args: Array[String]) =
@@ -1621,6 +1667,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[1][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 91
@@ -1798,9 +1846,8 @@ Failed to reduce node 9
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+(20/29)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 compilationUnit {id=180,slot_type=compilationUnit}
@@ -1902,7 +1949,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello
@@ -1930,7 +1977,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello
@@ -1939,6 +1988,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 192
@@ -2002,7 +2053,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2138,7 +2189,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2155,6 +2208,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 253
@@ -2199,9 +2254,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__paramClause_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__paramClause_2]dd@1
     --file: Hello.sc--
     object Hello {
         def main(                   ) =
@@ -2217,6 +2274,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 256
@@ -2316,7 +2375,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2333,6 +2394,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 261
@@ -2377,7 +2440,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2392,7 +2455,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2442,7 +2505,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2496,7 +2559,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2511,6 +2576,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 217
@@ -2555,7 +2622,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2572,6 +2641,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 273
@@ -2616,7 +2687,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2861,7 +2932,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
+=====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
     object Hello {
@@ -2878,6 +2951,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node_priority-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 228
@@ -3055,61 +3130,71 @@ Failed to reduce node 188
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 29
-  characterCount: 100
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+The spar-tree is the following.
+compilationUnit {id=180,slot_type=compilationUnit}
+|___(+) {id=181,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7 {id=187,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object {id=188,slot_type=Token}
+        |___objectDef {id=189,slot_type=objectDef}
+            |___Token:Hello {id=190,slot_type=Id}
+            |___(?) {id=192,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody {id=194,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{ {id=195,slot_type=Token}
+                    |___(+) {id=196,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2 {id=202,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def {id=203,slot_type=Token}
+                    |       |___aux_rule__funDef_8 {id=205,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig {id=206,slot_type=funSig}
+                    |           |   |___Token:main {id=251,slot_type=Id}
+                    |           |   |___(*) {id=253,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause {id=254,slot_type=paramClause}
+                    |           |           |___Token:( {id=255,slot_type=Token}
+                    |           |           |___(?) {id=256,slot_type=optional__paramClause_2}
+                    |           |           |   |___param {id=259,slot_type=[params,param]}
+                    |           |           |       |___Token:args {id=260,slot_type=Id}
+                    |           |           |       |___(?) {id=261,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2 {id=262,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token:: {id=263,slot_type=Token}
+                    |           |           |               |___simpleType {id=271,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array {id=293,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*) {id=273,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs {id=275,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[ {id=276,slot_type=Token}
+                    |           |           |                           |___Token:String {id=289,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:] {id=278,slot_type=Token}
+                    |           |           |___Token:) {id=257,slot_type=Token}
+                    |           |___aux_rule__funDef_9 {id=208,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:= {id=209,slot_type=Token}
+                    |               |___infixExpr {id=215,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
+                    |                   |___Token:println {id=250,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |___(*) {id=217,slot_type=kleene_star__infixExpr_2}
+                    |                       |___aux_rule__infixExpr_3 {id=218,slot_type=aux_rule__infixExpr_3}
+                    |                           |___Token:println {id=219,slot_type=Id}
+                    |                           |___aux_rule__simpleExpr1_10 {id=226,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                               |___Token:( {id=227,slot_type=Token}
+                    |                               |___(?) {id=228,slot_type=optional__simpleExpr1_1}
+                    |                               |   |___Token:"Hello, world" {id=243,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                               |___Token:) {id=229,slot_type=Token}
+                    |___Token:} {id=197,slot_type=Token}
+------------------------------------------------------------
 
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 20
-  characterCount: 71
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
 
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+FixPt[3][FineGritLatraReducer](20/29)  Latra does not support LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+(20/29)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs      -9    -29             0
+ 1    node_priority-dfs       0      0             0
+ 2 FineGritLatraReducer       0      0             0
 
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 20
-  characterCount: 71
-  fileContents:
-  - fileName: "Hello.sc"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     2      -9    -29
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 3

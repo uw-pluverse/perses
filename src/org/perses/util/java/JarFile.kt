@@ -32,10 +32,10 @@ class JarFile(
   val path: Path,
   val mainClassFullName: String,
 ) : AutoCloseable {
-
-  private val lazyClassLoader = lazy {
-    URLClassLoader(arrayOf(path.toUri().toURL()))
-  }
+  private val lazyClassLoader =
+    lazy {
+      URLClassLoader(arrayOf(path.toUri().toURL()))
+    }
   private val classLoader by lazyClassLoader
 
   fun copyTo(destination: Path): JarFile {
@@ -44,7 +44,10 @@ class JarFile(
     return JarFile(destination, mainClassFullName)
   }
 
-  fun moveTo(destination: Path, replaceExisting: Boolean = true): JarFile {
+  fun moveTo(
+    destination: Path,
+    replaceExisting: Boolean = true,
+  ): JarFile {
     check(Files.isRegularFile(path))
     if (replaceExisting) {
       Files.move(path, destination, StandardCopyOption.REPLACE_EXISTING)
@@ -57,13 +60,12 @@ class JarFile(
   fun readTextFile(
     pathInZip: String,
     charset: Charset = StandardCharsets.UTF_8,
-  ): String {
-    return readTextFileInZipFile(
+  ): String =
+    readTextFileInZipFile(
       path,
       pathInZip,
       charset,
     )
-  }
 
   override fun close() {
     if (lazyClassLoader.isInitialized()) {
@@ -71,9 +73,7 @@ class JarFile(
     }
   }
 
-  fun loadMainClass(): Class<*> {
-    return classLoader.loadClass(mainClassFullName)
-  }
+  fun loadMainClass(): Class<*> = classLoader.loadClass(mainClassFullName)
 
   fun expensiveRunMain() {
     val mainClass = loadMainClass()
@@ -101,7 +101,6 @@ class JarFile(
   }
 
   companion object {
-
     fun readTextFileInZipFile(
       zipFilePath: Path,
       pathInZip: String,

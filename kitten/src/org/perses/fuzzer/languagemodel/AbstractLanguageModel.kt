@@ -26,8 +26,9 @@ import java.util.Random
 typealias NodeSequenceToFrequencyMap = Object2IntOpenHashMap<NodeRepresentationList>
 typealias FeatureOfSparTree = HashMap<ParserRuleSparTreeNode, NodeRepresentationList>
 
-abstract class AbstractLanguageModel(val parserFacade: AbstractParserFacade) {
-
+abstract class AbstractLanguageModel(
+  val parserFacade: AbstractParserFacade,
+) {
   var numberOfTreesSeen = 0
     protected set
 
@@ -43,18 +44,21 @@ abstract class AbstractLanguageModel(val parserFacade: AbstractParserFacade) {
   // return true if the given sequence is interesting
   abstract fun updateModelAndGetFeatureOfSparTree(tree: SparTree): FeatureOfSparTree
 
-  fun getAverageNumberOfFeatureNodesOfSparTree(): Int {
-    return if (numberOfTreesSeen == 0) {
+  fun getAverageNumberOfFeatureNodesOfSparTree(): Int =
+    if (numberOfTreesSeen == 0) {
       Int.MAX_VALUE
     } else {
       numberOfFeatureNodesExtracted / numberOfTreesSeen
     }
-  }
 
   abstract val size: Int
+
   abstract fun getRarenessOfMostRareFeature(featureOfSparTree: FeatureOfSparTree): Double
+
   abstract fun isRare(featureOfSparTree: FeatureOfSparTree): Boolean
+
   abstract fun isVeryCommon(featureOfSparTree: FeatureOfSparTree): Boolean
+
   abstract fun selectIndexOfNodeToBeReplaced(
     nodeList: List<AbstractSparTreeNode>,
     featureOfSparTree: FeatureOfSparTree?,

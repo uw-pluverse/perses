@@ -23,11 +23,12 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class GuavaExtsTest {
-
   @Test
   fun test_toImmutableList() {
-    val list = listOf(0, 1).asSequence()
-      .toImmutableList()
+    val list =
+      listOf(0, 1)
+        .asSequence()
+        .toImmutableList()
     assertThat(list).containsExactly(0, 1).inOrder()
   }
 }

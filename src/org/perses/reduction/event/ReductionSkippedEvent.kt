@@ -25,8 +25,8 @@ class ReductionSkippedEvent(
   val tree: AbstractUnmodifiableSparTree,
   val message: String,
 ) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
+  override fun initialProgramSize(): Int = currentFixpointIteration.initialProgramSize()
 
-  override fun initialProgramSize(): Int {
-    return currentFixpointIteration.initialProgramSize()
-  }
+  override val prefixLabelFromRootToHere: String
+    get() = currentFixpointIteration.prefixLabelFromRootToHere
 }

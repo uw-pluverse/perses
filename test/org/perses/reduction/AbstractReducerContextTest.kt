@@ -27,10 +27,10 @@ import org.perses.reduction.io.CommonReductionIOManagerData
 import org.perses.reduction.io.token.TokenReductionIOManager
 
 @RunWith(JUnit4::class)
-class AbstractReducerContextTest : CommonReductionIOManagerData(
-  AbstractReducerContextTest::class.java,
-) {
-
+class AbstractReducerContextTest :
+  CommonReductionIOManagerData(
+    AbstractReducerContextTest::class.java,
+  ) {
   @After
   fun teardown() {
     close()
@@ -40,27 +40,29 @@ class AbstractReducerContextTest : CommonReductionIOManagerData(
     ioManager: TokenReductionIOManager,
     executorService: TestScriptExecutorService,
   ) : AbstractReducerContext<
-    TokenizedProgram,
-    LanguageKind,
-    TokenReductionIOManager,
-    DummyReducerContext,
+      TokenizedProgram,
+      LanguageKind,
+      TokenReductionIOManager,
+      DummyReducerContext,
     >(
-    ioManager,
-    executorService,
-  )
+      ioManager,
+      executorService,
+    )
 
-  val dummy = DummyReducerContext(
-    ioManager,
-    executorService,
-  )
+  val dummy =
+    DummyReducerContext(
+      ioManager,
+      executorService,
+    )
 
   @Test
   fun test() {
     val payload = "hello"
     val key = this::class.java
-    val value = dummy.computePiggybackPayloadIfAbsent(key) {
-      Pair(key, payload)
-    }
+    val value =
+      dummy.computePiggybackPayloadIfAbsent(key) {
+        Pair(key, payload)
+      }
     assertThat(value).isInstanceOf(Pair::class.java)
     val pair = value as Pair<*, *>
     assertThat(pair.first).isSameInstanceAs(this::class.java)

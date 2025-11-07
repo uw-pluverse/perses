@@ -41,7 +41,6 @@ class AFLCoverageCollector(
   val monitorInterval: Long,
   val resultFile: Path,
 ) : ICoverageCollector {
-
   private val globalBitMap = ByteArray(MAP_SIZE)
 
   private val sharedMemoryLocal = ThreadLocal<SharedMemory>()
@@ -62,17 +61,16 @@ class AFLCoverageCollector(
   ): ActionResult {
     val sharedMemory = sharedMemoryLocal.get()
     sharedMemory.clean()
-    val result = action.compileWithExtraEnvironment(
-      file,
-      getEnvironmentVariableForAFLSharedMemory(sharedMemory.id),
-    )
+    val result =
+      action.compileWithExtraEnvironment(
+        file,
+        getEnvironmentVariableForAFLSharedMemory(sharedMemory.id),
+      )
     triggerNewEdge(sharedMemory.buffer)
     return result
   }
 
-  fun getSharedMemoryIdWithThreadId(): SharedMemory? {
-    return sharedMemoryLocal.get()
-  }
+  fun getSharedMemoryIdWithThreadId(): SharedMemory? = sharedMemoryLocal.get()
 
   data class SharedMemory(
     val id: Int,
@@ -165,8 +163,9 @@ class AFLCoverageCollector(
     private const val MAP_SIZE = 1 shl MAP_SIZE_POW2
     const val AFL_LIB_NAME = "afl_coverage_jni"
     const val AFL_LIB_SO_FILE_NAME = "lib$AFL_LIB_NAME.so"
-    val ALF_JAVA_LIB_DIR_PREFIX = "perses_fuzzer_system_lib_" +
-      AFLCoverageCollector::class.simpleName
+    val ALF_JAVA_LIB_DIR_PREFIX =
+      "perses_fuzzer_system_lib_" +
+        AFLCoverageCollector::class.simpleName
     val SYSTEM_LIBRARY_PATH = loadSystemLibrary()
 
     private fun loadSystemLibrary(): Path {
@@ -201,13 +200,14 @@ class AFLCoverageCollector(
 
     fun getEnvironmentVariableForAFLSharedMemory(
       sharedMemoryId: Int,
-    ): ImmutableMap<String, String> {
-      return ImmutableMap.of("__AFL_SHM_ID", sharedMemoryId.toString())
-    }
+    ): ImmutableMap<String, String> = ImmutableMap.of("__AFL_SHM_ID", sharedMemoryId.toString())
 
     private external fun setupSharedMemory(mapSize: Int): Int
 
-    private external fun getSharedMemory(id: Int, mapSize: Int): ByteBuffer
+    private external fun getSharedMemory(
+      id: Int,
+      mapSize: Int,
+    ): ByteBuffer
 
     external fun closeSharedMemory(id: Int)
   }

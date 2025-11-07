@@ -35,7 +35,6 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class CompilersTest : AbstractAntlrrdcTest() {
-
   val workingDir: Path = tempDir.resolve(this::class.simpleName)
 
   @After
@@ -50,17 +49,19 @@ class CompilersTest : AbstractAntlrrdcTest() {
 
   @Test
   fun testJarfileCanFail() {
-    val compiler = AntlrCompiler.createFromFiles(
-      parserFile = parserGrammarPath,
-      lexerFile = lexerGrammarPath,
-      startRuleName = "start",
-      workingDirectory = workingDir,
-      stubFactory = GrammarMainStubFactory(
-        testPrograms = ImmutableList.of(valid1, valid2),
-      ),
-      packageName = "org.perses.antlr",
-      jarFileCustomizer = {},
-    )
+    val compiler =
+      AntlrCompiler.createFromFiles(
+        parserFile = parserGrammarPath,
+        lexerFile = lexerGrammarPath,
+        startRuleName = "start",
+        workingDirectory = workingDir,
+        stubFactory =
+          GrammarMainStubFactory(
+            testPrograms = ImmutableList.of(valid1, valid2),
+          ),
+        packageName = "org.perses.antlr",
+        jarFileCustomizer = {},
+      )
     val jarFile = compiler.run()
     valid1.writeText("junk")
     valid2.writeText("junk2")
@@ -71,21 +72,28 @@ class CompilersTest : AbstractAntlrrdcTest() {
 
   @Test
   fun testSimpleGrammar() {
-    val compiler = AntlrCompiler.createFromFiles(
-      parserFile = parserGrammarPath,
-      lexerFile = lexerGrammarPath,
-      startRuleName = "start",
-      workingDirectory = workingDir,
-      stubFactory = GrammarMainStubFactory(
-        testPrograms = ImmutableList.of(valid1, valid2),
-      ),
-      packageName = "org.perses.antlr",
-      jarFileCustomizer = {},
-    )
+    val compiler =
+      AntlrCompiler.createFromFiles(
+        parserFile = parserGrammarPath,
+        lexerFile = lexerGrammarPath,
+        startRuleName = "start",
+        workingDirectory = workingDir,
+        stubFactory =
+          GrammarMainStubFactory(
+            testPrograms = ImmutableList.of(valid1, valid2),
+          ),
+        packageName = "org.perses.antlr",
+        jarFileCustomizer = {},
+      )
     val jarFile = compiler.run()
 
     ZipFile(jarFile.path.toFile()).use { zipFile ->
-      val entryNames = zipFile.entries().asSequence().map { it.name }.toList()
+      val entryNames =
+        zipFile
+          .entries()
+          .asSequence()
+          .map { it.name }
+          .toList()
       assertThat(entryNames).containsExactly(
         "org/perses/antlr/TestLexer.class",
         "org/perses/antlr/TestLexer.java",
@@ -105,28 +113,31 @@ class CompilersTest : AbstractAntlrrdcTest() {
 
   @Test
   fun testSolidityGrammar() {
-    val solidityProgramExample = tempDir.resolve("solidity_hello_world.sol").apply {
-      this.writeText(
-        """
-            contract helloWorld {
-             function renderHelloWorld () public pure returns (string) {
-               return 'helloWorld';
-             }
-            }
-        """.trimIndent(),
+    val solidityProgramExample =
+      tempDir.resolve("solidity_hello_world.sol").apply {
+        this.writeText(
+          """
+          contract helloWorld {
+           function renderHelloWorld () public pure returns (string) {
+             return 'helloWorld';
+           }
+          }
+          """.trimIndent(),
+        )
+      }
+    val compiler =
+      AntlrCompiler.createFromFiles(
+        parserFile = Paths.get("src/org/perses/grammar/solidity/Solidity.g4"),
+        lexerFile = Paths.get("src/org/perses/grammar/solidity/SolidityLexer.g4"),
+        startRuleName = "sourceUnit",
+        workingDirectory = workingDir,
+        stubFactory =
+          GrammarMainStubFactory(
+            testPrograms = ImmutableList.of(solidityProgramExample),
+          ),
+        packageName = "org.perses.antlr",
+        jarFileCustomizer = {},
       )
-    }
-    val compiler = AntlrCompiler.createFromFiles(
-      parserFile = Paths.get("src/org/perses/grammar/solidity/Solidity.g4"),
-      lexerFile = Paths.get("src/org/perses/grammar/solidity/SolidityLexer.g4"),
-      startRuleName = "sourceUnit",
-      workingDirectory = workingDir,
-      stubFactory = GrammarMainStubFactory(
-        testPrograms = ImmutableList.of(solidityProgramExample),
-      ),
-      packageName = "org.perses.antlr",
-      jarFileCustomizer = {},
-    )
     val jarFile = compiler.run()
     jarFile.expensiveTestParsable(solidityProgramExample)
     jarFile.expensiveRunMain()
@@ -134,17 +145,19 @@ class CompilersTest : AbstractAntlrrdcTest() {
 
   @Test
   fun testNullLexerFile() {
-    val compiler = AntlrCompiler.createFromFiles(
-      parserFile = combinedGrammarPath,
-      lexerFile = null,
-      startRuleName = "start",
-      workingDirectory = workingDir,
-      stubFactory = GrammarMainStubFactory(
-        testPrograms = ImmutableList.of(valid1, valid2),
-      ),
-      packageName = "org.perses.antlr",
-      jarFileCustomizer = {},
-    )
+    val compiler =
+      AntlrCompiler.createFromFiles(
+        parserFile = combinedGrammarPath,
+        lexerFile = null,
+        startRuleName = "start",
+        workingDirectory = workingDir,
+        stubFactory =
+          GrammarMainStubFactory(
+            testPrograms = ImmutableList.of(valid1, valid2),
+          ),
+        packageName = "org.perses.antlr",
+        jarFileCustomizer = {},
+      )
     val jarFile = compiler.run()
     jarFile.expensiveTestParsable(valid1)
     jarFile.expensiveTestParsable(valid2)
@@ -153,27 +166,35 @@ class CompilersTest : AbstractAntlrrdcTest() {
 
   @Test
   fun testGenerateParserFacadeCombined() {
-    val compiler = AntlrCompiler.createFromFiles(
-      parserFile = combinedGrammarPath,
-      lexerFile = null,
-      startRuleName = "start",
-      workingDirectory = workingDir,
-      stubFactory = ParserFacadeStubFactory(
-        grammarName = "TestCombined",
+    val compiler =
+      AntlrCompiler.createFromFiles(
         parserFile = combinedGrammarPath,
         lexerFile = null,
-        languageKindSetting = ParserFacadeStubFactory.YamlLanguageKindSetting(
-          LanguageAdhoc.INSTANCE.toYamlString(),
-        ),
-        parserFacadeClassSimpleName = "TestCombinedAdhocParserFacade",
-        tokenNamesOfIdentifiers = listOf("ID"),
-      ),
-      packageName = "org.perses.grammar.adhoc",
-      jarFileCustomizer = {},
-    )
+        startRuleName = "start",
+        workingDirectory = workingDir,
+        stubFactory =
+          ParserFacadeStubFactory(
+            grammarName = "TestCombined",
+            parserFile = combinedGrammarPath,
+            lexerFile = null,
+            languageKindSetting =
+              ParserFacadeStubFactory.YamlLanguageKindSetting(
+                LanguageAdhoc.INSTANCE.toYamlString(),
+              ),
+            parserFacadeClassSimpleName = "TestCombinedAdhocParserFacade",
+            tokenNamesOfIdentifiers = listOf("ID"),
+          ),
+        packageName = "org.perses.grammar.adhoc",
+        jarFileCustomizer = {},
+      )
     val jarFile = compiler.run()
     ZipFile(jarFile.path.toFile()).use { zipFile ->
-      val entryNames = zipFile.entries().asSequence().map { it.name }.toList()
+      val entryNames =
+        zipFile
+          .entries()
+          .asSequence()
+          .map { it.name }
+          .toList()
       assertThat(entryNames).containsExactly(
         "org/perses/grammar/adhoc/TestCombinedAdhocParserFacade.class",
         "org/perses/grammar/adhoc/TestCombinedAdhocParserFacade.java",
@@ -189,27 +210,35 @@ class CompilersTest : AbstractAntlrrdcTest() {
 
   @Test
   fun testGenerateParserFacadeSeperate() {
-    val compiler = AntlrCompiler.createFromFiles(
-      parserFile = parserGrammarPath,
-      lexerFile = lexerGrammarPath,
-      startRuleName = "start",
-      workingDirectory = workingDir,
-      stubFactory = ParserFacadeStubFactory(
-        grammarName = "Test",
-        parserFile = combinedGrammarPath,
-        lexerFile = null,
-        languageKindSetting = ParserFacadeStubFactory.YamlLanguageKindSetting(
-          LanguageAdhoc.INSTANCE.toYamlString(),
-        ),
-        parserFacadeClassSimpleName = "TestAdhocParserFacade",
-        tokenNamesOfIdentifiers = listOf("ID"),
-      ),
-      packageName = "org.perses.grammar.adhoc",
-      jarFileCustomizer = {},
-    )
+    val compiler =
+      AntlrCompiler.createFromFiles(
+        parserFile = parserGrammarPath,
+        lexerFile = lexerGrammarPath,
+        startRuleName = "start",
+        workingDirectory = workingDir,
+        stubFactory =
+          ParserFacadeStubFactory(
+            grammarName = "Test",
+            parserFile = combinedGrammarPath,
+            lexerFile = null,
+            languageKindSetting =
+              ParserFacadeStubFactory.YamlLanguageKindSetting(
+                LanguageAdhoc.INSTANCE.toYamlString(),
+              ),
+            parserFacadeClassSimpleName = "TestAdhocParserFacade",
+            tokenNamesOfIdentifiers = listOf("ID"),
+          ),
+        packageName = "org.perses.grammar.adhoc",
+        jarFileCustomizer = {},
+      )
     val jarFile = compiler.run()
     ZipFile(jarFile.path.toFile()).use { zipFile ->
-      val entryNames = zipFile.entries().asSequence().map { it.name }.toList()
+      val entryNames =
+        zipFile
+          .entries()
+          .asSequence()
+          .map { it.name }
+          .toList()
       assertThat(entryNames).containsExactly(
         "org/perses/grammar/adhoc/TestAdhocParserFacade.class",
         "org/perses/grammar/adhoc/TestAdhocParserFacade.java",

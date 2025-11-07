@@ -23,30 +23,30 @@ import org.perses.reduction.ReducerContext
 class LLMBasedDataTypeSimplificationReducer(
   reducerContext: ReducerContext,
 ) : AbstractLLMBasedReducer(META, reducerContext) {
-
-  override val primaryQuestion: String = """
+  override val primaryQuestion: String =
+    """
     |In programming, primary data types typically include int, float, short, unsigned, char, etc.
     |Conversely, complex data types typically include structures, classes, arrays, pointers, etc.
     |Please identify all variables with complex data types.
     |Please write the identified variables into a list: [a list of variable names].
     |If no data type is identified, just give an empty list.
-  """.trimMargin()
+    """.trimMargin()
 
-  override val followupQuestion: String = """
+  override val followupQuestion: String =
+    """
     |Given the following program and the variable in complex data type,
     |decompose the it into variables with primary data type.
-  """.trimMargin()
+    """.trimMargin()
 
   object META : AbstractLLMReducerAnnotation(
     shortName = NAME,
     description = "Invoke LLMs for data type simplification.",
-    deterministic = false,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(LLMBasedDataTypeSimplificationReducer(reducerContext))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(LLMBasedDataTypeSimplificationReducer(reducerContext))
   }
+
   companion object {
     const val NAME = "llm_based_data_type_simplification_reducer"
   }

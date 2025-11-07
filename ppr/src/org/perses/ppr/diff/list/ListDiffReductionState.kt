@@ -18,22 +18,18 @@ package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.util.AbstractEditOperation
 import org.perses.util.ktInfo
 
 class ListDiffReductionState(
-  val initialDiff: ImmutableList<AbstractEditOperation<PersesToken>>,
-  private val listenerOnUpdate:
-  (ImmutableList<AbstractEditOperation<PersesToken>>) -> Unit,
+  initialDiff: ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
+  private val listenerOnUpdate: (ImmutableList<AbstractEditOperation<AbstractPersesToken>>) -> Unit,
 ) {
-
-  var bestDiff: ImmutableList<AbstractEditOperation<PersesToken>> = initialDiff
+  var bestDiff: ImmutableList<AbstractEditOperation<AbstractPersesToken>> = initialDiff
     private set
 
-  fun updateBestDiff(
-    newBestDiff: ImmutableList<AbstractEditOperation<PersesToken>>,
-  ) {
+  fun updateBestDiff(newBestDiff: ImmutableList<AbstractEditOperation<AbstractPersesToken>>) {
     logger.ktInfo { "Found a smaller diff(insert+replace). #ops is ${newBestDiff.size}" }
     bestDiff = newBestDiff
     listenerOnUpdate(newBestDiff)

@@ -36,17 +36,25 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
 
   private val nullLexer: PersesGrammar? = null
 
-  private val listener: PnfPassManager.Listener = object : PnfPassManager.Listener() {
-    override fun start(grammar: GrammarPair, startRuleName: String) {
-      System.err.println("Starting...")
-      System.err.println(grammar.parserGrammar!!.sourceCode)
-    }
+  private val listener: PnfPassManager.Listener =
+    object : PnfPassManager.Listener() {
+      override fun start(
+        grammar: GrammarPair,
+        startRuleName: String,
+      ) {
+        System.err.println("Starting...")
+        System.err.println(grammar.parserGrammar!!.sourceCode)
+      }
 
-    override fun afterPass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {
-      System.err.println("After pass $passClass")
-      System.err.println(grammar.parserGrammar!!.sourceCode)
+      override fun afterPass(
+        grammar: GrammarPair,
+        passClass: Class<*>,
+        iteration: Int,
+      ) {
+        System.err.println("After pass $passClass")
+        System.err.println(grammar.parserGrammar!!.sourceCode)
+      }
     }
-  }
 
   @Test
   fun testAssocRightRecursive() {
@@ -57,57 +65,69 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
 
   @Test
   fun testConvertDuplicateAlternatives() {
-    val grammar = GrammarTestingUtility.createPersesGrammarFromString(
-      "start : A c | A d;",
-      "c : B;",
-      "d : B;",
-    )
+    val grammar =
+      GrammarTestingUtility.createPersesGrammarFromString(
+        "start : A c | A d;",
+        "c : B;",
+        "d : B;",
+      )
     val processed = manager.process(GrammarPair(grammar, nullLexer), "start").parserGrammar!!
     println(processed.sourceCode)
   }
 
   @Test
   fun testRemoveAssociativity() {
-    val grammar = GrammarTestingUtility.createPersesGrammarFromString(
-      """
-      start : <assoc=right> 'a';
-      """.trimIndent(),
-    )
+    val grammar =
+      GrammarTestingUtility.createPersesGrammarFromString(
+        """
+        start : <assoc=right> 'a';
+        """.trimIndent(),
+      )
     val processed = manager.process(GrammarPair(grammar, nullLexer), "start").parserGrammar!!
     assertThat(processed.flattenedAllRules).hasSize(1)
-    assertThat(processed.flattenedAllRules.first().body.sourceCode).isEqualTo("'a'")
+    assertThat(
+      processed.flattenedAllRules
+        .first()
+        .body.sourceCode,
+    ).isEqualTo("'a'")
   }
 
   @Test
   fun testConvertC() {
     val grammar = loadGrammarFromFile("C.g4")
-    val processed = manager.process(
-      GrammarPair(grammar, nullLexer),
-      "compilationUnit",
-    ).parserGrammar!!
+    val processed =
+      manager
+        .process(
+          GrammarPair(grammar, nullLexer),
+          "compilationUnit",
+        ).parserGrammar!!
     println(processed.sourceCode)
   }
 
   @Test
   fun testConvertPhp() {
-    val lexer = loadGrammarFromFile(
-      Paths.get("src/org/perses/grammar/php/PhpLexer.g4"),
-    )
-    val grammar = loadGrammarFromFile(
-      Paths.get("src/org/perses/grammar/php/PhpParser.g4"),
-    )
+    val lexer =
+      loadGrammarFromFile(
+        Paths.get("src/org/perses/grammar/php/PhpLexer.g4"),
+      )
+    val grammar =
+      loadGrammarFromFile(
+        Paths.get("src/org/perses/grammar/php/PhpParser.g4"),
+      )
     val processed = manager.process(GrammarPair(grammar, lexer), "htmlDocument").parserGrammar!!
     println(processed.sourceCode)
   }
 
   @Test
   fun testConvertSystemVerilog() {
-    val lexer = loadGrammarFromFile(
-      Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogLexer.g4"),
-    )
-    val grammar = loadGrammarFromFile(
-      Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogParser.g4"),
-    )
+    val lexer =
+      loadGrammarFromFile(
+        Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogLexer.g4"),
+      )
+    val grammar =
+      loadGrammarFromFile(
+        Paths.get("antlropt/test/org/perses/antlr/pnf/grammars/SystemVerilogParser.g4"),
+      )
     val processed = manager.process(GrammarPair(grammar, lexer), "source_text").parserGrammar!!
     println(processed.sourceCode)
   }
@@ -115,19 +135,22 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
   @Test
   fun testConvertPrimaryExprOfGo_shouldNotCrash() {
     val grammar = loadGrammarFromFile("nested_alt_block_from_go.g4")
-    val processed = manager.process(
-      GrammarPair(grammar, nullLexer),
-      "primaryExpr",
-      listener,
-    ).parserGrammar!!
+    val processed =
+      manager
+        .process(
+          GrammarPair(grammar, nullLexer),
+          "primaryExpr",
+          listener,
+        ).parserGrammar!!
     val sourceCode = processed.sourceCode
     System.err.println(sourceCode)
   }
 
   @Test
   fun testConvertWLP4Language() {
-    val grammar = GrammarTestingUtility.createPersesGrammarFromString(
-      """procedures 
+    val grammar =
+      GrammarTestingUtility.createPersesGrammarFromString(
+        """procedures 
             : procedure procedures
             | main
             ;
@@ -138,30 +161,33 @@ class PnfPassManagerTest : PnfLeftTestGrammar() {
             : 'main'
             ;
       """,
-    )
-    val processed = manager.process(
-      GrammarPair(grammar, nullLexer),
-      startRuleName = "procedures",
-      listener,
-    ).parserGrammar!!
+      )
+    val processed =
+      manager
+        .process(
+          GrammarPair(grammar, nullLexer),
+          startRuleName = "procedures",
+          listener,
+        ).parserGrammar!!
 
     val kleeneNodes = mutableListOf<AbstractPersesAst>()
-    val visitor = object : DefaultAstVisitor() {
-      override fun visit(ast: PersesOptionalAst) {
-        super.visit(ast)
-        kleeneNodes.add(ast)
-      }
+    val visitor =
+      object : DefaultAstVisitor() {
+        override fun visit(ast: PersesOptionalAst) {
+          super.visit(ast)
+          kleeneNodes.add(ast)
+        }
 
-      override fun visit(ast: PersesPlusAst) {
-        super.visit(ast)
-        kleeneNodes.add(ast)
-      }
+        override fun visit(ast: PersesPlusAst) {
+          super.visit(ast)
+          kleeneNodes.add(ast)
+        }
 
-      override fun visit(ast: PersesStarAst) {
-        super.visit(ast)
-        kleeneNodes.add(ast)
+        override fun visit(ast: PersesStarAst) {
+          super.visit(ast)
+          kleeneNodes.add(ast)
+        }
       }
-    }
     processed.parserRules.forEach { rule ->
       visitor.preorder(rule)
     }

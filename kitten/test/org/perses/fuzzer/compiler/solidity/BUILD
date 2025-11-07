@@ -11,7 +11,6 @@ kt_jvm_test(
         "solc_crash_1.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",

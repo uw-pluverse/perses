@@ -23,11 +23,15 @@ class SparTreeWithParsability(
   private val sparTree: SparTree,
   val parsable: Boolean,
 ) {
-
   fun getTreeRegardlessOfParsability() = sparTree
 
   fun getParsableTreeOrFail(): SparTree {
-    check(parsable)
+    check(parsable) {
+      """
+        |The following tree is not parsable.
+      """.trimMargin()
+      sparTree.printTreeStructure()
+    }
     return sparTree
   }
 

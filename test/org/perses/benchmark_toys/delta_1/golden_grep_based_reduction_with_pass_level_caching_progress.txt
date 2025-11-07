@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -24,7 +25,8 @@ resultOutputFlags:
   outputDir: "result_grep_based_token_reduction_with_pass_level_cache_golden_test_concurrent_token_slicer_t.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -43,7 +45,10 @@ algorithmControlFlags:
   enableTokenSlicer: true
   enableTreeSlicer: true
   enableLineSlicer: true
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "grep_based_reduction_with_pass_level_cache_progress.txt"
@@ -72,73 +78,77 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: false
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
   enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<sequence>
-reducers:
-- !<fixpoint>
-  body: !<atomic>
-    reducer: concurrent_token_slicer
-  condition: smaller
-- !<sequence>
-  reducers:
-  - !<fixpoint>
-    body: !<if>
-      condition: !<atomic>
-        reducer: line_based_concurrent_token_slicer
-      then: !<fixpoint>
-        body: !<atomic>
-          reducer: concurrent_token_slicer
-        condition: smaller
-    condition: smaller
-  - !<fixpoint>
-    body: !<if>
-      condition: !<atomic>
-        reducer: tree_slicer
-      then: !<fixpoint>
-        body: !<atomic>
-          reducer: concurrent_token_slicer
-        condition: smaller
-    condition: smaller
-  - !<fixpoint>
-    body: !<if>
-      condition: !<atomic>
-        reducer: concurrent_token_slicer
-      then: !<fixpoint>
-        body: !<atomic>
-          reducer: concurrent_token_slicer
-        condition: smaller
-    condition: smaller
+Cache setting: query-caching=false, edit-caching=false, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 27
+(56/56)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        concurrent_token_slicer
+    }
+    fixpoint (smaller) {
+        if (line_based_concurrent_token_slicer) {
+            fixpoint (smaller) {
+                concurrent_token_slicer
+            }
+        }
+    }
+    fixpoint (smaller) {
+        if (tree_slicer) {
+            fixpoint (smaller) {
+                concurrent_token_slicer
+            }
+        }
+    }
+    fixpoint (smaller) {
+        if (concurrent_token_slicer) {
+            fixpoint (smaller) {
+                concurrent_token_slicer
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            concurrent_token_slicer
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
+(56/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ==Fixpoint iteration 1. Reducer: concurrent_token_slicer@1==
 
 The spar-tree is the following.
@@ -3737,8 +3747,7 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
+(8/56)  Rebuilding spar-tree: The spartree is rebuilt.
 =Fixpoint iteration 15. Reducer: concurrent_token_slicer@1==
 
 The spar-tree is the following.
@@ -4548,8 +4557,7 @@ translationUnit {id=404,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
+(7/56)  Rebuilding spar-tree: The spartree is rebuilt.
 =Fixpoint iteration 29. Reducer: concurrent_token_slicer@1==
 
 The spar-tree is the following.
@@ -4704,6 +4712,19 @@ translationUnit {id=474,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@2 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@3 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@4 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@5 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@6 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@7 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@8 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@9 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@10 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@11 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@12 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@13 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@14 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 =Fixpoint iteration 30. Reducer: line_based_concurrent_token_slicer@1
 
 The spar-tree is the following.
@@ -5386,6 +5407,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[44][tree_slicer][DFS](7/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:7/56=12.50%
+FixPt[44][tree_slicer][DFS](7/56)  Testing the empty input. Global ratio:7/56=12.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](7/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/56=12.50%
+FixPt[44][tree_slicer][DFS](7/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/56=12.50%
 ===================Node reduction is done===================
 
 Failed to reduce node 475
@@ -5406,18 +5439,38 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+FixPt[44][tree_slicer][DFS](7/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:7/56=12.50%
+FixPt[44][tree_slicer][DFS](7/56)  Testing the empty input. Global ratio:7/56=12.50%
+============Testing the following program: fail=============
 
-Failed to reduce node 477
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-=================Reducing node 479, size=7==================
+FixPt[44][tree_slicer][DFS](7/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:7/56=12.50%
+============Testing the following program: fail=============
 
-The current best program is the following
-
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
     --file: t.c--
         printf
+    --file: <formatted tokenized program in its original format>--
+        printf
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](7/56)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:7/56=12.50%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+                                      {
+           (
+            "world\n")
+                ;
+    }
+    --file: <formatted tokenized program in its original format>--
                                       {
            (
             "world\n")
@@ -5426,18 +5479,37 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+FixPt[44][tree_slicer][DFS](7/56)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:7/56=12.50%
+===========TestScriptExecutionCacheEntryEviction============
 
-Failed to reduce node 479
+0 entries are removed: 0 --> 0.
 ------------------------------------------------------------
 
 
-=================Reducing node 536, size=7==================
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 7 -> 6
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](6/56)  Minimizer DfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:6/56=10.71%
+===================Node reduction is done===================
+
+Succeeded to reduce node 477 from 7 to 6
+------------------------------------------------------------
+
+
+=================Reducing node 479, size=6==================
 
 The current best program is the following
 
     --file: t.c--
-        printf
                                       {
            (
             "world\n")
@@ -5446,337 +5518,436 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+FixPt[44][tree_slicer][DFS](6/56)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:6/56=10.71%
+FixPt[44][tree_slicer][DFS](6/56)  Testing the empty input. Global ratio:6/56=10.71%
+============Testing the following program: fail=============
 
-Failed to reduce node 536
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@3
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-=================Reducing node 482, size=7==================
+FixPt[44][tree_slicer][DFS](6/56)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:6/56=10.71%
+============Testing the following program: pass=============
 
-The current best program is the following
-
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
     --file: t.c--
-        printf
                                       {
            (
             "world\n")
                 ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 482
-------------------------------------------------------------
-
-
-=================Reducing node 481, size=7==================
-
-The current best program is the following
-
-    --file: t.c--
-        printf
+    --file: <formatted tokenized program in its original format>--
                                       {
            (
             "world\n")
                 ;
-    }
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](6/56)  Try deleting [2]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:6/56=10.71%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 6 -> 5
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: tree_slicer
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
     --file: t.c--
-        printf
-                                      {
-    }
     --file: <formatted tokenized program in its original format>--
-        printf
-                                      {
-    }
 ------------------------------------------------------------
 
 
+FixPt[44][tree_slicer][DFS](5/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/3=66.67%. Global ratio:5/56=8.93%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+                                      {
+    --file: <formatted tokenized program in its original format>--
+                                      {
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](5/56)  Try deleting [1]#1: Uninteresting. Local ratio: 2/3=66.67%. Global ratio:5/56=8.93%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+           (
+            "world\n")
+                ;
+    --file: <formatted tokenized program in its original format>--
+           (
+            "world\n")
+                ;
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](5/56)  Try deleting [0]#1: Interesting. Local ratio: 2/3=66.67%. Global ratio:5/56=8.93%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 5 -> 4
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](4/56)  Minimizer DfsListMinimizer ends. Result=[1]#1. Local ratio: 1/3=33.33%. Global ratio:4/56=7.14%
+===================Node reduction is done===================
+
+Succeeded to reduce node 479 from 6 to 4
+------------------------------------------------------------
+
+
+=================Reducing node 481, size=4==================
+
+The current best program is the following
+
+    --file: t.c--
+           (
+            "world\n")
+                ;
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](4/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:4/56=7.14%
+FixPt[44][tree_slicer][DFS](4/56)  Testing the empty input. Global ratio:4/56=7.14%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](4/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:4/56=7.14%
+FixPt[44][tree_slicer][DFS](4/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/56=7.14%
 ===================Node reduction is done===================
 
 Failed to reduce node 481
 ------------------------------------------------------------
 
 
-=================Reducing node 480, size=7==================
+=================Reducing node 484, size=4==================
 
 The current best program is the following
 
     --file: t.c--
-        printf
-                                      {
            (
             "world\n")
                 ;
-    }
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
-
-Failed to reduce node 480
-------------------------------------------------------------
-
-
-=================Reducing node 484, size=7==================
-
-The current best program is the following
-
-    --file: t.c--
-        printf
-                                      {
-           (
-            "world\n")
-                ;
-    }
-------------------------------------------------------------
-
-
+FixPt[44][tree_slicer][DFS](4/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:4/56=7.14%
+FixPt[44][tree_slicer][DFS](4/56)  Testing the empty input. Global ratio:4/56=7.14%
 ============Testing the following program: fail=============
 
-// edit action set type: tree_slicer
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
     --file: t.c--
-        printf
-                                      {
-    }
     --file: <formatted tokenized program in its original format>--
-        printf
-                                      {
-    }
 ------------------------------------------------------------
 
 
+FixPt[44][tree_slicer][DFS](4/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:4/56=7.14%
+FixPt[44][tree_slicer][DFS](4/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/56=7.14%
 ===================Node reduction is done===================
 
 Failed to reduce node 484
 ------------------------------------------------------------
 
 
-=================Reducing node 488, size=7==================
+=================Reducing node 488, size=4==================
 
 The current best program is the following
 
     --file: t.c--
-        printf
-                                      {
            (
             "world\n")
                 ;
-    }
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](4/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:4/56=7.14%
+FixPt[44][tree_slicer][DFS](4/56)  Testing the empty input. Global ratio:4/56=7.14%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](4/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:4/56=7.14%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+           (
+            "world\n")
+    --file: <formatted tokenized program in its original format>--
+           (
+            "world\n")
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](4/56)  Try deleting [1]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:4/56=7.14%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 4 -> 3
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: tree_slicer
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
     --file: t.c--
-        printf
-                                      {
-    }
     --file: <formatted tokenized program in its original format>--
-        printf
-                                      {
-    }
 ------------------------------------------------------------
 
 
+FixPt[44][tree_slicer][DFS](3/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/2=50.00%. Global ratio:3/56=5.36%
+FixPt[44][tree_slicer][DFS](3/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:3/56=5.36%
 ===================Node reduction is done===================
 
-Failed to reduce node 488
+Succeeded to reduce node 488 from 4 to 3
 ------------------------------------------------------------
 
 
-=================Reducing node 490, size=7==================
+=================Reducing node 489, size=3==================
 
 The current best program is the following
 
     --file: t.c--
-        printf
-                                      {
            (
             "world\n")
-                ;
-    }
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
-
-Failed to reduce node 490
-------------------------------------------------------------
-
-
-=================Reducing node 489, size=7==================
-
-The current best program is the following
-
-    --file: t.c--
-        printf
-                                      {
-           (
-            "world\n")
-                ;
-    }
-------------------------------------------------------------
-
-
+FixPt[44][tree_slicer][DFS](3/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:3/56=5.36%
+FixPt[44][tree_slicer][DFS](3/56)  Testing the empty input. Global ratio:3/56=5.36%
 ============Testing the following program: fail=============
 
-// edit action set type: tree_slicer
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
     --file: t.c--
-        printf
-                                      {
-                ;
-    }
     --file: <formatted tokenized program in its original format>--
-        printf
-                                      {
-                ;
-    }
 ------------------------------------------------------------
 
 
+FixPt[44][tree_slicer][DFS](3/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:3/56=5.36%
+FixPt[44][tree_slicer][DFS](3/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/56=5.36%
 ===================Node reduction is done===================
 
 Failed to reduce node 489
 ------------------------------------------------------------
 
 
-=================Reducing node 509, size=7==================
+=================Reducing node 509, size=3==================
 
 The current best program is the following
 
     --file: t.c--
-        printf
-                                      {
            (
             "world\n")
-                ;
-    }
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](3/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:3/56=5.36%
+FixPt[44][tree_slicer][DFS](3/56)  Testing the empty input. Global ratio:3/56=5.36%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](3/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:3/56=5.36%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+           (
+            "world\n"
+    --file: <formatted tokenized program in its original format>--
+           (
+            "world\n"
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](3/56)  Try deleting [1]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:3/56=5.36%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 3 -> 2
 ------------------------------------------------------------
 
 
 ============Testing the following program: fail=============
 
-// edit action set type: tree_slicer
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
     --file: t.c--
-        printf
-                                      {
-                ;
-    }
     --file: <formatted tokenized program in its original format>--
-        printf
-                                      {
-                ;
-    }
 ------------------------------------------------------------
 
 
+FixPt[44][tree_slicer][DFS](2/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/2=50.00%. Global ratio:2/56=3.57%
+FixPt[44][tree_slicer][DFS](2/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:2/56=3.57%
 ===================Node reduction is done===================
 
-Failed to reduce node 509
+Succeeded to reduce node 509 from 3 to 2
 ------------------------------------------------------------
 
 
-=================Reducing node 511, size=7==================
+=================Reducing node 512, size=2==================
 
 The current best program is the following
 
     --file: t.c--
-        printf
-                                      {
            (
-            "world\n")
-                ;
-    }
+            "world\n"
 ------------------------------------------------------------
 
 
+FixPt[44][tree_slicer][DFS](2/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:2/56=3.57%
+FixPt[44][tree_slicer][DFS](2/56)  Testing the empty input. Global ratio:2/56=3.57%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@2
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](2/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:2/56=3.57%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+           (
+    --file: <formatted tokenized program in its original format>--
+           (
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](2/56)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:2/56=3.57%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+            "world\n"
+    --file: <formatted tokenized program in its original format>--
+            "world\n"
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](2/56)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:2/56=3.57%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 2 -> 1
+------------------------------------------------------------
+
+
+FixPt[44][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:1/56=1.79%
 ===================Node reduction is done===================
 
-Failed to reduce node 511
+Succeeded to reduce node 512 from 2 to 1
 ------------------------------------------------------------
 
 
-=================Reducing node 512, size=7==================
+=================Reducing node 532, size=1==================
 
 The current best program is the following
 
     --file: t.c--
-        printf
-                                      {
-           (
-            "world\n")
-                ;
-    }
+            "world\n"
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+FixPt[44][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[44][tree_slicer][DFS](1/56)  Testing the empty input. Global ratio:1/56=1.79%
+============Testing the following program: fail=============
 
-Failed to reduce node 512
-------------------------------------------------------------
-
-
-=================Reducing node 532, size=7==================
-
-The current best program is the following
-
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
     --file: t.c--
-        printf
-                                      {
-           (
-            "world\n")
-                ;
-    }
+    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[44][tree_slicer][DFS](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[44][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 ===================Node reduction is done===================
 
 Failed to reduce node 532
 ------------------------------------------------------------
 
 
-=================Reducing node 513, size=7==================
+=================Reducing node 533, size=1==================
 
 The current best program is the following
 
     --file: t.c--
-        printf
-                                      {
-           (
-            "world\n")
-                ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 513
-------------------------------------------------------------
-
-
-=================Reducing node 533, size=7==================
-
-The current best program is the following
-
-    --file: t.c--
-        printf
-                                      {
-           (
-            "world\n")
-                ;
-    }
+            "world\n"
 ------------------------------------------------------------
 
 
@@ -5786,1654 +5957,580 @@ Failed to reduce node 533
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 56
-  characterCount: 133
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[1]: ReducerCallEvent
----
-reducer:
-  granularity: 1
-  shortName: "concurrent_token_slicer@1"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 35
-  characterCount: 72
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[3]: ReducerCallEvent
----
-reducer:
-  granularity: 2
-  shortName: "concurrent_token_slicer@2"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 17
-  characterCount: 44
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[5]: ReducerCallEvent
----
-reducer:
-  granularity: 3
-  shortName: "concurrent_token_slicer@3"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[6]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[7]: ReducerCallEvent
----
-reducer:
-  granularity: 4
-  shortName: "concurrent_token_slicer@4"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[8]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[9]: ReducerCallEvent
----
-reducer:
-  granularity: 5
-  shortName: "concurrent_token_slicer@5"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[10]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[11]: ReducerCallEvent
----
-reducer:
-  granularity: 6
-  shortName: "concurrent_token_slicer@6"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[12]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[13]: ReducerCallEvent
----
-reducer:
-  granularity: 7
-  shortName: "concurrent_token_slicer@7"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[14]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[15]: ReducerCallEvent
----
-reducer:
-  granularity: 8
-  shortName: "concurrent_token_slicer@8"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[16]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[17]: ReducerCallEvent
----
-reducer:
-  granularity: 9
-  shortName: "concurrent_token_slicer@9"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[18]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[19]: ReducerCallEvent
----
-reducer:
-  granularity: 10
-  shortName: "concurrent_token_slicer@10"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[20]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[21]: ReducerCallEvent
----
-reducer:
-  granularity: 11
-  shortName: "concurrent_token_slicer@11"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[22]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[23]: ReducerCallEvent
----
-reducer:
-  granularity: 12
-  shortName: "concurrent_token_slicer@12"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[24]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[25]: ReducerCallEvent
----
-reducer:
-  granularity: 13
-  shortName: "concurrent_token_slicer@13"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[26]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[27]: ReducerCallEvent
----
-reducer:
-  granularity: 14
-  shortName: "concurrent_token_slicer@14"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[28]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 8
-  characterCount: 23
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[29]: ReducerCallEvent
----
-reducer:
-  granularity: 1
-  shortName: "concurrent_token_slicer@1"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[30]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[31]: ReducerCallEvent
----
-reducer:
-  granularity: 2
-  shortName: "concurrent_token_slicer@2"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[32]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[33]: ReducerCallEvent
----
-reducer:
-  granularity: 3
-  shortName: "concurrent_token_slicer@3"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[34]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[35]: ReducerCallEvent
----
-reducer:
-  granularity: 4
-  shortName: "concurrent_token_slicer@4"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[36]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[37]: ReducerCallEvent
----
-reducer:
-  granularity: 5
-  shortName: "concurrent_token_slicer@5"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[38]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[39]: ReducerCallEvent
----
-reducer:
-  granularity: 6
-  shortName: "concurrent_token_slicer@6"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[40]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[41]: ReducerCallEvent
----
-reducer:
-  granularity: 7
-  shortName: "concurrent_token_slicer@7"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[42]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[43]: ReducerCallEvent
----
-reducer:
-  granularity: 8
-  shortName: "concurrent_token_slicer@8"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[44]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[45]: ReducerCallEvent
----
-reducer:
-  granularity: 9
-  shortName: "concurrent_token_slicer@9"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[46]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[47]: ReducerCallEvent
----
-reducer:
-  granularity: 10
-  shortName: "concurrent_token_slicer@10"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[48]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[49]: ReducerCallEvent
----
-reducer:
-  granularity: 11
-  shortName: "concurrent_token_slicer@11"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[50]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[51]: ReducerCallEvent
----
-reducer:
-  granularity: 12
-  shortName: "concurrent_token_slicer@12"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[52]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[53]: ReducerCallEvent
----
-reducer:
-  granularity: 13
-  shortName: "concurrent_token_slicer@13"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[54]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[55]: ReducerCallEvent
----
-reducer:
-  granularity: 14
-  shortName: "concurrent_token_slicer@14"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[56]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[57]: ReducerCallEvent
----
-reducer:
-  granularity: 1
-  shortName: "concurrent_token_slicer@1"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[58]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[59]: ReducerCallEvent
----
-reducer:
-  granularity: 2
-  shortName: "concurrent_token_slicer@2"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[60]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[61]: ReducerCallEvent
----
-reducer:
-  granularity: 3
-  shortName: "concurrent_token_slicer@3"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[62]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[63]: ReducerCallEvent
----
-reducer:
-  granularity: 4
-  shortName: "concurrent_token_slicer@4"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[64]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[65]: ReducerCallEvent
----
-reducer:
-  granularity: 5
-  shortName: "concurrent_token_slicer@5"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[66]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[67]: ReducerCallEvent
----
-reducer:
-  granularity: 6
-  shortName: "concurrent_token_slicer@6"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[68]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[69]: ReducerCallEvent
----
-reducer:
-  granularity: 7
-  shortName: "concurrent_token_slicer@7"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[70]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[71]: ReducerCallEvent
----
-reducer:
-  granularity: 8
-  shortName: "concurrent_token_slicer@8"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[72]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[73]: ReducerCallEvent
----
-reducer:
-  granularity: 9
-  shortName: "concurrent_token_slicer@9"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[74]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[75]: ReducerCallEvent
----
-reducer:
-  granularity: 10
-  shortName: "concurrent_token_slicer@10"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[76]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[77]: ReducerCallEvent
----
-reducer:
-  granularity: 11
-  shortName: "concurrent_token_slicer@11"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[78]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[79]: ReducerCallEvent
----
-reducer:
-  granularity: 12
-  shortName: "concurrent_token_slicer@12"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[80]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[81]: ReducerCallEvent
----
-reducer:
-  granularity: 13
-  shortName: "concurrent_token_slicer@13"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[82]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[83]: ReducerCallEvent
----
-reducer:
-  granularity: 14
-  shortName: "concurrent_token_slicer@14"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[84]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[85]: ReducerCallEvent
----
-reducer:
-  granularity: 1
-  shortName: "line_based_concurrent_token_slicer@1"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[86]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[87]: ReducerCallEvent
----
-reducer:
-  granularity: 2
-  shortName: "line_based_concurrent_token_slicer@2"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[88]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[89]: ReducerCallEvent
----
-reducer:
-  granularity: 3
-  shortName: "line_based_concurrent_token_slicer@3"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[90]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[91]: ReducerCallEvent
----
-reducer:
-  granularity: 4
-  shortName: "line_based_concurrent_token_slicer@4"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[92]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[93]: ReducerCallEvent
----
-reducer:
-  granularity: 5
-  shortName: "line_based_concurrent_token_slicer@5"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[94]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[95]: ReducerCallEvent
----
-reducer:
-  granularity: 6
-  shortName: "line_based_concurrent_token_slicer@6"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[96]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[97]: ReducerCallEvent
----
-reducer:
-  granularity: 7
-  shortName: "line_based_concurrent_token_slicer@7"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[98]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[99]: ReducerCallEvent
----
-reducer:
-  granularity: 8
-  shortName: "line_based_concurrent_token_slicer@8"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[100]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[101]: ReducerCallEvent
----
-reducer:
-  granularity: 9
-  shortName: "line_based_concurrent_token_slicer@9"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[102]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[103]: ReducerCallEvent
----
-reducer:
-  granularity: 10
-  shortName: "line_based_concurrent_token_slicer@10"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[104]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[105]: ReducerCallEvent
----
-reducer:
-  granularity: 11
-  shortName: "line_based_concurrent_token_slicer@11"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[106]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[107]: ReducerCallEvent
----
-reducer:
-  granularity: 12
-  shortName: "line_based_concurrent_token_slicer@12"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[108]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[109]: ReducerCallEvent
----
-reducer:
-  granularity: 13
-  shortName: "line_based_concurrent_token_slicer@13"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[110]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[111]: ReducerCallEvent
----
-reducer:
-  granularity: 14
-  shortName: "line_based_concurrent_token_slicer@14"
-  description: "line-based concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "line_based_concurrent_token_slicer"
-
-[112]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[113]: ReducerCallEvent
----
-reducer:
-  shortName: "tree_slicer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[114]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[115]: ReducerCallEvent
----
-reducer:
-  granularity: 1
-  shortName: "concurrent_token_slicer@1"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[116]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[117]: ReducerCallEvent
----
-reducer:
-  granularity: 2
-  shortName: "concurrent_token_slicer@2"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[118]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[119]: ReducerCallEvent
----
-reducer:
-  granularity: 3
-  shortName: "concurrent_token_slicer@3"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[120]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[121]: ReducerCallEvent
----
-reducer:
-  granularity: 4
-  shortName: "concurrent_token_slicer@4"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[122]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[123]: ReducerCallEvent
----
-reducer:
-  granularity: 5
-  shortName: "concurrent_token_slicer@5"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[124]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[125]: ReducerCallEvent
----
-reducer:
-  granularity: 6
-  shortName: "concurrent_token_slicer@6"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[126]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[127]: ReducerCallEvent
----
-reducer:
-  granularity: 7
-  shortName: "concurrent_token_slicer@7"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[128]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[129]: ReducerCallEvent
----
-reducer:
-  granularity: 8
-  shortName: "concurrent_token_slicer@8"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[130]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[131]: ReducerCallEvent
----
-reducer:
-  granularity: 9
-  shortName: "concurrent_token_slicer@9"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[132]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[133]: ReducerCallEvent
----
-reducer:
-  granularity: 10
-  shortName: "concurrent_token_slicer@10"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[134]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[135]: ReducerCallEvent
----
-reducer:
-  granularity: 11
-  shortName: "concurrent_token_slicer@11"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[136]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[137]: ReducerCallEvent
----
-reducer:
-  granularity: 12
-  shortName: "concurrent_token_slicer@12"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[138]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[139]: ReducerCallEvent
----
-reducer:
-  granularity: 13
-  shortName: "concurrent_token_slicer@13"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[140]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[141]: ReducerCallEvent
----
-reducer:
-  granularity: 14
-  shortName: "concurrent_token_slicer@14"
-  description: "concurrent token slicer"
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-  namePrefix: "concurrent_token_slicer"
-
-[142]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 7
-  characterCount: 20
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-
-#test success = 34
-#test failure = 133
+(1/56)  Rebuilding spar-tree: The spartree is rebuilt.
+=Fixpoint iteration 45. Reducer: concurrent_token_slicer@1==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: token slicer@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+=Fixpoint iteration 46. Reducer: concurrent_token_slicer@2==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 47. Reducer: concurrent_token_slicer@3==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 48. Reducer: concurrent_token_slicer@4==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 49. Reducer: concurrent_token_slicer@5==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 50. Reducer: concurrent_token_slicer@6==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 51. Reducer: concurrent_token_slicer@7==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 52. Reducer: concurrent_token_slicer@8==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 53. Reducer: concurrent_token_slicer@9==
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 54. Reducer: concurrent_token_slicer@10=
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 55. Reducer: concurrent_token_slicer@11=
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 56. Reducer: concurrent_token_slicer@12=
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 57. Reducer: concurrent_token_slicer@13=
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=Fixpoint iteration 58. Reducer: concurrent_token_slicer@14=
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+========Fixpoint iteration 59. Reducer: tree_slicer=========
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+=================Reducing node 475, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+            "world\n"
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Testing the empty input. Global ratio:1/56=1.79%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+===================Node reduction is done===================
+
+Failed to reduce node 475
+------------------------------------------------------------
+
+
+=================Reducing node 481, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+            "world\n"
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Testing the empty input. Global ratio:1/56=1.79%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+===================Node reduction is done===================
+
+Failed to reduce node 481
+------------------------------------------------------------
+
+
+=================Reducing node 484, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+            "world\n"
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Testing the empty input. Global ratio:1/56=1.79%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+===================Node reduction is done===================
+
+Failed to reduce node 484
+------------------------------------------------------------
+
+
+=================Reducing node 489, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+            "world\n"
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Testing the empty input. Global ratio:1/56=1.79%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+===================Node reduction is done===================
+
+Failed to reduce node 489
+------------------------------------------------------------
+
+
+=================Reducing node 532, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+            "world\n"
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Testing the empty input. Global ratio:1/56=1.79%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducerdd@1
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[59][tree_slicer][DFS](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[59][tree_slicer][DFS](1/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+===================Node reduction is done===================
+
+Failed to reduce node 532
+------------------------------------------------------------
+
+
+=================Reducing node 533, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+            "world\n"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 533
+------------------------------------------------------------
+
+
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@1 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@2 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@3 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@4 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@5 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@6 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@7 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@8 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@9 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@10 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@11 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@12 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@13 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@14 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+====Fixpoint iteration 60. Reducer: FineGritLatraReducer====
+
+The spar-tree is the following.
+translationUnit {id=474,slot_type=translationUnit}
+|___(+) {id=475,slot_type=kleene_plus__translationUnit_3}
+    |___(?) {id=481,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+        |___(+) {id=484,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |___(?) {id=489,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                |___(+) {id=532,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13,altnt_block__primaryExpression_3,aux_rule__primaryExpression_4,expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |___Token:"world\n" {id=533,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+FixPt[60][FineGritLatraReducer](1/56)  For c, there are 46 transformations.
+FixPt[60][FineGritLatraReducer](1/56)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+FixPt[60][FineGritLatraReducer](1/56)  Failed to re-parse the input within Latra. AntlrFailureException: Error in parsing file: <unknown>
+Details: Failed to parse the following input.
+---------------------------------------
+        "world\n"
+
+---------------------------------------
+The following is the old details.
+recognizer: class org.perses.grammar.c.PnfCParser
+offendingSymbol: [@0,8:16='"world\n"',<115>,1:8]
+line: 1
+column: 8
+offending msg: mismatched input '"world\n"' expecting {'__m128', '__m128d', '__m128i', '__typeof__', '__inline__', '__stdcall', '__declspec', 'asm', '__asm__', '__asm', '__attribute__', IncludeDirective, 'auto', 'char', 'const', '_Nonnull', '_Nullable', 'double', 'enum', 'extern', 'float', 'inline', 'int', 'long', 'register', 'restrict', '__restrict__', '__restrict', '__extension__', 'short', 'signed', 'static', 'struct', 'typedef', 'union', 'unsigned', 'void', 'volatile', '_Alignas', '_Atomic', '_Bool', '_Complex', '_Noreturn', '_Static_assert', '_Thread_local', '(', '*', '^', ';', Identifier}
+UTF chars: []
+\nThis is a rethrown exception to track the current stack trace.
+Method = public final org.perses.grammar.c.PnfCParser$TranslationUnitContext org.perses.grammar.c.PnfCParser.translationUnit() throws org.antlr.v4.runtime.RecognitionException
+
+FixPt[60][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](1/56)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[60][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](1/56)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[60][FineGritLatraReducer][DivideOperationSimplification](1/56)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[60][FineGritLatraReducer][MultiplyOperationSimplification](1/56)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[60][FineGritLatraReducer][MinusOperationSimplification](1/56)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[60][FineGritLatraReducer][PlusOperationSimplification](1/56)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[60][FineGritLatraReducer][LocalToGlobalTransformation](1/56)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[60][FineGritLatraReducer][UnionToStruct](1/56)  Found matches: 0 in transformation UnionToStruct
+FixPt[60][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](1/56)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[60][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](1/56)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[60][FineGritLatraReducer][FunctionInlining4Args](1/56)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[60][FineGritLatraReducer][FunctionInlining4ArgsNoType](1/56)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[60][FineGritLatraReducer][FunctionInliningLatraTransformation](1/56)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[60][FineGritLatraReducer][FunctionInlining3ArgsNoType](1/56)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[60][FineGritLatraReducer][FunctionInlining2Args](1/56)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[60][FineGritLatraReducer][FunctionInlining2ArgsNoType](1/56)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[60][FineGritLatraReducer][FunctionInlining1Arg](1/56)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[60][FineGritLatraReducer][FunctionInlining1ArgNoType](1/56)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[60][FineGritLatraReducer][FunctionInliningNoArg](1/56)  Found matches: 0 in transformation FunctionInliningNoArg
+FixPt[60][FineGritLatraReducer][LiftAssignmentExpr](1/56)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[60][FineGritLatraReducer][CopyPropagation](1/56)  Found matches: 0 in transformation CopyPropagation
+FixPt[60][FineGritLatraReducer][CallExprToValue](1/56)  Found matches: 0 in transformation CallExprToValue
+FixPt[60][FineGritLatraReducer][ReplaceCallExpr1Arg](1/56)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[60][FineGritLatraReducer][ReplaceCallExpr2Arg](1/56)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[60][FineGritLatraReducer][ReplaceCallExpr3Arg](1/56)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[60][FineGritLatraReducer][SimplifyCallExpr](1/56)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[60][FineGritLatraReducer][SimplifyIf](1/56)  Found matches: 0 in transformation SimplifyIf
+FixPt[60][FineGritLatraReducer][SimplifyIf2](1/56)  Found matches: 0 in transformation SimplifyIf2
+FixPt[60][FineGritLatraReducer][ReduceArrayDim3](1/56)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[60][FineGritLatraReducer][ReduceArrayDim2](1/56)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[60][FineGritLatraReducer][ReduceArrayDim](1/56)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[60][FineGritLatraReducer][MoveFuncDefToDecl](1/56)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[60][FineGritLatraReducer][MoveFuncDefToDecl2](1/56)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[60][FineGritLatraReducer][MoveFuncDefToDeclNoParam](1/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
+FixPt[60][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](1/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
+FixPt[60][FineGritLatraReducer][SimplifyComma](1/56)  Found matches: 0 in transformation SimplifyComma
+FixPt[60][FineGritLatraReducer][TypeDefTransform](1/56)  Found matches: 0 in transformation TypeDefTransform
+FixPt[60][FineGritLatraReducer][EmptyStructToInt](1/56)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[60][FineGritLatraReducer][RemoveAssignment](1/56)  Found matches: 0 in transformation RemoveAssignment
+FixPt[60][FineGritLatraReducer][RemoveAddrTaken](1/56)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[60][FineGritLatraReducer][ReplaceArrayAccessWithIndex](1/56)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[60][FineGritLatraReducer][SimplifyUnionDecl](1/56)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[60][FineGritLatraReducer][SimplifyStructDecl](1/56)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[60][FineGritLatraReducer][ReplaceDefByDecl](1/56)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[60][FineGritLatraReducer][CombineLocalVarDecl](1/56)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[60][FineGritLatraReducer][UnifyFunctionDecl](1/56)  Found matches: 0 in transformation UnifyFunctionDecl
+(1/56)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                               Reducer #Tokens #Chars #NonDeletions
+ 0             concurrent_token_slicer@1     -21    -61             0
+ 1             concurrent_token_slicer@2     -18    -28             0
+ 2             concurrent_token_slicer@3      -9    -21             0
+ 3             concurrent_token_slicer@4       0      0             0
+ 4             concurrent_token_slicer@5       0      0             0
+ 5             concurrent_token_slicer@6       0      0             0
+ 6             concurrent_token_slicer@7       0      0             0
+ 7             concurrent_token_slicer@8       0      0             0
+ 8             concurrent_token_slicer@9       0      0             0
+ 9            concurrent_token_slicer@10       0      0             0
+10            concurrent_token_slicer@11       0      0             0
+11            concurrent_token_slicer@12       0      0             0
+12            concurrent_token_slicer@13       0      0             0
+13            concurrent_token_slicer@14       0      0             0
+14             concurrent_token_slicer@1      -1     -3             0
+15             concurrent_token_slicer@2       0      0             0
+16             concurrent_token_slicer@3       0      0             0
+17             concurrent_token_slicer@4       0      0             0
+18             concurrent_token_slicer@5       0      0             0
+19             concurrent_token_slicer@6       0      0             0
+20             concurrent_token_slicer@7       0      0             0
+21             concurrent_token_slicer@8       0      0             0
+22             concurrent_token_slicer@9       0      0             0
+23            concurrent_token_slicer@10       0      0             0
+24            concurrent_token_slicer@11       0      0             0
+25            concurrent_token_slicer@12       0      0             0
+26            concurrent_token_slicer@13       0      0             0
+27            concurrent_token_slicer@14       0      0             0
+28             concurrent_token_slicer@1       0      0             0
+29             concurrent_token_slicer@2       0      0             0
+30             concurrent_token_slicer@3       0      0             0
+31             concurrent_token_slicer@4       0      0             0
+32             concurrent_token_slicer@5       0      0             0
+33             concurrent_token_slicer@6       0      0             0
+34             concurrent_token_slicer@7       0      0             0
+35             concurrent_token_slicer@8       0      0             0
+36             concurrent_token_slicer@9       0      0             0
+37            concurrent_token_slicer@10       0      0             0
+38            concurrent_token_slicer@11       0      0             0
+39            concurrent_token_slicer@12       0      0             0
+40            concurrent_token_slicer@13       0      0             0
+41            concurrent_token_slicer@14       0      0             0
+42  line_based_concurrent_token_slicer@1       0      0             0
+43  line_based_concurrent_token_slicer@2       0      0             0
+44  line_based_concurrent_token_slicer@3       0      0             0
+45  line_based_concurrent_token_slicer@4       0      0             0
+46  line_based_concurrent_token_slicer@5       0      0             0
+47  line_based_concurrent_token_slicer@6       0      0             0
+48  line_based_concurrent_token_slicer@7       0      0             0
+49  line_based_concurrent_token_slicer@8       0      0             0
+50  line_based_concurrent_token_slicer@9       0      0             0
+51 line_based_concurrent_token_slicer@10       0      0             0
+52 line_based_concurrent_token_slicer@11       0      0             0
+53 line_based_concurrent_token_slicer@12       0      0             0
+54 line_based_concurrent_token_slicer@13       0      0             0
+55 line_based_concurrent_token_slicer@14       0      0             0
+56                           tree_slicer      -6    -11             0
+57             concurrent_token_slicer@1       0      0             0
+58             concurrent_token_slicer@2       0      0             0
+59             concurrent_token_slicer@3       0      0             0
+60             concurrent_token_slicer@4       0      0             0
+61             concurrent_token_slicer@5       0      0             0
+62             concurrent_token_slicer@6       0      0             0
+63             concurrent_token_slicer@7       0      0             0
+64             concurrent_token_slicer@8       0      0             0
+65             concurrent_token_slicer@9       0      0             0
+66            concurrent_token_slicer@10       0      0             0
+67            concurrent_token_slicer@11       0      0             0
+68            concurrent_token_slicer@12       0      0             0
+69            concurrent_token_slicer@13       0      0             0
+70            concurrent_token_slicer@14       0      0             0
+71                           tree_slicer       0      0             0
+72             concurrent_token_slicer@1       0      0             0
+73             concurrent_token_slicer@2       0      0             0
+74             concurrent_token_slicer@3       0      0             0
+75             concurrent_token_slicer@4       0      0             0
+76             concurrent_token_slicer@5       0      0             0
+77             concurrent_token_slicer@6       0      0             0
+78             concurrent_token_slicer@7       0      0             0
+79             concurrent_token_slicer@8       0      0             0
+80             concurrent_token_slicer@9       0      0             0
+81            concurrent_token_slicer@10       0      0             0
+82            concurrent_token_slicer@11       0      0             0
+83            concurrent_token_slicer@12       0      0             0
+84            concurrent_token_slicer@13       0      0             0
+85            concurrent_token_slicer@14       0      0             0
+86                  FineGritLatraReducer       0      0             0
+
+----------------------------------- Summary ------------------------------------
+                              Reducer Times #Tokens #Chars
+            concurrent_token_slicer@1     5     -22    -64
+            concurrent_token_slicer@2     5     -18    -28
+            concurrent_token_slicer@3     5      -9    -21
+            concurrent_token_slicer@4     5       0      0
+            concurrent_token_slicer@5     5       0      0
+            concurrent_token_slicer@6     5       0      0
+            concurrent_token_slicer@7     5       0      0
+            concurrent_token_slicer@8     5       0      0
+            concurrent_token_slicer@9     5       0      0
+           concurrent_token_slicer@10     5       0      0
+           concurrent_token_slicer@11     5       0      0
+           concurrent_token_slicer@12     5       0      0
+           concurrent_token_slicer@13     5       0      0
+           concurrent_token_slicer@14     5       0      0
+ line_based_concurrent_token_slicer@1     1       0      0
+ line_based_concurrent_token_slicer@2     1       0      0
+ line_based_concurrent_token_slicer@3     1       0      0
+ line_based_concurrent_token_slicer@4     1       0      0
+ line_based_concurrent_token_slicer@5     1       0      0
+ line_based_concurrent_token_slicer@6     1       0      0
+ line_based_concurrent_token_slicer@7     1       0      0
+ line_based_concurrent_token_slicer@8     1       0      0
+ line_based_concurrent_token_slicer@9     1       0      0
+line_based_concurrent_token_slicer@10     1       0      0
+line_based_concurrent_token_slicer@11     1       0      0
+line_based_concurrent_token_slicer@12     1       0      0
+line_based_concurrent_token_slicer@13     1       0      0
+line_based_concurrent_token_slicer@14     1       0      0
+                          tree_slicer     2      -6    -11
+                 FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
+
+
+#test success = 40
+#test failure = 150
 #test result cache hits = 0
 #test execution cancelled = 0
 #node edit action set cache hits = 0

@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "HelloJava20.java.txt"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_HelloJava20.java.txt"
+  outputDir: "result_reduction_golden_test_node_priority-dfs_HelloJava20.java.txt"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: true
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -72,43 +78,64 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.java.Java20ParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: perses_node_priority_with_dfs_delta
-condition: smaller
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 25
+(45/45)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (token_canonicalizer) {
+            fixpoint (smaller) {
+                node_priority-dfs
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(45/45)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 (|:compilationUnit) {id=1,slot_type=compilationUnit}
@@ -177,7 +204,7 @@ The spar-tree is the following.
             |           |       |   |___assignment {id=77,slot_type=[statementExpression,assignment]}
             |           |       |   |   |___Token:message {id=105,slot_type=[leftHandSide,expressionName,Identifier]}
             |           |       |   |   |___Token:= {id=103,slot_type=[assignmentOperator,ASSIGN]}
-            |           |       |   |   |___Token:"world" {id=102,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
+            |           |       |   |   |___Token:"!!world" {id=102,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
             |           |       |   |___Token:; {id=76,slot_type=SEMI}
             |           |       |___expressionStatement {id=31,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
             |           |           |___methodInvocation {id=34,slot_type=[statementExpression,methodInvocation]}
@@ -210,21 +237,25 @@ The current best program is the following
       public static void main(String[] args) {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](45/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:45/45=100.00%
+FixPt[1][node_priority-dfs][DFS](45/45)  Testing the empty input. Global ratio:45/45=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__ordinaryCompilationUnit_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__ordinaryCompilationUnit_3]dd@1
     --file: HelloJava20.java.txt--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](45/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:45/45=100.00%
+FixPt[1][node_priority-dfs][DFS](45/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:45/45=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 3
@@ -240,7 +271,7 @@ The current best program is the following
       public static void main(String[] args) {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
@@ -268,7 +299,7 @@ The current best program is the following
       public static void main(String[] args) {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
@@ -290,16 +321,18 @@ The current best program is the following
       public static void main(String[] args) {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](45/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:45/45=100.00%
+FixPt[1][node_priority-dfs][DFS](45/45)  Testing the empty input. Global ratio:45/45=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@1
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
     }
@@ -309,6 +342,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](45/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:45/45=100.00%
+FixPt[1][node_priority-dfs][DFS](45/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:45/45=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 12
@@ -324,7 +359,7 @@ The current best program is the following
       public static void main(String[] args) {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
@@ -345,7 +380,7 @@ The current best program is the following
                                              {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
@@ -354,7 +389,7 @@ The current best program is the following
                                              {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
@@ -394,14 +429,14 @@ The current best program is the following
                                              {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
@@ -427,16 +462,18 @@ The current best program is the following
                                              {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/45=77.78%
+FixPt[1][node_priority-dfs][DFS](35/45)  Testing the empty input. Global ratio:35/45=77.78%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__block_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
                                              {
@@ -450,6 +487,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/45=77.78%
+FixPt[1][node_priority-dfs][DFS](35/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/45=77.78%
 ===================Node reduction is done===================
 
 Failed to reduce node 21
@@ -465,7 +504,7 @@ The current best program is the following
                                              {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
         System.out.println(message);
       }
     }
@@ -496,9 +535,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/45)  Minimizer DfsListMinimizer starts. Input=[0-3]#4. Global ratio:35/45=77.78%
+FixPt[1][node_priority-dfs][DFS](35/45)  Testing the empty input. Global ratio:35/45=77.78%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+    public sealed class HelloJava20 {
+                                             {
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+    public sealed class HelloJava20 {
+                                             {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](35/45)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:35/45=77.78%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockStatements_2]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockStatements_2]dd@2
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
                                              {
@@ -516,15 +573,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/45)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:35/45=77.78%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockStatements_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockStatements_2]dd@1
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
                                              {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
       }
     }
     --file: <formatted tokenized program in its original format>--
@@ -532,12 +590,13 @@ The current best program is the following
                                              {
         var message = "hello";
         System.out.println(message);
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](35/45)  Try deleting [3]#1: Interesting. Local ratio: 4/4=100.00%. Global ratio:35/45=77.78%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 5 --> 5.
@@ -546,7 +605,7 @@ The current best program is the following
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 5
+    size before clearance = 6
 ------------------------------------------------------------
 
 
@@ -556,7 +615,7 @@ token count change 35 -> 26
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
@@ -575,24 +634,26 @@ token count change 35 -> 26
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](26/45)  Try deleting [2]#1: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:26/45=57.78%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockStatements_2]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockStatements_2]dd@2
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
     --file: <formatted tokenized program in its original format>--
     public sealed class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](26/45)  Try deleting [0-1]#2: Interesting. Local ratio: 3/4=75.00%. Global ratio:26/45=57.78%
 ===========TestScriptExecutionCacheEntryEviction============
 
 2 entries are removed: 5 --> 3.
@@ -611,6 +672,7 @@ token count change 26 -> 12
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](12/45)  Minimizer DfsListMinimizer ends. Result=[2]#1. Local ratio: 1/4=25.00%. Global ratio:12/45=26.67%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 24 from 35 to 12
@@ -624,13 +686,13 @@ The current best program is the following
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
@@ -658,7 +720,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -677,30 +739,33 @@ The current best program is the following
     --file: HelloJava20.java.txt--
     public sealed class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](12/45)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:12/45=26.67%
+FixPt[1][node_priority-dfs][DFS](12/45)  Testing the empty input. Global ratio:12/45=26.67%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star:kleene_star__normalClassDeclaration_1]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__normalClassDeclaration_1]dd@2
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
     --file: <formatted tokenized program in its original format>--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](12/45)  Try deleting [0-1]#2: Interesting. Local ratio: 2/2=100.00%. Global ratio:12/45=26.67%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 3 --> 3.
@@ -719,6 +784,7 @@ token count change 12 -> 10
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer ends. Result=[]#0. Local ratio: 0/2=0.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 7 from 12 to 10
@@ -732,7 +798,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -751,7 +817,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -770,7 +836,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -789,7 +855,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -808,7 +874,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -827,7 +893,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -846,7 +912,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -865,7 +931,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -884,7 +950,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -903,7 +969,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -915,9 +981,8 @@ Failed to reduce node 8
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+(10/45)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 (|:compilationUnit) {id=219,slot_type=compilationUnit}
@@ -936,7 +1001,7 @@ The spar-tree is the following.
             |       |           |___assignment {id=245,slot_type=[statementExpression,assignment]}
             |       |           |   |___Token:message {id=273,slot_type=[leftHandSide,expressionName,Identifier]}
             |       |           |   |___Token:= {id=271,slot_type=[assignmentOperator,ASSIGN]}
-            |       |           |   |___Token:"world" {id=270,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |   |___Token:"!!world" {id=270,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
             |       |           |___Token:; {id=244,slot_type=SEMI}
             |       |___Token:} {id=236,slot_type=RBRACE}
             |___Token:} {id=230,slot_type=RBRACE}
@@ -950,19 +1015,23 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:10/45=22.22%
+FixPt[2][node_priority-dfs][DFS](10/45)  Testing the empty input. Global ratio:10/45=22.22%
+=====Cache hit for the following uninteresting program:=====
 
     --file: HelloJava20.java.txt--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](10/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+FixPt[2][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
 Failed to reduce node 221
@@ -976,7 +1045,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1001,7 +1070,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1020,15 +1089,17 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:10/45=22.22%
+FixPt[2][node_priority-dfs][DFS](10/45)  Testing the empty input. Global ratio:10/45=22.22%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__classBody_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@1
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
     }
@@ -1038,6 +1109,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](10/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+FixPt[2][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
 Failed to reduce node 229
@@ -1051,7 +1124,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1076,15 +1149,17 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:10/45=22.22%
+FixPt[2][node_priority-dfs][DFS](10/45)  Testing the empty input. Global ratio:10/45=22.22%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__block_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
@@ -1098,6 +1173,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](10/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+FixPt[2][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
 Failed to reduce node 235
@@ -1111,7 +1188,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1136,13 +1213,13 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
@@ -1170,7 +1247,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1189,7 +1266,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1208,7 +1285,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1227,7 +1304,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1246,7 +1323,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1265,7 +1342,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1284,7 +1361,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1303,7 +1380,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1322,7 +1399,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1341,7 +1418,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1360,7 +1437,7 @@ The current best program is the following
     --file: HelloJava20.java.txt--
                   class HelloJava20 {
                                              {
-        message = "world";
+        message = "!!world";
       }
     }
 ------------------------------------------------------------
@@ -1372,66 +1449,1558 @@ Failed to reduce node 225
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 45
-  characterCount: 157
-  fileContents:
-  - fileName: "HelloJava20.java.txt"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+=====Fixpoint iteration 3. Reducer: token_canonicalizer=====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 10
-  characterCount: 36
-  fileContents:
-  - fileName: "HelloJava20.java.txt"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 10
-  characterCount: 36
-  fileContents:
-  - fileName: "HelloJava20.java.txt"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+The spar-tree is the following.
+(|:compilationUnit) {id=219,slot_type=compilationUnit}
+|___(*) {id=221,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration {id=224,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class {id=225,slot_type=CLASS}
+        |___Token:HelloJava20 {id=274,slot_type=[typeIdentifier,Identifier]}
+        |___classBody {id=227,slot_type=classBody}
+            |___Token:{ {id=228,slot_type=LBRACE}
+            |___(*) {id=229,slot_type=kleene_star__classBody_1}
+            |   |___block {id=233,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{ {id=234,slot_type=LBRACE}
+            |       |___(?) {id=235,slot_type=optional__block_1}
+            |       |   |___(+) {id=238,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement {id=242,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment {id=245,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:message {id=273,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:= {id=271,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"!!world" {id=270,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:; {id=244,slot_type=SEMI}
+            |       |___Token:} {id=236,slot_type=RBRACE}
+            |___Token:} {id=230,slot_type=RBRACE}
+------------------------------------------------------------
 
 
-#test success = 4
-#test failure = 7
-#test result cache hits = 5
-#test execution cancelled = 0
-#node edit action set cache hits = 6
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        message = "!!world";
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        message = "!!world";
+      }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 10 -> 10
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!!world";
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!!world";
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        b       = "!!world";
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        b       = "!!world";
+      }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 10 -> 10
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"!world"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!world" ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!world" ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!!orld" ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!!orld" ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!!wrld" ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!!wrld" ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!!wold" ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!!wold" ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!!word" ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!!word" ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!!worl" ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!!worl" ;
+      }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 6 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 10 -> 10
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"world"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!orld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!orld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!wrld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!wrld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!wold"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!wold"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!word"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!word"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!worl"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!worl"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 6 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 10 -> 10
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"orld"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "orld"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "orld"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"wrld"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wrld"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wrld"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"wold"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wold"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wold"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"word"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "word"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "word"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"worl"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "worl"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "worl"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '" orld"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = " orld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = " orld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"!orld"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!orld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!orld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"w rld"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "w rld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "w rld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"w!rld"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "w!rld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "w!rld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"wo ld"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wo ld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wo ld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"wo!ld"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wo!ld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wo!ld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"wor d"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wor d"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wor d"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"wor!d"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wor!d"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wor!d"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"worl "'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "worl "  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "worl "  ;
+      }
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"worl!"'
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "worl!"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "worl!"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+(10/45)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 4. Reducer: node_priority-dfs======
+
+The spar-tree is the following.
+(|:compilationUnit) {id=346,slot_type=compilationUnit}
+|___(*) {id=348,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration {id=351,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class {id=352,slot_type=CLASS}
+        |___Token:a {id=401,slot_type=[typeIdentifier,Identifier]}
+        |___classBody {id=354,slot_type=classBody}
+            |___Token:{ {id=355,slot_type=LBRACE}
+            |___(*) {id=356,slot_type=kleene_star__classBody_1}
+            |   |___block {id=360,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{ {id=361,slot_type=LBRACE}
+            |       |___(?) {id=362,slot_type=optional__block_1}
+            |       |   |___(+) {id=365,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement {id=369,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment {id=372,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:a {id=400,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:= {id=398,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"world" {id=397,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:; {id=371,slot_type=SEMI}
+            |       |___Token:} {id=363,slot_type=RBRACE}
+            |___Token:} {id=357,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+=================Reducing node 348, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:10/45=22.22%
+FixPt[4][node_priority-dfs][DFS](10/45)  Testing the empty input. Global ratio:10/45=22.22%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](10/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+FixPt[4][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+===================Node reduction is done===================
+
+Failed to reduce node 348
+------------------------------------------------------------
+
+
+=================Reducing node 351, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=351}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 351
+------------------------------------------------------------
+
+
+=================Reducing node 354, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 354
+------------------------------------------------------------
+
+
+=================Reducing node 356, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:10/45=22.22%
+FixPt[4][node_priority-dfs][DFS](10/45)  Testing the empty input. Global ratio:10/45=22.22%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@1
+    --file: HelloJava20.java.txt--
+                  class a           {
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](10/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+FixPt[4][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+===================Node reduction is done===================
+
+Failed to reduce node 356
+------------------------------------------------------------
+
+
+=================Reducing node 360, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=360}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 360
+------------------------------------------------------------
+
+
+=================Reducing node 362, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:10/45=22.22%
+FixPt[4][node_priority-dfs][DFS](10/45)  Testing the empty input. Global ratio:10/45=22.22%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](10/45)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+FixPt[4][node_priority-dfs][DFS](10/45)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
+===================Node reduction is done===================
+
+Failed to reduce node 362
+------------------------------------------------------------
+
+
+=================Reducing node 365, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=365}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 365
+------------------------------------------------------------
+
+
+=================Reducing node 369, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 369
+------------------------------------------------------------
+
+
+=================Reducing node 372, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 372
+------------------------------------------------------------
+
+
+=================Reducing node 401, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 401
+------------------------------------------------------------
+
+
+=================Reducing node 400, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 400
+------------------------------------------------------------
+
+
+=================Reducing node 398, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 398
+------------------------------------------------------------
+
+
+=================Reducing node 397, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 397
+------------------------------------------------------------
+
+
+=================Reducing node 371, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 371
+------------------------------------------------------------
+
+
+=================Reducing node 363, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 363
+------------------------------------------------------------
+
+
+=================Reducing node 361, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 361
+------------------------------------------------------------
+
+
+=================Reducing node 357, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 357
+------------------------------------------------------------
+
+
+=================Reducing node 355, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 355
+------------------------------------------------------------
+
+
+=================Reducing node 352, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 352
+------------------------------------------------------------
+
+
+=====Fixpoint iteration 5. Reducer: token_canonicalizer=====
+
+The spar-tree is the following.
+(|:compilationUnit) {id=346,slot_type=compilationUnit}
+|___(*) {id=348,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration {id=351,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class {id=352,slot_type=CLASS}
+        |___Token:a {id=401,slot_type=[typeIdentifier,Identifier]}
+        |___classBody {id=354,slot_type=classBody}
+            |___Token:{ {id=355,slot_type=LBRACE}
+            |___(*) {id=356,slot_type=kleene_star__classBody_1}
+            |   |___block {id=360,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{ {id=361,slot_type=LBRACE}
+            |       |___(?) {id=362,slot_type=optional__block_1}
+            |       |   |___(+) {id=365,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement {id=369,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment {id=372,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:a {id=400,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:= {id=398,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"world" {id=397,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:; {id=371,slot_type=SEMI}
+            |       |___Token:} {id=363,slot_type=RBRACE}
+            |___Token:} {id=357,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = ""       ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "orld"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "orld"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wrld"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wrld"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wold"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wold"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "word"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "word"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "worl"   ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "worl"   ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = " orld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = " orld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "!orld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "!orld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "w rld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "w rld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "w!rld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "w!rld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wo ld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wo ld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wo!ld"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wo!ld"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wor d"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wor d"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "wor!d"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "wor!d"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "worl "  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "worl "  ;
+      }
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: HelloJava20.java.txt--
+                  class a           {
+                                             {
+        a       = "worl!"  ;
+      }
+    }
+    --file: <formatted tokenized program in its original format>--
+                  class a           {
+                                             {
+        a       = "worl!"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+====Fixpoint iteration 6. Reducer: FineGritLatraReducer=====
+
+The spar-tree is the following.
+(|:compilationUnit) {id=346,slot_type=compilationUnit}
+|___(*) {id=348,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration {id=351,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class {id=352,slot_type=CLASS}
+        |___Token:a {id=401,slot_type=[typeIdentifier,Identifier]}
+        |___classBody {id=354,slot_type=classBody}
+            |___Token:{ {id=355,slot_type=LBRACE}
+            |___(*) {id=356,slot_type=kleene_star__classBody_1}
+            |   |___block {id=360,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{ {id=361,slot_type=LBRACE}
+            |       |___(?) {id=362,slot_type=optional__block_1}
+            |       |   |___(+) {id=365,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement {id=369,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment {id=372,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:a {id=400,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:= {id=398,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"world" {id=397,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:; {id=371,slot_type=SEMI}
+            |       |___Token:} {id=363,slot_type=RBRACE}
+            |___Token:} {id=357,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+FixPt[6][FineGritLatraReducer](10/45)  Latra does not support LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} langauge yet.
+(10/45)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs     -35   -121             0
+ 1    node_priority-dfs       0      0             0
+ 2  token_canonicalizer       0    -18             1
+ 3    node_priority-dfs       0      0             1
+ 4  token_canonicalizer       0      0             1
+ 5 FineGritLatraReducer       0      0             1
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     3     -35   -121
+ token_canonicalizer     2       0    -18
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
+
+
+#test success = 8
+#test failure = 27
+#test result cache hits = 26
+#test execution cancelled = 11
+#node edit action set cache hits = 9
 #external test execution cache hits = 0

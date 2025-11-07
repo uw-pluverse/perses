@@ -32,7 +32,6 @@ import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 class AFLCoverageCollectorTest {
-
   private val tempDir = Files.createTempDirectory(this::class.java.canonicalName)
 
   private val resultFile = tempDir.resolve("coverage.temp")
@@ -43,25 +42,29 @@ class AFLCoverageCollectorTest {
     tempDir.deleteRecursively()
   }
 
-  private val aflCoverageCollector = AFLCoverageCollector(
-    monitorInterval = 600,
-    resultFile = resultFile,
-  )
+  private val aflCoverageCollector =
+    AFLCoverageCollector(
+      monitorInterval = 600,
+      resultFile = resultFile,
+    )
 
-  private val action = CommonCompilationAction(
-    compilerCmd = ShellCommandOnPath(
-      "kitten/test/fuzzer_test_data/coverage_collector_test/afl_instrumented_binary",
-    ),
-    compilerFlags = ImmutableList.of(),
-    versionPrintFlags = ImmutableList.of(),
-    language = LanguageC,
-  )
+  private val action =
+    CommonCompilationAction(
+      compilerCmd =
+        ShellCommandOnPath(
+          "kitten/test/fuzzer_test_data/coverage_collector_test/afl_instrumented_binary",
+        ),
+      compilerFlags = ImmutableList.of(),
+      versionPrintFlags = ImmutableList.of(),
+      language = LanguageC,
+    )
 
-  private val testInputs = listOf(
-    File("kitten/test/fuzzer_test_data/coverage_collector_test/test_input_1"),
-    File("kitten/test/fuzzer_test_data/coverage_collector_test/test_input_2"),
-    File("kitten/test/fuzzer_test_data/coverage_collector_test/test_input_3"),
-  )
+  private val testInputs =
+    listOf(
+      File("kitten/test/fuzzer_test_data/coverage_collector_test/test_input_1"),
+      File("kitten/test/fuzzer_test_data/coverage_collector_test/test_input_2"),
+      File("kitten/test/fuzzer_test_data/coverage_collector_test/test_input_3"),
+    )
 
   @Test
   fun testAFLCoverageCollectionWithMultiThreads() {

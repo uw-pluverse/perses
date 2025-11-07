@@ -26,7 +26,6 @@ kt_jvm_library(
         "//kitten/src/org/perses/fuzzer:command_options",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
         "//src/org/perses/util",
-        "//src/org/perses/util/shell",
     ],
 )
 

@@ -28,28 +28,32 @@ import org.perses.reduction.scheduler.ExecutionPlanYamlDefinition.SequenceDef
 
 @RunWith(JUnit4::class)
 class ReducerSchedulerTest {
-
   @Test
   fun test() {
-    val plan = FixpointLoopStepDef(
-      body = SequenceDef(
-        reducers = listOf(
-          AtomicReducerStepDef(reducer = "reducer1"),
-          AtomicReducerStepDef(reducer = "reducer2"),
-          IfProgressedThenStepDef(
-            condition = FixpointLoopStepDef(
-              body = AtomicReducerStepDef(reducer = "main"),
-              condition = "16",
-            ),
-            then = FixpointLoopStepDef(
-              body = AtomicReducerStepDef("reducer-then"),
-              condition = "20",
-            ),
+    val plan =
+      FixpointLoopStepDef(
+        body =
+          SequenceDef(
+            reducers =
+              listOf(
+                AtomicReducerStepDef(reducer = "reducer1"),
+                AtomicReducerStepDef(reducer = "reducer2"),
+                IfProgressedThenStepDef(
+                  condition =
+                    FixpointLoopStepDef(
+                      body = AtomicReducerStepDef(reducer = "main"),
+                      condition = "16",
+                    ),
+                  then =
+                    FixpointLoopStepDef(
+                      body = AtomicReducerStepDef("reducer-then"),
+                      condition = "20",
+                    ),
+                ),
+              ),
           ),
-        ),
-      ),
-      condition = "smaller",
-    )
+        condition = "smaller",
+      )
     val copy = AbstractExecutionPlanStepDef.fromYamlString(plan.toYamlString())
     Truth.assertThat(plan.toYamlString()).isEqualTo(copy.toYamlString())
   }

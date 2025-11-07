@@ -25,15 +25,13 @@ import org.perses.fuzzer.compilers.ruby.RubyCrashDetector
 
 @RunWith(JUnit4::class)
 class RubyCrashDetectorTest {
-
   val detector = RubyCrashDetector()
 
-  private fun computeSignature(path: String): List<String> {
-    return CrashDetectorHelper.computeSignature(
+  private fun computeSignature(path: String): List<String> =
+    CrashDetectorHelper.computeSignature(
       "kitten/test/org/perses/fuzzer/compiler/ruby/$path",
       detector,
     )
-  }
 
   @Test
   fun test_bug() {

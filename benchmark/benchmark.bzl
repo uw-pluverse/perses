@@ -43,12 +43,16 @@ def reduction_golden_test(
         golden_progress_file = None,
         enable_query_caching = None,
         enable_edit_caching = None,
+        enable_token_reducer = None,
+        enable_vulcan = None,
         thread_count = None,
         log_file = None,
         delta_debugger_profile = None,
         golden_delta_debugger_profile = None,
+        golden_global_cache_file = None,
         other_flags = None,
         perses_bin = DEFAULT_PERSES_BIN,
+        extra_output_files = None,
         cmd_deps = None,
         deps = None):
     if "/" in source_file:
@@ -66,6 +70,23 @@ def reduction_golden_test(
     if "--code-format" not in other_flags:
         other_flags["--code-format"] = "COMPACT_ORIG_FORMAT"
 
+    if golden_progress_file and not progress_dump_file:
+        progress_dump_file = "_%s_by_default_progress.txt" % name
+
+    updated_global_cache_csv_file = name + "_updated_global_cache_file.csv"
+    if golden_global_cache_file:
+        if extra_output_files:
+            extra_output_files = extra_output_files + [updated_global_cache_csv_file]
+        else:
+            extra_output_files = [updated_global_cache_csv_file]
+        if deps:
+            deps = deps + [golden_global_cache_file]
+        else:
+            deps = [golden_global_cache_file]
+        other_flags["--global-caching"] = "true"
+        other_flags["--global-cache-file"] = "$(location %s)" % golden_global_cache_file
+        other_flags["--path-to-save-updated-global-cache"] = "$(location %s)" % updated_global_cache_csv_file
+
     reduce(
         name = genrule_reduction,
         reduction_algorithm = reduction_algorithm,
@@ -77,11 +98,14 @@ def reduction_golden_test(
         progress_dump_file = progress_dump_file,
         enable_query_caching = enable_query_caching,
         enable_edit_caching = enable_edit_caching,
+        enable_token_reducer = enable_token_reducer,
+        enable_vulcan = enable_vulcan,
         log_file = log_file,
-        delta_debugger_profile = delta_debugger_profile,
+        list_minimizer_profile = delta_debugger_profile,
         other_flags = other_flags,
         perses_bin = perses_bin,
         cmd_deps = cmd_deps,
+        extra_output_files = extra_output_files,
         deps = deps,
     )
 
@@ -91,6 +115,13 @@ def reduction_golden_test(
         srcs = [result_file],
     )
 
+    if golden_global_cache_file:
+        golden_test(
+            name = "golden_test_on_global_cache_file_%s" % name,
+            golden_file = golden_global_cache_file,
+            test_file = updated_global_cache_csv_file,
+        )
+
     golden_test(
         name = name,
         golden_file = golden_reduced_file,
@@ -98,8 +129,6 @@ def reduction_golden_test(
     )
 
     if golden_progress_file:
-        if not progress_dump_file:
-            fail("The golden_progress_file and progress_file must be specified together.")
         golden_test(
             name = "%s_progress_test" % name,
             golden_file = golden_progress_file,

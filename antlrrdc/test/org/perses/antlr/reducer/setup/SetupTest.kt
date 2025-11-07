@@ -26,19 +26,20 @@ import org.perses.antlr.AbstractAntlrrdcTest
 
 @RunWith(JUnit4::class)
 class SetupTest : AbstractAntlrrdcTest() {
-
-  val setup = Setup(
-    tempDir,
-    parserGrammarPath,
-    lexerGrammarPath,
-    startRuleName = "start",
-    testPrograms = ImmutableList.of(
-      valid1,
-      valid2,
-      invalid1,
-      invalid2,
-    ),
-  )
+  val setup =
+    Setup(
+      tempDir,
+      parserGrammarPath,
+      lexerGrammarPath,
+      startRuleName = "start",
+      testPrograms =
+        ImmutableList.of(
+          valid1,
+          valid2,
+          invalid1,
+          invalid2,
+        ),
+    )
 
   @After
   fun teardown() {
@@ -47,10 +48,11 @@ class SetupTest : AbstractAntlrrdcTest() {
 
   @Test
   fun testParseablePrograms() {
-    assertThat(setup.parseableTestPrograms).containsExactly(
-      valid1,
-      valid2,
-    ).inOrder()
+    assertThat(setup.parseableTestPrograms)
+      .containsExactly(
+        valid1,
+        valid2,
+      ).inOrder()
   }
 
   @Test

@@ -26,7 +26,6 @@ class LatraGeneralActionSet private constructor(
   actions: ImmutableList<AbstractTreeEditAction>,
   actionsDescription: String,
 ) : AbstractActionSet<AbstractTreeEditAction>(actions, actionsDescription, canBeSorted = false) {
-
   class Builder(
     private val actionsDescription: String,
   ) {
@@ -54,7 +53,7 @@ class LatraGeneralActionSet private constructor(
       return this
     }
 
-    fun build(): LatraGeneralActionSet? {
+    fun buildOrNull(): LatraGeneralActionSet? {
       val actionSet = actionSetBuilder.build()
       return if (actionSet.isEmpty()) {
         null

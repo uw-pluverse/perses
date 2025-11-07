@@ -21,7 +21,6 @@ import org.perses.antlr.RuleType
 import java.util.WeakHashMap
 
 class RuleNameRegistry {
-
   private val ruleNameMap = WeakHashMap<String, RuleNameHandle>()
 
   private var idGenerator = 0
@@ -37,20 +36,19 @@ class RuleNameRegistry {
     return value
   }
 
-  fun createOrThrow(ruleName: String): RuleNameHandle {
-    return createOrThrow(ruleName, origin = null)
-  }
+  fun createOrThrow(ruleName: String): RuleNameHandle = createOrThrow(ruleName, origin = null)
 
-  private fun createOrThrow(ruleName: String, origin: RuleNameHandle?): RuleNameHandle {
+  private fun createOrThrow(
+    ruleName: String,
+    origin: RuleNameHandle?,
+  ): RuleNameHandle {
     require(!ruleNameMap.containsKey(ruleName))
     val value = RuleNameHandle(ruleName, idGenerator++, origin)
     ruleNameMap[ruleName] = value
     return value
   }
 
-  operator fun get(ruleName: String): RuleNameHandle? {
-    return ruleNameMap[ruleName]
-  }
+  operator fun get(ruleName: String): RuleNameHandle? = ruleNameMap[ruleName]
 
   fun getOrThrow(ruleName: String): RuleNameHandle {
     val value = ruleNameMap[ruleName]
@@ -64,7 +62,6 @@ class RuleNameRegistry {
     val id: Int,
     val origin: RuleNameHandle?,
   ) : Comparable<RuleNameHandle> {
-
     private var auxiliaryIdGenerator = 1
 
     fun createAuxiliaryRuleName(ruleType: RuleType): RuleNameHandle {
@@ -76,8 +73,8 @@ class RuleNameRegistry {
     }
 
     override fun compareTo(other: RuleNameHandle): Int {
-      val origin = MoreObjects.firstNonNull(origin, this)
-      val otherOrigin = MoreObjects.firstNonNull(other.origin, other)
+      val origin = MoreObjects.firstNonNull(origin, this)!!
+      val otherOrigin = MoreObjects.firstNonNull(other.origin, other)!!
       val originCmp = Integer.compare(origin.id, otherOrigin.id)
       return if (originCmp != 0) {
         originCmp
@@ -86,8 +83,11 @@ class RuleNameRegistry {
       }
     }
 
-    override fun toString(): String {
-      return MoreObjects.toStringHelper(this).add("id", id).add("name", ruleName).toString()
-    }
+    override fun toString(): String =
+      MoreObjects
+        .toStringHelper(this)
+        .add("id", id)
+        .add("name", ruleName)
+        .toString()
   }
 }

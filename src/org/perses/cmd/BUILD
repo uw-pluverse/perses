@@ -21,6 +21,7 @@ kt_jvm_library(
         "ExperimentFlagGroup.kt",
         "InputFlagGroup.kt",
         "LPRFlagGroup.kt",
+        "LatraFlagGroup.kt",
         "OutputFlagGroup.kt",
         "OutputRefiningFlagGroup.kt",
         "ProfilingFlagGroup.kt",
@@ -39,6 +40,7 @@ kt_jvm_library(
         "//src/org/perses/reduction/cache:test_execution_cache_type",
         "//src/org/perses/util:percentage",
         "//src/org/perses/util/cmd",
+        "//src/org/perses/util/hashing",
         "//src/org/perses/util/shell",
     ],
 )

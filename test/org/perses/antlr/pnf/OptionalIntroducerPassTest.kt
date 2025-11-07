@@ -37,8 +37,8 @@ class OptionalIntroducerPassTest {
     val newMap = processGrammar("s: a b c | a c ;")
     val s = newMap.getRuleDefinition("s")!!.body
     assertThat(s.sourceCode).isEqualTo("a optional__s_1 c")
-    val optional__s_1 = newMap.getRuleDefinition("optional__s_1")!!.body
-    assertThat(optional__s_1.sourceCode).isEqualTo("b?")
+    val optionalS1 = newMap.getRuleDefinition("optional__s_1")!!.body
+    assertThat(optionalS1.sourceCode).isEqualTo("b?")
     assertThat(newMap.parserRuleNameList).hasSize(2)
   }
 
@@ -55,8 +55,8 @@ class OptionalIntroducerPassTest {
     val newMap = processGrammar("s: a b+ c | a c ;")
     val s = newMap.getRuleDefinition("s")!!.body
     assertThat(s.sourceCode).isEqualTo("a kleene_star__s_1 c")
-    val kleene_star__s_1 = newMap.getRuleDefinition("kleene_star__s_1")!!.body
-    assertThat(kleene_star__s_1.sourceCode).isEqualTo("b*")
+    val kleeneStarS1 = newMap.getRuleDefinition("kleene_star__s_1")!!.body
+    assertThat(kleeneStarS1.sourceCode).isEqualTo("b*")
     assertThat(newMap.parserRuleNameList).hasSize(2)
   }
 
@@ -120,10 +120,11 @@ class OptionalIntroducerPassTest {
 
   @Test
   fun testFindGapInLongSequence_multiple_gaps_in_the_back() {
-    val gapInLongSequence = findGapInSequences(
-      arrayOf("a", "b", "c", "d", "e"),
-      arrayOf("a", "c", "d"),
-    )
+    val gapInLongSequence =
+      findGapInSequences(
+        arrayOf("a", "b", "c", "d", "e"),
+        arrayOf("a", "c", "d"),
+      )
     assertThat(gapInLongSequence).isNull()
   }
 
@@ -154,13 +155,14 @@ class OptionalIntroducerPassTest {
       longSeqOfTerminals: Array<String>,
       terminal: String,
     ): Interval? {
-      val longSeq = createCandidateElement(
-        createSeqOfTerminals(*longSeqOfTerminals),
-      )
-        .asSequence()
-      val shortSeq = createCandidateElement(
-        createTerminal(terminal),
-      )
+      val longSeq =
+        createCandidateElement(
+          createSeqOfTerminals(*longSeqOfTerminals),
+        ).asSequence()
+      val shortSeq =
+        createCandidateElement(
+          createTerminal(terminal),
+        )
       return findGapInLongSequence(longSeq, shortSeq)
     }
 
@@ -168,12 +170,14 @@ class OptionalIntroducerPassTest {
       longSeqOfTerminals: Array<String>,
       shortSeqOfTerminals: Array<String>,
     ): Interval? {
-      val longSeq = createCandidateElement(
-        createSeqOfTerminals(*longSeqOfTerminals),
-      ).asSequence()
-      val shortSeq = createCandidateElement(
-        createSeqOfTerminals(*shortSeqOfTerminals),
-      )
+      val longSeq =
+        createCandidateElement(
+          createSeqOfTerminals(*longSeqOfTerminals),
+        ).asSequence()
+      val shortSeq =
+        createCandidateElement(
+          createSeqOfTerminals(*shortSeqOfTerminals),
+        )
       return findGapInLongSequence(longSeq, shortSeq)
     }
   }

@@ -20,15 +20,16 @@ import org.perses.imagecutter.tree.AbstractImageTreeNode.Companion.DummyPayload
 import org.perses.spartree.AbstractTreeNode
 import org.perses.spartree.ErrorMessage
 
-abstract class AbstractImageTreeNode(nodeId: Int) :
-  AbstractTreeNode<AbstractImageTreeNode, DummyPayload>(nodeId) {
-
-  override fun onChildRemoved(index: Int, child: AbstractImageTreeNode) {
+abstract class AbstractImageTreeNode(
+  nodeId: Int,
+) : AbstractTreeNode<AbstractImageTreeNode, DummyPayload>(nodeId) {
+  override fun onChildRemoved(
+    index: Int,
+    child: AbstractImageTreeNode,
+  ) {
   }
 
-  override fun checkNodeIntegrity(): ErrorMessage? {
-    return null
-  }
+  override fun checkNodeIntegrity(): ErrorMessage? = null
 
   companion object {
     object DummyPayload

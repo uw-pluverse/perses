@@ -1,44 +1,73 @@
 All currently supported parser facade classes:
 
-LanguageC{name=c, extensions=[c], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (2 parser facades):
-    default: org.perses.grammar.c.PnfCParserFacade
-    Alternatives: 
-          org.perses.grammar.c.CParserFacade
-LanguageCpp{name=cpp, extensions=[cc, cpp, cxx], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (1 parser facades):
-    default: org.perses.grammar.cpp.PnfCppParserFacade
-LanguageGlsl{name=glsl, extensions=[glsl, comp, frag, vert], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.glsl.GlslParserFacade
-LanguageGo{name=go, extensions=[go], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.go.PnfGoParserFacade
-LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (2 parser facades):
-    default: org.perses.grammar.java.Java8ParserFacade
-    Alternatives: 
-          org.perses.grammar.java.Java20ParserFacade
-LanguageJavaScript{name=javascript, extensions=[javascript, js], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.javascript.JavaScriptParserFacade
-LanguageLine{name=line, extensions=[line], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.line.LineParserFacade
-LanguageMySQL{name=mysql, extensions=[mysql], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (1 parser facades):
-    default: org.perses.grammar.sql.mysql.MySQLParserFacade
-LanguageOneToken{name=onetoken, extensions=[onetoken], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (1 parser facades):
-    default: org.perses.grammar.onetoken.OneTokenParserFacade
-LanguagePhp{name=php, extensions=[php], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.php.PhpParserFacade
-LanguagePython3{name=python3, extensions=[py, py3], defaultCodeFormatControl=COMPACT_PYTHON3_FORMAT} (1 parser facades):
-    default: org.perses.grammar.python3.Python3ParserFacade
-LanguageRuby{name=ruby, extensions=[rb], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.ruby.PnfRubyParserFacade
-LanguageRust{name=rust, extensions=[rs], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.rust.PnfRustParserFacade
-LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.scala.PnfScalaParserFacade
-LanguageSmtLibV2{name=smtlibv2, extensions=[smt2], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.smtlibv2.SmtLibV2ParserFacade
-LanguageSolidity{name=solidity, extensions=[sol], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.solidity.preprocessed.PnfSolidityParserFacade
-LanguageSQLite{name=sqlite, extensions=[sqlite], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (1 parser facades):
-    default: org.perses.grammar.sql.sqlite.SQLiteParserFacade
-LanguageSystemVerilog{name=system_verilog, extensions=[v, sv], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.sysverilog.PnfSysverilogParserFacade
-LanguageXML{name=xml, extensions=[xml], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facades):
-    default: org.perses.grammar.xml.PnfXMLParserFacade
+ 0: LanguageWebAssembly{name=Web Assembly, extensions=[wat, wasm], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.wasm.WebAssemblyParserFacade
+
+ 1: LanguageC{name=c, extensions=[c], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (2 parser facades):
+    Default: org.perses.grammar.c.PnfCParserFacade
+    Others : org.perses.grammar.c.CParserFacade
+
+ 2: LanguageCpp{name=cpp, extensions=[cc, cpp, cxx], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (1 parser facade):
+    Default: org.perses.grammar.cpp.PnfCppParserFacade
+
+ 3: LanguageBraceDyck{name=dyck-brace, extensions=[dyck_brace], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.dyck.BraceDyckParserFacade
+
+ 4: LanguageBraceParenthesisDyck{name=dyck-brace-parenthesis, extensions=[dyck_brace_parenthesis], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.dyck.BraceParenthesisDyckParserFacade
+
+ 5: LanguageGlsl{name=glsl, extensions=[glsl, comp, frag, vert], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.glsl.GlslParserFacade
+
+ 6: LanguageGo{name=go, extensions=[go], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.go.PnfGoParserFacade
+
+ 7: LanguageJackson{name=jackson-yaml, extensions=[jackson, yaml, yml], defaultCodeFormatControl=YAML_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.jackson.JacksonParserFacade
+
+ 8: LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (2 parser facades):
+    Default: org.perses.grammar.java.Java8ParserFacade
+    Others : org.perses.grammar.java.Java20ParserFacade
+
+ 9: LanguageJavaScript{name=javascript, extensions=[javascript, js], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.javascript.JavaScriptParserFacade
+
+10: LanguageLine{name=line, extensions=[line], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.line.LineParserFacade
+
+11: LanguageMySQL{name=mysql, extensions=[mysql], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (1 parser facade):
+    Default: org.perses.grammar.sql.mysql.MySQLParserFacade
+
+12: LanguageOneToken{name=onetoken, extensions=[onetoken], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (1 parser facade):
+    Default: org.perses.grammar.onetoken.OneTokenParserFacade
+
+13: LanguagePhp{name=php, extensions=[php], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.php.PhpParserFacade
+
+14: LanguagePython3{name=python3, extensions=[py, py3], defaultCodeFormatControl=COMPACT_PYTHON3_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.python3.Python3ParserFacade
+
+15: LanguageRuby{name=ruby, extensions=[rb], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.ruby.PnfRubyParserFacade
+
+16: LanguageRust{name=rust, extensions=[rs], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.rust.PnfRustParserFacade
+
+17: LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.scala.PnfScalaParserFacade
+
+18: LanguageSmtLibV2{name=smtlibv2, extensions=[smt2], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.smtlibv2.SmtLibV2ParserFacade
+
+19: LanguageSolidity{name=solidity, extensions=[sol], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.solidity.preprocessed.PnfSolidityParserFacade
+
+20: LanguageSQLite{name=sqlite, extensions=[sqlite], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} (1 parser facade):
+    Default: org.perses.grammar.sql.sqlite.SQLiteParserFacade
+
+21: LanguageSystemVerilog{name=system_verilog, extensions=[v, sv], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.sysverilog.PnfSysverilogParserFacade
+
+22: LanguageXML{name=xml, extensions=[xml], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} (1 parser facade):
+    Default: org.perses.grammar.xml.PnfXMLParserFacade
+

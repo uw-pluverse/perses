@@ -23,10 +23,10 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_small.line",
     other_flags = {
-        "--default-delta-debugger-for-kleene": "PRISTINE",
+        "--default-list-minimizer-for-kleene": "PRISTINE_DDMIN",
     },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "small.line",
     test_script = "r.sh",
 )

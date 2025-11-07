@@ -17,8 +17,9 @@
 package org.perses.reduction
 
 import org.perses.grammar.AbstractParserFacade
-import org.perses.listminimizer.EnumListInputMinimizerType
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.program.printer.PrinterRegistry
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -26,20 +27,24 @@ import java.nio.file.Path
  * This is the internal configuration for Perses reducer.
  */
 class ReductionConfiguration(
+  val globalFixpoint: Boolean,
   val fixpointReductionForMainReducer: Boolean,
-  val enableTestScriptExecutionCaching: Boolean,
-  val defaultDeltaDebuggerTypeForKleene: EnumListInputMinimizerType,
+  val enableDeprecatedQueryCaching: Boolean,
+  val fullyDeterministicMode: Boolean,
   val numOfReductionThreads: Int,
   val parserFacade: AbstractParserFacade,
   val persesNodeReducerConfig: PersesNodeReducerConfiguration,
+  val listMinimizerConfig: ListMinimizerConfig,
   val vulcanConfig: VulcanConfig,
   val lprConfig: LPRConfig,
+  val latraConfig: LatraConfig,
+  val shaHashAlgorithm: EnumShaAlgorithm,
 ) {
-
-  val originalFormatPrinter = PrinterRegistry.getPrinter(
-    format = parserFacade.language.origCodeFormatControl,
-    lexerAtnWrapper = parserFacade.lexerAtnWrapper,
-  )
+  val originalFormatPrinter =
+    PrinterRegistry.getPrinter(
+      format = parserFacade.language.origCodeFormatControl,
+      lexerAtnWrapper = parserFacade.lexerAtnWrapper,
+    )
 
   init {
     require(numOfReductionThreads > 0) {
@@ -58,14 +63,36 @@ class ReductionConfiguration(
     }
   }
 
+  class ListMinimizerConfig(
+    val defaultListMinimizerTypeForKleene: EnumListMinimizerType,
+    val defaultListMinimizerTypeForHdd: EnumListMinimizerType,
+    val minSlidingWindowSize: Int,
+    val maxSlidingWindowSize: Int,
+  ) {
+    init {
+      require(0 < minSlidingWindowSize) { minSlidingWindowSize }
+      require(minSlidingWindowSize <= maxSlidingWindowSize) {
+        "$minSlidingWindowSize $maxSlidingWindowSize"
+      }
+    }
+  }
+
+  class LatraConfig(
+    val listMinimizerForTransformations: EnumListMinimizerType,
+  )
+
   class VulcanConfig(
     val nonDeletionIterationLimit: Int,
     val windowSizeForLocalExhaustivePatternReduction: Int,
     val vulcanFixpoint: Boolean,
   ) {
     init {
-      require(nonDeletionIterationLimit > 0)
-      require(windowSizeForLocalExhaustivePatternReduction > 0)
+      require(nonDeletionIterationLimit > 0) {
+        "Non deletion iteration limit: $nonDeletionIterationLimit"
+      }
+      require(windowSizeForLocalExhaustivePatternReduction > 0) {
+        "$windowSizeForLocalExhaustivePatternReduction"
+      }
     }
   }
 

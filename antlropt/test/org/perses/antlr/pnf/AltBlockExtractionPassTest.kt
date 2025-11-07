@@ -31,19 +31,21 @@ import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class AltBlockExtractionPassTest {
-
   private var pass = AltBlockExtractionPass()
 
   @Test
-  fun e2eTest_2_alternatives() {
-    val origGrammar = createPersesGrammarFromString(
-      """
-      s : a c d | a b d;
-      """.trimIndent(),
-    )
-    val processedGrammar = pass.processGrammar(
-      GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
-    ).parserGrammar!!
+  fun e2eTest2Alternatives() {
+    val origGrammar =
+      createPersesGrammarFromString(
+        """
+        s : a c d | a b d;
+        """.trimIndent(),
+      )
+    val processedGrammar =
+      pass
+        .processGrammar(
+          GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
+        ).parserGrammar!!
     val auxRuleName = computeAltblockRuleName("s_1")
     /*
      * DO NOT MODIFY THE ORDER OF ALTERNATIVES.
@@ -52,12 +54,13 @@ class AltBlockExtractionPassTest {
      * The order of the two alternatives should be exactly the
      * same as that in its original grammar.
      */
-    val goldenGrammar = createPersesGrammarFromString(
-      """
-      s : a $auxRuleName d;
-      $auxRuleName : c | b; 
-      """.trimIndent(),
-    )
+    val goldenGrammar =
+      createPersesGrammarFromString(
+        """
+        s : a $auxRuleName d;
+        $auxRuleName : c | b; 
+        """.trimIndent(),
+      )
     GrammarTestingUtility.checkWithGoldenGrammar(
       processedGrammar.sourceCode,
       goldenGrammar.sourceCode,
@@ -71,30 +74,33 @@ class AltBlockExtractionPassTest {
     assertThat(a).isNotInstanceOf(PersesAlternativeBlockAst::class.java)
     assertThat(a.sourceCode)
       .isEqualTo("a ${computeAltblockRuleName("a_1")} d")
-    val alternative__a_1 = processed.getRuleDefinition(
-      computeAltblockRuleName("a_1"),
-    )!!.body
-    check(alternative__a_1 is PersesAlternativeBlockAst) { alternative__a_1 }
-    assertThat(alternative__a_1.alternatives).hasSize(2)
+    val alternativeA1 =
+      processed
+        .getRuleDefinition(
+          computeAltblockRuleName("a_1"),
+        )!!
+        .body
+    check(alternativeA1 is PersesAlternativeBlockAst) { alternativeA1 }
+    assertThat(alternativeA1.alternatives).hasSize(2)
     assertThat(
-      alternative__a_1.alternatives
+      alternativeA1.alternatives
         .asSequence()
         .map { it.sourceCode }
         .toImmutableList(),
-    )
-      .containsExactly("b", "c")
+    ).containsExactly("b", "c")
     assertThat(processed.flattenedAllRules).hasSize(2)
   }
 
   private fun process(vararg grammarLines: String): PersesGrammar {
     val grammar = createPersesGrammarFromString(*grammarLines)
-    return pass.processGrammar(
-      GrammarPair(parserGrammar = grammar, lexerGrammar = null),
-    ).parserGrammar!!
+    return pass
+      .processGrammar(
+        GrammarPair(parserGrammar = grammar, lexerGrammar = null),
+      ).parserGrammar!!
   }
 
   @Test
-  fun testsearchAssumingCommonPrefix_equal_length() {
+  fun testsearchAssumingCommonPrefixEqualLength() {
     val r = search("ab", "ac")
     assertThat(r).isNotNull()
     val c = r!!
@@ -115,13 +121,13 @@ class AltBlockExtractionPassTest {
   }
 
   @Test
-  fun testsearchAssumingCommonPrefix_false() {
+  fun testsearchAssumingCommonPrefixFalse() {
     assertThat(search("ab", "cd")).isNull()
     assertThat(search("cd", "ab")).isNull()
   }
 
   @Test
-  fun testsearchAssumingCommonPrefix_different_lengths() {
+  fun testsearchAssumingCommonPrefixDifferentLengths() {
     val r = search("abcd", "ae")
     assertThat(r).isNotNull()
     val c = r!!
@@ -220,18 +226,21 @@ class AltBlockExtractionPassTest {
   }
 
   companion object {
-    private fun search(s1: String, s2: String): AbstractCandidate? {
+    private fun search(
+      s1: String,
+      s2: String,
+    ): AbstractCandidate? {
       val seq1 = GrammarTestingUtility.createSeqOfTerminals(split(s1))
       val seq2 = GrammarTestingUtility.createSeqOfTerminals(split(s2))
       return AltBlockExtractionPass.searchForCandidate(seq1, seq2)
     }
 
-    private fun gapStrings(c: AbstractCandidate): List<String> {
-      return c.getGapsToDelete()
+    private fun gapStrings(c: AbstractCandidate): List<String> =
+      c
+        .getGapsToDelete()
         .asSequence()
         .map { it.sourceCode }
         .toImmutableList()
-    }
 
     private fun split(s1: String): ImmutableList<String> {
       val builder = ImmutableList.builder<String>()

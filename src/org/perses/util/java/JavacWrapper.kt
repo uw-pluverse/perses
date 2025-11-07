@@ -28,39 +28,47 @@ import javax.tools.DiagnosticCollector
 import javax.tools.JavaFileObject
 import javax.tools.ToolProvider
 
-class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
-
+class JavacWrapper(
+  val sourceFiles: ImmutableList<Path>,
+) : Closeable {
   val compiler = ToolProvider.getSystemJavaCompiler()
   val diagnostics = DiagnosticCollector<JavaFileObject>()
-  val manager = compiler.getStandardFileManager(
-    diagnostics,
-    null, // local
-    StandardCharsets.UTF_8,
-  )
+  val manager =
+    compiler.getStandardFileManager(
+      diagnostics,
+      // local =
+      null,
+      StandardCharsets.UTF_8,
+    )
 
-  val sources = manager.getJavaFileObjectsFromFiles(
-    sourceFiles.map { it.toFile() },
-  )
+  val sources =
+    manager.getJavaFileObjectsFromFiles(
+      sourceFiles.map { it.toFile() },
+    )
 
-  val options = ImmutableList
-    .builder<String>()
-    .add("-classpath")
-    .add(getJarsOnClasspath().joinToString(pathSeparator))
-    .add("-target")
-    .add("1.8")
-    .add("-source")
-    .add("1.8")
-    .build()
+  val options =
+    ImmutableList
+      .builder<String>()
+      .add("-classpath")
+      .add(getJarsOnClasspath().joinToString(pathSeparator))
+      .add("-target")
+      .add("1.8")
+      .add("-source")
+      .add("1.8")
+      .build()
 
   fun compile() {
-    val task = compiler.getTask(
-      null, // out
-      manager,
-      diagnostics,
-      options,
-      null, // classes
-      sources,
-    )
+    val task =
+      compiler.getTask(
+        // out =
+        null,
+        manager,
+        diagnostics,
+        options,
+        // classes =
+        null,
+        sources,
+      )
     if (!task.call()) {
       throw RuntimeException(
         "compilation fail for $sourceFiles: \n" +
@@ -69,9 +77,10 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
     }
   }
 
-  fun isJava8Supported(): Boolean {
-    return compiler.sourceVersions.firstOrNull { it.name == "RELEASE_8" } != null
-  }
+  fun isJava8Supported(): Boolean =
+    compiler.sourceVersions.firstOrNull {
+      it.name == "RELEASE_8"
+    } != null
 
   override fun close() {
     manager.close()
@@ -89,7 +98,8 @@ class JavacWrapper(val sourceFiles: ImmutableList<Path>) : Closeable {
     fun getJarsOnClasspath(): ImmutableList<Path> {
       val pathSeparator = pathSeparator!!
       val classpath = System.getProperty("java.class.path")!!.trim()
-      return classpath.splitToSequence(pathSeparator)
+      return classpath
+        .splitToSequence(pathSeparator)
         .asSequence()
         .filter { it.endsWith(".jar") }
         .distinct()

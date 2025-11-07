@@ -29,7 +29,6 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class FileContentTest {
-
   private val tempDir = Util.createTempDirFor(this::class.java.canonicalName)
 
   @OptIn(ExperimentalPathApi::class)

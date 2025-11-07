@@ -24,6 +24,5 @@ kt_jvm_test(
         "//src/org/perses/grammar/smtlibv2:orig_parser_facade",
         "//src/org/perses/grammar/smtlibv2:parser_facade",
         "//test/org/perses:test_util",
-        "//test/org/perses/program:LanguageKindTestUtil",
     ],
 )

@@ -16,11 +16,11 @@
  */
 package org.perses.util
 
-import it.unimi.dsi.fastutil.chars.CharArrays
 import java.io.Writer
 
-class FastStringBuilder(capacity: Int) {
-
+class FastStringBuilder(
+  capacity: Int,
+) {
   private var size = 0
 
   private var data: CharArray
@@ -33,19 +33,36 @@ class FastStringBuilder(capacity: Int) {
 
   fun append(s: String): FastStringBuilder {
     val stringLength = s.length
-    val newSize = size + stringLength
+    if (stringLength == 0) {
+      return this
+    }
+    val oldSize = size
+    val newSize = oldSize + stringLength
     ensureCapacity(newSize)
-    s.toCharArray(data, size, 0, stringLength)
+    s.toCharArray(
+      destination = data,
+      destinationOffset = oldSize,
+      startIndex = 0,
+      endIndex = stringLength,
+    )
+    updatePosition(startIndexInclusive = oldSize, endIndexExclusive = oldSize + stringLength)
     size = newSize
-    updatePosition(s)
     return this
   }
 
-  private fun updatePosition(s: String) {
-    s.forEach { updatePosition(it) }
+  // FIXME: use the subarray of data to update the position.
+  private fun updatePosition(
+    startIndexInclusive: Int,
+    endIndexExclusive: Int,
+  ) {
+    val data = this.data
+    for (i in startIndexInclusive until endIndexExclusive) {
+      updatePosition(data[i])
+    }
   }
 
-  private fun updatePosition(c: Char) {
+  @Suppress("NOTHING_TO_INLINE")
+  private inline fun updatePosition(c: Char) {
     if (c == '\n') {
       ++currentLineNo
       charPositionInLine = FIRST_CHAR_POSITION_IN_LINE
@@ -75,24 +92,27 @@ class FastStringBuilder(capacity: Int) {
     writer.write(data, 0, length())
   }
 
-  fun lastChar() = data[length() - 1]
+  fun lastCharOrThrow() = data[length() - 1]
 
   fun capacity() = data.size
 
   private fun ensureCapacity(newLength: Int) {
-    if (newLength > data.size) {
-      val newCapacity = Math.max(data.size + data.size / 2, newLength)
-      data = CharArrays.forceCapacity(data, newCapacity, data.size)
+    val currentDataSize = data.size
+    if (newLength <= currentDataSize) {
+      return
     }
+    val newCapacity = (currentDataSize * 2 + 10).coerceAtLeast(newLength)
+    data = data.copyOf(newCapacity)
   }
 
   init {
     require(capacity >= 0)
-    data = if (capacity == 0) {
-      EMPTY
-    } else {
-      CharArray(capacity)
-    }
+    data =
+      if (capacity == 0) {
+        EMPTY
+      } else {
+        CharArray(capacity)
+      }
   }
 
   companion object {

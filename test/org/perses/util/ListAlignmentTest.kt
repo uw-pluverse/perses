@@ -29,124 +29,135 @@ import java.lang.RuntimeException
 
 @RunWith(JUnit4::class)
 class ListAlignmentTest {
-
   val equalizer = { e1: Char, e2: Char -> e1 == e2 }
 
   @Test
   fun test_insert_at_the_beginning() {
     val alignment = create("ab", "cab")
-    assertThat(alignment).containsExactly(
-      Pair(null, 'c'),
-      Pair('a', 'a'),
-      Pair('b', 'b'),
-    ).inOrder()
+    assertThat(alignment)
+      .containsExactly(
+        Pair(null, 'c'),
+        Pair('a', 'a'),
+        Pair('b', 'b'),
+      ).inOrder()
   }
 
   @Test
   fun test_insert_in_the_middle() {
     val alignment = create("ac", "abc")
-    assertThat(alignment).containsExactly(
-      Pair('a', 'a'),
-      Pair(null, 'b'),
-      Pair('c', 'c'),
-    ).inOrder()
+    assertThat(alignment)
+      .containsExactly(
+        Pair('a', 'a'),
+        Pair(null, 'b'),
+        Pair('c', 'c'),
+      ).inOrder()
   }
 
   @Test
   fun test_insert_at_the_end() {
     val alignment = create("ab", "abc")
-    assertThat(alignment).containsExactly(
-      Pair('a', 'a'),
-      Pair('b', 'b'),
-      Pair(null, 'c'),
-    ).inOrder()
+    assertThat(alignment)
+      .containsExactly(
+        Pair('a', 'a'),
+        Pair('b', 'b'),
+        Pair(null, 'c'),
+      ).inOrder()
   }
 
   @Test
   fun test_insert_into_empty() {
     val diff = create("", "a")
-    assertThat(diff).containsExactly(
-      Pair(null, 'a'),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair(null, 'a'),
+      ).inOrder()
   }
 
   @Test
   fun test_delete_the_first() {
     val diff = create("ab", "b")
-    assertThat(diff).containsExactly(
-      Pair('a', null),
-      Pair('b', 'b'),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair('a', null),
+        Pair('b', 'b'),
+      ).inOrder()
   }
 
   @Test
   fun test_delete_the_last() {
     val diff = create("ab", "a")
-    assertThat(diff).containsExactly(
-      Pair('a', 'a'),
-      Pair('b', null),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair('a', 'a'),
+        Pair('b', null),
+      ).inOrder()
   }
 
   @Test
   fun test_delete_the_middle() {
     val diff = create("abcd", "ad")
-    assertThat(diff).containsExactly(
-      Pair('a', 'a'),
-      Pair('b', null),
-      Pair('c', null),
-      Pair('d', 'd'),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair('a', 'a'),
+        Pair('b', null),
+        Pair('c', null),
+        Pair('d', 'd'),
+      ).inOrder()
   }
 
   @Test
   fun test_delete_all() {
     val diff = create("ab", "")
-    assertThat(diff).containsExactly(
-      Pair('a', null),
-      Pair('b', null),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair('a', null),
+        Pair('b', null),
+      ).inOrder()
   }
 
   @Test
   fun test_change_single_char() {
     val diff = create("a", "b")
-    assertThat(diff).containsExactly(
-      Pair('a', null),
-      Pair(null, 'b'),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair('a', null),
+        Pair(null, 'b'),
+      ).inOrder()
   }
 
   @Test
   fun test_change_head() {
     val diff = create("ab", "bb")
-    assertThat(diff).containsExactly(
-      Pair('a', null),
-      Pair('b', 'b'),
-      Pair(null, 'b'),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair('a', null),
+        Pair('b', 'b'),
+        Pair(null, 'b'),
+      ).inOrder()
   }
 
   @Test
   fun test_change_tail() {
     val diff = create("ab", "ac")
-    assertThat(diff).containsExactly(
-      Pair('a', 'a'),
-      Pair('b', null),
-      Pair(null, 'c'),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair('a', 'a'),
+        Pair('b', null),
+        Pair(null, 'c'),
+      ).inOrder()
   }
 
   @Test
   fun test_change_middle() {
     val diff = create("abc", "adec")
-    assertThat(diff).containsExactly(
-      Pair('a', 'a'),
-      Pair('b', null),
-      Pair(null, 'd'),
-      Pair(null, 'e'),
-      Pair('c', 'c'),
-    ).inOrder()
+    assertThat(diff)
+      .containsExactly(
+        Pair('a', 'a'),
+        Pair('b', null),
+        Pair(null, 'd'),
+        Pair(null, 'e'),
+        Pair('c', 'c'),
+      ).inOrder()
   }
 
   val insertA = Insert("a")
@@ -399,13 +410,14 @@ class ListAlignmentTest {
     assertThat(alignmentWithoutReplace1.onlyDeletes.get(0).base).isEqualTo('b')
     assertThat(alignmentWithoutReplace1.onlyInserts.get(0).revision).isEqualTo('B')
 
-    val alignmentManual = ListAlignment(
-      ImmutableList.of(
-        AbstractEditOperation.Replace('a', 'A'),
-        AbstractEditOperation.Replace('b', 'B'),
-        AbstractEditOperation.Replace('c', 'C'),
-      ),
-    )
+    val alignmentManual =
+      ListAlignment(
+        ImmutableList.of(
+          AbstractEditOperation.Replace('a', 'A'),
+          AbstractEditOperation.Replace('b', 'B'),
+          AbstractEditOperation.Replace('c', 'C'),
+        ),
+      )
     val alignmentManualWithoutReplace = ListAlignment.splitReplace(alignmentManual)
 
     assertThat(alignmentManualWithoutReplace.alignment.size).isEqualTo(6)
@@ -422,15 +434,22 @@ class ListAlignmentTest {
     assertThat(alignmentManualWithoutReplace.alignment.get(5).revision).isEqualTo('C')
   }
 
-  private fun createRevision(alignment: ListAlignment<Char>, newBase: String): String {
-    return String(alignment.computeRevision(newBase.toList()).toTypedArray().toCharArray())
-  }
+  private fun createRevision(
+    alignment: ListAlignment<Char>,
+    newBase: String,
+  ): String = String(alignment.computeRevision(newBase.toList()).toTypedArray().toCharArray())
 
-  private fun create(baseList: String, revision: String): ImmutableList<Pair<Char?, Char?>> {
-    return ListAlignment.create(baseList.toList(), revision.toList(), equalizer).toPairList()
-  }
+  private fun create(
+    baseList: String,
+    revision: String,
+  ): ImmutableList<Pair<Char?, Char?>> =
+    ListAlignment.create(baseList.toList(), revision.toList(), equalizer).toPairList()
 
-  private fun test(alignment: ListAlignment<Char>, newBase: String, expected: String) {
+  private fun test(
+    alignment: ListAlignment<Char>,
+    newBase: String,
+    expected: String,
+  ) {
     assertThat(createRevision(alignment, newBase)).isEqualTo(expected)
   }
 }

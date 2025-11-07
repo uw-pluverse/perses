@@ -40,8 +40,9 @@ import org.perses.util.toImmutableList
 import java.nio.file.Path
 import kotlin.io.path.readText
 
-class PersesAstBuilder(private val root: GrammarRootAST) {
-
+class PersesAstBuilder(
+  private val root: GrammarRootAST,
+) {
   init {
     require(root.childCount >= 2) {
       "Invalid child count ${root.childCount} $root"
@@ -50,10 +51,11 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
 
   private val symbolTable = SymbolTable()
   private val grammarName = (root.getChild(0) as GrammarAST).getToken().text
-  private val rootChildren = (1 until root.childCount)
-    .asSequence()
-    .map { root.getChild(it) as GrammarAST }
-    .toImmutableList()
+  private val rootChildren =
+    (1 until root.childCount)
+      .asSequence()
+      .map { root.getChild(it) as GrammarAST }
+      .toImmutableList()
   private val processedRootChildren = HashSet<GrammarAST>()
 
   private val grammarType = identifyGrammarType(root)
@@ -62,36 +64,40 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
   private val channelDefinitions = extractChannelDefinitions()
   private val tokenSpecifications = extractTokenSpecification()
 
-  private val rulesRootNode = selectRootChildren { isRulesNode(it) }
-    .single()
-    .also {
-      check("RULES" == it.getToken().text && it.getToken().type == ANTLRParser.RULES) {
-        it
+  private val rulesRootNode =
+    selectRootChildren { isRulesNode(it) }
+      .single()
+      .also {
+        check("RULES" == it.getToken().text && it.getToken().type == ANTLRParser.RULES) {
+          it
+        }
       }
-    }
-  private val rulesDefList = IntRange(0, rulesRootNode.childCount - 1)
-    .asSequence()
-    .map { rulesRootNode.getChild(it) as RuleAST }
-    .onEach {
-      check(it.getToken().text == "RULE" && it.getToken().type == ANTLRParser.RULE) {
-        it
-      }
-    }.toList()
+  private val rulesDefList =
+    IntRange(0, rulesRootNode.childCount - 1)
+      .asSequence()
+      .map { rulesRootNode.getChild(it) as RuleAST }
+      .onEach {
+        check(it.getToken().text == "RULE" && it.getToken().type == ANTLRParser.RULE) {
+          it
+        }
+      }.toList()
 
   private val lexerModeNodes =
     selectRootChildren { isLexerMode(it) }.toImmutableList()
 
   private val persesLexerModeAsts = convertLexerModes(lexerModeNodes)
 
-  private val lexerRuleDefList = rulesDefList
-    .asSequence()
-    .filter { it.isLexerRule }
-    .toImmutableList()
+  private val lexerRuleDefList =
+    rulesDefList
+      .asSequence()
+      .filter { it.isLexerRule }
+      .toImmutableList()
 
-  private val parserRuleDefList = rulesDefList
-    .asSequence()
-    .filter { !it.isLexerRule }
-    .toImmutableList()
+  private val parserRuleDefList =
+    rulesDefList
+      .asSequence()
+      .filter { !it.isLexerRule }
+      .toImmutableList()
 
   init {
     check(
@@ -103,30 +109,33 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
   }
 
   // Note that the order of lexerRuleDefList and parserRuleDefList can affect the order or rules.
-  private val persesLexerRuleDefs = LexerRuleList(
-    lexerRuleDefList
+  private val persesLexerRuleDefs =
+    LexerRuleList(
+      lexerRuleDefList
+        .asSequence()
+        .map { convertLexerRuleDefinition(it, symbolTable) }
+        .toImmutableList(),
+      persesLexerModeAsts,
+    )
+
+  private val persesParserRuleDefs =
+    parserRuleDefList
       .asSequence()
-      .map { convertLexerRuleDefinition(it, symbolTable) }
-      .toImmutableList(),
-    persesLexerModeAsts,
-  )
+      .map { convertParserRuleDefinition(it, symbolTable) }
+      .toImmutableList()
 
-  private val persesParserRuleDefs = parserRuleDefList
-    .asSequence()
-    .map { convertParserRuleDefinition(it, symbolTable) }
-    .toImmutableList()
-
-  val grammar: PersesGrammar = PersesGrammar(
-    grammarType,
-    grammarName,
-    channelDefinitions,
-    tokenSpecifications,
-    grammarOptions,
-    namedActions,
-    persesLexerRuleDefs,
-    persesParserRuleDefs,
-    symbolTable,
-  )
+  val grammar: PersesGrammar =
+    PersesGrammar(
+      grammarType,
+      grammarName,
+      channelDefinitions,
+      tokenSpecifications,
+      grammarOptions,
+      namedActions,
+      persesLexerRuleDefs,
+      persesParserRuleDefs,
+      symbolTable,
+    )
 
   init {
     check(processedRootChildren.size == rootChildren.size) {
@@ -146,20 +155,22 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
       check(modeNameAst.childCount == 0)
       val modeName = modeNameAst.text
 
-      val rules = IntRange(1, childCount - 1)
-        .asSequence()
-        .map { modeAst.getChild(it) as RuleAST }
-        .map { convertLexerRuleDefinition(it, symbolTable) }
-        .toImmutableList()
+      val rules =
+        IntRange(1, childCount - 1)
+          .asSequence()
+          .map { modeAst.getChild(it) as RuleAST }
+          .map { convertLexerRuleDefinition(it, symbolTable) }
+          .toImmutableList()
       result.add(LexerModeWithLexerRules(modeName, rules))
     }
     return result.build()
   }
 
   private fun extractChannelDefinitions(): PersesChannelDefinitionAst {
-    val channels = selectRootChildren { isChannelDefinition(it) }
-      .map { convertChannelDefinitions(it) }
-      .toList()
+    val channels =
+      selectRootChildren { isChannelDefinition(it) }
+        .map { convertChannelDefinitions(it) }
+        .toList()
     return when (channels.size) {
       0 -> PersesChannelDefinitionAst.EMPTY
       1 -> channels.single()
@@ -168,19 +179,20 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
   }
 
   private fun extractTokenSpecification(): PersesTokenSpecificationAst {
-    val tokenSpecifications = selectRootChildren { isTokenSpecification(it) }
-      .map { convertTokenSpecifications(it) }
-      .toList()
+    val tokenSpecifications =
+      selectRootChildren { isTokenSpecification(it) }
+        .map { convertTokenSpecifications(it) }
+        .toList()
     return when (tokenSpecifications.size) {
-      0 -> PersesTokenSpecificationAst.EMTY
+      0 -> PersesTokenSpecificationAst.EMPTY
       1 -> tokenSpecifications.single()
       else ->
         throw RuntimeException("Multiple token specifications are found: $tokenSpecifications")
     }
   }
 
-  private fun extractNamedActions(): ImmutableList<PersesNamedAction> {
-    return selectRootChildren { isNamedActionNode(it) }
+  private fun extractNamedActions(): ImmutableList<PersesNamedAction> =
+    selectRootChildren { isNamedActionNode(it) }
       .map {
         check(it.childCount >= 2)
         val name = extractNameFromNamedActionNode(it)
@@ -189,12 +201,12 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
         val body = lastChild.text
         PersesNamedAction(name, body)
       }.toImmutableList()
-  }
 
   private fun extractGrammarOptions(): PersesGrammarOptionsAst {
-    val optionList = selectRootChildren { isOptionsNode(it) }
-      .map { convertOptions(it) }
-      .toList()
+    val optionList =
+      selectRootChildren { isOptionsNode(it) }
+        .map { convertOptions(it) }
+        .toList()
     return when (optionList.size) {
       0 -> PersesGrammarOptionsAst.EMPTY
       1 -> optionList.single()
@@ -202,8 +214,8 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
     }
   }
 
-  private fun selectRootChildren(predicate: (GrammarAST) -> Boolean): Sequence<GrammarAST> {
-    return rootChildren
+  private fun selectRootChildren(predicate: (GrammarAST) -> Boolean): Sequence<GrammarAST> =
+    rootChildren
       .asSequence()
       .filter(predicate)
       .onEach {
@@ -211,45 +223,44 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
           "The root child has been selected before. $it"
         }
       }
-  }
 
   private class RawRuleAttributes {
     var isFragment = false
     var arguments: ActionAST? = null
     var returnAst: GrammarAST? = null
     var localsAst: GrammarAST? = null
+
     fun convert(symbolTable: SymbolTable): ParserRuleAttributes {
-      val args = if (arguments == null) {
-        null
-      } else {
-        dispatchConversion(arguments!!, symbolTable) as PersesActionAst
-      }
-      val returns = if (returnAst == null) {
-        null
-      } else {
-        dispatchConversion(returnAst!!, symbolTable) as PersesActionAst
-      }
-      val locals = if (localsAst == null) {
-        null
-      } else {
-        dispatchConversion(localsAst!!, symbolTable) as PersesActionAst
-      }
+      val args =
+        if (arguments == null) {
+          null
+        } else {
+          dispatchConversion(arguments!!, symbolTable) as PersesActionAst
+        }
+      val returns =
+        if (returnAst == null) {
+          null
+        } else {
+          dispatchConversion(returnAst!!, symbolTable) as PersesActionAst
+        }
+      val locals =
+        if (localsAst == null) {
+          null
+        } else {
+          dispatchConversion(localsAst!!, symbolTable) as PersesActionAst
+        }
       return ParserRuleAttributes(args, returns, locals)
     }
   }
 
   companion object {
+    @JvmStatic
+    fun loadGrammarFromFile(file: Path): PersesGrammar = loadGrammarFromString(file.readText())
 
     @JvmStatic
-    fun loadGrammarFromFile(file: Path): PersesGrammar {
-      return loadGrammarFromString(file.readText())
-    }
-
-    @JvmStatic
-    fun loadGrammarFromString(grammarContent: String): PersesGrammar {
-      return PersesAstBuilder(AntlrGrammarParser.parseRawGrammarASTFromString(grammarContent))
+    fun loadGrammarFromString(grammarContent: String): PersesGrammar =
+      PersesAstBuilder(AntlrGrammarParser.parseRawGrammarASTFromString(grammarContent))
         .grammar
-    }
 
     private fun convertOptions(secondChild: GrammarAST): PersesGrammarOptionsAst {
       val builder = ImmutableList.builder<PersesGrammarOptionsAst.Option>()
@@ -325,14 +336,13 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
       return builder.toString()
     }
 
-    private fun identifyGrammarType(root: GrammarRootAST): GrammarType {
-      return when (root.text) {
+    private fun identifyGrammarType(root: GrammarRootAST): GrammarType =
+      when (root.text) {
         "COMBINED_GRAMMAR" -> GrammarType.COMBINED
         "PARSER_GRAMMAR" -> GrammarType.PARSER
         "LEXER_GRAMMAR" -> GrammarType.LEXER
         else -> throw RuntimeException("Unsupported grammar type: " + root.text)
       }
-    }
 
     private fun isOptionsNode(ast: GrammarAST) =
       ast.text == "OPTIONS" && ast.token.type == ANTLRParser.OPTIONS
@@ -434,26 +444,27 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
         val firstChild = lexerAltAction.getChild(0) as GrammarAST
         val body = convertSingleAlternative(firstChild as AltAST, symbolTable)
 
-        val commands = IntRange(1, lexerAltAction.childCount - 1)
-          .asSequence()
-          .map { lexerAltAction.getChild(it) as GrammarAST }
-          .map {
-            when (it.text) {
-              "skip", "popMode", "more" -> AbstractLexerCommand.create(it.text)
-              "LEXER_ACTION_CALL" -> {
-                val lexerCommandName = it.getChild(0).text
-                check(
-                  lexerCommandName == "channel" ||
-                    lexerCommandName == "pushMode" ||
-                    lexerCommandName == "mode" ||
-                    lexerCommandName == "type",
-                )
-                val commandArg = it.getChild(1).text
-                AbstractLexerCommand.create(lexerCommandName, commandArg)
+        val commands =
+          IntRange(1, lexerAltAction.childCount - 1)
+            .asSequence()
+            .map { lexerAltAction.getChild(it) as GrammarAST }
+            .map {
+              when (it.text) {
+                "skip", "popMode", "more" -> AbstractLexerCommand.create(it.text)
+                "LEXER_ACTION_CALL" -> {
+                  val lexerCommandName = it.getChild(0).text
+                  check(
+                    lexerCommandName == "channel" ||
+                      lexerCommandName == "pushMode" ||
+                      lexerCommandName == "mode" ||
+                      lexerCommandName == "type",
+                  )
+                  val commandArg = it.getChild(1).text
+                  AbstractLexerCommand.create(lexerCommandName, commandArg)
+                }
+                else -> TODO()
               }
-              else -> TODO()
-            }
-          }.toImmutableList()
+            }.toImmutableList()
         return PersesLexerRuleAst(ruleNameHandle, PersesLexerCommandAst(commands, body))
       }
       if (firstChildOfRuleBody.token.type == ANTLRParser.ALT) {
@@ -510,16 +521,17 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
       val astTokenType = ast.getToken().type
       require(astTokenType == ANTLRParser.LEXER_ALT_ACTION || astTokenType == ANTLRParser.ALT)
 
-      val altAst = if (astTokenType == ANTLRParser.LEXER_ALT_ACTION) {
-        require(ast.childCount == 2)
-        val child = ast.getChild(0) as GrammarAST
-        check(
-          child is AltAST && child.getToken().type == ANTLRParser.ALT,
-        )
-        child
-      } else {
-        ast
-      }
+      val altAst =
+        if (astTokenType == ANTLRParser.LEXER_ALT_ACTION) {
+          require(ast.childCount == 2)
+          val child = ast.getChild(0) as GrammarAST
+          check(
+            child is AltAST && child.getToken().type == ANTLRParser.ALT,
+          )
+          child
+        } else {
+          ast
+        }
       val children = ArrayList<AbstractPersesRuleElement>()
       val childCount = altAst.childCount
       for (i in 0 until childCount) {
@@ -530,9 +542,7 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
     }
 
     @JvmStatic
-    fun combineIntoSequence(
-      children: List<AbstractPersesRuleElement>,
-    ): AbstractPersesRuleElement {
+    fun combineIntoSequence(children: List<AbstractPersesRuleElement>): AbstractPersesRuleElement {
       if (children.size == 1) {
         return children[0]
       }
@@ -582,7 +592,10 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
       }
     }
 
-    fun convertStarBlockAst(ast: StarBlockAST, symbolTable: SymbolTable): PersesStarAst {
+    fun convertStarBlockAst(
+      ast: StarBlockAST,
+      symbolTable: SymbolTable,
+    ): PersesStarAst {
       val body = checkAndConvertBodyOfQuantifiedBlock(ast, symbolTable)
       return if (ast.isGreedy) {
         PersesStarAst.createGreedy(body)
@@ -591,7 +604,10 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
       }
     }
 
-    fun convertPlusBlockAst(ast: PlusBlockAST, symbolTable: SymbolTable): PersesPlusAst {
+    fun convertPlusBlockAst(
+      ast: PlusBlockAST,
+      symbolTable: SymbolTable,
+    ): PersesPlusAst {
       val body = checkAndConvertBodyOfQuantifiedBlock(ast, symbolTable)
       return if (ast.isGreedy) {
         PersesPlusAst.createGreedy(body)
@@ -634,7 +650,10 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
       }
     }
 
-    private fun convertNotAst(notAST: NotAST, symbolTable: SymbolTable): PersesNotAst {
+    private fun convertNotAst(
+      notAST: NotAST,
+      symbolTable: SymbolTable,
+    ): PersesNotAst {
       require(notAST.childCount == 1)
       val child = notAST.getChild(0) as GrammarAST
       val childAst = child
@@ -644,8 +663,11 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
     }
 
     @VisibleForTesting
-    fun dispatchConversion(ast: GrammarAST, symbolTable: SymbolTable): AbstractPersesRuleElement {
-      return when {
+    fun dispatchConversion(
+      ast: GrammarAST,
+      symbolTable: SymbolTable,
+    ): AbstractPersesRuleElement =
+      when {
         ast is TerminalAST -> convertTerminalAst(ast)
         ast is RuleRefAST -> convertRuleRefAst(ast, symbolTable)
         ast is OptionalBlockAST -> convertOptionalBlockAst(ast, symbolTable)
@@ -662,7 +684,6 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
         PersesRuleElementLabel.isRuleElementLabel(ast) -> convertRuleElementLabel(ast, symbolTable)
         else -> error("Unhandled ast: " + ast.text + ", " + ast.javaClass)
       }
-    }
 
     private fun convertRuleElementLabel(
       ast: GrammarAST,
@@ -698,9 +719,8 @@ class PersesAstBuilder(private val root: GrammarRootAST) {
       return PersesRuleElementOption(key, value)
     }
 
-    private fun convertTerminalAst(terminal: TerminalAST): PersesTerminalAst {
-      return PersesTerminalAst(terminal.text, terminal.getToken().type)
-    }
+    private fun convertTerminalAst(terminal: TerminalAST): PersesTerminalAst =
+      PersesTerminalAst(terminal.text, terminal.getToken().type)
 
     private fun convertRangeAST(ast: RangeAST): AbstractPersesRuleElement {
       require(ast.childCount == 2)

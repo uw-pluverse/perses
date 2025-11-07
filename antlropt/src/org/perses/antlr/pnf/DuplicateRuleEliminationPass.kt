@@ -23,47 +23,49 @@ import org.perses.antlr.ast.RuleNameRegistry
 import org.perses.util.Util
 import org.perses.util.toImmutableList
 
-class DuplicateRuleEliminationPass(private val startRuleName: String) : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+class DuplicateRuleEliminationPass(
+  private val startRuleName: String,
+) : AbstractPnfPass() {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
-    val startRuleName = parserGrammar
-      .symbolTable
-      .ruleNameRegistry
-      .getOrThrow(startRuleName)
-    val processedParserGramamr = Util.fixpoint(parserGrammar) { inputGrammar ->
-      val candidates = searchForCandidates(inputGrammar)
-      if (candidates.isEmpty()) {
-        return@fixpoint inputGrammar
-      }
-      val mutable = MutableGrammar.createParserRulesFrom(inputGrammar)
-      for (rules in candidates) {
-        require(rules.size > 1)
-        val sortedRules = rules
-          .asSequence()
-          .filter { def: AbstractPersesRuleDefAst -> def.ruleNameHandle != startRuleName }
-          .sortedBy { it.ruleNameHandle }
-          .toImmutableList()
-        var canonicalName: RuleNameRegistry.RuleNameHandle
-        var others: List<AbstractPersesRuleDefAst>
-        if (sortedRules.size == rules.size) {
-          canonicalName = sortedRules[0].ruleNameHandle
-          others = sortedRules.subList(1, sortedRules.size)
-        } else {
-          check(sortedRules.size + 1 == rules.size)
-          canonicalName = startRuleName
-          others = sortedRules
+    val startRuleName =
+      parserGrammar
+        .symbolTable
+        .ruleNameRegistry
+        .getOrThrow(startRuleName)
+    val processedParserGramamr =
+      Util.fixpoint(parserGrammar) { inputGrammar ->
+        val candidates = searchForCandidates(inputGrammar)
+        if (candidates.isEmpty()) {
+          return@fixpoint inputGrammar
         }
-        for (other in others) {
-          val oldRuleName = other.ruleNameHandle
-          mutable.removeRule(oldRuleName)
-          RuleRefRenamingEdit.renameDefMap(mutable, oldRuleName, canonicalName)
+        val mutable = MutableGrammar.createParserRulesFrom(inputGrammar)
+        for (rules in candidates) {
+          require(rules.size > 1)
+          val sortedRules =
+            rules
+              .asSequence()
+              .filter { def: AbstractPersesRuleDefAst -> def.ruleNameHandle != startRuleName }
+              .sortedBy { it.ruleNameHandle }
+              .toImmutableList()
+          var canonicalName: RuleNameRegistry.RuleNameHandle
+          var others: List<AbstractPersesRuleDefAst>
+          if (sortedRules.size == rules.size) {
+            canonicalName = sortedRules[0].ruleNameHandle
+            others = sortedRules.subList(1, sortedRules.size)
+          } else {
+            check(sortedRules.size + 1 == rules.size)
+            canonicalName = startRuleName
+            others = sortedRules
+          }
+          for (other in others) {
+            val oldRuleName = other.ruleNameHandle
+            mutable.removeRule(oldRuleName)
+            RuleRefRenamingEdit.renameDefMap(mutable, oldRuleName, canonicalName)
+          }
         }
+        inputGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
       }
-      inputGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
-    }
     return grammar.withNewParserGrammar(processedParserGramamr)
   }
 

@@ -23,15 +23,10 @@ class DeepCopyResult<ValueT, NodeT>(
   @PublishedApi
   internal val orig2copyMapping: BiMap<NodeT, NodeT>,
 ) {
-
   inline fun <NewValueT> transform(transformer: (ValueT) -> NewValueT) =
     DeepCopyResult(transformer(result), orig2copyMapping)
 
-  fun getCopyNode(origNode: NodeT): NodeT? {
-    return orig2copyMapping[origNode]
-  }
+  fun getCopyNode(origNode: NodeT): NodeT? = orig2copyMapping[origNode]
 
-  fun getOrigNode(copyNode: NodeT): NodeT? {
-    return orig2copyMapping.inverse()[copyNode]
-  }
+  fun getOrigNode(copyNode: NodeT): NodeT? = orig2copyMapping.inverse()[copyNode]
 }

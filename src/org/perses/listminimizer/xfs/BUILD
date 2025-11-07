@@ -7,17 +7,16 @@ package(default_visibility = [
 kt_jvm_library(
     name = "xfs",
     srcs = [
-        "AbstractSpecialDeltaDebugger.kt",
-        "BfsDeltaDebugger.kt",
+        "AbstractTreeTraversalBasedListMinimizer.kt",
+        "BfsListMinimizer.kt",
         "DeltaDebugger.kt",
-        "DfsDeltaDebugger.kt",
+        "DfsListMinimizer.kt",
     ],
     deps = [
         "//:guava",
-        "//src/org/perses/listminimizer",
         "//src/org/perses/listminimizer:Partition",
+        "//src/org/perses/listminimizer:interfaces",
         "//src/org/perses/reduction:property_test_result",
         "//src/org/perses/util",
-        "//src/org/perses/util:Interval",
     ],
 )

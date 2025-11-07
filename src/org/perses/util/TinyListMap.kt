@@ -17,7 +17,6 @@
 package org.perses.util
 
 class TinyListMap<K, V> {
-
   private val entries = ArrayList<Entry<K, V>>(2)
 
   fun size() = entries.size
@@ -31,12 +30,18 @@ class TinyListMap<K, V> {
     return null
   }
 
-  fun putOrThrowIfPresent(key: K, value: V) {
+  fun putOrThrowIfPresent(
+    key: K,
+    value: V,
+  ) {
     check(get(key) == null)
     entries.add(Entry(key, value))
   }
 
   fun asSequence() = entries.asSequence()
 
-  data class Entry<K, V>(val key: K, val value: V)
+  data class Entry<K, V>(
+    val key: K,
+    val value: V,
+  )
 }

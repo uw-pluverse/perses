@@ -30,7 +30,6 @@ import org.perses.spartree.TreeNodeFilterResult
 import kotlin.math.min
 
 object TreeToSequenceConverter {
-
   fun convertWithPreOrder(node: AbstractSparTreeNode): NodeRepresentationList {
     val builder = NodeRepresentationList.Builder()
     node.preOrderVisit {
@@ -63,9 +62,7 @@ object TreeToSequenceConverter {
 
   // return NodeRepresentation of the given node if the
   // rule of the node is altblock ast or quantified ast
-  private fun encodeNode(
-    node: AbstractSparTreeNode,
-  ): NodeRepresentationList {
+  private fun encodeNode(node: AbstractSparTreeNode): NodeRepresentationList {
     val builder = NodeRepresentationList.Builder()
     if (node.isTokenNode()) {
       builder.addAll(encodeTokenNode(node))
@@ -77,11 +74,12 @@ object TreeToSequenceConverter {
     val rule = node.antlrRule!!.ruleDef
     if (rule.body is AbstractPersesQuantifiedAst) {
       // childCount cannot be 0, because SparTreeSimplifier delete those nodes
-      val featureValue = if (node.childCount > 1) {
-        1
-      } else {
-        0
-      }
+      val featureValue =
+        if (node.childCount > 1) {
+          1
+        } else {
+          0
+        }
       builder.add(NodeRepresentation.create(rule.ruleNameHandle.id, featureValue))
     } else if (rule.body is PersesAlternativeBlockAst) {
       builder.add(encodeAltNode(node))
@@ -89,22 +87,21 @@ object TreeToSequenceConverter {
     return builder.build()
   }
 
-  private fun encodeAltNode(
-    node: AbstractSparTreeNode,
-  ): NodeRepresentation {
+  private fun encodeAltNode(node: AbstractSparTreeNode): NodeRepresentation {
     val rule = node.antlrRule!!.ruleDef
     assert(rule.body is PersesAlternativeBlockAst)
     assert(node.childCount > 0)
     if (node.childCount > 1) {
       throw AssertionError("a AltBlock should not have more than one child")
     }
-    val child = if (node.getChild(0).isTokenNode()) {
-      "token_${node.getChild(0).asLexerRule().token.type}"
-    } else {
-      "rule_${
-        node.getChild(0).payload!!.expectedAntlrRuleType!!.ruleDef.ruleNameHandle.id
-      }"
-    }
+    val child =
+      if (node.getChild(0).isTokenNode()) {
+        "token_${node.getChild(0).asLexerRule().token.asAntlrToken().tokenType}"
+      } else {
+        "rule_${
+          node.getChild(0).payload!!.expectedAntlrRuleType!!.ruleDef.ruleNameHandle.id
+        }"
+      }
     val altNum = computeAltNum((rule.body as PersesAlternativeBlockAst).alternatives, child)
     return NodeRepresentation.create(rule.ruleNameHandle.id, altNum)
   }
@@ -129,9 +126,7 @@ object TreeToSequenceConverter {
     return builder.build()
   }
 
-  private fun encodeTokenNode(
-    node: AbstractSparTreeNode,
-  ): NodeRepresentationList {
+  private fun encodeTokenNode(node: AbstractSparTreeNode): NodeRepresentationList {
     assert(node.isTokenNode())
     val builder = NodeRepresentationList.Builder()
     val payloadList = node.payload?.asSinglePayloadList ?: return builder.build()
@@ -145,19 +140,20 @@ object TreeToSequenceConverter {
     alternatives: ImmutableList<AbstractPersesRuleElement>,
     child: String,
   ): Int {
-    val altNames = alternatives.map {
-      when (it) {
-        is PersesRuleReferenceAst -> {
-          "rule_${it.ruleNameHandle.id}"
-        }
-        is PersesTerminalAst -> {
-          "token_${it.tokenType}"
-        }
-        else -> {
-          error("Unreachable")
+    val altNames =
+      alternatives.map {
+        when (it) {
+          is PersesRuleReferenceAst -> {
+            "rule_${it.ruleNameHandle.id}"
+          }
+          is PersesTerminalAst -> {
+            "token_${it.tokenType}"
+          }
+          else -> {
+            error("Unreachable")
+          }
         }
       }
-    }
     val altNum = altNames.indexOf(child)
     if (altNum < 0) {
       throw AssertionError("cannot compute the altNum for AltBlock: $alternatives")

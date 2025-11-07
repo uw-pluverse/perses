@@ -20,20 +20,21 @@ import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 import org.perses.fuzzer.compilers.SanitizerCrashSignatureExtractor
 
 class RubyCrashDetector : AbstractCompilerCrashDetector() {
-
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
     val result = ArrayList<String>()
     val sanitizerCrashDetector = SanitizerCrashSignatureExtractor()
-    stderr.asSequence()
+    stderr
+      .asSequence()
       .filter {
         it.isNotBlank() && it.contains(KEYWORD_BUG)
-      }
-      .forEach {
+      }.forEach {
         result.add(it)
       }
     result.addAll(sanitizerCrashDetector.extractCrashSignatureFromStderr(stderr))
-    return result.asSequence()
-      .filter { it.isNotBlank() }.map {
+    return result
+      .asSequence()
+      .filter { it.isNotBlank() }
+      .map {
         it.trim()
         it.substring(it.indexOf("Ruby"))
       }.toList()

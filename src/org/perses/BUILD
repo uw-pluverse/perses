@@ -20,7 +20,6 @@ kt_jvm_library(
         "//:guava",
         "//:jcommander",
         "//src/org/perses/cmd:reduction_flags",
-        "//src/org/perses/grammar/adhoc:adhoc_grammar_configuration",
         "//src/org/perses/program:enum_format_control",
         "//src/org/perses/reduction/cache:enum_query_caching_control",
         "//src/org/perses/reduction/cache:test_execution_cache_type",
@@ -56,8 +55,18 @@ kt_jvm_library(
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:global_context",
         "//src/org/perses/reduction:reduction_driver_interface",
-        "//src/org/perses/util:default_logging_configurations",
-        "//src/org/perses/util/cmd",
+    ],
+)
+
+kt_jvm_library(
+    name = "HelperForPersesMain",
+    srcs = [
+        "HelperForPersesMain.kt",
+    ],
+    deps = [
+        ":abstract_reduction_main",
+        "//src/org/perses/cmd:LanguageControlFlagGroup",
+        "//src/org/perses/grammar:facade_factory",
     ],
 )
 
@@ -68,7 +77,7 @@ kt_jvm_library(
     ],
     deps = [
         "//src/org/perses:command_options",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/listener:listeners",
         "//src/org/perses/util",
     ],
@@ -78,6 +87,7 @@ kt_jvm_library(
     name = "perses_lib",
     srcs = ["Main.kt"],
     deps = [
+        ":HelperForPersesMain",
         ":abstract_reduction_main",
         ":command_options",
         ":perses_contants",
@@ -85,7 +95,6 @@ kt_jvm_library(
         "//:antlr_tool",
         "//:guava",
         "//:jcommander",
-        "//:kotlin_stdib",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar/adhoc:adhoc_grammar_configuration",
         "//src/org/perses/grammar/adhoc:adhoc_parser_facade_factory_util",
@@ -109,6 +118,7 @@ kt_jvm_library(
         "//src/org/perses/grammar/xml:language_kind",
         "//src/org/perses/grammar/xml:parser_facade",
         "//src/org/perses/program:language_kind",
+        "//src/org/perses/program:serializable_language_kind",
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction:reduction_driver_interface",
@@ -170,11 +180,10 @@ kt_jvm_library(
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/cmd:LanguageControlFlagGroup",
         "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/adhoc:adhoc_parser_facade_factory_util",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
-        "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/util/cmd",
     ],
 )

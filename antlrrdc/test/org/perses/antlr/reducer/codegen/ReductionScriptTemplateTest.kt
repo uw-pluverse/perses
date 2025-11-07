@@ -27,21 +27,24 @@ import org.perses.antlr.AbstractAntlrrdcTest
 
 @RunWith(JUnit4::class)
 class ReductionScriptTemplateTest : AbstractAntlrrdcTest() {
+  val testJarFile =
+    tempDir.resolve("test.jar").apply {
+      MoreFiles.touch(this)
+    }
 
-  val testJarFile = tempDir.resolve("test.jar").apply {
-    MoreFiles.touch(this)
-  }
+  val testProgram1 =
+    tempDir.resolve("t1.c").apply {
+      MoreFiles.touch(this)
+    }
+  val testProgram2 =
+    tempDir.resolve("t2.c").apply {
+      MoreFiles.touch(this)
+    }
 
-  val testProgram1 = tempDir.resolve("t1.c").apply {
-    MoreFiles.touch(this)
-  }
-  val testProgram2 = tempDir.resolve("t2.c").apply {
-    MoreFiles.touch(this)
-  }
-
-  val classpathJar = tempDir.resolve("extra-classpath.jar").apply {
-    MoreFiles.touch(this)
-  }
+  val classpathJar =
+    tempDir.resolve("extra-classpath.jar").apply {
+      MoreFiles.touch(this)
+    }
 
   @After
   fun teardown() {
@@ -50,11 +53,12 @@ class ReductionScriptTemplateTest : AbstractAntlrrdcTest() {
 
   @Test
   fun test() {
-    val template = ReductionScriptTemplate(
-      jarFileName = testJarFile.fileName.toString(),
-      mainClassFullName = "org.perses.Main",
-      extraClasspath = ImmutableList.of(classpathJar),
-    )
+    val template =
+      ReductionScriptTemplate(
+        jarFileName = testJarFile.fileName.toString(),
+        mainClassFullName = "org.perses.Main",
+        extraClasspath = ImmutableList.of(classpathJar),
+      )
     val scriptFile = template.writeTo(tempDir.resolve("r.sh"))
     val lines = scriptFile.fileContent.split("\n")
 

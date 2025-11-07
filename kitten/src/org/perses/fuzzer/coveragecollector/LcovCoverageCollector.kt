@@ -35,7 +35,6 @@ class LcovCoverageCollector(
   val monitorInterval: Long,
   val resultFile: Path,
 ) : ICoverageCollector {
-
   override fun launch(): ExecutorService? {
     resultFile.writeText("line coverage: 0\nbranch coverage: 0\n\n")
     val scheduledExecutor = Executors.newScheduledThreadPool(1)
@@ -58,19 +57,21 @@ class LcovCoverageCollector(
 
   @VisibleForTesting
   override fun getCoverageReport(): ICoverageCollector.CoverageReport {
-    val cmdOutput = ShellCommandOnPath("lcov")
-      .runWith(
-        extraArguments = ImmutableList.of(
-          "-d",
-          sourcePath.toString(),
-          "-c",
-          "--rc",
-          "lcov_branch_coverage=1",
-        ),
-        captureOutput = true,
-        workingDirectory = infoPath,
-        environment = Shells.CURRENT_ENV,
-      )
+    val cmdOutput =
+      ShellCommandOnPath("lcov")
+        .runWith(
+          extraArguments =
+            ImmutableList.of(
+              "-d",
+              sourcePath.toString(),
+              "-c",
+              "--rc",
+              "lcov_branch_coverage=1",
+            ),
+          captureOutput = true,
+          workingDirectory = infoPath,
+          environment = Shells.CURRENT_ENV,
+        )
     if (cmdOutput.exitCode.isNonZero()) {
       throw RuntimeException("get coverage failed. $cmdOutput")
     } else {
@@ -91,16 +92,22 @@ class LcovCoverageCollector(
         if (trimmedLine.startsWith(LINE_INDICATOR)) {
           lineTotal += 1
           val lastComma = trimmedLine.lastIndexOf(",")
-          val newCoveredLines = trimmedLine.subSequence(lastComma + 1, trimmedLine.length)
-            .toString().toIntOrNull()
+          val newCoveredLines =
+            trimmedLine
+              .subSequence(lastComma + 1, trimmedLine.length)
+              .toString()
+              .toIntOrNull()
           if (newCoveredLines != null && newCoveredLines > 0) {
             lineCovered += 1
           }
         } else if (trimmedLine.startsWith(BRANCH_INDICATOR)) {
           branchTotal += 1
           val lastComma = trimmedLine.lastIndexOf(",")
-          val newCoveredLines = trimmedLine.subSequence(lastComma + 1, trimmedLine.length)
-            .toString().toIntOrNull()
+          val newCoveredLines =
+            trimmedLine
+              .subSequence(lastComma + 1, trimmedLine.length)
+              .toString()
+              .toIntOrNull()
           if (newCoveredLines != null && newCoveredLines > 0) {
             branchCovered += 1
           }

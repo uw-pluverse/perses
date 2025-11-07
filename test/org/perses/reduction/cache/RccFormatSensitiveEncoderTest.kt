@@ -18,62 +18,96 @@ package org.perses.reduction.cache
 
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.CommonReductionIOManagerData
 
 @RunWith(JUnit4::class)
-class RccFormatSensitiveEncoderTest {
+class RccFormatSensitiveEncoderTest :
+  CommonReductionIOManagerData(RccFormatSensitiveEncoderTest::class.java) {
+  @After
+  fun tearDown() {
+    close()
+  }
+
   // Base program with 2 lines of code
-  val origProgram = TestUtility.createTokenizedProgramFromString(
-    """
+  val origProgram =
+    TestUtility.createTokenizedProgramFromString(
+      """
       int a;
       int a;
-    """.trimIndent(),
-    LanguageC,
-  )
+      """.trimIndent(),
+      LanguageC,
+    )
   val tokens = origProgram.tokens
 
-  val token_int1 = tokens[0]
-  val token_a1 = tokens[1]
-  val token_semi1 = tokens[2]
-  val token_int2 = tokens[3]
-  val token_a2 = tokens[4]
-  val token_semi2 = tokens[5]
+  val tokenInt1 = tokens[0]
+  val tokenA1 = tokens[1]
+  val tokenSemi1 = tokens[2]
+  val tokenInt2 = tokens[3]
+  val tokenA2 = tokens[4]
+  val tokenSemi2 = tokens[5]
 
   // Two varaint programs.
-  val firstLine = TokenizedProgram(
-    ImmutableList.of(token_int1, token_a1, token_semi1),
-    origProgram.factory,
-  )
-  val secondLine = TokenizedProgram(
-    ImmutableList.of(token_int2, token_a2, token_semi2),
-    origProgram.factory,
-  )
-  val multiLine = TokenizedProgram(
-    ImmutableList.of(token_int1, token_a2, token_semi2),
-    origProgram.factory,
-  )
-  val singleSemi = TokenizedProgram(
-    ImmutableList.of(token_semi2),
-    origProgram.factory,
-  )
+  val firstLine =
+    TokenizedProgram(
+      ImmutableList.of(tokenInt1, tokenA1, tokenSemi1),
+      origProgram.factory,
+    )
+  val secondLine =
+    TokenizedProgram(
+      ImmutableList.of(tokenInt2, tokenA2, tokenSemi2),
+      origProgram.factory,
+    )
+  val multiLine =
+    TokenizedProgram(
+      ImmutableList.of(tokenInt1, tokenA2, tokenSemi2),
+      origProgram.factory,
+    )
+  val singleSemi =
+    TokenizedProgram(
+      ImmutableList.of(tokenSemi2),
+      origProgram.factory,
+    )
 
   // Construct a format sensitive encoder.
-  val formatEncoder = RccFormatSensitiveEncoder(
-    origProgram,
-    AbstractQueryCacheProfiler.NULL_PROFILER,
-    true,
-  )
+  val formatEncoder =
+    RccFormatSensitiveEncoder(
+      origProgram,
+      AbstractQueryCacheProfiler.NULL_PROFILER,
+      true,
+    )
 
-  val baseEncoding = formatEncoder.encode(origProgram)
-  val firstLineEncoding = formatEncoder.encode(firstLine)
-  val secondLineEncoding = formatEncoder.encode(secondLine)
-  val multiLineEncoding = formatEncoder.encode(multiLine)
-  val singleSemiEncoding = formatEncoder.encode(singleSemi)
+  val baseEncoding =
+    formatEncoder.encode(
+      origProgram,
+      outputManager = outputManagerFactory.createManagerFor(origProgram),
+    )
+  val firstLineEncoding =
+    formatEncoder.encode(
+      firstLine,
+      outputManager = outputManagerFactory.createManagerFor(firstLine),
+    )
+  val secondLineEncoding =
+    formatEncoder.encode(
+      secondLine,
+      outputManager = outputManagerFactory.createManagerFor(secondLine),
+    )
+  val multiLineEncoding =
+    formatEncoder.encode(
+      multiLine,
+      outputManager = outputManagerFactory.createManagerFor(multiLine),
+    )
+  val singleSemiEncoding =
+    formatEncoder.encode(
+      singleSemi,
+      outputManager = outputManagerFactory.createManagerFor(singleSemi),
+    )
 
   @Test
   fun testFormatSensitiveEncoder() {

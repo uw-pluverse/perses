@@ -20,9 +20,7 @@ import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.DefaultAstVisitor
 import org.perses.antlr.ast.PersesRuleElementLabel
 
-class RuleElementLabelCollector private constructor() :
-  DefaultAstVisitor() {
-
+class RuleElementLabelCollector private constructor() : DefaultAstVisitor() {
   private val labels = ArrayList<PersesRuleElementLabel>()
 
   override fun visit(ast: PersesRuleElementLabel) {
@@ -30,8 +28,7 @@ class RuleElementLabelCollector private constructor() :
   }
 
   companion object {
-    fun collectLabels(ast: AbstractPersesRuleElement): ArrayList<PersesRuleElementLabel> {
-      return RuleElementLabelCollector().apply { preorder(ast) }.labels
-    }
+    fun collectLabels(ast: AbstractPersesRuleElement): ArrayList<PersesRuleElementLabel> =
+      RuleElementLabelCollector().apply { preorder(ast) }.labels
   }
 }

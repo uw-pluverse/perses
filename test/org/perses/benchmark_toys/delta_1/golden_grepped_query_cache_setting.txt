@@ -1,1 +1,1 @@
-Cache setting: query-caching=enabled, edit-caching=enabled, query-cache=content_sha512 
+Cache setting: query-caching=enabled, edit-caching=enabled, query-cache-type=CONTENT_SHA_HASH_FORMAT

@@ -13,6 +13,10 @@ kt_jvm_test(
     srcs = ["PnfGoParserFacadeTest.kt"],
     data = [],
     shard_count = 7,
+    tags = [
+        # TODO(cnsun): need to add a flag in presubmit.sh to enable this test.
+        "super_slow_parser_test",
+    ],
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",

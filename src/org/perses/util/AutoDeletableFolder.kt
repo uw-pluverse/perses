@@ -23,8 +23,9 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.exists
 import kotlin.io.path.isDirectory
 
-class AutoDeletableFolder(val file: Path) : Closeable {
-
+class AutoDeletableFolder(
+  val file: Path,
+) : Closeable {
   private var open = true
 
   override fun close() {
@@ -46,11 +47,8 @@ class AutoDeletableFolder(val file: Path) : Closeable {
   }
 
   companion object {
+    fun createTempDir(prefix: String) = AutoDeletableFolder(Files.createTempDirectory(prefix))
 
-    fun createTempDir(prefix: String) =
-      AutoDeletableFolder(Files.createTempDirectory(prefix))
-
-    fun createTempDirWithClassNameAsPrefix(any: Any) =
-      createTempDir(prefix = any::class.java.name)
+    fun createTempDirWithClassNameAsPrefix(any: Any) = createTempDir(prefix = any::class.java.name)
   }
 }

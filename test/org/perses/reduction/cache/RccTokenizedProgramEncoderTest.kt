@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import it.unimi.dsi.fastutil.ints.IntArrayList
 import org.antlr.v4.runtime.Token
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,27 +30,40 @@ import org.perses.grammar.c.LanguageC
 import org.perses.program.TokenizedProgram
 import org.perses.program.TokenizedProgramFactory
 import org.perses.program.printer.PrinterRegistry
+import org.perses.reduction.io.CommonReductionIOManagerData
 import org.perses.spartree.SparTree
-import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
 import java.nio.file.Path
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
-class RccTokenizedProgramEncoderTest {
+class RccTokenizedProgramEncoderTest :
+  CommonReductionIOManagerData(RccTokenizedProgramEncoderTest::class.java) {
   private var factory: TokenizedProgramFactory? = null
   private var encoder: RccTokenizedProgramEncoder? = null
   private var encoder2: RccTokenizedProgramEncoder? = null
+
+  @After
+  fun tearDown() {
+    close()
+  }
 
   @Before
   fun setup() {
     val tokens: ImmutableList<Token> = TestUtility.createAntlrTokens("a", "b", "c", "d", "e")
     factory = TokenizedProgramFactory.createFactory(tokens, LanguageC)
-    encoder = RccTokenizedProgramEncoder(
-      factory!!.create(tokens), AbstractQueryCacheProfiler.NULL_PROFILER, true,
-    )
-    encoder2 = RccTokenizedProgramEncoder(
-      factory!!.create(tokens), AbstractQueryCacheProfiler.NULL_PROFILER, true,
-    )
+    encoder =
+      RccTokenizedProgramEncoder(
+        factory!!.create(tokens),
+        AbstractQueryCacheProfiler.NULL_PROFILER,
+        true,
+      )
+    encoder2 =
+      RccTokenizedProgramEncoder(
+        factory!!.create(tokens),
+        AbstractQueryCacheProfiler.NULL_PROFILER,
+        true,
+      )
   }
 
   @Test
@@ -79,21 +93,33 @@ class RccTokenizedProgramEncoderTest {
     testTokenCompression("test/org/perses/reduction/cache/clang-22704.c", 184444, 2)
   }
 
-  private fun testTokenCompression(filepath: String, originalTokenCount: Int, encodingSize: Int) {
+  private fun testTokenCompression(
+    filepath: String,
+    originalTokenCount: Int,
+    encodingSize: Int,
+  ) {
     val file: Path = Paths.get(filepath)
     val sparTreeFromFile: SparTree = TestUtility.createSparTreeFromFile(file)
     val p: TokenizedProgram = sparTreeFromFile.programSnapshot
     val encoder =
       RccTokenizedProgramEncoder(p, AbstractQueryCacheProfiler.NULL_PROFILER, true)
     assertThat(p.tokens).hasSize(originalTokenCount)
-    val encoding = encoder.encode(p)!!
+    val encoding =
+      encoder.encode(
+        p,
+        outputManagerFactory.createManagerFor(p),
+      )!!
     assertThat(encoding.tokenCount).isEqualTo(originalTokenCount)
     assertThat(encoding.encodingSize()).isEqualTo(encodingSize)
     run {
-      val other = encoder.encode(p)
+      val other =
+        encoder.encode(
+          p,
+          outputManagerFactory.createManagerFor(p),
+        )!!
       assertThat(encoding).isNotSameInstanceAs(other)
       assertThat(encoding).isEqualTo(other)
-      assert(other != null)
+      assertThat(other).isNotNull()
       assertThat(encoding.hashCode()).isEqualTo(other.hashCode())
     }
   }
@@ -106,58 +132,61 @@ class RccTokenizedProgramEncoderTest {
     assertThat(p1).isNotEqualTo(p2)
   }
 
-  private fun test(lexemes: ImmutableList<String>, expectedIntervals: ImmutableList<Int>) {
+  private fun test(
+    lexemes: ImmutableList<String>,
+    expectedIntervals: ImmutableList<Int>,
+  ) {
     val p: TokenizedProgram = createProgram(*lexemes.toTypedArray<String>())
     val intervals: IntArrayList? = getIntervalsInOrigin(p)
     assertThat(intervals).containsExactlyElementsIn(expectedIntervals)
     val restored: TokenizedProgram = restore(intervals)
     assertThat(lexemes).containsExactlyElementsIn(toLexemes(restored))
     run {
-      val encoding = encoder!!.encode(p)!!
+      val encoding = encoder!!.encode(p, outputManagerFactory.createManagerFor(p))!!
       val encoding2 = encoder2!!.reEncode(encoding)
       assertThat(encoding).isEqualTo(encoding2)
     }
   }
 
-  private fun createProgram(vararg lexemes: String): TokenizedProgram {
-    return factory!!.create(TestUtility.createAntlrTokens(*lexemes))
-  }
+  private fun createProgram(vararg lexemes: String): TokenizedProgram =
+    factory!!.create(TestUtility.createAntlrTokens(*lexemes))
 
-  private fun getIntervalsInOrigin(p: TokenizedProgram): IntArrayList? {
-    return encoder!!.encodeUncompressed(p.tokens.iterator(), p.tokenCount)
-  }
+  private fun getIntervalsInOrigin(p: TokenizedProgram): IntArrayList? =
+    encoder!!.encodeUncompressed(p.tokens.iterator(), p.tokenCount)
 
   private fun restore(intervals: IntArrayList?): TokenizedProgram {
-    val program1: TokenizedProgram = RccProgramEncoding.createCompressedEncoding(
-      TokenizedProgram(factory!!.tokensInOrigin, factory!!),
-      IntArrayList(intervals),
-      Int.MIN_VALUE,
-    ).restoreProgram()
-    val program2: TokenizedProgram = RccProgramEncoding.createIntervalEncoding(
-      TokenizedProgram(factory!!.tokensInOrigin, factory!!),
-      IntArrayList(intervals),
-      Int.MIN_VALUE,
-    ).restoreProgram()
+    val program1: TokenizedProgram =
+      RccProgramEncoding
+        .createCompressedEncoding(
+          TokenizedProgram(factory!!.tokensInOrigin, factory!!),
+          IntArrayList(intervals),
+          Int.MIN_VALUE,
+        ).restoreProgram()
+    val program2: TokenizedProgram =
+      RccProgramEncoding
+        .createIntervalEncoding(
+          TokenizedProgram(factory!!.tokensInOrigin, factory!!),
+          IntArrayList(intervals),
+          Int.MIN_VALUE,
+        ).restoreProgram()
     assertThat(PrinterRegistry.printToStringInSingleLineFormat(program1))
       .isEqualTo(PrinterRegistry.printToStringInSingleLineFormat(program2))
     return program1
   }
 
-  private fun toLexemes(p: TokenizedProgram): ImmutableList<String> {
-    return p.tokens.asSequence().map { it.getText() }.toImmutableList()
-  }
+  private fun toLexemes(p: TokenizedProgram): ImmutableList<String> =
+    p.tokens.transformToImmutableList { it.lexemeText }
 
-  companion object {
-    private fun encode(filepath: String): RccProgramEncoding? {
-      val file: Path = Paths.get(filepath)
-      val sparTreeFromFile: SparTree = TestUtility.createSparTreeFromFile(file)
-      val program: TokenizedProgram = sparTreeFromFile.programSnapshot
-      val encoder = RccTokenizedProgramEncoder(
+  private fun encode(filepath: String): RccProgramEncoding? {
+    val file: Path = Paths.get(filepath)
+    val sparTreeFromFile: SparTree = TestUtility.createSparTreeFromFile(file)
+    val program: TokenizedProgram = sparTreeFromFile.programSnapshot
+    val encoder =
+      RccTokenizedProgramEncoder(
         program,
         AbstractQueryCacheProfiler.NULL_PROFILER,
         true,
       )
-      return encoder.encode(program)
-    }
+    return encoder.encode(program, outputManagerFactory.createManagerFor(program))
   }
 }

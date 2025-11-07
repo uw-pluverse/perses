@@ -12,7 +12,6 @@ kt_jvm_library(
         "//:antlr_tool",
         "//src/org/perses/antlr/atn:AbstractRandom",
         "//src/org/perses/antlr/atn:atn_kt_utils",
-        "//src/org/perses/antlr/atn/simulator:simulator_registry_interface",
         "//src/org/perses/antlr/atn/tdtree",
         "//src/org/perses/util",
     ],

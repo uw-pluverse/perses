@@ -16,7 +16,6 @@
  */
 package org.perses.reduction.io.token
 
-import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
@@ -26,9 +25,8 @@ import org.perses.reduction.io.AbstractOutputManagerFactory
 
 abstract class AbstractTokenOutputManagerFactory(
   val defaultCodeFormatControl: EnumFormatControl,
-  val lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
+  val lexerAtnWrapper: LexerAtnWrapper,
 ) : AbstractOutputManagerFactory<TokenizedProgram>() {
-
   protected val defaultProgramPrinter =
     PrinterRegistry.getPrinter(defaultCodeFormatControl, lexerAtnWrapper)
 

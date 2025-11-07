@@ -24,7 +24,6 @@ import it.unimi.dsi.fastutil.longs.LongArrayList
 value class MutableNodeRepresentationList internal constructor(
   @PublishedApi internal val nodes: LongArrayList,
 ) {
-
   fun add(node: NodeRepresentation) {
     nodes.add(node.longValue)
   }
@@ -42,13 +41,14 @@ value class MutableNodeRepresentationList internal constructor(
     get() = nodes.size
 
   companion object {
-    fun create(capacity: Int = 10): MutableNodeRepresentationList {
-      return MutableNodeRepresentationList(LongArrayList(capacity))
-    }
+    fun create(capacity: Int = 10): MutableNodeRepresentationList =
+      MutableNodeRepresentationList(LongArrayList(capacity))
   }
 }
 
-class NodeRepresentationList(@PublishedApi internal val nodes: ImmutableLongArray) {
+class NodeRepresentationList(
+  @PublishedApi internal val nodes: ImmutableLongArray,
+) {
   private val hashCode = nodes.hashCode()
 
   inline val size: Int
@@ -57,9 +57,7 @@ class NodeRepresentationList(@PublishedApi internal val nodes: ImmutableLongArra
   @Suppress("NOTHING_TO_INLINE")
   inline operator fun get(index: Int): NodeRepresentation = NodeRepresentation(nodes[index])
 
-  override fun hashCode(): Int {
-    return hashCode
-  }
+  override fun hashCode(): Int = hashCode
 
   override fun equals(other: Any?): Boolean {
     if (other == null || other !is NodeRepresentationList) {
@@ -77,7 +75,9 @@ class NodeRepresentationList(@PublishedApi internal val nodes: ImmutableLongArra
     }
   }
 
-  class Builder(initialSize: Int = 10) {
+  class Builder(
+    initialSize: Int = 10,
+  ) {
     private val builder = ImmutableLongArray.builder(initialSize)
     var size: Int = 0
       private set

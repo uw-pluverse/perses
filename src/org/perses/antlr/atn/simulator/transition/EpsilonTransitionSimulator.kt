@@ -19,6 +19,5 @@ package org.perses.antlr.atn.simulator.transition
 import org.perses.antlr.atn.AbstractDecisionMaker
 
 object EpsilonTransitionSimulator : AbstractAtnTransitionSimulator() {
-
   override fun simulate(decisionMaker: AbstractDecisionMaker): Char? = null
 }

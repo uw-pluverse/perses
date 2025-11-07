@@ -16,7 +16,6 @@
  */
 package org.perses.reduction
 
-import org.antlr.v4.runtime.Lexer
 import org.perses.CommandOptions
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.cmd.OutputFlagGroup
@@ -27,6 +26,7 @@ import org.perses.program.SourceFile
 import org.perses.reduction.io.AbstractSingleFileReductionInputs
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
+import org.perses.util.hashing.EnumShaAlgorithm
 
 /**
  * This is the main entry to invoke Perses reducer. It does not have a main, but is the main entry
@@ -40,31 +40,32 @@ class RegularProgramReductionDriver private constructor(
   configuration: ReductionConfiguration,
   listenerManager: AsyncReductionListenerManager,
 ) : AbstractProgramReductionDriver(
-  globalContext,
-  cmd,
-  ioManager,
-  tree,
-  configuration,
-  listenerManager,
-) {
-
+    globalContext,
+    cmd,
+    ioManager,
+    tree,
+    configuration,
+    listenerManager,
+  ) {
   companion object {
-
     fun createIOManager(
       reductionInputs: AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>,
       outputFlags: OutputFlagGroup,
       codeFormatControl: EnumFormatControl,
-      lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
+      lexerAtnWrapper: LexerAtnWrapper,
+      shaAlgorithm: EnumShaAlgorithm,
     ): TokenReductionIOManager {
       val workingDirectory = reductionInputs.mainFile.parentFile
       return TokenReductionIOManager(
         workingDirectory,
         reductionInputs,
-        outputManagerFactory = RegularOutputManagerFactory(
-          reductionInputs,
-          codeFormatControl,
-          lexerAtnWrapper,
-        ),
+        outputManagerFactory =
+          RegularOutputManagerFactory(
+            reductionInputs,
+            codeFormatControl,
+            lexerAtnWrapper,
+            shaAlgorithm = shaAlgorithm,
+          ),
         outputDirectory = outputFlags.outputDir,
       )
     }
@@ -76,22 +77,28 @@ class RegularProgramReductionDriver private constructor(
       parserFacade: AbstractParserFacade,
       codeFormatControl: EnumFormatControl,
       listenerManager: AsyncReductionListenerManager,
+      shaAlgorithm: EnumShaAlgorithm,
     ): RegularProgramReductionDriver {
-      val ioManager = createIOManager(
-        reductionInputs,
-        cmd.resultOutputFlags,
-        codeFormatControl,
-        parserFacade.lexerAtnWrapper,
-      )
-      val reductionConfiguration = createConfiguration(
-        cmd,
-        parserFacade,
-        ioManager.getDefaultProgramFormat(),
-      )
-      val tree = createSparTree(
-        reductionInputs.mainFile,
-        reductionConfiguration.parserFacade,
-      )
+      val ioManager =
+        createIOManager(
+          reductionInputs,
+          cmd.resultOutputFlags,
+          codeFormatControl,
+          parserFacade.lexerAtnWrapper,
+          shaAlgorithm,
+        )
+      val reductionConfiguration =
+        createConfiguration(
+          cmd,
+          parserFacade,
+          ioManager.getDefaultProgramFormat(),
+        )
+      val tree =
+        createSparTree(
+          fileToReduce = reductionInputs.mainFile,
+          parserFacade = reductionConfiguration.parserFacade,
+          hideTimeStampsInLog = cmd.verbosityFlags.hideTimestamps,
+        )
 
       return RegularProgramReductionDriver(
         globalContext,

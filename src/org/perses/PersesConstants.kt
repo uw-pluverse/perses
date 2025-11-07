@@ -24,30 +24,35 @@ import java.nio.file.Paths
 class PersesConstants private constructor(
   val userHomeFolder: Path,
 ) {
-
   init {
     check(Files.isDirectory(userHomeFolder))
   }
 
-  fun getPersesRootFolderOrCreate() = PersesRoot(
-    Util.ensureDirExists(userHomeFolder.resolve(".perses")),
-  )
+  fun getPersesRootFolderOrCreate() =
+    PersesRoot(
+      Util.ensureDirExists(userHomeFolder.resolve(".perses")),
+    )
 
-  data class PersesRoot(val file: Path) {
+  data class PersesRoot(
+    val file: Path,
+  ) {
     init {
       require(Files.isDirectory(file)) {
         "The folder $file is not a directory"
       }
     }
 
-    fun getPersesAdhocRootOrCreate() = AdhocGrammarRoot(
-      Util.ensureDirExists(
-        file.resolve("installed_adhoc_languages"),
-      ),
-    )
+    fun getPersesAdhocRootOrCreate() =
+      AdhocGrammarRoot(
+        Util.ensureDirExists(
+          file.resolve("installed_adhoc_languages"),
+        ),
+      )
   }
 
-  data class AdhocGrammarRoot(val file: Path) {
+  data class AdhocGrammarRoot(
+    val file: Path,
+  ) {
     init {
       require(Files.isDirectory(file)) {
         "The folder $file is not a directory."

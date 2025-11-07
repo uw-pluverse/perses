@@ -16,8 +16,6 @@ kt_jvm_library(
         "//src/org/perses/reduction/io",
         "//src/org/perses/reduction/io:output_manager_interface",
         "//src/org/perses/util",
-        "//src/org/perses/util:auto_deltable_folder",
         "//src/org/perses/util:file_name_content_pair",
-        "//src/org/perses/util/cmd",
     ],
 )

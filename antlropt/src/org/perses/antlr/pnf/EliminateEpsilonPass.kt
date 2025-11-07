@@ -25,24 +25,21 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.ast.TransformDecision
 
 class EliminateEpsilonPass : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
-    val epsilonList = parserGrammar.parserRules
-      .asSequence()
-      .filter {
-        val body = it.body
-        body.tag == AstTag.EPSILON ||
-          (
-            body is PersesAlternativeBlockAst &&
-              body.alternatives.any { alt -> alt.tag == AstTag.EPSILON }
+    val epsilonList =
+      parserGrammar.parserRules
+        .asSequence()
+        .filter {
+          val body = it.body
+          body.tag == AstTag.EPSILON ||
+            (
+              body is PersesAlternativeBlockAst &&
+                body.alternatives.any { alt -> alt.tag == AstTag.EPSILON }
             )
-      }
-      .map { it.ruleNameHandle }
-      .distinct()
-      .toList()
+        }.map { it.ruleNameHandle }
+        .distinct()
+        .toList()
     if (epsilonList.isEmpty()) {
       return grammar
     }

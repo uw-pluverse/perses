@@ -16,11 +16,11 @@ kt_jvm_library(
         "VersionFlagGroup.kt",
     ],
     deps = [
+        "//:flogger",
         "//:guava",
         "//:jcommander",
         "//src/org/perses/util",
         "//src/org/perses/util:default_logging_configurations",
-        "//src/org/perses/util:flogger_kt_exts",
         "//version/org/perses/version",
     ],
 )

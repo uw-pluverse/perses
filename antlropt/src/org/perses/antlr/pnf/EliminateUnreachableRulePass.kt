@@ -20,31 +20,31 @@ import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.util.SimpleStack
 
-class EliminateUnreachableRulePass(val startRuleName: String) : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+class EliminateUnreachableRulePass(
+  val startRuleName: String,
+) : AbstractPnfPass() {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val usedRuleNames = computeUsedRuleNames(parserGrammar)
     if (usedRuleNames.isEmpty()) {
       return grammar
     }
-    val grammarWithOnlyUsedParserRules = MutableGrammar.createParserRulesFrom(parserGrammar)
-      .let { mutableGrammar ->
-        mutableGrammar.ruleNameSequence()
-          .filter { ruleName ->
-            ruleName !in usedRuleNames
-          }.toList() // Materialize the rule names to avoid concurrent modification exception
-          .forEach { mutableGrammar.removeRule(it) }
-        parserGrammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList())
-      }
+    val grammarWithOnlyUsedParserRules =
+      MutableGrammar
+        .createParserRulesFrom(parserGrammar)
+        .let { mutableGrammar ->
+          mutableGrammar
+            .ruleNameSequence()
+            .filter { ruleName ->
+              ruleName !in usedRuleNames
+            }.toList() // Materialize the rule names to avoid concurrent modification exception
+            .forEach { mutableGrammar.removeRule(it) }
+          parserGrammar.copyWithNewParserRuleDefs(mutableGrammar.toParserRuleAstList())
+        }
     return grammar.withNewParserGrammar(grammarWithOnlyUsedParserRules)
   }
 
-  private fun computeUsedRuleNames(
-    grammar: PersesGrammar,
-  ): LinkedHashSet<RuleNameHandle> {
+  private fun computeUsedRuleNames(grammar: PersesGrammar): LinkedHashSet<RuleNameHandle> {
     val ruleNameRegistry = grammar.symbolTable.ruleNameRegistry
     val rootRuleName = ruleNameRegistry.getOrThrow(startRuleName)
     val usedRules = LinkedHashSet<RuleNameHandle>()

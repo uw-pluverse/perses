@@ -42,13 +42,13 @@ class MutationOperatorExecutor(
     val mutatedSparTree: SparTree?,
   )
 
-  fun mutateWithoutSavingTreeStructure(treeFuzzer: SparTreeFuzzer): MutatedProgram? {
-    return mutationOperatorsWithoutSavingTreeStructure!!.sample(random).invoke(treeFuzzer)
-  }
+  fun mutateWithoutSavingTreeStructure(treeFuzzer: SparTreeFuzzer): MutatedProgram? =
+    mutationOperatorsWithoutSavingTreeStructure!!.sample(random).invoke(treeFuzzer)
 
   fun mutateWithTokenLevelMutation(treeFuzzer: SparTreeFuzzer): MutationResult? {
-    val mutatedProgram = tokenLevelMutationOperators?.sample(random)?.invoke(treeFuzzer)
-      ?: return null
+    val mutatedProgram =
+      tokenLevelMutationOperators?.sample(random)?.invoke(treeFuzzer)
+        ?: return null
     val mutatedSource = mutatedProgram.program
     return MutationResult(mutatedSource, mutatedSparTree = null)
   }
@@ -63,8 +63,9 @@ class MutationOperatorExecutor(
   // Can only generate MutatedProgram, the tree structure won't be saved
   private fun createAllMutationOperatorsWithoutSavingTreeStructure():
     DistributionTable<(SparTreeFuzzer) -> MutatedProgram?>? {
-    val builder = ImmutableList.builder<
-      DistributionTable.Entry<(SparTreeFuzzer) -> MutatedProgram?>,
+    val builder =
+      ImmutableList.builder<
+        DistributionTable.Entry<(SparTreeFuzzer) -> MutatedProgram?>,
       >()
     if (mutationControlFlags.enableReplacingIdentifier) {
       builder.add(
@@ -162,8 +163,9 @@ class MutationOperatorExecutor(
 
   private fun createTokenLevelMutationOperators():
     DistributionTable<(SparTreeFuzzer) -> MutatedProgram?>? {
-    val builder = ImmutableList.builder<
-      DistributionTable.Entry<(SparTreeFuzzer) -> MutatedProgram?>,
+    val builder =
+      ImmutableList.builder<
+        DistributionTable.Entry<(SparTreeFuzzer) -> MutatedProgram?>,
       >()
     if (mutationControlFlags.enableReplacingIdentifier) {
       builder.add(
@@ -245,9 +247,10 @@ class MutationOperatorExecutor(
 
   private fun createTreeLevelMutationOperators(): DistributionTable<
     (SparTreeFuzzer) -> SparTree?,
-    >? {
-    val builder = ImmutableList.builder<
-      DistributionTable.Entry<(SparTreeFuzzer) -> SparTree?>,
+  >? {
+    val builder =
+      ImmutableList.builder<
+        DistributionTable.Entry<(SparTreeFuzzer) -> SparTree?>,
       >()
     if (mutationControlFlags.enableSplicing) {
       builder.add(
@@ -277,10 +280,9 @@ class MutationOperatorExecutor(
     return DistributionTable(builder.build())
   }
 
-  private fun treeLevelMutationIsSelected(random: Random): Boolean {
-    return random.nextInt(
+  private fun treeLevelMutationIsSelected(random: Random): Boolean =
+    random.nextInt(
       (treeLevelMutationOperators?.totalWeight ?: 0) +
         (tokenLevelMutationOperators?.totalWeight ?: 0),
     ) < (treeLevelMutationOperators?.totalWeight ?: 0)
-  }
 }

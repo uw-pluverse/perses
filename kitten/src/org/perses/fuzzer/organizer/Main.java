@@ -24,7 +24,7 @@ import org.perses.util.cmd.AbstractCommandOptions;
 public class Main {
 
   public static void main(String[] args) {
-    DefaultLoggingConfigurations.configureLogManager("INFO");
+    DefaultLoggingConfigurations.configureLogManager("INFO", false);
 
     final CommandOptions cmd = new CommandOptions();
     final AbstractCommandOptions.CmdUsagePrinter usagePrinter =

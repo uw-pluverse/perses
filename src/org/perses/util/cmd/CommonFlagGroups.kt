@@ -22,7 +22,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 class OutputOnlyFlagGroup : AbstractCommandLineFlagGroup(groupName = "Output") {
-
   @Parameter(
     names = ["--output"],
     description = "output file",
@@ -37,7 +36,6 @@ class OutputOnlyFlagGroup : AbstractCommandLineFlagGroup(groupName = "Output") {
 }
 
 class InputOnlyFlagGroup : AbstractCommandLineFlagGroup(groupName = "Input") {
-
   @Parameter(
     names = ["--input"],
     description = "input file",
@@ -53,7 +51,6 @@ class InputOnlyFlagGroup : AbstractCommandLineFlagGroup(groupName = "Input") {
 }
 
 class HelpFlagGroup : AbstractCommandLineFlagGroup(groupName = "Help") {
-
   @Parameter(
     names = ["-h", "--help"],
     description = "print help message",

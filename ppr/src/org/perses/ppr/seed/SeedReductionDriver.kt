@@ -16,14 +16,13 @@
  */
 package org.perses.ppr.seed
 
-import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Token
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.cmd.OutputFlagGroup
 import org.perses.cmd.ReductionControlFlagGroup
 import org.perses.grammar.AbstractParserFacade
 import org.perses.ppr.diff.PPRDiffUtils
-import org.perses.program.PersesTokenFactory
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.AbstractProgramReductionDriver
 import org.perses.reduction.AsyncReductionListenerManager
@@ -32,6 +31,7 @@ import org.perses.reduction.ReductionConfiguration
 import org.perses.reduction.SparTreeWithParsability
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.ListAlignment
+import org.perses.util.hashing.EnumShaAlgorithm
 
 class SeedReductionDriver private constructor(
   globalContext: GlobalContext,
@@ -41,44 +41,46 @@ class SeedReductionDriver private constructor(
   configuration: ReductionConfiguration,
   listenerManager: AsyncReductionListenerManager,
 ) : AbstractProgramReductionDriver(
-  globalContext,
-  cmd,
-  ioManager,
-  tree,
-  configuration,
-  listenerManager,
-) {
-
+    globalContext,
+    cmd,
+    ioManager,
+    tree,
+    configuration,
+    listenerManager,
+  ) {
   companion object {
-
     private fun createIOManager(
       reductionInputs: SeedReductionInputs,
       reductionControlFlags: ReductionControlFlagGroup,
       outputFlags: OutputFlagGroup,
-      listAlignment: ListAlignment<PersesTokenFactory.PersesToken>,
-      lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
+      listAlignment: ListAlignment<AbstractPersesToken>,
+      lexerAtnWrapper: LexerAtnWrapper,
+      shaAlgorithm: EnumShaAlgorithm,
     ): TokenReductionIOManager {
       val workingDirectory = reductionInputs.seedFile.parentFile
       val languageKind = reductionInputs.initiallyDeterminedMainDataKind
-      val programFormatControl = reductionControlFlags.codeFormat.let { codeFormat ->
-        if (codeFormat != null) {
-          check(languageKind.isCodeFormatAllowed(codeFormat)) {
-            "$codeFormat is not allowed for language $languageKind"
+      val programFormatControl =
+        reductionControlFlags.codeFormat.let { codeFormat ->
+          if (codeFormat != null) {
+            check(languageKind.isCodeFormatAllowed(codeFormat)) {
+              "$codeFormat is not allowed for language $languageKind"
+            }
+            codeFormat
+          } else {
+            languageKind.defaultCodeFormatControl
           }
-          codeFormat
-        } else {
-          languageKind.defaultCodeFormatControl
         }
-      }
       return TokenReductionIOManager(
         workingDirectory,
         reductionInputs,
-        outputManagerFactory = SeedOutputManagerFactory(
-          reductionInputs,
-          programFormatControl,
-          listAlignment,
-          lexerAtnWrapper,
-        ),
+        outputManagerFactory =
+          SeedOutputManagerFactory(
+            reductionInputs,
+            programFormatControl,
+            listAlignment,
+            lexerAtnWrapper,
+            shaAlgorithm,
+          ),
         outputDirectory = outputFlags.outputDir,
       )
     }
@@ -94,37 +96,46 @@ class SeedReductionDriver private constructor(
       // create a parserFacade to create the SparTree
       val languageKind = reductionInputs.initiallyDeterminedMainDataKind
 
-      val seedTree = createSparTree(
-        reductionInputs.seedFile,
-        parserFacade,
-      )
+      val seedTree =
+        createSparTree(
+          fileToReduce = reductionInputs.seedFile,
+          parserFacade = parserFacade,
+          hideTimeStampsInLog = cmd.verbosityFlags.hideTimestamps,
+        )
       val seedPersesTokens = seedTree.programSnapshot.tokens
 
       // parse variant file into tokens
-      val variantTokens = parserFacade.tokenizeFile(cmd.seedInputFlags.variantFile!!)
-        .filter { it.channel == Token.DEFAULT_CHANNEL }
-      val variantTokenizedProgramFactory = TokenizedProgramFactory
-        .createFactory(variantTokens, languageKind)
+      val variantTokens =
+        parserFacade
+          .tokenizeFile(cmd.seedInputFlags.variantFile!!)
+          .filter { it.channel == Token.DEFAULT_CHANNEL }
+      val variantTokenizedProgramFactory =
+        TokenizedProgramFactory
+          .createFactory(variantTokens, languageKind)
       val variantPersesTokens = variantTokenizedProgramFactory.create(variantTokens).tokens
 
-      val listAlignment = ListAlignment.create(
-        seedPersesTokens,
-        variantPersesTokens,
-        PPRDiffUtils.EQUALIZER_TOKEN,
-      )
+      val listAlignment =
+        ListAlignment.create(
+          seedPersesTokens,
+          variantPersesTokens,
+          PPRDiffUtils.EQUALIZER_PERSES_TOKEN,
+        )
       // pass listAlignment to IOManager
-      val ioManager = createIOManager(
-        reductionInputs,
-        cmd.reductionControlFlags,
-        cmd.resultOutputFlags,
-        listAlignment,
-        parserFacade.lexerAtnWrapper,
-      )
-      val reductionConfiguration = createConfiguration(
-        cmd,
-        parserFacade,
-        ioManager.getDefaultProgramFormat(),
-      )
+      val ioManager =
+        createIOManager(
+          reductionInputs,
+          cmd.reductionControlFlags,
+          cmd.resultOutputFlags,
+          listAlignment,
+          parserFacade.lexerAtnWrapper,
+          shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
+        )
+      val reductionConfiguration =
+        createConfiguration(
+          cmd,
+          parserFacade,
+          ioManager.getDefaultProgramFormat(),
+        )
 
       return SeedReductionDriver(
         globalContext,

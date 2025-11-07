@@ -19,6 +19,7 @@ kt_jvm_library(
     ],
     deps = [
         ":reduction_driver",
+        "//src/org/perses:HelperForPersesMain",
         "//src/org/perses:abstract_reduction_main",
         "//src/org/perses:perses_listener_manager_creator",
     ],
@@ -36,6 +37,7 @@ kt_jvm_library(
         ":reduction_inputs",
         "//ppr/src/org/perses/ppr/diff:ppr_diff_utils",
         "//src/org/perses/reduction:reduction_driver",
+        "//src/org/perses/reduction/io:reduction_inputs",
     ],
 )
 
@@ -45,8 +47,8 @@ kt_jvm_library(
         "TreeDiffCmdOptions.kt",
     ],
     deps = [
+        "//ppr/src/org/perses/ppr:AbstractPPRCommandOptions",
         "//src/org/perses:command_options",
-        "//src/org/perses/reduction:reducer_factory",
     ],
 )
 
@@ -58,6 +60,7 @@ kt_jvm_library(
     deps = [
         ":reduction_inputs",
         "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction/io:reduction_inputs",
     ],
 )
 
@@ -67,7 +70,7 @@ kt_jvm_library(
         "TreeDiffReductionInputs.kt",
     ],
     deps = [
-        "//src/org/perses/reduction/io:reduction_inputs",
+        "//src/org/perses/reduction/io:reduction_inputs_interface",
     ],
 )
 

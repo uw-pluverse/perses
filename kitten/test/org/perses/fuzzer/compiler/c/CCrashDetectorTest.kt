@@ -26,22 +26,23 @@ import org.perses.fuzzer.compilers.c.GccCrashDetector
 
 @RunWith(JUnit4::class)
 class CCrashDetectorTest {
-
   val gccDetector = GccCrashDetector()
 
   private fun computeSignature(path: String): List<String> {
-    val signatureLines = CrashDetectorHelper.computeSignature(
-      "kitten/test/org/perses/fuzzer/compiler/c/$path",
-      gccDetector,
-    )
+    val signatureLines =
+      CrashDetectorHelper.computeSignature(
+        "kitten/test/org/perses/fuzzer/compiler/c/$path",
+        gccDetector,
+      )
     return signatureLines
   }
 
   private fun computeClangSignature(path: String): List<String> {
-    val signatureLines = CrashDetectorHelper.computeSignature(
-      "kitten/test/org/perses/fuzzer/compiler/c/$path",
-      ClangCrashDetector(),
-    )
+    val signatureLines =
+      CrashDetectorHelper.computeSignature(
+        "kitten/test/org/perses/fuzzer/compiler/c/$path",
+        ClangCrashDetector(),
+      )
     return signatureLines
   }
 
@@ -132,13 +133,14 @@ class CCrashDetectorTest {
 
   @Test
   fun testFCompareDebug() {
-    val signature = gccDetector.detectCrashSignatureFromStderr(
-      listOf(
-        """
-      error: t.c: '-fcompare-debug' failure
-        """.trimIndent(),
-      ),
-    )
+    val signature =
+      gccDetector.detectCrashSignatureFromStderr(
+        listOf(
+          """
+          error: t.c: '-fcompare-debug' failure
+          """.trimIndent(),
+        ),
+      )
     assertThat(signature).hasSize(1)
     assertThat(signature.single()).isEqualTo("-fcompare-debug")
   }

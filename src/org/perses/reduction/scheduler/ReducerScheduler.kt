@@ -16,43 +16,38 @@
  */
 package org.perses.reduction.scheduler
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractTokenReducer
-import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerAnnotation.ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.StatsOfFilesBeingReduced
+import org.perses.reduction.scheduler.AbstractSchedulerEvent.ReducerCallEvent
+import org.perses.reduction.scheduler.AbstractSchedulerEvent.StatsSnapshotEvent
+import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.ContinueOnChange
+import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.ContinueOnSmallSize
 import org.perses.spartree.SparTree
 import org.perses.util.Util
+import org.perses.util.toImmutableList
 
 // TODO(cnsun): needs testing.
 class ReducerScheduler(
   private val reducerContext: ReducerContext,
   private val reducerExecutionPlan: ReducerExecutionPlan,
   private val computeStatistics: () -> StatsOfFilesBeingReduced,
-  reducerRunner: (AbstractTokenReducer) -> SparTree?,
+  reducerRunner: (AbstractTokenReducer) -> Pair<SparTree, Exception?>,
 ) {
-
   private val schedulerEvents = SchedulerEventHistory()
 
   /**
    * @return the minimal spartree if the minimal spartree is smaller than the current best spartree
    *          that is being reduced.
    */
-  fun runAndGetGlobalMinimalSparTreeIfDifferentFromCurrentBest(): SparTree? {
+  fun runAndGetGlobalMinimalSparTree(): SparTree? {
     // Always run the main reducers first, continuously if fixpoint is enabled.
     executePlan(reducerExecutionPlan.steps)
 
     val minSparTree = schedulerEvents.findTreeWithMinimalProgramSizeFromHistory()
-    val currentBestSparTree = schedulerEvents.findCurrentBestSparTreeFromHistory()
-    return if (minSparTree !== currentBestSparTree) {
-      // Need to update the spartree.
-      minSparTree
-    } else {
-      null
-    }
+    return minSparTree
   }
 
   private data class PlanExecutionBeforeAndAfterStats(
@@ -62,8 +57,8 @@ class ReducerScheduler(
 
   private fun executePlan(
     planElement: ReducerExecutionPlan.AbstractExecutionPlanStep,
-  ): PlanExecutionBeforeAndAfterStats {
-    return when (planElement) {
+  ): PlanExecutionBeforeAndAfterStats =
+    when (planElement) {
       is ReducerExecutionPlan.FixpointLoopStep -> {
         executeFixpointLoop(planElement)
       }
@@ -80,7 +75,6 @@ class ReducerScheduler(
         executeIfReducedThenStep(planElement)
       }
     }
-  }
 
   private fun executeFixpointLoop(
     fixpointLoop: ReducerExecutionPlan.FixpointLoopStep,
@@ -98,8 +92,25 @@ class ReducerScheduler(
 
         FixpointDecision.CONTINUE_CHANGE_IN_RESULT_BUT_NOT_SMALLER -> {
           ++countOfNonDeletions
-          check(fixpointLoop.continueCondition is ReducerExecutionPlan.ContinueOnChange) {
-            fixpointLoop
+          if (fixpointLoop.continueCondition is ContinueOnSmallSize) {
+            // TODO(cnsun): needs tests.
+            break
+          }
+          check(
+            fixpointLoop.continueCondition is ContinueOnChange,
+          ) {
+            """
+              |Expecting ${ContinueOnChange::class.simpleName} but got 
+              |${fixpointLoop.continueCondition::class.simpleName}
+              |
+              |The fixpoint loop is defined as follows.
+              |${fixpointLoop.toDefinition().toYamlString()}
+              |
+              |Before: ${result.before.stats}
+              |   ${result.before.stats.fileContents}
+              |After:  ${result.after.stats}
+              |   ${result.after.stats.fileContents}
+            """.trimMargin()
           }
           if (countOfNonDeletions >= fixpointLoop.continueCondition.maxCountOfAllowedChanges) {
             break
@@ -144,7 +155,8 @@ class ReducerScheduler(
     return PlanExecutionBeforeAndAfterStats(before = before, after = after)
   }
 
-  fun readSchedulerEvents() = schedulerEvents.asList()
+  fun readSchedulerEvents() =
+    ReducerHistoryAndStatistics(schedulerEvents.asList().toImmutableList())
 
   private fun recordStatsSnapshotIfNotYet(): StatsSnapshotEvent {
     if (schedulerEvents.isLastEvent { it == null || it !is StatsSnapshotEvent }) {
@@ -171,7 +183,7 @@ class ReducerScheduler(
             }
           }
         }
-      schedulerEvents.add(
+      schedulerEvents.addStatsEvent(
         StatsSnapshotEvent(
           stats = currentStats,
           numberOfNonDeletionIterations = numberOfNonDeletionIterations,
@@ -186,20 +198,30 @@ class ReducerScheduler(
   }
 
   private val callReducer: (AbstractTokenReducer) -> Unit = { reducer: AbstractTokenReducer ->
-    val treeAfterReduction = reducerRunner(reducer)
-    val reducerEvent = ReducerCallEvent(reducer.reducerAnnotation, treeAfterReduction)
-    schedulerEvents.add(reducerEvent)
+    val result =
+      try {
+        reducerRunner(reducer)
+      } catch (e: Exception) {
+        // TODO(cnsun): need to write the exception to a file so that we get notified of the error.
+        e.printStackTrace()
+        null to e
+      }
+    val reducerEvent =
+      ReducerCallEvent(
+        reducer.reducerAnnotation,
+        exceptionStackTrace = result.second?.stackTraceToString(),
+      )
+    schedulerEvents.addReducerCallEvent(reducerEvent, result.first)
     recordStatsSnapshotIfNotYet()
   }
 
   private fun computeFixpointDecision(
     statsBeforeAndAfter: PlanExecutionBeforeAndAfterStats,
-  ): FixpointDecision {
-    return computeFixpointDecision(
+  ): FixpointDecision =
+    computeFixpointDecision(
       before = statsBeforeAndAfter.before,
       after = statsBeforeAndAfter.after,
     )
-  }
 
   private fun computeFixpointDecision(
     before: StatsSnapshotEvent,
@@ -241,39 +263,12 @@ class ReducerScheduler(
     ),
   }
 
-  sealed class SchedulerEvent {
-    final override fun hashCode(): Int {
-      return super.hashCode()
-    }
-
-    final override fun equals(other: Any?): Boolean {
-      return super.equals(other)
-    }
-  }
-
-  data class ReducerCallEvent(
-    val reducer: ReducerAnnotation,
-    @JsonIgnore val treeAfterReduction: SparTree?,
-  ) : SchedulerEvent() {
-    override fun toString(): String {
-      return MoreObjects.toStringHelper(this).add(
-        "reducer",
-        reducer,
-      ).toString()
-    }
-  }
-
-  data class StatsSnapshotEvent(
-    val stats: StatsOfFilesBeingReduced,
-    val numberOfNonDeletionIterations: Int,
-    val fileContentChangedWrtPrevious: Boolean,
-  ) : SchedulerEvent()
-
   class SchedulerEventHistory {
+    private var minimalSparTree: SparTree? = null
 
-    private val history = mutableListOf<SchedulerEvent>()
+    private val history = mutableListOf<AbstractSchedulerEvent>()
 
-    fun isLastEvent(predicate: (SchedulerEvent?) -> Boolean): Boolean {
+    fun isLastEvent(predicate: (AbstractSchedulerEvent?) -> Boolean): Boolean {
       val last = history.lastOrNull()
       return predicate(last)
     }
@@ -281,32 +276,36 @@ class ReducerScheduler(
     /**
      * TODO(cnsun): need to be unit-tested.
      */
-    fun findTreeWithMinimalProgramSizeFromHistory(): SparTree? {
-      val programCandidates = history.map { event ->
-        if (event !is ReducerCallEvent) {
-          return@map null
-        }
-        val program = event.treeAfterReduction ?: return@map null
-        program
-      }.filterNotNull()
-      if (programCandidates.isEmpty()) {
-        return null
+    fun findTreeWithMinimalProgramSizeFromHistory(): SparTree? = minimalSparTree
+
+    private fun updateMinimalSparTree(newSparTree: SparTree?) {
+      if (newSparTree == null) {
+        return
       }
-      val minTokenCount = programCandidates.minBy { it.tokenCount }.tokenCount
-      val minProgramCandidates = programCandidates
-        .filter { it.tokenCount == minTokenCount }
-        .asReversed()
-      return minProgramCandidates.minByOrNull { it.totalCharacterCount }
+      val localMinTree = minimalSparTree
+      minimalSparTree =
+        when {
+          localMinTree == null -> newSparTree
+          localMinTree.tokenCount > newSparTree.tokenCount -> newSparTree
+          localMinTree.tokenCount == newSparTree.tokenCount &&
+            localMinTree.totalCharacterCount > newSparTree.totalCharacterCount -> newSparTree
+          else -> localMinTree
+        }
     }
 
-    fun findCurrentBestSparTreeFromHistory(): SparTree? {
-      val event = history
-        .asReversed()
-        .firstOrNull { it is ReducerCallEvent && it.treeAfterReduction != null } ?: return null
-      return (event as ReducerCallEvent).treeAfterReduction
+    fun addStatsEvent(event: StatsSnapshotEvent) {
+      add(event)
     }
 
-    fun add(event: SchedulerEvent): SchedulerEvent {
+    fun addReducerCallEvent(
+      event: ReducerCallEvent,
+      treeAfterReduction: SparTree?,
+    ) {
+      add(event)
+      updateMinimalSparTree(treeAfterReduction)
+    }
+
+    private fun add(event: AbstractSchedulerEvent): AbstractSchedulerEvent {
       require(!history.contains(event)) { "The event $event is already in the history." }
       val last = history.lastOrNull()
       if (last == null) {
@@ -321,7 +320,10 @@ class ReducerScheduler(
           check(eventBeforeLast is StatsSnapshotEvent)
           if (last.reducer.reductionResultSizeTrend != BEST_RESULT_SIZE_INCREASE) {
             check(eventBeforeLast.stats.tokenCount >= event.stats.tokenCount) {
-              "The reducer cannot increase the token count, but the token count increases."
+              """The reducer cannot increase the token count, but the token count increases.
+                |last: $last
+                |event: $event
+              """.trimMargin()
             }
           }
         }
@@ -358,13 +360,14 @@ class ReducerScheduler(
       return builder.build()
     }
 
-    fun lastStatsSnapshotEvent(): StatsSnapshotEvent? {
-      return history.lastOrNull { it is StatsSnapshotEvent } as StatsSnapshotEvent?
-    }
+    fun lastStatsSnapshotEvent(): StatsSnapshotEvent? =
+      history.lastOrNull {
+        it is StatsSnapshotEvent
+      } as StatsSnapshotEvent?
 
     fun lastEvent() = history.lastOrNull()
 
-    fun asList(): List<SchedulerEvent> = history
+    fun asList(): List<AbstractSchedulerEvent> = history
 
     fun checkSchedulerEventsIntegrity(): Boolean {
       if (history.isEmpty()) {
@@ -373,9 +376,10 @@ class ReducerScheduler(
       if (history.toHashSet().size != history.size) {
         return false
       }
-      return history.first() is StatsSnapshotEvent && history.zipWithNext().none { (prev, curr) ->
-        prev::class.java == curr::class.java
-      }
+      return history.first() is StatsSnapshotEvent &&
+        history.zipWithNext().none { (prev, curr) ->
+          prev::class.java == curr::class.java
+        }
     }
   }
 }

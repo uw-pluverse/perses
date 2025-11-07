@@ -19,7 +19,6 @@ package org.perses.fuzzer.compilers.c
 import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 
 class ClangCrashDetector : AbstractCompilerCrashDetector() {
-
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
     val result = ArrayList<AbstractSignatureElement>()
     for (element in stderr) {

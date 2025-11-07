@@ -17,16 +17,18 @@
 package org.perses.grammar.c
 
 import com.google.common.primitives.ImmutableIntArray
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 
-class PnfCParserFacade : AbstractDefaultParserFacade<PnfCLexer, PnfCParser>(
-  LanguageC,
-  createCombinedAntlrGrammar(
-    startRuleName = "translationUnit",
-    antlrGrammarFileName = "PnfC.g4",
-    PnfCParserFacade::class.java,
-  ),
-  PnfCLexer::class.java,
-  PnfCParser::class.java,
-  ImmutableIntArray.of(PnfCLexer.Identifier),
-)
+class PnfCParserFacade :
+  AbstractParserFacade(
+    language = LanguageC,
+    antlrGrammar =
+      createCombinedAntlrGrammar(
+        startRuleName = "translationUnit",
+        antlrGrammarFileName = "PnfC.g4",
+        PnfCParserFacade::class.java,
+      ),
+    identifierTokenTypes = ImmutableIntArray.of(PnfCLexer.Identifier),
+    lexerClass = PnfCLexer::class.java,
+    parserClass = PnfCParser::class.java,
+  )

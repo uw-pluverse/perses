@@ -28,7 +28,6 @@ class RuleHierarchyEntry internal constructor(
   val immediateStringLiterals: ImmutableSet<String>,
   private val canBeEpsilon: Boolean,
 ) : Comparable<RuleHierarchyEntry> {
-
   private var _transitiveSubRules: ImmutableSet<RuleHierarchyEntry>? = null
     get() {
       check(field != null)
@@ -55,10 +54,12 @@ class RuleHierarchyEntry internal constructor(
     get() = _transitiveSubRules!!
     internal set(value) {
       _transitiveSubRules = value
-      _transitiveStringLiterals = value.asSequence()
-        .flatMap { it.immediateStringLiterals }
-        .plus(immediateStringLiterals)
-        .toImmutableSet()
+      _transitiveStringLiterals =
+        value
+          .asSequence()
+          .flatMap { it.immediateStringLiterals }
+          .plus(immediateStringLiterals)
+          .toImmutableSet()
     }
 
   var transitiveStringLiterals: ImmutableSet<String>
@@ -68,31 +69,23 @@ class RuleHierarchyEntry internal constructor(
     }
 
   /** Test whether the current rule is a SUPER rule of the given argument `subrule`  */
-  fun isSuperOf(subrule: RuleHierarchyEntry): Boolean {
-    return transitiveSubRules.contains(subrule)
-  }
+  fun isSuperOf(subrule: RuleHierarchyEntry): Boolean = transitiveSubRules.contains(subrule)
 
-  fun canRuleBeEpsilon(): Boolean {
-    return canBeEpsilon
-  }
+  fun canRuleBeEpsilon(): Boolean = canBeEpsilon
 
   /**
    * Test whether the current rule is EQUAL to or a SUPER rule of the given argument `subrule`
    */
-  fun isEqualToOrSuperOf(subrule: RuleHierarchyEntry): Boolean {
-    return this == subrule || isSuperOf(subrule)
-  }
+  fun isEqualToOrSuperOf(subrule: RuleHierarchyEntry): Boolean =
+    this == subrule || isSuperOf(subrule)
 
   val ruleName: String
     get() = ruleDef.ruleNameHandle.ruleName
 
-  override fun compareTo(other: RuleHierarchyEntry): Int {
-    return ruleName.compareTo(other.ruleName)
-  }
+  override fun compareTo(other: RuleHierarchyEntry): Int = ruleName.compareTo(other.ruleName)
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("ruleName", ruleName).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("ruleName", ruleName).toString()
 
   fun toProtoRuleHierarchyEntry(): GrammarHierarchyOuterClass.RuleHierarchyEntry {
     val builder = GrammarHierarchyOuterClass.RuleHierarchyEntry.newBuilder()
@@ -100,11 +93,13 @@ class RuleHierarchyEntry internal constructor(
     builder.canBeEpsilon = canBeEpsilon
     immediateSubRuleNames.asSequence().sorted().forEach { builder.addImmediateSubRuleNames(it) }
     immediateStringLiterals.asSequence().sorted().forEach { builder.addImmediateStringLiterals(it) }
-    transitiveSubRules.asSequence()
+    transitiveSubRules
+      .asSequence()
       .map { it.ruleName }
       .sorted()
       .forEach { builder.addTransitiveSubRuleNames(it) }
-    transitiveStringLiterals.asSequence()
+    transitiveStringLiterals
+      .asSequence()
       .sorted()
       .forEach { builder.addTransitiveStringLiterals(it) }
     return builder.build()

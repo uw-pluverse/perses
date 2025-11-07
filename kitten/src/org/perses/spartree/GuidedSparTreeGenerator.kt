@@ -45,7 +45,6 @@ class GuidedSparTreeGenerator(
   random: Random,
   val languageModel: IGenerationGuide,
 ) : AbstractSparTreeGenerator(parserFacade, random) {
-
   override fun internalGenerateParserRuleSparTreeNodeWithMaxDepth(
     ruleNameHandle: RuleNameHandle,
     maxDepth: Int,
@@ -86,12 +85,13 @@ class GuidedSparTreeGenerator(
         node.addChild(child, AbstractNodePayload.SinglePayload(child.antlrRule))
       }
       is PersesAlternativeBlockAst -> {
-        val alternative = chooseAlternative(
-          node,
-          ruleBody,
-          depth,
-          context,
-        )
+        val alternative =
+          chooseAlternative(
+            node,
+            ruleBody,
+            depth,
+            context,
+          )
         addChildrenAndUpdateQueue(node, alternative, queue, depth, context)
       }
       is PersesRuleElementOption, // Do nothing as this only affect parsing.
@@ -123,9 +123,10 @@ class GuidedSparTreeGenerator(
       }
       is PersesRuleReferenceAst -> {
         val ruleNameHandle = ruleBody.ruleNameHandle
-        val antlrRule = grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(
-          ruleNameHandle.ruleName,
-        )
+        val antlrRule =
+          grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(
+            ruleNameHandle.ruleName,
+          )
         val generatedNode = ParserRuleSparTreeNode(startNodeId++, antlrRule)
         node.addChild(generatedNode, AbstractNodePayload.SinglePayload(generatedNode.antlrRule))
         queue.add(generatedNode)
@@ -143,10 +144,12 @@ class GuidedSparTreeGenerator(
     context: IGenerationGuide.GenerationContext,
   ): AbstractPersesRuleElement {
     val rule = node.antlrRule!!.ruleDef.ruleNameHandle
-    val candidates = ruleBody.alternatives.withIndex()
-      .filter {
-        ruleGenerationInfo.getMinDepth(it.value) <= maxDepth
-      }.map { it.index }
+    val candidates =
+      ruleBody.alternatives
+        .withIndex()
+        .filter {
+          ruleGenerationInfo.getMinDepth(it.value) <= maxDepth
+        }.map { it.index }
     if (candidates.isEmpty()) {
       throw Exception("The maxDepth is set too small")
     }

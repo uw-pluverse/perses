@@ -23,11 +23,12 @@ import org.perses.grammar.c.PnfCLexer
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
-import org.perses.reduction.AbstractExternalTestScriptExecutionCache.NullCache
+import org.perses.reduction.AbstractGlobalExecutionCache.NullCache
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.Shells
 import java.nio.file.Files
 import java.nio.file.Path
@@ -35,7 +36,10 @@ import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.writeText
 
-open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable {
+open class CommonReductionIOManagerData(
+  val testClass: Class<*>,
+) : AutoCloseable {
+  protected val shaAlgorithm = EnumShaAlgorithm.SHA512
 
   val tempDir: Path = Files.createTempDirectory(testClass.simpleName + "_data")
 
@@ -47,56 +51,66 @@ open class CommonReductionIOManagerData(val testClass: Class<*>) : AutoCloseable
     tempDir.deleteRecursively()
   }
 
-  val script = ScriptFile(
-    tempDir.resolve("r.sh").apply {
-      Files.createFile(this)
-      Util.setExecutable(this)
-      writeText(
-        """${Shells.SHEBANG_BASH}
-      test
-        """.trimIndent(),
-      )
-    },
-  )
-  val sourceFile = SourceFile(
-    tempDir.resolve("t.c").apply {
-      Files.createFile(this)
-      this.writeText("int a;")
-    },
-    LanguageC,
-  )
-  val inputs = RegularReductionInputs(
-    testScript = script,
-    mainFile = sourceFile,
-    dependencyFiles = ImmutableList.of(),
-  )
-  val outputDir: Path = tempDir.resolve("output_dir").apply {
-    Files.createDirectory(this)
-  }
-  val workingDir: Path = tempDir.resolve("working_dir").apply {
-    Files.createDirectory(this)
-  }
-  val outputManagerFactory = RegularOutputManagerFactory(
-    inputs,
-    EnumFormatControl.ORIG_FORMAT,
-    LexerAtnWrapper(PnfCLexer::class.java),
-  )
-  val ioManager = TokenReductionIOManager(
-    workingFolder = workingDir,
-    reductionInputs = inputs,
-    outputManagerFactory = outputManagerFactory,
-    outputDirectory = outputDir,
-  )
+  val script =
+    ScriptFile(
+      tempDir.resolve("r.sh").apply {
+        Files.createFile(this)
+        Util.setExecutable(this)
+        writeText(
+          """
+          ${Shells.SHEBANG_BASH}
+          test
+          """.trimIndent(),
+        )
+      },
+    )
+  val sourceFile =
+    SourceFile(
+      tempDir.resolve("t.c").apply {
+        Files.createFile(this)
+        this.writeText("int a;")
+      },
+      LanguageC,
+    )
+  val inputs =
+    RegularReductionInputs(
+      testScript = script,
+      mainFile = sourceFile,
+      dependencyFiles = ImmutableList.of(),
+    )
+  val outputDir: Path =
+    tempDir.resolve("output_dir").apply {
+      Files.createDirectory(this)
+    }
+  val workingDir: Path =
+    tempDir.resolve("working_dir").apply {
+      Files.createDirectory(this)
+    }
+  val outputManagerFactory =
+    RegularOutputManagerFactory(
+      inputs,
+      EnumFormatControl.ORIG_FORMAT,
+      LexerAtnWrapper.createLexerWrapperFromLexerClass(PnfCLexer::class.java),
+      shaAlgorithm = shaAlgorithm,
+    )
+  val ioManager =
+    TokenReductionIOManager(
+      workingFolder = workingDir,
+      reductionInputs = inputs,
+      outputManagerFactory = outputManagerFactory,
+      outputDirectory = outputDir,
+    )
 
   // This field has to be lazy, because the constructor has side effects, and creates files
   // in the workingFolder.
-  private val executorServiceDelegate = lazy {
-    TestScriptExecutorService(
-      ioManager.lazilyInitializedReductionFolderManager,
-      specifiedNumOfThreads = 1,
-      scriptExecutionTimeoutInSeconds = 600L,
-      externalTestScriptExecutionCache = NullCache(),
-    )
-  }
+  private val executorServiceDelegate =
+    lazy {
+      TestScriptExecutorService(
+        ioManager.lazilyInitializedReductionFolderManager,
+        specifiedNumOfThreads = 1,
+        scriptExecutionTimeoutInSeconds = 600L,
+        globalExecutionCache = NullCache(),
+      )
+    }
   val executorService: TestScriptExecutorService by executorServiceDelegate
 }

@@ -36,7 +36,6 @@ antlr_codegen_parser(
     parser_grammar_file = "PnfCPP14Parser.g4",
     parser_java_file_name = "PnfCPP14Parser.java",
     deps = [
-        ":cpp_lexer",
     ],
 )
 

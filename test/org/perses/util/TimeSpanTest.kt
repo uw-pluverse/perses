@@ -25,13 +25,22 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class TimeSpanTest {
   @Test
+  fun test() {
+    val builder = TimeSpan.Builder(startMillis = 0)
+    val span = builder.createTimeSpan(endMillis = Int.MAX_VALUE.toLong())
+    assertThat(
+      span.formattedElapsedTime,
+    ).isEqualTo("2147483 seconds (24 days 20 hours 31 minutes 23 seconds)")
+  }
+
+  @Test
   fun testBuilder() {
     val builder = TimeSpan.Builder(2000)
     val span = builder.createTimeSpan(3000)
     assertThat(span.endTimeMillis).isEqualTo(3000)
     assertThat(span.startTimeMillis).isEqualTo(2000)
     assertThat(span.elapsedTimeInMillis).isEqualTo(1000)
-    assertThat(span.formattedElaspedTime).isEqualTo("1 second")
+    assertThat(span.formattedElapsedTime).isEqualTo("1 second")
     assertThat(span.elapsedTimeInSeconds).isEqualTo(1)
   }
 }

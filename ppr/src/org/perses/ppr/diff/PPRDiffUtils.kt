@@ -30,13 +30,15 @@ import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet
 import org.antlr.v4.runtime.Token
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.PersesTokenFactory.PersesAntlrToken
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.util.ListAlignment
 import org.perses.util.SimpleQueue
 import org.perses.util.Util
 import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
 
 object PPRDiffUtils {
   val EQUALIZER_LINE: (List<Token>, List<Token>) -> Boolean = { line1, line2 ->
@@ -57,7 +59,11 @@ object PPRDiffUtils {
     }
   }
 
-  val EQUALIZER_TOKEN: (Token, Token) -> Boolean = { t1, t2 ->
+  val EQUALIZER_PERSES_TOKEN = { t1: AbstractPersesToken, t2: AbstractPersesToken ->
+    t1.lexemeText == t2.lexemeText
+  }
+
+  val EQUALIZER_ANTLR_TOKEN = { t1: Token, t2: Token ->
     t1.text == t2.text
   }
 
@@ -66,9 +72,7 @@ object PPRDiffUtils {
     val nodeMapping: ImmutableMap<Tree, AbstractSparTreeNode>,
   )
 
-  fun sparTreeNode2TreeContext(
-    sparTreeNode: AbstractSparTreeNode,
-  ): TreeContextInfo {
+  fun sparTreeNode2TreeContext(sparTreeNode: AbstractSparTreeNode): TreeContextInfo {
     val treeContext = TreeContext()
     val mapBuilder = ImmutableMap.builder<Tree, AbstractSparTreeNode>()
     treeContext.root = buildTreeContext(sparTreeNode, parent = null, treeContext, mapBuilder)
@@ -78,9 +82,7 @@ object PPRDiffUtils {
   fun treeContext2SparTreeNode(
     tree: Tree,
     nodeMapping: ImmutableMap<Tree, AbstractSparTreeNode>,
-  ): AbstractSparTreeNode {
-    return nodeMapping[tree]!!
-  }
+  ): AbstractSparTreeNode = nodeMapping[tree]!!
 
   private fun buildTreeContext(
     node: AbstractSparTreeNode,
@@ -88,14 +90,28 @@ object PPRDiffUtils {
     treeContext: TreeContext,
     mapBuilder: ImmutableMap.Builder<Tree, AbstractSparTreeNode>,
   ): Tree {
-    val ruleName = if (node.antlrRule != null) {
-      node.ruleName
-    } else {
-      "null"
-    }
+    val ruleName =
+      if (node.antlrRule != null) {
+        node.ruleName
+      } else {
+        "null"
+      }
     val tree = treeContext.createTree(TypeSet.type(ruleName), "")
-    tree.pos = node.beginToken!!.token.startIndex
-    tree.length = node.endToken!!.token.stopIndex - node.beginToken!!.token.startIndex + 1
+    tree.pos =
+      node.beginToken!!
+        .token
+        .asAntlrToken()
+        .startIndex
+    tree.length =
+      node.endToken!!
+        .token
+        .asAntlrToken()
+        .stopIndex -
+      node.beginToken!!
+        .token
+        .asAntlrToken()
+        .startIndex +
+      1
     tree.parent = parent
 
     for (i in 0 until node.childCount) {
@@ -104,7 +120,7 @@ object PPRDiffUtils {
     }
 
     if (node.childCount == 0) {
-      tree.type = TypeSet.type(ruleName + node.beginToken!!.token.text)
+      tree.type = TypeSet.type(ruleName + node.beginToken!!.token.lexemeText)
     }
     mapBuilder.put(tree, node)
     return tree
@@ -119,9 +135,10 @@ object PPRDiffUtils {
       variantNodesSet.add(node.metrics.hash)
     }
 
-    return seedNodesList.filter {
-      !variantNodesSet.contains(it.metrics.hash)
-    }.toImmutableList()
+    return seedNodesList
+      .filter {
+        !variantNodesSet.contains(it.metrics.hash)
+      }.toImmutableList()
   }
 
   fun extractUnmappedNodes(
@@ -142,7 +159,7 @@ object PPRDiffUtils {
 
   fun sparTreeNode2Diff(
     node: AbstractSparTreeNode,
-    tokenDiffSet: ImmutableSet<Token>,
+    tokenDiffSet: ImmutableSet<PersesAntlrToken>,
     node2DiffMap: MutableMap<AbstractSparTreeNode, Boolean>,
   ) {
     node.postOrderVisit(
@@ -154,12 +171,13 @@ object PPRDiffUtils {
         }
       },
       visitor = {
-        val isDiff: Boolean = if (it.isTokenNode()) {
-          tokenDiffSet.contains(it.asLexerRule().token)
-        } else {
-          check(it.hasChildren()) { "The node $it does not have children." }
-          it.immutableChildView.all { node2DiffMap[it] == true }
-        }
+        val isDiff: Boolean =
+          if (it.isTokenNode()) {
+            tokenDiffSet.contains(it.asLexerRule().token.asAntlrToken())
+          } else {
+            check(it.hasChildren()) { "The node $it does not have children." }
+            it.immutableChildView.all { node2DiffMap[it] == true }
+          }
         node2DiffMap[it] = isDiff
       },
     )
@@ -169,7 +187,7 @@ object PPRDiffUtils {
   // w.r.t. both tree-based diff algorithm and list-based diff algorithm (line-diff)
   fun computeRealDiffNodes(
     nodesFromTreeDiffAlgo: ImmutableList<AbstractSparTreeNode>,
-    tokenDiffSet: ImmutableSet<Token>,
+    tokenDiffSet: ImmutableSet<PersesAntlrToken>,
   ): ImmutableList<AbstractSparTreeNode> {
     val realDiffNodes = ImmutableList.builder<AbstractSparTreeNode>()
     val node2DiffMap = mutableMapOf<AbstractSparTreeNode, Boolean>()
@@ -192,22 +210,25 @@ object PPRDiffUtils {
 
   // Compute line-diff, and return the tokens in line-diff
   fun computeTokenDiffSetByLine(
-    seedTokens: ImmutableList<PersesToken>,
-    variantTokens: ImmutableList<PersesToken>,
-  ): ImmutableSet<Token> {
-    val seedLines = Util.mergeContinuousElementsIntoRegions(seedTokens) { a, b ->
-      a.position.line == b.position.line
-    }
-    val variantLines = Util.mergeContinuousElementsIntoRegions(variantTokens) { a, b ->
-      a.position.line == b.position.line
-    }
+    seedTokens: ImmutableList<PersesAntlrToken>,
+    variantTokens: ImmutableList<PersesAntlrToken>,
+  ): ImmutableSet<PersesAntlrToken> {
+    val seedLines =
+      Util.mergeContinuousElementsIntoRegions(seedTokens) { a, b ->
+        a.position.line == b.position.line
+      }
+    val variantLines =
+      Util.mergeContinuousElementsIntoRegions(variantTokens) { a, b ->
+        a.position.line == b.position.line
+      }
 
-    val lineListAlignment = ListAlignment.create(
-      seedLines,
-      variantLines,
-      EQUALIZER_LINE,
-    )
-    val tokenDiffSet = ImmutableSet.builder<Token>()
+    val lineListAlignment =
+      ListAlignment.create(
+        seedLines,
+        variantLines,
+        EQUALIZER_LINE,
+      )
+    val tokenDiffSet = ImmutableSet.builder<PersesAntlrToken>()
 
     val insertedLines = lineListAlignment.onlyInserts
     for (editsList in insertedLines) {
@@ -250,21 +271,23 @@ object PPRDiffUtils {
     val seedTreeDiff = extractUnmappedNodes(seedTree.root, nodeMapping, editScript)
     val variantTreeDiff = extractUnmappedNodes(variantTree.root, nodeMapping, editScript)
 
-    val readSeedDiffNodes = postProcess(
-      seedTreeDiff,
-      variantTreeDiff,
-      seedTreeContextInfo,
-      seedSparTree,
-      variantSparTree,
-    )
+    val readSeedDiffNodes =
+      postProcess(
+        seedTreeDiff,
+        variantTreeDiff,
+        seedTreeContextInfo,
+        seedSparTree,
+        variantSparTree,
+      )
 
-    val readVariantDiffNodes = postProcess(
-      variantTreeDiff,
-      seedTreeDiff,
-      variantTreeContextInfo,
-      variantSparTree,
-      seedSparTree,
-    )
+    val readVariantDiffNodes =
+      postProcess(
+        variantTreeDiff,
+        seedTreeDiff,
+        variantTreeContextInfo,
+        variantSparTree,
+        seedSparTree,
+      )
 
     return DiffNodes(readSeedDiffNodes, readVariantDiffNodes)
   }
@@ -282,15 +305,18 @@ object PPRDiffUtils {
     // map Tree to AbstractSparTreeNode
     val seedNodeMapping = seedTreeContextInfo.nodeMapping
 
-    val seedAbstractNodeDiff = seedTreeDiffDeduplicated.map {
-      treeContext2SparTreeNode(it, seedNodeMapping)
-    }.toImmutableList()
+    val seedAbstractNodeDiff =
+      seedTreeDiffDeduplicated
+        .map {
+          treeContext2SparTreeNode(it, seedNodeMapping)
+        }.toImmutableList()
 
     // compute tokens from line diff
-    val tokenDiffSetByLine = computeTokenDiffSetByLine(
-      seedSparTree.programSnapshot.tokens,
-      variantSparTree.programSnapshot.tokens,
-    )
+    val tokenDiffSetByLine =
+      computeTokenDiffSetByLine(
+        seedSparTree.programSnapshot.tokens.transformToImmutableList { it.asAntlrToken() },
+        variantSparTree.programSnapshot.tokens.transformToImmutableList { it.asAntlrToken() },
+      )
 
     // further filter nodes by line difference
     return computeRealDiffNodes(seedAbstractNodeDiff, tokenDiffSetByLine)

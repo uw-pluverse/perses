@@ -16,7 +16,9 @@
  */
 package org.perses.antlr.ast
 
-enum class AstTag(val precedence: Precedence) {
+enum class AstTag(
+  val precedence: Precedence,
+) {
   GRAMMAR(Precedence.NONE),
   OPTIONS(Precedence.NONE),
   NAMED_ACTION(Precedence.NONE),
@@ -42,9 +44,8 @@ enum class AstTag(val precedence: Precedence) {
   LEXER_RANGE_OPERATOR(Precedence.UNIT),
   UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE(Precedence.UNIT),
   EPSILON(Precedence.NONE),
+  UNDEFINED(Precedence.NONE),
   ;
 
-  fun isQuantifier(): Boolean {
-    return this == STAR || this == PLUS || this == OPTIONAL
-  }
+  fun isQuantifier(): Boolean = this == STAR || this == PLUS || this == OPTIONAL
 }

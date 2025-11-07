@@ -46,11 +46,11 @@ import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.util.DaemonThreadPool
 import org.perses.util.FileNameContentPair
 import java.io.Closeable
+import kotlin.Exception
 
 class AsyncReductionListenerManager(
   private val listeners: ImmutableList<AbstractReductionListener>,
 ) : Closeable {
-
   private val executorService = DaemonThreadPool.createSingleThreadPool()
 
   override fun close() {
@@ -58,11 +58,29 @@ class AsyncReductionListenerManager(
     listeners.forEach { it.close() }
   }
 
-  private fun submitEvent(action: (AbstractReductionListener) -> Unit): ListenableFuture<*> {
-    return executorService.submit {
+  private fun submitEvent(action: (AbstractReductionListener) -> Unit): ListenableFuture<*> =
+    executorService.submit {
       for (listener in listeners) {
-        action(listener)
+        try {
+          action(listener)
+        } catch (e: Exception) {
+          e.printStackTrace()
+          onCriticalException(e)
+        }
       }
+    }
+
+  fun notifyNumOfLexemesInPersesTokenFactory(numOfLexemes: Int) {
+    submitEvent { listener -> listener.notifyNumOfLexemesInPersesTokenFactory(numOfLexemes) }
+  }
+
+  fun notifyCacheSettings(
+    queryCacheEnabled: Boolean,
+    editCacheEnabled: Boolean,
+    queryCacheType: String,
+  ) {
+    submitEvent { listener ->
+      listener.notifyCacheSettings(queryCacheEnabled, editCacheEnabled, queryCacheType)
     }
   }
 
@@ -89,13 +107,20 @@ class AsyncReductionListenerManager(
   }
 
   fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
-    val future = submitEvent { listener ->
-      listener.onFixpointIterationStart(event)
-    }
+    val future =
+      submitEvent { listener ->
+        listener.onFixpointIterationStart(event)
+      }
     // Need to wait for the future to complete, because the event points
     // to the spartree that can be modified by reducers. We need to make sure
     // that the spartree is used before it is changed.
     future.get()
+  }
+
+  fun onCriticalException(exception: Exception) {
+    submitEvent { listener ->
+      listener.onCriticalException(exception)
+    }
   }
 
   fun onFixpointIterationEnd(event: FixpointIterationEndEvent) {
@@ -134,15 +159,11 @@ class AsyncReductionListenerManager(
     }
   }
 
-  fun onSlicingTokensStart(
-    event: TokenSlicingStartEvent,
-  ) {
+  fun onSlicingTokensStart(event: TokenSlicingStartEvent) {
     listeners.forEach { it.onSlicingTokensStart(event) }
   }
 
-  fun onSlicingTokensEnd(
-    event: TokenSlicingEndEvent,
-  ) {
+  fun onSlicingTokensEnd(event: TokenSlicingEndEvent) {
     listeners.forEach { it.onSlicingTokensEnd(event) }
   }
 
@@ -152,9 +173,7 @@ class AsyncReductionListenerManager(
     }
   }
 
-  fun onNodeReductionEnd(
-    event: NodeReductionEndEvent,
-  ) {
+  fun onNodeReductionEnd(event: NodeReductionEndEvent) {
     submitEvent { listener ->
       listener.onNodeReductionEnd(event)
     }
@@ -166,13 +185,14 @@ class AsyncReductionListenerManager(
     edit: AbstractSparTreeEdit<*>,
     outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
   ) {
-    val event = TestScriptExecutionEvent(
-      System.currentTimeMillis(),
-      result,
-      program,
-      edit,
-      outputCreator,
-    )
+    val event =
+      TestScriptExecutionEvent(
+        System.currentTimeMillis(),
+        result,
+        program,
+        edit,
+        outputCreator,
+      )
     submitEvent { listener ->
       listener.onTestScriptExecution(event)
     }
@@ -184,62 +204,68 @@ class AsyncReductionListenerManager(
     millisToCancelTheTask: Int,
     outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
   ) {
-    val event = AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent(
-      System.currentTimeMillis(),
-      millisToCancelTheTask,
-      program,
-      edit,
-      outputCreator,
-    )
+    val event =
+      AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent(
+        System.currentTimeMillis(),
+        millisToCancelTheTask,
+        program,
+        edit,
+        outputCreator,
+      )
     submitEvent { listener ->
       listener.onTestScriptExecutionCancelled(event)
     }
   }
 
   fun onTestResultCacheHit(
-    result: PropertyTestResult,
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
     outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
   ) {
-    val event = AbstractTestScriptExecutionEvent.TestResultCacheHitEvent(
-      System.currentTimeMillis(),
-      result,
-      program,
-      edit,
-      outputCreator,
-    )
+    val event =
+      AbstractTestScriptExecutionEvent.TestResultCacheHitEvent(
+        System.currentTimeMillis(),
+        program,
+        edit,
+        outputCreator,
+      )
     submitEvent { listener ->
       listener.onTestResultCacheHit(event)
     }
   }
 
   fun onNodeEditActionSetCacheHit(query: AbstractActionSet<*>) {
-    val event = NodeEditActionSetCacheHitEvent(
-      System.currentTimeMillis(),
-      query,
-    )
+    val event =
+      NodeEditActionSetCacheHitEvent(
+        System.currentTimeMillis(),
+        query,
+      )
     submitEvent { listener ->
       listener.onNodeEditActionSetCacheHit(event)
     }
   }
 
-  fun onTestScriptExecutionCacheEntryEviction(sizeBefore: Int, sizeAfter: Int) {
-    val event = TestScriptExecutionCacheEntryEvictionEvent(
-      System.currentTimeMillis(),
-      sizeBefore,
-      sizeAfter,
-    )
+  fun onTestScriptExecutionCacheEntryEviction(
+    sizeBefore: Int,
+    sizeAfter: Int,
+  ) {
+    val event =
+      TestScriptExecutionCacheEntryEvictionEvent(
+        System.currentTimeMillis(),
+        sizeBefore,
+        sizeAfter,
+      )
     submitEvent { listener ->
       listener.onTestScriptExecutionCacheEntryEviction(event)
     }
   }
 
   fun onNodeActionSetClearance(cacheSizeBefore: Int) {
-    val event = NodeEditActionSetCacheClearanceEvent(
-      System.currentTimeMillis(),
-      cacheSizeBefore,
-    )
+    val event =
+      NodeEditActionSetCacheClearanceEvent(
+        System.currentTimeMillis(),
+        cacheSizeBefore,
+      )
     submitEvent { listener ->
       listener.onNodeActionSetCacheClearance(event)
     }

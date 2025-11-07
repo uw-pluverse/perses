@@ -39,14 +39,16 @@ import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.PersesStarAst
 import org.perses.antlr.ast.PersesTerminalAst
 import org.perses.antlr.ast.PersesTokenSetAst
+import org.perses.antlr.ast.PersesUndefinedRuleElement
 import org.perses.antlr.atn.AbstractDecisionMaker
 import org.perses.antlr.atn.nfa.PersesTransitionAst
 import org.perses.antlr.atn.tdtree.AbstractTDTreeNode
 import org.perses.antlr.atn.tdtree.TDTree
 import org.perses.util.toImmutableList
 
-abstract class AbstractASTSimulator<T : AbstractPersesRuleElement>(val ast: T) {
-
+abstract class AbstractASTSimulator<T : AbstractPersesRuleElement>(
+  val ast: T,
+) {
   fun simulate(decisionMaker: AbstractDecisionMaker): TDTree {
     val tree = TDTree()
     simulate(decisionMaker, tree, tree.root)
@@ -68,7 +70,6 @@ abstract class AbstractASTSimulator<T : AbstractPersesRuleElement>(val ast: T) {
   }
 
   class SimulatorConstructor : AbstractAstVisitor() {
-
     internal val map = HashMap<AbstractPersesAst, AbstractASTSimulator<*>>()
 
     override fun visit(ast: PersesTokenSetAst) {
@@ -79,18 +80,27 @@ abstract class AbstractASTSimulator<T : AbstractPersesRuleElement>(val ast: T) {
       TODO("Not yet implemented")
     }
 
+    override fun visit(ast: PersesUndefinedRuleElement) {
+      TODO("Not yet implemented")
+    }
+
     override fun visit(ast: PersesSequenceAst) {
-      map[ast] = SequenceASTSimulator(
-        ast,
-        ast.children.asSequence().map { map[it]!! }.toImmutableList(),
-      )
+      map[ast] =
+        SequenceASTSimulator(
+          ast,
+          ast.children
+            .asSequence()
+            .map { map[it]!! }
+            .toImmutableList(),
+        )
     }
 
     override fun visit(ast: PersesPlusAst) {
-      map[ast] = PlusAstSimulator(
-        ast,
-        map[ast.body]!!,
-      )
+      map[ast] =
+        PlusAstSimulator(
+          ast,
+          map[ast.body]!!,
+        )
     }
 
     override fun visit(ast: PersesStarAst) {
@@ -120,11 +130,14 @@ abstract class AbstractASTSimulator<T : AbstractPersesRuleElement>(val ast: T) {
     }
 
     override fun visit(ast: PersesAlternativeBlockAst) {
-      map[ast] = AltBlockAstSimulator(
-        ast,
-        ast.alternatives.asSequence()
-          .map { map[it]!! }.toImmutableList(),
-      )
+      map[ast] =
+        AltBlockAstSimulator(
+          ast,
+          ast.alternatives
+            .asSequence()
+            .map { map[it]!! }
+            .toImmutableList(),
+        )
     }
 
     override fun visit(ast: PersesActionAst) {

@@ -17,7 +17,6 @@
 package org.perses.spartree
 
 class NullNodeActionSetCache : AbstractNodeActionSetCache() {
-
   override fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>) = false
 
   override fun clear() {}

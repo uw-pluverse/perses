@@ -10,10 +10,5 @@ kt_jvm_library(
         "AbstractSimulatorRegistry.kt",
     ],
     deps = [
-        "//:antlr_runtime",
-        "//:antlr_tool",
-        "//src/org/perses/antlr/atn:AbstractRandom",
-        "//src/org/perses/antlr/atn/tdtree",
-        "//src/org/perses/util",
     ],
 )

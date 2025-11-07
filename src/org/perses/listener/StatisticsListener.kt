@@ -18,6 +18,7 @@ package org.perses.listener
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
+import org.perses.reduction.AbstractReductionListener
 import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.ReductionEndEvent
@@ -27,15 +28,16 @@ import org.perses.util.Util.lazyAssert
 /** Collects the statistics of reduction.  */
 class StatisticsListener(
   private val fileStream: FileStreamPool.ManagedPrintStream,
-) : DefaultReductionListener() {
+) : AbstractReductionListener() {
   private val iterations = ArrayList<ReductionIterationStatistics>()
 
   override fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
-    val newStat = ReductionIterationStatistics(
-      event.iteration.toString(),
-      event.programSize,
-      event.currentTimeMillis,
-    )
+    val newStat =
+      ReductionIterationStatistics(
+        event.iteration.toString(),
+        event.programSize,
+        event.currentTimeMillis,
+      )
     iterations.add(newStat)
   }
 
@@ -125,7 +127,8 @@ class StatisticsListener(
       ReductionIterationStatistics("total", first.beforeProgramSize, first.startTimeMillis)
     result.afterProgramSize = last.afterProgramSize
     result.countOfTestScriptExecutions =
-      iterations.stream()
+      iterations
+        .stream()
         .mapToInt { stat: ReductionIterationStatistics -> stat.countOfTestScriptExecutions }
         .sum()
     result.endTimeMillis = last.endTimeMillis
@@ -150,25 +153,28 @@ class StatisticsListener(
         field = value
       }
 
-    fun elapsedTimeMillis(): Long {
-      return endTimeMillis - startTimeMillis
-    }
+    fun elapsedTimeMillis(): Long = endTimeMillis - startTimeMillis
   }
 
   companion object {
-    private val COLUMN_NAMES = ImmutableList.of(
-      "iteration",
-      "before_size",
-      "after_size",
-      "removed_tokens",
-      "time(ms)",
-      "queries",
-    )
-    private val COLUMN_FORMAT = buildColumnFormat(
-      COLUMN_NAMES.stream().mapToInt { obj: String -> obj.length }
-        .max().asInt,
-      COLUMN_NAMES.size,
-    )
+    private val COLUMN_NAMES =
+      ImmutableList.of(
+        "iteration",
+        "before_size",
+        "after_size",
+        "removed_tokens",
+        "time(ms)",
+        "queries",
+      )
+    private val COLUMN_FORMAT =
+      buildColumnFormat(
+        COLUMN_NAMES
+          .stream()
+          .mapToInt { obj: String -> obj.length }
+          .max()
+          .asInt,
+        COLUMN_NAMES.size,
+      )
 
     private fun writeProperty(
       writer: FileStreamPool.ManagedPrintStream,
@@ -210,7 +216,10 @@ class StatisticsListener(
       )
     }
 
-    private fun buildColumnFormat(columnWidth: Int, columnCount: Int): String {
+    private fun buildColumnFormat(
+      columnWidth: Int,
+      columnCount: Int,
+    ): String {
       lazyAssert { columnWidth > 0 }
       lazyAssert { columnCount > 0 }
       val builder = StringBuilder()

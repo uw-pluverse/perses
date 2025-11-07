@@ -25,7 +25,6 @@ import java.util.Random
 class NullLanguageModel(
   parserFacade: AbstractParserFacade,
 ) : AbstractLanguageModel(parserFacade) {
-
   override fun updateModelAndGetFeatureOfSparTree(tree: SparTree): FeatureOfSparTree = HashMap()
 
   override val size: Int
@@ -41,29 +40,25 @@ class NullLanguageModel(
     nodeList: List<AbstractSparTreeNode>,
     featureOfSparTree: FeatureOfSparTree?,
     random: Random,
-  ): Int? {
-    return if (nodeList.isEmpty()) {
+  ): Int? =
+    if (nodeList.isEmpty()) {
       null
     } else {
       random.nextInt(nodeList.size)
     }
-  }
 
   override fun selectReplacingNode(
     nodeList: List<AbstractSparTreeNode>,
     featureOfSparTree: FeatureOfSparTree?,
     random: Random,
-  ): AbstractSparTreeNode? {
-    return if (nodeList.isEmpty()) {
+  ): AbstractSparTreeNode? =
+    if (nodeList.isEmpty()) {
       null
     } else {
       nodeList[random.nextInt(nodeList.size)].recursiveDeepCopy(ReuseNodeIdStrategy).result
     }
-  }
 
-  override fun printDatabase(): String {
-    return ""
-  }
+  override fun printDatabase(): String = ""
 
   override fun changeStatusOfGuidance() {}
 }

@@ -28,46 +28,46 @@ import org.perses.antlr.ast.TransformDecision
 import org.perses.util.toImmutableList
 
 class InlineFragmentPass : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val allLexerRules = parserGrammar.lexerRules.flattenedLexerRules
     val mutableGrammar = MutableGrammar.createRulesFrom(allLexerRules)
     inlineLexerRules(
       mutableGrammar,
-      rulesToInline = allLexerRules
-        .asSequence()
-        .filter { it.tag == AstTag.RULE_DEFINITION_LEXER_FRAGMENT }
-        .map { it.ruleNameHandle }
-        .toImmutableList(),
+      rulesToInline =
+        allLexerRules
+          .asSequence()
+          .filter { it.tag == AstTag.RULE_DEFINITION_LEXER_FRAGMENT }
+          .map { it.ruleNameHandle }
+          .toImmutableList(),
       ruleNameRegistry = parserGrammar.symbolTable.ruleNameRegistry,
     )
     inlineLexerRules(
       mutableGrammar,
-      rulesToInline = allLexerRules
-        .asSequence()
-        .filter { it.tag == AstTag.RULE_DEFINITION_LEXER }
-        .map { it.ruleNameHandle }
-        .toImmutableList(),
+      rulesToInline =
+        allLexerRules
+          .asSequence()
+          .filter { it.tag == AstTag.RULE_DEFINITION_LEXER }
+          .map { it.ruleNameHandle }
+          .toImmutableList(),
       ruleNameRegistry = parserGrammar.symbolTable.ruleNameRegistry,
     )
-    val defaultMode = transformLexerRules(
-      parserGrammar.lexerRules.defaultModeLexerRules,
-      mutableGrammar,
-    )
-    val nonDefaultModes = parserGrammar.lexerRules.nonDefaultModes
-      .asSequence()
-      .map { mode ->
-        mode.copyWithNewLexerRules(transformLexerRules(mode.lexerRules, mutableGrammar))
-      }.toImmutableList()
+    val defaultMode =
+      transformLexerRules(
+        parserGrammar.lexerRules.defaultModeLexerRules,
+        mutableGrammar,
+      )
+    val nonDefaultModes =
+      parserGrammar.lexerRules.nonDefaultModes
+        .asSequence()
+        .map { mode ->
+          mode.copyWithNewLexerRules(transformLexerRules(mode.lexerRules, mutableGrammar))
+        }.toImmutableList()
     val newLexerRules = LexerRuleList(defaultMode, nonDefaultModes)
     return grammar.withNewParserGrammar(parserGrammar.copyWithNewLexerRuleDefs(newLexerRules))
   }
 
   companion object {
-
     private fun inlineLexerRules(
       grammar: MutableGrammar,
       rulesToInline: List<RuleNameHandle>,
@@ -80,10 +80,12 @@ class InlineFragmentPass : AbstractPnfPass() {
           val altBlock = grammar.getAltBlock(ruleName)
           val originalAlts = altBlock.toImmutableList()
           for (originalAlt in originalAlts) {
-            val usedRuleNames = UsedRuleNameCollector().let {
-              it.preorder(originalAlt)
-              it.tokenReferences
-            }.map { ruleNameRegistry.getOrThrow(it) }
+            val usedRuleNames =
+              UsedRuleNameCollector()
+                .let {
+                  it.preorder(originalAlt)
+                  it.tokenReferences
+                }.map { ruleNameRegistry.getOrThrow(it) }
             if (usedRuleNames.isEmpty()) {
               continue
             }
@@ -97,22 +99,22 @@ class InlineFragmentPass : AbstractPnfPass() {
 //              check(usedRuleDef !is PersesLexerCommandAst) {
 //                "Cannot inline a lexer command $usedRuleName into $ruleName"
 //              }
-              val replaceEdit = ReplaceEdit(
-                oldPredicate = {
-                  it is PersesTerminalAst &&
-                    it.isTokenRef &&
-                    it.text == usedRuleName.ruleName
-                },
-                newValueComputer = { usedRuleDef },
-              )
+              val replaceEdit =
+                ReplaceEdit(
+                  oldPredicate = {
+                    it is PersesTerminalAst &&
+                      it.isTokenRef &&
+                      it.text == usedRuleName.ruleName
+                  },
+                  newValueComputer = { usedRuleDef },
+                )
               val decision = replaceEdit.apply(originalAlt)
               check(decision is TransformDecision.Replace) {
                 "${decision::class}"
               }
               decision.newValue.let {
                 if (it is PersesAlternativeBlockAst) {
-                  it.alternatives.forEach {
-                      alt ->
+                  it.alternatives.forEach { alt ->
                     altBlock.addIfNotEquivalent(alt)
                   }
                 } else {
@@ -128,13 +130,12 @@ class InlineFragmentPass : AbstractPnfPass() {
     fun transformLexerRules(
       rules: ImmutableList<AbstractPersesLexerRuleAst>,
       mutableGrammar: MutableGrammar,
-    ): ImmutableList<AbstractPersesLexerRuleAst> {
-      return rules
+    ): ImmutableList<AbstractPersesLexerRuleAst> =
+      rules
         .asSequence()
         .filter { it.tag == AstTag.RULE_DEFINITION_LEXER } // Delete fragments.
         .map { oldDef ->
           oldDef.copyWithNewBody(mutableGrammar.getAltBlock(oldDef.ruleNameHandle).asRuleBody())
         }.toImmutableList()
-    }
   }
 }

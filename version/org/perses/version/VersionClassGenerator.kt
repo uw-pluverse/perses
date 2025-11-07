@@ -26,9 +26,8 @@ import kotlin.io.path.readLines
 import kotlin.io.path.writeText
 
 object VersionClassGenerator {
-
   private const val MAJOR_VERSION = "2"
-  private const val MINOR_VERSION = "4"
+  private const val MINOR_VERSION = "5"
 
   @JvmStatic
   fun generate(args: Array<String>) {
@@ -39,7 +38,10 @@ object VersionClassGenerator {
     writeVersionClass(map, outputFile)
   }
 
-  private fun writeVersionClass(map: ImmutableMultimap<String, String>, outputFile: Path) {
+  private fun writeVersionClass(
+    map: ImmutableMultimap<String, String>,
+    outputFile: Path,
+  ) {
     val branch: String = map.get("PERSES_GIT_BRANCH").single()
     val hash: String = map.get("PERSES_GIT_COMMIT_HASH").single()
     val status: String = map.get("PERSES_GIT_STATUS").single()

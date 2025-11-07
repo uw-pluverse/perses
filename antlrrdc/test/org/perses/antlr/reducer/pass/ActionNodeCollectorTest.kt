@@ -26,17 +26,18 @@ import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class ActionNodeCollectorTest : AbstractAntlrrdcTest() {
-
   @Test
   fun test() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      parserWithActions.readText(),
-    )
-    val actions = ActionNodeCollector
-      .collectActionNodes(grammar)
-      .asSequence()
-      .map { it.sourceCode }
-      .toList()
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        parserWithActions.readText(),
+      )
+    val actions =
+      ActionNodeCollector
+        .collectActionNodes(grammar)
+        .asSequence()
+        .map { it.sourceCode }
+        .toList()
     assertThat(actions).hasSize(3)
     assertThat(
       actions,

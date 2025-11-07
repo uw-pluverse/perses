@@ -25,23 +25,25 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class SerializableLanguageKindTest {
-
   @Test
   fun test() {
-    val data = SerializableLanguageKind.LanguageKindData(
-      name = "test",
-      extensions = ImmutableSet.of("cp", "c"),
-      defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-      origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-      allowedCodeFormatControl = ImmutableSet.of(
-        EnumFormatControl.ORIG_FORMAT,
-        EnumFormatControl.COMPACT_ORIG_FORMAT,
-      ),
-      defaultFormatterCommands = ImmutableList.of(
-        SerializableLanguageKind.ShellCommandData("ls", ImmutableList.of("-a")),
-        SerializableLanguageKind.ShellCommandData("wc", ImmutableList.of("-l")),
-      ),
-    )
+    val data =
+      SerializableLanguageKind.LanguageKindData(
+        name = "test",
+        extensions = ImmutableSet.of("cp", "c"),
+        defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+        origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+        allowedCodeFormatControl =
+          ImmutableSet.of(
+            EnumFormatControl.ORIG_FORMAT,
+            EnumFormatControl.COMPACT_ORIG_FORMAT,
+          ),
+        defaultFormatterCommands =
+          ImmutableList.of(
+            SerializableLanguageKind.ShellCommandData("ls", ImmutableList.of("-a")),
+            SerializableLanguageKind.ShellCommandData("wc", ImmutableList.of("-l")),
+          ),
+      )
 
     val language = SerializableLanguageKind.fromYamlString(data.toYamlString())
     val yamlString = language.toYamlString()
@@ -52,28 +54,32 @@ class SerializableLanguageKindTest {
 
   @Test
   fun testNullFormatterCommand() {
-    val data = SerializableLanguageKind.LanguageKindData(
-      name = "test",
-      extensions = ImmutableSet.of("cp", "c"),
-      defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-      origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-      allowedCodeFormatControl = ImmutableSet.of(
-        EnumFormatControl.ORIG_FORMAT,
-        EnumFormatControl.COMPACT_ORIG_FORMAT,
-      ),
-    )
+    val data =
+      SerializableLanguageKind.LanguageKindData(
+        name = "test",
+        extensions = ImmutableSet.of("cp", "c"),
+        defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+        origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+        allowedCodeFormatControl =
+          ImmutableSet.of(
+            EnumFormatControl.ORIG_FORMAT,
+            EnumFormatControl.COMPACT_ORIG_FORMAT,
+          ),
+      )
 
-    val result = SerializableLanguageKind.LanguageKindData(
-      name = "test",
-      extensions = ImmutableSet.of("cp", "c"),
-      defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-      origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-      allowedCodeFormatControl = ImmutableSet.of(
-        EnumFormatControl.ORIG_FORMAT,
-        EnumFormatControl.COMPACT_ORIG_FORMAT,
-      ),
-      defaultFormatterCommands = ImmutableList.of(),
-    )
+    val result =
+      SerializableLanguageKind.LanguageKindData(
+        name = "test",
+        extensions = ImmutableSet.of("cp", "c"),
+        defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+        origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+        allowedCodeFormatControl =
+          ImmutableSet.of(
+            EnumFormatControl.ORIG_FORMAT,
+            EnumFormatControl.COMPACT_ORIG_FORMAT,
+          ),
+        defaultFormatterCommands = ImmutableList.of(),
+      )
 
     val language = SerializableLanguageKind.fromYamlString(data.toYamlString())
 

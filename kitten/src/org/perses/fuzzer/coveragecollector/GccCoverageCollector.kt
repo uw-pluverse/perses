@@ -23,7 +23,7 @@ import org.perses.fuzzer.compilers.ICompilationAction
 import org.perses.util.shell.ShellCommandOnPath
 import java.io.File
 import java.nio.file.Path
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -34,24 +34,25 @@ class GccCoverageCollector(
   val monitorInterval: Long,
   val timeout: Long,
 ) : ICoverageCollector {
-
-  private val lcovCommand = ShellCommandOnPath("lcov").also {
-    val versionOutput = it.runWith(extraArguments = ImmutableList.of("--version"))
-    require(versionOutput.exitCode.isZero()) {
-      versionOutput
+  private val lcovCommand =
+    ShellCommandOnPath("lcov").also {
+      val versionOutput = it.runWith(extraArguments = ImmutableList.of("--version"))
+      require(versionOutput.exitCode.isZero()) {
+        versionOutput
+      }
     }
-  }
 
   private val buildDirHistory = mutableListOf<Path>()
 
-  private val emptyCoverageReport = ICoverageCollector.CoverageReport(
-    branch_covered = 0,
-    branch_total = 0,
-    line_covered = 0,
-    line_total = 0,
-    aflMapDensity = 0.0,
-    aflHitCount = 0,
-  )
+  private val emptyCoverageReport =
+    ICoverageCollector.CoverageReport(
+      branch_covered = 0,
+      branch_total = 0,
+      line_covered = 0,
+      line_total = 0,
+      aflMapDensity = 0.0,
+      aflHitCount = 0,
+    )
   private var executedCount = 0
   private var collectCount = 0
   private var numDirs: Long = 0
@@ -99,13 +100,14 @@ class GccCoverageCollector(
     // create coverage result file, but do not generate report here
     ShellCommandOnPath("lcov")
       .runWith(
-        extraArguments = ImmutableList.of(
-          "-c",
-          "-d",
-          oldBuildDir.toString(),
-          "-o",
-          "$coverageDir/cov_$collectCount.info",
-        ),
+        extraArguments =
+          ImmutableList.of(
+            "-c",
+            "-d",
+            oldBuildDir.toString(),
+            "-o",
+            "$coverageDir/cov_$collectCount.info",
+          ),
       )
     return emptyCoverageReport
   }
@@ -117,12 +119,13 @@ class GccCoverageCollector(
   ): ActionResult {
     val gcovPrefix = System.getProperty("GCOV_PREFIX")
     val gcovPrefixStrip = System.getProperty("GCOV_PREFIX_STRIP")
-    val env = ImmutableMap.of(
-      "GCOV_PREFIX",
-      gcovPrefix,
-      "GCOV_PREFIX_STRIP",
-      gcovPrefixStrip,
-    )
+    val env =
+      ImmutableMap.of(
+        "GCOV_PREFIX",
+        gcovPrefix,
+        "GCOV_PREFIX_STRIP",
+        gcovPrefixStrip,
+      )
     return action.compileWithExtraEnvironment(file, env)
   }
 

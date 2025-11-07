@@ -17,37 +17,45 @@
 package org.perses.reduction
 
 import com.google.common.base.MoreObjects
+import com.google.common.collect.ImmutableList
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.Util.lazyAssert
 import org.perses.util.Util.removeElementsFromList
+import org.perses.util.toImmutableList
 
 /** Represents a level in a spar-tree.  */
-class ReductionLevel(val level: Int) {
+class ReductionLevel(
+  val level: Int,
+) {
   private val nodes = ArrayList<AbstractSparTreeNode>()
+
+  fun toImmutableList(): ImmutableList<AbstractSparTreeNode> {
+    cleanDeletedNodes()
+    return nodes.toImmutableList()
+  }
 
   fun addNode(node: AbstractSparTreeNode) {
     lazyAssert({ !node.isPermanentlyDeleted }) { "The node to add is already permanently deleted." }
     nodes.add(node)
   }
 
-  fun replaceNode(origNode: AbstractSparTreeNode, replacement: AbstractSparTreeNode) {
+  fun replaceNode(
+    origNode: AbstractSparTreeNode,
+    replacement: AbstractSparTreeNode,
+  ) {
     val index = nodes.indexOf(origNode)
     lazyAssert({ index >= 0 }) { nodes }
     nodes[index] = replacement
   }
 
-  fun containsNode(node: AbstractSparTreeNode): Boolean {
-    return nodes.contains(node)
-  }
+  fun containsNode(node: AbstractSparTreeNode): Boolean = nodes.contains(node)
 
   val nodeCount: Int
     get() = nodes.size
   val isEmpty: Boolean
     get() = nodeCount == 0
 
-  fun getNode(index: Int): AbstractSparTreeNode {
-    return nodes[index]
-  }
+  fun getNode(index: Int): AbstractSparTreeNode = nodes[index]
 
   fun forEachNode(consumer: (AbstractSparTreeNode) -> Unit) {
     nodes.forEach(consumer)
@@ -59,7 +67,18 @@ class ReductionLevel(val level: Int) {
     }
   }
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("level", level).add("nodes", nodes).toString()
+  fun createNextLevel(): ReductionLevel {
+    val nextLevel = ReductionLevel(level + 1)
+    nodes.forEach { node ->
+      node.forEachChild { child -> nextLevel.addNode(child) }
+    }
+    return nextLevel
   }
+
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
+      .add("level", level)
+      .add("nodes", nodes)
+      .toString()
 }

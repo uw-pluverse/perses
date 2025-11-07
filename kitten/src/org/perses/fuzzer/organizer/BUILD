@@ -11,7 +11,6 @@ java_library(
         "//:flogger",
         "//:guava",
         "//:jcommander",
-        "//kitten/src/org/perses/fuzzer/config:testing_configuration",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar/rust:language_kind",
         "//src/org/perses/program:language_kind",

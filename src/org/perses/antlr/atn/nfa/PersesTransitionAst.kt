@@ -32,7 +32,6 @@ import java.io.PrintStream
 class PersesTransitionAst(
   val atnTransition: Transition,
 ) : AbstractPersesTerminalAst() {
-
   init {
     require(!atnTransition.isEpsilon)
     require(
@@ -50,10 +49,9 @@ class PersesTransitionAst(
     }
   }
 
-  override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean {
-    return other is PersesTransitionAst &&
+  override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean =
+    other is PersesTransitionAst &&
       testTransitionEquivalence(atnTransition, other.atnTransition)
-  }
 
   private fun testTransitionEquivalence(
     t1: Transition,
@@ -93,13 +91,16 @@ class PersesTransitionAst(
     return PersesTransitionAst(atnTransition)
   }
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.print(atnTransition.toString())
   }
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("transition", atnTransition).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("transition", atnTransition).toString()
 
   override val tag: AstTag
     get() = AstTag.UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE

@@ -11,9 +11,9 @@ sanity_test(
 reduction_golden_test(
     name = "reduction_golden_test",
     enable_edit_caching = True,
-    enable_query_caching = False,
+    enable_query_caching = True,
     golden_reduced_file = "golden.sqlite",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.sqlite",
     test_script = "r.sh",
 )

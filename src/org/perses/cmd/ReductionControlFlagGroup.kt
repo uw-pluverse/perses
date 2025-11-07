@@ -22,22 +22,32 @@ import org.perses.program.EnumFormatControl
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.ktWarning
 
-class ReductionControlFlagGroup : AbstractCommandLineFlagGroup(
-  groupName = "General Reduction Control",
-) {
+class ReductionControlFlagGroup :
+  AbstractCommandLineFlagGroup(
+    groupName = "General Reduction Control",
+  ) {
   @JvmField
   @Parameter(
-    names = ["--fixpoint"],
-    description = "iterative reduction till fixpoint",
+    names = ["--global-fixpoint"],
+    description = "iterative reduction till fixpoint, globally",
     arity = 1,
     order = 0,
   )
-  var fixpoint = true
+  var globalFixpoint = false
+
+  @JvmField
+  @Parameter(
+    names = ["--fixpoint"],
+    description = "iterative reduction till fixpoint, for the main reducer only",
+    arity = 1,
+    order = 30,
+  )
+  var fixpointForMainReducer = false
 
   @Parameter(
     names = ["--threads"],
     description = "Number of reduction threads: a positive integer, or 'auto'.",
-    order = 1,
+    order = 40,
   )
   private var numOfThreads = "auto"
 
@@ -45,22 +55,24 @@ class ReductionControlFlagGroup : AbstractCommandLineFlagGroup(
     names = ["--code-format"],
     description = "The format of the reduced program.",
     arity = 1,
-    order = 2,
+    order = 50,
   )
   var codeFormat: EnumFormatControl? = null
 
   @Parameter(
     names = ["--script-execution-timeout-in-seconds"],
-    description = "the interval in seconds to timeout " +
-      "the test script executions. the default timeout is 600 seconds.",
+    description =
+      "the interval in seconds to timeout " +
+        "the test script executions. the default timeout is 600 seconds.",
     order = 60,
   )
   var testScriptExecutionTimeoutInSeconds: Long = 600L
 
   @Parameter(
     names = ["--script-execution-keep-waiting-after-timeout"],
-    description = "keep trying even after " +
-      "the script execution timeouts.",
+    description =
+      "keep trying even after " +
+        "the script execution timeouts.",
     arity = 1,
     order = 70,
   )
@@ -79,13 +91,12 @@ class ReductionControlFlagGroup : AbstractCommandLineFlagGroup(
     }
   }
 
-  fun getNumOfThreads(): Int {
-    return if ("auto" == numOfThreads) {
+  fun getNumOfThreads(): Int =
+    if ("auto" == numOfThreads) {
       AVAILABLE_PROCESSORS
     } else {
       numOfThreads.toInt()
     }
-  }
 
   fun setNumOfThreads(num: Int) {
     numOfThreads = num.toString()

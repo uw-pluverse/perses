@@ -17,35 +17,27 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
-import org.perses.listminimizer.PristineDeltaDebugger
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.spartree.AbstractSparTreeNode
-import org.perses.util.toImmutableList
 
 class DeltaDebuggingReducer(
   reducerContext: ReducerContext,
-) : AbstractTokenSlicerReducer(META, reducerContext) {
+) : AbstractTokenReducer(META, reducerContext) {
+  override fun computeListMinimizerType(): EnumListMinimizerType =
+    EnumListMinimizerType.PRISTINE_DDMIN
 
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
-    val originalInput = tree
-      .remainingLexerRuleNodes
-      .asSequence()
-      .map { it as AbstractSparTreeNode }
-      .toImmutableList()
-
-    val deltaDebugger = PristineDeltaDebugger(
-      createDeltaArguments(
-        needToTestEmpty = true,
-        tree,
-        actionsDescription = "[pristine-ddmin]",
-        input = originalInput,
-      ),
+    runListMinimizerOverNodes(
+      tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability(),
+      fixpointReductionState = fixpointReductionState,
+      input =
+        fixpointReductionState.sparTree
+          .getTreeRegardlessOfParsability()
+          .remainingLexerRuleNodes,
     )
-    deltaDebugger.reduce()
   }
 
   object META : ReducerAnnotation(
@@ -54,16 +46,15 @@ class DeltaDebuggingReducer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(
         DeltaDebuggingReducer(
           reducerContext,
         ),
       )
-    }
   }
-  companion object {
 
+  companion object {
     const val NAME = "ddmin"
   }
 }

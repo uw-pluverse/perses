@@ -20,7 +20,6 @@ class AnyNodeReplacementTreeEdit internal constructor(
   tree: SparTree,
   actionSet: NodeReplacementActionSet,
 ) : AbstractNodeReplacementTreeEdit(tree, actionSet) {
-
   override fun internalApplyToTree() {
     actionSet.actions.forEach { action ->
       action.apply()

@@ -33,8 +33,9 @@ import org.perses.antlr.atn.tdtree.AlternativeBlockTDTreeNode
 import org.perses.antlr.atn.tdtree.TDTree
 import org.perses.util.SimpleStack
 
-class ATNSimulator(private val startState: RuleStartState) {
-
+class ATNSimulator(
+  private val startState: RuleStartState,
+) {
   private val transitionSimulatorRegistry = TransitionSimulatorRegistry()
   private val stateSimulatorRegistry = StateSimulatorRegistry()
 
@@ -71,53 +72,56 @@ class ATNSimulator(private val startState: RuleStartState) {
       }
       val numOfTransitions = currentState.numberOfTransitions
 
-      val transition = when (currentState) {
-        is BasicBlockStartState,
-        is StarLoopEntryState,
-        is StarBlockStartState,
-        -> {
-          val stateSimulator = stateSimulatorRegistry.getSimulator(currentState)
-          if (expectingStopStatesSimpleStack.peek() === stateSimulator.endState) {
-            // This is a loop, and not the first iteration.
-            // Do nothing.
-          } else {
-            val starTDNode = stateSimulator.createTreeNode(result.nextId())
-            path.peek().addChild(starTDNode)
-            path.add(starTDNode)
-            expectingStopStatesSimpleStack.add(stateSimulator.endState)
+      val transition =
+        when (currentState) {
+          is BasicBlockStartState,
+          is StarLoopEntryState,
+          is StarBlockStartState,
+          -> {
+            val stateSimulator = stateSimulatorRegistry.getSimulator(currentState)
+            if (expectingStopStatesSimpleStack.peek() === stateSimulator.endState) {
+              // This is a loop, and not the first iteration.
+              // Do nothing.
+            } else {
+              val starTDNode = stateSimulator.createTreeNode(result.nextId())
+              path.peek().addChild(starTDNode)
+              path.add(starTDNode)
+              expectingStopStatesSimpleStack.add(stateSimulator.endState)
+            }
+            stateSimulator.sampleTransition(decisionMaker)
           }
-          stateSimulator.sampleTransition(decisionMaker)
-        }
-        is PlusBlockStartState -> {
-          val plusSimulator = stateSimulatorRegistry.getSimulator(currentState)
-          if (expectingStopStatesSimpleStack.peek() == plusSimulator.endState) {
-            // This is a loop, and not the first iteration.
-            // Do nothing.
-          } else {
-            val plusTDNode = plusSimulator.createTreeNode(result.nextId())
-            path.peek().addChild(plusTDNode)
-            path.add(plusTDNode)
-            expectingStopStatesSimpleStack.add(plusSimulator.endState)
+          is PlusBlockStartState -> {
+            val plusSimulator = stateSimulatorRegistry.getSimulator(currentState)
+            if (expectingStopStatesSimpleStack.peek() == plusSimulator.endState) {
+              // This is a loop, and not the first iteration.
+              // Do nothing.
+            } else {
+              val plusTDNode = plusSimulator.createTreeNode(result.nextId())
+              path.peek().addChild(plusTDNode)
+              path.add(plusTDNode)
+              expectingStopStatesSimpleStack.add(plusSimulator.endState)
+            }
+            val altBlock = AlternativeBlockTDTreeNode(result.nextId())
+            path.peek().addChild(altBlock)
+            path.add(altBlock)
+            expectingStopStatesSimpleStack.add(currentState.endState)
+            plusSimulator.sampleTransition(decisionMaker)
           }
-          val altBlock = AlternativeBlockTDTreeNode(result.nextId())
-          path.peek().addChild(altBlock)
-          path.add(altBlock)
-          expectingStopStatesSimpleStack.add(currentState.endState)
-          plusSimulator.sampleTransition(decisionMaker)
+          is PlusLoopbackState -> {
+            check(currentState.numberOfTransitions == 2)
+            decisionMaker.sampleTransition(currentState)
+          }
+          else -> {
+            check(numOfTransitions == 1) { "${currentState::class.java}, $numOfTransitions" }
+            decisionMaker.sampleTransition(currentState)
+          }
         }
-        is PlusLoopbackState -> {
-          check(currentState.numberOfTransitions == 2)
-          decisionMaker.sampleTransition(currentState)
-        }
-        else -> {
-          check(numOfTransitions == 1) { "${currentState::class.java}, $numOfTransitions" }
-          decisionMaker.sampleTransition(currentState)
-        }
-      }
 
       val currentParent = path.peek()
-      val simulatedChar = transitionSimulatorRegistry
-        .getOrCreateSimulatorFor(transition).simulate(decisionMaker)
+      val simulatedChar =
+        transitionSimulatorRegistry
+          .getOrCreateSimulatorFor(transition)
+          .simulate(decisionMaker)
       if (simulatedChar != null) {
         currentParent.addChild(
           result.createCharNode(simulatedChar, transition.getAllowedAsciiChars()),
@@ -136,8 +140,11 @@ class ATNSimulator(private val startState: RuleStartState) {
       {
         builder.append(getStateLabel(it)).append("\n")
         it.transitionSequence().forEach { transition ->
-          builder.append("  ->").append(getStateLabel(transition.target))
-            .append(getTransitionLabel(transition)).append('\n')
+          builder
+            .append("  ->")
+            .append(getStateLabel(transition.target))
+            .append(getTransitionLabel(transition))
+            .append('\n')
         }
       },
       { _, _ -> },
@@ -145,15 +152,11 @@ class ATNSimulator(private val startState: RuleStartState) {
     return builder.toString()
   }
 
-  private fun getTransitionLabel(t: Transition): String {
-    return "(${t::class.java.simpleName} $t)"
-  }
+  private fun getTransitionLabel(t: Transition): String = "(${t::class.java.simpleName} $t)"
 
-  private fun getStateLabel(state: ATNState): String {
-    return "(state $state)[${state::class.java.simpleName}]"
-  }
+  private fun getStateLabel(state: ATNState): String =
+    "(state $state)[${state::class.java.simpleName}]"
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("graph", printATNToString()).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("graph", printATNToString()).toString()
 }

@@ -21,16 +21,12 @@ class LevelGranularityReductionEndEvent(
   currentTimeMillis: Long,
   programSize: Int,
   val maxNumOfNodesPerPartition: Int,
-) :
-  AbstractEndEvent<LevelGranularityReductionStartEvent>(
+) : AbstractEndEvent<LevelGranularityReductionStartEvent>(
     startEvent,
     currentTimeMillis,
     programSize,
   ) {
-
   val iteration = startEvent.iteration
 
-  override fun initialProgramSize(): Int {
-    return startEvent.initialProgramSize()
-  }
+  override fun initialProgramSize(): Int = startEvent.initialProgramSize()
 }

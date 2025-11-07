@@ -5,7 +5,6 @@ kt_jvm_test(
     name = "MarkdownToHTMLConverterTest",
     srcs = ["MarkdownToHTMLConverterTest.kt"],
     deps = [
-        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/util/markdown",
     ],

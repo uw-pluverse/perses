@@ -23,46 +23,50 @@ import org.perses.util.Util.lazyAssert
  * mark them 'inline' too.
  */
 @JvmInline
-value class LogicalSizedArray @PublishedApi internal constructor(
-  @PublishedApi internal val array: IntArray,
-) {
-
-  inline var logicalSize: Int
-    get() = array[indexOfLogicalSize]
-    set(value) {
-      lazyAssert { value <= maxLogicalSize }
-      array[indexOfLogicalSize] = value
-    }
-
-  inline val maxLogicalSize: Int
-    get() = array.size - 1
-
+value class LogicalSizedArray
   @PublishedApi
-  internal inline val indexOfLogicalSize: Int
-    get() = array.size - 1
+  internal constructor(
+    @PublishedApi internal val array: IntArray,
+  ) {
+    inline var logicalSize: Int
+      get() = array[indexOfLogicalSize]
+      set(value) {
+        lazyAssert { value <= maxLogicalSize }
+        array[indexOfLogicalSize] = value
+      }
 
-  @Suppress("NOTHING_TO_INLINE")
-  inline operator fun get(index: Int): Int {
-    lazyAssert { index < logicalSize }
-    return array[index]
-  }
+    inline val maxLogicalSize: Int
+      get() = array.size - 1
 
-  @Suppress("NOTHING_TO_INLINE")
-  inline operator fun set(index: Int, value: Int) {
-    lazyAssert { index < logicalSize }
-    array[index] = value
-  }
+    @PublishedApi
+    internal inline val indexOfLogicalSize: Int
+      get() = array.size - 1
 
-  init {
-    require(array.isNotEmpty())
-    logicalSize = maxLogicalSize
-  }
-
-  companion object {
     @Suppress("NOTHING_TO_INLINE")
-    inline fun createWithSize(size: Int): LogicalSizedArray {
-      require(size >= 0)
-      return LogicalSizedArray(IntArray(size + 1))
+    inline operator fun get(index: Int): Int {
+      lazyAssert { index < logicalSize }
+      return array[index]
+    }
+
+    @Suppress("NOTHING_TO_INLINE")
+    inline operator fun set(
+      index: Int,
+      value: Int,
+    ) {
+      lazyAssert { index < logicalSize }
+      array[index] = value
+    }
+
+    init {
+      require(array.isNotEmpty())
+      logicalSize = maxLogicalSize
+    }
+
+    companion object {
+      @Suppress("NOTHING_TO_INLINE")
+      inline fun createWithSize(size: Int): LogicalSizedArray {
+        require(size >= 0)
+        return LogicalSizedArray(IntArray(size + 1))
+      }
     }
   }
-}

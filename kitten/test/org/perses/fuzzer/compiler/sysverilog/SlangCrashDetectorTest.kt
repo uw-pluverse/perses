@@ -25,15 +25,13 @@ import org.perses.fuzzer.compilers.sysverilog.SlangCrashDetector
 
 @RunWith(JUnit4::class)
 class SlangCrashDetectorTest {
-
   val detector = SlangCrashDetector()
 
-  private fun computeSignature(path: String): List<String> {
-    return CrashDetectorHelper.computeSignature(
+  private fun computeSignature(path: String): List<String> =
+    CrashDetectorHelper.computeSignature(
       "kitten/test/org/perses/fuzzer/compiler/sysverilog/$path",
       detector,
     )
-  }
 
   @Test
   fun test_ice_1() {

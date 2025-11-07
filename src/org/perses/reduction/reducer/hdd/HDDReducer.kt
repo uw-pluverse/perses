@@ -22,18 +22,17 @@ import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 
 /** Implementation of the original HDD algorithm.  */
-class HDDReducer(reducerContext: ReducerContext) :
-  AbstractLevelBasedReducer(META, reducerContext) {
-
+class HDDReducer(
+  reducerContext: ReducerContext,
+) : AbstractLevelBasedReducer(META, reducerContext) {
   object META : ReducerAnnotation(
     shortName = NAME,
     description = "A variant of HDD.",
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(HDDReducer(reducerContext))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(HDDReducer(reducerContext))
   }
 
   companion object {

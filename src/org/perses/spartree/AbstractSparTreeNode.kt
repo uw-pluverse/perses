@@ -32,10 +32,28 @@ sealed class AbstractSparTreeNode(
   nodeId: Int,
   val antlrRule: RuleHierarchyEntry?,
 ) : AbstractTreeNode<AbstractSparTreeNode, AbstractNodePayload>(nodeId) {
-
   /** The count of tokens under this node.  */
   var leafTokenCount = INVALID_LEAF_TOKEN_COUNT
     protected set
+    get() {
+      if (isTokenNode()) {
+        field = 1
+      }
+      check(!isPermanentlyDeleted) {
+        """The node $this has been deleted. Use other methods to get the token count of this node.
+          |node: ${printTreeStructure()}
+        """.trimMargin()
+      }
+      lazyAssert({ field == tokenListCostlyComputed.size }) {
+        """Need to update the leafTokenCount. The value is stale.
+          |stale value : $field
+          |actual value: ${tokenListCostlyComputed.size}
+          |is deleted: $isPermanentlyDeleted
+          |node: ${printTreeStructure()}
+        """.trimMargin()
+      }
+      return field
+    }
 
   protected abstract val labelPrefix: String
 
@@ -51,16 +69,11 @@ sealed class AbstractSparTreeNode(
   val isOptionalRuleNode: Boolean
     get() = this is ParserRuleSparTreeNode && this.ruleType === RuleType.OPTIONAL
 
-  val ruleName: String
-    get() {
-      return antlrRule.let {
-        check(it != null) { this }
-        it.ruleName
-      }
-    }
+  val ruleName: String?
+    get() = antlrRule?.ruleName
 
   val tokenListCostlyComputed: ImmutableList<String>
-    get() = slowCollectLeavesWithPostorder().transformToImmutableList { it.token.text }
+    get() = slowCollectLeavesWithPostorder().transformToImmutableList { it.token.lexemeText }
 
   fun isSentinelRoot() = this is SparTreeSentinelRootNode
 
@@ -106,8 +119,8 @@ sealed class AbstractSparTreeNode(
     return internalLeafNodeSequence()
   }
 
-  private fun internalLeafNodeSequence(): Sequence<LexerRuleSparTreeNode> {
-    return sequence {
+  private fun internalLeafNodeSequence(): Sequence<LexerRuleSparTreeNode> =
+    sequence {
       var i = beginToken
       while (i != null && i !== endToken) {
         yield(i)
@@ -117,7 +130,6 @@ sealed class AbstractSparTreeNode(
         yield(i)
       }
     }
-  }
 
   fun checkLeafLinkIntegrity(): ErrorMessage? {
     val errors = ImmutableList.builder<String>()
@@ -126,8 +138,8 @@ sealed class AbstractSparTreeNode(
     if (leaves.toList() != anotherLeaves.toList()) {
       errors.add(
         """leaf node links are not updated.
-        |leaves via links    : ${anotherLeaves.map { it.token.text }}
-        |leaves via postorder: ${leaves.map { it.token.text }}
+        |leaves via links    : ${anotherLeaves.map { it.token.lexemeText }}
+        |leaves via postorder: ${leaves.map { it.token.lexemeText }}
         """.trimMargin(),
       )
     }
@@ -148,9 +160,7 @@ sealed class AbstractSparTreeNode(
     lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
   }
 
-  override fun checkNodeIntegrity(): ErrorMessage? {
-    return null
-  }
+  override fun checkNodeIntegrity(): ErrorMessage? = null
 
   fun slowCollectLeavesWithPostorder(): ImmutableList<LexerRuleSparTreeNode> {
     val leaves = ImmutableList.builder<LexerRuleSparTreeNode>()
@@ -168,12 +178,12 @@ sealed class AbstractSparTreeNode(
 
   protected abstract fun buildTokenIntervalInfoForCurrentNode()
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
       .add("id", nodeId)
       .add("parent", parent?.nodeId ?: "null")
       .toString()
-  }
 
   abstract var beginToken: LexerRuleSparTreeNode?
     internal set
@@ -181,17 +191,11 @@ sealed class AbstractSparTreeNode(
   abstract var endToken: LexerRuleSparTreeNode?
     internal set
 
-  override fun equals(other: Any?): Boolean {
-    return this === other
-  }
+  override fun equals(other: Any?): Boolean = this === other
 
-  override fun hashCode(): Int {
-    return nodeId
-  }
+  override fun hashCode(): Int = nodeId
 
-  fun printTreeStructure(): String {
-    return printTreeStructure(this)
-  }
+  fun printTreeStructure(): String = printTreeStructure(this)
 
   override fun recursiveDeepCopy(
     nodeIdCopyStrategy: NodeIdCopyStrategy,
@@ -227,7 +231,6 @@ sealed class AbstractSparTreeNode(
   }
 
   companion object {
-
     private const val INVALID_LEAF_TOKEN_COUNT = Int.MIN_VALUE
 
     fun printTreeStructure(root: AbstractSparTreeNode): String {
@@ -241,7 +244,10 @@ sealed class AbstractSparTreeNode(
       return writer.toString()
     }
 
-    fun printTreeStructure(root: AbstractSparTreeNode, writer: Writer) {
+    fun printTreeStructure(
+      root: AbstractSparTreeNode,
+      writer: Writer,
+    ) {
       writer.append(getStringLabel(root)).append('\n')
       printTreeStructure(root, writer, ArrayList())
     }

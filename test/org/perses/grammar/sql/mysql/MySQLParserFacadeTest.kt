@@ -20,12 +20,11 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 
 @RunWith(JUnit4::class)
 class MySQLParserFacadeTest {
-
-  val facade = MySQLParserFacade() as AbstractDefaultParserFacade<*, *>
+  val facade = MySQLParserFacade() as AbstractParserFacade
 
   @Test
   fun test() {

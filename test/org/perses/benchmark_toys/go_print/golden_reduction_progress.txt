@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "small.go"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_small.go"
+  outputDir: "result_reduction_golden_test_node_priority-dfs_small.go"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: true
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -72,43 +78,64 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: perses_node_priority_with_dfs_delta
-condition: smaller
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 28
+(70/70)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (token_canonicalizer) {
+            fixpoint (smaller) {
+                node_priority-dfs
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(70/70)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 (|:sourceFile) {id=1,slot_type=sourceFile}
@@ -299,9 +326,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
+FixPt[1][node_priority-dfs][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__sourceFile_4]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__sourceFile_4]dd@1
     --file: small.go--
     package main;
     import "fmt";
@@ -311,6 +340,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 6
@@ -389,9 +420,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
+FixPt[1][node_priority-dfs][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDecl_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDecl_1]dd@1
     --file: small.go--
     package main;
     import "fmt";
@@ -405,6 +438,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 15
@@ -459,9 +494,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
+FixPt[1][node_priority-dfs][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__block_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
     --file: small.go--
     package main;
     import "fmt";
@@ -475,6 +512,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 18
@@ -560,7 +599,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -685,7 +724,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
+FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -702,9 +743,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__primaryExpr_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__primaryExpr_1]dd@1
     --file: small.go--
     package main;
     import "fmt";
@@ -720,9 +762,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__primaryExpr_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__primaryExpr_1]dd@1
     --file: small.go--
     package main;
     import "fmt";
@@ -738,6 +781,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 249
@@ -782,9 +827,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__arguments_6]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__arguments_6]dd@1
     --file: small.go--
     package main;
     import "fmt";
@@ -800,6 +847,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 254
@@ -880,9 +929,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__sourceFile_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__sourceFile_2]dd@1
     --file: small.go--
     package main;
     func main() {
@@ -896,6 +947,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 5
@@ -1003,7 +1056,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1020,6 +1075,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 261
@@ -1488,9 +1545,8 @@ Failed to reduce node 10
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+(22/70)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 (|:sourceFile) {id=297,slot_type=sourceFile}
@@ -1573,7 +1629,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1584,6 +1642,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 302
@@ -1647,7 +1707,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1662,6 +1724,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 311
@@ -1706,7 +1770,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1721,6 +1787,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 314
@@ -1765,7 +1833,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1799,7 +1867,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1816,7 +1884,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1833,7 +1901,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1850,7 +1918,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1886,7 +1954,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1903,7 +1973,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1920,7 +1991,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1937,6 +2009,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 328
@@ -1981,7 +2055,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -1998,6 +2074,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 333
@@ -2023,7 +2101,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -2040,7 +2118,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -2076,7 +2154,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -2091,6 +2171,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 301
@@ -2198,7 +2280,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
@@ -2215,6 +2299,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 340
@@ -2683,66 +2769,2782 @@ Failed to reduce node 306
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 70
-  characterCount: 189
-  fileContents:
-  - fileName: "small.go"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+=====Fixpoint iteration 3. Reducer: token_canonicalizer=====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 22
-  characterCount: 62
-  fileContents:
-  - fileName: "small.go"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 22
-  characterCount: 62
-  fileContents:
-  - fileName: "small.go"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+The spar-tree is the following.
+(|:sourceFile) {id=297,slot_type=sourceFile}
+|___aux_rule__sourceFile_6 {id=298,slot_type=aux_rule__sourceFile_6}
+    |___packageClause {id=299,slot_type=packageClause}
+    |   |___Token:package {id=373,slot_type=PACKAGE}
+    |   |___Token:main {id=374,slot_type=IDENTIFIER}
+    |___Token:; {id=372,slot_type=[eos,SEMI]}
+    |___(*) {id=301,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1 {id=362,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl {id=363,slot_type=importDecl}
+    |       |   |___Token:import {id=366,slot_type=IMPORT}
+    |       |   |___Token:"fmt" {id=371,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:; {id=365,slot_type=[eos,SEMI]}
+    |___(*) {id=302,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3 {id=303,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl {id=307,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func {id=308,slot_type=FUNC}
+            |   |___Token:main {id=309,slot_type=IDENTIFIER}
+            |   |___parameters {id=359,slot_type=[signature,parameters]}
+            |   |   |___Token:( {id=360,slot_type=L_PAREN}
+            |   |   |___Token:) {id=361,slot_type=R_PAREN}
+            |   |___(?) {id=311,slot_type=optional__functionDecl_1}
+            |       |___block {id=312,slot_type=block}
+            |           |___Token:{ {id=313,slot_type=L_CURLY}
+            |           |___(?) {id=314,slot_type=optional__block_1}
+            |           |   |___(+) {id=316,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2 {id=318,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr {id=326,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt {id=358,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*) {id=328,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4 {id=354,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:. {id=355,slot_type=DOT}
+            |           |           |       |   |___Token:Println {id=356,slot_type=IDENTIFIER}
+            |           |           |       |___arguments {id=331,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:( {id=332,slot_type=L_PAREN}
+            |           |           |           |___(?) {id=333,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression {id=338,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go" {id=353,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*) {id=340,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2 {id=341,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+ {id=349,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"lang" {id=348,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:) {id=334,slot_type=R_PAREN}
+            |           |           |___Token:; {id=321,slot_type=[eos,SEMI]}
+            |           |___Token:} {id=315,slot_type=R_CURLY}
+            |___Token:; {id=306,slot_type=[eos,SEMI]}
+------------------------------------------------------------
 
 
-#test success = 1
-#test failure = 13
-#test result cache hits = 19
-#test execution cancelled = 0
-#node edit action set cache hits = 16
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package a   ;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package a   ;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 2 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package a   ;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package a   ;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: small.go--
+    package main;
+    import ""   ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import ""   ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import ""   ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import ""   ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"mt"'
+    --file: small.go--
+    package main;
+    import "mt" ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "mt" ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"ft"'
+    --file: small.go--
+    package main;
+    import "ft" ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "ft" ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"fm"'
+    --file: small.go--
+    package main;
+    import "fm" ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fm" ;
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '" mt"'
+    --file: small.go--
+    package main;
+    import " mt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import " mt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"!mt"'
+    --file: small.go--
+    package main;
+    import "!mt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "!mt";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"f t"'
+    --file: small.go--
+    package main;
+    import "f t";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "f t";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"f!t"'
+    --file: small.go--
+    package main;
+    import "f!t";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "f!t";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"fm "'
+    --file: small.go--
+    package main;
+    import "fm ";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fm ";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"fm!"'
+    --file: small.go--
+    package main;
+    import "fm!";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fm!";
+    func main() {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package a   ;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package a   ;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        a  .Println("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        a  .Println("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.a      ("go" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.a      ("go" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(""   + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(""   + "lang");
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(""   + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(""   + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"o"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("o"  + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("o"  + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"g"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g"  + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g"  + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '" o"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(" o" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(" o" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"!o"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("!o" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("!o" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"g "'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g " + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g " + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"g!"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g!" + "lang");
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g!" + "lang");
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"ang"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "ang" );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "ang" );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"lng"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lng" );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lng" );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"lag"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lag" );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lag" );
+    };
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lan" );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lan" );
+    };
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+25 entries are removed: 38 --> 13.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 29
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 22 -> 22
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"ag"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "ag"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "ag"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"lg"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lg"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "lg"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"la"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+3 entries are removed: 16 --> 13.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 22 -> 22
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"a"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "a"   );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "a"   );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"l"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l"   );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l"   );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '" a"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + " a"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + " a"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"!a"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "!a"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "!a"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"l "'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l "  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l "  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"l!"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l!"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l!"  );
+    };
+------------------------------------------------------------
+
+
+(22/70)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 4. Reducer: node_priority-dfs======
+
+The spar-tree is the following.
+(|:sourceFile) {id=458,slot_type=sourceFile}
+|___aux_rule__sourceFile_6 {id=459,slot_type=aux_rule__sourceFile_6}
+    |___packageClause {id=460,slot_type=packageClause}
+    |   |___Token:package {id=534,slot_type=PACKAGE}
+    |   |___Token:main {id=535,slot_type=IDENTIFIER}
+    |___Token:; {id=533,slot_type=[eos,SEMI]}
+    |___(*) {id=462,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1 {id=523,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl {id=524,slot_type=importDecl}
+    |       |   |___Token:import {id=527,slot_type=IMPORT}
+    |       |   |___Token:"fmt" {id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:; {id=526,slot_type=[eos,SEMI]}
+    |___(*) {id=463,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3 {id=464,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl {id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func {id=469,slot_type=FUNC}
+            |   |___Token:main {id=470,slot_type=IDENTIFIER}
+            |   |___parameters {id=520,slot_type=[signature,parameters]}
+            |   |   |___Token:( {id=521,slot_type=L_PAREN}
+            |   |   |___Token:) {id=522,slot_type=R_PAREN}
+            |   |___(?) {id=472,slot_type=optional__functionDecl_1}
+            |       |___block {id=473,slot_type=block}
+            |           |___Token:{ {id=474,slot_type=L_CURLY}
+            |           |___(?) {id=475,slot_type=optional__block_1}
+            |           |   |___(+) {id=477,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2 {id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr {id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt {id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*) {id=489,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4 {id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:. {id=516,slot_type=DOT}
+            |           |           |       |   |___Token:Println {id=517,slot_type=IDENTIFIER}
+            |           |           |       |___arguments {id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:( {id=493,slot_type=L_PAREN}
+            |           |           |           |___(?) {id=494,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression {id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go" {id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*) {id=501,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2 {id=502,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+ {id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"la" {id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:) {id=495,slot_type=R_PAREN}
+            |           |           |___Token:; {id=482,slot_type=[eos,SEMI]}
+            |           |___Token:} {id=476,slot_type=R_CURLY}
+            |___Token:; {id=467,slot_type=[eos,SEMI]}
+------------------------------------------------------------
+
+
+=================Reducing node 459, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 459
+------------------------------------------------------------
+
+
+=================Reducing node 463, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+===================Node reduction is done===================
+
+Failed to reduce node 463
+------------------------------------------------------------
+
+
+=================Reducing node 464, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=464}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 464
+------------------------------------------------------------
+
+
+=================Reducing node 468, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 468
+------------------------------------------------------------
+
+
+=================Reducing node 472, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main()
+     ;
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main()
+     ;
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+===================Node reduction is done===================
+
+Failed to reduce node 472
+------------------------------------------------------------
+
+
+=================Reducing node 473, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=473}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 473
+------------------------------------------------------------
+
+
+=================Reducing node 475, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+===================Node reduction is done===================
+
+Failed to reduce node 475
+------------------------------------------------------------
+
+
+=================Reducing node 477, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=477}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 477
+------------------------------------------------------------
+
+
+=================Reducing node 479, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 479
+------------------------------------------------------------
+
+
+=================Reducing node 487, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+            Println               ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+            Println               ;
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+                    "go"          ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+                    "go"          ;
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+                    "go" + "la"   ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+                    "go" + "la"   ;
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 487
+------------------------------------------------------------
+
+
+=================Reducing node 489, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt                       ;
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println               ;
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println               ;
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__primaryExpr_1]dd@1
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt        ("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt        ("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+===================Node reduction is done===================
+
+Failed to reduce node 489
+------------------------------------------------------------
+
+
+=================Reducing node 492, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=492}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 492
+------------------------------------------------------------
+
+
+=================Reducing node 494, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(             );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(             );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+===================Node reduction is done===================
+
+Failed to reduce node 494
+------------------------------------------------------------
+
+
+=================Reducing node 499, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=499}
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(       "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(       "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 499
+------------------------------------------------------------
+
+
+=================Reducing node 462, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__sourceFile_2]dd@1
+    --file: small.go--
+    package main;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+===================Node reduction is done===================
+
+Failed to reduce node 462
+------------------------------------------------------------
+
+
+=================Reducing node 523, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=523}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 523
+------------------------------------------------------------
+
+
+=================Reducing node 524, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 524
+------------------------------------------------------------
+
+
+=================Reducing node 520, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 520
+------------------------------------------------------------
+
+
+=================Reducing node 515, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=515}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 515
+------------------------------------------------------------
+
+
+=================Reducing node 501, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go"         );
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+===================Node reduction is done===================
+
+Failed to reduce node 501
+------------------------------------------------------------
+
+
+=================Reducing node 502, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=502}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 502
+------------------------------------------------------------
+
+
+=================Reducing node 460, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 460
+------------------------------------------------------------
+
+
+=================Reducing node 535, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 535
+------------------------------------------------------------
+
+
+=================Reducing node 534, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 534
+------------------------------------------------------------
+
+
+=================Reducing node 533, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 533
+------------------------------------------------------------
+
+
+=================Reducing node 532, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 532
+------------------------------------------------------------
+
+
+=================Reducing node 527, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 527
+------------------------------------------------------------
+
+
+=================Reducing node 526, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 526
+------------------------------------------------------------
+
+
+=================Reducing node 522, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 522
+------------------------------------------------------------
+
+
+=================Reducing node 521, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 521
+------------------------------------------------------------
+
+
+=================Reducing node 519, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 519
+------------------------------------------------------------
+
+
+=================Reducing node 517, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 517
+------------------------------------------------------------
+
+
+=================Reducing node 516, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 516
+------------------------------------------------------------
+
+
+=================Reducing node 514, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 514
+------------------------------------------------------------
+
+
+=================Reducing node 510, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 510
+------------------------------------------------------------
+
+
+=================Reducing node 509, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 509
+------------------------------------------------------------
+
+
+=================Reducing node 495, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 495
+------------------------------------------------------------
+
+
+=================Reducing node 493, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 493
+------------------------------------------------------------
+
+
+=================Reducing node 482, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 482
+------------------------------------------------------------
+
+
+=================Reducing node 476, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 476
+------------------------------------------------------------
+
+
+=================Reducing node 474, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 474
+------------------------------------------------------------
+
+
+=================Reducing node 470, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 470
+------------------------------------------------------------
+
+
+=================Reducing node 469, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 469
+------------------------------------------------------------
+
+
+=================Reducing node 467, size=22=================
+
+The current best program is the following
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 467
+------------------------------------------------------------
+
+
+=====Fixpoint iteration 5. Reducer: token_canonicalizer=====
+
+The spar-tree is the following.
+(|:sourceFile) {id=458,slot_type=sourceFile}
+|___aux_rule__sourceFile_6 {id=459,slot_type=aux_rule__sourceFile_6}
+    |___packageClause {id=460,slot_type=packageClause}
+    |   |___Token:package {id=534,slot_type=PACKAGE}
+    |   |___Token:main {id=535,slot_type=IDENTIFIER}
+    |___Token:; {id=533,slot_type=[eos,SEMI]}
+    |___(*) {id=462,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1 {id=523,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl {id=524,slot_type=importDecl}
+    |       |   |___Token:import {id=527,slot_type=IMPORT}
+    |       |   |___Token:"fmt" {id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:; {id=526,slot_type=[eos,SEMI]}
+    |___(*) {id=463,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3 {id=464,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl {id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func {id=469,slot_type=FUNC}
+            |   |___Token:main {id=470,slot_type=IDENTIFIER}
+            |   |___parameters {id=520,slot_type=[signature,parameters]}
+            |   |   |___Token:( {id=521,slot_type=L_PAREN}
+            |   |   |___Token:) {id=522,slot_type=R_PAREN}
+            |   |___(?) {id=472,slot_type=optional__functionDecl_1}
+            |       |___block {id=473,slot_type=block}
+            |           |___Token:{ {id=474,slot_type=L_CURLY}
+            |           |___(?) {id=475,slot_type=optional__block_1}
+            |           |   |___(+) {id=477,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2 {id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr {id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt {id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*) {id=489,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4 {id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:. {id=516,slot_type=DOT}
+            |           |           |       |   |___Token:Println {id=517,slot_type=IDENTIFIER}
+            |           |           |       |___arguments {id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:( {id=493,slot_type=L_PAREN}
+            |           |           |           |___(?) {id=494,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression {id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go" {id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*) {id=501,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2 {id=502,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+ {id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"la" {id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:) {id=495,slot_type=R_PAREN}
+            |           |           |___Token:; {id=482,slot_type=[eos,SEMI]}
+            |           |___Token:} {id=476,slot_type=R_CURLY}
+            |___Token:; {id=467,slot_type=[eos,SEMI]}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package a   ;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package a   ;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 2 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package a   ;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package a   ;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: small.go--
+    package main;
+    import ""   ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import ""   ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import ""   ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import ""   ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"mt"'
+    --file: small.go--
+    package main;
+    import "mt" ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "mt" ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"ft"'
+    --file: small.go--
+    package main;
+    import "ft" ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "ft" ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"fm"'
+    --file: small.go--
+    package main;
+    import "fm" ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fm" ;
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '" mt"'
+    --file: small.go--
+    package main;
+    import " mt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import " mt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"!mt"'
+    --file: small.go--
+    package main;
+    import "!mt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "!mt";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"f t"'
+    --file: small.go--
+    package main;
+    import "f t";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "f t";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"f!t"'
+    --file: small.go--
+    package main;
+    import "f!t";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "f!t";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"fm "'
+    --file: small.go--
+    package main;
+    import "fm ";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fm ";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"fm!"'
+    --file: small.go--
+    package main;
+    import "fm!";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fm!";
+    func main() {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package a   ;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package a   ;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func a   () {
+        fmt.Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        a  .Println("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        a  .Println("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.a      ("go" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.a      ("go" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(""   + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(""   + "la"  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(""   + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(""   + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"o"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("o"  + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("o"  + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"g"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g"  + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g"  + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '" o"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(" o" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println(" o" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"!o"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("!o" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("!o" + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"g "'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g " + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g " + "la"  );
+    };
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"g!"'
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g!" + "la"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("g!" + "la"  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + ""    );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "a"   );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "a"   );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l"   );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l"   );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + " a"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + " a"  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "!a"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "!a"  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l "  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l "  );
+    };
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l!"  );
+    };
+    --file: <formatted tokenized program in its original format>--
+    package main;
+    import "fmt";
+    func main() {
+        fmt.Println("go" + "l!"  );
+    };
+------------------------------------------------------------
+
+
+====Fixpoint iteration 6. Reducer: FineGritLatraReducer=====
+
+The spar-tree is the following.
+(|:sourceFile) {id=458,slot_type=sourceFile}
+|___aux_rule__sourceFile_6 {id=459,slot_type=aux_rule__sourceFile_6}
+    |___packageClause {id=460,slot_type=packageClause}
+    |   |___Token:package {id=534,slot_type=PACKAGE}
+    |   |___Token:main {id=535,slot_type=IDENTIFIER}
+    |___Token:; {id=533,slot_type=[eos,SEMI]}
+    |___(*) {id=462,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1 {id=523,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl {id=524,slot_type=importDecl}
+    |       |   |___Token:import {id=527,slot_type=IMPORT}
+    |       |   |___Token:"fmt" {id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:; {id=526,slot_type=[eos,SEMI]}
+    |___(*) {id=463,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3 {id=464,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl {id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func {id=469,slot_type=FUNC}
+            |   |___Token:main {id=470,slot_type=IDENTIFIER}
+            |   |___parameters {id=520,slot_type=[signature,parameters]}
+            |   |   |___Token:( {id=521,slot_type=L_PAREN}
+            |   |   |___Token:) {id=522,slot_type=R_PAREN}
+            |   |___(?) {id=472,slot_type=optional__functionDecl_1}
+            |       |___block {id=473,slot_type=block}
+            |           |___Token:{ {id=474,slot_type=L_CURLY}
+            |           |___(?) {id=475,slot_type=optional__block_1}
+            |           |   |___(+) {id=477,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2 {id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr {id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt {id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*) {id=489,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4 {id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:. {id=516,slot_type=DOT}
+            |           |           |       |   |___Token:Println {id=517,slot_type=IDENTIFIER}
+            |           |           |       |___arguments {id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:( {id=493,slot_type=L_PAREN}
+            |           |           |           |___(?) {id=494,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression {id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go" {id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*) {id=501,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2 {id=502,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+ {id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"la" {id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:) {id=495,slot_type=R_PAREN}
+            |           |           |___Token:; {id=482,slot_type=[eos,SEMI]}
+            |           |___Token:} {id=476,slot_type=R_CURLY}
+            |___Token:; {id=467,slot_type=[eos,SEMI]}
+------------------------------------------------------------
+
+
+FixPt[6][FineGritLatraReducer](22/70)  Latra does not support LanguageGo{name=go, extensions=[go], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+(22/70)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs     -48   -127             0
+ 1    node_priority-dfs       0      0             0
+ 2  token_canonicalizer       0     -2             1
+ 3    node_priority-dfs       0      0             1
+ 4  token_canonicalizer       0      0             1
+ 5 FineGritLatraReducer       0      0             1
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     3     -48   -127
+ token_canonicalizer     2       0     -2
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
+
+
+#test success = 3
+#test failure = 74
+#test result cache hits = 46
+#test execution cancelled = 1
+#node edit action set cache hits = 24
 #external test execution cache hits = 0

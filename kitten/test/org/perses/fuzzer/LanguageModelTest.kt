@@ -30,19 +30,18 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class LanguageModelTest {
-
   private val tempDir = Files.createTempDirectory(javaClass.simpleName)
   private val test =
     """
-        int main () {
-          return 0;
-        }
+    int main () {
+      return 0;
+    }
     """.trimIndent()
   private val anotherTest =
     """
-      int main () {
-        printf("Hello");
-      }
+    int main () {
+      printf("Hello");
+    }
     """.trimIndent()
 
   @After
@@ -55,27 +54,34 @@ class LanguageModelTest {
 
   @Test
   fun testIsInteresting() {
-    val nDepthTreeModel = NDepthTreeModel(
-      contextSizeLimit = 5,
-      parserFacadeFactory.getParserFacadeListForOrNull(LanguageC)!!
-        .defaultParserFacade.create(),
-      allowToEnableGuidance = true,
-    )
+    val nDepthTreeModel =
+      NDepthTreeModel(
+        contextSizeLimit = 5,
+        parserFacadeFactory
+          .getParserFacadeListForOrNull(LanguageC)!!
+          .defaultParserFacade
+          .create(),
+        allowToEnableGuidance = true,
+      )
     val program1 = File(tempDir.toFile(), "test_1.c")
     val program2 = File(tempDir.toFile(), "test_2.c")
-    val parserFacade = SingleParserFacadeFactory
-      .builderWithBuiltinLanguages()
-      .build()
-      .getParserFacadeListForOrNull(LanguageC)!!
-      .defaultParserFacade.create()
+    val parserFacade =
+      SingleParserFacadeFactory
+        .builderWithBuiltinLanguages()
+        .build()
+        .getParserFacadeListForOrNull(LanguageC)!!
+        .defaultParserFacade
+        .create()
     program1.writeText(test)
     program2.writeText(anotherTest)
-    val tree1 = SparTreeFuzzer
-      .fromFile(parserFacade, program1)
-      .sparTree
-    val tree2 = SparTreeFuzzer
-      .fromFile(parserFacade, program2)
-      .sparTree
+    val tree1 =
+      SparTreeFuzzer
+        .fromFile(parserFacade, program1)
+        .sparTree
+    val tree2 =
+      SparTreeFuzzer
+        .fromFile(parserFacade, program2)
+        .sparTree
     val feature1 = nDepthTreeModel.updateModelAndGetFeatureOfSparTree(tree1)
     assertThat(nDepthTreeModel.getRarenessOfMostRareFeature(feature1)).isEqualTo(1.0)
     var feature2 = nDepthTreeModel.updateModelAndGetFeatureOfSparTree(tree2)

@@ -34,7 +34,6 @@ import kotlin.io.path.deleteRecursively
 // TODO: add more tests for the other methods.
 @RunWith(JUnit4::class)
 class ShellCommandOnPathTest {
-
   val tempDir = createTempDirectory(javaClass.simpleName)
 
   @OptIn(ExperimentalPathApi::class)
@@ -75,17 +74,19 @@ class ShellCommandOnPathTest {
 
   @Test
   fun testShouldPrintPATHOnFailure() {
-    val exception: Exception = Assert.assertThrows(Exception::class.java) {
-      ShellCommandOnPath("does-not-exist")
-    }
+    val exception: Exception =
+      Assert.assertThrows(Exception::class.java) {
+        ShellCommandOnPath("does-not-exist")
+      }
     assertThat(exception.message).contains(System.getenv("PATH"))
   }
 
   @Test
   fun testPathOnPATHIsARegularFile() {
-    val script = tempDir.resolve("temp.sh").apply {
-      createFile(this)
-    }
+    val script =
+      tempDir.resolve("temp.sh").apply {
+        createFile(this)
+      }
     Util.setExecutable(script)
     assertThat(
       ShellCommandOnPath.isCmdOnPATH(
@@ -97,9 +98,10 @@ class ShellCommandOnPathTest {
 
   @Test
   fun testSymLinkIsRegularFile() {
-    val script = tempDir.resolve("temp.sh").apply {
-      createFile(this)
-    }
+    val script =
+      tempDir.resolve("temp.sh").apply {
+        createFile(this)
+      }
     Util.setExecutable(script)
 
     Paths.get("tempSymLink").createSymbolicLinkPointingTo(script)
@@ -111,9 +113,10 @@ class ShellCommandOnPathTest {
   @Test
   fun testSymLinkIsNotRegularFile() {
     Paths.get("temp").createSymbolicLinkPointingTo(Paths.get("tempSymLink.sh"))
-    val exception: Exception = Assert.assertThrows(Exception::class.java) {
-      ShellCommandOnPath.normalizeAndCheckExecutability("temp")
-    }
+    val exception: Exception =
+      Assert.assertThrows(Exception::class.java) {
+        ShellCommandOnPath.normalizeAndCheckExecutability("temp")
+      }
     assertThat(exception.message).contains(
       "The symbol link temp exists, but the source is not a regular file.",
     )

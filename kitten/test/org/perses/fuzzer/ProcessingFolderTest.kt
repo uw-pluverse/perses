@@ -26,11 +26,12 @@ import org.junit.runners.JUnit4
 @Suppress("DEPRECATION")
 @RunWith(JUnit4::class)
 class ProcessingFolderTest {
-
   private val util = RustTestUtil()
 
-  private val workingDir = java.nio.file.Files.createTempDirectory(javaClass.simpleName)
-    .toFile()
+  private val workingDir =
+    java.nio.file.Files
+      .createTempDirectory(javaClass.simpleName)
+      .toFile()
 
   @After
   fun teardown() {

@@ -27,13 +27,15 @@ class ReductionStartEvent(
   val commandLineOptions: String,
   val extraData: String? = null,
 ) : AbstractStartEvent(
-  currentTimeMillis,
-  programSize,
-) {
-
+    currentTimeMillis,
+    programSize,
+  ) {
   private var currentIteration = 0
 
   override fun initialProgramSize() = programSize
+
+  override val prefixLabelFromRootToHere: String
+    get() = ""
 
   fun nextFixpointIteration(
     programSize: Int,
@@ -55,15 +57,16 @@ class ReductionStartEvent(
 
   fun createAdHocMessageEvent(
     programSize: Int,
+    prefixLabelFromRootToHere: String,
     messageComputer: () -> Any,
-  ): AdHocMessageEvent {
-    return AdHocMessageEvent(
+  ): AdHocMessageEvent =
+    AdHocMessageEvent(
       reductionStartEvent = this,
       currentTimeMillis = System.currentTimeMillis(),
       programSize = programSize,
+      prefixLabelFromRootToHere = prefixLabelFromRootToHere,
       messageComputer = messageComputer,
     )
-  }
 
   fun createEndEvent(
     programSize: Int,

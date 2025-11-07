@@ -27,11 +27,11 @@ import java.nio.file.Files
 
 @RunWith(JUnit4::class)
 class PersesConstantsTest {
-
   val workingDir = Files.createTempDirectory("PersesConstantsTest_")
-  val constants = PersesConstants.createCustomizedConstants(
-    userHomeFolder = workingDir,
-  )
+  val constants =
+    PersesConstants.createCustomizedConstants(
+      userHomeFolder = workingDir,
+    )
 
   @After
   fun teardown() {

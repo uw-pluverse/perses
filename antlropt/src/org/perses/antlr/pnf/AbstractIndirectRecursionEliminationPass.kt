@@ -28,17 +28,16 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.util.toImmutableList
 
 abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val ruleTransitionGraph = createRuleTransitionGraph(parserGrammar)
-    val stronglyConnectedComponents = ruleTransitionGraph.computeSccSet()
-      .asSequence()
-      .map { it.vertexSet() }
-      .map { ImmutableSet.copyOf(it) }
-      .toImmutableList()
+    val stronglyConnectedComponents =
+      ruleTransitionGraph
+        .computeSccSet()
+        .asSequence()
+        .map { it.vertexSet() }
+        .map { ImmutableSet.copyOf(it) }
+        .toImmutableList()
     val mutableGrammar = MutableGrammar.createParserRulesFrom(parserGrammar)
     for (scc in stronglyConnectedComponents) {
       mutableGrammar.validate()
@@ -79,23 +78,22 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
     }
   }
 
-  protected abstract fun getRuleRefToInline(
-    def: AbstractPersesRuleElement,
-  ): RuleNameHandle?
+  protected abstract fun getRuleRefToInline(def: AbstractPersesRuleElement): RuleNameHandle?
 
   fun inlineRuleRef(
     def: AbstractPersesRuleElement,
     toInline: AbstractPersesRuleElement,
-  ): AbstractPersesRuleElement {
-    return when (def.tag) {
+  ): AbstractPersesRuleElement =
+    when (def.tag) {
       AstTag.RULE_REF -> toInline
       AstTag.SEQUENCE -> {
         val seq = def as PersesSequenceAst
         check(seq.childCount > 1)
-        val newDef = ImmutableList
-          .builderWithExpectedSize<AbstractPersesRuleElement>(
-            seq.childCount + toInline.childCount,
-          )
+        val newDef =
+          ImmutableList
+            .builderWithExpectedSize<AbstractPersesRuleElement>(
+              seq.childCount + toInline.childCount,
+            )
         inlineRuleRefIntoSequence(seq, toInline, newDef)
         val children = newDef.build()
         check(children.size > 0)
@@ -107,7 +105,6 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
       }
       else -> throw RuntimeException("Unhandled tag " + def.tag)
     }
-  }
 
   protected abstract fun inlineRuleRefIntoSequence(
     originalSequence: PersesSequenceAst,
@@ -115,17 +112,15 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
     newSeqBuilder: ImmutableList.Builder<AbstractPersesRuleElement>,
   )
 
-  protected abstract fun createRuleTransitionGraph(
-    grammar: PersesGrammar,
-  ): RuleTransitionGraph
+  protected abstract fun createRuleTransitionGraph(grammar: PersesGrammar): RuleTransitionGraph
 
   companion object {
     @JvmStatic
     fun getFirstOrLastRuleRef(
       def: AbstractPersesRuleElement,
       seekingFirst: Boolean,
-    ): RuleNameHandle? {
-      return when (def.tag) {
+    ): RuleNameHandle? =
+      when (def.tag) {
         AstTag.RULE_REF -> (def as PersesRuleReferenceAst).ruleNameHandle
         AstTag.SEQUENCE -> {
           val seq = def as PersesSequenceAst
@@ -137,6 +132,5 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
         }
         else -> null
       }
-    }
   }
 }

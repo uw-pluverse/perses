@@ -17,6 +17,7 @@
 package org.perses.ppr.diff.list
 
 import org.perses.AbstractMain
+import org.perses.HelperForPersesMain
 import org.perses.PersesListenerManagerCreator
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.program.AbstractDataKind
@@ -31,42 +32,46 @@ class ListDiffMain(
   cmd: ListDiffCmdOptions,
   globalContext: GlobalContext,
 ) : AbstractMain<ListDiffCmdOptions, ListDiffReductionDriver, ListDiffReductionInputs>(
-  cmd,
-  globalContext,
-) {
-
+    cmd,
+    globalContext,
+  ) {
   override fun createSequenceOfReductionDriverCreators(
     reductionInputs: ListDiffReductionInputs,
   ): Sequence<ReductionDriverCreator<ListDiffReductionDriver>> {
-    val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(
-      reductionInputs.initiallyDeterminedMainDataKind,
-    )!!.defaultParserFacade.create()
-    return sequenceOf(
-      ReductionDriverCreator(
-        creator = {
-          ListDiffReductionDriver.create(
-            globalContext,
-            cmd,
-            reductionInputs,
-            parserFacade,
-            listenerManager,
-          )
-        },
-        descriptor = {
-          """
-            ${parserFacade::class}
-          """.trimIndent()
-        },
-      ),
-    )
+    val parserFacadeLists = computePlausibleParserFacades()
+
+    return parserFacadeLists
+      .sequenceOfCreators()
+      .map { facadeCreator ->
+        val parserFacade = facadeCreator.create()
+        ReductionDriverCreator(
+          creator = {
+            ListDiffReductionDriver.create(
+              globalContent = globalContext,
+              cmd = cmd,
+              reductionInputs = reductionInputs,
+              parserFacade = parserFacade,
+              listenerManager = listenerManager,
+            )
+          },
+          descriptor = { "${parserFacade::class}" },
+        )
+      }
   }
 
-  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager {
-    return PersesListenerManagerCreator.createAsyncReductionListenerManager(
+  override fun computeLanguageAndParserConfiguration(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): LanguageAndParserConfiguration =
+    HelperForPersesMain.computeLanguageAndParserConfiguration(
+      parserFacadeFactory,
+      cmd.languageControlFlags,
+    )
+
+  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager =
+    PersesListenerManagerCreator.createAsyncReductionListenerManager(
       cmd,
       globalContext.fileStreamPool,
     )
-  }
 
   override fun createReductionInputs(
     parserFacadeFactory: AbstractParserFacadeFactory,
@@ -76,14 +81,12 @@ class ListDiffMain(
       seedPath = inputFlags.getSourceFile(),
       variantPath = inputFlags.getVariantFile(),
       testScriptPath = inputFlags.getTestScript(),
-      immutableDependencyFiles = inputFlags.deps.transformToImmutableList { path ->
-        BinaryReductionFile(path, AbstractDataKind.UnknownDataKind)
-      },
+      immutableDependencyFiles =
+        inputFlags.deps.transformToImmutableList { path ->
+          BinaryReductionFile(path, AbstractDataKind.UnknownDataKind)
+        },
       languageKindComputer = { sourceFileAbsPath ->
-        parserFacadeFactory.computeLanguage(
-          cmd.languageControlFlags.languageName,
-          sourceFileAbsPath,
-        )
+        computeLanguageForFile(sourceFileAbsPath)
       },
     )
   }
@@ -91,11 +94,12 @@ class ListDiffMain(
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor<ListDiffCmdOptions>(
-        cmdCreator = { ListDiffCmdOptions() },
-        programName = ListDiffMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor<ListDiffCmdOptions>(
+          cmdCreator = { ListDiffCmdOptions() },
+          programName = ListDiffMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }
@@ -103,8 +107,10 @@ class ListDiffMain(
       Util.useResources(
         {
           GlobalContext(
+            enableGlobalCache = cmd.cacheControlFlags.enableGlobalCache,
             globalCacheFile = cmd.cacheControlFlags.globalCacheFile,
             pathToSaveUpdatedGlobalCache = cmd.cacheControlFlags.pathToSaveUpdatedGlobalCache,
+            shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
           )
         },
         { globalContext -> ListDiffMain(cmd, globalContext) },

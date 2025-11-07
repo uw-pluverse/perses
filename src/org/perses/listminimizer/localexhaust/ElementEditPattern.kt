@@ -17,15 +17,45 @@
 package org.perses.listminimizer.localexhaust
 
 import com.google.common.collect.ImmutableList
+import org.perses.util.toImmutableIntArray
+import org.perses.util.toImmutableList
+import kotlin.streams.asSequence
 
-data class ElementEditPattern(val operations: ImmutableList<EnumOperation>) {
+data class ElementEditPattern(
+  val operations: ImmutableList<EnumOperation>,
+) {
   val patternLength: Int
     get() = operations.size
 
   val numOfDeletes = operations.count { it == EnumOperation.DELETE }
   val numOfKeeps = operations.count { it == EnumOperation.KEEP }
 
+  // TODO(cnsun): needs tests.
+  val indicesOfDeletes =
+    operations
+      .withIndex()
+      .filter { it.value == EnumOperation.DELETE }
+      .map { it.index }
+      .toImmutableIntArray()
+
   init {
-    require(operations.isNotEmpty()) { "There must be at least one operation" }
+    check(patternLength == numOfDeletes + numOfKeeps) {
+      "pattern length: $patternLength, keeps: $numOfKeeps, deletes: $numOfDeletes"
+    }
+  }
+
+  fun <T : Any> getDeletedElements(input: List<T>): ImmutableList<T> {
+    if (numOfDeletes == 0) {
+      return ImmutableList.of()
+    }
+    val size = input.size
+    require(size == patternLength) {
+      "pattern length: $patternLength, keeps: $numOfDeletes"
+    }
+    return indicesOfDeletes
+      .stream()
+      .mapToObj { input[it] }
+      .asSequence()
+      .toImmutableList()
   }
 }

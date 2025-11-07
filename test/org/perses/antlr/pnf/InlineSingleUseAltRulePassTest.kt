@@ -27,24 +27,29 @@ import org.perses.antlr.ast.PersesAlternativeBlockAst
 class InlineSingleUseAltRulePassTest {
   @Test
   fun testWithStartRuleName() {
-    val persesGrammar = createPersesGrammarFromString(
-      StringBuilder()
-        .append("start: b | c | d | f;")
-        .append("c: e | d;")
-        .append("e: 'e';")
-        .append("d: 'e';")
-        .append("f: 'm' | 'n';")
-        .append("g: f;")
-        .toString(),
-    )
+    val persesGrammar =
+      createPersesGrammarFromString(
+        StringBuilder()
+          .append("start: b | c | d | f;")
+          .append("c: e | d;")
+          .append("e: 'e';")
+          .append("d: 'e';")
+          .append("f: 'm' | 'n';")
+          .append("g: f;")
+          .toString(),
+      )
     run {
       val pass = InlineSingleUseAltRulePass()
-      val processed = pass.processGrammar(
-        GrammarPair(persesGrammar, lexerGrammar = null),
-      ).parserGrammar!!
-      val startAlts = (
-        processed.getRuleDefinition("start")!!
-          .body as PersesAlternativeBlockAst
+      val processed =
+        pass
+          .processGrammar(
+            GrammarPair(persesGrammar, lexerGrammar = null),
+          ).parserGrammar!!
+      val startAlts =
+        (
+          processed
+            .getRuleDefinition("start")!!
+            .body as PersesAlternativeBlockAst
         ).alternatives
       Truth.assertThat(startAlts).hasSize(4)
       Truth.assertThat(startAlts[0]!!.sourceCode).isEqualTo("b")

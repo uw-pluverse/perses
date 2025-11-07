@@ -21,9 +21,10 @@ import org.perses.reduction.IReductionDriver
 class SanityCheckEvent(
   currentTimeMillis: Long,
   programSize: Int,
-  val sanityCheckResult: IReductionDriver.AbstractSanityCheckResult,
+  val sanityCheckResult: IReductionDriver.SanityCheckResult,
 ) : AbstractStartEvent(currentTimeMillis, programSize) {
-  override fun initialProgramSize(): Int {
-    return programSize
-  }
+  override fun initialProgramSize(): Int = programSize
+
+  override val prefixLabelFromRootToHere: String
+    get() = ""
 }

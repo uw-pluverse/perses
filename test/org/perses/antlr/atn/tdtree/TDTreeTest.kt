@@ -26,9 +26,11 @@ import org.perses.antlr.atn.OrigCLexer
 
 @RunWith(JUnit4::class)
 class TDTreeTest {
-
   val tree = TDTree()
-  private val cLexerWrapper = LexerAtnWrapper(OrigCLexer::class.java)
+  private val cLexerWrapper =
+    LexerAtnWrapper.createLexerWrapperFromLexerClass(
+      OrigCLexer::class.java,
+    )
 
   @Test
   fun testToLexemeForCharNode() {
@@ -40,10 +42,12 @@ class TDTreeTest {
 
   @Test
   fun testGetCanonicalLexemeList() {
-    val tokenType = cLexerWrapper.metaTokenInfoDB
-      .getTokenInfoWithName("Constant")!!.tokenType
+    val tokenType =
+      cLexerWrapper.metaTokenInfoDB
+        .getTokenInfoWithName("Constant")!!
+        .tokenType
     val lexeme = "0xffull"
-    val tree = cLexerWrapper.createTDTree(lexeme, tokenType)
+    val tree = cLexerWrapper.createTDTree(lexeme, tokenType)!!
     assertThat(tree.root.getCanonicalLexemeList(countLimitPerChar = 2))
       .containsExactlyElementsIn(
         listOf(

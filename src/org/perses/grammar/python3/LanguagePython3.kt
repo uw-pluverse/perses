@@ -25,8 +25,9 @@ object LanguagePython3 : LanguageKind(
   extensions = ImmutableSet.of("py", "py3"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_PYTHON3_FORMAT,
   origCodeFormatControl = EnumFormatControl.PYTHON3_FORMAT,
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.COMPACT_PYTHON3_FORMAT,
-    EnumFormatControl.PYTHON3_FORMAT,
-  ),
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.COMPACT_PYTHON3_FORMAT,
+      EnumFormatControl.PYTHON3_FORMAT,
+    ),
 )

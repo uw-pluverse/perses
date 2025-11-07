@@ -23,10 +23,7 @@ import org.perses.spartree.AbstractTreeNode
 sealed class AbstractTDTreeNode(
   nodeId: Int,
 ) : AbstractTreeNode<AbstractTDTreeNode, Any>(nodeId = nodeId) {
-
-  fun toLexeme(
-    blanketedNodes: Set<AbstractTDTreeNode> = HashSet(),
-  ): String {
+  fun toLexeme(blanketedNodes: Set<AbstractTDTreeNode> = HashSet()): String {
     val builder = StringBuilder()
     preOrderVisit { node ->
       if (blanketedNodes.contains(node)) {
@@ -69,12 +66,13 @@ sealed class AbstractTDTreeNode(
     super.addChild(child, EMPTY_PAYLOAD)
   }
 
-  override fun onChildRemoved(index: Int, child: AbstractTDTreeNode) {
+  override fun onChildRemoved(
+    index: Int,
+    child: AbstractTDTreeNode,
+  ) {
   }
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("id", nodeId).toString()
-  }
+  override fun toString(): String = MoreObjects.toStringHelper(this).add("id", nodeId).toString()
 
   companion object {
     private val EMPTY_PAYLOAD = Object()

@@ -18,7 +18,7 @@ package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
 import org.perses.program.LanguageKind
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.util.AbstractEditOperation
 import java.nio.file.Path
@@ -29,17 +29,15 @@ class ListDiffReductionIOManager(
   outputManagerFactory: ListDiffOutputManagerFactory,
   outputDirectory: Path?,
 ) : AbstractReductionIOManager<
-  ImmutableList<AbstractEditOperation<PersesToken>>,
-  LanguageKind,
-  ListDiffReductionIOManager,
+    ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
+    LanguageKind,
+    ListDiffReductionIOManager,
   >(
-  workingDir,
-  reductionInputs,
-  outputManagerFactory,
-  outputDirectory,
-) {
-
-  override fun getConcreteReductionInputs(): ListDiffReductionInputs {
-    return reductionInputs as ListDiffReductionInputs
-  }
+    workingDir,
+    reductionInputs,
+    outputManagerFactory,
+    outputDirectory,
+  ) {
+  override fun getConcreteReductionInputs(): ListDiffReductionInputs =
+    reductionInputs as ListDiffReductionInputs
 }

@@ -19,5 +19,8 @@ kt_jvm_library(
         "//antlropt/src/org/perses/antlr/ast",
         "//src/org/perses/antlr/atn/nfa",
         "//src/org/perses/antlr/atn/simulator/transition",
+        "//src/org/perses/antlr/atn/tdtree",
+        "//src/org/perses/program",
+        "//src/org/perses/spartree",
     ],
 )

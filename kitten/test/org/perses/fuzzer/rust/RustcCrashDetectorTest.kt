@@ -40,13 +40,14 @@ import kotlin.io.path.readLines
 
 @RunWith(JUnit4::class)
 class RustcCrashDetectorTest {
-
   private val detector = RustcCrashDetector()
   private val parserFacadeFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
   private var workingDir: File? = null
 
-  private val packagePath = "kitten/test/" +
-    this::class.java.`package`.name.replace('.', '/') + "/"
+  private val packagePath =
+    "kitten/test/" +
+      this::class.java.`package`.name
+        .replace('.', '/') + "/"
 
   @Before
   fun setup() {
@@ -71,32 +72,42 @@ class RustcCrashDetectorTest {
     testWithMockRustc(rustc, 6)
   }
 
-  private fun testWithMockRustc(rustc: String, numOfLinesInCrashSignature: Int) {
-    val testingConfiguration = TestingConfiguration(
-      language = "RUST",
-      seedFolders = listOf(
-        SeedFolder(
-          path = File(workingDir, "seed_folder").apply {
-            check(mkdirs())
-          }.absolutePath,
-          fileExtentions = listOf(".rs"),
-        ),
-      ),
-      programsUnderTest = listOf(
-        ProgramUnderTest(
-          command = rustc,
-          flagsToTest = listOf(CmdFlags.EMPTY),
-          versionFlags = CmdFlags(listOf("--version", "--verbose")),
-          crashDetectorClassName = RustcCrashDetector::class.java.canonicalName,
-        ),
-      ),
-    )
-    val facade = DefaultCompilationConfigurationFacade(
-      languageKind = parserFacadeFactory.computeLanguageKindWithLanguageNameIgnoreCase(
-        testingConfiguration.language,
-      )!!,
-      programUnderTest = testingConfiguration.programsUnderTest[0],
-    )
+  private fun testWithMockRustc(
+    rustc: String,
+    numOfLinesInCrashSignature: Int,
+  ) {
+    val testingConfiguration =
+      TestingConfiguration(
+        language = "RUST",
+        seedFolders =
+          listOf(
+            SeedFolder(
+              path =
+                File(workingDir, "seed_folder")
+                  .apply {
+                    check(mkdirs())
+                  }.absolutePath,
+              fileExtentions = listOf(".rs"),
+            ),
+          ),
+        programsUnderTest =
+          listOf(
+            ProgramUnderTest(
+              command = rustc,
+              flagsToTest = listOf(CmdFlags.EMPTY),
+              versionFlags = CmdFlags(listOf("--version", "--verbose")),
+              crashDetectorClassName = RustcCrashDetector::class.java.canonicalName,
+            ),
+          ),
+      )
+    val facade =
+      DefaultCompilationConfigurationFacade(
+        languageKind =
+          parserFacadeFactory.computeLanguageKindWithLanguageNameIgnoreCase(
+            testingConfiguration.language,
+          )!!,
+        programUnderTest = testingConfiguration.programsUnderTest[0],
+      )
     val action = facade.compilationActions[0]
     val sourceFile = File(workingDir, "t.rs").apply { check(createNewFile()) }
     val actionOutput = action.compile(sourceFile)
@@ -107,22 +118,24 @@ class RustcCrashDetectorTest {
 
   @Test
   fun testNoCrashForExitCodeZero() {
-    val cmdOutput = CmdOutput(
-      exitCode = ExitCode.ZERO,
-      stdout = ShellOutputLines.EMPTY,
-      stderr = ShellOutputLines.EMPTY,
-    )
+    val cmdOutput =
+      CmdOutput(
+        exitCode = ExitCode.ZERO,
+        stdout = ShellOutputLines.EMPTY,
+        stderr = ShellOutputLines.EMPTY,
+      )
     val result = detector.detectCrash(cmdOutput)
     assertThat(result.isCrashDetected()).isFalse()
   }
 
   @Test
   fun testNoCrashForExitCodeNonzero() {
-    val cmdOutput = CmdOutput(
-      exitCode = ExitCode.ONE,
-      stdout = ShellOutputLines.EMPTY,
-      stderr = ShellOutputLines.EMPTY,
-    )
+    val cmdOutput =
+      CmdOutput(
+        exitCode = ExitCode.ONE,
+        stdout = ShellOutputLines.EMPTY,
+        stderr = ShellOutputLines.EMPTY,
+      )
     val result = detector.detectCrash(cmdOutput)
     assertThat(result.isCrashDetected()).isFalse()
   }
@@ -130,12 +143,13 @@ class RustcCrashDetectorTest {
   @Test
   fun test_detectCrashForPanic() {
     val msg = "thread 'rustc' panicked "
-    val cmdout = CmdOutput(
-      exitCode = ExitCode.ONE,
-      stdout = ShellOutputLines.EMPTY,
-      // TODO(gaosen): a real crash message from rustc.
-      stderr = ShellOutputLines(ImmutableList.of(msg)),
-    )
+    val cmdout =
+      CmdOutput(
+        exitCode = ExitCode.ONE,
+        stdout = ShellOutputLines.EMPTY,
+        // TODO(gaosen): a real crash message from rustc.
+        stderr = ShellOutputLines(ImmutableList.of(msg)),
+      )
     assertThat(msg.matches(RustcCrashDetector.GENERAL_PANIC_PATTERN)).isTrue()
     val result = detector.detectCrash(cmdout)
     assertThat(result.isCrashDetected()).isTrue()
@@ -144,11 +158,12 @@ class RustcCrashDetectorTest {
 
   @Test
   fun testDetectCrashForSegmentationFault() {
-    val cmdOut = CmdOutput(
-      exitCode = ExitCode.ONE,
-      stdout = ShellOutputLines.EMPTY,
-      stderr = ShellOutputLines(ImmutableList.of("internal compiler error:")),
-    )
+    val cmdOut =
+      CmdOutput(
+        exitCode = ExitCode.ONE,
+        stdout = ShellOutputLines.EMPTY,
+        stderr = ShellOutputLines(ImmutableList.of("internal compiler error:")),
+      )
     val result = detector.detectCrash(cmdOut)
     assertThat(result.isCrashDetected()).isTrue()
     assertThat(result.asCrash().signature.elements)
@@ -157,15 +172,15 @@ class RustcCrashDetectorTest {
 
   @Test
   fun testDetectCrashForKeywordCrash() {
-    val cmdOut = CmdOutput(
-
-      exitCode = ExitCode.ONE,
-      stdout = ShellOutputLines.EMPTY,
-      stderr = ShellOutputLines(
-        ImmutableList.of("the compiler unexpectedly panicked. this is a bug."),
-      ),
-
-    )
+    val cmdOut =
+      CmdOutput(
+        exitCode = ExitCode.ONE,
+        stdout = ShellOutputLines.EMPTY,
+        stderr =
+          ShellOutputLines(
+            ImmutableList.of("the compiler unexpectedly panicked. this is a bug."),
+          ),
+      )
     val result = detector.detectCrash(cmdOut)
     assertThat(result.isCrashDetected()).isTrue()
     assertThat(result.asCrash().signature.elements)
@@ -174,35 +189,39 @@ class RustcCrashDetectorTest {
 
   @Test
   fun testDetectRealCrashOutput2() {
-    val cmdOut = CmdOutput(
-      exitCode = ExitCode(100),
-      stdout = ShellOutputLines.EMPTY,
-      stderr = ShellOutputLines(
-        ImmutableList.copyOf(
-          File("$packagePath/crashoutput/crash_output_2.txt")
-            .readLines(),
-        ),
-      ),
-    )
+    val cmdOut =
+      CmdOutput(
+        exitCode = ExitCode(100),
+        stdout = ShellOutputLines.EMPTY,
+        stderr =
+          ShellOutputLines(
+            ImmutableList.copyOf(
+              File("$packagePath/crashoutput/crash_output_2.txt")
+                .readLines(),
+            ),
+          ),
+      )
     val result = detector.detectCrash(cmdOut)
     assertThat(result.isCrashDetected()).isTrue()
-    assertThat(result.asCrash().signature.elements).containsExactly(
-      "thread 'rustc' panicked at 'cannot use the `#[rustc_if_this_changed]` " +
-        "or `#[rustc_then_this_would_need]` annotations " +
-        "without supplying `-Z query-dep-graph`'",
-      "error: internal compiler error: unexpected panic",
-      "note: the compiler unexpectedly panicked. this is a bug.",
-      "thread '<unnamed>' panicked at 'assertion failed: `(left == right)`",
-      "left: `LLVMing`",
-      "right: `Codegenning`'",
-    ).inOrder()
+    assertThat(result.asCrash().signature.elements)
+      .containsExactly(
+        "thread 'rustc' panicked at 'cannot use the `#[rustc_if_this_changed]` " +
+          "or `#[rustc_then_this_would_need]` annotations " +
+          "without supplying `-Z query-dep-graph`'",
+        "error: internal compiler error: unexpected panic",
+        "note: the compiler unexpectedly panicked. this is a bug.",
+        "thread '<unnamed>' panicked at 'assertion failed: `(left == right)`",
+        "left: `LLVMing`",
+        "right: `Codegenning`'",
+      ).inOrder()
   }
 
   @Test
   fun testNonCrashOutput() {
-    val stderr = File(
-      "$packagePath/crashoutput/non_crash_output.txt",
-    ).readText()
+    val stderr =
+      File(
+        "$packagePath/crashoutput/non_crash_output.txt",
+      ).readText()
     val result = detector.detectCrash(stderr, 1)
     assertThat(result.isCrashDetected()).isFalse()
   }
@@ -223,7 +242,7 @@ class RustcCrashDetectorTest {
         "body: BodyId { hir_id: HirId { owner: DefId(0:3 ~ mutant[8787]::main), " +
         "local_id: 56 } } }, span: mutant.rs:7:17: 7:21 (#0) })], bindings: [], " +
         "parenthesized: false }), infer_args: false }] }"
-      ).let {
+    ).let {
       val result = detector.detectCrash(it, 1)
       assertThat(result.isCrashDetected()).isTrue()
       val signature = result.asCrash().signature.elements
@@ -246,7 +265,7 @@ class RustcCrashDetectorTest {
     (
       "thread 'rustc' panicked at 'Box<Any>', " +
         "/rustc/e160e5cb80652bc2afe74cb3affbe35b74243ea9/compiler/rustc_errors/src/lib.rs:891:9"
-      ).let {
+    ).let {
       val result = detector.detectCrash(it, 1)
       assertThat(result.isCrashDetected()).isTrue()
       val signature = result.asCrash().signature.elements
@@ -255,7 +274,7 @@ class RustcCrashDetectorTest {
     (
       "thread 'rustc' panicked at 'assertion failed: !bounds.has_escaping_bound_vars()', " +
         "compiler/rustc_typeck/src/check/method/mod.rs:388:9"
-      ).let {
+    ).let {
       val result = detector.detectCrash(it, 1)
       assertThat(result.isCrashDetected()).isTrue()
       val signature = result.asCrash().signature.elements
@@ -269,7 +288,7 @@ class RustcCrashDetectorTest {
     (
       "thread 'rustc' panicked at 'index out of bounds: the len is 0 but the index is 0', " +
         "compiler/rustc_middle/src/ty/mod.rs:908:14"
-      ).let {
+    ).let {
       val result = detector.detectCrash(it, 1)
       assertThat(result.isCrashDetected()).isTrue()
       val signature = result.asCrash().signature.elements
@@ -285,7 +304,7 @@ class RustcCrashDetectorTest {
         "Custom { kind: Other, error: \"No such file or directory\" }', " +
         "/rustc/a9cd294cf2775441e713c7ee2918b728733b99f5/compiler/" +
         "rustc_codegen_ssa/src/back/link.rs:434:10"
-      ).let {
+    ).let {
       val result = detector.detectCrash(it, 1)
       assertThat(result.isCrashDetected()).isTrue()
       val signature = result.asCrash().signature.elements
@@ -300,12 +319,12 @@ class RustcCrashDetectorTest {
 
   @Test
   fun testDetectRealCrashOutput3() {
-    val result = detector.detectCrash(
-      File(
-        "$packagePath/crashoutput/crash_output_3.txt",
+    val result =
+      detector.detectCrash(
+        File(
+          "$packagePath/crashoutput/crash_output_3.txt",
+        ).readText(),
       )
-        .readText(),
-    )
     assertThat(result.isCrashDetected()).isTrue()
     val signature = result.asCrash().signature.elements
     assertThat(signature).hasSize(5)
@@ -320,38 +339,43 @@ class RustcCrashDetectorTest {
 
   @Test
   fun testDetectRealCrashOutput1() {
-    val cmdOut = CmdOutput(
-      exitCode = ExitCode(100),
-      stdout = ShellOutputLines.EMPTY,
-      stderr = ShellOutputLines(
-        ImmutableList.copyOf(
-          File("$packagePath/crashoutput/crash_output_1.txt")
-            .readLines(),
-        ),
-      ),
-    )
+    val cmdOut =
+      CmdOutput(
+        exitCode = ExitCode(100),
+        stdout = ShellOutputLines.EMPTY,
+        stderr =
+          ShellOutputLines(
+            ImmutableList.copyOf(
+              File("$packagePath/crashoutput/crash_output_1.txt")
+                .readLines(),
+            ),
+          ),
+      )
     val result = detector.detectCrash(cmdOut)
     assertThat(result.isCrashDetected()).isTrue()
-    assertThat(result.asCrash().signature.elements).containsExactly(
-      "thread 'rustc' panicked at 'cannot use the `#[rustc_if_this_changed]` " +
-        "or `#[rustc_then_this_would_need]` annotations without supplying " +
-        "`-Z query-dep-graph`'",
-      "error: internal compiler error: unexpected panic",
-      "note: the compiler unexpectedly panicked. this is a bug.",
-    ).inOrder()
+    assertThat(result.asCrash().signature.elements)
+      .containsExactly(
+        "thread 'rustc' panicked at 'cannot use the `#[rustc_if_this_changed]` " +
+          "or `#[rustc_then_this_would_need]` annotations without supplying " +
+          "`-Z query-dep-graph`'",
+        "error: internal compiler error: unexpected panic",
+        "note: the compiler unexpectedly panicked. this is a bug.",
+      ).inOrder()
   }
 
   @Test
   fun testDetectRealCrashOutput5() {
-    val cmdOut = CmdOutput(
-      exitCode = ExitCode(100),
-      stdout = ShellOutputLines.EMPTY,
-      stderr = ShellOutputLines(
-        ImmutableList.copyOf(
-          Paths.get("$packagePath/crashoutput/crash_output_5.txt").readLines(),
-        ),
-      ),
-    )
+    val cmdOut =
+      CmdOutput(
+        exitCode = ExitCode(100),
+        stdout = ShellOutputLines.EMPTY,
+        stderr =
+          ShellOutputLines(
+            ImmutableList.copyOf(
+              Paths.get("$packagePath/crashoutput/crash_output_5.txt").readLines(),
+            ),
+          ),
+      )
     val result = detector.detectCrash(cmdOut)
     assertThat(result.isCrashDetected()).isTrue()
     assertThat(result.asCrash().signature.elements).contains("fatal runtime error: stack overflow")

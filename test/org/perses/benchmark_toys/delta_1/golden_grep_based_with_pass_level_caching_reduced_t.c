@@ -1,6 +1,1 @@
-    printf
-                                  {
-       (
-        "world\n")
-            ;
-}
+        "world\n"

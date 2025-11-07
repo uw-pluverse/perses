@@ -21,13 +21,11 @@ import com.google.common.collect.ImmutableList
 class PersesTokenSpecificationAst(
   imaginaryTokenNames: ImmutableList<String>,
 ) : AbstractPersesEnumAst(KEYWORD_TOKENS, imaginaryTokenNames) {
-
   companion object {
-
     @JvmField
     val KEYWORD_TOKENS = "tokens"
 
     @JvmStatic
-    val EMTY = PersesTokenSpecificationAst(ImmutableList.of())
+    val EMPTY = PersesTokenSpecificationAst(ImmutableList.of())
   }
 }

@@ -37,16 +37,18 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 class RuleGenerationInfo(
   val antlrGrammar: AbstractAntlrGrammar,
 ) {
-  private val parserGrammar = if (antlrGrammar.isCombined) {
-    antlrGrammar.asCombined().grammar
-  } else {
-    antlrGrammar.asSeparate().parserGrammar
-  }
-  private val lexerGrammar = if (antlrGrammar.isCombined) {
-    null
-  } else {
-    antlrGrammar.asSeparate().lexerGrammar
-  }
+  private val parserGrammar =
+    if (antlrGrammar.isCombined) {
+      antlrGrammar.asCombined().grammar
+    } else {
+      antlrGrammar.asSeparate().parserGrammar
+    }
+  private val lexerGrammar =
+    if (antlrGrammar.isCombined) {
+      null
+    } else {
+      antlrGrammar.asSeparate().lexerGrammar
+    }
 
   @VisibleForTesting
   val ruleToDepthMap = mutableMapOf<RuleNameHandle, Int>()
@@ -54,7 +56,7 @@ class RuleGenerationInfo(
   val startSymbol = computeStartSymbol()
 
   init {
-    for (rule in antlrGrammar.getCombinedRules()) {
+    for (rule in antlrGrammar.combinedRules) {
       ruleToDepthMap[rule.ruleNameHandle] = Int.MAX_VALUE / 2
     }
     // Calculate and store the minDepth for each rule so that we do not need
@@ -65,14 +67,19 @@ class RuleGenerationInfo(
   }
 
   private fun computeStartSymbol(): RuleNameHandle {
-    val ruleNameSet = antlrGrammar.getCombinedRules()
-      .filter { it.isParserRule }
-      .map {
-        it.ruleNameHandle
-      }.toSet()
-    val referredRuleNameSet = antlrGrammar.getCombinedRules().map {
-      findAllReferredRuleName(it.body)
-    }.reduce { acc, i -> acc + i }
+    val ruleNameSet =
+      antlrGrammar
+        .combinedRules
+        .filter { it.isParserRule }
+        .map {
+          it.ruleNameHandle
+        }.toSet()
+    val referredRuleNameSet =
+      antlrGrammar
+        .combinedRules
+        .map {
+          findAllReferredRuleName(it.body)
+        }.reduce { acc, i -> acc + i }
     assert(ruleNameSet.size - referredRuleNameSet.size == 1)
     val leftRuleName = ruleNameSet - referredRuleNameSet
     assert(leftRuleName.size == 1)
@@ -105,7 +112,7 @@ class RuleGenerationInfo(
 
   private fun computeRuleToDepthMap(): Boolean {
     var isChanged = false
-    antlrGrammar.getCombinedRules().forEach {
+    antlrGrammar.combinedRules.forEach {
       val minDepth = getMinDepth(it.body)
       if (minDepth < ruleToDepthMap[it.ruleNameHandle]!!) {
         isChanged = true
@@ -146,12 +153,13 @@ class RuleGenerationInfo(
         if (ruleToDepthMap.containsKey(ruleNameHandle)) {
           return ruleToDepthMap[ruleNameHandle]!! + 1
         }
-        val rule = if (antlrGrammar.isCombined) {
-          parserGrammar.getRuleDefinition(ruleNameHandle.ruleName)!!
-        } else {
-          parserGrammar.getRuleDefinition(ruleNameHandle.ruleName)
-            ?: lexerGrammar!!.getRuleDefinition(ruleNameHandle.ruleName)!!
-        }
+        val rule =
+          if (antlrGrammar.isCombined) {
+            parserGrammar.getRuleDefinition(ruleNameHandle.ruleName)!!
+          } else {
+            parserGrammar.getRuleDefinition(ruleNameHandle.ruleName)
+              ?: lexerGrammar!!.getRuleDefinition(ruleNameHandle.ruleName)!!
+          }
         getMinDepth(rule.body) + 1
       }
       is PersesRuleElementLabel -> {
@@ -165,15 +173,15 @@ class RuleGenerationInfo(
       }
     }
   }
+
   companion object {
-    fun canBeTerminal(ruleBody: AbstractPersesRuleElement): Boolean {
-      return ruleBody is PersesTokenSetAst ||
+    fun canBeTerminal(ruleBody: AbstractPersesRuleElement): Boolean =
+      ruleBody is PersesTokenSetAst ||
         ruleBody is AbstractPersesTerminalAst ||
         ruleBody is PersesLexerCommandAst ||
         ruleBody is PersesEpsilonAst ||
         ruleBody is PersesActionAst ||
         ruleBody is PersesNotAst ||
         ruleBody is PersesRangeAst
-    }
   }
 }

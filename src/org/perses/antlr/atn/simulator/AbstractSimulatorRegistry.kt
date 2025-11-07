@@ -19,12 +19,10 @@ package org.perses.antlr.atn.simulator
 import java.util.concurrent.ConcurrentHashMap
 
 abstract class AbstractSimulatorRegistry<ATNElement, Simulator> {
-
   private val map = ConcurrentHashMap<ATNElement, Simulator>()
 
-  fun getOrCreateSimulatorFor(element: ATNElement): Simulator {
-    return map.computeIfAbsent(element, this::createSimulatorFor)
-  }
+  fun getOrCreateSimulatorFor(element: ATNElement): Simulator =
+    map.computeIfAbsent(element, this::createSimulatorFor)
 
   abstract fun createSimulatorFor(element: ATNElement): Simulator
 }

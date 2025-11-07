@@ -25,7 +25,6 @@ object PrintableCharacters {
   val ALL_PRINTABLE_CHARS_LIST = (MIN_PRINTABLE_CHAR..MAX_PRINTABLE_CHAR).toImmutableList()
   val ALL_PRINTABLE_CHARS_STRING = ALL_PRINTABLE_CHARS_LIST.joinToString(separator = "")
 
-  fun createPrintableIntervalSet(): IntervalSet {
-    return IntervalSet.of(MIN_PRINTABLE_CHAR.code, MAX_PRINTABLE_CHAR.code)
-  }
+  fun createPrintableIntervalSet(): IntervalSet =
+    IntervalSet.of(MIN_PRINTABLE_CHAR.code, MAX_PRINTABLE_CHAR.code)
 }

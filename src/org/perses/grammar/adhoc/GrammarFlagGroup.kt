@@ -18,11 +18,11 @@ package org.perses.grammar.adhoc
 
 import com.beust.jcommander.Parameter
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import java.nio.file.Path
 
 class GrammarFlagGroup : AbstractCommandLineFlagGroup(groupName = "") {
-
   @JvmField
   @Parameter(
     names = ["--parser-grammar"],
@@ -125,8 +125,8 @@ class GrammarFlagGroup : AbstractCommandLineFlagGroup(groupName = "") {
   )
   var extraLibs: List<Path> = listOf()
 
-  fun createAdhocGrammarConfiguration(): AdhocGrammarConfiguration {
-    return AdhocGrammarConfiguration(
+  fun createAdhocGrammarConfiguration(): AdhocGrammarConfiguration =
+    AdhocGrammarConfiguration(
       parserFile = parserGrammar!!,
       lexerFile = lexerGrammar,
       parserBase = parserBase,
@@ -137,11 +137,11 @@ class GrammarFlagGroup : AbstractCommandLineFlagGroup(groupName = "") {
       existingLanguageKindClassFullName = existingLanguageKindClassFullName,
       startRuleName = startRuleName!!,
       tokenNamesOfIdentifiers = tokenNamesOfIdentifiers,
+      shaAlgorithm = EnumShaAlgorithm.SHA512,
     )
-  }
 
-  fun isAnyFlagSet(): Boolean {
-    return parserGrammar != null ||
+  fun isAnyFlagSet(): Boolean =
+    parserGrammar != null ||
       startRuleName != null ||
       tokenNamesOfIdentifiers.isNotEmpty() ||
       lexerGrammar != null ||
@@ -149,7 +149,6 @@ class GrammarFlagGroup : AbstractCommandLineFlagGroup(groupName = "") {
       parserFacadeClassSimpleName != null ||
       languageKindYamlFile != null ||
       existingLanguageKindClassFullName != null
-  }
 
   override fun validate() {
     check(parserGrammar != null)

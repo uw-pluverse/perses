@@ -38,12 +38,12 @@ import kotlin.io.path.deleteIfExists
 
 @RunWith(JUnit4::class)
 class StatisticsListenerTest {
-
   private val resultFile: Path = Files.createTempFile("reduction-statistics", ".txt")
   private val streamPool = FileStreamPool()
-  private val listener = StatisticsListener(
-    streamPool.rentStream(resultFile, this::class.qualifiedName!!),
-  )
+  private val listener =
+    StatisticsListener(
+      streamPool.rentStream(resultFile, this::class.qualifiedName!!),
+    )
 
   @After
   fun teardown() {
@@ -55,24 +55,27 @@ class StatisticsListenerTest {
   @Test
   fun test() {
     val reducer = PersesNodePrioritizedDfsReducer.META
-    val startEvent = ReductionStartEvent(
-      currentTimeMillis = 300,
-      tree = WeakReference(null),
-      programSize = 100,
-      commandLineOptions = "<cmd>",
-    )
-    val firstIterationStart = FixpointIterationStartEvent(
-      startEvent,
-      300,
-      100,
-      1,
-      reducer,
-      treeStructureDumper = { "" },
-      testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
-        scriptExecutionNumber = 0,
-        externalCacheHitNumber = 0,
-      ),
-    )
+    val startEvent =
+      ReductionStartEvent(
+        currentTimeMillis = 300,
+        tree = WeakReference(null),
+        programSize = 100,
+        commandLineOptions = "<cmd>",
+      )
+    val firstIterationStart =
+      FixpointIterationStartEvent(
+        startEvent,
+        300,
+        100,
+        1,
+        reducer,
+        treeStructureDumper = { "" },
+        testScriptStatistics =
+          TestScriptExecutorServiceStatisticsSnapshot(
+            scriptExecutionNumber = 0,
+            externalCacheHitNumber = 0,
+          ),
+      )
     listener.onFixpointIterationStart(firstIterationStart)
     val firstTestExecutions = 100
     listener.onFixpointIterationEnd(
@@ -80,24 +83,27 @@ class StatisticsListenerTest {
         firstIterationStart,
         500,
         50,
-        testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
-          scriptExecutionNumber = firstTestExecutions,
-          externalCacheHitNumber = 0,
-        ),
+        testScriptStatistics =
+          TestScriptExecutorServiceStatisticsSnapshot(
+            scriptExecutionNumber = firstTestExecutions,
+            externalCacheHitNumber = 0,
+          ),
       ),
     )
-    val secondIterationStart = FixpointIterationStartEvent(
-      startEvent,
-      500,
-      50,
-      2,
-      reducer,
-      treeStructureDumper = { "" },
-      testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
-        scriptExecutionNumber = firstTestExecutions,
-        externalCacheHitNumber = 0,
-      ),
-    )
+    val secondIterationStart =
+      FixpointIterationStartEvent(
+        startEvent,
+        500,
+        50,
+        2,
+        reducer,
+        treeStructureDumper = { "" },
+        testScriptStatistics =
+          TestScriptExecutorServiceStatisticsSnapshot(
+            scriptExecutionNumber = firstTestExecutions,
+            externalCacheHitNumber = 0,
+          ),
+      )
     listener.onFixpointIterationStart(secondIterationStart)
     val secondTestExecutions = 150
     listener.onFixpointIterationEnd(
@@ -105,10 +111,11 @@ class StatisticsListenerTest {
         secondIterationStart,
         700,
         25,
-        testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
-          scriptExecutionNumber = secondTestExecutions + firstTestExecutions,
-          externalCacheHitNumber = 0,
-        ),
+        testScriptStatistics =
+          TestScriptExecutorServiceStatisticsSnapshot(
+            scriptExecutionNumber = secondTestExecutions + firstTestExecutions,
+            externalCacheHitNumber = 0,
+          ),
       ),
     )
     val endEvent =
@@ -136,15 +143,19 @@ class StatisticsListenerTest {
       assertThat(p.getProperty("elapsed_time_millis.2")).isEqualTo("200")
     }
     val testFileContent =
-      com.google.common.io.Files.asCharSource(resultFile.toFile(), StandardCharsets.UTF_8)
+      com.google.common.io.Files
+        .asCharSource(resultFile.toFile(), StandardCharsets.UTF_8)
         .read()
         .trim { it <= ' ' }
-    val goldenFileContent = com.google.common.io.Files.asCharSource(
-      Paths.get("test/org/perses/listener/golden_statistics_listener_test.properties")
-        .toFile(),
-      StandardCharsets.UTF_8,
-    ).read()
-      .trim { it <= ' ' }
+    val goldenFileContent =
+      com.google.common.io.Files
+        .asCharSource(
+          Paths
+            .get("test/org/perses/listener/golden_statistics_listener_test.properties")
+            .toFile(),
+          StandardCharsets.UTF_8,
+        ).read()
+        .trim { it <= ' ' }
     assertThat(testFileContent).isEqualTo(goldenFileContent)
   }
 }

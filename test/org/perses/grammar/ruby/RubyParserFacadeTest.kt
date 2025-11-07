@@ -25,44 +25,46 @@ import org.perses.util.removeWhitespaces
 
 @RunWith(JUnit4::class)
 class RubyParserFacadeTest {
-
   private val facade = PnfRubyParserFacade()
 
   @Test
   fun testSimpleProgram() {
-    val program = """
+    val program =
+      """
       puts "Start"
       var=1+2
       puts "End"
 
-    """.trimIndent()
+      """.trimIndent()
     testProgram(program)
   }
 
   @Test
   fun testParsingFunction() {
-    val funcProgram = """
-        def say_hello(name)
-          var = "Hello," + name
-            return var
-        end
-        var = say_hello "Name"
-        var = say_hello("Name")
-        puts say_hello "Name"
-  
-    """.trimIndent()
+    val funcProgram =
+      """
+      def say_hello(name)
+        var = "Hello," + name
+          return var
+      end
+      var = say_hello "Name"
+      var = say_hello("Name")
+      puts say_hello "Name"
+      
+      """.trimIndent()
     testProgram(funcProgram)
   }
 
   @Test
   fun testNestedProgram() {
-    val nestedProgram = """
-        puts ("Start")
-        var=(1+2)*(2+3)
-        var=(1)+(-2)
-        puts ("End")
-  
-    """.trimIndent()
+    val nestedProgram =
+      """
+      puts ("Start")
+      var=(1+2)*(2+3)
+      var=(1)+(-2)
+      puts ("End")
+      
+      """.trimIndent()
 
     testProgram(nestedProgram)
   }
@@ -72,7 +74,8 @@ class RubyParserFacadeTest {
     val origTokens = TestUtility.extractTokenTexts(origParseTree.tree)
     assertThat(origTokens.joinToString(separator = ""))
       .isEqualTo(
-        program.splitToSequence('\n')
+        program
+          .splitToSequence('\n')
           .map { it.removeWhitespaces() }
           .joinToString(separator = "\n"),
       )

@@ -24,7 +24,6 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class ConcurrentTokenSlicerTaskDescTest {
-
   @Test
   fun test_one_element_list() {
     val tokens = ImmutableList.of("")

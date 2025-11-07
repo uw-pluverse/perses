@@ -25,9 +25,16 @@ class LexerModeWithLexerRules(
   val modeName: String,
   val lexerRules: ImmutableList<AbstractPersesLexerRuleAst>,
 ) : AbstractPersesAst() {
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
-    stream.append("mode ").append(modeName).append(";").print('\n')
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
+    stream
+      .append("mode ")
+      .append(modeName)
+      .append(";")
+      .print('\n')
     val childCount = childCount
     for (i in 0 until childCount) {
       getChild(i).toSourceCode(stream, Indent.FOUR_CHAR_EMPTY_INDENT, multiLineMode)
@@ -37,15 +44,11 @@ class LexerModeWithLexerRules(
   override val childCount: Int
     get() = lexerRules.size
 
-  override fun getChild(index: Int): AbstractPersesLexerRuleAst {
-    return lexerRules[index]
-  }
+  override fun getChild(index: Int): AbstractPersesLexerRuleAst = lexerRules[index]
 
   fun copyWithNewLexerRules(
     newLexerRules: ImmutableList<AbstractPersesLexerRuleAst>,
-  ): LexerModeWithLexerRules {
-    return LexerModeWithLexerRules(modeName, newLexerRules)
-  }
+  ): LexerModeWithLexerRules = LexerModeWithLexerRules(modeName, newLexerRules)
 
   override val tag: AstTag
     get() = AstTag.LEXER_MODE

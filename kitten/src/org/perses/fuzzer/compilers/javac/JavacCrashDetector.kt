@@ -19,17 +19,20 @@ package org.perses.fuzzer.compilers.javac
 import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 
 class JavacCrashDetector : AbstractCompilerCrashDetector() {
-
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
     val result = ArrayList<String>()
-    stderr.asSequence()
+    stderr
+      .asSequence()
       .filter {
         it.isNotBlank() && it.contains(KEYWORD_CRASH)
-      }
-      .forEach {
+      }.forEach {
         result.add(it)
       }
-    return result.asSequence().filter { it.isNotBlank() }.map { it.trim() }.toList()
+    return result
+      .asSequence()
+      .filter { it.isNotBlank() }
+      .map { it.trim() }
+      .toList()
   }
 
   companion object {

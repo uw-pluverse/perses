@@ -29,7 +29,6 @@ class StarStateSimulator(
   private val endingTransition: EpsilonTransition,
   private val nonEndingTransition: EpsilonTransition,
 ) : AbstractATNStateSimulator() {
-
   override val endState: LoopEndState = endingTransition.target as LoopEndState
 
   init {
@@ -42,16 +41,12 @@ class StarStateSimulator(
     )
   }
 
-  override fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition {
-    return decisionMaker.sampleTransition(state)
-  }
+  override fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition =
+    decisionMaker.sampleTransition(state)
 
-  override fun createTreeNode(nodeId: Int): StarTDTreeNode {
-    return StarTDTreeNode(nodeId)
-  }
+  override fun createTreeNode(nodeId: Int): StarTDTreeNode = StarTDTreeNode(nodeId)
 
   companion object {
-
     fun create(state: StarLoopEntryState): StarStateSimulator {
       check(state.numberOfTransitions == 2)
       val t1 = state.transition(0)

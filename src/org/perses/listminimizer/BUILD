@@ -5,46 +5,81 @@ package(default_visibility = [
 ])
 
 kt_jvm_library(
-    name = "listminimizer",
+    name = "list_slider",
+    srcs = [
+        "BackwardWindowSlider.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_library(
+    name = "interfaces",
     srcs = [
         "AbstractConfigCache.kt",
-        "AbstractDefaultDeltaDebugger.kt",
-        "AbstractListInputMinimizer.kt",
-        "AbstractListInputMinimizerListener.kt",
+        "AbstractDefaultListMinimizer.kt",
+        "AbstractListMinimizer.kt",
+        "AbstractListMinimizerListener.kt",
         "AbstractProbabilisticDeltaDebugger.kt",
-        "CounterBasedDeltaDebugger.kt",
+        "AbstractWindowedSlicer.kt",
+        "CompoundListMinimizerListener.kt",
+        "ElementWrapper.kt",
         "IPropertyTester.kt",
-        "ListInputMinimizerProgressListener.kt",
+        "ListMinimizerArguments.kt",
+        "ListMinimizerListenerAdaptor.kt",
+        "ListMinimizerProgressListener.kt",
+        "NullListMinimizerListener.kt",
         "PartitionList.kt",
-        "PristineDeltaDebugger.kt",
-        "PristineProbabilisticDeltaDebugger.kt",
-        "Slicer.kt",
-        "WeightedDeltaDebugger.kt",
-        "WeightedProbabilisticDeltaDebugger.kt",
     ],
     deps = [
         ":Partition",
         "//:guava",
         "//src/org/perses/reduction:property_test_result",
         "//src/org/perses/util",
-        "//src/org/perses/util:Interval",
+    ],
+)
+
+kt_jvm_library(
+    name = "listminimizer",
+    srcs = [
+        "ConcurrentWindowedSlicer.kt",
+        "CounterBasedDeltaDebugger.kt",
+        "PristineDeltaDebugger.kt",
+        "PristineProbabilisticDeltaDebugger.kt",
+        "WeightedDeltaDebugger.kt",
+        "WeightedProbabilisticDeltaDebugger.kt",
+        "WindowedSlicer.kt",
+    ],
+    exports = [
+        "//src/org/perses/listminimizer/localexhaust",
+    ],
+    deps = [
+        ":Partition",
+        ":interfaces",
+        ":list_slider",
+        "//:guava",
+        "//src/org/perses/reduction:property_test_result",
+        "//src/org/perses/util",
     ],
 )
 
 kt_jvm_library(
     name = "enum_list_input_minimizer_type",
     srcs = [
-        "EnumListInputMinimizerType.kt",
+        "EnumListMinimizerType.kt",
     ],
 )
 
 kt_jvm_library(
-    name = "ListInputMinimizerFactory",
+    name = "ListMinimizerFactory",
     srcs = [
-        "ListInputMinimizerFactory.kt",
+        "ListMinimizerFactory.kt",
     ],
     deps = [
         ":enum_list_input_minimizer_type",
+        ":interfaces",
         ":listminimizer",
         "//src/org/perses/listminimizer/xfs",
     ],
@@ -57,6 +92,5 @@ kt_jvm_library(
     ],
     deps = [
         "//:guava",
-        "//src/org/perses/util",
     ],
 )

@@ -19,13 +19,15 @@ package org.perses.reduction
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableSet
 import com.google.common.flogger.FluentLogger
+import org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducer
 import org.perses.reduction.reducer.PersesNodeBfsReducer
 import org.perses.reduction.reducer.PersesNodeDfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
-import org.perses.reduction.reducer.TreeSlicer
 import org.perses.reduction.reducer.hdd.HDDReducer
 import org.perses.reduction.reducer.hdd.PristineHDDReducer
+import org.perses.reduction.reducer.latra.CoarseGritLatraReducerAnnotation
+import org.perses.reduction.reducer.latra.FineGritLatraReducerAnnotation
 import org.perses.reduction.reducer.lpr.LLMBasedDataTypeEliminationReducer
 import org.perses.reduction.reducer.lpr.LLMBasedDataTypeSimplificationReducer
 import org.perses.reduction.reducer.lpr.LLMBasedFunctionInliningReducer
@@ -37,7 +39,9 @@ import org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer
 import org.perses.reduction.reducer.token.ConcurrentTokenSlicer
 import org.perses.reduction.reducer.token.DeltaDebuggingReducer
 import org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer
+import org.perses.reduction.reducer.token.LineBasedTokenSlicer
 import org.perses.reduction.reducer.token.TokenSlicer
+import org.perses.reduction.reducer.trec.TokenCanonicalizer
 import org.perses.reduction.reducer.vulcan.IdentifierReplacementReducer
 import org.perses.reduction.reducer.vulcan.SubTreeReplacementReducer
 import org.perses.reduction.reducer.vulcan.pattern.LocalExhaustivePatternReducer
@@ -53,7 +57,10 @@ object ReducerFactory {
   private val DEFAULT_REDUCTION_ALG = PersesNodePrioritizedDfsReducer.META
 
   val registeredReductionAlgorithms =
-    ImmutableSet.builder<ReducerAnnotation>().add(HDDReducer.META).add(TokenSlicer.META)
+    ImmutableSet
+      .builder<ReducerAnnotation>()
+      .add(HDDReducer.META)
+      .add(TokenSlicer.META)
       .addAll(ConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
       .add(ConcurrentTokenSlicer.CompositeReducerAnnotation)
       .addAll(LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
@@ -63,13 +70,15 @@ object ReducerFactory {
       .add(ConcurrentStateBasedLineSlicer.CompositeReducerAnnotation)
       .addAll(ConcurrentStateBasedTokenSlicer.REDUCER_ANNOTATIONS)
       .add(ConcurrentStateBasedTokenSlicer.CompositeReducerAnnotation)
-      .add(TreeSlicer.META)
+      .add(NonSyntacticSingleTreeNodeReducer.META)
       .add(PersesNodeBfsReducer.META)
       .add(PersesNodePrioritizedBfsReducer.META)
       .add(PersesNodeDfsReducer.META)
       .add(PristineHDDReducer.META)
       .add(DeltaDebuggingReducer.META)
       .add(DEFAULT_REDUCTION_ALG)
+      .add(FineGritLatraReducerAnnotation)
+      .add(CoarseGritLatraReducerAnnotation)
       .add(LLMBasedFunctionInliningReducer.META)
       .add(LLMBasedLoopUnrollingReducer.META)
       .add(LLMBasedDataTypeEliminationReducer.META)
@@ -78,7 +87,10 @@ object ReducerFactory {
       .add(SubTreeReplacementReducer.META)
       .add(IdentifierReplacementReducer.META)
       .add(LocalExhaustivePatternReducer.META)
-      .build().toImmutableMap(
+      .add(TokenCanonicalizer.META)
+      .add(LineBasedTokenSlicer.META)
+      .build()
+      .toImmutableMap(
         keyFunc = { it.shortName },
         valueFunc = { it },
       )
@@ -139,19 +151,23 @@ object ReducerFactory {
   }
 
   @JvmStatic
-  fun printAllReductionAlgorithms(): String {
-    return registeredReductionAlgorithms.values.asSequence().sortedBy { it.shortName }.withIndex()
+  fun printAllReductionAlgorithms(): String =
+    registeredReductionAlgorithms.values
+      .asSequence()
+      .sortedBy { it.shortName }
+      .withIndex()
       .map { (index, reducerAnnotation) ->
         val indexComponent = Strings.padStart((index + 1).toString(), 2, ' ')
         buildString {
           append(indexComponent).append(": ").append(reducerAnnotation.shortName).append("\n")
-          append("    desc : ").append(
-            reducerAnnotation.description.replace('\n', ' '),
-          ).append('\n')
-          append("    class: ").append(reducerAnnotation::class.java.name).append('\n')
+          append("    desc : ")
+            .append(
+              reducerAnnotation.description.replace('\n', ' '),
+            ).append('\n')
+          val klass = reducerAnnotation::class.java
+          append("    class: ").append(klass.name).append('\n')
         }
       }.joinToString(separator = "\n")
-  }
 
   private val logger = FluentLogger.forEnclosingClass()
 }

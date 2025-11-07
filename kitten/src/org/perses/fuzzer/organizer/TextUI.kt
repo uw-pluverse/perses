@@ -21,8 +21,9 @@ import com.google.common.collect.ImmutableMap
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-class TextUI private constructor(private val commands: ImmutableMap<String, Command>) {
-
+class TextUI private constructor(
+  private val commands: ImmutableMap<String, Command>,
+) {
   fun run() {
     val stdin = BufferedReader(InputStreamReader(System.`in`))
     printCommands()
@@ -59,14 +60,16 @@ class TextUI private constructor(private val commands: ImmutableMap<String, Comm
     }
   }
 
-  private fun computeCommand(firstToken: String): String? {
-    return try {
+  private fun computeCommand(firstToken: String): String? =
+    try {
       val commandId = Integer.parseInt(firstToken)
-      commands.keys.withIndex().firstOrNull { it.index == commandId }?.value
+      commands.keys
+        .withIndex()
+        .firstOrNull { it.index == commandId }
+        ?.value
     } catch (e: Exception) {
       firstToken
     }
-  }
 
   private fun printCommands() {
     println()
@@ -78,15 +81,17 @@ class TextUI private constructor(private val commands: ImmutableMap<String, Comm
   }
 
   companion object {
-    private val CMD_EXIT = Command(
-      "exit",
-      ImmutableList.of(),
-    ) {}
+    private val CMD_EXIT =
+      Command(
+        "exit",
+        ImmutableList.of(),
+      ) {}
 
-    private val CMD_HELP = Command(
-      "help",
-      ImmutableList.of(),
-    ) {}
+    private val CMD_HELP =
+      Command(
+        "help",
+        ImmutableList.of(),
+      ) {}
   }
 
   class Command(
@@ -94,13 +99,14 @@ class TextUI private constructor(private val commands: ImmutableMap<String, Comm
     val parameters: ImmutableList<String>,
     val action: (ImmutableList<String>) -> Unit,
   ) {
-
-    val usage = StringBuilder().apply {
-      append(name)
-      parameters.forEach {
-        append(" <$it>")
-      }
-    }.toString()
+    val usage =
+      StringBuilder()
+        .apply {
+          append(name)
+          parameters.forEach {
+            append(" <$it>")
+          }
+        }.toString()
 
     fun perform(arguments: ImmutableList<String>) {
       action.invoke(arguments)
@@ -108,7 +114,6 @@ class TextUI private constructor(private val commands: ImmutableMap<String, Comm
   }
 
   class Builder {
-
     private val commands = ImmutableMap.builder<String, Command>()
 
     fun addCommand(

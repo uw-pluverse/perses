@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.primitives.ImmutableIntArray
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.AbstractOutputManager
 import java.util.PrimitiveIterator
 
 class ContentLexemeIdQueryCache(
@@ -27,38 +28,39 @@ class ContentLexemeIdQueryCache(
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<
-  ContentLexemeIdQueryCache.ContentLexemeIdEncoding,
-  ContentLexemeIdQueryCache.ContentLexemeIdEncoder,
+    ContentLexemeIdQueryCache.ContentLexemeIdEncoding,
+    ContentLexemeIdQueryCache.ContentLexemeIdEncoder,
   >(
-  tokenizedProgram,
-  profiler,
-  configuration,
-) {
-
+    tokenizedProgram,
+    profiler,
+    configuration,
+  ) {
   override fun createEncoder(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ): ContentLexemeIdEncoder {
-    return ContentLexemeIdEncoder(baseProgram, profiler)
-  }
+  ): ContentLexemeIdEncoder = ContentLexemeIdEncoder(baseProgram, profiler)
 
   class ContentLexemeIdEncoder(
     program: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
   ) : AbstractTokenizedProgramEncoder<ContentLexemeIdEncoding>(
-    program,
-    profiler,
-    supportsRccReEncoding = true,
-  ) {
-
+      program,
+      profiler,
+      supportsRccReEncoding = true,
+    ) {
     private var persesLexemeIdInOrigin: ImmutableIntArray
 
-    override fun encode(program: TokenizedProgram): ContentLexemeIdEncoding? {
-      return encode(
-        program.tokens.stream().mapToInt(PersesTokenFactory.PersesToken::persesLexemeId).iterator(),
+    override fun encode(
+      program: TokenizedProgram,
+      outputManager: AbstractOutputManager,
+    ): ContentLexemeIdEncoding? =
+      encode(
+        program.tokens
+          .stream()
+          .mapToInt(PersesTokenFactory.AbstractPersesToken::persesLexemeId)
+          .iterator(),
         program.tokenCount,
       )
-    }
 
     private fun encode(
       lexemeIterator: PrimitiveIterator.OfInt,
@@ -88,14 +90,11 @@ class ContentLexemeIdQueryCache(
       return ContentLexemeIdEncoding(builder.build(), tokenCount)
     }
 
-    override fun reEncode(
-      previousEncoding: ContentLexemeIdEncoding,
-    ): ContentLexemeIdEncoding? {
-      return encode(
+    override fun reEncode(previousEncoding: ContentLexemeIdEncoding): ContentLexemeIdEncoding? =
+      encode(
         previousEncoding.persesLexemeIdArray.stream().iterator(),
         previousEncoding.tokenCount,
       )
-    }
 
     override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {
       persesLexemeIdInOrigin = computeLexemeIdInOrig(encoderBaseProgram.tokens)
@@ -103,7 +102,7 @@ class ContentLexemeIdQueryCache(
 
     companion object {
       private fun computeLexemeIdInOrig(
-        tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+        tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
       ): ImmutableIntArray {
         val size = tokensInOrigin.size
         val builder = ImmutableIntArray.builder(size)
@@ -119,11 +118,11 @@ class ContentLexemeIdQueryCache(
     }
   }
 
-  class ContentLexemeIdEncoding(val persesLexemeIdArray: ImmutableIntArray, tokenCount: Int) :
-    AbstractProgramEncoding<ContentLexemeIdEncoding>(persesLexemeIdArray.hashCode(), tokenCount) {
-
-    override fun extraEquals(other: ContentLexemeIdEncoding): Boolean {
-      return persesLexemeIdArray == other.persesLexemeIdArray
-    }
+  class ContentLexemeIdEncoding(
+    val persesLexemeIdArray: ImmutableIntArray,
+    tokenCount: Int,
+  ) : AbstractProgramEncoding<ContentLexemeIdEncoding>(persesLexemeIdArray.hashCode(), tokenCount) {
+    override fun extraEquals(other: ContentLexemeIdEncoding): Boolean =
+      persesLexemeIdArray == other.persesLexemeIdArray
   }
 }

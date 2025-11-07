@@ -44,7 +44,6 @@ class AntlrCompiler(
   val packageName: String,
   val jarFileCustomizer: (ZipOutputStream) -> Unit,
 ) {
-
   init {
     if (!Files.exists(workingDirectory)) {
       Files.createDirectories(workingDirectory)
@@ -54,44 +53,50 @@ class AntlrCompiler(
 
   private val parserFileBaseName = parser.grammarName + ".g4"
 
-  val parserFile: Path = workingDirectory.resolve(parserFileBaseName).apply {
-    writeText(parser.sourceCode)
-  }
+  val parserFile: Path =
+    workingDirectory.resolve(parserFileBaseName).apply {
+      writeText(parser.sourceCode)
+    }
 
   val lexerFile = lexer?.writeToDirectory(workingDirectory)
 
-  val lexerClassSimpleName: String = if (lexer == null) {
-    parser.grammarName + "Lexer"
-  } else {
-    getNameWithoutExtension(lexer.fileName)
-  }
+  val lexerClassSimpleName: String =
+    if (lexer == null) {
+      parser.grammarName + "Lexer"
+    } else {
+      getNameWithoutExtension(lexer.fileName)
+    }
 
-  val parserClassSimpleName = when (parser.grammarType) {
-    PersesGrammar.GrammarType.COMBINED -> parser.grammarName + "Parser"
-    PersesGrammar.GrammarType.PARSER -> parser.grammarName
-    else -> throw RuntimeException("Unreachable. ${parser.grammarType}")
-  }
-  private val mainStub = stubFactory.createStub(
-    packageName = packageName,
-    parserClassSimpleName = parserClassSimpleName,
-    lexerClassSimpleName = lexerClassSimpleName,
-    startRuleName = startRuleName,
-  )
+  val parserClassSimpleName =
+    when (parser.grammarType) {
+      PersesGrammar.GrammarType.COMBINED -> parser.grammarName + "Parser"
+      PersesGrammar.GrammarType.PARSER -> parser.grammarName
+      else -> throw RuntimeException("Unreachable. ${parser.grammarType}")
+    }
+  private val mainStub =
+    stubFactory.createStub(
+      packageName = packageName,
+      parserClassSimpleName = parserClassSimpleName,
+      lexerClassSimpleName = lexerClassSimpleName,
+      startRuleName = startRuleName,
+    )
   private val outputFolder: Path = workingDirectory.resolve(packageName.replace('.', '/'))
 
   private val parserJavaFile: Path = outputFolder.resolve("$parserClassSimpleName.java")
   private val lexerJavaFile: Path = outputFolder.resolve("$lexerClassSimpleName.java")
   private val mainJavaFile: Path = outputFolder.resolve(mainStub.classSimpleName() + ".java")
-  private val parserBaseFile: Path? = if (parserBase == null) {
-    null
-  } else {
-    outputFolder.resolve(parserBase.fileName)
-  }
-  private val lexerBaseFile: Path? = if (lexerBase == null) {
-    null
-  } else {
-    outputFolder.resolve(lexerBase.fileName)
-  }
+  private val parserBaseFile: Path? =
+    if (parserBase == null) {
+      null
+    } else {
+      outputFolder.resolve(parserBase.fileName)
+    }
+  private val lexerBaseFile: Path? =
+    if (lexerBase == null) {
+      null
+    } else {
+      outputFolder.resolve(lexerBase.fileName)
+    }
 
   val jarFile: Path = outputFolder.resolve(parser.grammarName + ".jar")
 
@@ -142,14 +147,15 @@ class AntlrCompiler(
   }
 
   private fun createJarFile(destination: Path) {
-    val packager = JarPackager(
-      outputFolder,
-      packageName,
-      { file ->
-        file.endsWith(".java") || file.endsWith(".class") || file.endsWith(".g4")
-      },
-      jarFileCustomizer,
-    )
+    val packager =
+      JarPackager(
+        outputFolder,
+        packageName,
+        { file ->
+          file.endsWith(".java") || file.endsWith(".class") || file.endsWith(".g4")
+        },
+        jarFileCustomizer,
+      )
     packager.createJarFile(destination)
   }
 
@@ -177,24 +183,28 @@ class AntlrCompiler(
       parserBase: Path? = null,
       lexerBase: Path? = null,
     ) = AntlrCompiler(
-      parser = PersesAstBuilder.loadGrammarFromString(
-        Files.readAllBytes(parserFile).toString(StandardCharsets.UTF_8),
-      ),
-      lexer = if (lexerFile == null) {
-        null
-      } else {
-        FileNameContentLinesPair.createFromFile(lexerFile)
-      },
-      parserBase = if (parserBase == null) {
-        null
-      } else {
-        FileNameContentLinesPair.createFromFile(parserBase)
-      },
-      lexerBase = if (lexerBase == null) {
-        null
-      } else {
-        FileNameContentLinesPair.createFromFile(lexerBase)
-      },
+      parser =
+        PersesAstBuilder.loadGrammarFromString(
+          Files.readAllBytes(parserFile).toString(StandardCharsets.UTF_8),
+        ),
+      lexer =
+        if (lexerFile == null) {
+          null
+        } else {
+          FileNameContentLinesPair.createFromFile(lexerFile)
+        },
+      parserBase =
+        if (parserBase == null) {
+          null
+        } else {
+          FileNameContentLinesPair.createFromFile(parserBase)
+        },
+      lexerBase =
+        if (lexerBase == null) {
+          null
+        } else {
+          FileNameContentLinesPair.createFromFile(lexerBase)
+        },
       startRuleName = startRuleName,
       workingDirectory = workingDirectory,
       stubFactory = stubFactory,
@@ -218,21 +228,26 @@ class AntlrCompiler(
     ) = AntlrCompiler(
       parser = PersesAstBuilder.loadGrammarFromString(parserCode),
       lexer = FileNameContentLinesPair.createFromString(lexerFileName, lexerCode),
-      parserBase = if (parserBaseFileName == null) {
-        null
-      } else {
-        FileNameContentLinesPair.createFromString(parserBaseFileName, checkNotNull(parserBaseCode))
-      },
-      lexerBase = if (lexerBaseFileName == null) {
-        null
-      } else {
-        FileNameContentLinesPair.createFromString(
-          lexerBaseFileName,
-          checkNotNull(
-            lexerBaseCode,
-          ),
-        )
-      },
+      parserBase =
+        if (parserBaseFileName == null) {
+          null
+        } else {
+          FileNameContentLinesPair.createFromString(
+            parserBaseFileName,
+            checkNotNull(parserBaseCode),
+          )
+        },
+      lexerBase =
+        if (lexerBaseFileName == null) {
+          null
+        } else {
+          FileNameContentLinesPair.createFromString(
+            lexerBaseFileName,
+            checkNotNull(
+              lexerBaseCode,
+            ),
+          )
+        },
       startRuleName = startRuleName,
       workingDirectory = workingDirectory,
       stubFactory = stubFactory,

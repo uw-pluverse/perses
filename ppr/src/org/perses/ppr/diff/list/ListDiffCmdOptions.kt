@@ -17,20 +17,18 @@
 package org.perses.ppr.diff.list
 
 import com.beust.jcommander.Parameter
-import org.perses.CommandOptions
 import org.perses.cmd.InputFlagGroup
+import org.perses.ppr.AbstractPPRCommandOptions
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class ListDiffCmdOptions : CommandOptions() {
-
+class ListDiffCmdOptions : AbstractPPRCommandOptions() {
   override fun createInputFlags() = ListDiffInputFlagGroup()
 
   val listDiffInputFlags = inputFlags as ListDiffInputFlagGroup
 
   class ListDiffInputFlagGroup : InputFlagGroup() {
-
     @JvmField
     @Parameter(
       names = ["--variant-file", "--variant"],

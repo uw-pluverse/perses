@@ -6,12 +6,12 @@ kt_jvm_test(
     name = "TestingConfigurationTest",
     srcs = ["TestingConfigurationTest.kt"],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/c",
         "//kitten/src/org/perses/fuzzer/config:testing_configuration",
-        "//src/org/perses/util/shell",
+        "//src/org/perses/grammar/c:language_kind",
+        "//src/org/perses/program:language_kind",
     ],
 )
 
@@ -21,5 +21,6 @@ kt_jvm_test(
     deps = [
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/rust",
+        "//src/org/perses/grammar:facade_factory",
     ],
 )

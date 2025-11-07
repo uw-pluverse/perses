@@ -41,12 +41,12 @@ class MutableNFA(
   override var startState: PersesATNState,
   override var acceptingState: PersesATNState,
 ) : AbstractNFABasedOnJGraphT(
-  graph = GraphTypeBuilder
-    .directed<PersesATNState, Edge>()
-    .allowingSelfLoops(true)
-    .buildGraph(),
-) {
-
+    graph =
+      GraphTypeBuilder
+        .directed<PersesATNState, Edge>()
+        .allowingSelfLoops(true)
+        .buildGraph(),
+  ) {
   init {
     addStateOrThrow(startState)
     addStateOrThrow(acceptingState)
@@ -65,10 +65,12 @@ class MutableNFA(
 
   fun removeStatesUnreachableFromAcceptingState(): MutableNFA {
     val reversedGraph = EdgeReversedGraph(graph)
-    val reachableStates = DepthFirstIterator(reversedGraph, acceptingState)
-      .asSequence()
-      .toSet()
-    graph.vertexSet()
+    val reachableStates =
+      DepthFirstIterator(reversedGraph, acceptingState)
+        .asSequence()
+        .toSet()
+    graph
+      .vertexSet()
       .asSequence()
       .minus(reachableStates)
       .toList() // materialize the elements to avoid concurrent modification
@@ -85,9 +87,7 @@ class MutableNFA(
 
   fun addStateIfAbsent(state: PersesATNState) = graph.addVertex(state)
 
-  private fun getMaxStateNumber(): Int {
-    return graph.vertexSet().maxOf { it.stateNumber }
-  }
+  private fun getMaxStateNumber(): Int = graph.vertexSet().maxOf { it.stateNumber }
 
   private fun createDummyState(): PersesATNState {
     val maxStateNumber = getMaxStateNumber()
@@ -115,34 +115,41 @@ class MutableNFA(
     check(graph.inDegreeOf(startState) == 0)
     check(graph.outDegreeOf(acceptingState) == 0)
 
-    val verticesToDelete = graph.vertexSet()
-      .asSequence()
-      .filter { it != startState && it != acceptingState }
-      .sortedBy { it.stateNumber }
-      .toMutableList()
+    val verticesToDelete =
+      graph
+        .vertexSet()
+        .asSequence()
+        .filter { it != startState && it != acceptingState }
+        .sortedBy { it.stateNumber }
+        .toMutableList()
     lazyAssert { startState !in verticesToDelete }
     lazyAssert { acceptingState !in verticesToDelete }
 
     while (verticesToDelete.isNotEmpty()) {
       val vertex = verticesToDelete.removeLast()
-      val selfEdge: Edge? = graph.getEdge(vertex, vertex)?.let {
-        val label = it.label
-        if (label.tag == AstTag.EPSILON) {
-          null
-        } else {
-          it
+      val selfEdge: Edge? =
+        graph.getEdge(vertex, vertex)?.let {
+          val label = it.label
+          if (label.tag == AstTag.EPSILON) {
+            null
+          } else {
+            it
+          }
         }
-      }
-      val sourceList = graph.incomingEdgesOf(vertex)
-        .asSequence()
-        .filter { it !== selfEdge }
-        .map { graph.getEdgeSource(it) to it }
-        .toList()
-      val targetList = graph.outgoingEdgesOf(vertex)
-        .asSequence()
-        .filter { it !== selfEdge }
-        .map { graph.getEdgeTarget(it) to it }
-        .toList()
+      val sourceList =
+        graph
+          .incomingEdgesOf(vertex)
+          .asSequence()
+          .filter { it !== selfEdge }
+          .map { graph.getEdgeSource(it) to it }
+          .toList()
+      val targetList =
+        graph
+          .outgoingEdgesOf(vertex)
+          .asSequence()
+          .filter { it !== selfEdge }
+          .map { graph.getEdgeTarget(it) to it }
+          .toList()
       check(graph.removeVertex(vertex))
       sourceList.forEach { check(!graph.containsEdge(it.second)) }
       targetList.forEach { check(!graph.containsEdge(it.second)) }
@@ -165,32 +172,36 @@ class MutableNFA(
           val targetVertex = target.first
           val targetEdge = target.second
 
-          val newEdgeAlternative: AbstractPersesRuleElement = AstUtil.concatenateByIgnoringEpsilon(
-            ArrayList<AbstractPersesRuleElement>().apply {
-              add(sourceEdge.label)
-              if (selfEdge != null) {
-                // FIXME: need to handle the non-greedy version.
-                add(SmartAstConstructor.createForStar(selfEdge.label, isGreedy = true))
-              }
-              add(targetEdge.label)
-            },
-          )
+          val newEdgeAlternative: AbstractPersesRuleElement =
+            AstUtil.concatenateByIgnoringEpsilon(
+              ArrayList<AbstractPersesRuleElement>().apply {
+                add(sourceEdge.label)
+                if (selfEdge != null) {
+                  // FIXME: need to handle the non-greedy version.
+                  add(SmartAstConstructor.createForStar(selfEdge.label, isGreedy = true))
+                }
+                add(targetEdge.label)
+              },
+            )
           val existingEdge: Edge? = graph.getEdge(source.first, target.first)
           if (existingEdge == null) {
             addEdgeOrThrow(sourceVertex, targetVertex, newEdgeAlternative)
           } else {
             graph.removeEdge(existingEdge)
-            val newEdgeAltBlock = when (existingEdge.label) {
-              // FIXME: handle the non-greedy version.
-              is PersesEpsilonAst -> SmartAstConstructor.createForOptional(
-                newEdgeAlternative,
-                isGreedy = true,
-              )
+            val newEdgeAltBlock =
+              when (existingEdge.label) {
+                // FIXME: handle the non-greedy version.
+                is PersesEpsilonAst ->
+                  SmartAstConstructor.createForOptional(
+                    newEdgeAlternative,
+                    isGreedy = true,
+                  )
 
-              else -> AstUtil.createAltBlockIfNecessary(
-                listOf(newEdgeAlternative, existingEdge.label),
-              )
-            }
+                else ->
+                  AstUtil.createAltBlockIfNecessary(
+                    listOf(newEdgeAlternative, existingEdge.label),
+                  )
+              }
             addEdgeOrThrow(sourceVertex, targetVertex, newEdgeAltBlock)
           }
         }
@@ -198,49 +209,57 @@ class MutableNFA(
     }
     check(graph.vertexSet().size == 2)
     check(graph.edgeSet().size == 1)
-    return graph.edgeSet().single().label.deepCopyTreeStructure()
+    return graph
+      .edgeSet()
+      .single()
+      .label
+      .deepCopyTreeStructure()
   }
 
   @Suppress("UNCHECKED_CAST")
-  fun toImmutableNFA(): ImmutableNFA {
-    return ImmutableNFA(
+  fun toImmutableNFA(): ImmutableNFA =
+    ImmutableNFA(
       startState = startState,
       acceptingState = acceptingState,
-      graph = (graph as AbstractBaseGraph<PersesATNState, Edge>).clone()
-        as Graph<PersesATNState, Edge>,
+      graph =
+        (graph as AbstractBaseGraph<PersesATNState, Edge>).clone()
+          as Graph<PersesATNState, Edge>,
     )
-  }
 
   companion object {
-
     private const val APPROXIMATION_RECURSION_LIMIT = 5
 
     fun copyOf(start: RuleStartState): MutableNFA {
       val map = HashMap<ATNState, PersesATNState>()
-      val nfa = MutableNFA(
-        startState = map.computeIfAbsent(start) {
-          PersesATNState(it.stateNumber)
-        },
-        acceptingState = map.computeIfAbsent(start.stopState) {
-          PersesATNState(it.stateNumber)
-        },
-      )
+      val nfa =
+        MutableNFA(
+          startState =
+            map.computeIfAbsent(start) {
+              PersesATNState(it.stateNumber)
+            },
+          acceptingState =
+            map.computeIfAbsent(start.stopState) {
+              PersesATNState(it.stateNumber)
+            },
+        )
       dfsATN(
         start,
         stateVisitor = { state ->
           nfa.addStateIfAbsent(map.computeIfAbsent(state) { PersesATNState(it.stateNumber) })
         },
         transitionVisitor = { atnSource, transition ->
-          val edgeLabel = if (transition.isEpsilon) {
-            PersesEpsilonAst()
-          } else {
-            PersesTransitionAst(transition)
-          }
+          val edgeLabel =
+            if (transition.isEpsilon) {
+              PersesEpsilonAst()
+            } else {
+              PersesTransitionAst(transition)
+            }
 
           val sourceState = map[atnSource]!!
-          val targetState = map.computeIfAbsent(transition.target) {
-            PersesATNState(it.stateNumber)
-          }
+          val targetState =
+            map.computeIfAbsent(transition.target) {
+              PersesATNState(it.stateNumber)
+            }
           nfa.addStateIfAbsent(targetState)
           nfa.addEdgeOrThrow(sourceState, targetState, edgeLabel)
         },
@@ -248,13 +267,11 @@ class MutableNFA(
       return nfa
     }
 
-    fun copyAndInlineOf(start: RuleStartState): MutableNFA {
-      return copyAndInlineOf(start, allowApproximation = false)
-    }
+    fun copyAndInlineOf(start: RuleStartState): MutableNFA =
+      copyAndInlineOf(start, allowApproximation = false)
 
-    fun approximateOf(start: RuleStartState): MutableNFA {
-      return copyAndInlineOf(start, allowApproximation = true)
-    }
+    fun approximateOf(start: RuleStartState): MutableNFA =
+      copyAndInlineOf(start, allowApproximation = true)
 
     private fun copyAndInlineOf(
       start: RuleStartState,
@@ -293,13 +310,15 @@ class MutableNFA(
         if (state is RuleStopState) {
           continue
         }
-        state.transitionSequence()
+        state
+          .transitionSequence()
           .forEach { transition ->
-            val edgeLabel = if (transition.isEpsilon) {
-              PersesEpsilonAst()
-            } else {
-              PersesTransitionAst(transition)
-            }
+            val edgeLabel =
+              if (transition.isEpsilon) {
+                PersesEpsilonAst()
+              } else {
+                PersesTransitionAst(transition)
+              }
             val targetState = transition.target
             if (transition is RuleTransition) {
               check(targetState is RuleStartState)
@@ -307,7 +326,8 @@ class MutableNFA(
               val cloneChildStop = PersesATNState(targetState.stopState.stateNumber)
 
               // Detect recursive rule.
-              if (!allowApproximation && visitedRuleStack.contains(
+              if (!allowApproximation &&
+                visitedRuleStack.contains(
                   targetState.obtainRuleIndex(),
                 )
               ) {

@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -22,10 +23,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_tree_diff_reduction_golden_test_delete_two_stmts_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_tree_diff_reduction_golden_test_delete_two_stmts_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: null
   testScriptExecutionTimeoutInSeconds: 600
@@ -38,13 +40,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -55,6 +60,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -63,7 +69,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -73,27 +79,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 treeDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -106,12 +121,13 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: customized_tree_diff_node_reducer
-condition: smaller
+Cache setting: query-caching=false, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 20
+(31/31)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        customized_tree_diff_node_reducer
+    }
 
 
 =Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
@@ -662,9 +678,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:26/31=83.87%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Testing the empty input. Global ratio:26/31=83.87%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.ppr.diff.tree.CustomizedTreeNodesReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.c--
     #include <stdio.h>
     int
@@ -726,6 +744,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
 ===================Node reduction is done===================
 
 Failed to reduce node 157
@@ -989,9 +1009,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:26/31=83.87%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Testing the empty input. Global ratio:26/31=83.87%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
+// edit action set type: DFS in org.perses.ppr.diff.tree.CustomizedTreeNodesReducer[kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: seed.c--
     #include <stdio.h>
     int
@@ -1054,6 +1076,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
 ===================Node reduction is done===================
 
 Failed to reduce node 177
@@ -1255,70 +1279,6 @@ translationUnit {id=1,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-=================Reducing node 118, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 118
-------------------------------------------------------------
-
-
 =================Reducing node 156, size=26=================
 
 The current best program is the following
@@ -1453,12 +1413,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:26/31=83.87%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Testing the empty input. Global ratio:26/31=83.87%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=175}
 ------------------------------------------------------------
 
 
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
 ===================Node reduction is done===================
 
 Failed to reduce node 157
@@ -1663,12 +1627,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:26/31=83.87%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Testing the empty input. Global ratio:26/31=83.87%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=179}
 ------------------------------------------------------------
 
 
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
 ===================Node reduction is done===================
 
 Failed to reduce node 177
@@ -1803,73 +1771,17 @@ Failed to reduce node 158
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 31
-  characterCount: 74
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(26/31)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                           Reducer #Tokens #Chars #NonDeletions
+ 0 customized_tree_diff_node_reducer      -5     -7             0
+ 1 customized_tree_diff_node_reducer       0      0             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "customized_tree_diff_node_reducer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 26
-  characterCount: 67
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
-
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "customized_tree_diff_node_reducer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 26
-  characterCount: 67
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+                          Reducer Times #Tokens #Chars
+customized_tree_diff_node_reducer     2      -5     -7
+------------------------------------- End --------------------------------------
 
 
 #test success = 1
@@ -1890,6 +1802,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -1902,10 +1815,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_tree_diff_reduction_golden_test_delete_two_stmts_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_tree_diff_reduction_golden_test_delete_two_stmts_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: null
   testScriptExecutionTimeoutInSeconds: 600
@@ -1918,13 +1832,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -1935,6 +1852,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -1943,7 +1861,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -1953,27 +1871,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 treeDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -1986,116 +1913,23 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: customized_tree_diff_node_reducer
-condition: smaller
+Cache setting: query-caching=false, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 17
+(23/23)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        customized_tree_diff_node_reducer
+    }
 
 
-=Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
+(23/23)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID Reducer #Tokens #Chars #NonDeletions
 
-The spar-tree is the following.
-translationUnit {id=1,slot_type=translationUnit}
-|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___Token:#include <stdio.h> {id=175,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
-    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=170,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=174,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=152,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=169,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=154,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=156,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=157,slot_type=LeftParen}
-        |           |___(+) {id=163,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
-        |           |   |___Token:void {id=168,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
-        |           |___Token:) {id=159,slot_type=RightParen}
-        |___compoundStatement {id=8,slot_type=compoundStatement}
-            |___Token:{ {id=9,slot_type=LeftBrace}
-            |___(?) {id=10,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=116,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=117,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=151,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=118,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=121,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=147,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=123,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=124,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=125,slot_type=Assign}
-            |       |   |               |___Token:1 {id=144,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=119,slot_type=Semi}
-            |       |___expressionStatement {id=46,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=47,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=65,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:printf {id=114,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=67,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=69,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=70,slot_type=LeftParen}
-            |       |   |               |___(?) {id=71,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___expression {id=73,slot_type=expression}
-            |       |   |               |       |___(+) {id=112,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |   |___Token:"%d" {id=113,slot_type=StringLiteral}
-            |       |   |               |       |___(*) {id=75,slot_type=kleene_star__expression_1}
-            |       |   |               |           |___aux_rule__expression_2 {id=76,slot_type=aux_rule__expression_2}
-            |       |   |               |               |___Token:, {id=77,slot_type=Comma}
-            |       |   |               |               |___Token:a {id=95,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |               |___Token:) {id=72,slot_type=RightParen}
-            |       |   |___Token:; {id=48,slot_type=Semi}
-            |       |___jumpStatement {id=19,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=22,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=23,slot_type=Return}
-            |           |   |___(?) {id=24,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0 {id=43,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=21,slot_type=Semi}
-            |___Token:} {id=11,slot_type=RightBrace}
-------------------------------------------------------------
-
-
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 63
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "customized_tree_diff_node_reducer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 63
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+Reducer Times #Tokens #Chars
+------------------------------------- End --------------------------------------
 
 
 #test success = 1

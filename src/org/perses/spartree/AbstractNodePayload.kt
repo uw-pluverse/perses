@@ -37,7 +37,6 @@ import org.perses.util.toImmutableList
  * its antlrRuleForTheChild should be 'expr',
  */
 abstract class AbstractNodePayload {
-
   abstract val expectedAntlrRuleType: RuleHierarchyEntry?
   abstract val actualAntlrRuleType: RuleHierarchyEntry?
 
@@ -57,21 +56,17 @@ abstract class AbstractNodePayload {
   data class SinglePayload(
     override val expectedAntlrRuleType: RuleHierarchyEntry?,
   ) : AbstractNodePayload() {
-
     override val actualAntlrRuleType: RuleHierarchyEntry?
       get() = expectedAntlrRuleType
 
     override val asSinglePayloadList: ImmutableList<SinglePayload> = ImmutableList.of(this)
 
-    override fun label(): String {
-      return expectedAntlrRuleType?.ruleName ?: "Token"
-    }
+    override fun label(): String = expectedAntlrRuleType?.ruleName ?: "Token"
   }
 
   data class CollapsingPayload(
     val collapsedAncestorsFromTop: ImmutableList<SinglePayload>,
   ) : AbstractNodePayload() {
-
     init {
       require(collapsedAncestorsFromTop.size > 1)
     }
@@ -97,14 +92,12 @@ abstract class AbstractNodePayload {
   }
 
   companion object {
-
-    fun create(payloads: ImmutableList<SinglePayload>): AbstractNodePayload {
-      return when (payloads.size) {
+    fun create(payloads: ImmutableList<SinglePayload>): AbstractNodePayload =
+      when (payloads.size) {
         0 -> error("cannot be empty")
         1 -> payloads.single()
         else -> CollapsingPayload(payloads)
       }
-    }
 
     fun concatenatePaylods(
       ancestor: AbstractNodePayload,
@@ -114,11 +107,13 @@ abstract class AbstractNodePayload {
       val ancestorTopToBottom = ancestor.asSinglePayloadList
       val descendantTopToBottom = descendant.asSinglePayloadList
       for (desc in descendantTopToBottom.withIndex()) {
-        val match = ancestorTopToBottom.withIndex().findLast {
-          it.value == desc.value
-        } ?: continue
+        val match =
+          ancestorTopToBottom.withIndex().findLast {
+            it.value == desc.value
+          } ?: continue
         return create(
-          ImmutableList.builder<SinglePayload>()
+          ImmutableList
+            .builder<SinglePayload>()
             .addAll(ancestorTopToBottom.subList(0, match.index + 1))
             .addAll(descendantTopToBottom.subList(desc.index + 1, descendantTopToBottom.size))
             .build(),

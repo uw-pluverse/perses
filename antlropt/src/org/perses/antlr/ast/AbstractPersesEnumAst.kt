@@ -25,16 +25,17 @@ abstract class AbstractPersesEnumAst protected constructor(
   private val enumName: String,
   private val values: ImmutableList<String>,
 ) : AbstractPersesAst() {
-
   init {
     require(values.toHashSet().size == values.size)
   }
 
-  override fun getChild(index: Int): AbstractPersesAst {
-    throw UnsupportedOperationException()
-  }
+  override fun getChild(index: Int): AbstractPersesAst = throw UnsupportedOperationException()
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     if (values.isEmpty()) {
       return
     }

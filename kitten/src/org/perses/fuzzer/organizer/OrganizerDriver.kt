@@ -29,15 +29,17 @@ import org.perses.util.ktInfo
 import java.io.File
 
 @Suppress("DEPRECATION")
-class OrganizerDriver(private val cmdOptions: CommandOptions) {
-
+class OrganizerDriver(
+  private val cmdOptions: CommandOptions,
+) {
   val findingFolder = FindingFolder(cmdOptions.findingFolder)
   val processingFolder = org.perses.fuzzer.ProcessingFolder(cmdOptions.processingFolder)
   val reportedBugFolder = ReportedBugFolder(cmdOptions.reportedFolder)
-  val duplicateBugFolder = DuplicateBugFolder(
-    cmdOptions.duplicateBugFolder,
-    reportedBugFolder,
-  )
+  val duplicateBugFolder =
+    DuplicateBugFolder(
+      cmdOptions.duplicateBugFolder,
+      reportedBugFolder,
+    )
 
   var clusters = buildClusters()
 
@@ -189,13 +191,11 @@ class OrganizerDriver(private val cmdOptions: CommandOptions) {
     println("#clusters=${clusters.numberOfClusters}, #instances=${clusters.numberOfInstances}")
   }
 
-  private fun getInstanceWithLargestMutantFile(): CrashInstanceFolder? {
-    return findingFolder.getInstanceWithLargestMutantFile()
-  }
+  private fun getInstanceWithLargestMutantFile(): CrashInstanceFolder? =
+    findingFolder.getInstanceWithLargestMutantFile()
 
-  private fun getInstanceWithSmallestMutantFile(): CrashInstanceFolder? {
-    return findingFolder.getInstanceWithSmallestMutantFile()
-  }
+  private fun getInstanceWithSmallestMutantFile(): CrashInstanceFolder? =
+    findingFolder.getInstanceWithSmallestMutantFile()
 
   fun moveDuplicateBugReports() {
     foreach(findingFolder.getAllCrashInstances()) {
@@ -221,5 +221,7 @@ class OrganizerDriver(private val cmdOptions: CommandOptions) {
     private val logger = FluentLogger.forEnclosingClass()
   }
 
-  class CrashClusterBox(var clusters: CrashClusterIndex)
+  class CrashClusterBox(
+    var clusters: CrashClusterIndex,
+  )
 }

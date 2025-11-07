@@ -18,14 +18,12 @@ package org.perses.antlr.atn
 
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
-import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.atn.BasicState
 import org.antlr.v4.runtime.atn.EpsilonTransition
 import org.antlr.v4.runtime.atn.RuleStartState
 import org.antlr.v4.runtime.atn.RuleStopState
 import org.antlr.v4.runtime.atn.SetTransition
 import org.antlr.v4.runtime.misc.IntervalSet
-import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -47,32 +45,31 @@ import org.perses.util.SimpleStack
 
 @RunWith(JUnit4::class)
 class AtnTest {
-
   val testLexerClass = TestLexer::class.java
 
   private val emptyRandom = DecisionMakerMock.createEmpty()
   private val defaultRandom = AbstractDecisionMaker.DefaultDecisionMaker(seed = 1L)
 
-  val testAtn = LexerAtnWrapper(testLexerClass)
-  val atnC = LexerAtnWrapper(OrigCLexer::class.java)
+  val testAtn = LexerAtnWrapper.createLexerWrapperFromLexerClass(testLexerClass)
+  val atnC = LexerAtnWrapper.createLexerWrapperFromLexerClass(OrigCLexer::class.java)
 
   @Test
   fun testIdentifierNFAShouldRejectInvalidIdentiers() {
-    val exception = Assert.assertThrows(java.lang.Exception::class.java) {
+    val path =
       atnC.findATNPathForLexeme(
         ruleType = OrigCLexer.Identifier.toTokenType(),
         lexeme = "A0\"\\x00\\u0p0",
       )
-    }
-    assertThat(exception).hasMessageThat().contains("#paths=0")
+    assertThat(path).isNull()
   }
 
   @Test
   fun testStringLiteralNFAShouldAcceptUnicode() {
-    val path = atnC.findATNPathForLexeme(
-      ruleType = OrigCLexer.StringLiteral.toTokenType(),
-      lexeme = "\"\u00a5\"",
-    )
+    val path =
+      atnC.findATNPathForLexeme(
+        ruleType = OrigCLexer.StringLiteral.toTokenType(),
+        lexeme = "\"\u00a5\"",
+      )!!
     assertThat(path.stateSequence.first()).isInstanceOf(RuleStartState::class.java)
     assertThat(path.stateSequence.last()).isInstanceOf(RuleStopState::class.java)
   }
@@ -88,14 +85,14 @@ class AtnTest {
 
   @Test
   fun testParsingIdentifierSingleChar() {
-    atnC.createTDTree("a", OrigCLexer.Identifier.toTokenType()).let { tree ->
+    atnC.createTDTree("a", OrigCLexer.Identifier.toTokenType())!!.let { tree ->
       assertThat(tree.toLexeme()).isEqualTo("a")
     }
   }
 
   @Test
   fun testParsingIdentifierTwoChars() {
-    atnC.createTDTree("a9", OrigCLexer.Identifier.toTokenType()).let { tree ->
+    atnC.createTDTree("a9", OrigCLexer.Identifier.toTokenType())!!.let { tree ->
       assertThat(tree.toLexeme()).isEqualTo("a9")
     }
   }
@@ -128,10 +125,11 @@ class AtnTest {
 
   @Test
   fun testSimulatingCharSet() {
-    val random = DecisionMakerMock(
-      listOf(),
-      listOf(0, 1),
-    )
+    val random =
+      DecisionMakerMock(
+        listOf(),
+        listOf(0, 1),
+      )
     val generator: () -> String = {
       testAtn.simulateRule(TestLexer.CharSet.toTokenType(), random).toLexeme()
     }
@@ -151,10 +149,11 @@ class AtnTest {
 
   @Test
   fun testSimulatingNotADigit() {
-    val random = DecisionMakerMock(
-      listOf(),
-      listOf(0, ' '.code),
-    )
+    val random =
+      DecisionMakerMock(
+        listOf(),
+        listOf(0, ' '.code),
+      )
     val generator: () -> String = {
       testAtn.simulateRule(TestLexer.NotADigit.toTokenType(), random).toLexeme()
     }
@@ -169,23 +168,26 @@ class AtnTest {
   @Test
   fun testSimulatingKleenePlusSingleChar() {
     // TODO: need to support loops.
-    val random = DecisionMakerMock(
-      listOf(true, true, false, false, true, false),
-      listOf(),
-    )
+    val random =
+      DecisionMakerMock(
+        listOf(true, true, false, false, true, false),
+        listOf(),
+      )
     val result = testAtn.simulateRule(TestLexer.KleenePlusOnSingleChar.toTokenType(), random)
     assertThat(result.toLexeme()).matches("a+")
   }
 
   @Test
   fun testSimulatingWildcard() {
-    val result = testAtn.simulateRule(
-      TestLexer.Wildcard.toTokenType(),
-      DecisionMakerMock(
-        listOf(),
-        listOf(1),
-      ),
-    ).toLexeme()
+    val result =
+      testAtn
+        .simulateRule(
+          TestLexer.Wildcard.toTokenType(),
+          DecisionMakerMock(
+            listOf(),
+            listOf(1),
+          ),
+        ).toLexeme()
     assertThat(result).hasLength(2)
     assertThat(result.first()).isEqualTo('a')
     val last = result.last()
@@ -194,10 +196,11 @@ class AtnTest {
 
   @Test
   fun testKleeneStar() {
-    val random = DecisionMakerMock(
-      listOf(true, false, true, true, true, false, false, false, true, false),
-      listOf(),
-    )
+    val random =
+      DecisionMakerMock(
+        listOf(true, false, true, true, true, false, false, false, true, false),
+        listOf(),
+      )
     val generator: () -> TDTree = {
       testAtn.simulateRule(
         TestLexer.KleeneStar.toTokenType(),
@@ -233,10 +236,11 @@ class AtnTest {
   @Test
   fun testAlternative() {
     // Alternative in lexer rules is handled as CharSet.
-    val random = DecisionMakerMock(
-      listOf(),
-      listOf(0, 1),
-    )
+    val random =
+      DecisionMakerMock(
+        listOf(),
+        listOf(0, 1),
+      )
     val ruleType = TestLexer.Alt.toTokenType()
     val generator: () -> String = {
       testAtn.simulateRule(ruleType, random).toLexeme()
@@ -252,10 +256,11 @@ class AtnTest {
 
   @Test
   fun testOptionalChar() {
-    val random = DecisionMakerMock(
-      listOf(true, false),
-      listOf(),
-    )
+    val random =
+      DecisionMakerMock(
+        listOf(true, false),
+        listOf(),
+      )
     val generator: () -> TDTree = {
       testAtn.simulateRule(
         TestLexer.OptionalChar.toTokenType(),
@@ -278,10 +283,11 @@ class AtnTest {
 
   @Test
   fun testOptionalSequence() {
-    val random = DecisionMakerMock(
-      listOf(true, false),
-      listOf(),
-    )
+    val random =
+      DecisionMakerMock(
+        listOf(true, false),
+        listOf(),
+      )
     val generator: () -> TDTree = {
       testAtn.simulateRule(TestLexer.OptionalSequence.toTokenType(), random)
     }
@@ -299,39 +305,43 @@ class AtnTest {
 
   @Test
   fun testGetPathForSingleChar() {
-    val path = testAtn.findATNPathForLexeme("A", TestLexer.SingleChar.toTokenType())
+    val path = testAtn.findATNPathForLexeme("A", TestLexer.SingleChar.toTokenType())!!
     assertThat(path.stateSequence.first()).isInstanceOf(RuleStartState::class.java)
     assertThat(path.stateSequence.last()).isInstanceOf(RuleStopState::class.java)
   }
 
   @Test
   fun testConstructTreeForSingleChar() {
-    val tree = testAtn.createTDTree("A", TestLexer.SingleChar.toTokenType())
+    val tree = testAtn.createTDTree("A", TestLexer.SingleChar.toTokenType())!!
     assertThat(tree.toLexeme()).isEqualTo("A")
   }
 
   @Test
   fun testConstructTreeForKleenePlusOnSingleChar() {
     val lexeme = "aaaaaaa"
-    val tree = testAtn.createTDTree(lexeme, TestLexer.KleenePlusOnSingleChar.toTokenType())
+    val tree = testAtn.createTDTree(lexeme, TestLexer.KleenePlusOnSingleChar.toTokenType())!!
     assertThat(tree.toLexeme()).isEqualTo(lexeme)
   }
 
   @Test
   fun testFragmentOfNatualNumber() {
-    val lexeme = testAtn.simulateRule(
-      TestLexer.NaturalNumber.toTokenType(),
-      DecisionMakerMock(listOf(false), listOf(0)),
-    ).toLexeme()
+    val lexeme =
+      testAtn
+        .simulateRule(
+          TestLexer.NaturalNumber.toTokenType(),
+          DecisionMakerMock(listOf(false), listOf(0)),
+        ).toLexeme()
     assertThat(lexeme).isEqualTo("0")
   }
 
   @Test
   fun testFragmentOfLong() {
-    val lexeme = testAtn.simulateRule(
-      TestLexer.Long.toTokenType(),
-      DecisionMakerMock(listOf(true, true, true, false), listOf(1, 2, 3, 4)),
-    ).toLexeme()
+    val lexeme =
+      testAtn
+        .simulateRule(
+          TestLexer.Long.toTokenType(),
+          DecisionMakerMock(listOf(true, true, true, false), listOf(1, 2, 3, 4)),
+        ).toLexeme()
     assertThat(lexeme).isEqualTo("1234L")
   }
 
@@ -340,10 +350,12 @@ class AtnTest {
   fun testSimulatingConstant() {
     val regex = atnC.getNormalizedAtn(OrigCLexer.Constant.toTokenType()).second
     println(regex.sourceCode)
-    val lexeme = atnC.simulateRule(
-      OrigCLexer.Constant.toTokenType(),
-      AbstractDecisionMaker.DefaultDecisionMaker(seed = 1L),
-    ).toLexeme()
+    val lexeme =
+      atnC
+        .simulateRule(
+          OrigCLexer.Constant.toTokenType(),
+          AbstractDecisionMaker.DefaultDecisionMaker(seed = 1L),
+        ).toLexeme()
     assertThat(lexeme).isEqualTo("")
   }
 
@@ -359,8 +371,8 @@ class AtnTest {
     testAtnWithAllItsLexerRules(atn, setOf("Identifier"))
   }
 
-  private fun <T : Lexer> testAtnWithAllItsLexerRules(
-    atn: LexerAtnWrapper<T>,
+  private fun testAtnWithAllItsLexerRules(
+    atn: LexerAtnWrapper,
     excluded: Set<String> = setOf(),
   ) {
     val tokens = atn.metaTokenInfoDB.asSequence().toList()
@@ -380,18 +392,22 @@ class AtnTest {
   }
 
   private fun testSimulationAndTDTreeReconstruction(
-    atnWrapper: LexerAtnWrapper<*>,
+    atnWrapper: LexerAtnWrapper,
     ruleType: TokenType,
     decisionMaker: AbstractDecisionMaker.DefaultDecisionMaker,
   ) {
     val origTree = atnWrapper.simulateRule(ruleType, decisionMaker)
     val lexeme = origTree.toLexeme()
-    val reconstructedTree = atnWrapper.createTDTree(lexeme, ruleType)
+    val reconstructedTree = atnWrapper.createTDTree(lexeme, ruleType)!!
     assertIsomorphic(ruleType, origTree, reconstructedTree)
     assertWithMessage(ruleType.toString()).that(lexeme).isEqualTo(reconstructedTree.toLexeme())
   }
 
-  private fun assertIsomorphic(ruleType: TokenType, t1: TDTree, t2: TDTree) {
+  private fun assertIsomorphic(
+    ruleType: TokenType,
+    t1: TDTree,
+    t2: TDTree,
+  ) {
     val stack = SimpleStack<Pair<AbstractTDTreeNode, AbstractTDTreeNode>>()
     assertWithMessage(ruleType.toString()).that(t1.root::class.java).isEqualTo(t2.root::class.java)
     stack.add(Pair(t1.root, t2.root))
@@ -418,9 +434,10 @@ class AtnTest {
       Pair("Identifier", "PlusPlus"),
       Pair("LessEqual", "Less"),
     ).forEach {
-      assertWithMessage(it.toString()).that(
-        atnC.canBeConcatWithoutSpace(it.first, it.second),
-      ).isTrue()
+      assertWithMessage(it.toString())
+        .that(
+          atnC.canBeConcatWithoutSpace(it.first, it.second),
+        ).isTrue()
     }
   }
 
@@ -440,21 +457,24 @@ class AtnTest {
   @Test
   fun testNfasConcatSpaceRequired() {
     listOf(
-      Pair("Int", "Identifier"), // 'Int' is the keyword 'int'
+      // 'Int' is the keyword 'int'
+      Pair("Int", "Identifier"),
       Pair("Identifier", "Identifier"),
     ).forEach {
-      assertWithMessage(it.toString()).that(
-        atnC.canBeConcatWithoutSpace(it.first, it.second),
-      ).isFalse()
+      assertWithMessage(it.toString())
+        .that(
+          atnC.canBeConcatWithoutSpace(it.first, it.second),
+        ).isFalse()
     }
   }
 
   @Test
   fun testCacheForCanBeConcat() {
     var entryCounter = 0
-    val newAtnC = LexerAtnWrapper(OrigCLexer::class.java)
+    val newAtnC = LexerAtnWrapper.createLexerWrapperFromLexerClass(OrigCLexer::class.java)
     listOf(
-      Pair(OrigCLexer.Int, OrigCLexer.Identifier), // 'Int' is the keyword 'int'
+      // 'Int' is the keyword 'int'
+      Pair(OrigCLexer.Int, OrigCLexer.Identifier),
       Pair(OrigCLexer.Identifier, OrigCLexer.PlusPlus),
     ).map { it.first.toTokenType() to it.second.toTokenType() }
       .forEach {
@@ -480,13 +500,15 @@ class AtnTest {
   @Test
   fun testConcatSpaceRequiredWithTokenType() {
     listOf(
-      Pair(OrigCLexer.Int, OrigCLexer.Identifier), // 'Int' is the keyword 'int'
+      // 'Int' is the keyword 'int'
+      Pair(OrigCLexer.Int, OrigCLexer.Identifier),
       Pair(OrigCLexer.Identifier, OrigCLexer.Identifier),
     ).map { it.first.toTokenType() to it.second.toTokenType() }
       .forEach {
-        assertWithMessage(it.toString()).that(
-          atnC.canBeConcatWithoutSpace(it.first, it.second),
-        ).isFalse()
+        assertWithMessage(it.toString())
+          .that(
+            atnC.canBeConcatWithoutSpace(it.first, it.second),
+          ).isFalse()
       }
   }
 
@@ -499,9 +521,10 @@ class AtnTest {
         OrigCLexer.Assign.toTokenType(),
       ),
     ).forEach {
-      assertWithMessage(it.toString()).that(
-        atnC.canBeSubsumed(it.first, it.second, it.third),
-      ).isTrue()
+      assertWithMessage(it.toString())
+        .that(
+          atnC.canBeSubsumed(it.first, it.second, it.third),
+        ).isTrue()
     }
   }
 
@@ -536,30 +559,33 @@ class AtnTest {
 
     val nfa = MutableNFA.copyOf(start)
 
-    val result = LexerAtnWrapper.getReachableStatesWithNonEpsilonOutgoingTransition(
-      nfa.createNFAState { it.startState },
-    ).map {
-      it.state.stateNumber
-    }
+    val result =
+      LexerAtnWrapper
+        .getReachableStatesWithNonEpsilonOutgoingTransition(
+          nfa.createNFAState { it.startState },
+        ).map {
+          it.state.stateNumber
+        }
     assertThat(result).containsExactly(state1.stateNumber, end.stateNumber)
   }
 
   @Test
   fun testApproximateOf() {
     val regex = testAtn.getNormalizedAtn(TestLexer.NonRegexToken.toTokenType()).second.sourceCode
-    val readableRegex = regex.replace(Regex("\\d+")) { match ->
-      val number = match.value.toInt()
-      if (number in 32..126) {
-        val character = number.toChar()
-        character.toString()
-      } else {
-        match.value
+    val readableRegex =
+      regex.replace(Regex("\\d+")) { match ->
+        val number = match.value.toInt()
+        if (number in 32..126) {
+          val character = number.toChar()
+          character.toString()
+        } else {
+          match.value
+        }
       }
-    }
     assertThat(readableRegex).isEqualTo(
       """
-        # (# (# a # # # | a # #) | a #)
-        | a
+      # (# (# a # # # | a # #) | a #)
+      | a
       """.trimIndent(),
     )
   }

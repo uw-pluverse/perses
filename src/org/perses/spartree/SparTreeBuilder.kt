@@ -31,7 +31,6 @@ class SparTreeBuilder(
   private val parseTreeWithParser: ParseTreeWithParser,
   val simplifyTree: Boolean = true,
 ) : ISparTreeAntlrTreeMapping {
-
   private val spar2antlrMap = HashBiMap.create<AbstractSparTreeNode, ParseTree>()
   private var built = false
   val result by lazy {
@@ -79,14 +78,18 @@ class SparTreeBuilder(
       SparTreeSimplifier.simplify(root)
     }
     return SparTree(
-      realRoot = root,
+      realRoot =
+        if (root.isPermanentlyDeleted) {
+          null
+        } else {
+          root
+        },
       sparTreeNodeFactory = sparTreeNodeFactory,
     )
   }
 
-  private fun isEOFToken(node: ParseTree): Boolean {
-    return isTokenNode(node) && (node as TerminalNode).symbol.type == Token.EOF
-  }
+  private fun isEOFToken(node: ParseTree): Boolean =
+    isTokenNode(node) && (node as TerminalNode).symbol.type == Token.EOF
 
   private fun createSparTreeNode(parseTree: ParseTree): AbstractSparTreeNode {
     if (isTokenNode(parseTree)) {
@@ -101,9 +104,7 @@ class SparTreeBuilder(
   }
 
   companion object {
-    fun isEmptyRuleNode(node: ParseTree): Boolean {
-      return isRuleNode(node) && node.childCount == 0
-    }
+    fun isEmptyRuleNode(node: ParseTree): Boolean = isRuleNode(node) && node.childCount == 0
 
     fun isRuleNode(node: ParseTree): Boolean {
       lazyAssert { node is RuleNode != node is TerminalNode }
@@ -115,9 +116,8 @@ class SparTreeBuilder(
       return node is TerminalNode
     }
 
-    fun isEOFToken(node: ParseTree): Boolean {
-      return isTokenNode(node) && (node as TerminalNode).symbol.type == Token.EOF
-    }
+    fun isEOFToken(node: ParseTree): Boolean =
+      isTokenNode(node) && (node as TerminalNode).symbol.type == Token.EOF
 
     private fun areNodeIdsUnique(root: AbstractSparTreeNode): Boolean {
       val visited = HashSet<Int>()
@@ -137,7 +137,6 @@ class SparTreeBuilder(
     fun createSparTreeNode(
       sparTreeNodeFactory: SparTreeNodeFactory,
       parseTreeWithParser: ParseTreeWithParser,
-    ) =
-      createSparTree(sparTreeNodeFactory, parseTreeWithParser).detachRootFromTree()
+    ) = createSparTree(sparTreeNodeFactory, parseTreeWithParser).detachRootFromTree()
   }
 }

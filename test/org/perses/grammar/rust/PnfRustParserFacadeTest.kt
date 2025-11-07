@@ -35,7 +35,6 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class PnfRustParserFacadeTest {
-
   val facade = PnfRustParserFacade()
   val workingDir = Files.createTempDirectory("PnfRustParserFacadeTest_")
 
@@ -80,7 +79,8 @@ class PnfRustParserFacadeTest {
   fun testSingleFile(file: Path) {
     try {
       compareOrigAndPnfParsers(file)
-      Truth.assertWithMessage("Remove $file")
+      Truth
+        .assertWithMessage("Remove $file")
         .that(failedTests)
         .containsNoneIn(arrayOf(file.toString()))
     } catch (e: Throwable) {
@@ -243,7 +243,8 @@ class PnfRustParserFacadeTest {
     }
 
     private fun buildFailedTests() =
-      Paths.get("test/org/perses/grammar/rust/golden_fail_list.txt")
+      Paths
+        .get("test/org/perses/grammar/rust/golden_fail_list.txt")
         .readLines()
         .asSequence()
         .map { it.trim() }

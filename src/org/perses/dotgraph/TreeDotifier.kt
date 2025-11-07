@@ -38,14 +38,13 @@ object TreeDotifier {
   private val logger = FluentLogger.forEnclosingClass()
   private val DEFAULT_ANTLR_PARSE_TREE_LABEL_PROVIDER: NodeLabelProvider<ParseTree> =
     object : NodeLabelProvider<ParseTree>() {
-      protected override fun computeNodeLabel(node: ParseTree): String? {
-        return if (node is TerminalNode) node.getText() else node.javaClass.simpleName
-      }
+      protected override fun computeNodeLabel(node: ParseTree): String? =
+        if (node is TerminalNode) node.getText() else node.javaClass.simpleName
     }
   private val DEFAULT_RUNTIME_TREE_LABEL_PROVIDER: NodeLabelProvider<AbstractSparTreeNode> =
     object : NodeLabelProvider<AbstractSparTreeNode>() {
-      protected override fun computeNodeLabel(node: AbstractSparTreeNode): String {
-        return (node as? LexerRuleSparTreeNode)?.asLexerRule()?.token?.text
+      protected override fun computeNodeLabel(node: AbstractSparTreeNode): String =
+        (node as? LexerRuleSparTreeNode)?.asLexerRule()?.token?.lexemeText
           ?: when (node) {
             is ParserRuleSparTreeNode -> {
               when (node.ruleType) {
@@ -70,7 +69,6 @@ object TreeDotifier {
               throw RuntimeException("unreachable.")
             }
           }
-      }
     }
 
   @JvmStatic
@@ -81,15 +79,23 @@ object TreeDotifier {
     )
   }
 
-  fun dotifyAntlrParseTree(sourceFile: Path, pdfFile: Path) {
+  fun dotifyAntlrParseTree(
+    sourceFile: Path,
+    pdfFile: Path,
+  ) {
     try {
       val factory = builderWithBuiltinLanguages().build()
-      val source = SourceFile(
-        sourceFile,
-        factory.computeLanguageKindWithFileName(sourceFile)!!,
-      )
-      val (tree) = factory.getParserFacadeListForOrNull(source.dataKind)!!
-        .defaultParserFacade.create().parseFile(sourceFile)
+      val source =
+        SourceFile(
+          sourceFile,
+          factory.computeLanguageKindWithFileName(sourceFile)!!,
+        )
+      val (tree) =
+        factory
+          .getParserFacadeListForOrNull(source.dataKind)!!
+          .defaultParserFacade
+          .create()
+          .parseFile(sourceFile)
       convertTreeToDotGraph(tree)
         .dotify(pdfFile, DEFAULT_ANTLR_PARSE_TREE_LABEL_PROVIDER)
     } catch (e: Exception) {
@@ -111,7 +117,10 @@ object TreeDotifier {
     }
   }
 
-  fun dotifyRuntimeMutableTree(root: AbstractSparTreeNode, pdfFile: Path) {
+  fun dotifyRuntimeMutableTree(
+    root: AbstractSparTreeNode,
+    pdfFile: Path,
+  ) {
     val dotGraph = convertTreeToDotGraph(root)
     try {
       dotGraph.dotify(pdfFile, DEFAULT_RUNTIME_TREE_LABEL_PROVIDER)

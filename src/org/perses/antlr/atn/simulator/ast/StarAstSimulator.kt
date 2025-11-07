@@ -26,7 +26,6 @@ class StarAstSimulator(
   ast: PersesStarAst,
   private val bodySimulator: AbstractASTSimulator<*>,
 ) : AbstractASTSimulator<PersesStarAst>(ast) {
-
   override fun simulate(
     decisionMaker: AbstractDecisionMaker,
     tree: TDTree,

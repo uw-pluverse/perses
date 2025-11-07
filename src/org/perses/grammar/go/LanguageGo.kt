@@ -25,8 +25,9 @@ object LanguageGo : LanguageKind(
   extensions = ImmutableSet.of("go"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT,
-  ),
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.ORIG_FORMAT,
+    ),
 )

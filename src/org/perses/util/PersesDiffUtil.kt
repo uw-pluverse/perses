@@ -19,7 +19,6 @@ package org.perses.util
 import difflib.DiffUtils
 
 object PersesDiffUtil {
-
   fun <T> diff(
     main: List<T>,
     other: List<T>,

@@ -12,5 +12,6 @@ kt_jvm_library(
         "Indent.kt",
     ],
     deps = [
+        "//:guava",
     ],
 )

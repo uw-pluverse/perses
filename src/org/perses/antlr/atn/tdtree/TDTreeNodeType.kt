@@ -17,7 +17,6 @@
 package org.perses.antlr.atn.tdtree
 
 enum class TDTreeNodeType {
-
   PLUS,
 
   STAR,

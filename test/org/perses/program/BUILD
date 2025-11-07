@@ -72,7 +72,6 @@ kt_jvm_test(
     srcs = ["SerializableLanguageKindTest.kt"],
     associates = ["//src/org/perses/program:serializable_language_kind"],
     deps = [
-        "//:jackson",
         "//:truth",
     ],
 )

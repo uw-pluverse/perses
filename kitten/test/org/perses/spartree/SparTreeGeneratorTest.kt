@@ -21,7 +21,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.antlr.ast.PersesParserRuleAst
 import org.perses.fuzzer.languagemodel.NDepthTreeModel
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.c.PnfCParserFacade
@@ -41,24 +40,27 @@ class SparTreeGeneratorTest {
   ) {
     var successTimes = 0
     var failedTimes = 0
-    val randomGenerator = RandomSparTreeGenerator(
-      parserFacade,
-      Random(2),
-    )
-    val languageModel = NDepthTreeModel(
-      contextSizeLimit = 5,
-      parserFacade,
-      allowToEnableGuidance = true,
-    )
-    val guidedGenerator = GuidedSparTreeGenerator(
-      parserFacade,
-      Random(2),
-      languageModel,
-    )
-    val rules =
-      parserFacade.antlrGrammar.getCombinedRules().filterIsInstance<PersesParserRuleAst>()
-    for (element in rules) {
-      val ruleToStart = element.ruleNameHandle
+    val randomGenerator =
+      RandomSparTreeGenerator(
+        parserFacade,
+        Random(2),
+      )
+    val languageModel =
+      NDepthTreeModel(
+        contextSizeLimit = 5,
+        parserFacade,
+        allowToEnableGuidance = true,
+      )
+    val guidedGenerator =
+      GuidedSparTreeGenerator(
+        parserFacade,
+        Random(2),
+        languageModel,
+      )
+    val rules = parserFacade.antlrGrammar.parserRules
+    for (rule in rules.withIndex()) {
+      println("Processing rule $rule/${rules.size}")
+      val ruleToStart = rule.value.ruleNameHandle
       // Following code should not fail
       val tree1 = randomGenerator.generateParserRuleSparTreeNode(ruleToStart)
       val tree2 = guidedGenerator.generateParserRuleSparTreeNode(ruleToStart)
@@ -80,13 +82,14 @@ class SparTreeGeneratorTest {
 
   @Test
   fun testRandomGenerationWithC() {
-    val parserFacade = TestUtility.generateAdhocFacade(
-      Paths.get("kitten/test/fuzzer_test_data/grammar_for_testing/OrigC.g4"),
-      startRule = "compilationUnit",
-      tokenNamesOfIdentifiers = listOf("Identifier"),
-      workingDir = workingDir,
-      enablePnfNormalization = true,
-    )
+    val parserFacade =
+      TestUtility.generateAdhocFacade(
+        Paths.get("kitten/test/fuzzer_test_data/grammar_for_testing/OrigC.g4"),
+        startRule = "compilationUnit",
+        tokenNamesOfIdentifiers = listOf("Identifier"),
+        workingDir = workingDir,
+        enablePnfNormalization = true,
+      )
     testRandomGeneration(
       parserFacade,
       expectedSuccessTimes = 229,
@@ -98,29 +101,33 @@ class SparTreeGeneratorTest {
   fun testStringLiteralInC() {
     val random = Random(0)
     val generator = RandomSparTreeGenerator(parserFacade = cParserFacade, random)
-    val persesToken = generator.generatePersesToken(
-      cParserFacade.ruleHierarchy.getRuleHierarchyEntryOrNull("StringLiteral")!!
-        .ruleDef.body,
-    )
-    assertThat(persesToken.type).isEqualTo(
+    val persesToken =
+      generator.generatePersesToken(
+        cParserFacade.ruleHierarchy
+          .getRuleHierarchyEntryOrNull("StringLiteral")!!
+          .ruleDef.body,
+      )
+    assertThat(persesToken.tokenType).isEqualTo(
       cParserFacade.lexerAtnWrapper.metaTokenInfoDB
-        .getTokenInfoWithName("StringLiteral")!!.tokenType,
+        .getTokenInfoWithName("StringLiteral")!!
+        .tokenType,
     )
   }
 
   @Test
   fun testRandomGenerationWithRust() {
-    val parserFacade = TestUtility.generateAdhocFacade(
-      Paths.get("kitten/test/fuzzer_test_data/grammar_for_testing/Rust.g4"),
-      startRule = "crate",
-      tokenNamesOfIdentifiers = listOf("Ident"),
-      workingDir = workingDir,
-      enablePnfNormalization = true,
-    )
+    val parserFacade =
+      TestUtility.generateAdhocFacade(
+        Paths.get("kitten/test/fuzzer_test_data/grammar_for_testing/Rust.g4"),
+        startRule = "crate",
+        tokenNamesOfIdentifiers = listOf("Ident"),
+        workingDir = workingDir,
+        enablePnfNormalization = true,
+      )
     testRandomGeneration(
       parserFacade,
-      expectedSuccessTimes = 589,
-      expectedFailedTimes = 122,
+      expectedSuccessTimes = 600,
+      expectedFailedTimes = 111,
     )
   }
 }

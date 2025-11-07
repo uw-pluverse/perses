@@ -22,10 +22,10 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import java.nio.charset.StandardCharsets
 
 @RunWith(JUnit4::class)
 class VersionTest {
-
   @Test
   fun test() {
     assertThat(Version.MAJOR_VERSION).isNotEmpty()
@@ -44,12 +44,13 @@ class VersionTest {
     val bos = ByteArrayOutputStream()
     PrintStream(
       bos,
-      true, // autoFlush
-      Charsets.UTF_8.name(),
+      // autoFlush=
+      true,
+      StandardCharsets.UTF_8.name(),
     ).use {
       VersionHelper.printVersionInfo("perses", it)
     }
-    val string = bos.toString(Charsets.UTF_8.name())
+    val string = bos.toString(StandardCharsets.UTF_8.name())
     assertThat(string).startsWith("perses")
     if (string.contains("Git Version")) {
       assertThat(string).contains("Git Branch")

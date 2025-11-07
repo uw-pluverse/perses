@@ -7,9 +7,6 @@ kt_jvm_library(
     srcs = ["PnfNormalizer.kt"],
     deps = [
         ":pnf",
-        "//antlropt/src/org/perses/antlr/util",
-        "//src/org/perses/util",
-        "//src/org/perses/util:file_name_content_pair",
     ],
 )
 
@@ -60,7 +57,6 @@ kt_jvm_library(
     ],
     deps = [
         ":mutable_ast_and_util",
-        "//:flogger",
         "//:guava",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//antlropt/src/org/perses/antlr/ast",
@@ -142,7 +138,6 @@ kt_jvm_library(
     ],
     deps = [
         ":pnf_pass_interface",
-        "//:flogger",
         "//:guava",
         "//:jgrapht",
         "//antlropt/src/org/perses/antlr:enum_rule_type",

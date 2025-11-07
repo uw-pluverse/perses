@@ -19,17 +19,18 @@ package org.perses.reduction
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 
-/** Annotation for a reducer.  */
-// TODO: test the equals and hashcode function.
+/** Annotation for a reducer.
+ * TODO: test the equals and hashcode function.
+ */
 abstract class ReducerAnnotation(
   shortName: String,
   description: String,
   val deterministic: Boolean,
   val reductionResultSizeTrend: ReductionResultSizeTrend,
 ) : AbstractReducerNameAndDesc(shortName, description) {
-
   override fun extraToString(stringHelper: MoreObjects.ToStringHelper) {
-    stringHelper.add("deterministic", deterministic)
+    stringHelper
+      .add("deterministic", deterministic)
       .add("reductionResultSizeTrend", reductionResultSizeTrend)
   }
 

@@ -18,19 +18,26 @@ package org.perses.reduction.cache
 
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.io.AbstractOutputManager
 
 abstract class AbstractQueryCache {
-
-  abstract fun getCachedResult(program: TokenizedProgram): AbstractCacheRetrievalResult
+  abstract fun getCachedResult(
+    program: TokenizedProgram,
+    outputManager: AbstractOutputManager,
+  ): AbstractCacheRetrievalResult
 
   abstract fun cacheProgramAndResult(
     program: AbstractCacheRetrievalResult.CacheMiss,
     result: PropertyTestResult,
   )
 
-  abstract fun size(): Int
+  abstract fun cacheSize(): Int
 
   abstract fun evictEntriesLargerThan(best: TokenizedProgram)
 
   abstract fun triggerHeartBeat()
+
+  abstract fun clearCache()
+
+  abstract fun constructObjectsForMemoryMeasurement(): Any
 }

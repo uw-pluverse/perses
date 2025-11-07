@@ -24,7 +24,6 @@ import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class PnfSolidityParserFacadeTest {
-
   private val facade = PnfSolidityParserFacade()
 
   @Test

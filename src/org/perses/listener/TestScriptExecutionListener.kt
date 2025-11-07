@@ -17,6 +17,7 @@
 package org.perses.listener
 
 import com.google.common.base.Strings
+import org.perses.reduction.AbstractReductionListener
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.util.FileStreamPool
@@ -25,8 +26,9 @@ import java.util.concurrent.ConcurrentLinkedQueue
 /** Records the test script executions.  */
 class TestScriptExecutionListener(
   private val printStream: FileStreamPool.ManagedPrintStream,
-) : DefaultReductionListener() {
+) : AbstractReductionListener() {
   private val statisticsList = ConcurrentLinkedQueue<ExecutionStatistics>()
+
   override fun onTestScriptExecution(
     event: AbstractTestScriptExecutionEvent.TestScriptExecutionEvent,
   ) {
@@ -34,7 +36,7 @@ class TestScriptExecutionListener(
     val program = event.program
     statisticsList.add(
       ExecutionStatistics(
-        result.elapsedMilliseconds,
+        result.elapsedMillis,
         result.isInteresting,
         program.tokenCount,
       ),
@@ -67,7 +69,8 @@ class TestScriptExecutionListener(
     stream.printf("fail_total_time=%d\n", failTime)
     stream.print("\n\n\n===Details===\n")
     printStatistics(stream, "Time", "Result", "Size")
-    statisticsList.stream()
+    statisticsList
+      .stream()
       .filter { e: ExecutionStatistics -> e.result }
       .forEach { statistics: ExecutionStatistics ->
         printStatistics(
@@ -77,7 +80,8 @@ class TestScriptExecutionListener(
           statistics.programSize,
         )
       }
-    statisticsList.stream()
+    statisticsList
+      .stream()
       .filter { e: ExecutionStatistics -> !e.result }
       .forEach { statistics: ExecutionStatistics ->
         printStatistics(
@@ -90,13 +94,16 @@ class TestScriptExecutionListener(
   }
 
   private class ExecutionStatistics(
-    val milliSeconds: Long,
+    val milliSeconds: Int,
     val result: Boolean,
     val programSize: Int,
   )
 
   companion object {
-    private fun printStatistics(stream: FileStreamPool.ManagedPrintStream, vararg values: Any) {
+    private fun printStatistics(
+      stream: FileStreamPool.ManagedPrintStream,
+      vararg values: Any,
+    ) {
       var isFirst = true
       for (value in values) {
         if (isFirst) {

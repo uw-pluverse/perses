@@ -18,10 +18,10 @@ package org.perses.imagecutter
 
 import org.perses.util.cmd.AbstractMain
 
-class ImageReducerMain(args: Array<String>) : AbstractMain<CommandOptions>(args) {
-  override fun createCommandOptions(): CommandOptions {
-    return CommandOptions()
-  }
+class ImageReducerMain(
+  args: Array<String>,
+) : AbstractMain<CommandOptions>(args) {
+  override fun createCommandOptions(): CommandOptions = CommandOptions()
 
   override fun internalRun() {
   }

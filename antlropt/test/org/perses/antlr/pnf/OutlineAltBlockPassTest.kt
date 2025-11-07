@@ -23,32 +23,40 @@ import org.perses.antlr.ast.PersesAlternativeBlockAst
 import org.perses.antlr.ast.PersesSequenceAst
 
 class OutlineAltBlockPassTest {
-
   val pass = OutlineAltBlockPass()
 
   @Test
   fun test() {
-    val orig = GrammarTestingUtility.createPersesGrammarFromString(
-      """
+    val orig =
+      GrammarTestingUtility.createPersesGrammarFromString(
+        """
         start: ( 'a' | 'b' ) ( 'c' | 'd' ) 'e'*
               ;
-      """.trimIndent(),
-    )
-    val processed = pass.processGrammar(
-      GrammarPair(orig, lexerGrammar = null),
-    ).parserGrammar!!
+        """.trimIndent(),
+      )
+    val processed =
+      pass
+        .processGrammar(
+          GrammarPair(orig, lexerGrammar = null),
+        ).parserGrammar!!
     val body = processed.getRuleDefinition("start")!!.body
     assertThat(body).isInstanceOf(PersesSequenceAst::class.java)
     assertThat(body.childCount).isEqualTo(3)
-    var ruleElement = processed.parserRules.find {
-      it.ruleNameHandle.ruleName == "altnt_block__start_1"
-    }!!.body as PersesAlternativeBlockAst
+    var ruleElement =
+      processed.parserRules
+        .find {
+          it.ruleNameHandle.ruleName == "altnt_block__start_1"
+        }!!
+        .body as PersesAlternativeBlockAst
     assertThat(ruleElement.childCount).isEqualTo(2)
     assertThat(ruleElement.getChild(0).sourceCode.trim()).isEqualTo("'a'")
     assertThat(ruleElement.getChild(1).sourceCode.trim()).isEqualTo("'b'")
-    ruleElement = processed.parserRules.find {
-      it.ruleNameHandle.ruleName == "altnt_block__start_2"
-    }!!.body as PersesAlternativeBlockAst
+    ruleElement =
+      processed.parserRules
+        .find {
+          it.ruleNameHandle.ruleName == "altnt_block__start_2"
+        }!!
+        .body as PersesAlternativeBlockAst
     assertThat(ruleElement.childCount).isEqualTo(2)
     assertThat(ruleElement.getChild(0).sourceCode.trim()).isEqualTo("'c'")
     assertThat(ruleElement.getChild(1).sourceCode.trim()).isEqualTo("'d'")

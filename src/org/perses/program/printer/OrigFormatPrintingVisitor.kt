@@ -16,7 +16,7 @@
  */
 package org.perses.program.printer
 
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
 import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
@@ -28,19 +28,21 @@ open class OrigFormatPrintingVisitor(
   tokenPositionProvider: AbstractTokenPositionProvider,
   tokenPlacementListener: AbstractTokenPlacementListener?,
 ) : AbstractOrigFormatPrintingVisitor(
-  program,
-  keepBlankLines,
-  tokenPositionProvider,
-  tokenPlacementListener,
-) {
+    program,
+    keepBlankLines,
+    tokenPositionProvider,
+    tokenPlacementListener,
+  ) {
+  override fun isControlToken(token: PersesTokenFactory.AbstractPersesToken) = false
 
-  override fun isControlToken(token: PersesToken) = false
-
-  override fun visitControlToken(token: PersesToken) {
+  override fun visitControlToken(token: PersesTokenFactory.AbstractPersesToken) {
     // Do nothing.
   }
 
-  override fun printNonEmptyLine(line: List<PersesToken>, builder: FastStringBuilder) {
+  override fun printNonEmptyLine(
+    line: List<PersesTokenFactory.AbstractPersesToken>,
+    builder: FastStringBuilder,
+  ) {
     printNonEmptyLine(
       startPositionInLine = 0,
       line = line,

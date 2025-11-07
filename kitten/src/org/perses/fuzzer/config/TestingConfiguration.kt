@@ -33,7 +33,6 @@ data class SeedFolder(
   val path: String,
   val fileExtentions: List<String>,
 ) : Validateable {
-
   override fun validate() {
     check(path.isNotBlank())
     check(Files.isDirectory(Paths.get(path)))
@@ -54,7 +53,6 @@ data class ProgramUnderTest(
   val versionFlags: CmdFlags,
   val crashDetectorClassName: String,
 ) : Validateable {
-
   override fun validate() {
     check(command.containsNoWhitespace())
     check(command.isNotBlank())
@@ -81,7 +79,6 @@ data class ProgramUnderTest(
 data class CmdFlags(
   val flags: List<String>,
 ) : Validateable {
-
   override fun validate() {
     flags.forEach {
       check(it.containsNoWhitespace())
@@ -102,8 +99,7 @@ data class TestingConfiguration(
   val seedFolders: List<SeedFolder>,
   val programsUnderTest: List<ProgramUnderTest>,
 ) : Validateable {
-
-//  private val languageKind = checkNotNull(
+  //  private val languageKind = checkNotNull(
 //    SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
 //      .computeLanguageKindWithLanguageNameIgnoreCase(language)
 //  ) {
@@ -130,9 +126,7 @@ data class TestingConfiguration(
   }
 
   companion object {
-
-    fun readFrom(file: Path): TestingConfiguration {
-      return Serialization.fromYamlFile(file, object : TypeReference<TestingConfiguration>() {})
-    }
+    fun readFrom(file: Path): TestingConfiguration =
+      Serialization.fromYamlFile(file, object : TypeReference<TestingConfiguration>() {})
   }
 }

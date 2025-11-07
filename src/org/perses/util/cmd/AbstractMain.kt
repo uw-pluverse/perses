@@ -24,7 +24,10 @@ abstract class AbstractMain<Cmd : AbstractCommandOptions>(
 ) {
   companion object {
     init {
-      DefaultLoggingConfigurations.configureLogManager("INFO")
+      DefaultLoggingConfigurations.configureLogManager(
+        loggingLevel = "INFO",
+        hideTimestamps = false,
+      )
     }
   }
 
@@ -38,9 +41,8 @@ abstract class AbstractMain<Cmd : AbstractCommandOptions>(
 
   protected abstract fun internalRun()
 
-  protected open fun processOtherHelpRequests(): HelpRequestProcessingDecision {
-    return HelpRequestProcessingDecision.NO_EXIT
-  }
+  protected open fun processOtherHelpRequests(): HelpRequestProcessingDecision =
+    HelpRequestProcessingDecision.NO_EXIT
 
   protected open fun validateCommandOptions() {
     cmd.validate()

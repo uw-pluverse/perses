@@ -9,7 +9,6 @@ kt_jvm_library(
     srcs = ["PPRDiffUtils.kt"],
     deps = [
         "//:gumtree",
-        "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/spartree",
         "//src/org/perses/util:perses_diffutil",
     ],

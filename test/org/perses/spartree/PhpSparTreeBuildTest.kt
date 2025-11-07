@@ -26,20 +26,20 @@ import org.perses.grammar.php.LanguagePhp
 
 @RunWith(JUnit4::class)
 class PhpSparTreeBuildTest {
-
   @Ignore
   @Test
   fun test() {
-    val tree = TestUtility.createSparTreeFromString(
-      """
-      <?php
-      echo "start", "\n";
-      echo "hello world", "\n";
-      echo "finish", "\n";
-      ?>
-      """.trimIndent(),
-      LanguagePhp,
-    )
+    val tree =
+      TestUtility.createSparTreeFromString(
+        """
+        <?php
+        echo "start", "\n";
+        echo "hello world", "\n";
+        echo "finish", "\n";
+        ?>
+        """.trimIndent(),
+        LanguagePhp,
+      )
     Truth.assertThat(tree.programSnapshot.tokens).isNotEmpty()
   }
 }

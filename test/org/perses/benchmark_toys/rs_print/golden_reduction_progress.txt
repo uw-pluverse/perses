@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "hello.rs"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_hello.rs"
+  outputDir: "result_reduction_golden_test_node_priority-dfs_hello.rs"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: true
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -72,43 +78,64 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.rust.PnfRustParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: perses_node_priority_with_dfs_delta
-condition: smaller
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 13
+(24/24)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (token_canonicalizer) {
+            fixpoint (smaller) {
+                node_priority-dfs
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(24/24)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 crate {id=1,slot_type=crate}
@@ -169,14 +196,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](24/24)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:24/24=100.00%
+FixPt[1][node_priority-dfs][DFS](24/24)  Testing the empty input. Global ratio:24/24=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__mod_body_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__mod_body_2]dd@1
     --file: hello.rs--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](24/24)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/24=100.00%
+FixPt[1][node_priority-dfs][DFS](24/24)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/24=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 3
@@ -270,9 +301,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](24/24)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:24/24=100.00%
+FixPt[1][node_priority-dfs][DFS](24/24)  Testing the empty input. Global ratio:24/24=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@3
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__block_with_inner_attrs_2]dd@3
     --file: hello.rs--
     fn main() {
     }
@@ -282,9 +315,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](24/24)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:24/24=100.00%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
     --file: hello.rs--
     fn main() {
                                   println!("ingress");
@@ -298,6 +332,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](24/24)  Try deleting [2]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:24/24=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 5 --> 5.
@@ -316,7 +351,7 @@ token count change 24 -> 18
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: hello.rs--
     fn main() {
@@ -327,9 +362,10 @@ token count change 24 -> 18
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](18/24)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/3=66.67%. Global ratio:18/24=75.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
     --file: hello.rs--
     fn main() {
                                   println!("ingress");
@@ -341,9 +377,10 @@ token count change 24 -> 18
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](18/24)  Try deleting [1]#1: Uninteresting. Local ratio: 2/3=66.67%. Global ratio:18/24=75.00%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__block_with_inner_attrs_2]dd@1
     --file: hello.rs--
     fn main() {
     println!("hello_world");
@@ -355,6 +392,7 @@ token count change 24 -> 18
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](18/24)  Try deleting [0]#1: Interesting. Local ratio: 2/3=66.67%. Global ratio:18/24=75.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 1 entries are removed: 6 --> 5.
@@ -373,6 +411,7 @@ token count change 18 -> 12
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer ends. Result=[1]#1. Local ratio: 1/3=33.33%. Global ratio:12/24=50.00%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 15 from 24 to 12
@@ -390,7 +429,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: hello.rs--
     fn main() {
@@ -537,9 +576,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:12/24=50.00%
+FixPt[1][node_priority-dfs][DFS](12/24)  Testing the empty input. Global ratio:12/24=50.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__inner_attr_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__inner_attr_1]dd@1
     --file: hello.rs--
     fn main() {
     println!(             );
@@ -551,6 +592,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](12/24)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/24=50.00%
+FixPt[1][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/24=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 50
@@ -693,9 +736,8 @@ Failed to reduce node 10
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+(12/24)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 crate {id=81,slot_type=crate}
@@ -734,13 +776,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:12/24=50.00%
+FixPt[2][node_priority-dfs][DFS](12/24)  Testing the empty input. Global ratio:12/24=50.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: hello.rs--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](12/24)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/24=50.00%
+FixPt[2][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/24=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 83
@@ -764,7 +810,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+=====Cache hit for the following uninteresting program:=====
 
     --file: hello.rs--
     println!("hello_world");
@@ -807,7 +853,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:12/24=50.00%
+FixPt[2][node_priority-dfs][DFS](12/24)  Testing the empty input. Global ratio:12/24=50.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: hello.rs--
     fn main() {
@@ -818,6 +866,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](12/24)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/24=50.00%
+FixPt[2][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/24=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 95
@@ -977,7 +1027,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=========Cache hit for the following program: fail==========
+FixPt[2][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:12/24=50.00%
+FixPt[2][node_priority-dfs][DFS](12/24)  Testing the empty input. Global ratio:12/24=50.00%
+=====Cache hit for the following uninteresting program:=====
 
     --file: hello.rs--
     fn main() {
@@ -990,6 +1042,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](12/24)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/24=50.00%
+FixPt[2][node_priority-dfs][DFS](12/24)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/24=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 109
@@ -1132,66 +1186,619 @@ Failed to reduce node 90
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 24
-  characterCount: 73
-  fileContents:
-  - fileName: "hello.rs"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+=====Fixpoint iteration 3. Reducer: token_canonicalizer=====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+The spar-tree is the following.
+crate {id=81,slot_type=crate}
+|___(*) {id=83,slot_type=[mod_body,kleene_star__mod_body_2]}
+    |___fn_decl {id=88,slot_type=[item,altnt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
+        |___fn_head {id=89,slot_type=fn_head}
+        |   |___Token:fn {id=117,slot_type=Token}
+        |   |___Token:main {id=119,slot_type=[ident,Ident]}
+        |___Token:( {id=90,slot_type=Token}
+        |___Token:) {id=91,slot_type=Token}
+        |___block_with_inner_attrs {id=93,slot_type=[altnt_block__fn_decl_4,block_with_inner_attrs]}
+            |___Token:{ {id=94,slot_type=Token}
+            |___(*) {id=95,slot_type=kleene_star__block_with_inner_attrs_2}
+            |   |___macro_invocation_semi {id=100,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |       |___Token:println {id=116,slot_type=[simple_path,simple_path_segment,ident,Ident]}
+            |       |___Token:! {id=102,slot_type=Token}
+            |       |___aux_rule__macro_invocation_semi_7 {id=104,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |           |___aux_rule__macro_invocation_semi_8 {id=107,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |           |   |___Token:( {id=108,slot_type=Token}
+            |           |   |___(*) {id=109,slot_type=kleene_star__inner_attr_1}
+            |           |   |   |___Token:"hello_world" {id=113,slot_type=[tt,aux_rule__tt_1,StringLit]}
+            |           |   |___Token:) {id=110,slot_type=Token}
+            |           |___Token:; {id=106,slot_type=Token}
+            |___Token:} {id=96,slot_type=Token}
+------------------------------------------------------------
 
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 12
-  characterCount: 34
-  fileContents:
-  - fileName: "hello.rs"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
 
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+============Testing the following program: fail=============
 
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 12
-  characterCount: 34
-  fileContents:
-  - fileName: "hello.rs"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: hello.rs--
+    fn a   () {
+    println!("hello_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn a   () {
+    println!("hello_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: hello.rs--
+    fn main() {
+    a      !("hello_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    a      !("hello_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: hello.rs--
+    fn main() {
+    println!(""           );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!(""           );
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.rs--
+    fn main() {
+    println!(""           );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!(""           );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"ello_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("ello_world" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("ello_world" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hllo_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("hllo_world" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hllo_world" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"helo_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("helo_world" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("helo_world" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hell_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("hell_world" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hell_world" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"helloworld"'
+    --file: hello.rs--
+    fn main() {
+    println!("helloworld" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("helloworld" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_orld"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_orld" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_orld" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_wrld"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_wrld" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_wrld" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_wold"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_wold" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_wold" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_word"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_word" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_word" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_worl"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_worl" );
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_worl" );
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '" ello_world"'
+    --file: hello.rs--
+    fn main() {
+    println!(" ello_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!(" ello_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"!ello_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("!ello_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("!ello_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"h llo_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("h llo_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("h llo_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"h!llo_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("h!llo_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("h!llo_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"he lo_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("he lo_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("he lo_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"he!lo_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("he!lo_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("he!lo_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hel o_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("hel o_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hel o_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hel!o_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("hel!o_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hel!o_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hell _world"'
+    --file: hello.rs--
+    fn main() {
+    println!("hell _world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hell _world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hell!_world"'
+    --file: hello.rs--
+    fn main() {
+    println!("hell!_world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hell!_world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello world"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello!world"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello!world");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello!world");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_ orld"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_ orld");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_ orld");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_!orld"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_!orld");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_!orld");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_w rld"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_w rld");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_w rld");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_w!rld"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_w!rld");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_w!rld");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_wo ld"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_wo ld");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_wo ld");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_wo!ld"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_wo!ld");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_wo!ld");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_wor d"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_wor d");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_wor d");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_wor!d"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_wor!d");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_wor!d");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_worl "'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_worl ");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_worl ");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hello_worl!"'
+    --file: hello.rs--
+    fn main() {
+    println!("hello_worl!");
+    }
+    --file: <formatted tokenized program in its original format>--
+    fn main() {
+    println!("hello_worl!");
+    }
+------------------------------------------------------------
+
+
+====Fixpoint iteration 4. Reducer: FineGritLatraReducer=====
+
+The spar-tree is the following.
+crate {id=81,slot_type=crate}
+|___(*) {id=83,slot_type=[mod_body,kleene_star__mod_body_2]}
+    |___fn_decl {id=88,slot_type=[item,altnt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
+        |___fn_head {id=89,slot_type=fn_head}
+        |   |___Token:fn {id=117,slot_type=Token}
+        |   |___Token:main {id=119,slot_type=[ident,Ident]}
+        |___Token:( {id=90,slot_type=Token}
+        |___Token:) {id=91,slot_type=Token}
+        |___block_with_inner_attrs {id=93,slot_type=[altnt_block__fn_decl_4,block_with_inner_attrs]}
+            |___Token:{ {id=94,slot_type=Token}
+            |___(*) {id=95,slot_type=kleene_star__block_with_inner_attrs_2}
+            |   |___macro_invocation_semi {id=100,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |       |___Token:println {id=116,slot_type=[simple_path,simple_path_segment,ident,Ident]}
+            |       |___Token:! {id=102,slot_type=Token}
+            |       |___aux_rule__macro_invocation_semi_7 {id=104,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |           |___aux_rule__macro_invocation_semi_8 {id=107,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |           |   |___Token:( {id=108,slot_type=Token}
+            |           |   |___(*) {id=109,slot_type=kleene_star__inner_attr_1}
+            |           |   |   |___Token:"hello_world" {id=113,slot_type=[tt,aux_rule__tt_1,StringLit]}
+            |           |   |___Token:) {id=110,slot_type=Token}
+            |           |___Token:; {id=106,slot_type=Token}
+            |___Token:} {id=96,slot_type=Token}
+------------------------------------------------------------
+
+
+FixPt[4][FineGritLatraReducer](12/24)  For rust, there are 3 transformations.
+FixPt[4][FineGritLatraReducer](12/24)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+35 entries are removed: 41 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 6
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 12 -> 12
+------------------------------------------------------------
+
+
+FixPt[4][FineGritLatraReducer][ClearBlockTransformation](12/24)  Found matches: 1 in transformation ClearBlockTransformation
+FixPt[4][FineGritLatraReducer][ClearBlockTransformation](12/24)  Built a LatraGeneralActionSet subroot(id=207,#8) in ClearBlockTransformation
+============Testing the following program: fail=============
+
+// edit action set type: Latra Transformation ClearBlockTransformation created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: hello.rs--
+    fn main(){ unimplemented!() }
+    --file: <formatted tokenized program in its original format>--
+    fn main(){ unimplemented!() }
+------------------------------------------------------------
+
+
+FixPt[4][FineGritLatraReducer][ClearStructTransformation](12/24)  Found matches: 0 in transformation ClearStructTransformation
+FixPt[4][FineGritLatraReducer][NoneDefaultingTransformation](12/24)  Found matches: 0 in transformation NoneDefaultingTransformation
+(12/24)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs     -12    -39             0
+ 1    node_priority-dfs       0      0             0
+ 2  token_canonicalizer       0      0             0
+ 3 FineGritLatraReducer       0      0             0
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     2     -12    -39
+ token_canonicalizer     1       0      0
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 2
-#test failure = 7
-#test result cache hits = 6
+#test failure = 43
+#test result cache hits = 7
 #test execution cancelled = 0
 #node edit action set cache hits = 3
 #external test execution cache hits = 0

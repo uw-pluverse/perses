@@ -17,17 +17,17 @@
 package org.perses.reduction.cache
 
 import com.google.common.collect.ImmutableList
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.util.FileStreamPool
 import java.lang.AutoCloseable
 
 class QueryCacheTimeProfiler(
   writer: FileStreamPool.ManagedPrintStream,
-) : AbstractQueryCacheProfiler(writer), AutoCloseable {
-
+) : AbstractQueryCacheProfiler(writer),
+  AutoCloseable {
   override fun onCreatingEncoder(
-    tokensInOrigin: ImmutableList<PersesToken>,
+    tokensInOrigin: ImmutableList<out AbstractPersesToken>,
     nanoDuration: Long,
   ) {
     writer!!
@@ -43,7 +43,7 @@ class QueryCacheTimeProfiler(
   }
 
   override fun onDecodingProgram(
-    tokensInOrigin: ImmutableList<PersesToken>,
+    tokensInOrigin: ImmutableList<out AbstractPersesToken>,
     encoding: RccProgramEncoding,
     nanoDuration: Long,
   ) {
@@ -66,7 +66,7 @@ class QueryCacheTimeProfiler(
   }
 
   override fun afterEncodeProgram(
-    tokensInOrigin: ImmutableList<PersesToken>,
+    tokensInOrigin: ImmutableList<out AbstractPersesToken>,
     program: TokenizedProgram,
     nanoDuration: Long,
   ) {
@@ -86,8 +86,8 @@ class QueryCacheTimeProfiler(
   }
 
   override fun afterHeavyweightCacheRefreshing(
-    oldBestProgram: ImmutableList<PersesToken>,
-    newBestProgram: ImmutableList<PersesToken>,
+    oldBestProgram: ImmutableList<out AbstractPersesToken>,
+    newBestProgram: ImmutableList<out AbstractPersesToken>,
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
     nanoDuration: Long,

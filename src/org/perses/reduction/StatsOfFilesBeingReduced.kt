@@ -18,7 +18,7 @@ package org.perses.reduction
 
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
-import org.perses.util.Util
+import org.perses.util.hashing.ShaHashCode
 
 data class StatsOfFilesBeingReduced(
   val tokenCount: Int,
@@ -27,11 +27,13 @@ data class StatsOfFilesBeingReduced(
 ) {
   data class FileNameAndContentDigestPair(
     val fileName: String,
-    val contentDigest: Util.SHA512HashCode,
+    val contentDigest: ShaHashCode,
   ) {
-    override fun toString(): String {
-      return MoreObjects.toStringHelper(this).add("fileName", fileName)
-        .add("contentDigest", contentDigest.numOfStrings).toString()
-    }
+    override fun toString(): String =
+      MoreObjects
+        .toStringHelper(this)
+        .add("fileName", fileName)
+        .add("contentDigest", contentDigest.numOfStrings)
+        .toString()
   }
 }

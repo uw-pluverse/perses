@@ -27,32 +27,31 @@ class SparTreeRootReplacementReducer(
   reducerContext: ReducerContext,
   private val newRootNode: AbstractSparTreeNode,
 ) : AbstractTokenReducer(META, reducerContext) {
-
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
     val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
-    val edit = tree.createRootReplacementEdit(
-      newRoot = newRootNode,
-      actionsDescription = "The current best file is not the minimal one. " +
-        "Replace the best file " +
-        "with the minimal program we have generated during the reduction process.",
-    )
+    val edit =
+      tree.createRootReplacementEdit(
+        newRoot = newRootNode,
+        actionsDescription =
+          "The current best file is not the minimal one. " +
+            "Replace the best file " +
+            "with the minimal program we have generated during the reduction process.",
+      )
     tree.applyEdit(edit)
   }
 
-  companion object {
-
-    const val NAME = "spartree_root_replacement_reducer"
-
-    @JvmField
-    val META = object : ReducerAnnotation(
-      shortName = NAME,
-      description = "Replace the spartree being reduced with the given spartree",
-      deterministic = true,
-      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
-    ) {
-      override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-        error("Cannot call $NAME with its annotation.")
-      }
+  object META : ReducerAnnotation(
+    shortName = NAME,
+    description = "Replace the spartree being reduced with the given spartree",
+    deterministic = true,
+    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+  ) {
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
+      error("Cannot call $NAME with its annotation.")
     }
+  }
+
+  companion object {
+    const val NAME = "spartree_root_replacement_reducer"
   }
 }

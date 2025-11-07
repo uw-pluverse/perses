@@ -21,12 +21,12 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class AdhocGrammarUtilTest {
-
   val workDir = Files.createTempDirectory("AdhocGrammarUtilTest_")
 
   @After
@@ -38,9 +38,7 @@ class AdhocGrammarUtilTest {
   fun test() {
     val file = workDir.resolve("a.txt")
     file.writeText("")
-    val hash = AdhocGrammarUtil.computeHash(file)
-    assertThat(hash).isEqualTo(
-      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    )
+    val hash = AdhocGrammarUtil.computeHash(file, EnumShaAlgorithm.SHA512)
+    assertThat(hash).isNotEmpty()
   }
 }

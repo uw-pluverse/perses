@@ -29,7 +29,6 @@ import org.perses.antlr.atn.tdtree.AlternativeBlockTDTreeNode
 class AlternativeBlockStateSimulator(
   private val state: BlockStartState,
 ) : AbstractATNStateSimulator() {
-
   init {
     require(
       state is StarBlockStartState ||
@@ -41,14 +40,11 @@ class AlternativeBlockStateSimulator(
     require(state.numberOfTransitions > 0)
   }
 
-  override fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition {
-    return decisionMaker.sampleTransition(state)
-  }
+  override fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition =
+    decisionMaker.sampleTransition(state)
 
   override val endState: ATNState
     get() = state.endState
 
-  override fun createTreeNode(nodeId: Int): AbstractTDTreeNode {
-    return AlternativeBlockTDTreeNode(nodeId)
-  }
+  override fun createTreeNode(nodeId: Int): AbstractTDTreeNode = AlternativeBlockTDTreeNode(nodeId)
 }

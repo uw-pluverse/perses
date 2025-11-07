@@ -25,18 +25,26 @@ abstract class AbstractNFA {
   abstract val acceptingState: PersesATNState
 
   abstract fun edgeSequence(): Sequence<Edge>
+
   abstract fun getSourceState(edge: Edge): PersesATNState
+
   abstract fun getTargetState(edge: Edge): PersesATNState
+
   abstract fun getOutgoingEdgesOf(sourceState: PersesATNState): Set<Edge>
+
   abstract fun outDegreeOf(state: PersesATNState): Int
+
   abstract fun printGraph(): String
+
   abstract fun containsState(state: PersesATNState): Boolean
 
-  override fun toString() = MoreObjects
-    .toStringHelper(this)
-    .add("start", getLabelForState(startState))
-    .add("accepting", getLabelForState(acceptingState))
-    .add("graph", printGraph()).toString()
+  override fun toString() =
+    MoreObjects
+      .toStringHelper(this)
+      .add("start", getLabelForState(startState))
+      .add("accepting", getLabelForState(acceptingState))
+      .add("graph", printGraph())
+      .toString()
 
   inline fun createNFAState(stateSelector: (AbstractNFA) -> PersesATNState): NFAState {
     val state = stateSelector(this)
@@ -46,12 +54,11 @@ abstract class AbstractNFA {
 
   abstract fun stateSequence(): Sequence<PersesATNState>
 
-  protected fun getLabelForState(state: PersesATNState): String {
-    return MoreObjects.toStringHelper(state).add("id", state).toString()
-  }
+  protected fun getLabelForState(state: PersesATNState): String =
+    MoreObjects.toStringHelper(state).add("id", state).toString()
 
-  fun printTopology(): String {
-    return buildString {
+  fun printTopology(): String =
+    buildString {
       appendLine("======NFA======")
       appendLine("start state: ${startState.stateNumber}")
       appendLine("accepting state: ${acceptingState.stateNumber}")
@@ -73,31 +80,33 @@ abstract class AbstractNFA {
           }
       }
     }
-  }
 
   // Not a data class for using the system identity as hashcode.
-  class Edge(val label: AbstractPersesRuleElement) {
-
+  class Edge(
+    val label: AbstractPersesRuleElement,
+  ) {
     val isEpsilon: Boolean
       get() = label is PersesEpsilonAst
 
-    override fun toString(): String {
-      return MoreObjects.toStringHelper(this).addValue(label).toString()
-    }
+    override fun toString(): String = MoreObjects.toStringHelper(this).addValue(label).toString()
   }
 
-  data class NFAState @PublishedApi internal constructor(
+  data class NFAState
+    @PublishedApi
+    internal constructor(
+      val nfa: AbstractNFA,
+      val state: PersesATNState,
+    ) {
+      fun outgoingEdges(): Sequence<NFAEdge> =
+        nfa.getOutgoingEdgesOf(state).asSequence().map {
+          NFAEdge(nfa, it)
+        }
+    }
+
+  data class NFAEdge(
     val nfa: AbstractNFA,
-    val state: PersesATNState,
+    val edge: Edge,
   ) {
-    fun outgoingEdges(): Sequence<NFAEdge> {
-      return nfa.getOutgoingEdgesOf(state).asSequence().map {
-        NFAEdge(nfa, it)
-      }
-    }
-  }
-
-  data class NFAEdge(val nfa: AbstractNFA, val edge: Edge) {
     val target: NFAState by lazy {
       NFAState(nfa, nfa.getTargetState(edge))
     }

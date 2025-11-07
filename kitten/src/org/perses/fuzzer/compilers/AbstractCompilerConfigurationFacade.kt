@@ -22,7 +22,6 @@ import org.perses.util.shell.ShellCommandOnPath
 abstract class AbstractCompilerConfigurationFacade(
   val compilerCommand: ShellCommandOnPath,
 ) {
-
   val compilationActions: ImmutableList<ICompilationAction> by lazy {
     createCompilationActions(compilerCommand)
   }
@@ -31,8 +30,9 @@ abstract class AbstractCompilerConfigurationFacade(
     createCrashDetector()
   }
 
-  protected abstract fun createCompilationActions(compilerCommand: ShellCommandOnPath):
-    ImmutableList<ICompilationAction>
+  protected abstract fun createCompilationActions(
+    compilerCommand: ShellCommandOnPath,
+  ): ImmutableList<ICompilationAction>
 
   protected abstract fun createCrashDetector(): ICompilerCrashDetector
 }

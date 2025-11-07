@@ -19,6 +19,7 @@ package org.perses.reduction.reducer.token
 import com.google.common.collect.ImmutableList
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
+import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.ReducerAnnotation
@@ -36,12 +37,11 @@ import org.perses.util.Util.lazyAssert
 
 abstract class AbstractStateBasedConcurrentReducer<
   ConcurrentState : IConcurrentState<ConcurrentState>,
-  Element,
-  >(
+  Element : Any,
+>(
   meta: ReducerAnnotation,
   reducerContext: ReducerContext,
-) : AbstractTokenSlicerReducer(meta, reducerContext) {
-
+) : AbstractTokenReducer(meta, reducerContext) {
   abstract val parseCheckNeeded: Boolean
 
   private var state: ConcurrentState? = null
@@ -103,7 +103,7 @@ abstract class AbstractStateBasedConcurrentReducer<
 
   private fun waitForFirstInterestingTestToFinishOrNull(): TestScriptExecResult<
     ConcurrentStateEditTestPayload<ConcurrentState>,
-    >? {
+  >? {
     // About Determinism:
     // activeFutures arranges futures in time ascending order
     // new future tasks are always added to the end of the deque
@@ -115,9 +115,10 @@ abstract class AbstractStateBasedConcurrentReducer<
 
   private fun peekAtActiveFuturesForBest(): Boolean {
     var bestFound = false
-    val doneFutures = ArrayList<
-      TestScriptExecResult<
-        ConcurrentStateEditTestPayload<ConcurrentState>,
+    val doneFutures =
+      ArrayList<
+        TestScriptExecResult<
+          ConcurrentStateEditTestPayload<ConcurrentState>,
         >,
       >()
     activeFutures.forEach { future ->
@@ -184,7 +185,10 @@ abstract class AbstractStateBasedConcurrentReducer<
 
   abstract fun createInitialState(tree: SparTree): ConcurrentState?
 
-  abstract fun getStateOnSuccess(tree: SparTree, state: ConcurrentState): ConcurrentState?
+  abstract fun getStateOnSuccess(
+    tree: SparTree,
+    state: ConcurrentState,
+  ): ConcurrentState?
 
   abstract fun computeNodeActionSet(
     state: ConcurrentState,
@@ -207,12 +211,10 @@ abstract class AbstractStateBasedConcurrentReducer<
     // transform
     val treeEdit = tree.createNodeDeletionEdit(actionSet)
     val testProgram = treeEdit.program
-    val cachedResult = reducerContext.queryCache.getCachedResult(testProgram)
+    val outputManager = ioManager.createOutputManager(testProgram)
+    val cachedResult = reducerContext.queryCache.getCachedResult(testProgram, outputManager)
     return@Creator if (cachedResult.isHit()) {
-      val testResult = cachedResult.asCacheHit().testResult
-      check(testResult.isNotInteresting) { "Only failed programs can be cached." }
       listenerManager.onTestResultCacheHit(
-        testResult,
         testProgram,
         treeEdit,
         outputCreator = ::computeFileContentListForProgram,
@@ -222,7 +224,7 @@ abstract class AbstractStateBasedConcurrentReducer<
     } else {
       val payload = ConcurrentStateEditTestPayload(state, treeEdit, cachedResult.asCacheMiss())
       ProceedResult(
-        ioManager.createOutputManager(testProgram),
+        outputManager,
         payload,
       )
     }
@@ -238,15 +240,17 @@ abstract class AbstractStateBasedConcurrentReducer<
       } else {
         PropertyTestResult(
           exitCode = AbstractSlicingTask.INVALID_SYNTAX_EXIT_CODE,
-          elapsedMilliseconds = -1,
+          elapsedMillis = -1,
         )
       }
     }
 
   private fun isProgramParsable(testProgram: TokenizedProgram) =
     reducerContext.configuration.parserFacade.isSourceCodeParsable(
-      PrinterRegistry.getPrinter(ioManager.getDefaultProgramFormat())
-        .print(testProgram).sourceCode,
+      PrinterRegistry
+        .getPrinter(ioManager.getDefaultProgramFormat())
+        .print(testProgram)
+        .sourceCode,
     )
 
   data class ConcurrentStateEditTestPayload<state : IConcurrentState<state>>(
@@ -270,5 +274,6 @@ interface IConcurrentState<T> {
     to calculate when to increase the granularity.
    */
   fun advance(): T?
+
   fun advanceOnSuccess(newSequenceSize: Int): T?
 }

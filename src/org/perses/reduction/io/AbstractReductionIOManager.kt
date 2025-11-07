@@ -41,36 +41,39 @@ abstract class AbstractReductionIOManager<
   P,
   K : AbstractDataKind,
   Self : AbstractReductionIOManager<P, K, Self>,
-  >(
+>(
   private val workingFolder: Path,
   val reductionInputs: AbstractReductionInputs<K, *>,
   val outputManagerFactory: AbstractOutputManagerFactory<P>,
   outputDirectory: Path?,
 ) {
-
-  val tempRootFolder: Path = workingFolder.resolve(
-    getTempRootFolderName(
-      reductionInputs.relativePathSequence().asIterable(),
-      reductionInputs.testScript.file.fileName.toString(),
-      LocalDateTime.now(),
-    ),
-  )
+  val tempRootFolder: Path =
+    workingFolder.resolve(
+      getTempRootFolderName(
+        reductionInputs.relativePathSequence().asIterable(),
+        reductionInputs.testScript.file.fileName
+          .toString(),
+        LocalDateTime.now(),
+      ),
+    )
 
   abstract fun getConcreteReductionInputs(): AbstractReductionInputs<*, *>
 
-  val resultFolder = if (outputDirectory == null) {
-    val dir = AutoIncrementDirectory(DEFAULT_PERSES_BEST_DIR_NAME)
-      .computeAndCreate(workingFolder)
-    ReductionFolder(reductionInputs, dir)
-  } else {
-    if (!Files.exists(outputDirectory)) {
-      Files.createDirectories(outputDirectory)
+  val resultFolder =
+    if (outputDirectory == null) {
+      val dir =
+        AutoIncrementDirectory(DEFAULT_PERSES_BEST_DIR_NAME)
+          .computeAndCreate(workingFolder)
+      ReductionFolder(reductionInputs, dir)
+    } else {
+      if (!Files.exists(outputDirectory)) {
+        Files.createDirectories(outputDirectory)
+      }
+      check(Files.isDirectory(outputDirectory)) {
+        "$outputDirectory is not a directory."
+      }
+      ReductionFolder(reductionInputs, outputDirectory)
     }
-    check(Files.isDirectory(outputDirectory)) {
-      "$outputDirectory is not a directory."
-    }
-    ReductionFolder(reductionInputs, outputDirectory)
-  }
 
   fun updateBestResult(program: P) {
     /*
@@ -91,28 +94,28 @@ abstract class AbstractReductionIOManager<
   }
 
   private var snapshotCounter = 0
+
   internal fun createCurrentBestResultFolder(): ReductionFolder {
     // create the result folder besides the resultFolder
     val timestamp = TimeUtil.formatDateForFileName(System.currentTimeMillis())
-    val path = resultFolder.folder.parent.resolve(
-      resultFolder.folder.name + "_best_result_snapshot_${++snapshotCounter}_at_" + timestamp,
-    )
+    val path =
+      resultFolder.folder.parent.resolve(
+        resultFolder.folder.name + "_best_result_snapshot_${++snapshotCounter}_at_" + timestamp,
+      )
     check(!Files.exists(path))
     Files.createDirectories(path)
     check(Files.isDirectory(path)) { path }
     return ReductionFolder(reductionInputs, path)
   }
 
-  fun createTempResultFolder(): ReductionFolder {
-    return lazilyInitializedReductionFolderManager.createNextFolder(
+  fun createTempResultFolder(): ReductionFolder =
+    lazilyInitializedReductionFolderManager.createNextFolder(
       prefix = "temp_",
       postfix = System.currentTimeMillis().toString(),
     )
-  }
 
-  fun createOutputManager(program: P): AbstractOutputManager {
-    return outputManagerFactory.createManagerFor(program)
-  }
+  fun createOutputManager(program: P): AbstractOutputManager =
+    outputManagerFactory.createManagerFor(program)
 
   fun getScriptFileBaseNameIn(folder: ReductionFolder): String {
     val scriptBaseName = reductionInputs.testScript.baseName
@@ -127,11 +130,14 @@ abstract class AbstractReductionIOManager<
   }
 
   fun getAllSourceFileBaseNamesIn(folder: ReductionFolder): ImmutableList<String> {
-    val baseNameList = reductionInputs.relativePathSequence().map {
-      val baseName = it.toString()
-      check(folder.checkFileExistence(baseName))
-      baseName
-    }.toImmutableList()
+    val baseNameList =
+      reductionInputs
+        .relativePathSequence()
+        .map {
+          val baseName = it.toString()
+          check(folder.checkFileExistence(baseName))
+          baseName
+        }.toImmutableList()
     return baseNameList
   }
 
@@ -145,30 +151,32 @@ abstract class AbstractReductionIOManager<
   inline fun <T> visitMainSourceFileIn(
     reductionFolder: ReductionFolder,
     visitor: (SourceFile) -> T,
-  ): T {
-    return visitor.invoke(
+  ): T =
+    visitor.invoke(
       SourceFile(
         reductionFolder.folder.resolve(getMainSourceFileBaseName()),
         reductionInputs.initiallyDeterminedMainDataKind as LanguageKind,
       ),
     )
-  }
 
-  fun getProfileFile() = workingFolder.resolve(
-    getCompactNameForFileList(reductionInputs.relativePathSequence().asIterable()) + "." +
-      TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".profile.txt",
-  )
+  fun getProfileFile() =
+    workingFolder.resolve(
+      getCompactNameForFileList(reductionInputs.relativePathSequence().asIterable()) + "." +
+        TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".profile.txt",
+    )
 
   fun backupAllMutableFiles(): ImmutableList<Path> {
     val formatDateForFileName = TimeUtil.formatDateForFileName(System.currentTimeMillis())
     val globalId = GlobalSequenceGenerator.nextWithPadding(paddingLength = 2, paddingChar = '0')
-    return reductionInputs.sequenceOfMutableFiles()
+    return reductionInputs
+      .sequenceOfMutableFiles()
       .map {
         val fileToReduce = it.origFile
         val relativePath = it.relativePath
-        val backupFile = workingFolder.resolve(
-          "$relativePath.${formatDateForFileName}_$globalId.orig",
-        )
+        val backupFile =
+          workingFolder.resolve(
+            "$relativePath.${formatDateForFileName}_$globalId.orig",
+          )
         check(!Files.exists(backupFile)) {
           buildString {
             append(
@@ -234,7 +242,8 @@ abstract class AbstractReductionIOManager<
     ): String {
       val separator = "_"
       val fileListString = getCompactNameForFileList(fileNameForReduction)
-      return Joiner.on(separator)
+      return Joiner
+        .on(separator)
         .join(
           PERSES_TEMP_ROOT_PREFIX,
           fileListString,

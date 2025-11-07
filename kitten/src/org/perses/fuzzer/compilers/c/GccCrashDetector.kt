@@ -19,51 +19,51 @@ package org.perses.fuzzer.compilers.c
 import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 
 class GccCrashDetector : AbstractCompilerCrashDetector() {
-
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
-    val lines = stderr
-      .asSequence()
-      .map { it.trimEnd() }
-      .filter { it.isNotBlank() }
-      .filter {
-        isSegfault(it) || isICE(it) || isStacktrace(it) || isCompareDebugFailure(it)
-      }
-      .map { it.trim() }
-      .map {
-        when {
-          isICE(it) -> {
-            val iceIndex = it.indexOf(KW_ICE)
-            check(iceIndex > 0)
+    val lines =
+      stderr
+        .asSequence()
+        .map { it.trimEnd() }
+        .filter { it.isNotBlank() }
+        .filter {
+          isSegfault(it) || isICE(it) || isStacktrace(it) || isCompareDebugFailure(it)
+        }.map { it.trim() }
+        .map {
+          when {
+            isICE(it) -> {
+              val iceIndex = it.indexOf(KW_ICE)
+              check(iceIndex > 0)
 
-            val startIndex = iceIndex
+              val startIndex = iceIndex
 
-            val colonLastIndex = it.lastIndexOf(':')
-            check(colonLastIndex > 0)
-            val endIndex = if (isInt(it.substring(colonLastIndex + 1))) {
-              colonLastIndex
-            } else {
-              it.length
+              val colonLastIndex = it.lastIndexOf(':')
+              check(colonLastIndex > 0)
+              val endIndex =
+                if (isInt(it.substring(colonLastIndex + 1))) {
+                  colonLastIndex
+                } else {
+                  it.length
+                }
+              CrashMessageLine(it.substring(startIndex, endIndex))
             }
-            CrashMessageLine(it.substring(startIndex, endIndex))
+            isStacktrace(it) -> {
+              val indexFirstSpace = it.indexOf(' ')
+              check(indexFirstSpace > 0)
+              StackTraceLine(it.substring(indexFirstSpace + 1).trim())
+            }
+            isSegfault(it) -> {
+              val firstSpaceIndex = it.indexOf(' ')
+              check(firstSpaceIndex > 0)
+              CrashMessageLine(it.substring(firstSpaceIndex + 1).trim())
+            }
+            isCompareDebugFailure(it) -> {
+              CrashMessageLine(KW_COMPARE_DEBUG)
+            }
+            else -> {
+              CrashMessageLine(it)
+            }
           }
-          isStacktrace(it) -> {
-            val indexFirstSpace = it.indexOf(' ')
-            check(indexFirstSpace > 0)
-            StackTraceLine(it.substring(indexFirstSpace + 1).trim())
-          }
-          isSegfault(it) -> {
-            val firstSpaceIndex = it.indexOf(' ')
-            check(firstSpaceIndex > 0)
-            CrashMessageLine(it.substring(firstSpaceIndex + 1).trim())
-          }
-          isCompareDebugFailure(it) -> {
-            CrashMessageLine(KW_COMPARE_DEBUG)
-          }
-          else -> {
-            CrashMessageLine(it)
-          }
-        }
-      }.toList()
+        }.toList()
     return limitStackTraceLines(lines, limit = 3).map { it.value.trim() }.toList()
   }
 
@@ -76,11 +76,9 @@ class GccCrashDetector : AbstractCompilerCrashDetector() {
     fun isStacktrace(string: String) =
       string.matches(Regex("^0x[a-fA-F0-9]+ [a-zA-Z0-9_:.->]+(\\(.*\\))?"))
 
-    fun isSegfault(string: String) =
-      string.contains(KW_SEGFAULT) && !isICE(string)
+    fun isSegfault(string: String) = string.contains(KW_SEGFAULT) && !isICE(string)
 
-    fun isICE(string: String) =
-      string.contains(KW_ICE)
+    fun isICE(string: String) = string.contains(KW_ICE)
 
     private val KW_COMPARE_DEBUG_FAILURE = "failure"
 

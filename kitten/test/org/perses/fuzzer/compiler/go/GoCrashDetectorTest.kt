@@ -26,22 +26,23 @@ import org.perses.fuzzer.compilers.c.GccCrashDetector
 
 @RunWith(JUnit4::class)
 class GoCrashDetectorTest {
-
   val gccDetector = GccCrashDetector()
 
   private fun computeSignature(path: String): List<String> {
-    val signatureLines = CrashDetectorHelper.computeSignature(
-      "kitten/test/org/perses/fuzzer/compiler/go/$path",
-      gccDetector,
-    )
+    val signatureLines =
+      CrashDetectorHelper.computeSignature(
+        "kitten/test/org/perses/fuzzer/compiler/go/$path",
+        gccDetector,
+      )
     return signatureLines
   }
 
   private fun computeClangSignature(path: String): List<String> {
-    val signatureLines = CrashDetectorHelper.computeSignature(
-      "kitten/test/org/perses/fuzzer/compiler/c/$path",
-      ClangCrashDetector(),
-    )
+    val signatureLines =
+      CrashDetectorHelper.computeSignature(
+        "kitten/test/org/perses/fuzzer/compiler/c/$path",
+        ClangCrashDetector(),
+      )
     return signatureLines
   }
 

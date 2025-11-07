@@ -27,13 +27,11 @@ class GrammarReductionIOManager(
   outputManagerFactory: GrammarOutputManagerFactory,
   outputDirectory: Path?,
 ) : AbstractReductionIOManager<PersesGrammar, LanguageKind, GrammarReductionIOManager>(
-  workingDir,
-  reductionInputs,
-  outputManagerFactory,
-  outputDirectory,
-) {
-
-  override fun getConcreteReductionInputs(): SeparateGrammarReductionInput {
-    return reductionInputs as SeparateGrammarReductionInput
-  }
+    workingDir,
+    reductionInputs,
+    outputManagerFactory,
+    outputDirectory,
+  ) {
+  override fun getConcreteReductionInputs(): SeparateGrammarReductionInput =
+    reductionInputs as SeparateGrammarReductionInput
 }

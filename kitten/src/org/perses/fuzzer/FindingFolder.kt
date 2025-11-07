@@ -21,8 +21,9 @@ import org.perses.util.TimeUtil.formatDateForFileName
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
-class FindingFolder(root: File) : AbstractFlatCrashFolder(root) {
-
+class FindingFolder(
+  root: File,
+) : AbstractFlatCrashFolder(root) {
   private val counter = AtomicInteger(0)
 
   fun createBugFolder(prefix: String): File {
@@ -31,7 +32,7 @@ class FindingFolder(root: File) : AbstractFlatCrashFolder(root) {
         formatDateForFileName(System.currentTimeMillis()) +
         "_" +
         Strings.padStart(Integer.toHexString(counter.getAndIncrement()), 4, '0')
-      )
+    )
     val result = File(root, folderName)
     check(result.mkdir())
     return result

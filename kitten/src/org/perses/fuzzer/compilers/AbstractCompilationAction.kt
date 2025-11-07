@@ -29,13 +29,13 @@ abstract class AbstractCompilationAction(
   val versionPrintFlags: ImmutableList<String>,
   private val timeoutSeconds: Int = ICompilationAction.DEFAULT_COMPILATION_TIMEOUT_SECONDS,
 ) : ICompilationAction {
-
   init {
     require(timeoutSeconds > 0)
   }
 
-  protected val versionPrintCmd = compilerCommand.normalizedCommand +
-    " " + versionPrintFlags.joinToString(" ")
+  protected val versionPrintCmd =
+    compilerCommand.normalizedCommand +
+      " " + versionPrintFlags.joinToString(" ")
 
   override fun compile(file: File) = compile(file, Shells.CURRENT_ENV)
 
@@ -50,7 +50,10 @@ abstract class AbstractCompilationAction(
     return compile(file, builder.build())
   }
 
-  protected fun compile(file: File, env: ImmutableMap<String, String>): ActionResult {
+  protected fun compile(
+    file: File,
+    env: ImmutableMap<String, String>,
+  ): ActionResult {
     require(file.isFile) { file }
     val cmd = constructCompileCmd(file)
     return ActionResult(
@@ -65,11 +68,12 @@ abstract class AbstractCompilationAction(
   }
 
   override fun getVersion(): String {
-    val result = Shells.singleton.run(
-      versionPrintCmd,
-      captureOutput = true,
-      environment = Shells.CURRENT_ENV,
-    )
+    val result =
+      Shells.singleton.run(
+        versionPrintCmd,
+        captureOutput = true,
+        environment = Shells.CURRENT_ENV,
+      )
     check(result.exitCode.isZero()) {
       result.stderr.combinedLines
     }
@@ -80,9 +84,12 @@ abstract class AbstractCompilationAction(
   override fun constructCompileCmd(file: File): String {
     val cmd = StringBuilder()
     // run brew install coreutils if you have timeout command not found issue
-    cmd.append("${TIMEOUT_CMD.normalizedCommand} -s 9 ")
-      .append(timeoutSeconds).append(" ")
-      .append(compilerCommand.normalizedCommand).append(" ")
+    cmd
+      .append("${TIMEOUT_CMD.normalizedCommand} -s 9 ")
+      .append(timeoutSeconds)
+      .append(" ")
+      .append(compilerCommand.normalizedCommand)
+      .append(" ")
     compileFlags.joinTo(cmd, " ")
     cmd.append(' ')
     cmd.append(file.name)

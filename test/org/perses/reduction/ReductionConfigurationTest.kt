@@ -28,13 +28,14 @@ import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
-import org.perses.listminimizer.EnumListInputMinimizerType
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.reduction.io.RegularReductionInputs
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -44,17 +45,22 @@ import kotlin.io.path.deleteRecursively
 /** Test for [ReductionConfiguration]  */
 @RunWith(JUnit4::class)
 class ReductionConfigurationTest {
+  private val hashAlgorithm = EnumShaAlgorithm.SHA256
   private val testScript = ScriptFile(Paths.get(FOLDER, "r.sh"))
   private val workingDirectory =
     TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
   private val sourceFile = SourceFile(Paths.get(FOLDER, "t.c"), LanguageC)
   private val outputDir = workingDirectory.resolve("perses_output_dir")
-  private val lexerAtnWrapper = LexerAtnWrapper(PnfCLexer::class.java)
-  private val reductionInputs = RegularReductionInputs(
-    testScript = testScript,
-    mainFile = sourceFile,
-    dependencyFiles = ImmutableList.of(),
-  )
+  private val lexerAtnWrapper =
+    LexerAtnWrapper.createLexerWrapperFromLexerClass(
+      PnfCLexer::class.java,
+    )
+  private val reductionInputs =
+    RegularReductionInputs(
+      testScript = testScript,
+      mainFile = sourceFile,
+      dependencyFiles = ImmutableList.of(),
+    )
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -66,41 +72,65 @@ class ReductionConfigurationTest {
   fun testConfiguration() {
     assertThat(Files.isDirectory(workingDirectory)).isTrue()
     val numOfReductionThreads = 2
-    val ioManager = TokenReductionIOManager(
-      workingDirectory,
-      reductionInputs,
-      outputManagerFactory = RegularOutputManagerFactory(
+    val ioManager =
+      TokenReductionIOManager(
+        workingDirectory,
         reductionInputs,
-        ORIG_FORMAT,
-        lexerAtnWrapper,
-      ),
-      outputDirectory = outputDir,
-    )
+        outputManagerFactory =
+          RegularOutputManagerFactory(
+            reductionInputs,
+            ORIG_FORMAT,
+            lexerAtnWrapper,
+            hashAlgorithm,
+          ),
+        outputDirectory = outputDir,
+      )
     val languageKind = ioManager.reductionInputs.initiallyDeterminedMainDataKind
-    val parserFacade = SingleParserFacadeFactory
-      .builderWithBuiltinLanguages().build().getParserFacadeListForOrNull(languageKind)!!
-      .defaultParserFacade.create()
-    val configuration = ReductionConfiguration(
-      fixpointReductionForMainReducer = true,
-      enableTestScriptExecutionCaching = true,
-      defaultDeltaDebuggerTypeForKleene = EnumListInputMinimizerType.DFS,
-      numOfReductionThreads = numOfReductionThreads,
-      parserFacade = parserFacade,
-      persesNodeReducerConfig = ReductionConfiguration.PersesNodeReducerConfiguration(
-        maxEditCountForRegularRuleNode = 100,
-        maxBfsDepthForRegularRuleNode = 5,
-        stopAtFirstCompatibleChildren = true,
-      ),
-      vulcanConfig = ReductionConfiguration.VulcanConfig(
-        nonDeletionIterationLimit = 10,
-        windowSizeForLocalExhaustivePatternReduction = 4,
-        vulcanFixpoint = false,
-      ),
-      lprConfig = ReductionConfiguration.LPRConfig(
-        llmClientPath = null,
-        lprFixpoint = false,
-      ),
-    )
+    val parserFacade =
+      SingleParserFacadeFactory
+        .builderWithBuiltinLanguages()
+        .build()
+        .getParserFacadeListForOrNull(languageKind)!!
+        .defaultParserFacade
+        .create()
+    val configuration =
+      ReductionConfiguration(
+        globalFixpoint = false,
+        fixpointReductionForMainReducer = true,
+        enableDeprecatedQueryCaching = true,
+        fullyDeterministicMode = false,
+        numOfReductionThreads = numOfReductionThreads,
+        parserFacade = parserFacade,
+        persesNodeReducerConfig =
+          ReductionConfiguration.PersesNodeReducerConfiguration(
+            maxEditCountForRegularRuleNode = 100,
+            maxBfsDepthForRegularRuleNode = 5,
+            stopAtFirstCompatibleChildren = true,
+          ),
+        listMinimizerConfig =
+          ReductionConfiguration.ListMinimizerConfig(
+            defaultListMinimizerTypeForKleene = EnumListMinimizerType.DFS,
+            defaultListMinimizerTypeForHdd = EnumListMinimizerType.CDD,
+            minSlidingWindowSize = 1,
+            maxSlidingWindowSize = 5,
+          ),
+        vulcanConfig =
+          ReductionConfiguration.VulcanConfig(
+            nonDeletionIterationLimit = 10,
+            windowSizeForLocalExhaustivePatternReduction = 4,
+            vulcanFixpoint = false,
+          ),
+        lprConfig =
+          ReductionConfiguration.LPRConfig(
+            llmClientPath = null,
+            lprFixpoint = false,
+          ),
+        latraConfig =
+          ReductionConfiguration.LatraConfig(
+            listMinimizerForTransformations = EnumListMinimizerType.WPROBDD,
+          ),
+        shaHashAlgorithm = EnumShaAlgorithm.SHA256,
+      )
     val mainFile = (ioManager.reductionInputs as RegularReductionInputs).mainFile
     assertThat(mainFile.file).isEqualTo(sourceFile.file)
     assertThat(mainFile.textualFileContent)

@@ -26,21 +26,19 @@ import org.perses.antlr.atn.transitionSequence
 class PlusStateSimulator(
   private val state: PlusBlockStartState,
 ) : AbstractATNStateSimulator() {
-
-  override val endState: LoopEndState = state.loopBackState
-    .transitionSequence()
-    .filter { it.target is LoopEndState }
-    .single().target as LoopEndState
+  override val endState: LoopEndState =
+    state.loopBackState
+      .transitionSequence()
+      .filter { it.target is LoopEndState }
+      .single()
+      .target as LoopEndState
 
   init {
     require(state.numberOfTransitions > 0)
   }
 
-  override fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition {
-    return decisionMaker.sampleTransition(state)
-  }
+  override fun sampleTransition(decisionMaker: AbstractDecisionMaker): Transition =
+    decisionMaker.sampleTransition(state)
 
-  override fun createTreeNode(nodeId: Int): PlusTDTreeNode {
-    return PlusTDTreeNode(nodeId)
-  }
+  override fun createTreeNode(nodeId: Int): PlusTDTreeNode = PlusTDTreeNode(nodeId)
 }

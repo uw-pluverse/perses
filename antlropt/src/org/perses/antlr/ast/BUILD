@@ -46,6 +46,7 @@ kt_jvm_library(
         "PersesTerminalAst.kt",
         "PersesTokenSetAst.kt",
         "PersesTokenSpecificationAst.kt",
+        "PersesUndefinedRuleElement.kt",
         "Precedence.kt",
         "RuleEpsilonComputer.kt",
         "RuleNameRegistry.kt",
@@ -69,7 +70,6 @@ kt_jvm_library(
     ],
     deps = [
         ":ast",
-        "//:antlr_runtime",
         "//:antlr_tool",
         "//:guava",
         "//antlropt/src/org/perses/antlr:enum_rule_type",

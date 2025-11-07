@@ -19,12 +19,12 @@ package org.perses.antlr.ast
 import org.perses.util.toImmutableList
 
 abstract class AbstractPersesRuleElement : AbstractPersesAst() {
-
   abstract override fun getChild(index: Int): AbstractPersesRuleElement
 
-  fun childSequence(): Sequence<AbstractPersesRuleElement> {
-    return IntRange(0, childCount - 1).asSequence().map { getChild(it) }
-  }
+  fun childSequence(): Sequence<AbstractPersesRuleElement> =
+    IntRange(0, childCount - 1).asSequence().map {
+      getChild(it)
+    }
 
   inline fun foreachChildRuleElement(consumer: (AbstractPersesRuleElement) -> Unit) {
     childSequence().forEach(consumer)
@@ -35,25 +35,23 @@ abstract class AbstractPersesRuleElement : AbstractPersesAst() {
   ): AbstractPersesRuleElement
 
   fun deepCopyTreeStructure(): AbstractPersesRuleElement {
-    val newChildren = childSequence()
-      .map { it.deepCopyTreeStructure() }
-      .toImmutableList()
+    val newChildren =
+      childSequence()
+        .map { it.deepCopyTreeStructure() }
+        .toImmutableList()
     return createWithNewChildren(newChildren)
   }
 
-  fun shallowCopy(): AbstractPersesRuleElement {
-    return createWithNewChildren(childSequence().toList())
-  }
+  fun shallowCopy(): AbstractPersesRuleElement = createWithNewChildren(childSequence().toList())
 
   fun isEquivalent(other: AbstractPersesRuleElement): Boolean {
     if (other.javaClass != javaClass) {
       return false
     }
-    return if (!areChildrenEquivalent(other)) {
-      false
-    } else {
-      extraEquivalenceTest(other)
+    if (!areChildrenEquivalent(other)) {
+      return false
     }
+    return extraEquivalenceTest(other)
   }
 
   private fun areChildrenEquivalent(other: AbstractPersesRuleElement): Boolean {
@@ -72,11 +70,8 @@ abstract class AbstractPersesRuleElement : AbstractPersesAst() {
     return true
   }
 
-  protected open fun getChildForEquivalenceChecking(index: Int): AbstractPersesRuleElement {
-    return getChild(index)
-  }
+  protected open fun getChildForEquivalenceChecking(index: Int): AbstractPersesRuleElement =
+    getChild(index)
 
-  protected open fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean {
-    return true
-  }
+  protected open fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean = true
 }

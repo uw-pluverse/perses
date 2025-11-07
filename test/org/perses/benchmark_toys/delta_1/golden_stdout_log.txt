@@ -1,0 +1,421 @@
+INFO The command-line options are: --alg "node_priority-dfs" --append-to-progress-dump-file "true" --call-creduce "false" --call-formatter "false" --code-format "COMPACT_ORIG_FORMAT" --creduce-cmd "creduce" --default-list-minimizer-for-hdd "CDD" --default-list-minimizer-for-kleene "DFS" --default-sha-alg-type "SHA256" --deps "[]" --edit-caching "true" --enable-latra "true" --enable-lightweight-refreshing "true" --enable-line-slicer "false" --enable-lpr "false" --enable-token-slicer "false" --enable-trec "false" --enable-tree-slicer "false" --enable-vulcan "false" --fixpoint "true" --format-cmd "" --fully-deterministic-mode "false" --global-caching "false" --global-fixpoint "false" --help "false" --hide-timestamps "true" --input-file "test/org/perses/benchmark_toys/delta_1/t.c" --keep-reduction-history "false" --lang "" --language-ext-jars "[]" --latra-fixpoint "true" --latra-transformation-list-minimizer "WPROBDD" --list-algs "false" --list-langs "false" --list-parser-facades "false" --list-verbosity-levels "false" --lpr-fixpoint "false" --max-bfs-depth-for-regular-rule-node "5" --max-edit-count-for-regular-rule-node "100" --max-slicing-window-size "14" --min-slicing-window-size "1" --non-deletion-iteration-limit "10" --on-demand-coarse-grit-reducer-annotations "[]" --on-demand-fine-grit-reducer-annotations "[]" --on-demand-medium-grit-reducer-annotations "[]" --output-dir "bazel-out/k8-fastbuild/bin/test/org/perses/benchmark_toys/delta_1/result_reduction_golden_test_node_priority-dfs_t.c" --parser-facade-class-name "" --pass-level-caching "true" --progress-dump-file "bazel-out/k8-fastbuild/bin/test/org/perses/benchmark_toys/delta_1/reduction_progress.txt" --query-cache-refresh-threshold "0" --query-cache-type "CONTENT_SHA_HASH_FORMAT" --query-caching "TRUE" --reparse-each-iteration "true" --script-execution-keep-waiting-after-timeout "true" --script-execution-timeout-in-seconds "600" --stop-at-first-compatible-child-for-regular-rule-node "false" --test-script "test/org/perses/benchmark_toys/delta_1/r.sh" --threads "1" --underlying-lexer-class-for-dyck "" --verbosity "INFO" --version "false" --vulcan-fixpoint "false" --window-size "4"
+SEVERE Failed to load the class of the parser facade org.perses.grammar.sql.tidb.TiDBParserFacade for LanguageTiDB{name=tidb, extensions=[tidb], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}
+org.perses.grammar.sql.tidb.TiDBParserFacade
+INFO The reduction process started at 
+INFO Reduction Started. #tokens=56 extraData=Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+INFO Cache setting: query-caching=enabled, edit-caching=enabled, query-cache-type=CONTENT_SHA_HASH_FORMAT
+INFO The sanity check result is: Passing
+INFO The number of lexemes in PersesTokenFactory is 27
+INFO The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
+
+
+INFO Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+INFO FixPt[1][node_priority-dfs] New fixpoint iteration started. #Tokens=56
+INFO FixPt[1][node_priority-dfs] Reduce Node(2,antlr=kleene_plus__translationUnit_3,#children=2,#tokens=56)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs] Finished node 2: queue=0, delete 0 tokens, ratio=56/56=100.00%
+INFO FixPt[1][node_priority-dfs] Reduce Node(5,antlr=functionDefinition,#children=3,#tokens=46)
+INFO FixPt[1][node_priority-dfs] Finished node 5: queue=1, delete 0 tokens, ratio=56/56=100.00%
+INFO FixPt[1][node_priority-dfs] Reduce Node(8,antlr=compoundStatement,#children=3,#tokens=34)
+INFO FixPt[1][node_priority-dfs] Finished node 8: queue=3, delete 0 tokens, ratio=56/56=100.00%
+INFO FixPt[1][node_priority-dfs] Reduce Node(10,antlr=optional__compoundStatement_1,#children=1,#tokens=32)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs] Finished node 10: queue=5, delete 0 tokens, ratio=56/56=100.00%
+INFO FixPt[1][node_priority-dfs] Reduce Node(13,antlr=kleene_plus__blockItemList_3,#children=6,#tokens=32)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0-5]#6. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [3-5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [5]#1: Interesting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+INFO FixPt[1][node_priority-dfs] New minimal, delete 3 tokens, ratio=53/56=94.64%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [3-4]#2: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:53/56=94.64%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [4]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:53/56=94.64%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [3]#1: Interesting. Local ratio: 5/6=83.33%. Global ratio:53/56=94.64%
+INFO FixPt[1][node_priority-dfs] New minimal, delete 5 tokens, ratio=48/56=85.71%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0-2]#3: Interesting. Local ratio: 4/6=66.67%. Global ratio:48/56=85.71%
+INFO FixPt[1][node_priority-dfs] New minimal, delete 19 tokens, ratio=29/56=51.79%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[4]#1. Local ratio: 1/6=16.67%. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Finished node 13: queue=5, delete 27 tokens, ratio=29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Reduce Node(303,antlr=directDeclarator,#children=2,#tokens=11)
+INFO FixPt[1][node_priority-dfs] Finished node 303: queue=5, delete 0 tokens, ratio=29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Reduce Node(360,antlr=aux_rule__declaration_3,#children=3,#tokens=10)
+INFO FixPt[1][node_priority-dfs] Finished node 360: queue=6, delete 0 tokens, ratio=29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Reduce Node(305,antlr=kleene_star__directDeclarator_7,#children=1,#tokens=10)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Finished node 305: queue=8, delete 0 tokens, ratio=29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Reduce Node(307,antlr=aux_rule__directDeclarator_15,#children=3,#tokens=10)
+INFO FixPt[1][node_priority-dfs] Finished node 307: queue=8, delete 0 tokens, ratio=29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Reduce Node(362,antlr=optional__declaration_2,#children=1,#tokens=8)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Finished node 362: queue=10, delete 0 tokens, ratio=29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Reduce Node(367,antlr=directDeclarator,#children=2,#tokens=8)
+INFO FixPt[1][node_priority-dfs] Finished node 367: queue=10, delete 0 tokens, ratio=29/56=51.79%
+INFO FixPt[1][node_priority-dfs] Reduce Node(312,antlr=parameterList,#children=2,#tokens=8)
+INFO FixPt[1][node_priority-dfs] New minimal, delete 8 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 312: queue=11, delete 8 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(369,antlr=kleene_star__directDeclarator_7,#children=1,#tokens=7)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 369: queue=10, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(371,antlr=aux_rule__directDeclarator_15,#children=3,#tokens=7)
+INFO FixPt[1][node_priority-dfs] Finished node 371: queue=10, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(375,antlr=parameterTypeList,#children=2,#tokens=5)
+INFO FixPt[1][node_priority-dfs] Finished node 375: queue=12, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(49,antlr=expressionStatement,#children=2,#tokens=5)
+INFO FixPt[1][node_priority-dfs] Finished node 49: queue=13, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(50,antlr=optional__postfixExpression_1,#children=1,#tokens=4)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 50: queue=14, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(68,antlr=postfixExpression,#children=2,#tokens=4)
+INFO FixPt[1][node_priority-dfs] Finished node 68: queue=14, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(381,antlr=parameterDeclaration,#children=2,#tokens=3)
+INFO FixPt[1][node_priority-dfs] Finished node 381: queue=15, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(70,antlr=kleene_star__postfixExpression_2,#children=1,#tokens=3)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 70: queue=16, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(72,antlr=aux_rule__postfixExpression_11,#children=3,#tokens=3)
+INFO FixPt[1][node_priority-dfs] Finished node 72: queue=16, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(382,antlr=declarationSpecifiers,#children=2,#tokens=2)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 382: queue=18, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(377,antlr=optional__parameterTypeList_2,#children=1,#tokens=2)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 377: queue=19, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(378,antlr=aux_rule__parameterTypeList_1,#children=2,#tokens=2)
+INFO FixPt[1][node_priority-dfs] Finished node 378: queue=19, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(398,antlr=Identifier,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 398: queue=20, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(397,antlr=Const,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 397: queue=19, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(395,antlr=Char,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 395: queue=18, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(384,antlr=optional__typeName_1,#children=1,#tokens=1)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 384: queue=17, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(387,antlr=kleene_plus__pointer_8,#children=1,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 387: queue=17, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(390,antlr=Star,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 390: queue=17, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(380,antlr=Ellipsis,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 380: queue=16, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(379,antlr=Comma,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 379: queue=15, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(374,antlr=RightParen,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 374: queue=14, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(372,antlr=LeftParen,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 372: queue=13, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(363,antlr=Semi,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 363: queue=12, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(361,antlr=declarationSpecifiers,#children=1,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 361: queue=11, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(402,antlr=Int,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 402: queue=11, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(353,antlr=Identifier,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 353: queue=10, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(310,antlr=RightParen,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 310: queue=9, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(308,antlr=LeftParen,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 308: queue=8, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(96,antlr=Identifier,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 96: queue=7, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(75,antlr=RightParen,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 75: queue=6, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(74,antlr=optional__postfixExpression_1,#children=1,#tokens=1)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 74: queue=5, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(94,antlr=kleene_plus__primaryExpression_1,#children=1,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 94: queue=5, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(95,antlr=StringLiteral,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 95: queue=5, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(73,antlr=LeftParen,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 73: queue=4, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(51,antlr=Semi,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 51: queue=3, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(11,antlr=RightBrace,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 11: queue=2, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(9,antlr=LeftBrace,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 9: queue=1, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(6,antlr=optional__functionDefinition_2,#children=1,#tokens=1)
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Finished node 6: queue=0, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(354,antlr=declarationSpecifiers,#children=1,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 354: queue=0, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Reduce Node(358,antlr=Int,#children=0,#tokens=1)
+INFO FixPt[1][node_priority-dfs] Finished node 358: queue=0, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[1][node_priority-dfs] Fixpoint iteration finished, delete 35 tokens, ratio=21/56=37.50%
+INFO Rebuilding spar-tree: The spartree is rebuilt.
+INFO FixPt[2][node_priority-dfs] New fixpoint iteration started. #Tokens=21
+INFO FixPt[2][node_priority-dfs] Reduce Node(405,antlr=kleene_plus__translationUnit_3,#children=2,#tokens=21)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 405: queue=0, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(408,antlr=functionDefinition,#children=3,#tokens=11)
+INFO FixPt[2][node_priority-dfs] Finished node 408: queue=1, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(483,antlr=aux_rule__declaration_3,#children=3,#tokens=10)
+INFO FixPt[2][node_priority-dfs] Finished node 483: queue=3, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(485,antlr=optional__declaration_2,#children=1,#tokens=8)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 485: queue=5, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(490,antlr=directDeclarator,#children=2,#tokens=8)
+INFO FixPt[2][node_priority-dfs] Finished node 490: queue=5, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(492,antlr=kleene_star__directDeclarator_7,#children=1,#tokens=7)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 492: queue=6, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(494,antlr=aux_rule__directDeclarator_15,#children=3,#tokens=7)
+INFO FixPt[2][node_priority-dfs] Finished node 494: queue=6, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(411,antlr=compoundStatement,#children=3,#tokens=7)
+INFO FixPt[2][node_priority-dfs] Finished node 411: queue=8, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(498,antlr=parameterTypeList,#children=2,#tokens=5)
+INFO FixPt[2][node_priority-dfs] Finished node 498: queue=10, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(413,antlr=optional__compoundStatement_1,#children=1,#tokens=5)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 413: queue=11, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(416,antlr=kleene_plus__blockItemList_3,#children=1,#tokens=5)
+INFO FixPt[2][node_priority-dfs] Finished node 416: queue=11, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(420,antlr=expressionStatement,#children=2,#tokens=5)
+INFO FixPt[2][node_priority-dfs] Finished node 420: queue=11, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(421,antlr=optional__postfixExpression_1,#children=1,#tokens=4)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 421: queue=12, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(439,antlr=postfixExpression,#children=2,#tokens=4)
+INFO FixPt[2][node_priority-dfs] Finished node 439: queue=12, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(504,antlr=parameterDeclaration,#children=2,#tokens=3)
+INFO FixPt[2][node_priority-dfs] Finished node 504: queue=13, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(468,antlr=directDeclarator,#children=2,#tokens=3)
+INFO FixPt[2][node_priority-dfs] Finished node 468: queue=14, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(441,antlr=kleene_star__postfixExpression_2,#children=1,#tokens=3)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 441: queue=15, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(443,antlr=aux_rule__postfixExpression_11,#children=3,#tokens=3)
+INFO FixPt[2][node_priority-dfs] Finished node 443: queue=15, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(505,antlr=declarationSpecifiers,#children=2,#tokens=2)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 505: queue=17, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(500,antlr=optional__parameterTypeList_2,#children=1,#tokens=2)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 500: queue=18, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(501,antlr=aux_rule__parameterTypeList_1,#children=2,#tokens=2)
+INFO FixPt[2][node_priority-dfs] Finished node 501: queue=18, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(470,antlr=kleene_star__directDeclarator_7,#children=1,#tokens=2)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 470: queue=19, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(472,antlr=aux_rule__directDeclarator_15,#children=2,#tokens=2)
+INFO FixPt[2][node_priority-dfs] Finished node 472: queue=19, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(521,antlr=Identifier,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 521: queue=20, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(520,antlr=Const,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 520: queue=19, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(518,antlr=Char,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 518: queue=18, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(507,antlr=optional__typeName_1,#children=1,#tokens=1)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 507: queue=17, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(510,antlr=kleene_plus__pointer_8,#children=1,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 510: queue=17, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(513,antlr=Star,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 513: queue=17, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(503,antlr=Ellipsis,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 503: queue=16, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(502,antlr=Comma,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 502: queue=15, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(497,antlr=RightParen,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 497: queue=14, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(495,antlr=LeftParen,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 495: queue=13, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(486,antlr=Semi,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 486: queue=12, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(484,antlr=declarationSpecifiers,#children=1,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 484: queue=11, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(525,antlr=Int,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 525: queue=11, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(476,antlr=Identifier,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 476: queue=10, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(475,antlr=RightParen,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 475: queue=9, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(473,antlr=LeftParen,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 473: queue=8, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(467,antlr=Identifier,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 467: queue=7, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(446,antlr=RightParen,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 446: queue=6, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(445,antlr=optional__postfixExpression_1,#children=1,#tokens=1)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 445: queue=5, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(465,antlr=kleene_plus__primaryExpression_1,#children=1,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 465: queue=5, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(466,antlr=StringLiteral,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 466: queue=5, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(444,antlr=LeftParen,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 444: queue=4, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(422,antlr=Semi,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 422: queue=3, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(414,antlr=RightBrace,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 414: queue=2, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(412,antlr=LeftBrace,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 412: queue=1, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(409,antlr=optional__functionDefinition_2,#children=1,#tokens=1)
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Testing the empty input. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs][DFS] Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Finished node 409: queue=0, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(477,antlr=declarationSpecifiers,#children=1,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 477: queue=0, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Reduce Node(481,antlr=Int,#children=0,#tokens=1)
+INFO FixPt[2][node_priority-dfs] Finished node 481: queue=0, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[2][node_priority-dfs] Fixpoint iteration finished, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[3][FineGritLatraReducer] New fixpoint iteration started. #Tokens=21
+INFO FixPt[3][FineGritLatraReducer] For c, there are 46 transformations.
+INFO FixPt[3][FineGritLatraReducer] Reparsing the best spartree to faithfully reflect the syntactic structure.
+INFO FixPt[3][FineGritLatraReducer] New minimal, delete 0 tokens, ratio=21/56=37.50%
+INFO FixPt[3][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation] Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+INFO FixPt[3][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation] Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+INFO FixPt[3][FineGritLatraReducer][DivideOperationSimplification] Found matches: 0 in transformation DivideOperationSimplification
+INFO FixPt[3][FineGritLatraReducer][MultiplyOperationSimplification] Found matches: 0 in transformation MultiplyOperationSimplification
+INFO FixPt[3][FineGritLatraReducer][MinusOperationSimplification] Found matches: 0 in transformation MinusOperationSimplification
+INFO FixPt[3][FineGritLatraReducer][PlusOperationSimplification] Found matches: 0 in transformation PlusOperationSimplification
+INFO FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation] Found matches: 0 in transformation LocalToGlobalTransformation
+INFO FixPt[3][FineGritLatraReducer][UnionToStruct] Found matches: 0 in transformation UnionToStruct
+INFO FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation] Found matches: 1 in transformation VoidReturnFunctionDeclLatraTransformation
+INFO FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation] Built a LatraGeneralActionSet subroot(id=529,#10) in VoidReturnFunctionDeclLatraTransformation
+INFO FixPt[3][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation] Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+INFO FixPt[3][FineGritLatraReducer][FunctionInlining4Args] Found matches: 0 in transformation FunctionInlining4Args
+INFO FixPt[3][FineGritLatraReducer][FunctionInlining4ArgsNoType] Found matches: 0 in transformation FunctionInlining4ArgsNoType
+INFO FixPt[3][FineGritLatraReducer][FunctionInliningLatraTransformation] Found matches: 0 in transformation FunctionInliningLatraTransformation
+INFO FixPt[3][FineGritLatraReducer][FunctionInlining3ArgsNoType] Found matches: 0 in transformation FunctionInlining3ArgsNoType
+INFO FixPt[3][FineGritLatraReducer][FunctionInlining2Args] Found matches: 0 in transformation FunctionInlining2Args
+INFO FixPt[3][FineGritLatraReducer][FunctionInlining2ArgsNoType] Found matches: 0 in transformation FunctionInlining2ArgsNoType
+INFO FixPt[3][FineGritLatraReducer][FunctionInlining1Arg] Found matches: 0 in transformation FunctionInlining1Arg
+INFO FixPt[3][FineGritLatraReducer][FunctionInlining1ArgNoType] Found matches: 0 in transformation FunctionInlining1ArgNoType
+INFO FixPt[3][FineGritLatraReducer][FunctionInliningNoArg] Found matches: 1 in transformation FunctionInliningNoArg
+INFO FixPt[3][FineGritLatraReducer][FunctionInliningNoArg] Exception: There must be at least one match for this transformation FunctionInliningNoArg
+INFO FixPt[3][FineGritLatraReducer][LiftAssignmentExpr] Found matches: 0 in transformation LiftAssignmentExpr
+INFO FixPt[3][FineGritLatraReducer][CopyPropagation] Found matches: 0 in transformation CopyPropagation
+INFO FixPt[3][FineGritLatraReducer][CallExprToValue] Found matches: 0 in transformation CallExprToValue
+INFO FixPt[3][FineGritLatraReducer][ReplaceCallExpr1Arg] Found matches: 0 in transformation ReplaceCallExpr1Arg
+INFO FixPt[3][FineGritLatraReducer][ReplaceCallExpr2Arg] Found matches: 0 in transformation ReplaceCallExpr2Arg
+INFO FixPt[3][FineGritLatraReducer][ReplaceCallExpr3Arg] Found matches: 0 in transformation ReplaceCallExpr3Arg
+INFO FixPt[3][FineGritLatraReducer][SimplifyCallExpr] Found matches: 0 in transformation SimplifyCallExpr
+INFO FixPt[3][FineGritLatraReducer][SimplifyIf] Found matches: 0 in transformation SimplifyIf
+INFO FixPt[3][FineGritLatraReducer][SimplifyIf2] Found matches: 0 in transformation SimplifyIf2
+INFO FixPt[3][FineGritLatraReducer][ReduceArrayDim3] Found matches: 0 in transformation ReduceArrayDim3
+INFO FixPt[3][FineGritLatraReducer][ReduceArrayDim2] Found matches: 0 in transformation ReduceArrayDim2
+INFO FixPt[3][FineGritLatraReducer][ReduceArrayDim] Found matches: 0 in transformation ReduceArrayDim
+INFO FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl] Found matches: 0 in transformation MoveFuncDefToDecl
+INFO FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl2] Found matches: 0 in transformation MoveFuncDefToDecl2
+INFO FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam] Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+INFO FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam] Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+INFO FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2] Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+INFO FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2] Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+INFO FixPt[3][FineGritLatraReducer][SimplifyComma] Found matches: 0 in transformation SimplifyComma
+INFO FixPt[3][FineGritLatraReducer][TypeDefTransform] Found matches: 0 in transformation TypeDefTransform
+INFO FixPt[3][FineGritLatraReducer][EmptyStructToInt] Found matches: 0 in transformation EmptyStructToInt
+INFO FixPt[3][FineGritLatraReducer][RemoveAssignment] Found matches: 0 in transformation RemoveAssignment
+INFO FixPt[3][FineGritLatraReducer][RemoveAddrTaken] Found matches: 0 in transformation RemoveAddrTaken
+INFO FixPt[3][FineGritLatraReducer][ReplaceArrayAccessWithIndex] Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+INFO FixPt[3][FineGritLatraReducer][SimplifyUnionDecl] Found matches: 0 in transformation SimplifyUnionDecl
+INFO FixPt[3][FineGritLatraReducer][SimplifyStructDecl] Found matches: 0 in transformation SimplifyStructDecl
+INFO FixPt[3][FineGritLatraReducer][ReplaceDefByDecl] Found matches: 0 in transformation ReplaceDefByDecl
+INFO FixPt[3][FineGritLatraReducer][CombineLocalVarDecl] Found matches: 0 in transformation CombineLocalVarDecl
+INFO FixPt[3][FineGritLatraReducer][UnifyFunctionDecl] Found matches: 0 in transformation UnifyFunctionDecl
+INFO FixPt[3][FineGritLatraReducer] Fixpoint iteration finished, delete 0 tokens, ratio=21/56=37.50%
+INFO The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs     -35    -78             0
+ 1    node_priority-dfs       0      0             0
+ 2 FineGritLatraReducer       0      0             0
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     2     -35    -78
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
+
+
+INFO Removed 35 token(s). Reduction ratio is 21/56=37.50%
+INFO Test script execution count: 47

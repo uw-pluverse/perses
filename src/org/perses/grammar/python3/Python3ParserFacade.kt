@@ -20,21 +20,23 @@ import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.CommonTokenStream
 import org.perses.antlr.ParseTreeWithParser
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 import java.io.StringReader
 
-class Python3ParserFacade : AbstractDefaultParserFacade<Python3Lexer, PnfPython3Parser>(
-  LanguagePython3,
-  createSeparateAntlrGrammar(
-    startRuleName = "file_input",
-    antlrParserGrammarFileName = "PnfPython3Parser.g4",
-    antlrLexerGrammarFileName = "Python3Lexer.g4",
-    Python3ParserFacade::class.java,
-  ),
-  Python3Lexer::class.java,
-  PnfPython3Parser::class.java,
-  ImmutableIntArray.of(Python3Lexer.NAME),
-) {
+class Python3ParserFacade :
+  AbstractParserFacade(
+    language = LanguagePython3,
+    antlrGrammar =
+      createSeparateAntlrGrammar(
+        startRuleName = "file_input",
+        antlrParserGrammarFileName = "PnfPython3Parser.g4",
+        antlrLexerGrammarFileName = "Python3Lexer.g4",
+        Python3ParserFacade::class.java,
+      ),
+    identifierTokenTypes = ImmutableIntArray.of(Python3Lexer.NAME),
+    lexerClass = Python3Lexer::class.java,
+    parserClass = PnfPython3Parser::class.java,
+  ) {
   fun parseWithOrigParser(program: String?): ParseTreeWithParser {
     StringReader(program).use { reader ->
       return parseReader(

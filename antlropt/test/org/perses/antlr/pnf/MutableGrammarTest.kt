@@ -25,7 +25,6 @@ import org.perses.antlr.ast.PersesAlternativeBlockAst
 
 @RunWith(JUnit4::class)
 class MutableGrammarTest : AbstractMutableGrammarTest() {
-
   val grammar = MutableGrammar()
 
   @Test
@@ -46,10 +45,22 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
     grammar.getAltBlock(nameB).addIfNotEquivalent(refA)
     grammar.getAltBlock(nameB).addIfNotEquivalent(refB)
     val map = grammar.toImmutableMultiMap()
-    assertThat(map.entries().asSequence().map { it.key }.toList())
-      .containsExactly(nameA, nameA, nameB, nameB).inOrder()
-    assertThat(map.entries().asSequence().map { it.value }.toList())
-      .containsExactly(refA, refB, refA, refB).inOrder()
+    assertThat(
+      map
+        .entries()
+        .asSequence()
+        .map { it.key }
+        .toList(),
+    ).containsExactly(nameA, nameA, nameB, nameB)
+      .inOrder()
+    assertThat(
+      map
+        .entries()
+        .asSequence()
+        .map { it.value }
+        .toList(),
+    ).containsExactly(refA, refB, refA, refB)
+      .inOrder()
   }
 
   @Test
@@ -106,21 +117,23 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
 
     MutableGrammar().let { grammar ->
       grammar.getAltBlock(nameTop).decomposeAltBlockAndAddIfInequivalent(blockTop)
-      assertThat(grammar.getAltBlock(nameTop)).containsExactly(
-        refA,
-        refB,
-        refC,
-      ).inOrder()
+      assertThat(grammar.getAltBlock(nameTop))
+        .containsExactly(
+          refA,
+          refB,
+          refC,
+        ).inOrder()
     }
 
     MutableGrammar().let { grammar ->
       grammar.getAltBlock(nameTop).addIfNotEquivalent(refC)
       grammar.getAltBlock(nameTop).decomposeAltBlockAndAddIfInequivalent(blockTop)
-      assertThat(grammar.getAltBlock(nameTop)).containsExactly(
-        refC,
-        refA,
-        refB,
-      ).inOrder()
+      assertThat(grammar.getAltBlock(nameTop))
+        .containsExactly(
+          refC,
+          refA,
+          refB,
+        ).inOrder()
     }
   }
 }

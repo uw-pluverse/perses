@@ -27,11 +27,12 @@ import kotlin.collections.HashMap
 
 @RunWith(JUnit4::class)
 class PristineDeltaDebuggerTest {
-
   val input = ImmutableList.of("a", "b", "c", "d", "e")
 
   val dummyHandler = {
-      _: ImmutableList<AbstractListInputMinimizer.ElementWrapper<String>>, _: String ->
+    _: ImmutableList<ElementWrapper<String>>,
+    _: String,
+    ->
   }
 
   @Test
@@ -41,18 +42,37 @@ class PristineDeltaDebuggerTest {
     test(property = listOf(), expected = listOf())
     test(property = listOf("a", "b", "c", "d", "e"), expected = listOf("a", "b", "c", "d", "e"))
     test(property = listOf("a", "e"), expected = listOf("a", "e")).let { testHistory ->
-      assertThat(testHistory).containsExactly(
-        // n = 1
-        "",
-        // n = 2
-        "abc", "de", "de", "abc",
-        // n = 4
-        "ab", "c", "d", "e", "cde", "abde", "abe", "ab",
-        // n = 3
-        "a", "b", "e", "be", "ae", "a",
-        // n = 2
-        "a", "e", "e", "a",
-      ).inOrder()
+      assertThat(testHistory)
+        .containsExactly(
+          // n = 1
+          "",
+          // n = 2
+          "abc",
+          "de",
+          "de",
+          "abc",
+          // n = 4
+          "ab",
+          "c",
+          "d",
+          "e",
+          "cde",
+          "abde",
+          "abe",
+          "ab",
+          // n = 3
+          "a",
+          "b",
+          "e",
+          "be",
+          "ae",
+          "a",
+          // n = 2
+          "a",
+          "e",
+          "e",
+          "a",
+        ).inOrder()
     }
   }
 
@@ -65,25 +85,26 @@ class PristineDeltaDebuggerTest {
 
     val propertyTest =
       IPropertyTester<String, String> { configuration ->
-        val candidate = configuration.candidate
+        val candidate = configuration.getCandidateOrFail()
         testHistory.add(candidate.joinToString(separator = ""))
         if (candidate.containsAll(property)) {
-          PropertyTestResultWithPayload(INTERESTING_RESULT, "payload")
+          LMPropertyTestResult.Completed(INTERESTING_RESULT, "payload")
         } else {
-          PropertyTestResultWithPayload(NON_INTERESTING_RESULT, "payload")
+          LMPropertyTestResult.Completed(NON_INTERESTING_RESULT, "payload")
         }
       }
 
-    val debugger = PristineDeltaDebugger<String, String>(
-      AbstractListInputMinimizer.Arguments(
-        needToTestEmpty = true,
-        input,
-        propertyTest,
-        dummyHandler,
-        descriptionPrefix = "",
-      ),
-      enableCache,
-    )
+    val debugger =
+      PristineDeltaDebugger<String, String>(
+        ListMinimizerArguments(
+          needToTestEmpty = true,
+          input,
+          propertyTest,
+          dummyHandler,
+          descriptionPrefix = "",
+        ),
+        enableCache,
+      )
     val result = debugger.reduce()
     assertThat(result).isEqualTo(expected)
     return ImmutableList.copyOf(testHistory)
@@ -103,30 +124,42 @@ class PristineDeltaDebuggerTest {
     // cache effectiveness
     test(property = listOf("a", "e"), expected = listOf("a", "e"), enableCache = true)
       .let { testHistory ->
-        assertThat(testHistory).containsExactly(
-          // n = 1
-          "",
-          // n = 2
-          "abc", "de",
-          // n = 4
-          "ab", "c", "d", "e", "cde", "abde",
-          // n = 3
-          "abe",
-          // n = 3
-          "a", "b", "be", "ae",
-        ).inOrder()
+        assertThat(testHistory)
+          .containsExactly(
+            // n = 1
+            "",
+            // n = 2
+            "abc",
+            "de",
+            // n = 4
+            "ab",
+            "c",
+            "d",
+            "e",
+            "cde",
+            "abde",
+            // n = 3
+            "abe",
+            // n = 3
+            "a",
+            "b",
+            "be",
+            "ae",
+          ).inOrder()
       }
   }
 
   @Test
   fun testConfigCacheRefresh() {
     // refresh 0%; refresh on every update
-    val configCache = ConfigCache<String>(
-      enableRefresh = true,
-    )
-    val config5 = ConfigurationBasedOnElementSystemIdentity(
-      ImmutableList.of("a", "b", "c", "d", "e"),
-    )
+    val configCache =
+      ConfigCache<String>(
+        enableRefresh = true,
+      )
+    val config5 =
+      ConfigurationBasedOnElementSystemIdentity(
+        ImmutableList.of("a", "b", "c", "d", "e"),
+      )
     val config4 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a", "b", "c", "d"))
     val config3 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a", "b", "c"))
     val config2 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a", "b"))
@@ -160,7 +193,9 @@ class PristineDeltaDebuggerTest {
   @Test
   fun testConfigurationHashAndEquals() {
     // dummy but unique objects
-    data class Token(private val text: String)
+    data class Token(
+      private val text: String,
+    )
     val token1 = Token("int")
     val token2 = Token("int")
     val token3 = Token("a")
@@ -193,15 +228,13 @@ class PristineDeltaDebuggerTest {
     assertThat(cache.get(config1)).isEqualTo(1001)
     assertThat(
       cache.get(ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(token1, token3))),
-    )
-      .isEqualTo(1001)
+    ).isEqualTo(1001)
     assertThat(cache.get(config2)).isNull()
 
     cache.put(config2, 1002)
 
     assertThat(
       cache.get(ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(token2, token3))),
-    )
-      .isEqualTo(1002)
+    ).isEqualTo(1002)
   }
 }

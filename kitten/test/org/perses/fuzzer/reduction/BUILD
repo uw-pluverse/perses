@@ -8,7 +8,6 @@ kt_jvm_test(
         "//:flogger",
         "//:guava",
         "//:truth",
-        "//kitten/src/org/perses/fuzzer:perses_fuzzer",
         "//kitten/src/org/perses/fuzzer/compilers/c",
         "//kitten/src/org/perses/fuzzer/reduction",
     ],
@@ -22,8 +21,6 @@ kt_jvm_test(
         "//:flogger",
         "//:guava",
         "//:truth",
-        "//kitten/src/org/perses/fuzzer:perses_fuzzer",
         "//kitten/src/org/perses/fuzzer/reduction",
-        "//kitten/test/org/perses/fuzzer:FakeCompilationAction",
     ],
 )

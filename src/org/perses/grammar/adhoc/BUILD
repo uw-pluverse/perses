@@ -9,7 +9,7 @@ kt_jvm_library(
     srcs = ["AdhocGrammarUtil.kt"],
     deps = [
         "//:guava",
-        "//:kotlin_stdib",
+        "//src/org/perses/util/hashing",
     ],
 )
 
@@ -22,11 +22,10 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//antlropt/src/org/perses/antlr/ast",
-        "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//src/org/perses:perses_contants",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/util:Serialization",
-        "//src/org/perses/util/cmd",
+        "//src/org/perses/util/hashing",
         "//src/org/perses/util/java",
     ],
 )
@@ -36,7 +35,6 @@ kt_jvm_library(
     srcs = ["CommandOptions.kt"],
     deps = [
         ":adhoc_grammar_configuration",
-        "//src/org/perses/util/cmd",
     ],
 )
 
@@ -50,13 +48,13 @@ kt_jvm_library(
     deps = [
         ":adhoc_grammar_util",
         ":command_options",
+        ":language_kind",
         ":parser_facade_template",
-        "//:kotlin_stdib",
         "//antlropt/src/org/perses/antlr/ast",
-        "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//antlropt/src/org/perses/antlr/pnf:pnf_normalizer",
         "//src/org/perses:perses_contants",
         "//src/org/perses/antlr:antlr_compiler",
+        "//src/org/perses/util/hashing",
     ],
 )
 
@@ -81,7 +79,6 @@ kt_jvm_library(
         "//:guava",
         "//src/org/perses/antlr:abstract_grammar_stub",
         "//src/org/perses/grammar/adhoc:adhoc_grammar_configuration",
-        "//src/org/perses/program:serializable_language_kind",
     ],
 )
 

@@ -18,20 +18,19 @@ package org.perses.spartree
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.util.Util.lazyAssert
 
 abstract class AbstractTokenizedProgramCustomizer protected constructor(
   actionSet: AbstractActionSet<*>,
 ) {
-
   protected val targets = actionSet.targets
   protected val pathsToRootExcludingTargets = computePathsToRootExcludingTargets(targets)
-  protected val builder = ImmutableList.builderWithExpectedSize<PersesToken>(1000)
+  protected val builder = ImmutableList.builderWithExpectedSize<AbstractPersesToken>(1000)
 
   abstract fun visit(node: AbstractSparTreeNode): List<AbstractSparTreeNode>
 
-  val result: ImmutableList<PersesToken>
+  val result: ImmutableList<out AbstractPersesToken>
     get() = builder.build()
 
   protected fun addTokenIntervalToResult(node: AbstractSparTreeNode) {
@@ -44,10 +43,11 @@ abstract class AbstractTokenizedProgramCustomizer protected constructor(
       val sentinel = endToken!!.next
       var i = beginToken
       while (i !== sentinel) {
-        lazyAssert({ !i!!.isPermanentlyDeleted }) {
+        checkNotNull(i) { "i is null here." }
+        lazyAssert({ i!!.isPermanentlyDeleted.not() }) {
           "The node has been deleted: $i"
         }
-        builder.add(i!!.token)
+        builder.add(i.token)
         i = i.next
       }
     }
@@ -61,11 +61,12 @@ abstract class AbstractTokenizedProgramCustomizer protected constructor(
       var parent = target!!.parent
       while (parent != null && parent.isParserRuleNode()) {
         val node = parent.asParserRule()
-        parent = if (result.add(node)) {
-          node.parent
-        } else {
-          break
-        }
+        parent =
+          if (result.add(node)) {
+            node.parent
+          } else {
+            break
+          }
       }
     }
     return result

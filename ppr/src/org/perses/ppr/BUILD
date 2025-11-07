@@ -13,6 +13,16 @@ java_binary(
 )
 
 kt_jvm_library(
+    name = "AbstractPPRCommandOptions",
+    srcs = [
+        ":AbstractPPRCommandOptions.kt",
+    ],
+    deps = [
+        "//src/org/perses:command_options",
+    ],
+)
+
+kt_jvm_library(
     name = "main_lib",
     srcs = [
         "Main.kt",
@@ -20,6 +30,7 @@ kt_jvm_library(
     deps = [
         ":cmd_options",
         ":reduction_driver",
+        "//src/org/perses:HelperForPersesMain",
     ],
 )
 
@@ -29,8 +40,8 @@ kt_jvm_library(
         "CmdOptions.kt",
     ],
     deps = [
+        "//ppr/src/org/perses/ppr:AbstractPPRCommandOptions",
         "//src/org/perses:command_options",
-        "//src/org/perses/reduction:reducer_factory",
     ],
 )
 

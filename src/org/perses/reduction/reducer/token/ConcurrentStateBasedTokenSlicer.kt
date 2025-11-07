@@ -30,10 +30,9 @@ class ConcurrentStateBasedTokenSlicer(
   reducerContext: ReducerContext,
   private val slicerAnnotation: ConcurrentStateTokenSlicerAnnotation,
 ) : AbstractStateBasedConcurrentReducer<ConcurrentTokenSlicingState, LexerRuleSparTreeNode>(
-  slicerAnnotation,
-  reducerContext,
-) {
-
+    slicerAnnotation,
+    reducerContext,
+  ) {
   init {
     require(slicerAnnotation.granularity > 0) { "$slicerAnnotation" }
   }
@@ -41,20 +40,16 @@ class ConcurrentStateBasedTokenSlicer(
   override val parseCheckNeeded: Boolean
     get() = true
 
-  override fun createInputSequence(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> {
-    return tree.remainingLexerRuleNodes
-  }
+  override fun createInputSequence(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> =
+    tree.remainingLexerRuleNodes
 
-  override fun createInitialState(tree: SparTree): ConcurrentTokenSlicingState? {
-    return ConcurrentTokenSlicingState.create(slicerAnnotation.granularity, tree.tokenCount)
-  }
+  override fun createInitialState(tree: SparTree): ConcurrentTokenSlicingState? =
+    ConcurrentTokenSlicingState.create(slicerAnnotation.granularity, tree.tokenCount)
 
   override fun getStateOnSuccess(
     tree: SparTree,
     state: ConcurrentTokenSlicingState,
-  ): ConcurrentTokenSlicingState? {
-    return state.advanceOnSuccess(tree.tokenCount)
-  }
+  ): ConcurrentTokenSlicingState? = state.advanceOnSuccess(tree.tokenCount)
 
   override fun computeNodeActionSet(
     state: ConcurrentTokenSlicingState,
@@ -73,48 +68,45 @@ class ConcurrentStateBasedTokenSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return REDUCER_ANNOTATIONS
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      REDUCER_ANNOTATIONS
         .asSequence()
         .flatMap { it.create(reducerContext) }
         .toImmutableList()
-    }
   }
-  companion object {
 
+  companion object {
     private const val NAME_PREFIX = "concurrent_state_token_slicer"
 
-    val REDUCER_ANNOTATIONS = IntRange(start = 1, endInclusive = 14)
-      .asSequence()
-      .map { ConcurrentStateTokenSlicerAnnotation(NAME_PREFIX, granularity = it) }
-      .toImmutableList()
+    val REDUCER_ANNOTATIONS =
+      IntRange(start = 1, endInclusive = 14)
+        .asSequence()
+        .map { ConcurrentStateTokenSlicerAnnotation(NAME_PREFIX, granularity = it) }
+        .toImmutableList()
 
-    fun getAnnotationForGranularity(granularity: Int): ConcurrentStateTokenSlicerAnnotation {
-      return REDUCER_ANNOTATIONS.single { it.granularity == granularity }
-    }
+    fun getAnnotationForGranularity(granularity: Int): ConcurrentStateTokenSlicerAnnotation =
+      REDUCER_ANNOTATIONS.single {
+        it.granularity == granularity
+      }
   }
 
   class ConcurrentStateTokenSlicerAnnotation(
     private val namePrefix: String,
     val granularity: Int,
   ) : ReducerAnnotation(
-    shortName = "$namePrefix@$granularity",
-    description = "A concurrent state-based token slicer",
-    deterministic = true,
-    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
-  ) {
-
+      shortName = "$namePrefix@$granularity",
+      description = "A concurrent state-based token slicer",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
     init {
       require(granularity > 0)
     }
 
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(ConcurrentStateBasedTokenSlicer(reducerContext, this))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(ConcurrentStateBasedTokenSlicer(reducerContext, this))
 
-    override fun hashCode(): Int {
-      return Objects.hashCode(this::class.java, namePrefix, granularity)
-    }
+    override fun hashCode(): Int = Objects.hashCode(this::class.java, namePrefix, granularity)
 
     override fun equals(other: Any?): Boolean {
       if (other == null) {
@@ -140,7 +132,6 @@ data class ConcurrentTokenSlicingState(
   val granularity: Int,
   private val tokenSize: Int,
 ) : IConcurrentState<ConcurrentTokenSlicingState> {
-
   val endExclusive: Int = minOf(startInclusive + granularity, tokenSize)
 
   override fun advance(): ConcurrentTokenSlicingState? {
@@ -161,7 +152,10 @@ data class ConcurrentTokenSlicingState(
   }
 
   companion object {
-    fun create(granularity: Int, sequenceSize: Int): ConcurrentTokenSlicingState? {
+    fun create(
+      granularity: Int,
+      sequenceSize: Int,
+    ): ConcurrentTokenSlicingState? {
       if (sequenceSize == 0 || granularity >= sequenceSize) {
         return null
       }

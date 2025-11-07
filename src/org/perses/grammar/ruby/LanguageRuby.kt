@@ -26,8 +26,9 @@ object LanguageRuby : LanguageKind(
   extensions = ImmutableSet.of("rb"),
   defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT,
-  ),
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.ORIG_FORMAT,
+    ),
 )

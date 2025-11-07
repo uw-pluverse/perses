@@ -23,6 +23,9 @@ kt_jvm_library(
         "//antlropt/src/org/perses/antlr/ast",
         "//src/org/perses/antlr/atn/nfa",
         "//src/org/perses/antlr/atn/simulator/ast",
+        "//src/org/perses/antlr/atn/tdtree",
+        "//src/org/perses/program",
+        "//src/org/perses/spartree",
     ],
 )
 
@@ -35,9 +38,10 @@ kt_jvm_test(
         ":TestLexer",
         "//:guava",
         "//:truth",
-        "//src/org/perses/antlr/atn",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/util",
-        "//test/org/perses:test_util",
         "//test/org/perses/antlr/atn:OrigC",
         "//third_party/memory_measurer:object_explorer",
     ],
@@ -87,9 +91,8 @@ kt_jvm_test(
     srcs = [
         "AtnTest.kt",
     ],
-    associates = ["//src/org/perses/antlr/atn"],
+    associates = ["//src/org/perses/antlr/atn:lexer_wrapper"],
     deps = [
-        "TestJavaScriptLexer",
         ":OrigC",
         ":RandomMock",
         ":TestLexer",

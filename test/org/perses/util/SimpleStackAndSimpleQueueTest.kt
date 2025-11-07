@@ -23,7 +23,6 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class SimpleStackAndSimpleQueueTest {
-
   val stack = SimpleStack.of(1).add(2).add(3)
   val queue = SimpleQueue.of(1).add(2).add(3)
 

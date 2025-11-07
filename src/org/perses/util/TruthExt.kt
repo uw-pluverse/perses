@@ -20,7 +20,6 @@ import com.google.common.truth.Truth
 import java.lang.AssertionError
 
 object TruthExt {
-
   fun assertTrimmedNonBlankLinesEqual(
     toBeTested: String,
     vararg expectedLines: String,

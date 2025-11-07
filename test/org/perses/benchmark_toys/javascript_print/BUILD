@@ -11,9 +11,9 @@ sanity_test(
 reduction_golden_test(
     name = "reduction_golden_test",
     enable_edit_caching = True,
-    enable_query_caching = False,
+    enable_query_caching = True,
+    enable_token_reducer = True,
     golden_reduced_file = "golden.js",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
     source_file = "hello.js",
     statistics_file = "statistics.txt",
     test_script = "r.sh",
@@ -24,11 +24,8 @@ reduction_golden_test(
     name = "vulcan_reduction_golden_test",
     enable_edit_caching = True,
     enable_query_caching = False,
+    enable_vulcan = True,
     golden_reduced_file = "vulcan_golden.js",
-    other_flags = {
-        "--enable-vulcan": "true",
-    },
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
     source_file = "hello.js",
     test_script = "r.sh",
 )

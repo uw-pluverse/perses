@@ -25,7 +25,6 @@ import org.perses.antlr.ast.PersesRuleReferenceAst
 
 @RunWith(JUnit4::class)
 class MutableAltBlockTest : AbstractMutableGrammarTest() {
-
   val block = MutableAltBlock()
 
   @Test
@@ -78,17 +77,19 @@ class MutableAltBlockTest : AbstractMutableGrammarTest() {
     block.addIfNotEquivalent(refB)
     block.addIfNotEquivalent(refC)
 
-    assertThat(block.asIterable()).containsExactly(
-      refA,
-      refB,
-      refC,
-    ).inOrder()
+    assertThat(block.asIterable())
+      .containsExactly(
+        refA,
+        refB,
+        refC,
+      ).inOrder()
 
     block.replace(refB, refD)
-    assertThat(block.asIterable()).containsExactly(
-      refA,
-      refD,
-      refC,
-    ).inOrder()
+    assertThat(block.asIterable())
+      .containsExactly(
+        refA,
+        refD,
+        refC,
+      ).inOrder()
   }
 }

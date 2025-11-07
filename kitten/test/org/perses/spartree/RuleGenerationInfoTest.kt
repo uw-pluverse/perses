@@ -43,32 +43,38 @@ class RuleGenerationInfoTest {
   @Test
   fun testComputeStartSymbol() {
     for (language in languageToStartSymbolMap.keys) {
-      val parserFacade = factory.getParserFacadeListForOrNull(language)!!
-        .defaultParserFacade.create()
-      val generator = RandomSparTreeGenerator(
-        parserFacade,
-        Random(0),
-      )
-      Truth.assertThat(generator.ruleGenerationInfo.startSymbol.ruleName)
+      val parserFacade =
+        factory
+          .getParserFacadeListForOrNull(language)!!
+          .defaultParserFacade
+          .create()
+      val generator =
+        RandomSparTreeGenerator(
+          parserFacade,
+          Random(0),
+        )
+      Truth
+        .assertThat(generator.ruleGenerationInfo.startSymbol.ruleName)
         .isEqualTo(languageToStartSymbolMap[language]!!)
     }
   }
 
   companion object {
-    val languageToStartSymbolMap = mapOf(
-      LanguageC to "compilationUnit",
-      LanguageCpp to "translationUnit",
-      LanguageGo to "sourceFile",
-      LanguageRust to "crate",
-      LanguageJava to "compilationUnit",
-      LanguageJavaScript to "program",
-      LanguageScala to "compilationUnit",
-      LanguageSystemVerilog to "source_text",
-      LanguageRuby to "compilation_unit",
-      LanguagePhp to "htmlDocument",
-      LanguageSolidity to "sourceUnit",
-      LanguagePython3 to "file_input",
-      LanguageSmtLibV2 to "start",
-    )
+    val languageToStartSymbolMap =
+      mapOf(
+        LanguageC to "compilationUnit",
+        LanguageCpp to "translationUnit",
+        LanguageGo to "sourceFile",
+        LanguageRust to "crate",
+        LanguageJava to "compilationUnit",
+        LanguageJavaScript to "program",
+        LanguageScala to "compilationUnit",
+        LanguageSystemVerilog to "source_text",
+        LanguageRuby to "compilation_unit",
+        LanguagePhp to "htmlDocument",
+        LanguageSolidity to "sourceUnit",
+        LanguagePython3 to "file_input",
+        LanguageSmtLibV2 to "start",
+      )
   }
 }

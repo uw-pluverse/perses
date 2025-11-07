@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "hello.rb"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_perses_node_priority_with_dfs_delta_hello.rb"
+  outputDir: "result_reduction_golden_test_node_priority-dfs_hello.rb"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
@@ -72,43 +78,57 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
   queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA512"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: false
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.ruby.PnfRubyParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<fixpoint>
-body: !<atomic>
-  reducer: perses_node_priority_with_dfs_delta
-condition: smaller
+Cache setting: query-caching=false, edit-caching=false, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 13
+(27/27)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(27/27)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 compilation_unit {id=1,slot_type=compilation_unit}
@@ -204,30 +224,6 @@ The current best program is the following
     if __FILE__ == $0
         main
     end
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-    --file: <formatted tokenized program in its original format>--
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-    --file: <formatted tokenized program in its original format>--
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
@@ -367,30 +363,6 @@ The current best program is the following
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.rb--
-    --file: <formatted tokenized program in its original format>--
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-    --file: <formatted tokenized program in its original format>--
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-    --file: <formatted tokenized program in its original format>--
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
         puts "start"
     --file: <formatted tokenized program in its original format>--
         puts "start"
@@ -414,9 +386,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](9/27)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:9/27=33.33%
+FixPt[1][node_priority-dfs][DFS](9/27)  Testing the empty input. Global ratio:9/27=33.33%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__statement_list_terms_1]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__statement_list_terms_1]dd@2
     --file: hello.rb--
         puts "start"
     --file: <formatted tokenized program in its original format>--
@@ -424,9 +398,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](9/27)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:9/27=33.33%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_star:kleene_star__statement_list_terms_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__statement_list_terms_1]dd@1
     --file: hello.rb--
         puts "start"
         puts "hello world"
@@ -436,6 +411,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](9/27)  Try deleting [1]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:9/27=33.33%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 0 --> 0.
@@ -456,7 +432,7 @@ token count change 9 -> 6
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__statement_list_terms_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__statement_list_terms_1]dd@1
     --file: hello.rb--
         puts "start"
     --file: <formatted tokenized program in its original format>--
@@ -464,6 +440,8 @@ token count change 9 -> 6
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](6/27)  Try deleting [0]#1: Uninteresting. Local ratio: 1/2=50.00%. Global ratio:6/27=22.22%
+FixPt[1][node_priority-dfs][DFS](6/27)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:6/27=22.22%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 78 from 9 to 6
@@ -516,17 +494,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.rb--
-        puts "hello world"
-    --file: <formatted tokenized program in its original format>--
-        puts "hello world"
-------------------------------------------------------------
-
-
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 0 --> 0.
@@ -567,16 +534,6 @@ The current best program is the following
         puts              
     --file: <formatted tokenized program in its original format>--
         puts
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-             "hello world"
-    --file: <formatted tokenized program in its original format>--
-             "hello world"
 ------------------------------------------------------------
 
 
@@ -701,9 +658,8 @@ Failed to reduce node 107
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 2. Reducer: perses_node_priority_with_dfs_delta
+(6/27)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 compilation_unit {id=161,slot_type=compilation_unit}
@@ -776,14 +732,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-    --file: <formatted tokenized program in its original format>--
-------------------------------------------------------------
-
-
 ===================Node reduction is done===================
 
 Failed to reduce node 162
@@ -799,14 +747,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](6/27)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:6/27=22.22%
+FixPt[2][node_priority-dfs][DFS](6/27)  Testing the empty input. Global ratio:6/27=22.22%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:kleene_star__statement_list_terms_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__statement_list_terms_1]dd@1
     --file: hello.rb--
     --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority-dfs][DFS](6/27)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:6/27=22.22%
+FixPt[2][node_priority-dfs][DFS](6/27)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:6/27=22.22%
 ===================Node reduction is done===================
 
 Failed to reduce node 164
@@ -895,16 +847,6 @@ The current best program is the following
         puts              
     --file: <formatted tokenized program in its original format>--
         puts
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-             "hello world"
-    --file: <formatted tokenized program in its original format>--
-             "hello world"
 ------------------------------------------------------------
 
 
@@ -1042,66 +984,45 @@ Failed to reduce node 171
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 27
-  characterCount: 82
-  fileContents:
-  - fileName: "hello.rb"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+The spar-tree is the following.
+compilation_unit {id=161,slot_type=compilation_unit}
+|___statement_list_terms {id=162,slot_type=statement_list_terms}
+    |___(+) {id=191,slot_type=[aux_rule__statement_list_terms_3,terms]}
+    |   |___Token:
+ {id=195,slot_type=[term,CRLF]}
+    |___(*) {id=164,slot_type=kleene_star__statement_list_terms_1}
+        |___aux_rule__statement_list_terms_2 {id=165,slot_type=aux_rule__statement_list_terms_2}
+            |___aux_rule__expr_45 {id=174,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
+            |   |___Token:puts {id=190,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+            |   |___(+) {id=185,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+            |       |___Token:"hello world" {id=186,slot_type=String}
+            |___(+) {id=167,slot_type=terms}
+                |___Token:
+ {id=171,slot_type=[term,CRLF]}
+------------------------------------------------------------
 
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 4
-  characterCount: 19
-  fileContents:
-  - fileName: "hello.rb"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
 
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
+FixPt[3][FineGritLatraReducer](4/27)  Latra does not support LanguageRuby{name=ruby, extensions=[rb], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+(4/27)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs     -23    -63             0
+ 1    node_priority-dfs       0      0             0
+ 2 FineGritLatraReducer       0      0             0
 
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 4
-  characterCount: 19
-  fileContents:
-  - fileName: "hello.rb"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     2     -23    -63
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 5
-#test failure = 32
+#test failure = 23
 #test result cache hits = 0
-#test execution cancelled = 2
+#test execution cancelled = 1
 #node edit action set cache hits = 0
 #external test execution cache hits = 0

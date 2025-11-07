@@ -26,7 +26,6 @@ data class RustcVersion private constructor(
   val rustc: ShellCommandOnPath,
   val versionString: String,
 ) {
-
   init {
     if (versionString != VERSION_NAME_NIGHTLY) {
       for (component in versionString.split('.')) {
@@ -40,7 +39,6 @@ data class RustcVersion private constructor(
   val commandWithVersion = "${rustc.normalizedCommand} $versionFlag"
 
   companion object {
-
     const val VERSION_NAME_NIGHTLY = "nightly"
 
     fun parse(compilerCmd: String): RustcVersion {
@@ -61,11 +59,12 @@ data class RustcVersion private constructor(
       val rustc = ShellCommandOnPath(compiler)
       val versionString = versionFlag.substring(1)
       val cmd = "${rustc.normalizedCommand} $versionFlag --version --verbose"
-      val cmdOutput = Shells.singleton.run(
-        cmd,
-        captureOutput = true,
-        environment = Shells.CURRENT_ENV,
-      )
+      val cmdOutput =
+        Shells.singleton.run(
+          cmd,
+          captureOutput = true,
+          environment = Shells.CURRENT_ENV,
+        )
       check(cmdOutput.exitCode.isZero()) {
         "Fail to run cmd '$cmd'. $cmdOutput"
       }
@@ -78,13 +77,17 @@ data class RustcVersion private constructor(
 
     val VERSION_STRINGS = ImmutableList.of(VERSION_NAME_NIGHTLY) + LanguageRust.stableVersionStrings
 
-    val VERSIONS = VERSION_STRINGS.asSequence().map {
-      RustcVersion(ShellCommandOnPath("rustc"), it)
-    }.toImmutableList()
+    val VERSIONS =
+      VERSION_STRINGS
+        .asSequence()
+        .map {
+          RustcVersion(ShellCommandOnPath("rustc"), it)
+        }.toImmutableList()
 
     fun getFirstStable(): RustcVersion = getAllStables().first()
 
-    fun getAllStables() = VERSIONS
-      .filter { it.versionString != VERSION_NAME_NIGHTLY }
+    fun getAllStables() =
+      VERSIONS
+        .filter { it.versionString != VERSION_NAME_NIGHTLY }
   }
 }

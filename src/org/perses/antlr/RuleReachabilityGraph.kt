@@ -28,7 +28,6 @@ class RuleReachabilityGraph(
   ruleList: ImmutableList<RuleHierarchyEntry>,
   nameToRuleMap: ImmutableMap<String, RuleHierarchyEntry>,
 ) {
-
   val graph: ImmutableGraph<RuleHierarchyEntry> = buildReachabilityGraph(ruleList, nameToRuleMap)
 
   val numOfIncomingPathsPerNode: ImmutableMap<RuleHierarchyEntry, Int> by lazy {
@@ -99,15 +98,15 @@ class RuleReachabilityGraph(
     }
 
     visited.add(rule)
-    val paths = predecessors.sumOf {
-      computeNumOfPaths(it, visited)
-    }
+    val paths =
+      predecessors.sumOf {
+        computeNumOfPaths(it, visited)
+      }
     visited.remove(rule)
     return paths
   }
 
   companion object {
-
     internal fun buildReachabilityGraph(
       ruleList: ImmutableList<RuleHierarchyEntry>,
       nameToRuleMap: ImmutableMap<String, RuleHierarchyEntry>,

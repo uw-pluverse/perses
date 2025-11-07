@@ -21,18 +21,18 @@ import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
 import org.perses.util.toImmutableList
 
-class RuleEpsilonComputer private constructor(grammar: ImmutableList<AbstractPersesRuleDefAst>) {
-
+class RuleEpsilonComputer private constructor(
+  grammar: ImmutableList<AbstractPersesRuleDefAst>,
+) {
   private val epsilonable = LinkedHashSet<AbstractPersesRuleElement>()
 
-  private val nameToRuleMap = ImmutableMap
-    .builder<String, AbstractPersesRuleDefAst>()
-    .apply { grammar.forEach { put(it.ruleNameHandle.ruleName, it) } }
-    .build()
+  private val nameToRuleMap =
+    ImmutableMap
+      .builder<String, AbstractPersesRuleDefAst>()
+      .apply { grammar.forEach { put(it.ruleNameHandle.ruleName, it) } }
+      .build()
 
-  fun containsEpsilon(rule: AbstractPersesRuleDefAst): Boolean {
-    return epsilonable.contains(rule.body)
-  }
+  fun containsEpsilon(rule: AbstractPersesRuleDefAst): Boolean = epsilonable.contains(rule.body)
 
   val epsilonableElements: ImmutableSet<AbstractPersesRuleElement>
     get() = ImmutableSet.copyOf(epsilonable)
@@ -42,10 +42,11 @@ class RuleEpsilonComputer private constructor(grammar: ImmutableList<AbstractPer
     var prevSize: Int
     do {
       prevSize = epsilonable.size
-      val rules = nameToRuleMap.values
-        .asSequence()
-        .filter { def: AbstractPersesRuleDefAst -> !epsilonable.contains(def.body) }
-        .toImmutableList()
+      val rules =
+        nameToRuleMap.values
+          .asSequence()
+          .filter { def: AbstractPersesRuleDefAst -> !epsilonable.contains(def.body) }
+          .toImmutableList()
       for (rule in rules) {
         val body = rule.body
         visitor.postorder(body)
@@ -108,9 +109,7 @@ class RuleEpsilonComputer private constructor(grammar: ImmutableList<AbstractPer
 
   companion object {
     @JvmStatic
-    fun computeEpsilonableRules(
-      grammar: ImmutableList<AbstractPersesRuleDefAst>,
-    ): EpsilonInfo {
+    fun computeEpsilonableRules(grammar: ImmutableList<AbstractPersesRuleDefAst>): EpsilonInfo {
       val computer = RuleEpsilonComputer(grammar)
       computer.compute()
       val builder = ImmutableSet.builder<AbstractPersesRuleDefAst>()

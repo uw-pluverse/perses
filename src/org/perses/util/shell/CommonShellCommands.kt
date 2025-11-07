@@ -24,7 +24,6 @@ class CommonShellCommands {
    * Initializing a command requires the command to be present on the PATH.
    */
   companion object {
-
     val CLANG_FORMAT_IN_PLACE: ShellCommandOnPath by lazy {
       ShellCommandOnPath("clang-format", ImmutableList.of(FLAG_INPLACE_EDIT))
     }

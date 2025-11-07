@@ -41,18 +41,18 @@ import org.perses.antlr.atn.simulator.ast.AbstractASTSimulator.Companion.create
 
 @RunWith(JUnit4::class)
 class AstSimulatorTest {
-
   private val defaultRandom = DecisionMakerMock(listOf(), (0..1000).toList())
 
   @Test
   fun testAltSimulator() {
-    val altBlock = PersesAlternativeBlockAst(
-      ImmutableList.of(
-        createAtomAst('A'),
-        createAtomAst('B'),
-        createAtomAst('C'),
-      ),
-    )
+    val altBlock =
+      PersesAlternativeBlockAst(
+        ImmutableList.of(
+          createAtomAst('A'),
+          createAtomAst('B'),
+          createAtomAst('C'),
+        ),
+      )
     val simulator = create(altBlock)
     DecisionMakerMock(listOf(), listOf(0, 1, 2)).let {
       simulator.simulate(it).toLexeme().let { lexeme ->
@@ -69,63 +69,71 @@ class AstSimulatorTest {
 
   @Test
   fun testStarSimulator() {
-    val star = PersesStarAst.createGreedy(
-      PersesSequenceAst(
-        ImmutableList.of(
-          createAtomAst('A'),
-          createAtomAst('B'),
+    val star =
+      PersesStarAst.createGreedy(
+        PersesSequenceAst(
+          ImmutableList.of(
+            createAtomAst('A'),
+            createAtomAst('B'),
+          ),
         ),
-      ),
-    )
+      )
     val simulator = create(star)
-    DecisionMakerMock(listOf(false), listOf()).let {
-      simulator.simulate(it).toLexeme()
-    }.let {
-      assertThat(it).isEmpty()
-    }
-    DecisionMakerMock(listOf(true, false), listOf()).let {
-      simulator.simulate(it).toLexeme()
-    }.let {
-      assertThat(it).isEqualTo("AB")
-    }
-    DecisionMakerMock(listOf(true, true, false), listOf()).let {
-      simulator.simulate(it).toLexeme()
-    }.let {
-      assertThat(it).isEqualTo("ABAB")
-    }
+    DecisionMakerMock(listOf(false), listOf())
+      .let {
+        simulator.simulate(it).toLexeme()
+      }.let {
+        assertThat(it).isEmpty()
+      }
+    DecisionMakerMock(listOf(true, false), listOf())
+      .let {
+        simulator.simulate(it).toLexeme()
+      }.let {
+        assertThat(it).isEqualTo("AB")
+      }
+    DecisionMakerMock(listOf(true, true, false), listOf())
+      .let {
+        simulator.simulate(it).toLexeme()
+      }.let {
+        assertThat(it).isEqualTo("ABAB")
+      }
   }
 
   @Test
   fun testPlusSimulator() {
-    val plus = PersesPlusAst.createGreedy(
+    val plus =
+      PersesPlusAst.createGreedy(
+        PersesSequenceAst(
+          ImmutableList.of(
+            createAtomAst('A'),
+            createAtomAst('B'),
+          ),
+        ),
+      )
+    val simulator = create(plus)
+    DecisionMakerMock(listOf(false), listOf())
+      .let {
+        simulator.simulate(it).toLexeme()
+      }.let {
+        assertThat(it).isEqualTo("AB")
+      }
+    DecisionMakerMock(listOf(true, false), listOf())
+      .let {
+        simulator.simulate(it).toLexeme()
+      }.let {
+        assertThat(it).isEqualTo("ABAB")
+      }
+  }
+
+  @Test
+  fun testSequence() {
+    val seq =
       PersesSequenceAst(
         ImmutableList.of(
           createAtomAst('A'),
           createAtomAst('B'),
         ),
-      ),
-    )
-    val simulator = create(plus)
-    DecisionMakerMock(listOf(false), listOf()).let {
-      simulator.simulate(it).toLexeme()
-    }.let {
-      assertThat(it).isEqualTo("AB")
-    }
-    DecisionMakerMock(listOf(true, false), listOf()).let {
-      simulator.simulate(it).toLexeme()
-    }.let {
-      assertThat(it).isEqualTo("ABAB")
-    }
-  }
-
-  @Test
-  fun testSequence() {
-    val seq = PersesSequenceAst(
-      ImmutableList.of(
-        createAtomAst('A'),
-        createAtomAst('B'),
-      ),
-    )
+      )
     val simulator = create(seq)
     val value = simulator.simulate(defaultRandom)
     assertThat(value.toLexeme()).isEqualTo("AB")
@@ -133,13 +141,15 @@ class AstSimulatorTest {
 
   @Test
   fun testOptionalSingleChar() {
-    val simulator = createSimulatorForOptionalTransition(
-      createAtomTransition('A'),
-    )
-    val decisionMaker = DecisionMakerMock(
-      listOf(true, false),
-      listOf(),
-    )
+    val simulator =
+      createSimulatorForOptionalTransition(
+        createAtomTransition('A'),
+      )
+    val decisionMaker =
+      DecisionMakerMock(
+        listOf(true, false),
+        listOf(),
+      )
     val value = simulator.simulate(decisionMaker)
     assertThat(value.toLexeme()).isEqualTo("A")
 
@@ -148,9 +158,10 @@ class AstSimulatorTest {
 
   @Test
   fun testAtomTransition() {
-    val simulator = createSimulatorForTransition(
-      createAtomTransition('A'),
-    )
+    val simulator =
+      createSimulatorForTransition(
+        createAtomTransition('A'),
+      )
 
     val value = simulator.simulate(defaultRandom)
     assertThat(value.toLexeme()).isEqualTo("A")
@@ -158,9 +169,10 @@ class AstSimulatorTest {
 
   @Test
   fun testSetTransition() {
-    val simulator = createSimulatorForTransition(
-      SetTransition(dummyState, IntervalSet.of('A'.code, 'B'.code)),
-    )
+    val simulator =
+      createSimulatorForTransition(
+        SetTransition(dummyState, IntervalSet.of('A'.code, 'B'.code)),
+      )
 
     val value = simulator.simulate(defaultRandom)
     assertThat(value.toLexeme()).isEqualTo("A")
@@ -168,15 +180,17 @@ class AstSimulatorTest {
 
   @Test
   fun testNotSetTransition() {
-    val intervalSet = IntervalSet(
-      listOf(
-        Interval.of(0, 'A'.code - 1),
-        Interval.of('B'.code, 1000),
-      ),
-    )
-    val simulator = createSimulatorForTransition(
-      NotSetTransition(dummyState, intervalSet),
-    )
+    val intervalSet =
+      IntervalSet(
+        listOf(
+          Interval.of(0, 'A'.code - 1),
+          Interval.of('B'.code, 1000),
+        ),
+      )
+    val simulator =
+      createSimulatorForTransition(
+        NotSetTransition(dummyState, intervalSet),
+      )
     val value = simulator.simulate(defaultRandom)
     assertThat(value.toLexeme()).isEqualTo("A")
   }
@@ -184,9 +198,10 @@ class AstSimulatorTest {
   private fun createSimulatorForOptionalTransition(
     transition: Transition,
   ): AbstractASTSimulator<*> {
-    val ast = PersesOptionalAst.createGreedy(
-      PersesTransitionAst(transition),
-    )
+    val ast =
+      PersesOptionalAst.createGreedy(
+        PersesTransitionAst(transition),
+      )
     return create(ast)
   }
 }

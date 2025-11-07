@@ -26,10 +26,10 @@ class CommonCompilationAction(
   versionPrintFlags: ImmutableList<String>,
   private val language: LanguageKind,
 ) : AbstractCompilationAction(
-  compilerCmd,
-  compilerFlags,
-  versionPrintFlags,
-  timeoutSeconds = ICompilationAction.DEFAULT_COMPILATION_TIMEOUT_SECONDS,
-) {
+    compilerCmd,
+    compilerFlags,
+    versionPrintFlags,
+    timeoutSeconds = ICompilationAction.DEFAULT_COMPILATION_TIMEOUT_SECONDS,
+  ) {
   override fun getLanguage() = language
 }

@@ -27,11 +27,17 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class LevelReductionSpeedAnalysis(eventFile: Path) : AbstractHddPerformanceAnalysis(eventFile) {
-  private fun exportChart(chart: JFreeChart, fileNameSuffix: String) {
-    val file = eventFile
-      .parent
-      .resolve(eventFile.fileName.toString() + fileNameSuffix + ".jpg")
+class LevelReductionSpeedAnalysis(
+  eventFile: Path,
+) : AbstractHddPerformanceAnalysis(eventFile) {
+  private fun exportChart(
+    chart: JFreeChart,
+    fileNameSuffix: String,
+  ) {
+    val file =
+      eventFile
+        .parent
+        .resolve(eventFile.fileName.toString() + fileNameSuffix + ".jpg")
     logger.ktInfo { "Exporting chart to file" }
     ChartUtils.saveChartAsJPEG(file.toFile(), chart, 1920, 1080)
   }
@@ -46,12 +52,13 @@ class LevelReductionSpeedAnalysis(eventFile: Path) : AbstractHddPerformanceAnaly
     //    final XYChart chart = new XYChart(1920, 1080);
     //    ChartFactory.createLineChart(title, xTitle, yTitle) chart.setTitle
     // (title);
-    val chart = ChartFactory.createXYLineChart(
-      title + seriesName,
-      xTitle,
-      yTitle,
-      dataset.collection,
-    )
+    val chart =
+      ChartFactory.createXYLineChart(
+        title + seriesName,
+        xTitle,
+        yTitle,
+        dataset.collection,
+      )
     val plot = chart.xyPlot
     //    plot.addDomainMarker(new ValueMarker());
     val renderer = plot.renderer
@@ -103,18 +110,19 @@ class LevelReductionSpeedAnalysis(eventFile: Path) : AbstractHddPerformanceAnaly
       dataset.add(
         (
           (end.timeInMilliseconds - startTime) / 1000
-          ).toDouble(),
+        ).toDouble(),
         end.programSize.toDouble(),
         "L" + end.level,
       )
     }
-    val chart = createChart(
-      "Level Reduction Rate",
-      "Time " + "(seconds)",
-      "Program Size (tokens)",
-      "Level Reduction Speed",
-      dataset,
-    )
+    val chart =
+      createChart(
+        "Level Reduction Rate",
+        "Time " + "(seconds)",
+        "Program Size (tokens)",
+        "Level Reduction Speed",
+        dataset,
+      )
     exportChart(chart, "-level-reduction-rate-over_time")
   }
 

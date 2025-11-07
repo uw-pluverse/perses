@@ -18,6 +18,8 @@ package org.perses.spartree
 
 abstract class AbstractNodeActionSetCache {
   abstract fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): Boolean
+
   abstract fun clear()
+
   abstract val size: Int
 }

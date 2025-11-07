@@ -9,7 +9,6 @@ kt_jvm_test(
         "go-47723-bug.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/c",

@@ -28,12 +28,11 @@ class SeedReductionInputs(
   val seedFile: SourceFile,
   val variantFile: SourceFile,
 ) : AbstractSingleFileReductionInputs<LanguageKind, SourceFile, SeedReductionInputs>(
-  testScript,
-  mainFile = seedFile,
-  otherMutableFiles = ImmutableList.of(variantFile),
-  immutableDependencyFiles = ImmutableList.of(),
-) {
-
+    testScript,
+    mainFile = seedFile,
+    otherMutableFiles = ImmutableList.of(variantFile),
+    immutableDependencyFiles = ImmutableList.of(),
+  ) {
   init {
     require(seedFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
       "The seed file and the test script should reside in the same folder. " +

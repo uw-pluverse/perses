@@ -20,15 +20,15 @@ abstract class AbstractReductionEventWithProgramSize(
   currentTimeMillis: Long,
   val programSize: Int,
 ) : AbstractReductionEvent(currentTimeMillis) {
-
   abstract fun initialProgramSize(): Int
+
+  abstract val prefixLabelFromRootToHere: String
 }
 
 abstract class AbstractStartEvent(
   currentTimeMillis: Long,
   programSize: Int,
 ) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
-
   protected var ended: Boolean = false
     set(value) {
       check(!field)
@@ -40,4 +40,7 @@ abstract class AbstractEndEvent<StartEventType : AbstractStartEvent>(
   val startEvent: StartEventType,
   currentTimeMillis: Long,
   programSize: Int,
-) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize)
+) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
+  override val prefixLabelFromRootToHere: String
+    get() = startEvent.prefixLabelFromRootToHere
+}

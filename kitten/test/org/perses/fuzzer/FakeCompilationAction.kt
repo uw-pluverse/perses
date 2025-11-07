@@ -28,22 +28,20 @@ import org.perses.util.shell.ShellOutputLines
 import java.io.File
 
 object FakeCompilationAction : ICompilationAction {
-
   override fun compileWithExtraEnvironment(
     file: File,
     extraEnv: ImmutableMap<String, String>,
-  ): ActionResult {
-    return compile(file)
-  }
+  ): ActionResult = compile(file)
 
-  override fun compile(file: File) = ActionResult(
-    CmdOutput(
-      exitCode = ExitCode.ONE,
-      stdout = ShellOutputLines(ImmutableList.of("stdout")),
-      stderr = ShellOutputLines(ImmutableList.of("internal compiler error", "this is a bug")),
-    ),
-    cmd = "( echo -e 'internal compiler error\\nthis is a bug' ; false )",
-  )
+  override fun compile(file: File) =
+    ActionResult(
+      CmdOutput(
+        exitCode = ExitCode.ONE,
+        stdout = ShellOutputLines(ImmutableList.of("stdout")),
+        stderr = ShellOutputLines(ImmutableList.of("internal compiler error", "this is a bug")),
+      ),
+      cmd = "( echo -e 'internal compiler error\\nthis is a bug' ; false )",
+    )
 
   override fun getLanguage() = LanguageRust
 

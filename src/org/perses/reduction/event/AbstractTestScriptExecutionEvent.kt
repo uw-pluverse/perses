@@ -28,11 +28,11 @@ sealed class AbstractTestScriptExecutionEvent(
   val edit: AbstractSparTreeEdit<*>,
   outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
 ) : AbstractReductionEvent(currentTimeMillis) {
-
-  val textualProgram = LazyProgramOutputer(
-    program,
-    outputCreator,
-  )
+  val textualProgram =
+    LazyProgramOutputer(
+      program,
+      outputCreator,
+    )
 
   class TestScriptExecutionEvent(
     currentTimeMillis: Long,
@@ -44,7 +44,6 @@ sealed class AbstractTestScriptExecutionEvent(
 
   class TestResultCacheHitEvent(
     currentTimeMillis: Long,
-    val result: PropertyTestResult,
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
     outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,

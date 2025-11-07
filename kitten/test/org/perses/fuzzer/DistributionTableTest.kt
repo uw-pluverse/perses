@@ -26,14 +26,14 @@ import org.perses.fuzzer.DistributionTable.Entry
 
 @RunWith(JUnit4::class)
 class DistributionTableTest {
-
-  val table = DistributionTable(
-    ImmutableList.of(
-      Entry(1, "1"),
-      Entry(2, "2"),
-      Entry(3, "3"),
-    ),
-  )
+  val table =
+    DistributionTable(
+      ImmutableList.of(
+        Entry(1, "1"),
+        Entry(2, "2"),
+        Entry(3, "3"),
+      ),
+    )
 
   @Test
   fun test_totalWeight() {

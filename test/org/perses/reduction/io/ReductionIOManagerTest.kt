@@ -40,7 +40,6 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTest::class.java) {
-
   @After
   fun teardown() {
     close()
@@ -54,12 +53,6 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
     ioManager.backupAllMutableFiles()
     val backupFile = getOrigFiles().single()
     assertThat(Files.readAllBytes(backupFile)).isEqualTo(Files.readAllBytes(sourceFile.file))
-  }
-
-  @Test
-  fun testCreateCurrentBestResultFolder() {
-    val folder = ioManager.createCurrentBestResultFolder()
-    assertThat(folder.folder.name).contains("_best_result_snapshot_")
   }
 
   @Test
@@ -84,9 +77,10 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
     assertThat(scriptFile.fileName.toString()).isEqualTo("r.sh")
     assertThat(Files.isExecutable(scriptFile))
 
-    outputManagerFactory.createManagerFor(
-      TestUtility.createTokenizedProgramFromString("int a;", LanguageC),
-    ).write(folder)
+    outputManagerFactory
+      .createManagerFor(
+        TestUtility.createTokenizedProgramFromString("int a;", LanguageC),
+      ).write(folder)
     assertThat(realFolder.listDirectoryEntries()).hasSize(2)
     val sourceFile = realFolder.resolve("t.c")
     assertThat(sourceFile.fileName.toString()).isEqualTo("t.c")
@@ -96,21 +90,23 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
 
   @Test
   fun testDigestOfOutputFilesWithoutMaterializingFiles() {
-    val outputManager = outputManagerFactory.createManagerFor(
-      TestUtility.createTokenizedProgramFromString("int a;", LanguageC),
-    )
-    val digest = outputManager.shA512HashCode
+    val outputManager =
+      outputManagerFactory.createManagerFor(
+        TestUtility.createTokenizedProgramFromString("int a;", LanguageC),
+      )
+    val digest = outputManager.shaHashCode
     assertThat(digest.digest.toString()).isNotEmpty()
-    assertThat(digest).isSameInstanceAs(outputManager.shA512HashCode)
+    assertThat(digest).isSameInstanceAs(outputManager.shaHashCode)
     outputManager.write(ioManager.createTempResultFolder())
-    assertThat(digest).isSameInstanceAs(outputManager.shA512HashCode)
+    assertThat(digest).isSameInstanceAs(outputManager.shaHashCode)
   }
 
   @Test
   fun testWriteTestScriptTo() {
-    val folder = tempDir.resolve("tmp").apply {
-      Files.createDirectory(this)
-    }
+    val folder =
+      tempDir.resolve("tmp").apply {
+        Files.createDirectory(this)
+      }
     assertThat(folder.listDirectoryEntries()).isEmpty()
     ioManager.reductionInputs.writeTestScriptTo(folder)
 
@@ -129,36 +125,43 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
 
   @Test
   fun testBackupMultileFiles() {
-    val secondSourceFile = SourceFile(
-      tempDir.resolve("another_t.c").apply {
-        writeText("int b;")
-      },
-      LanguageC,
-    )
-    val dependencyFile = BinaryReductionFile(
-      tempDir.resolve("dependency.bin").apply {
-        writeText("dependency")
-      },
-      LanguageC,
-    )
+    val secondSourceFile =
+      SourceFile(
+        tempDir.resolve("another_t.c").apply {
+          writeText("int b;")
+        },
+        LanguageC,
+      )
+    val dependencyFile =
+      BinaryReductionFile(
+        tempDir.resolve("dependency.bin").apply {
+          writeText("dependency")
+        },
+        LanguageC,
+      )
+
     class MultiFileReductionInputs :
       AbstractReductionInputs<LanguageKind, MultiFileReductionInputs>(
         testScript = script,
         initiallyDeterminedMainDataKind = LanguageC,
         rootDirectory = tempDir,
-        mutableFiles = ImmutableList.of(
-          sourceFile,
-          secondSourceFile,
-        ),
-        immutableDependencyFiles = ImmutableList.of(
-          dependencyFile,
-        ),
+        mutableFiles =
+          ImmutableList.of(
+            sourceFile,
+            secondSourceFile,
+          ),
+        immutableDependencyFiles =
+          ImmutableList.of(
+            dependencyFile,
+          ),
       )
+
     class DummyOutputManagerFactory : AbstractOutputManagerFactory<String>() {
       override fun createManagerFor(program: String): AbstractOutputManager {
         TODO("Not yet implemented")
       }
     }
+
     class DummyReductionIOManager :
       AbstractReductionIOManager<String, LanguageKind, DummyReductionIOManager>(
         workingFolder = workingDir,
@@ -166,21 +169,21 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
         outputManagerFactory = DummyOutputManagerFactory(),
         outputDirectory = outputDir,
       ) {
-      override fun getConcreteReductionInputs(): AbstractReductionInputs<*, *> {
-        return inputs
-      }
+      override fun getConcreteReductionInputs(): AbstractReductionInputs<*, *> = inputs
     }
     val ioManager = DummyReductionIOManager()
     val backupFiles = ioManager.backupAllMutableFiles()
     assertThat(
-      backupFiles.single {
-        it.name.startsWith(sourceFile.file.name)
-      }.readText(),
+      backupFiles
+        .single {
+          it.name.startsWith(sourceFile.file.name)
+        }.readText(),
     ).isEqualTo(sourceFile.textualFileContent)
     assertThat(
-      backupFiles.single {
-        it.name.startsWith(secondSourceFile.baseName)
-      }.readText(),
+      backupFiles
+        .single {
+          it.name.startsWith(secondSourceFile.baseName)
+        }.readText(),
     ).isEqualTo(secondSourceFile.textualFileContent)
   }
 
@@ -188,16 +191,18 @@ class ReductionIOManagerTest : CommonReductionIOManagerData(ReductionIOManagerTe
   fun testGetTempRootFolderName() {
     val expectedPrefix = "PersesTempRoot_t.c_r.sh_20000121_010203_"
 
-    (0..10).map {
-      val time = LocalDateTime.of(2000, 1, 21, 1, 2, 3)
-      val name = getTempRootFolderName(ImmutableList.of(Paths.get("t.c")), "r.sh", time)
-      assertThat(name).startsWith(expectedPrefix)
-      assertThat(name.length).isGreaterThan(expectedPrefix.length)
-      name
-    }.toImmutableList().let {
-      val set = it.toHashSet()
-      assertThat(set).containsExactlyElementsIn(it)
-    }
+    (0..10)
+      .map {
+        val time = LocalDateTime.of(2000, 1, 21, 1, 2, 3)
+        val name = getTempRootFolderName(ImmutableList.of(Paths.get("t.c")), "r.sh", time)
+        assertThat(name).startsWith(expectedPrefix)
+        assertThat(name.length).isGreaterThan(expectedPrefix.length)
+        name
+      }.toImmutableList()
+      .let {
+        val set = it.toHashSet()
+        assertThat(set).containsExactlyElementsIn(it)
+      }
   }
 
   @Test

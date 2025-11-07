@@ -16,74 +16,58 @@
  */
 package org.perses.program.printer
 
-import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.AbstractLazySourceCode
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 
 abstract class AbstractTokenizedProgramPrinter {
-
   abstract class AbstractTokenPositionProvider {
-    abstract fun getLine(
-      token: PersesTokenFactory.PersesToken,
-    ): Int
-    abstract fun getCharPositionInLine(
-      token: PersesTokenFactory.PersesToken,
-      currentCursorPositionInLine: Int,
-      previousToken: PersesTokenFactory.PersesToken?,
-    ): Int
+    abstract fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int
 
-    @Deprecated("Use getLine and getCharPositionInLine instead")
-    fun getPosition(
-      token: PersesTokenFactory.PersesToken,
+    abstract fun getCharPositionInLine(
+      token: PersesTokenFactory.AbstractPersesToken,
       currentCursorPositionInLine: Int,
-      previousToken: PersesTokenFactory.PersesToken?,
-    ): PersesTokenFactory.TokenPosition {
-      return PersesTokenFactory.TokenPosition(
-        line = getLine(token),
-        charPositionInLine = getCharPositionInLine(
-          token,
-          currentCursorPositionInLine,
-          previousToken,
-        ),
-      )
-    }
+      previousToken: PersesTokenFactory.AbstractPersesToken?,
+    ): Int
 
     companion object DefaultProvider : AbstractTokenPositionProvider() {
-      override fun getLine(
-        token: PersesTokenFactory.PersesToken,
-      ): Int {
-        return token.position.line
-      }
+      override fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int =
+        token.asAntlrToken().position.line
 
       override fun getCharPositionInLine(
-        token: PersesTokenFactory.PersesToken,
+        token: PersesTokenFactory.AbstractPersesToken,
         currentCursorPositionInLine: Int,
-        previousToken: PersesTokenFactory.PersesToken?,
-      ): Int {
-        return token.position.charPositionInLine
-      }
+        previousToken: PersesTokenFactory.AbstractPersesToken?,
+      ): Int = token.asAntlrToken().position.charPositionInLine
     }
   }
 
   class DeducedPositionProvider(
-    val lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
+    val lexerAtnWrapper: LexerAtnWrapper,
   ) : AbstractTokenPositionProvider() {
-
-    override fun getLine(token: PersesTokenFactory.PersesToken): Int {
-      return token.position.line
-    }
+    override fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int =
+      token.asAntlrToken().position.line
 
     override fun getCharPositionInLine(
-      token: PersesTokenFactory.PersesToken,
+      token: PersesTokenFactory.AbstractPersesToken,
       currentCursorPositionInLine: Int,
-      previousToken: PersesTokenFactory.PersesToken?,
+      previousToken: PersesTokenFactory.AbstractPersesToken?,
     ): Int {
       return if (previousToken == null) {
-        token.position.charPositionInLine
+        if (token.isPlainText()) {
+          return currentCursorPositionInLine
+        } else {
+          token.asAntlrToken().position.charPositionInLine
+        }
       } else {
-        if (lexerAtnWrapper.canBeConcatWithoutSpace(previousToken.type, token.type)) {
+        if (previousToken.isPlainText()) {
+          currentCursorPositionInLine
+        } else if (lexerAtnWrapper.canBeConcatWithoutSpace(
+            previousToken.tokenType,
+            token.tokenType,
+          )
+        ) {
           currentCursorPositionInLine
         } else {
           currentCursorPositionInLine + 1
@@ -94,7 +78,7 @@ abstract class AbstractTokenizedProgramPrinter {
 
   abstract class AbstractTokenPlacementListener {
     abstract fun onTokenPlacement(
-      token: PersesTokenFactory.PersesToken,
+      token: PersesTokenFactory.AbstractPersesToken,
       line: Int,
       charPositionInLine: Int,
     )
@@ -123,9 +107,7 @@ abstract class AbstractTokenizedProgramPrinter {
 
   protected abstract fun extraEquals(other: Any): Boolean
 
-  override fun hashCode(): Int {
-    return this::class.java.hashCode() * 31 + extraHashCode()
-  }
+  override fun hashCode(): Int = this::class.java.hashCode() * 31 + extraHashCode()
 
   protected abstract fun extraHashCode(): Int
 }

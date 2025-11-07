@@ -16,30 +16,30 @@
  */
 package org.perses.antlr.ast
 
-abstract class AbstractLexerCommand protected constructor(protected val commandName: String) {
+abstract class AbstractLexerCommand protected constructor(
+  protected val commandName: String,
+) {
   abstract fun toSourceCode(): String
-  class LexerCommandWithNoArg(commandName: String) : AbstractLexerCommand(commandName) {
-    override fun toSourceCode(): String {
-      return commandName
-    }
+
+  class LexerCommandWithNoArg(
+    commandName: String,
+  ) : AbstractLexerCommand(commandName) {
+    override fun toSourceCode(): String = commandName
   }
 
   class LexerCommandWithArg(
     commandName: String,
     private val arg: String,
   ) : AbstractLexerCommand(commandName) {
-    override fun toSourceCode(): String {
-      return "$commandName($arg)"
-    }
+    override fun toSourceCode(): String = "$commandName($arg)"
   }
 
   companion object {
-    fun create(command: String): LexerCommandWithNoArg {
-      return LexerCommandWithNoArg(command)
-    }
+    fun create(command: String): LexerCommandWithNoArg = LexerCommandWithNoArg(command)
 
-    fun create(command: String, arg: String): LexerCommandWithArg {
-      return LexerCommandWithArg(command, arg)
-    }
+    fun create(
+      command: String,
+      arg: String,
+    ): LexerCommandWithArg = LexerCommandWithArg(command, arg)
   }
 }

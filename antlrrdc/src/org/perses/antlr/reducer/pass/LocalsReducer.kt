@@ -25,19 +25,16 @@ class LocalsReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractParserRuleAttributeReducer(
-  nameAndDesc = object : AbstractReducerNameAndDesc(
-    shortName = LocalsReducer::class.simpleName!!,
-    description = "",
-  ) {},
-  ioManager = ioManager,
-  testScriptExecutorService = testScriptExecutorService,
-) {
+    nameAndDesc =
+      object : AbstractReducerNameAndDesc(
+        shortName = LocalsReducer::class.simpleName!!,
+        description = "",
+      ) {},
+    ioManager = ioManager,
+    testScriptExecutorService = testScriptExecutorService,
+  ) {
+  override fun hasAttribute(attributes: ParserRuleAttributes): Boolean = attributes.hasLocals()
 
-  override fun hasAttribute(attributes: ParserRuleAttributes): Boolean {
-    return attributes.hasLocals()
-  }
-
-  override fun removeAttribute(attributes: ParserRuleAttributes): ParserRuleAttributes {
-    return attributes.copyWithNewLocals(null)
-  }
+  override fun removeAttribute(attributes: ParserRuleAttributes): ParserRuleAttributes =
+    attributes.copyWithNewLocals(null)
 }

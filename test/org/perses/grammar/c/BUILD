@@ -58,7 +58,6 @@ kt_jvm_test(
         "//:antlr_tool",
         "//:flogger",
         "//:guava",
-        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/antlr:util",
         "//src/org/perses/grammar/c:parser_facade",
@@ -79,6 +78,5 @@ kt_jvm_test(
         "//:truth",
         "//src/org/perses/antlr:util",
         "//src/org/perses/grammar/c:parser_facade",
-        "//test/org/perses:test_util",
     ],
 )

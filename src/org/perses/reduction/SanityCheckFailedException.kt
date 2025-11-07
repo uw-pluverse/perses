@@ -16,4 +16,6 @@
  */
 package org.perses.reduction
 
-class SanityCheckFailedException(message: String) : java.lang.RuntimeException(message)
+class SanityCheckFailedException(
+  message: String,
+) : java.lang.RuntimeException(message)

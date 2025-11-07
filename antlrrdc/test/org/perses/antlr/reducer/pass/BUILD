@@ -7,7 +7,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:guava",
-        "//:kotlin_stdib",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//antlrrdc/src/org/perses/antlr/reducer/pass:action_node_collector",

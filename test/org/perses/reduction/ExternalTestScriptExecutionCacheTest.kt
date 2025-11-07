@@ -23,7 +23,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
-import org.perses.reduction.AbstractExternalTestScriptExecutionCache.ExternalTestScriptExecutionCache
+import org.perses.reduction.AbstractGlobalExecutionCache.GlobalExecutionCache
 import org.perses.reduction.io.CommonReductionIOManagerData
 import org.perses.util.shell.ExitCode
 import java.nio.file.Files
@@ -31,7 +31,6 @@ import java.nio.file.Files
 @RunWith(JUnit4::class)
 class ExternalTestScriptExecutionCacheTest :
   CommonReductionIOManagerData(ExternalTestScriptExecutionCacheTest::class.java) {
-
   val program = TestUtility.createTokenizedProgramFromString("int a;", LanguageC)
 
   @After
@@ -41,15 +40,15 @@ class ExternalTestScriptExecutionCacheTest :
 
   @Test
   fun test() {
-    val cache = ExternalTestScriptExecutionCache.create()
+    val cache = GlobalExecutionCache.createEmpty(shaAlgorithm)
     val outputManager = outputManagerFactory.createManagerFor(program)
     assertThat(cache.getCachedResultOrNull(outputManager)).isNull()
 
-    val propertyTestResult = PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMilliseconds = 1)
+    val propertyTestResult = PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMillis = 1)
     cache.cacheTestScriptResult(outputManager, propertyTestResult)
     cache.getCachedResultOrNull(outputManagerFactory.createManagerFor(program)).let {
       assertThat(it!!.exitCode.intValue).isSameInstanceAs(propertyTestResult.exitCode.intValue)
-      assertThat(it.ellapsedMillies).isEqualTo(propertyTestResult.elapsedMilliseconds)
+      assertThat(it.elapsedMillis).isEqualTo(propertyTestResult.elapsedMillis)
     }
 
     val resultFile = workingDir.resolve("result.csv")
@@ -57,10 +56,10 @@ class ExternalTestScriptExecutionCacheTest :
     cache.saveCacheEntriesToCsvFile(resultFile)
     assertThat(Files.exists(resultFile)).isTrue()
 
-    val anotherCache = ExternalTestScriptExecutionCache.createFromHistoryCvsFile(resultFile)
+    val anotherCache = GlobalExecutionCache.createFromHistoryCvsFile(shaAlgorithm, resultFile)
     anotherCache.getCachedResultOrNull(outputManager)!!.let {
       assertThat(it.exitCode.intValue).isEqualTo(propertyTestResult.exitCode.intValue)
-      assertThat(it.ellapsedMillies).isEqualTo(propertyTestResult.elapsedMilliseconds)
+      assertThat(it.elapsedMillis).isEqualTo(propertyTestResult.elapsedMillis)
     }
   }
 }

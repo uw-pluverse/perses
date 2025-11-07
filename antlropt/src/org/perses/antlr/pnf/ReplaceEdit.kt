@@ -27,17 +27,15 @@ open class ReplaceEdit(
   val oldPredicate: (AbstractPersesRuleElement) -> Boolean,
   val newValueComputer: (oldValue: AbstractPersesRuleElement) -> AbstractPersesRuleElement,
 ) : AstEdit() {
-
   override fun internalApply(
     element: AbstractPersesRuleElement,
     isRoot: Boolean,
-  ): TransformDecision.NonDeleteTransformDecision {
-    return if (!oldPredicate(element)) {
+  ): TransformDecision.NonDeleteTransformDecision =
+    if (!oldPredicate(element)) {
       TransformDecision.Keep(element)
     } else {
       TransformDecision.Replace(oldValue = element, newValue = newValueComputer(element))
     }
-  }
 
   override fun internalApplyWithNewChildren(
     element: AbstractPersesRuleElement,
@@ -47,15 +45,17 @@ open class ReplaceEdit(
     if (element.tag != AstTag.SEQUENCE) {
       return super.internalApplyWithNewChildren(element, children, isRoot)
     }
-    val nonEpsilonChildren = children.asSequence()
-      .filter { it.tag != AstTag.EPSILON }
-      .flatMap {
-        if (it is PersesSequenceAst) {
-          it.children.asSequence()
-        } else {
-          sequenceOf(it)
-        }
-      }.toList()
+    val nonEpsilonChildren =
+      children
+        .asSequence()
+        .filter { it.tag != AstTag.EPSILON }
+        .flatMap {
+          if (it is PersesSequenceAst) {
+            it.children.asSequence()
+          } else {
+            sequenceOf(it)
+          }
+        }.toList()
     return when (nonEpsilonChildren.size) {
       children.size -> {
         super.internalApplyWithNewChildren(element, children, isRoot)

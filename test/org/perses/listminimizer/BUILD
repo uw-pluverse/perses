@@ -7,6 +7,28 @@ package(default_visibility = [
 ])
 
 kt_jvm_test(
+    name = "AbstractListMinimizerListenerTest",
+    srcs = [
+        "AbstractListMinimizerListenerTest.kt",
+    ],
+    deps = [
+        "//:truth",
+        "//src/org/perses/listminimizer:interfaces",
+    ],
+)
+
+kt_jvm_test(
+    name = "ListSliderTest",
+    srcs = [
+        "ListSliderTest.kt",
+    ],
+    deps = [
+        "//:truth",
+        "//src/org/perses/listminimizer:list_slider",
+    ],
+)
+
+kt_jvm_test(
     name = "DeltaDebuggerFactoryTest",
     srcs = [
         "DeltaDebuggerFactoryTest.kt",
@@ -14,7 +36,7 @@ kt_jvm_test(
     deps = [
         "//:truth",
         "//src/org/perses/listminimizer",
-        "//src/org/perses/listminimizer:ListInputMinimizerFactory",
+        "//src/org/perses/listminimizer:ListMinimizerFactory",
         "//src/org/perses/listminimizer:enum_list_input_minimizer_type",
         "//src/org/perses/listminimizer/xfs",
     ],

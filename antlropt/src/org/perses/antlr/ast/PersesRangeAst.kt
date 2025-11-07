@@ -23,8 +23,11 @@ class PersesRangeAst(
   private val first: PersesTerminalAst,
   private val second: PersesTerminalAst,
 ) : AbstractPersesRuleElement() {
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     first.toSourceCode(stream, indent, multiLineMode)
     stream.append("..")
     second.toSourceCode(stream, indent, multiLineMode)
@@ -33,13 +36,12 @@ class PersesRangeAst(
   override val childCount: Int
     get() = 2
 
-  override fun getChild(index: Int): AbstractPersesRuleElement {
-    return when (index) {
+  override fun getChild(index: Int): AbstractPersesRuleElement =
+    when (index) {
       0 -> first
       1 -> second
       else -> throw RuntimeException("Invalid index: $index")
     }
-  }
 
   override val tag = AstTag.LEXER_RANGE_OPERATOR
 

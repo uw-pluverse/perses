@@ -30,19 +30,18 @@ class ExistingLangParserFacadeStubTemplate(
   parserFacadeClassSimpleName: String,
   tokenNamesOfIdentifiers: List<String>,
 ) : AbstractParserFacadeStubTemplate(
-  packageName,
-  parserClassSimpleName,
-  lexerClassSimpleName,
-  startRuleName,
-  grammarName,
-  parserFile,
-  lexerFile,
-  parserFacadeClassSimpleName,
-  tokenNamesOfIdentifiers,
-) {
-
-  override fun createLanguageKind(): String {
-    return """
+    packageName,
+    parserClassSimpleName,
+    lexerClassSimpleName,
+    startRuleName,
+    grammarName,
+    parserFile,
+    lexerFile,
+    parserFacadeClassSimpleName,
+    tokenNamesOfIdentifiers,
+  ) {
+  override fun createLanguageKind(): String =
+    """
      
   static {
     try {
@@ -54,5 +53,4 @@ class ExistingLangParserFacadeStubTemplate(
   } 
   
     """
-  }
 }

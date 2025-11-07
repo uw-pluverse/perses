@@ -33,7 +33,6 @@ class CommandOptions : AbstractCommandOptions() {
   val reductionControlFlags = registerFlags(ReductionControlFlagGroup())
 
   class CompulsoryFlagGroup : AbstractCommandLineFlagGroup("Compulsory") {
-
     @JvmField
     @Parameter(
       names = ["--parser"],
@@ -74,8 +73,9 @@ class CommandOptions : AbstractCommandOptions() {
     @Parameter(
       names = ["--file-ext"],
       required = true,
-      description = "The extension name (without the dot) " +
-        "of the test programs, e.g., `rs` for Rust, `c` for C, `java` for Java.",
+      description =
+        "The extension name (without the dot) " +
+          "of the test programs, e.g., `rs` for Rust, `c` for C, `java` for Java.",
       order = FlagOrder.COMPULSORY + 500,
     )
     var fileExtName: String = ""
@@ -91,7 +91,6 @@ class CommandOptions : AbstractCommandOptions() {
   }
 
   class ResultOutputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Output") {
-
     @Parameter(
       names = ["--output-dir"],
       description = "The output directory to save the reduced result.",
@@ -102,10 +101,10 @@ class CommandOptions : AbstractCommandOptions() {
     override fun validate() = Unit
   }
 
-  class ReductionControlFlagGroup : AbstractCommandLineFlagGroup(
-    groupName = "Reduction Algorithm Control",
-  ) {
-
+  class ReductionControlFlagGroup :
+    AbstractCommandLineFlagGroup(
+      groupName = "Reduction Algorithm Control",
+    ) {
     @Parameter(
       names = ["--threads"],
       description = "Number of reduction threads: a positive integer, or 'auto'.",
@@ -125,7 +124,6 @@ class CommandOptions : AbstractCommandOptions() {
       names = ["--enable-label-remover"],
       hidden = true,
       arity = 1,
-
       order = FlagOrder.REDUCTION_CONTROL + 200,
     )
     var enableLabelRemover = true
@@ -134,7 +132,6 @@ class CommandOptions : AbstractCommandOptions() {
       names = ["--enable-argument-remover"],
       hidden = true,
       arity = 1,
-
       order = FlagOrder.REDUCTION_CONTROL + 300,
     )
     var enableArgumentsRemover = true
@@ -143,7 +140,6 @@ class CommandOptions : AbstractCommandOptions() {
       names = ["--enable-return-remover"],
       hidden = true,
       arity = 1,
-
       order = FlagOrder.REDUCTION_CONTROL + 400,
     )
     var enableReturnsRemover = true
@@ -152,7 +148,6 @@ class CommandOptions : AbstractCommandOptions() {
       names = ["--enable-local-remover"],
       hidden = true,
       arity = 1,
-
       order = FlagOrder.REDUCTION_CONTROL + 500,
     )
     var enableLocalsRemover = true
@@ -163,13 +158,12 @@ class CommandOptions : AbstractCommandOptions() {
       }
     }
 
-    fun getNumOfThreads(): Int {
-      return if ("auto" == numOfThreads) {
+    fun getNumOfThreads(): Int =
+      if ("auto" == numOfThreads) {
         Runtime.getRuntime().availableProcessors()
       } else {
         numOfThreads.toInt()
       }
-    }
   }
 }
 

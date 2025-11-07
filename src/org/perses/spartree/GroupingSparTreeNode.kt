@@ -22,14 +22,12 @@ package org.perses.spartree
 class GroupingSparTreeNode(
   nodeId: Int,
 ) : AbstractInternalSparTreeNode(
-  nodeId = nodeId,
-  antlrRule = null,
-) {
-
+    nodeId = nodeId,
+    antlrRule = null,
+  ) {
   override val labelPrefix: String
     get() = "GroupingNode"
 
-  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractSparTreeNode {
-    return GroupingSparTreeNode(computedNewNodeId)
-  }
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractSparTreeNode =
+    GroupingSparTreeNode(computedNewNodeId)
 }

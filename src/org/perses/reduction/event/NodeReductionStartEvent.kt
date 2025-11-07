@@ -25,13 +25,26 @@ class NodeReductionStartEvent internal constructor(
   val currentFixpointIteration: FixpointIterationStartEvent,
   currentTimeMillis: Long,
   val program: TokenizedProgram,
-  val node: AbstractSparTreeNode,
+  private val node: AbstractSparTreeNode,
   outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
 ) : AbstractStartEvent(currentTimeMillis, programSize = program.tokenCount) {
-
   val textualProgram = LazyProgramOutputer(program, outputCreator)
 
   val iteration = currentFixpointIteration.iteration
+
+  override val prefixLabelFromRootToHere: String
+    get() = currentFixpointIteration.prefixLabelFromRootToHere
+
+  // Needs to store the information at the creation of this event, due to the aysnc nature of the
+  // listeners. It is possible that when the listeners are processing the event, the node might
+  // have been deleted already.
+  val nodeInfo =
+    NodeInfo(
+      nodeId = node.nodeId,
+      antlrRuleName = node.ruleName,
+      childCount = node.childCount,
+      tokenCount = node.leafTokenCount,
+    )
 
   fun getReducerName() = currentFixpointIteration.reducerClass.shortName
 
@@ -40,8 +53,11 @@ class NodeReductionStartEvent internal constructor(
     program: TokenizedProgram,
     remainingQueueSize: Int,
   ): NodeReductionEndEvent {
-    check(!ended)
+    check(!ended) {
+      "An end event has been created."
+    }
     ended = true
+    check(node.nodeId == nodeInfo.nodeId)
     return NodeReductionEndEvent(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
@@ -51,7 +67,22 @@ class NodeReductionStartEvent internal constructor(
     )
   }
 
-  override fun initialProgramSize(): Int {
-    return currentFixpointIteration.initialProgramSize()
+  override fun initialProgramSize(): Int = currentFixpointIteration.initialProgramSize()
+
+  data class NodeInfo(
+    val nodeId: Int,
+    val antlrRuleName: String?,
+    val childCount: Int,
+    val tokenCount: Int,
+  ) {
+    override fun toString(): String =
+      buildString {
+        append("Node(")
+        append(nodeId).append(',')
+        append("antlr=").append(antlrRuleName ?: "<n.a.>").append(',')
+        append("#children=").append(childCount).append(',')
+        append("#tokens=").append(tokenCount)
+        append(')')
+      }
   }
 }

@@ -10,11 +10,16 @@ fi
 
 readonly FILE="$1"
 
-if grep --quiet 'Fixpoint\[0\]' "${FILE}"; then
+if ! grep --quiet 'FixPt\[1\]' "${FILE}" ; then
+  echo "No Fixpoint information is printed."
+  exit 1
+fi
+
+if grep --quiet 'FixPt\[0\]' "${FILE}"; then
   echo "Fixpoint iterations should start with 1, but not 0"
   exit 1
 fi
 
-grep --quiet 'perses_node_priority_with_dfs_delta' "${FILE}" || exit 1
+grep --quiet 'node_priority-dfs' "${FILE}" || exit 1
 
-awk '/Fixpoint\[1\]/,/Fixpoint\[2\]/' "${FILE}" | grep --quiet 'Fixpoint\[2\]'
+awk '/FixPt\[1\]/,/FixPt\[2\]/' "${FILE}" | grep --quiet 'FixPt\[2\]'

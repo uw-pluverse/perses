@@ -12,6 +12,18 @@ kt_jvm_library(
 )
 
 kt_jvm_test(
+    name = "ReflectionUtilTest",
+    srcs = [
+        "ReflectionUtilTest.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
     name = "AssertionCanBeDisabledTest",
     srcs = ["AssertionCanBeDisabledTest.kt"],
     jvm_flags = [
@@ -51,8 +63,7 @@ kt_jvm_test(
         ":dummy_class_with_resources",
         "//:guava",
         "//:truth",
-        "//src/org/perses/util",
-        "//src/org/perses/util:auto_deltable_folder",
+        "//src/org/perses/util/hashing",
     ],
 )
 
@@ -73,8 +84,6 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses/util",
-        "//src/org/perses/util:auto_deltable_folder",
         "//src/org/perses/util:simple_stack_and_queue",
     ],
 )
@@ -94,7 +103,6 @@ kt_jvm_test(
     name = "TinyListMapTest",
     srcs = ["TinyListMapTest.kt"],
     deps = [
-        "//:guava",
         "//:truth",
         "//src/org/perses/util:tiny_list_map",
     ],
@@ -107,7 +115,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:guava",
-        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/util",
         "//src/org/perses/util:file_name_content_pair",
@@ -118,7 +125,6 @@ kt_jvm_test(
     name = "MutableIntTest",
     srcs = ["MutableIntTest.kt"],
     deps = [
-        "//:guava",
         "//:truth",
         "//src/org/perses/util:mutable_int",
     ],
@@ -128,7 +134,6 @@ kt_jvm_test(
     name = "AutoIncrementDirectoryTest",
     srcs = ["AutoIncrementDirectoryTest.kt"],
     deps = [
-        "//:guava",
         "//:truth",
         "//src/org/perses/util:auto_increment_dir",
     ],
@@ -162,7 +167,19 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses/util",
+        "//src/org/perses/util/hashing",
+    ],
+)
+
+kt_jvm_test(
+    name = "GCMonitoringTest",
+    srcs = ["GCMonitoringTest.kt"],
+    jvm_flags = [
+        "-Xmx10m",
+    ],
+    deps = [
+        "//:truth",
+        "//src/org/perses/util:GCMonitoring",
     ],
 )
 
@@ -191,7 +208,6 @@ kt_jvm_test(
     name = "AutoDeletableFolderTest",
     srcs = ["AutoDeletableFolderTest.kt"],
     deps = [
-        "//:guava",
         "//:truth",
         "//src/org/perses/util:auto_deltable_folder",
     ],
@@ -239,9 +255,8 @@ kt_jvm_test(
 kt_jvm_test(
     name = "DefaultLoggingConfigurationsTest",
     srcs = ["DefaultLoggingConfigurationsTest.kt"],
-    data = ["golden_SimpleFormatter.format.txt"],
     deps = [
-        "//:kotlin_stdib",
+        "//:flogger",
         "//:truth",
         "//src/org/perses/util:default_logging_configurations",
     ],

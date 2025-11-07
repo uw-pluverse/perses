@@ -23,7 +23,6 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class ExitCodeTest {
-
   @Test
   fun test() {
     assertThat(ExitCode.ZERO.intValue).isEqualTo(0)

@@ -25,13 +25,11 @@ class PersesParserRuleAst(
   body: AbstractPersesRuleElement,
   val attributes: ParserRuleAttributes,
 ) : AbstractPersesRuleDefAst(ruleNameHandle, body) {
-
   class ParserRuleAttributes(
     val arguments: PersesActionAst?,
     val returns: PersesActionAst?,
     val locals: PersesActionAst?,
   ) {
-
     fun toSourceCode(stream: PrintStream?) {
       val emptyIndent = Indent.FOUR_CHAR_EMPTY_INDENT
       if (arguments != null) {
@@ -51,33 +49,24 @@ class PersesParserRuleAst(
       }
     }
 
-    fun hasReturn(): Boolean {
-      return returns != null
-    }
+    fun hasReturn(): Boolean = returns != null
 
-    fun hasArguments(): Boolean {
-      return arguments != null
-    }
+    fun hasArguments(): Boolean = arguments != null
 
-    fun hasLocals(): Boolean {
-      return locals != null
-    }
+    fun hasLocals(): Boolean = locals != null
 
     fun isNotEmpty() = hasReturn() || hasArguments() || hasLocals()
 
     fun isEmpty() = !isNotEmpty()
 
-    fun copyWithNewLocals(newLocals: PersesActionAst?): ParserRuleAttributes {
-      return ParserRuleAttributes(arguments, returns, newLocals)
-    }
+    fun copyWithNewLocals(newLocals: PersesActionAst?): ParserRuleAttributes =
+      ParserRuleAttributes(arguments, returns, newLocals)
 
-    fun copyWithReturn(newReturn: PersesActionAst?): ParserRuleAttributes {
-      return ParserRuleAttributes(arguments, newReturn, locals)
-    }
+    fun copyWithReturn(newReturn: PersesActionAst?): ParserRuleAttributes =
+      ParserRuleAttributes(arguments, newReturn, locals)
 
-    fun copyWithArguments(newArguments: PersesActionAst?): ParserRuleAttributes {
-      return ParserRuleAttributes(newArguments, returns, locals)
-    }
+    fun copyWithArguments(newArguments: PersesActionAst?): ParserRuleAttributes =
+      ParserRuleAttributes(newArguments, returns, locals)
 
     companion object {
       @JvmField
@@ -85,9 +74,8 @@ class PersesParserRuleAst(
     }
   }
 
-  override fun copyWithNewBody(newBody: AbstractPersesRuleElement): PersesParserRuleAst {
-    return PersesParserRuleAst(ruleNameHandle, newBody, attributes)
-  }
+  override fun copyWithNewBody(newBody: AbstractPersesRuleElement): PersesParserRuleAst =
+    PersesParserRuleAst(ruleNameHandle, newBody, attributes)
 
   override fun afterPrintRuleName(stream: PrintStream?) {
     attributes.toSourceCode(stream)
@@ -98,7 +86,6 @@ class PersesParserRuleAst(
   override val isLexerRule: Boolean
     get() = false
 
-  fun copyWithNewAttributes(newRuleAttributes: ParserRuleAttributes): PersesParserRuleAst {
-    return PersesParserRuleAst(ruleNameHandle, body, newRuleAttributes)
-  }
+  fun copyWithNewAttributes(newRuleAttributes: ParserRuleAttributes): PersesParserRuleAst =
+    PersesParserRuleAst(ruleNameHandle, body, newRuleAttributes)
 }

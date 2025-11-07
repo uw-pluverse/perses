@@ -22,6 +22,7 @@ kt_jvm_library(
         ":reduction_driver",
         "//:flogger",
         "//:guava",
+        "//src/org/perses:HelperForPersesMain",
         "//src/org/perses:abstract_reduction_main",
         "//src/org/perses:perses_listener_manager_creator",
         "//src/org/perses/grammar:facade_factory",
@@ -61,7 +62,6 @@ kt_jvm_library(
     name = "reduction_inputs",
     srcs = ["SeedReductionInputs.kt"],
     deps = [
-        "//src/org/perses/reduction/io:reduction_inputs",
         "//src/org/perses/reduction/io:reduction_inputs_interface",
     ],
 )
@@ -72,7 +72,7 @@ kt_jvm_library(
         "SeedCmdOptions.kt",
     ],
     deps = [
+        "//ppr/src/org/perses/ppr:AbstractPPRCommandOptions",
         "//src/org/perses:command_options",
-        "//src/org/perses/reduction:reducer_factory",
     ],
 )

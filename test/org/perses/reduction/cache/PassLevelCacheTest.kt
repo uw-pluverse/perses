@@ -23,47 +23,52 @@ import org.junit.runners.JUnit4
 import org.perses.reduction.cache.PassLevelCache.PassLevelCacheResult
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
-import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
 
 @RunWith(JUnit4::class)
 class PassLevelCacheTest {
-
   private val cache = PassLevelCache()
   private val bfsReducer = PersesNodePrioritizedBfsReducer.META
   private val dfsReducer = PersesNodePrioritizedDfsReducer.META
 
   @Test
   fun test() {
-    cache.update(bfsReducer) {
-      Util.SHA512HashCode.createFromListOfStrings(listOf("content"))
-    }.also {
-      assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
-    }
-    cache.update(bfsReducer) {
-      Util.SHA512HashCode.createFromListOfStrings(listOf("content"))
-    }.also {
-      assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
-    }
-    cache.update(dfsReducer) {
-      Util.SHA512HashCode.createFromListOfStrings(listOf("content"))
-    }.also {
-      assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
-    }
-    cache.update(dfsReducer) {
-      Util.SHA512HashCode.createFromListOfStrings(listOf("content"))
-    }.also {
-      assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
-    }
+    cache
+      .update(bfsReducer) {
+        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content"))
+      }.also {
+        assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
+      }
+    cache
+      .update(bfsReducer) {
+        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content"))
+      }.also {
+        assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
+      }
+    cache
+      .update(dfsReducer) {
+        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content"))
+      }.also {
+        assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
+      }
+    cache
+      .update(dfsReducer) {
+        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content"))
+      }.also {
+        assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
+      }
 
-    cache.update(dfsReducer) {
-      Util.SHA512HashCode.createFromListOfStrings(listOf("content b"))
-    }.also {
-      assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
-    }
-    cache.update(dfsReducer) {
-      Util.SHA512HashCode.createFromListOfStrings(listOf("content b"))
-    }.also {
-      assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
-    }
+    cache
+      .update(dfsReducer) {
+        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content b"))
+      }.also {
+        assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
+      }
+    cache
+      .update(dfsReducer) {
+        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content b"))
+      }.also {
+        assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
+      }
   }
 }

@@ -21,8 +21,9 @@ import org.perses.util.Util.lazyAssert
 import java.nio.file.Path
 import kotlin.io.path.writeText
 
-data class ShellOutputLines(val lines: ImmutableList<String>) {
-
+data class ShellOutputLines(
+  val lines: ImmutableList<String>,
+) {
   init {
     lazyAssert({ !lines.any { it.isNotEmpty() && it.last() == '\n' } }) { lines.toString() }
   }
@@ -30,16 +31,18 @@ data class ShellOutputLines(val lines: ImmutableList<String>) {
   /**
    * Returns true if there is a line contains the string.
    */
-  fun anyLineContains(needle: String) = lines.any {
-    it.contains(needle)
-  }
+  fun anyLineContains(needle: String) =
+    lines.any {
+      it.contains(needle)
+    }
 
   fun hasLines() = !lines.isEmpty()
 
   val combinedLines by lazy {
-    StringBuilder(lines.map { it.length + 1 }.sum()).apply {
-      lines.forEach { line -> append(line).append('\n') }
-    }.toString()
+    StringBuilder(lines.map { it.length + 1 }.sum())
+      .apply {
+        lines.forEach { line -> append(line).append('\n') }
+      }.toString()
   }
 
   fun writeToFile(file: Path) {

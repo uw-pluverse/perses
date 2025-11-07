@@ -40,29 +40,29 @@ import kotlin.io.path.readText
 
 object GrammarTestingUtility {
   @JvmStatic
-  fun loadGrammarFromString(antlrGrammarContent: String): PersesGrammar {
-    return PersesAstBuilder(
+  fun loadGrammarFromString(antlrGrammarContent: String): PersesGrammar =
+    PersesAstBuilder(
       AntlrGrammarParser.parseRawGrammarASTFromString(antlrGrammarContent),
     ).grammar
-  }
 
   @JvmStatic
-  fun loadGrammarFromFile(filenameInTestDataAntlrGrammarFolder: String): PersesGrammar {
-    return PersesAstBuilder(
+  fun loadGrammarFromFile(filenameInTestDataAntlrGrammarFolder: String): PersesGrammar =
+    PersesAstBuilder(
       AntlrGrammarParser.parseRawGrammarASTFromString(
         readAntlrFileToString(filenameInTestDataAntlrGrammarFolder),
       ),
     ).grammar
-  }
 
   @JvmStatic
-  fun loadGrammarFromFile(path: Path): PersesGrammar {
-    return PersesAstBuilder(
+  fun loadGrammarFromFile(path: Path): PersesGrammar =
+    PersesAstBuilder(
       AntlrGrammarParser.parseRawGrammarASTFromString(path.readText()),
     ).grammar
-  }
 
-  fun checkWithGoldenGrammar(grammar: String, goldenGrammarString: String) {
+  fun checkWithGoldenGrammar(
+    grammar: String,
+    goldenGrammarString: String,
+  ) {
     val trimmedGoldenGrammarString = deepTrim(goldenGrammarString)
     val valTrimmedGrammar = deepTrim(grammar)
     val goldenGrammar = loadGrammarFromString(trimmedGoldenGrammarString)
@@ -71,19 +71,21 @@ object GrammarTestingUtility {
     assertThat(valTrimmedGrammar).isEqualTo(goldenTestString)
   }
 
-  private fun deepTrim(string: String): String {
-    return Joiner.on('\n').join(Splitter.on('\n').trimResults().omitEmptyStrings().split(string))
-  }
+  private fun deepTrim(string: String): String =
+    Joiner.on('\n').join(
+      Splitter
+        .on('\n')
+        .trimResults()
+        .omitEmptyStrings()
+        .split(string),
+    )
 
   @JvmStatic
-  fun computeAltblockRuleName(suffix: String): String {
-    return RuleType.ALT_BLOCKS.signaturePrefix + suffix
-  }
+  fun computeAltblockRuleName(suffix: String): String = RuleType.ALT_BLOCKS.signaturePrefix + suffix
 
   @JvmStatic
-  fun readAntlrFileToString(filename: String): String {
-    return Paths.get("test_data/antlr_grammars/$filename").readText(StandardCharsets.UTF_8)
-  }
+  fun readAntlrFileToString(filename: String): String =
+    Paths.get("test_data/antlr_grammars/$filename").readText(StandardCharsets.UTF_8)
 
   @JvmStatic
   fun createPersesGrammarFromString(vararg lines: String): PersesGrammar {
@@ -93,9 +95,8 @@ object GrammarTestingUtility {
     return PersesAstBuilder.loadGrammarFromString(list.joinToString("\n"))
   }
 
-  fun createSeqOfTerminals(terminals: List<String>): PersesSequenceAst {
-    return createSeqOfTerminals(*terminals.toTypedArray())
-  }
+  fun createSeqOfTerminals(terminals: List<String>): PersesSequenceAst =
+    createSeqOfTerminals(*terminals.toTypedArray())
 
   @JvmStatic
   fun createSeqOfTerminals(vararg terminals: String): PersesSequenceAst {
@@ -104,43 +105,43 @@ object GrammarTestingUtility {
   }
 
   @JvmStatic
-  fun createSeqOfTerminalsFromChars(terminals: String): PersesSequenceAst {
-    return createSeqOfTerminals(terminals.toCharArray().map { it.toString() }.toList())
-  }
+  fun createSeqOfTerminalsFromChars(terminals: String): PersesSequenceAst =
+    createSeqOfTerminals(terminals.toCharArray().map { it.toString() }.toList())
 
   @JvmStatic
-  fun createTerminal(text: String): PersesTerminalAst {
-    return PersesTerminalAst(text, 0)
-  }
+  fun createTerminal(text: String): PersesTerminalAst = PersesTerminalAst(text, 0)
 
   @JvmStatic
-  fun createTerminalList(vararg terminals: String): ImmutableList<AbstractPersesRuleElement> {
-    return terminals.asSequence()
+  fun createTerminalList(vararg terminals: String): ImmutableList<AbstractPersesRuleElement> =
+    terminals
+      .asSequence()
       .map { createTerminal(it) }
       .toImmutableList()
-  }
 
   @JvmStatic
   fun getSortedSccList(
     graph: RuleTransitionGraph,
-  ): List<Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>> {
-    return graph.computeSccSet().asSequence().sortedWith(GraphOrder()).toList()
-  }
+  ): List<Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>> =
+    graph
+      .computeSccSet()
+      .asSequence()
+      .sortedWith(GraphOrder())
+      .toList()
 
-  fun toSortedEdges(edges: Set<AbstractPersesRuleElement>): List<String> {
-    return edges.stream()
+  fun toSortedEdges(edges: Set<AbstractPersesRuleElement>): List<String> =
+    edges
+      .stream()
       .map { it.sourceCode }
       .sorted()
       .collect(Collectors.toList())
-  }
 
   fun toSortedVertices(
     vertices: Set<RuleNameRegistry.RuleNameHandle>,
-  ): List<RuleNameRegistry.RuleNameHandle> {
-    return vertices.stream()
+  ): List<RuleNameRegistry.RuleNameHandle> =
+    vertices
+      .stream()
       .sorted(Comparator.comparingInt(RuleNameRegistry.RuleNameHandle::id))
       .collect(Collectors.toList())
-  }
 
   class GraphOrder : Comparator<Graph<RuleNameRegistry.RuleNameHandle, AbstractPersesRuleElement>> {
     override fun compare(
@@ -160,9 +161,11 @@ object GrammarTestingUtility {
         val n2 = v2[i]
         val e1 = toSortedEdges(o1.outgoingEdgesOf(n1))
         val e2 = toSortedEdges(o2.outgoingEdgesOf(n2))
-        result = Comparators.lexicographical { a: String, b: String ->
-          a.compareTo(b)
-        }.compare(e1, e2)
+        result =
+          Comparators
+            .lexicographical { a: String, b: String ->
+              a.compareTo(b)
+            }.compare(e1, e2)
         if (result != 0) {
           return result
         }
@@ -175,12 +178,11 @@ object GrammarTestingUtility {
       private fun compareVertices(
         v1: List<RuleNameRegistry.RuleNameHandle>,
         v2: List<RuleNameRegistry.RuleNameHandle>,
-      ): Int {
-        return Comparators.lexicographical(
-          Comparator.comparingInt(RuleNameRegistry.RuleNameHandle::id),
-        )
-          .compare(v1, v2)
-      }
+      ): Int =
+        Comparators
+          .lexicographical(
+            Comparator.comparingInt(RuleNameRegistry.RuleNameHandle::id),
+          ).compare(v1, v2)
     }
   }
 }

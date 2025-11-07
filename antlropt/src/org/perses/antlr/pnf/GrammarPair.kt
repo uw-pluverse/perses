@@ -26,7 +26,6 @@ data class GrammarPair(
   val parserGrammar: PersesGrammar?,
   val lexerGrammar: PersesGrammar?,
 ) {
-
   init {
     // TODO: enable the following test.
     if (parserGrammar != null) {
@@ -39,9 +38,8 @@ data class GrammarPair(
     }
   }
 
-  fun withNewParserGrammar(parserGrammar: PersesGrammar): GrammarPair {
-    return GrammarPair(parserGrammar, lexerGrammar)
-  }
+  fun withNewParserGrammar(parserGrammar: PersesGrammar): GrammarPair =
+    GrammarPair(parserGrammar, lexerGrammar)
 
   fun withNewParserAndExtraLexerRules(
     parserGrammar: PersesGrammar,
@@ -61,10 +59,11 @@ data class GrammarPair(
   }
 
   fun isEquivalentTo(other: GrammarPair): Boolean {
-    val pairs = listOf(
-      Pair(parserGrammar, other.parserGrammar),
-      Pair(lexerGrammar, other.lexerGrammar),
-    )
+    val pairs =
+      listOf(
+        Pair(parserGrammar, other.parserGrammar),
+        Pair(lexerGrammar, other.lexerGrammar),
+      )
     return pairs.all { (left, right) ->
       if ((left == null) != (right == null)) {
         return@all false
@@ -79,10 +78,9 @@ data class GrammarPair(
 
   fun grammarSequence() = sequenceOf(parserGrammar, lexerGrammar).filterNotNull()
 
-  fun flattenedAllRuleSequence(): Sequence<AbstractPersesRuleDefAst> {
-    return grammarSequence()
+  fun flattenedAllRuleSequence(): Sequence<AbstractPersesRuleDefAst> =
+    grammarSequence()
       .flatMap { it.flattenedAllRules }
-  }
 
   val combinedSourceCode by lazy {
     grammarSequence().joinToString(separator = "\n") { it.sourceCode }

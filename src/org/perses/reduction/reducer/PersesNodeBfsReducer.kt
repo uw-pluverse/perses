@@ -17,15 +17,14 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
-import org.perses.listminimizer.EnumListInputMinimizerType
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.reducer.PersesNodeReducer.IDeltaDebuggerStrategy.SimpleDeltaDebuggerStrategy
 
 /** Perses node reducer, with bfs delta debugging  */
 object PersesNodeBfsReducer {
-  const val NAME = "perses_node_with_bfs_delta"
+  const val NAME = "node-bfs"
 
   object META : ReducerAnnotation(
     shortName = NAME,
@@ -35,12 +34,13 @@ object PersesNodeBfsReducer {
   ) {
     override fun create(reducerContext: ReducerContext) =
       ImmutableList.of<AbstractTokenReducer>(
-        PersesNodeReducer(
-          reducerAnnotation = this,
+        object : PersesNodeReducer(
+          reducerAnnotation = this@META,
           reducerContext,
           AbstractNodeReducer.IReductionQueueStrategy.FOR_REGULAR_QUEUE,
-          deltaDebuggerStrategy = SimpleDeltaDebuggerStrategy(EnumListInputMinimizerType.BFS),
-        ),
+        ) {
+          override fun computeListMinimizerType(): EnumListMinimizerType = EnumListMinimizerType.BFS
+        },
       )
   }
 }

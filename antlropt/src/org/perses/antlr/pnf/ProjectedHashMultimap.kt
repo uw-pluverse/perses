@@ -23,24 +23,23 @@ class ProjectedHashMultimap(
   private val grammar: MutableGrammar,
   projectedKeySet: Collection<RuleNameHandle>,
 ) {
-
   private val projectedKeySet = LinkedHashSet(projectedKeySet)
 
-  fun ketSet(): Set<RuleNameHandle> {
-    return projectedKeySet
-  }
+  fun ketSet(): Set<RuleNameHandle> = projectedKeySet
 
-  operator fun get(ruleName: RuleNameHandle): MutableAltBlock? {
-    return if (!projectedKeySet.contains(ruleName)) {
+  operator fun get(ruleName: RuleNameHandle): MutableAltBlock? =
+    if (!projectedKeySet.contains(ruleName)) {
       null
     } else {
       grammar.getAltBlock(ruleName)
     }
-  }
 
   fun containsKey(ruleName: RuleNameHandle) = projectedKeySet.contains(ruleName)
 
-  fun remove(key: RuleNameHandle, value: AbstractPersesRuleElement): Boolean {
+  fun remove(
+    key: RuleNameHandle,
+    value: AbstractPersesRuleElement,
+  ): Boolean {
     if (!containsKey(key)) {
       return false
     }
@@ -51,7 +50,10 @@ class ProjectedHashMultimap(
     return result
   }
 
-  fun put(key: RuleNameHandle, value: AbstractPersesRuleElement) {
+  fun put(
+    key: RuleNameHandle,
+    value: AbstractPersesRuleElement,
+  ) {
     projectedKeySet.add(key)
     grammar.getAltBlock(key).addIfNotEquivalent(value)
   }

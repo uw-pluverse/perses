@@ -23,7 +23,6 @@ class ListenableReductionState<Entity>(
   initialEntity: Entity,
   private val listenerOnUpdate: (Entity) -> Unit,
 ) {
-
   var bestEntity: Entity = initialEntity
     private set
 

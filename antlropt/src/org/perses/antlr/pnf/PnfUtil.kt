@@ -20,14 +20,12 @@ import org.perses.antlr.RuleType
 import org.perses.antlr.ast.AstTag
 
 object PnfUtil {
-
   @JvmStatic
-  fun getRuleTypeIfQuantifiedOrThrow(tag: AstTag): RuleType {
-    return when (tag) {
+  fun getRuleTypeIfQuantifiedOrThrow(tag: AstTag): RuleType =
+    when (tag) {
       AstTag.STAR -> RuleType.KLEENE_STAR
       AstTag.OPTIONAL -> RuleType.OPTIONAL
       AstTag.PLUS -> RuleType.KLEENE_PLUS
       else -> throw RuntimeException("Unhandled tag $tag")
     }
-  }
 }

@@ -32,7 +32,6 @@ import org.perses.util.Util
 import org.perses.util.toImmutableList
 
 object AstUtil {
-
   fun isSeqOrRuleRefOrTerminal(e: AbstractPersesRuleElement): Boolean {
     when (e.tag) {
       AstTag.SEQUENCE,
@@ -48,8 +47,9 @@ object AstUtil {
     return false
   }
 
-  class AstEquivalenceClass(val representative: AbstractPersesRuleElement) {
-
+  class AstEquivalenceClass(
+    val representative: AbstractPersesRuleElement,
+  ) {
     private val asts = ArrayList<AbstractPersesRuleElement>().apply { add(representative) }
 
     fun addIfEquivalent(ast: AbstractPersesRuleElement): Boolean {
@@ -122,20 +122,23 @@ object AstUtil {
     list: List<AbstractPersesRuleElement>,
   ): ImmutableList<AbstractPersesRuleElement> {
     return Util.fixpoint(ImmutableList.copyOf(list)) { current ->
-      val starList = current.withIndex()
-        .asSequence()
-        .filter { it.value is PersesStarAst }
-        .map { it.index to it.value as PersesStarAst }
-        .toList()
+      val starList =
+        current
+          .withIndex()
+          .asSequence()
+          .filter { it.value is PersesStarAst }
+          .map { it.index to it.value as PersesStarAst }
+          .toList()
       for (starAndIndex in starList) {
         val star = starAndIndex.second
         val index = starAndIndex.first
         val quantifiedAst = star.body
-        val quantifiedElements = if (quantifiedAst is PersesSequenceAst) {
-          quantifiedAst.children
-        } else {
-          ImmutableList.of(quantifiedAst)
-        }
+        val quantifiedElements =
+          if (quantifiedAst is PersesSequenceAst) {
+            quantifiedAst.children
+          } else {
+            ImmutableList.of(quantifiedAst)
+          }
         val rangeToReplace: IntRange =
           if (doesBodyAppearBeforeStar(quantifiedElements, index, current)) {
             index - quantifiedElements.size..index
@@ -144,15 +147,17 @@ object AstUtil {
           } else {
             continue
           }
-        return@fixpoint ImmutableList.builder<AbstractPersesRuleElement>().apply {
-          (0 until rangeToReplace.first).forEach { add(current[it]) }
-          if (star.body is PersesPlusAst) {
-            add(star.body)
-          } else {
-            add(PersesPlusAst(star.body, isGreedy = star.isGreedy))
-          }
-          (rangeToReplace.last + 1 until current.size).forEach { add(current[it]) }
-        }.build()
+        return@fixpoint ImmutableList
+          .builder<AbstractPersesRuleElement>()
+          .apply {
+            (0 until rangeToReplace.first).forEach { add(current[it]) }
+            if (star.body is PersesPlusAst) {
+              add(star.body)
+            } else {
+              add(PersesPlusAst(star.body, isGreedy = star.isGreedy))
+            }
+            (rangeToReplace.last + 1 until current.size).forEach { add(current[it]) }
+          }.build()
       }
       current
     }
@@ -162,23 +167,21 @@ object AstUtil {
     quantifiedElements: ImmutableList<AbstractPersesRuleElement>,
     index: Int,
     current: List<AbstractPersesRuleElement>,
-  ) =
-    quantifiedElements.size + index < current.size &&
-      areEquivalent(
-        quantifiedElements,
-        current.subList(index + 1, quantifiedElements.size + index + 1),
-      )
+  ) = quantifiedElements.size + index < current.size &&
+    areEquivalent(
+      quantifiedElements,
+      current.subList(index + 1, quantifiedElements.size + index + 1),
+    )
 
   private fun doesBodyAppearBeforeStar(
     quantifiedElements: ImmutableList<AbstractPersesRuleElement>,
     index: Int,
     list: List<AbstractPersesRuleElement>,
-  ) =
-    quantifiedElements.size <= index &&
-      areEquivalent(
-        quantifiedElements,
-        list.subList(index - quantifiedElements.size, index),
-      )
+  ) = quantifiedElements.size <= index &&
+    areEquivalent(
+      quantifiedElements,
+      list.subList(index - quantifiedElements.size, index),
+    )
 
   private fun areEquivalent(
     list1: List<AbstractPersesRuleElement>,
@@ -194,11 +197,11 @@ object AstUtil {
 
   private fun removeEpsilon(
     list: ImmutableList<AbstractPersesRuleElement>,
-  ): ImmutableList<AbstractPersesRuleElement> {
-    return list.asSequence()
+  ): ImmutableList<AbstractPersesRuleElement> =
+    list
+      .asSequence()
       .filter { it.tag != AstTag.EPSILON }
       .toImmutableList()
-  }
 
   fun replaceGapInSequence(
     seq: PersesSequenceAst,

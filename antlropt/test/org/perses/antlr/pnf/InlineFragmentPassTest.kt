@@ -24,21 +24,24 @@ import org.perses.antlr.GrammarTestingUtility
 
 @RunWith(JUnit4::class)
 class InlineFragmentPassTest {
-
   val pass = InlineFragmentPass()
 
   @Test
   fun testSimpleCase() {
-    val g = GrammarTestingUtility.createPersesGrammarFromString(
-      """
-      fragment F2 : 'a' ;
-      fragment F1 : F2 ;
-      T1 : F1 ;  
-      """.trimIndent(),
-    )
-    val rules = pass.processGrammar(
-      GrammarPair(g, lexerGrammar = null),
-    ).parserGrammar!!.flattenedAllRules
+    val g =
+      GrammarTestingUtility.createPersesGrammarFromString(
+        """
+        fragment F2 : 'a' ;
+        fragment F1 : F2 ;
+        T1 : F1 ;  
+        """.trimIndent(),
+      )
+    val rules =
+      pass
+        .processGrammar(
+          GrammarPair(g, lexerGrammar = null),
+        ).parserGrammar!!
+        .flattenedAllRules
     assertThat(rules).hasSize(1)
     val rule = rules.single()
     assertThat(rule.ruleNameHandle.ruleName).isEqualTo("T1")
@@ -47,22 +50,26 @@ class InlineFragmentPassTest {
 
   @Test
   fun testInliningAltblock() {
-    val g = GrammarTestingUtility.createPersesGrammarFromString(
-      """
+    val g =
+      GrammarTestingUtility.createPersesGrammarFromString(
+        """
         fragment EncodingPrefix 
           : 'u8' | 'u' ;
         
         fragment SCharSequence
           : 'a' + ;
-    
+        
         StringLiteral 
           : EncodingPrefix? '"' SCharSequence?  '"' ;
-       
-      """.trimIndent(),
-    )
-    val rules = pass.processGrammar(
-      GrammarPair(g, lexerGrammar = null),
-    ).parserGrammar!!.flattenedAllRules
+        
+        """.trimIndent(),
+      )
+    val rules =
+      pass
+        .processGrammar(
+          GrammarPair(g, lexerGrammar = null),
+        ).parserGrammar!!
+        .flattenedAllRules
     assertThat(rules).hasSize(1)
     val rule = rules.single()
     assertThat(rule.ruleNameHandle.ruleName).isEqualTo("StringLiteral")

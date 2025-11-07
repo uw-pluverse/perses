@@ -28,7 +28,6 @@ import kotlin.coroutines.cancellation.CancellationException
 
 @RunWith(JUnit4::class)
 class RestrictedFutureTest {
-
   private val service = DaemonThreadPool.createSingleThreadPool()
 
   @After
@@ -38,13 +37,14 @@ class RestrictedFutureTest {
 
   @Test
   fun testCancelWithInterruption() {
-    val future = RestrictedFuture(
-      service.submit {
-        Thread.sleep(999999999)
-      },
-      defaultKeepTrying = true,
-      defaultTimeoutInSeconds = 1,
-    )
+    val future =
+      RestrictedFuture(
+        service.submit {
+          Thread.sleep(999999999)
+        },
+        defaultKeepTrying = true,
+        defaultTimeoutInSeconds = 1,
+      )
     assertThat(future.isCancelled()).isFalse()
     assertThat(future.isDone()).isFalse()
 
@@ -56,13 +56,14 @@ class RestrictedFutureTest {
 
   @Test
   fun testGetWithTimeoutWarningsKeepTrying() {
-    val future = RestrictedFuture(
-      service.submit {
-        Thread.sleep(999999999)
-      },
-      defaultTimeoutInSeconds = 1,
-      defaultKeepTrying = true,
-    )
+    val future =
+      RestrictedFuture(
+        service.submit {
+          Thread.sleep(999999999)
+        },
+        defaultTimeoutInSeconds = 1,
+        defaultKeepTrying = true,
+      )
     assertThat(future.isCancelled()).isFalse()
     assertThat(future.isDone()).isFalse()
 
@@ -73,7 +74,7 @@ class RestrictedFutureTest {
     }
     val counter = AtomicBoolean(false)
     Assert.assertThrows(CancellationException::class.java) {
-      future.getWithTimeoutWarnings() {
+      future.getWithTimeoutWarnings {
         counter.set(true)
       }
     }
@@ -83,20 +84,22 @@ class RestrictedFutureTest {
 
   @Test
   fun testGetWithTimeoutWarningsWithoutKeepTrying() {
-    val future = RestrictedFuture(
-      service.submit {
-        Thread.sleep(999999999)
-      },
-      defaultTimeoutInSeconds = 1,
-      defaultKeepTrying = true,
-    )
+    val future =
+      RestrictedFuture(
+        service.submit {
+          Thread.sleep(999999999)
+        },
+        defaultTimeoutInSeconds = 1,
+        defaultKeepTrying = true,
+      )
     assertThat(future.isCancelled()).isFalse()
     assertThat(future.isDone()).isFalse()
 
     val counter = AtomicBoolean(false)
-    val result = future.getWithTimeoutWarnings(keepTrying = false) {
-      counter.set(true)
-    }
+    val result =
+      future.getWithTimeoutWarnings(keepTrying = false) {
+        counter.set(true)
+      }
     assertThat(result).isNull()
     assertThat(counter.get()).isTrue()
   }

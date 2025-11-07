@@ -26,11 +26,11 @@ import org.perses.grammar.c.LanguageC
 
 @RunWith(JUnit4::class)
 class CompactProgramEncodingTest {
-
-  private val program = TestUtility.createTokenizedProgramFromString(
-    "int a, b;",
-    LanguageC,
-  )
+  private val program =
+    TestUtility.createTokenizedProgramFromString(
+      "int a, b;",
+      LanguageC,
+    )
 
   @Test
   fun testIntervalEncoding() {

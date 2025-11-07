@@ -16,13 +16,16 @@
  */
 package org.perses.grammar.adhoc
 
-import com.google.common.hash.Hashing
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Path
 import kotlin.io.path.readBytes
 
 object AdhocGrammarUtil {
-
-  fun computeHash(file: Path): String {
-    return Hashing.sha256().hashBytes(file.readBytes()).toString()
-  }
+  fun computeHash(
+    file: Path,
+    shaAlgorithmType: EnumShaAlgorithm,
+  ): String =
+    shaAlgorithmType
+      .hashBytes(file.readBytes())
+      .toString()
 }

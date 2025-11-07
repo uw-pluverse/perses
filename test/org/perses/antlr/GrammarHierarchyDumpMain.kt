@@ -28,9 +28,9 @@ import org.perses.util.cmd.CommandLineProcessor
 import java.io.File
 import java.nio.charset.StandardCharsets
 
-class GrammarHierarchyDumpMain(cmd: Options) :
-  AbstractMain<GrammarHierarchyDumpMain.Options>(cmd) {
-
+class GrammarHierarchyDumpMain(
+  cmd: Options,
+) : AbstractMain<GrammarHierarchyDumpMain.Options>(cmd) {
   override fun internalRun() {
     dumpGrammarHierarchy(cmd.c!!, PnfCParserFacade().ruleHierarchy)
     dumpGrammarHierarchy(cmd.go!!, PnfGoParserFacade().ruleHierarchy)
@@ -40,25 +40,35 @@ class GrammarHierarchyDumpMain(cmd: Options) :
     dumpRuleGraph(cmd.graphScala!!, PnfScalaParserFacade().ruleHierarchy)
   }
 
-  private fun dumpGrammarHierarchy(outputPath: String, hierarchy: GrammarHierarchy) {
+  private fun dumpGrammarHierarchy(
+    outputPath: String,
+    hierarchy: GrammarHierarchy,
+  ) {
     val message = TextFormat.printer().printToString(hierarchy.toProtoMessage())
-    Files.asCharSink(File(outputPath), StandardCharsets.UTF_8)
+    Files
+      .asCharSink(File(outputPath), StandardCharsets.UTF_8)
       .write(message)
   }
 
-  private fun dumpRuleGraph(outputPath: String, hierarchy: GrammarHierarchy) {
+  private fun dumpRuleGraph(
+    outputPath: String,
+    hierarchy: GrammarHierarchy,
+  ) {
     val graph = hierarchy.reachabilityGraph.graph
     val nodes = graph.nodes().sortedBy { it.ruleName }
     val builder = StringBuilder()
 
     for (node in nodes) {
-      val successors = graph.successors(node)
-        .sortedBy { it.ruleName }
-        .joinToString(", ") { it.ruleName }
+      val successors =
+        graph
+          .successors(node)
+          .sortedBy { it.ruleName }
+          .joinToString(", ") { it.ruleName }
       builder.append("${node.ruleName} -> [$successors]\n")
     }
 
-    Files.asCharSink(File(outputPath), StandardCharsets.UTF_8)
+    Files
+      .asCharSink(File(outputPath), StandardCharsets.UTF_8)
       .write(builder.toString())
   }
 
@@ -94,11 +104,12 @@ class GrammarHierarchyDumpMain(cmd: Options) :
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { Options() },
-        programName = GrammarHierarchyDumpMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { Options() },
+          programName = GrammarHierarchyDumpMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }

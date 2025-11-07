@@ -20,14 +20,16 @@ class AdHocMessageEvent(
   val reductionStartEvent: ReductionStartEvent,
   currentTimeMillis: Long,
   programSize: Int,
+  override val prefixLabelFromRootToHere: String,
   private val messageComputer: () -> Any,
 ) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
-
-  override fun initialProgramSize(): Int {
-    return reductionStartEvent.initialProgramSize()
-  }
+  override fun initialProgramSize(): Int = reductionStartEvent.initialProgramSize()
 
   val message: String by lazy {
-    messageComputer().toString()
+    try {
+      messageComputer().toString()
+    } catch (e: Exception) {
+      e.stackTraceToString()
+    }
   }
 }

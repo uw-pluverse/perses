@@ -18,9 +18,9 @@ package org.perses.imagecutter.model
 
 import org.perses.imagecutter.tree.AbstractImageTreeNode
 
-class ImageRegionTreeNode(nodeId: Int) : AbstractImageTreeNode(nodeId) {
-
-  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractImageTreeNode {
-    return ImageRegionTreeNode(computedNewNodeId)
-  }
+class ImageRegionTreeNode(
+  nodeId: Int,
+) : AbstractImageTreeNode(nodeId) {
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): AbstractImageTreeNode =
+    ImageRegionTreeNode(computedNewNodeId)
 }

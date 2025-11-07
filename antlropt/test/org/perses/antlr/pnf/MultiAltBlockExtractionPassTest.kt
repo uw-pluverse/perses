@@ -27,27 +27,32 @@ import org.perses.antlr.ast.PersesAlternativeBlockAst
 
 @RunWith(JUnit4::class)
 class MultiAltBlockExtractionPassTest {
-
   private var pass = MultiAltBlockExtractionPass()
 
   @Test
   fun test_python3_argument() {
-    val origGrammar = createPersesGrammarFromString(
-      """
+    val origGrammar =
+      createPersesGrammarFromString(
+        """
         argument: 
                 'test' 'comp_for'? |
                 'test' '=' 'test' |
                 '**' 'test' | 
                 '*' 'test' 
                 ;
-      """.trimIndent(),
-    )
-    val processedGrammar = pass.processGrammar(
-      GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
-    ).parserGrammar!!
-    val alts = processedGrammar.parserRules.find {
-      it.ruleNameHandle.ruleName == "altnt_block__argument_1"
-    }!!.body as PersesAlternativeBlockAst
+        """.trimIndent(),
+      )
+    val processedGrammar =
+      pass
+        .processGrammar(
+          GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
+        ).parserGrammar!!
+    val alts =
+      processedGrammar.parserRules
+        .find {
+          it.ruleNameHandle.ruleName == "altnt_block__argument_1"
+        }!!
+        .body as PersesAlternativeBlockAst
     assertThat(alts.childCount).isEqualTo(3)
     // Note that the following order matters here. The pass should respecti the original alt order.
     assertThat(alts.getChild(0).sourceCode.trim()).isEqualTo("'test' '='")
@@ -57,14 +62,17 @@ class MultiAltBlockExtractionPassTest {
 
   @Test
   fun e2eTest_3_alternatives() {
-    val origGrammar = createPersesGrammarFromString(
-      """
-      s : a c d | a b d | a e d;
-      """.trimIndent(),
-    )
-    val processedGrammar = pass.processGrammar(
-      GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
-    ).parserGrammar!!
+    val origGrammar =
+      createPersesGrammarFromString(
+        """
+        s : a c d | a b d | a e d;
+        """.trimIndent(),
+      )
+    val processedGrammar =
+      pass
+        .processGrammar(
+          GrammarPair(parserGrammar = origGrammar, lexerGrammar = null),
+        ).parserGrammar!!
     val auxRuleName = computeAltblockRuleName("s_1")
     /*
      * DO NOT MODIFY THE ORDER OF ALTERNATIVES.
@@ -73,12 +81,13 @@ class MultiAltBlockExtractionPassTest {
      * The order of the two alternatives should be exactly the
      * same as that in its original grammar.
      */
-    val goldenGrammar = createPersesGrammarFromString(
-      """
-      s : a $auxRuleName d;
-      $auxRuleName : c | b | e; 
-      """.trimIndent(),
-    )
+    val goldenGrammar =
+      createPersesGrammarFromString(
+        """
+        s : a $auxRuleName d;
+        $auxRuleName : c | b | e; 
+        """.trimIndent(),
+      )
     GrammarTestingUtility.checkWithGoldenGrammar(
       processedGrammar.sourceCode,
       goldenGrammar.sourceCode,

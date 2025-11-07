@@ -28,7 +28,6 @@ kt_jvm_test(
         "//src/org/perses/grammar/solidity/preprocessed:orig_solidity_parser",
         "//src/org/perses/grammar/solidity/preprocessed:parser_facade",
         "//src/org/perses/grammar/solidity/preprocessed:solidity_lexer",
-        "//test/org/perses:test_util",
     ],
 )
 
@@ -46,8 +45,8 @@ kt_jvm_test(
         "//:antlr_runtime",
         "//:guava",
         "//:truth",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/solidity/preprocessed:orig_solidity_parser",
         "//src/org/perses/grammar/solidity/preprocessed:solidity_lexer",
-        "//test/org/perses:test_util",
     ],
 )

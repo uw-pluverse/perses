@@ -26,7 +26,6 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class TestScriptExecutionListenerTest {
-
   val fileStreamPool = FileStreamPool()
   val tempDir = Files.createTempDirectory(this::class.simpleName!!)
 

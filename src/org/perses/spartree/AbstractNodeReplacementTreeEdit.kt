@@ -23,20 +23,16 @@ abstract class AbstractNodeReplacementTreeEdit internal constructor(
   tree: SparTree,
   actionSet: NodeReplacementActionSet,
 ) : AbstractSparTreeEdit<NodeReplacementAction>(actionSet, tree) {
-
   val onlyReplacementNode: AbstractSparTreeNode
     get() = actionSet.actions.single().replacingNode
 
-  override fun computeProgram(tree: SparTree): TokenizedProgram {
-    return tree.customizeProgram(TokenizedProgramConstructor(actionSet))
-  }
+  override fun computeProgram(tree: SparTree): TokenizedProgram =
+    tree.customizeProgram(TokenizedProgramConstructor(actionSet))
 
   private class TokenizedProgramConstructor(
     private val actionSet: AbstractActionSet<NodeReplacementAction>,
   ) : AbstractTokenizedProgramCustomizer(actionSet) {
-    override fun visit(
-      node: AbstractSparTreeNode,
-    ): List<AbstractSparTreeNode> {
+    override fun visit(node: AbstractSparTreeNode): List<AbstractSparTreeNode> {
       lazyAssert { !node.isPermanentlyDeleted }
       if (node.isPermanentlyDeleted) {
         return emptyList()

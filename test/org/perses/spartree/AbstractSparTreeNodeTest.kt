@@ -29,21 +29,22 @@ import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class AbstractSparTreeNodeTest {
-
   val facade = TestUtility.getFacade(LanguageC)
-  val nodeFactory = SparTreeNodeFactory(
-    facade.metaTokenInfoDb,
-    TokenizedProgramFactory.createEmptyFactory(LanguageC),
-    facade.ruleHierarchy,
-  )
+  val nodeFactory =
+    SparTreeNodeFactory(
+      facade.metaTokenInfoDb,
+      TokenizedProgramFactory.createEmptyFactory(LanguageC),
+      facade.ruleHierarchy,
+    )
 
   @Test
   fun testChildSequence() {
-    val tree = TestUtility.createSparTreeFromString(
-      "int a ; int b = a + 3 + 4 + 5;",
-      LanguageC,
-      simplifyTree = true,
-    )
+    val tree =
+      TestUtility.createSparTreeFromString(
+        "int a ; int b = a + 3 + 4 + 5;",
+        LanguageC,
+        simplifyTree = true,
+      )
     val childrenCounter = MutableInt(0)
     tree.realRoot.postOrderVisit { node ->
       val list = mutableListOf<AbstractSparTreeNode>()
@@ -62,12 +63,12 @@ class AbstractSparTreeNodeTest {
     val tokens = tree.getTokenNodeForText("int")
     assertThat(tokens).hasSize(1)
 
-    val edit = tree.createNodeDeletionEdit(
-      NodeDeletionActionSet.createByDeleteSingleNode(tokens.first(), "dummy"),
-    )
+    val edit =
+      tree.createNodeDeletionEdit(
+        NodeDeletionActionSet.createByDeleteSingleNode(tokens.first(), "dummy"),
+      )
     tree.applyEdit(edit)
-
-    assertThat(tree.realRoot.leafTokenCount).isEqualTo(3)
+    assertThat(tree.realRoot.leafTokenCount).isEqualTo(2)
     tree.updateLeafTokenCount()
     assertThat(tree.realRoot.leafTokenCount).isEqualTo(2)
     tree.updateLeafTokenCount()
@@ -90,7 +91,7 @@ class AbstractSparTreeNodeTest {
   @Test
   fun testNonEmptyLeafNodeSequence() {
     val token = facade.transformLiteralIntoSingleToken(";")
-    val tokenNode = nodeFactory.createLexerRuleSparTreeNode(token)
+    val tokenNode = nodeFactory.createLexerRuleSparTreeNodeForAntlrToken(token)
     val ruleNode = nodeFactory.createParserRuleSparTreeNode("expressionStatement")
     ruleNode.addChild(
       tokenNode,
@@ -98,9 +99,10 @@ class AbstractSparTreeNodeTest {
         facade.ruleHierarchy.getRuleHierarchyEntryWithNameOrThrow("statement"),
       ),
     )
-    val exception = Assert.assertThrows(Exception::class.java) {
-      ruleNode.leafNodeSequence()
-    }
+    val exception =
+      Assert.assertThrows(Exception::class.java) {
+        ruleNode.leafNodeSequence()
+      }
     assertThat(exception.message).contains("leaf node links are not updated")
     ruleNode.buildTokenIntervalInfoRecursive()
     assertThat(ruleNode.leafNodeSequence().toImmutableList()).containsExactly(
@@ -124,29 +126,28 @@ class AbstractSparTreeNodeTest {
     val secondStmt = child.getChild(1)
     assertThat(secondStmt.leafTokenCount).isEqualTo(5)
 
-    tree.createNodeDeletionEdit(
-      NodeDeletionActionSet.createByDeleteSingleNode(
-        tree.getTokenNodeForText("b").single(),
-        "dummy",
-      ),
-    ).let {
-      tree.applyEdit(it)
-    }
-
-    assertThat(tree.realRoot.leafTokenCount).isEqualTo(8)
+    tree
+      .createNodeDeletionEdit(
+        NodeDeletionActionSet.createByDeleteSingleNode(
+          tree.getTokenNodeForText("b").single(),
+          "dummy",
+        ),
+      ).let {
+        tree.applyEdit(it)
+      }
+    assertThat(tree.realRoot.leafTokenCount).isEqualTo(7)
     tree.realRoot.updateLeafTokenCount()
     assertThat(tree.realRoot.leafTokenCount).isEqualTo(7)
   }
 
   @Test
-  fun test_is_delete() {
+  fun testIsDeleted() {
     val tree = TestUtility.createSparTreeFromString("int a; int b=0;", LanguageC)
     tree.updateLeafTokenCount()
-
     tree.realRoot.delete()
-    tree.updateLeafTokenCount()
-    assertThat(tree.realRoot.leafTokenCount).isEqualTo(0)
-    assertThat(tree.realRoot.isPermanentlyDeleted)
+    assertThat(kotlin.runCatching { tree.updateLeafTokenCount() }.exceptionOrNull()).isNotNull()
+    assertThat(kotlin.runCatching { tree.realRoot.leafTokenCount }.exceptionOrNull()).isNotNull()
+    assertThat(tree.realRoot.isPermanentlyDeleted).isTrue()
     assertThat(tree.realRoot.childCount).isEqualTo(0)
   }
 }

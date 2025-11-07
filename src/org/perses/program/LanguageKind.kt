@@ -32,7 +32,6 @@ abstract class LanguageKind(
   val defaultFormatterCommandCreators: ImmutableList<IShellCommandOnPathCreator> =
     ImmutableList.of(),
 ) : AbstractDataKind(name, extensions) {
-
   init {
     check(defaultCodeFormatControl in allowedCodeFormatControl) {
       "The default code format $defaultCodeFormatControl is not in $allowedCodeFormatControl"
@@ -42,13 +41,12 @@ abstract class LanguageKind(
     }
   }
 
-  open fun getDefaultWorkingFormatter(): ShellCommandOnPath? {
-    return if (defaultFormatterCommandCreators.isEmpty()) {
+  open fun getDefaultWorkingFormatter(): ShellCommandOnPath? =
+    if (defaultFormatterCommandCreators.isEmpty()) {
       null
     } else {
       defaultFormatterCommandCreators.firstNotNullOfOrNull { it.tryCreate() }
     }
-  }
 
   override fun onEquals(other: Any) {
     check(other is LanguageKind)
@@ -66,14 +64,15 @@ abstract class LanguageKind(
   fun isCodeFormatAllowed(codeFormat: EnumFormatControl) =
     allowedCodeFormatControl.contains(codeFormat)
 
-  override fun toString() = MoreObjects.toStringHelper(this)
-    .add("name", name)
-    .add("extensions", extensions)
-    .add("defaultCodeFormatControl", defaultCodeFormatControl)
-    .toString()
+  override fun toString() =
+    MoreObjects
+      .toStringHelper(this)
+      .add("name", name)
+      .add("extensions", extensions)
+      .add("defaultCodeFormatControl", defaultCodeFormatControl)
+      .toString()
 
   companion object {
-
     @JvmStatic
     fun createPotentialCodeFormatterList(vararg formatters: IShellCommandOnPathCreator?) =
       formatters.filterNotNull().toImmutableList()

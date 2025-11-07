@@ -26,25 +26,29 @@ import org.antlr.v4.runtime.tree.TerminalNode
 import java.util.ArrayDeque
 
 object ParseTreeUtil {
-
   @JvmStatic
   fun getParserRuleIndex(tree: RuleNode) = tree.ruleContext.ruleIndex
 
   @JvmStatic
-  fun getParserRuleName(tree: RuleNode, parser: Parser): String {
+  fun getParserRuleName(
+    tree: RuleNode,
+    parser: Parser,
+  ): String {
     val ruleIndex = getParserRuleIndex(tree)
     return parser.ruleNames[ruleIndex]
   }
 
   @JvmStatic
-  fun getSymbolicTokenTypeName(tree: TerminalNode, lexerVocabulary: Vocabulary): String? {
-    return getSymbolicTokenTypeName(tree.symbol, lexerVocabulary)
-  }
+  fun getSymbolicTokenTypeName(
+    tree: TerminalNode,
+    lexerVocabulary: Vocabulary,
+  ): String? = getSymbolicTokenTypeName(tree.symbol, lexerVocabulary)
 
   @JvmStatic
-  fun getSymbolicTokenTypeName(token: Token, lexerVocabulary: Vocabulary): String? {
-    return lexerVocabulary.getSymbolicName(token.type)
-  }
+  fun getSymbolicTokenTypeName(
+    token: Token,
+    lexerVocabulary: Vocabulary,
+  ): String? = lexerVocabulary.getSymbolicName(token.type)
 
   fun getTokens(tree: ParseTree): ImmutableList<Token> {
     val builder = ImmutableList.builderWithExpectedSize<Token>(500)

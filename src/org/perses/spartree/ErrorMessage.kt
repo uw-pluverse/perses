@@ -18,15 +18,17 @@ package org.perses.spartree
 
 import com.google.common.collect.ImmutableList
 
-class ErrorMessage(val errors: ImmutableList<String>) {
-
+class ErrorMessage(
+  val errors: ImmutableList<String>,
+) {
   init {
     require(errors.isNotEmpty())
   }
 
-  override fun toString(): String {
-    return errors.withIndex().joinToString("\n") { "Error ${it.index}: ${it.value}" }
-  }
+  override fun toString(): String =
+    errors.withIndex().joinToString("\n") {
+      "Error ${it.index}: ${it.value}"
+    }
 
   companion object {
     fun of(errorMessage: String): ErrorMessage {

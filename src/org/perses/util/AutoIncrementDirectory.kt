@@ -22,7 +22,6 @@ import java.nio.file.Path
 class AutoIncrementDirectory(
   val defaultDirName: String,
 ) {
-
   private val dirNamePrefix = "${defaultDirName}_"
   private val dirNamePattern = Regex("${dirNamePrefix}\\d+")
 
@@ -34,14 +33,16 @@ class AutoIncrementDirectory(
   }
 
   private fun getResultDirectoryPath(workingDir: Path): Path {
-    val maxId = Files.newDirectoryStream(workingDir).use { directoryStream ->
-      directoryStream.asSequence()
-        .map { it.fileName.toString().trim() }
-        .filter { dirNamePattern.matches(it) }
-        .map { it.substring(dirNamePrefix.length) }
-        .map { Integer.parseInt(it) }
-        .maxOrNull()
-    }
+    val maxId =
+      Files.newDirectoryStream(workingDir).use { directoryStream ->
+        directoryStream
+          .asSequence()
+          .map { it.fileName.toString().trim() }
+          .filter { dirNamePattern.matches(it) }
+          .map { it.substring(dirNamePrefix.length) }
+          .map { Integer.parseInt(it) }
+          .maxOrNull()
+      }
     if (maxId != null) {
       return workingDir.resolve("${dirNamePrefix}${maxId + 1}")
     }
@@ -56,7 +57,9 @@ class AutoIncrementDirectory(
   }
 
   companion object {
-    fun computeAndCreate(workingDir: Path, defaultDirName: String) =
-      AutoIncrementDirectory(defaultDirName).computeAndCreate(workingDir)
+    fun computeAndCreate(
+      workingDir: Path,
+      defaultDirName: String,
+    ) = AutoIncrementDirectory(defaultDirName).computeAndCreate(workingDir)
   }
 }

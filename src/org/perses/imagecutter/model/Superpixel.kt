@@ -19,15 +19,18 @@ package org.perses.imagecutter.model
 import com.google.common.primitives.ImmutableLongArray
 
 @JvmInline
-value class Superpixel internal constructor(@PublishedApi internal val pixels: ImmutableLongArray) {
-
+value class Superpixel internal constructor(
+  @PublishedApi internal val pixels: ImmutableLongArray,
+) {
   val size: Int
     get() = pixels.length()
 
   @Suppress("NOTHING_TO_INLINE")
   inline fun get(index: Int): Pixel = Pixel(pixels.get(index))
 
-  class Builder(initialCapacity: Int = 10) {
+  class Builder(
+    initialCapacity: Int = 10,
+  ) {
     private val builder = ImmutableLongArray.builder(initialCapacity)
 
     var size: Int = 0

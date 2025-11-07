@@ -22,7 +22,6 @@ import org.apache.commons.exec.CommandLine
 import java.nio.file.Path
 
 abstract class AbstractShellDiscardingOutputPolicy {
-
   abstract fun runAndGetExitCode(
     cmd: String,
     workingDirectory: Path,
@@ -34,15 +33,14 @@ abstract class AbstractShellDiscardingOutputPolicy {
       cmd: String,
       workingDirectory: Path,
       environment: ImmutableMap<String, String>,
-    ): ExitCode {
-      return Shells.runAndGetExitCode(
+    ): ExitCode =
+      Shells.runAndGetExitCode(
         cmd,
         workingDirectory,
         stdout = NullShellOutputStream,
         stderr = NullShellOutputStream,
         environment,
       )
-    }
   }
 
   object JDKShellDiscardingOutputPolicy : AbstractShellDiscardingOutputPolicy() {
@@ -51,12 +49,13 @@ abstract class AbstractShellDiscardingOutputPolicy {
       workingDirectory: Path,
       environment: ImmutableMap<String, String>,
     ): ExitCode {
-      val commandLine = CommandLine.parse(cmd).let {
-        val builder = ImmutableList.builderWithExpectedSize<String>(1 + it.arguments.size)
-        builder.add(it.executable)
-        it.arguments.forEach { arg -> builder.add(arg) }
-        builder.build()
-      }
+      val commandLine =
+        CommandLine.parse(cmd).let {
+          val builder = ImmutableList.builderWithExpectedSize<String>(1 + it.arguments.size)
+          builder.add(it.executable)
+          it.arguments.forEach { arg -> builder.add(arg) }
+          builder.build()
+        }
       val processBuilder = ProcessBuilder(commandLine)
       processBuilder.redirectError(ProcessBuilder.Redirect.DISCARD)
       processBuilder.redirectOutput(ProcessBuilder.Redirect.DISCARD)

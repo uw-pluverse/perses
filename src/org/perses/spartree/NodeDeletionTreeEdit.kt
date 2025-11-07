@@ -23,7 +23,6 @@ class NodeDeletionTreeEdit internal constructor(
   tree: SparTree,
   actionSet: NodeDeletionActionSet,
 ) : AbstractSparTreeEdit<NodeDeletionAction>(actionSet, tree) {
-
   init {
     require(!actionSet.isEmpty) { "The passed-in action set is empty." }
   }
@@ -34,14 +33,12 @@ class NodeDeletionTreeEdit internal constructor(
     }
   }
 
-  override fun computeProgram(tree: SparTree): TokenizedProgram {
-    return tree.customizeProgram(TokenizedProgramConstructor(actionSet))
-  }
+  override fun computeProgram(tree: SparTree): TokenizedProgram =
+    tree.customizeProgram(TokenizedProgramConstructor(actionSet))
 
   private class TokenizedProgramConstructor(
     actionSet: AbstractActionSet<NodeDeletionAction>,
   ) : AbstractTokenizedProgramCustomizer(actionSet) {
-
     override fun visit(node: AbstractSparTreeNode): List<AbstractSparTreeNode> {
       lazyAssert { !node.isPermanentlyDeleted }
       if (node.isPermanentlyDeleted) {

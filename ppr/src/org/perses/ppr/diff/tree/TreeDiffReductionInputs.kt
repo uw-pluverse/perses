@@ -30,12 +30,11 @@ class TreeDiffReductionInputs(
   val variantFile: SourceFile,
   immutableDependencyFiles: ImmutableList<BinaryReductionFile>,
 ) : AbstractSingleFileReductionInputs<LanguageKind, SourceFile, TreeDiffReductionInputs>(
-  testScript,
-  mainFile = seedFile,
-  otherMutableFiles = ImmutableList.of(variantFile),
-  immutableDependencyFiles = immutableDependencyFiles,
-) {
-
+    testScript,
+    mainFile = seedFile,
+    otherMutableFiles = ImmutableList.of(variantFile),
+    immutableDependencyFiles = immutableDependencyFiles,
+  ) {
   init {
     require(seedFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
       "The seed file and the test script should reside in the same folder. " +
@@ -47,12 +46,13 @@ class TreeDiffReductionInputs(
     }
   }
 
-  fun copyBySwappingSeedAndVariant() = TreeDiffReductionInputs(
-    testScript,
-    seedFile = variantFile,
-    variantFile = seedFile,
-    immutableDependencyFiles,
-  )
+  fun copyBySwappingSeedAndVariant() =
+    TreeDiffReductionInputs(
+      testScript,
+      seedFile = variantFile,
+      variantFile = seedFile,
+      immutableDependencyFiles,
+    )
 
   companion object {
     inline fun create(

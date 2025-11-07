@@ -25,9 +25,9 @@ class DefaultCompilationConfigurationFacade(
   val languageKind: LanguageKind,
   val programUnderTest: ProgramUnderTest,
 ) : AbstractCompilerConfigurationFacade(ShellCommandOnPath(programUnderTest.command)) {
-
-  override fun createCompilationActions(compilerCommand: ShellCommandOnPath):
-    ImmutableList<ICompilationAction> {
+  override fun createCompilationActions(
+    compilerCommand: ShellCommandOnPath,
+  ): ImmutableList<ICompilationAction> {
     val result = ImmutableList.builder<ICompilationAction>()
     programUnderTest.flagsToTest.forEach {
       result.add(
@@ -42,10 +42,9 @@ class DefaultCompilationConfigurationFacade(
     return result.build()
   }
 
-  override fun createCrashDetector(): ICompilerCrashDetector {
-    return Class
+  override fun createCrashDetector(): ICompilerCrashDetector =
+    Class
       .forName(programUnderTest.crashDetectorClassName)
       .getConstructor()
       .newInstance() as ICompilerCrashDetector
-  }
 }

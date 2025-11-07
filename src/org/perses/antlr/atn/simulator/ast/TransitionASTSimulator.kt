@@ -26,7 +26,6 @@ import org.perses.antlr.atn.tdtree.TDTree
 class TransitionASTSimulator(
   ast: PersesTransitionAst,
 ) : AbstractASTSimulator<PersesTransitionAst>(ast) {
-
   init {
     require(!ast.atnTransition.isEpsilon) { ast.atnTransition.toString() }
   }

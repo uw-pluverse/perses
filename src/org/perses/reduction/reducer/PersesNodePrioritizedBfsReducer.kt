@@ -17,15 +17,14 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
-import org.perses.listminimizer.EnumListInputMinimizerType
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.reducer.PersesNodeReducer.IDeltaDebuggerStrategy.SimpleDeltaDebuggerStrategy
 
 /** Perses node reducer, with bfs delta debugging  */
 object PersesNodePrioritizedBfsReducer {
-  const val NAME = "perses_node_priority_with_bfs_delta"
+  const val NAME = "node_priority-bfs"
 
   object META : ReducerAnnotation(
     shortName = NAME,
@@ -33,14 +32,15 @@ object PersesNodePrioritizedBfsReducer {
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext) =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
       ImmutableList.of<AbstractTokenReducer>(
-        PersesNodeReducer(
-          reducerAnnotation = this,
+        object : PersesNodeReducer(
+          reducerAnnotation = this@META,
           reducerContext,
-          AbstractNodeReducer.IReductionQueueStrategy.FOR_PRIORITY_QUEUE,
-          deltaDebuggerStrategy = SimpleDeltaDebuggerStrategy(EnumListInputMinimizerType.BFS),
-        ),
+          IReductionQueueStrategy.FOR_PRIORITY_QUEUE,
+        ) {
+          override fun computeListMinimizerType(): EnumListMinimizerType = EnumListMinimizerType.BFS
+        },
       )
   }
 }

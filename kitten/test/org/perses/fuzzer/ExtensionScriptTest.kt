@@ -32,34 +32,38 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class ExtensionScriptTest {
-
   private val tempDir = Files.createTempDirectory(javaClass.simpleName)
   private val scriptResultFolder = tempDir.resolve("script_result_folder")
   private val scriptResultFile = scriptResultFolder.resolve("result.txt")
 
-  private val scriptFile = tempDir.resolve("test.sh").apply {
-    this.writeText(
-      """#!/usr/bin/env bash
-      FILE=${'$'}1
-      FOLDER=${'$'}2
-      echo "hello" > ${'$'}{FOLDER}/result.txt
-      """.trimIndent(),
-    )
-    Util.setExecutable(this)
-  }
+  private val scriptFile =
+    tempDir.resolve("test.sh").apply {
+      this.writeText(
+        """
+        #!/usr/bin/env bash
+        FILE=${'$'}1
+        FOLDER=${'$'}2
+        echo "hello" > ${'$'}{FOLDER}/result.txt
+        """.trimIndent(),
+      )
+      Util.setExecutable(this)
+    }
 
-  private val failingScriptFile = tempDir.resolve("test-failing.sh").apply {
-    this.writeText(
-      """#!/usr/bin/env bash
-      exit 100
-      """.trimIndent(),
-    )
-    Util.setExecutable(this)
-  }
+  private val failingScriptFile =
+    tempDir.resolve("test-failing.sh").apply {
+      this.writeText(
+        """
+        #!/usr/bin/env bash
+        exit 100
+        """.trimIndent(),
+      )
+      Util.setExecutable(this)
+    }
 
-  private val tempFile = tempDir.resolve("temp.txt").apply {
-    Files.createFile(this)
-  }
+  private val tempFile =
+    tempDir.resolve("temp.txt").apply {
+      Files.createFile(this)
+    }
 
   @After
   fun teardown() {

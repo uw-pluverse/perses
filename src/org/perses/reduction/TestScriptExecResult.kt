@@ -21,14 +21,14 @@ import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreat
 import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.ProceedResult
 import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.StopResult
 import org.perses.reduction.io.ReductionFolder
+import java.io.Closeable
 import java.util.concurrent.CancellationException
 
 class TestScriptExecResult<Payload : Any>(
   val workingDirectory: ReductionFolder,
   val outputManagerCreatorFuture: RestrictedFuture<AbstractOutputManagerCreatorResult<Payload>>,
   val testScriptExecFuture: RestrictedFuture<PropertyTestResult?>,
-) {
-
+) : Closeable {
   private val outputManagerCreatorResult by lazy {
     try {
       outputManagerCreatorFuture.getWithTimeoutWarnings()
@@ -38,12 +38,27 @@ class TestScriptExecResult<Payload : Any>(
     }
   }
 
-  val payload: Payload?
-    get() = when (val t = outputManagerCreatorResult) {
-      is EmptyResult -> null
-      is ProceedResult -> t.payload
-      is StopResult -> t.payload
+  override fun close() {
+    testScriptExecFuture.cancelWithInterruption()
+    if (!testScriptExecFuture.isDone() && !testScriptExecFuture.isCancelled()) {
+      // Make sure the future is indeed cancelled. Otherwise, the future might generate more files,
+      // and the generated files will trigger exceptions when the reduction folder is being
+      // recursively deleted.
+      testScriptExecFuture.getWithTimeoutWarnings(
+        timeoutInSeconds = 10,
+        keepTrying = true,
+      )
     }
+    workingDirectory.deleteThisDirectoryRecursively()
+  }
+
+  val payload: Payload?
+    get() =
+      when (val t = outputManagerCreatorResult) {
+        is EmptyResult -> null
+        is ProceedResult -> t.payload
+        is StopResult -> t.payload
+      }
 
   fun cancelWithInterruption() {
     // First cancel the script execution, as it depends on the output manager creator, to avoid

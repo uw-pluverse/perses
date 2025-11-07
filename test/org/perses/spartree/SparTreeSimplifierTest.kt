@@ -33,7 +33,6 @@ import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class SparTreeSimplifierTest {
-
   @Test
   fun testSESESimplification() {
     val tree = createSparTreeFromFile(Paths.get("test_data/misc/t10.c"))
@@ -43,14 +42,15 @@ class SparTreeSimplifierTest {
 
   @Test
   fun testPayloadsShouldBeEquivalentBeforeAndAfterSimplification() {
-    val tree = TestUtility.createSparTreeFromString(
-      """
+    val tree =
+      TestUtility.createSparTreeFromString(
+        """
         int a = 1 + 2;
         int b = a++ * a;
-      """.trimIndent(),
-      LanguageC,
-      simplifyTree = false,
-    )
+        """.trimIndent(),
+        LanguageC,
+        simplifyTree = false,
+      )
     assertThrows(Exception::class.java) {
       SparTreeSimplifier.assertSingleEntrySingleExitPathProperty(tree.realRoot)
     }
@@ -75,13 +75,14 @@ class SparTreeSimplifierTest {
 
   @Test
   fun testCollapsingPayload() {
-    val tree = TestUtility.createSparTreeFromString(
-      """
+    val tree =
+      TestUtility.createSparTreeFromString(
+        """
         int a = 1 + 2;
-      """.trimIndent(),
-      LanguageC,
-      simplifyTree = false,
-    )
+        """.trimIndent(),
+        LanguageC,
+        simplifyTree = false,
+      )
     tree.printTreeStructureToStdout()
     val two = tree.getTokenNodeForText("2").single()
     val typeTwo = two.payload!!
@@ -96,14 +97,16 @@ class SparTreeSimplifierTest {
     ).isInstanceOf(SinglePayload::class.java)
 
     val lowestCommonAncestor = AbstractTreeNode.findLowestAncestor(two, plus)
-    val nodesBetweenLcaAndTwo = getNodesBetween(
-      ancestor = lowestCommonAncestor,
-      descendant = two,
-    ).map { it.payload!! }
-    val nodesBetweenLcaAndPlus = getNodesBetween(
-      ancestor = lowestCommonAncestor,
-      descendant = plus,
-    ).map { it.payload!! }
+    val nodesBetweenLcaAndTwo =
+      getNodesBetween(
+        ancestor = lowestCommonAncestor,
+        descendant = two,
+      ).map { it.payload!! }
+    val nodesBetweenLcaAndPlus =
+      getNodesBetween(
+        ancestor = lowestCommonAncestor,
+        descendant = plus,
+      ).map { it.payload!! }
     assertThat(nodesBetweenLcaAndPlus).isNotEmpty()
     assertThat(nodesBetweenLcaAndTwo).isNotEmpty()
 

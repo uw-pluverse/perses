@@ -30,7 +30,8 @@ object GlobalSequenceGenerator {
 
   fun next() = generator.getAndIncrement()
 
-  fun nextWithPadding(paddingLength: Int, paddingChar: Char = '0'): String {
-    return Strings.padStart(next().toString(), paddingLength, paddingChar)
-  }
+  fun nextWithPadding(
+    paddingLength: Int,
+    paddingChar: Char = '0',
+  ): String = Strings.padStart(next().toString(), paddingLength, paddingChar)
 }

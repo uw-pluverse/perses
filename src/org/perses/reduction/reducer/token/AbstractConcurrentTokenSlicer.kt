@@ -18,6 +18,7 @@ package org.perses.reduction.reducer.token
 
 import com.google.common.base.Objects
 import com.google.common.collect.ImmutableList
+import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
@@ -26,77 +27,79 @@ import org.perses.spartree.SparTree
 abstract class AbstractConcurrentTokenSlicer(
   val slicerAnnotation: AbstractTokenSlicerAnnotation,
   reducerContext: ReducerContext,
-) : AbstractTokenSlicerReducer(slicerAnnotation, reducerContext) {
-
+) : AbstractTokenReducer(slicerAnnotation, reducerContext) {
   init {
-    require(slicerAnnotation.granularity > 0) {
+    require(slicerAnnotation.windowSize > 0) {
       "$slicerAnnotation"
     }
   }
 
   // TODO: This algorithm need to be parallelized.
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    sliceTreeForGivenGranularity(fixpointReductionState, slicerAnnotation.granularity)
-  }
-
-  private fun sliceTreeForGivenGranularity(
-    fixpointReductionState: FixpointReductionState,
-    tokenSlicingGranularity: Int,
-  ) {
     val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
-    val listenerManager = reducerContext.listenerManager
-    val slicingStartEvent = fixpointReductionState
-      .fixpointIterationStartEvent
-      .createTokenSlicingStartEvent(
-        currentTimeMillis = System.currentTimeMillis(),
-        programSize = tree.programSnapshot.tokenCount,
-        tokenSlicingGranularity = tokenSlicingGranularity,
-      )
-    listenerManager.onSlicingTokensStart(slicingStartEvent)
-    createSequenceOfIndependentSlicingTasks(
-      tokenSlicingGranularity,
-      tree,
-    ).forEach {
-      SlicingTaskConcurrentExecutor(
-        it.tasks,
-        workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2,
-      ).run()
-    }
-    val slicingEndEvent = slicingStartEvent.createEndEvent(
-      currentTimeMillis = System.currentTimeMillis(),
-      programSize = tree.programSnapshot.tokenCount,
+    reducerContext.listenerManager.onSlicingTokensStart(
+      fixpointReductionState
+        .fixpointIterationStartEvent
+        .createTokenSlicingStartEvent(
+          currentTimeMillis = System.currentTimeMillis(),
+          programSize = tree.programSnapshot.tokenCount,
+          tokenSlicingGranularity = slicerAnnotation.windowSize,
+        ),
     )
-    listenerManager.onSlicingTokensEnd(slicingEndEvent)
+    val independendSlicingTasks =
+      createSequenceOfIndependentSlicingTasks(
+        slicerAnnotation.windowSize,
+        tree,
+      )
+    independendSlicingTasks.forEach {
+      val taskExecutor =
+        SlicingTaskConcurrentExecutor(
+          it.tasks,
+          workingDequeExpectedSize = executorService.specifiedNumOfThreads + 2,
+        )
+      taskExecutor.run()
+    }
+    reducerContext.listenerManager.onSlicingTokensEnd(
+      fixpointReductionState
+        .fixpointIterationStartEvent
+        .createTokenSlicingStartEvent(
+          currentTimeMillis = System.currentTimeMillis(),
+          programSize = tree.programSnapshot.tokenCount,
+          tokenSlicingGranularity = slicerAnnotation.windowSize,
+        ).createEndEvent(
+          currentTimeMillis = System.currentTimeMillis(),
+          programSize = tree.programSnapshot.tokenCount,
+        ),
+    )
   }
 
   abstract fun createSequenceOfIndependentSlicingTasks(
     tokenSlicingGranularity: Int,
     tree: SparTree,
-  ): Sequence<IndependentSlicingTasks>
+  ): Sequence<ListOfIndependentSlicingTasks>
 
-  data class IndependentSlicingTasks(
+  data class ListOfIndependentSlicingTasks(
     val tasks: ImmutableList<out AbstractSlicingTask>,
   )
 
   // TODO: testing
   abstract class AbstractTokenSlicerAnnotation(
     val namePrefix: String,
-    val granularity: Int,
+    val windowSize: Int,
     description: String,
   ) : ReducerAnnotation(
-    shortName = "$namePrefix@$granularity",
-    description = description,
-    deterministic = true,
-    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
-  ) {
-
+      shortName = "$namePrefix@$windowSize",
+      description = description,
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
     init {
-      require(granularity > 0)
+      require(windowSize > 0) {
+        "Invalid window size $windowSize. Must be greater than 0."
+      }
     }
 
-    final override fun hashCode(): Int {
-      return Objects.hashCode(this::class.java, namePrefix, granularity)
-    }
+    final override fun hashCode(): Int = Objects.hashCode(this::class.java, namePrefix, windowSize)
 
     final override fun equals(other: Any?): Boolean {
       if (other == null) {
@@ -109,7 +112,7 @@ abstract class AbstractConcurrentTokenSlicer(
       if (namePrefix != o.namePrefix) {
         return false
       }
-      return granularity == o.granularity
+      return windowSize == o.windowSize
     }
   }
 }

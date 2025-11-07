@@ -18,52 +18,58 @@ package org.perses.util
 
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.io.IOException
-import java.io.UncheckedIOException
 import java.util.Properties
 import java.util.logging.Level
 import java.util.logging.LogManager
 
 object DefaultLoggingConfigurations {
+  @JvmStatic
+  val ALLOWED_LOGGING_LEVELS =
+    listOf(
+      Level.SEVERE,
+      Level.WARNING,
+      Level.INFO,
+      Level.CONFIG,
+      Level.FINE,
+      Level.FINER,
+      Level.FINEST,
+    ).transformToImmutableList { it.name }
 
   @JvmStatic
-  val ALLOWED_LOGGING_LEVELS = listOf(
-    Level.SEVERE,
-    Level.WARNING,
-    Level.INFO,
-    Level.CONFIG,
-    Level.FINE,
-    Level.FINER,
-    Level.FINEST,
-  ).asSequence().map { it.name }.toList()
-
-  @JvmStatic
-  fun configureLogManager(loggingLevel: String) {
+  fun configureLogManager(
+    loggingLevel: String,
+    hideTimestamps: Boolean,
+  ) {
     require(ALLOWED_LOGGING_LEVELS.contains(loggingLevel)) { loggingLevel }
-    val properties = createLoggingProperties(loggingLevel)
+    val properties = createLoggingProperties(loggingLevel, hideTimestamps)
     val stream = ByteArrayOutputStream()
-    try {
-      properties.store(stream, "")
-      LogManager.getLogManager()
-        .readConfiguration(ByteArrayInputStream(stream.toByteArray()))
-    } catch (e: IOException) {
-      throw UncheckedIOException(e)
-    }
+    properties.store(stream, "")
+    LogManager
+      .getLogManager()
+      .readConfiguration(ByteArrayInputStream(stream.toByteArray()))
   }
 
-  fun createLoggingProperties(loggingLevel: String): Properties {
+  fun createLoggingProperties(
+    loggingLevel: String,
+    hideTimestamps: Boolean,
+  ): Properties {
     require(ALLOWED_LOGGING_LEVELS.contains(loggingLevel)) { loggingLevel }
-    val properties = createLoggingPropertiesTemplate()
-    properties[".level"] = loggingLevel
-    properties["java.util.logging.ConsoleHandler.level"] = loggingLevel
+    val properties = createLoggingPropertiesTemplate(loggingLevel, hideTimestamps)
     return properties
   }
 
-  private fun createLoggingPropertiesTemplate(): Properties {
+  private fun createLoggingPropertiesTemplate(
+    loggingLevel: String,
+    hideTimestamps: Boolean,
+  ): Properties {
     val result = Properties()
+    // The order of the entries matters here. Change them with caution if you want to change.
+    result[".level"] = loggingLevel
     result["handlers"] = "java.util.logging.ConsoleHandler"
-    result["java.util.logging.ConsoleHandler.formatter"] = "java.util.logging.SimpleFormatter"
-    result["java.util.logging.SimpleFormatter.format"] = "[%1${'$'}tT] [%4${'$'}-7s] %5${'$'}s %n"
+    result["java.util.logging.ConsoleHandler.level"] = loggingLevel
+    val formatterQualifiedName = RelativeTimeFormatter::class.qualifiedName!!
+    result["java.util.logging.ConsoleHandler.formatter"] = formatterQualifiedName
+    result["$formatterQualifiedName.hideTimestamps"] = hideTimestamps.toString()
     return result
   }
 

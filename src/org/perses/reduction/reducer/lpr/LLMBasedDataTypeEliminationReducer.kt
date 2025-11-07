@@ -23,29 +23,29 @@ import org.perses.reduction.ReducerContext
 class LLMBasedDataTypeEliminationReducer(
   reducerContext: ReducerContext,
 ) : AbstractLLMBasedReducer(META, reducerContext) {
-
-  override val primaryQuestion: String = """
+  override val primaryQuestion: String =
+    """
     |Given the following program, identify all redundant data types 
     |(e.g., a data type defined by the programmer via typedef).
     |Please write the identified data type into a list.
     |If no data type is identified, just give an empty list.
-  """.trimMargin()
+    """.trimMargin()
 
-  override val followupQuestion: String = """
+  override val followupQuestion: String =
+    """
     |Given the following program and the specified data type, eliminate it,
     |and substitute every instance of it with its associated original data type.
-  """.trimMargin()
+    """.trimMargin()
 
   object META : AbstractLLMReducerAnnotation(
     shortName = NAME,
     description = "Invoke LLMs for data type elimination.",
-    deterministic = false,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(LLMBasedDataTypeEliminationReducer(reducerContext))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(LLMBasedDataTypeEliminationReducer(reducerContext))
   }
+
   companion object {
     const val NAME = "llm_based_data_type_elimination_reducer"
   }

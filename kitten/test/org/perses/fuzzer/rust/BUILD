@@ -19,6 +19,7 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/rust",
+        "//src/org/perses/grammar:facade_factory",
     ],
 )
 
@@ -30,6 +31,7 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/rust",
+        "//src/org/perses/grammar:facade_factory",
     ],
 )
 

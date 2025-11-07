@@ -20,7 +20,6 @@ class PersesStarAst(
   body: AbstractPersesRuleElement,
   isGreedy: Boolean,
 ) : AbstractPersesQuantifiedAst(body, isGreedy) {
-
   init {
     when (body.tag) {
       AstTag.EPSILON, AstTag.STAR, AstTag.PLUS, AstTag.OPTIONAL ->
@@ -44,13 +43,9 @@ class PersesStarAst(
 
   companion object {
     @JvmStatic
-    fun createGreedy(body: AbstractPersesRuleElement): PersesStarAst {
-      return PersesStarAst(body, true)
-    }
+    fun createGreedy(body: AbstractPersesRuleElement): PersesStarAst = PersesStarAst(body, true)
 
     @JvmStatic
-    fun createNonGreedy(body: AbstractPersesRuleElement): PersesStarAst {
-      return PersesStarAst(body, false)
-    }
+    fun createNonGreedy(body: AbstractPersesRuleElement): PersesStarAst = PersesStarAst(body, false)
   }
 }

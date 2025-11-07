@@ -30,7 +30,8 @@ import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.scala.LanguageScala
 import org.perses.grammar.scala.PnfScalaParserFacade
 import org.perses.program.EnumFormatControl
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
+import org.perses.program.PersesTokenFactory.PersesAntlrToken
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
 import org.perses.util.transformToImmutableList
@@ -65,6 +66,12 @@ class ParserFacadeTest {
   }
 
   @Test
+  fun testTokenizedCCode() {
+    val tokens = pnfcFacade.tokenizeString("(0, 0, 0);", fileName = "empty")
+    assertThat(tokens.map { it.text }).containsExactly("(", "0", ",", "0", ",", "0", ")", ";")
+  }
+
+  @Test
   fun testParserFacadeTag() {
     assertThrows(Exception::class.java) { ParserFacadeTag.create("pnf") }
     assertThrows(Exception::class.java) { ParserFacadeTag.create("original") }
@@ -87,19 +94,21 @@ class ParserFacadeTest {
 
   @Test
   fun testTokenizeString() {
-    val tokens = cFacade.tokenizeString(
-      content = "a b c",
-      fileName = "<in-memory>",
-    )
+    val tokens =
+      cFacade.tokenizeString(
+        content = "a b c",
+        fileName = "<in-memory>",
+      )
     assertThat(tokens.map { it.text }).containsExactly("a", "b", "c").inOrder()
   }
 
   @Test
   fun testTokenizeEmptyString() {
-    val tokens = cFacade.tokenizeString(
-      content = "",
-      fileName = "<in-memory>",
-    )
+    val tokens =
+      cFacade.tokenizeString(
+        content = "",
+        fileName = "<in-memory>",
+      )
     assertThat(tokens).isEmpty()
   }
 
@@ -145,14 +154,12 @@ class ParserFacadeTest {
       cFacade.isSourceCodeParsable(
         printerOrig.print(program).sourceCode,
       ),
-    )
-      .isTrue()
+    ).isTrue()
     assertThat(
       pnfcFacade.isSourceCodeParsable(
         printerOrig.print(program).sourceCode,
       ),
-    )
-      .isTrue()
+    ).isTrue()
     val invalidProgram = deriveInvalidProgram(program)
     assertThat(
       cFacade.isSourceCodeParsable(
@@ -168,11 +175,12 @@ class ParserFacadeTest {
 
   @Test
   fun testPartialParsing() {
-    val result = cFacade.parseString(
-      string = "int a; int b;",
-      filename = "",
-      startRuleName = "declaration",
-    )
+    val result =
+      cFacade.parseString(
+        string = "int a; int b;",
+        filename = "",
+        startRuleName = "declaration",
+      )
     assertThat(result.lazyAllTokens.map { it.text }.joinToString(separator = " ")).isEqualTo(
       "int a ; int b ;",
     )
@@ -181,33 +189,34 @@ class ParserFacadeTest {
 
   @Test
   fun testCompleteParsing() {
-    val result = cFacade.parseString(
-      string = """
-        struct Student {
-          char name[50];
-          int age;
-        };
-      """.trimIndent(),
-      filename = "",
-      startRuleName = null,
-    )
+    val result =
+      cFacade.parseString(
+        string =
+          """
+          struct Student {
+            char name[50];
+            int age;
+          };
+          """.trimIndent(),
+        filename = "",
+        startRuleName = null,
+      )
     assertThat(result.isInputCompletelyConsumed()).isTrue()
   }
 
   companion object {
-
     private fun projectProgram(
       program: TokenizedProgram,
       vararg lexemes: String,
     ): TokenizedProgram {
-      val builder = ImmutableList.builder<PersesToken>()
+      val builder = ImmutableList.builder<PersesAntlrToken>()
       var index = 0
       val tokens = program.tokens
       for (lexeme in lexemes) {
         while (index < tokens.size) {
-          val persesToken = tokens[index]
+          val persesToken = tokens[index].asAntlrToken()
           ++index
-          if (persesToken.text == lexeme) {
+          if (persesToken.lexemeText == lexeme) {
             builder.add(persesToken)
             break
           }
@@ -217,9 +226,9 @@ class ParserFacadeTest {
     }
 
     private fun deriveInvalidProgram(program: TokenizedProgram): TokenizedProgram {
-      val builder = ImmutableList.builder<PersesToken>()
+      val builder = ImmutableList.builder<PersesTokenFactory.AbstractPersesToken>()
       for (t in program.tokens) {
-        val lexeme = t.text
+        val lexeme = t.lexemeText
         if (lexeme == ";" || lexeme == "," || lexeme == ":") {
           continue
         }

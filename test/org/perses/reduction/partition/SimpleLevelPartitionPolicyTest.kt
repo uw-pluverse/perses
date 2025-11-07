@@ -30,9 +30,10 @@ import java.nio.file.Paths
 @RunWith(JUnit4::class)
 class SimpleLevelPartitionPolicyTest {
   private val policy: SimpleLevelPartitionPolicy = SimpleLevelPartitionPolicy()
-  private val tree: SparTree = TestUtility.createSparTreeFromFile(
-    Paths.get("test_data/misc/t1.c"),
-  )
+  private val tree: SparTree =
+    TestUtility.createSparTreeFromFile(
+      Paths.get("test_data/misc/t1.c"),
+    )
 
   @Test
   fun testEmptyReductionNodeRegion() {

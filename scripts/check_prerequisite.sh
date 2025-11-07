@@ -16,7 +16,10 @@ readonly TOOLS=(
   "ruby"
   "rustc"
   "rustfmt"
-  "scala")
+  "scala"
+  "wat2wasm"
+  "wasmedge"
+  )
 
 missing=""
 for tool in "${TOOLS[@]}"; do
@@ -34,5 +37,9 @@ readonly JAVA_VERSION=$(java -version 2>&1 | head -1 | cut -d'"' -f2 | sed '/^1\
 if [[ "${JAVA_VERSION}" -lt "11" ]]; then
   echo "The minimum java version should be 11. The current version is ${JAVA_VERSION}"
   exit 1
+fi
+
+if ! wasmedge -v > /dev/null ; then
+  echo "wasmedge is not properly installed."
 fi
 exit 0

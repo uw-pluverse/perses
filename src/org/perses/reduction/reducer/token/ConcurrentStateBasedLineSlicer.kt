@@ -33,13 +33,12 @@ class ConcurrentStateBasedLineSlicer(
   reducerContext: ReducerContext,
   private val slicerAnnotation: ConcurrentStateLineSlicerAnnotation,
 ) : AbstractStateBasedConcurrentReducer<
-  ConcurrentLineSlicingState,
-  Line,
+    ConcurrentLineSlicingState,
+    Line,
   >(
-  slicerAnnotation,
-  reducerContext,
-) {
-
+    slicerAnnotation,
+    reducerContext,
+  ) {
   init {
     require(slicerAnnotation.granularity > 0) { "$slicerAnnotation" }
   }
@@ -47,11 +46,8 @@ class ConcurrentStateBasedLineSlicer(
   override val parseCheckNeeded: Boolean
     get() = true
 
-  override fun createInputSequence(
-    tree: SparTree,
-  ): ImmutableList<Line> {
-    return computeLines(tree.remainingLexerRuleNodes)
-  }
+  override fun createInputSequence(tree: SparTree): ImmutableList<Line> =
+    computeLines(tree.remainingLexerRuleNodes)
 
   // todo : improve efficiency. should avoid computeLines here.
   override fun getStateOnSuccess(
@@ -72,12 +68,14 @@ class ConcurrentStateBasedLineSlicer(
     state: ConcurrentLineSlicingState,
     sequence: ImmutableList<Line>,
   ): NodeDeletionActionSet {
-    val nodesToDelete = sequence.withIndex()
-      .asSequence()
-      .filter { it.index in state.startInclusive until state.endExclusive }
-      .map { it.value }
-      .flatMap { it.asSequence() }
-      .toList()
+    val nodesToDelete =
+      sequence
+        .withIndex()
+        .asSequence()
+        .filter { it.index in state.startInclusive until state.endExclusive }
+        .map { it.value }
+        .flatMap { it.asSequence() }
+        .toList()
     return NodeDeletionActionSet.createByDeletingNodes(
       nodesToDelete,
       "$NAME_PREFIX@${state.granularity}",
@@ -90,52 +88,49 @@ class ConcurrentStateBasedLineSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return REDUCER_ANNOTATIONS
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      REDUCER_ANNOTATIONS
         .asSequence()
         .flatMap { it.create(reducerContext) }
         .toImmutableList()
-    }
   }
 
   companion object {
-
     private const val NAME_PREFIX = "concurrent_state_line_slicer"
 
-    fun computeLines(
-      tokens: ImmutableList<LexerRuleSparTreeNode>,
-    ): ImmutableList<Line> {
-      return Util.mergeContinuousElementsIntoRegions(tokens) { a, b ->
-        a.token.position.line == b.token.position.line
+    fun computeLines(tokens: ImmutableList<LexerRuleSparTreeNode>): ImmutableList<Line> =
+      Util.mergeContinuousElementsIntoRegions(tokens) { a, b ->
+        a.token
+          .asAntlrToken()
+          .position.line ==
+          b.token
+            .asAntlrToken()
+            .position.line
       }
-    }
 
-    val REDUCER_ANNOTATIONS = IntRange(start = 1, endInclusive = 14)
-      .asSequence()
-      .map { ConcurrentStateLineSlicerAnnotation(NAME_PREFIX, granularity = it) }
-      .toImmutableList()
+    val REDUCER_ANNOTATIONS =
+      IntRange(start = 1, endInclusive = 14)
+        .asSequence()
+        .map { ConcurrentStateLineSlicerAnnotation(NAME_PREFIX, granularity = it) }
+        .toImmutableList()
 
     class ConcurrentStateLineSlicerAnnotation(
       private val namePrefix: String,
       val granularity: Int,
     ) : ReducerAnnotation(
-      shortName = "$namePrefix@$granularity",
-      description = "A concurrent state-based line slicer",
-      deterministic = true,
-      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
-    ) {
-
+        shortName = "$namePrefix@$granularity",
+        description = "A concurrent state-based line slicer",
+        deterministic = true,
+        reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+      ) {
       init {
         require(granularity > 0)
       }
 
-      override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-        return ImmutableList.of(ConcurrentStateBasedLineSlicer(reducerContext, this))
-      }
+      override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+        ImmutableList.of(ConcurrentStateBasedLineSlicer(reducerContext, this))
 
-      override fun hashCode(): Int {
-        return Objects.hashCode(this::class.java, namePrefix, granularity)
-      }
+      override fun hashCode(): Int = Objects.hashCode(this::class.java, namePrefix, granularity)
 
       override fun equals(other: Any?): Boolean {
         if (other == null) {
@@ -162,7 +157,6 @@ data class ConcurrentLineSlicingState(
   val granularity: Int,
   private val lineSize: Int,
 ) : IConcurrentState<ConcurrentLineSlicingState> {
-
   val endExclusive: Int
     get() = minOf(startInclusive + granularity, lineSize)
 
@@ -181,7 +175,10 @@ data class ConcurrentLineSlicingState(
   }
 
   companion object {
-    fun create(granularity: Int, sequenceSize: Int): ConcurrentLineSlicingState? {
+    fun create(
+      granularity: Int,
+      sequenceSize: Int,
+    ): ConcurrentLineSlicingState? {
       if (sequenceSize == 0 || granularity >= sequenceSize) {
         return null
       }

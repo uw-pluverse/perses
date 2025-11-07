@@ -26,9 +26,11 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class FindingFolderTest {
-
   private val util = RustTestUtil()
-  private val root = java.nio.file.Files.createTempDirectory(javaClass.simpleName).toFile()
+  private val root =
+    java.nio.file.Files
+      .createTempDirectory(javaClass.simpleName)
+      .toFile()
 
   @After
   fun teardown() {

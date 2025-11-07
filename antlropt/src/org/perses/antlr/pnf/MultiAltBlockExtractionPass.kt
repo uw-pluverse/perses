@@ -24,18 +24,18 @@ import org.perses.antlr.ast.PersesSequenceAst
  * extracts a block of two alternatives.
  */
 class MultiAltBlockExtractionPass : AbstractAltBlockExtractionPass() {
-
   override fun searchForCandidate(sequences: List<PersesSequenceAst>): AbstractCandidate? {
     val prefixCandidates = computeCandidatesClosedPrefix(sequences)
     val postfixCandidates = computeCandidatesClosedPostfix(sequences)
     val infixCandidate = computeCandidateInfix(prefixCandidates, postfixCandidates, sequences)
-    val allCandidates = ArrayList<AbstractCandidate>().apply {
-      addAll(prefixCandidates)
-      addAll(postfixCandidates)
-      if (infixCandidate != null) {
-        add(infixCandidate)
+    val allCandidates =
+      ArrayList<AbstractCandidate>().apply {
+        addAll(prefixCandidates)
+        addAll(postfixCandidates)
+        if (infixCandidate != null) {
+          add(infixCandidate)
+        }
       }
-    }
     return selectBestCandidate(allCandidates, sequences)
   }
 }

@@ -17,6 +17,7 @@
 package org.perses.reduction
 
 import com.google.common.base.MoreObjects
+import org.perses.reduction.event.AdHocMessageEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 
 /** This is the information passed between different reduction passes.  */
@@ -24,12 +25,17 @@ class FixpointReductionState(
   val fixpointIterationStartEvent: FixpointIterationStartEvent,
   val sparTree: SparTreeWithParsability,
 ) {
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
+      .add(
+        "tree-id",
+        sparTree.getTreeRegardlessOfParsability().treeId,
+      ).toString()
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add(
-      "tree-id",
-      sparTree.getTreeRegardlessOfParsability().treeId,
+  fun createAdHocMessageEvent(messageComputer: () -> Any): AdHocMessageEvent =
+    fixpointIterationStartEvent.createAdHocMessageEvent(
+      programSize = sparTree.getTreeRegardlessOfParsability().tokenCount,
+      messageComputer = messageComputer,
     )
-      .toString()
-  }
 }

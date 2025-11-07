@@ -20,12 +20,8 @@ import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.PersesRuleElementOption
 import org.perses.antlr.ast.PersesSequenceAst
 
-class AssociativityParserRuleEliminatorPass :
-  AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+class AssociativityParserRuleEliminatorPass : AbstractPnfPass() {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     val ruleNamesCopy = getSortedRuleNames(mutable)
@@ -52,9 +48,7 @@ class AssociativityParserRuleEliminatorPass :
   }
 
   companion object {
-    fun containsAssociativityElementOptionDef(
-      defs: Iterable<AbstractPersesRuleElement>,
-    ) =
+    fun containsAssociativityElementOptionDef(defs: Iterable<AbstractPersesRuleElement>) =
       defs.asSequence().any { startsWithAssocElementOption(it) }
 
     fun startsWithAssocElementOption(def: AbstractPersesRuleElement): Boolean {

@@ -21,7 +21,6 @@ import com.beust.jcommander.Parameter
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 
 class ExperimentFlagGroup : AbstractCommandLineFlagGroup(groupName = "Experiment Control") {
-
   @JvmField
   @Parameter(
     names = ["--on-demand-fine-grit-reducer-annotations"],
@@ -51,7 +50,30 @@ class ExperimentFlagGroup : AbstractCommandLineFlagGroup(groupName = "Experiment
     converter = ClassConverter::class,
   )
   var onDemandCoarseGritReducerAnnotationClasses: List<Class<*>> = listOf()
+
   override fun validate() = Unit
+
+  @JvmField
+  @Parameter(
+    names = ["--fully-deterministic-mode"],
+    description =
+      "make sure the reduction process is fully deterministic for testing purpose " +
+        "at the cost of affected performance",
+    hidden = true,
+    order = 400,
+    arity = 1,
+  )
+  var fullyDeterministicMode = false
+
+  @JvmField
+  @Parameter(
+    names = ["--keep-reduction-history"],
+    description = "keep all the reduction folders generated during reduction",
+    hidden = false,
+    order = 500,
+    arity = 1,
+  )
+  var keepReductionHistory = false
 
   class ClassConverter : IStringConverter<Class<*>> {
     override fun convert(className: String?): Class<*> {

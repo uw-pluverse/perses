@@ -65,11 +65,12 @@ class IndirectRightRecursionEliminationPassTest : PnfRightTestGrammar() {
 
   @Test
   fun test_transformRightForScc() {
-    val grammars: List<Set<RuleNameRegistry.RuleNameHandle>> = getSortedSccList(
-      createForRightmostTransition(grammar),
-    ).asSequence()
-      .map { it.vertexSet() }
-      .toList()
+    val grammars: List<Set<RuleNameRegistry.RuleNameHandle>> =
+      getSortedSccList(
+        createForRightmostTransition(grammar),
+      ).asSequence()
+        .map { it.vertexSet() }
+        .toList()
 
     val g = grammars[0]
     val result = MutableGrammar.createParserRulesFrom(grammar)
@@ -84,11 +85,12 @@ class IndirectRightRecursionEliminationPassTest : PnfRightTestGrammar() {
     run {
       val defs = result.getAltBlock(b)
       assertThat(defs).hasSize(3)
-      val defsStrings = defs
-        .asSequence()
-        .map { it.sourceCode }
-        .sorted()
-        .toList()
+      val defsStrings =
+        defs
+          .asSequence()
+          .map { it.sourceCode }
+          .sorted()
+          .toList()
       assertThat(defsStrings).containsExactly("d c b", "d d", "c d")
     }
   }

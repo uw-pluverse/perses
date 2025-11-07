@@ -25,7 +25,9 @@ import java.io.ObjectInputStream
 import java.nio.file.Files
 import java.nio.file.Path
 
-abstract class AbstractHddPerformanceAnalysis protected constructor(protected val eventFile: Path) {
+abstract class AbstractHddPerformanceAnalysis protected constructor(
+  protected val eventFile: Path,
+) {
   protected val events: ImmutableList<IProfileEvent> = loadEvents(eventFile)
 
   fun analyze() {
@@ -33,6 +35,7 @@ abstract class AbstractHddPerformanceAnalysis protected constructor(protected va
   }
 
   protected abstract fun performAnalysis()
+
   private fun loadEvents(eventFile: Path): ImmutableList<IProfileEvent> {
     logger.ktInfo { "Loading events from eventFile" }
     val builder = ImmutableList.builder<IProfileEvent>()

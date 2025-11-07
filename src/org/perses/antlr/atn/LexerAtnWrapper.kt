@@ -19,12 +19,12 @@ package org.perses.antlr.atn
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.antlr.v4.runtime.Lexer
+import org.antlr.v4.runtime.atn.ATN
 import org.antlr.v4.runtime.atn.ATNState
 import org.antlr.v4.runtime.atn.RuleStartState
 import org.antlr.v4.runtime.atn.RuleStopState
 import org.antlr.v4.runtime.atn.Transition
 import org.antlr.v4.runtime.atn.WildcardTransition
-import org.perses.antlr.AntlrGrammarUtil
 import org.perses.antlr.MetaTokenInfoDB
 import org.perses.antlr.TokenType
 import org.perses.antlr.ast.AbstractPersesRuleElement
@@ -44,12 +44,10 @@ import org.perses.util.toImmutableList
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.min
 
-class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
-
-  val atn = AntlrGrammarUtil.getAtnFromLexer(lexerClass)
-
-  val metaTokenInfoDB = MetaTokenInfoDB.createFor(lexerClass)
-
+class LexerAtnWrapper(
+  val atn: ATN,
+  val metaTokenInfoDB: MetaTokenInfoDB,
+) {
   private val simulatorMap = ConcurrentHashMap<TokenType, ATNSimulator>()
 
   private val normalizedATNs =
@@ -58,9 +56,12 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
   internal val tokenTypePairToNecessityOfWhiteSpaceForConcat =
     ConcurrentHashMap<TokenTypePair, Boolean>()
 
-  private fun normalizeAtn(
-    tokenType: TokenType,
-  ): Pair<RuleStartState, AbstractPersesRuleElement> {
+  fun isATNEmpty(): Boolean =
+    atn.ruleToStopState.let {
+      it == null || it.isEmpty()
+    }
+
+  private fun normalizeAtn(tokenType: TokenType): Pair<RuleStartState, AbstractPersesRuleElement> {
     var originalStartState: RuleStartState? = null
     var regex: AbstractPersesRuleElement? = null
     return try {
@@ -87,18 +88,29 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     }
   }
 
-  private fun getNormalizedStartState(ruleType: TokenType): RuleStartState {
-    return getNormalizedAtn(ruleType).first
+  private fun getNormalizedStartState(ruleType: TokenType): RuleStartState =
+    getNormalizedAtn(ruleType).first
+
+  fun hasInformationForToken(tokenType: TokenType): Boolean {
+    val ruleToStartState = atn.ruleToStartState ?: return false
+    val tokenInfo =
+      metaTokenInfoDB.getTokenInfoWithType(tokenType)
+        ?: return false
+    val ruleIndex = tokenInfo.ruleIndex.antlrRuleIndex
+    return ruleIndex >= 0 &&
+      ruleIndex < ruleToStartState.size &&
+      ruleToStartState[ruleIndex] != null
   }
 
-  fun getNormalizedAtn(tokenType: TokenType): Pair<RuleStartState, AbstractPersesRuleElement> {
-    return normalizedATNs.computeIfAbsent(tokenType) {
+  fun getNormalizedAtn(tokenType: TokenType): Pair<RuleStartState, AbstractPersesRuleElement> =
+    normalizedATNs.computeIfAbsent(tokenType) {
       normalizeAtn(it)
     }
-  }
 
   fun getOriginalStartState(ruleType: TokenType): RuleStartState {
-    val tokenInfo = metaTokenInfoDB.getTokenInfoWithType(ruleType)!!
+    val tokenInfo =
+      metaTokenInfoDB.getTokenInfoWithType(ruleType)
+        ?: error("No information for the token type $ruleType")
     return atn.ruleToStartState[tokenInfo.ruleIndex.antlrRuleIndex]
   }
 
@@ -107,37 +119,57 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     return atn.ruleToStopState[tokenInfo.ruleIndex.antlrRuleIndex]
   }
 
+  // TODO(cnsun): needs tests.
+  //  This function has a bug. It does not consider the types of transitions.
+  //  The ATN is similar to a call graph, which has call edges and return edges.
+  //  We need to make sure we consider these special edges during graph traversal.
+  fun getAcyclicPathsToGenerateGivenTokenType(ruleType: TokenType): List<ATNPath> {
+    if (metaTokenInfoDB.getTokenInfoWithType(ruleType) == null) {
+      // For example, INDENT and DEDENT are not defined in the lexer.
+      return emptyList()
+    }
+    val startState = getOriginalStartState(ruleType)
+    val stopState = startState.stopState
+    var growingPaths = mutableListOf(ATNPath.create(startState))
+    var completePaths =
+      growingPaths.filter { path ->
+        // Filter out the growing path that cannot reach the stopState, which means
+        // the current prefix will not generate the given token type, specified by the
+        // parameter ruleType.
+        isReachableViaEpsilons(path.lastState, stopState)
+      }
+    while (completePaths.isEmpty()) {
+      val newPaths = ArrayList<ATNPath>()
+      growingPaths.forEach { existingPath ->
+        val result = getAllReachablePaths(startState = existingPath.lastState)
+        result.forEach {
+          newPaths.add(existingPath.append(it))
+        }
+        growingPaths = newPaths
+        completePaths = growingPaths.filter { isReachableViaEpsilons(it.lastState, stopState) }
+      }
+    }
+    return completePaths
+  }
+
   fun generateCandidateCanonicalTokenTextsGivenTokenType(
     ruleType: TokenType,
     countLimit: Int,
   ): ImmutableList<String> {
-    var paths = ArrayList<ATNPath>()
-    val startState = getOriginalStartState(ruleType)
-    val stopState = startState.stopState
-    paths.add(ATNPath.create(startState))
-    var completePaths = paths.filter { isReachableViaEpsilons(it.endingState, stopState) }
-    while (completePaths.isEmpty()) {
-      val newPaths = ArrayList<ATNPath>()
-      paths.forEach { path ->
-        val endingState = path.endingState
-        val currentPath = ArrayList<ATNState>()
-        val result = HashSet<ATNPath>()
-        val visited = HashSet<Transition>()
-        getAllReachablePaths(endingState, currentPath, result, visited)
-        result.forEach {
-          newPaths.add(path.append(it))
-        }
-        paths = newPaths
-        completePaths = paths.filter { isReachableViaEpsilons(it.endingState, stopState) }
-      }
-    }
-    val candidates = completePaths.flatMap { path ->
-      getCandidateCanonicalTokenTextsFromPath(path, countLimit)
-    }.distinct().sorted()
+    val completePaths = getAcyclicPathsToGenerateGivenTokenType(ruleType)
+    val candidates =
+      completePaths
+        .flatMap { path ->
+          getCandidateCanonicalTokenTextsFromPath(path, countLimit)
+        }.distinct()
+        .sorted()
     return candidates.subList(0, min(countLimit, candidates.size)).toImmutableList()
   }
 
-  fun findATNPathForLexeme(lexeme: String, ruleType: TokenType): ATNPath {
+  fun findATNPathForLexeme(
+    lexeme: String,
+    ruleType: TokenType,
+  ): ATNPath? {
     var paths = ArrayList<ATNPath>()
     val startState = getNormalizedStartState(ruleType)
     paths.add(ATNPath.create(startState))
@@ -145,11 +177,7 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
       lexeme.forEach { char ->
         val newPaths = ArrayList<ATNPath>()
         paths.forEach { path ->
-          val endingState = path.endingState
-          val currentPath = ArrayList<ATNState>()
-          val result = HashSet<ATNPath>()
-          val visited = HashSet<Transition>()
-          getAllReachablePaths(endingState, currentPath, result, visited, char)
+          val result = getAllReachablePaths(path.lastState, char)
           result.forEach {
             newPaths.add(path.append(it))
           }
@@ -162,10 +190,14 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     }
     val endState = startState.stopState
     paths.removeAll {
-      !isReachableViaEpsilons(it.endingState, endState)
+      !isReachableViaEpsilons(it.lastState, endState)
+    }
+    if (paths.isEmpty()) {
+      return null
     }
     check(paths.size == 1) {
-      "There should be exactly 1 path. #paths=${paths.size}, ruleType=$ruleType, lexeme=$lexeme"
+      val tokenInfo = metaTokenInfoDB.getTokenInfoWithType(ruleType)
+      "There should be exactly 1 path. #paths=${paths.size}, ruleType=$tokenInfo, lexeme=$lexeme"
     }
     val partialResult = paths.single()
     val lastStateInPath = partialResult.stateSequence.last()
@@ -177,22 +209,38 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
   }
 
   private fun getAllReachablePaths(
-    state: ATNState,
-    currentPath: ArrayList<ATNState>,
-    result: HashSet<ATNPath>,
-    visited: HashSet<Transition>,
+    startState: ATNState,
+    char: Char? = null,
+  ): Set<ATNPath> {
+    val result = mutableSetOf<ATNPath>()
+    getAllReachablePathsRecursive(
+      startState = startState,
+      currentPath = mutableListOf(),
+      result = result,
+      visitedTransitions = mutableSetOf(),
+      char = char,
+    )
+    return result
+  }
+
+  private fun getAllReachablePathsRecursive(
+    startState: ATNState,
+    currentPath: MutableList<ATNState>,
+    result: MutableSet<ATNPath>,
+    visitedTransitions: MutableSet<Transition>,
     char: Char? = null,
   ) {
-    state.transitionSequence().forEach { transition ->
-      if (!visited.add(transition)) {
+    startState.transitionSequence().forEach { transition ->
+      if (!visitedTransitions.add(transition)) {
         return@forEach
       }
       val targetState = transition.target
       currentPath.add(targetState)
       if (transition.isEpsilon) {
-        getAllReachablePaths(targetState, currentPath, result, visited, char)
+        getAllReachablePathsRecursive(targetState, currentPath, result, visitedTransitions, char)
       } else {
-        if (char == null || transition
+        if (char == null ||
+          transition
             .matches(char.code, Char.MIN_VALUE.code, Char.MAX_VALUE.code)
         ) {
           result.add(ATNPath.create(currentPath))
@@ -253,28 +301,40 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     return null
   }
 
-  fun createTDTree(lexeme: String, ruleType: TokenType): TDTree {
-    val path = findATNPathForLexeme(lexeme, ruleType)
+  fun createTDTree(
+    lexeme: String,
+    ruleType: TokenType,
+  ): TDTree? {
+    val path = findATNPathForLexeme(lexeme, ruleType) ?: return null
     return simulateRule(ruleType, ReplayDecisionMaker(path, lexeme)).apply {
       removeNodesWithNoCharLeaves()
     }
   }
 
-  fun simulateRule(ruleType: TokenType, decisionMaker: AbstractDecisionMaker): TDTree {
+  fun simulateRule(
+    ruleType: TokenType,
+    decisionMaker: AbstractDecisionMaker,
+  ): TDTree {
     val startState = getNormalizedStartState(ruleType)
-    val simulator = simulatorMap.computeIfAbsent(ruleType) {
-      ATNSimulator(startState)
-    }
+    val simulator =
+      simulatorMap.computeIfAbsent(ruleType) {
+        ATNSimulator(startState)
+      }
     return simulator.simulate(decisionMaker).removeNodesWithNoCharLeaves()
   }
 
-  fun canBeConcatWithoutSpace(tokenNameFormer: String, tokenNameLatter: String) =
-    canBeConcatWithoutSpace(
-      metaTokenInfoDB.getTokenInfoWithName(tokenNameFormer)!!.tokenType,
-      metaTokenInfoDB.getTokenInfoWithName(tokenNameLatter)!!.tokenType,
-    )
+  fun canBeConcatWithoutSpace(
+    tokenNameFormer: String,
+    tokenNameLatter: String,
+  ) = canBeConcatWithoutSpace(
+    metaTokenInfoDB.getTokenInfoWithName(tokenNameFormer)!!.tokenType,
+    metaTokenInfoDB.getTokenInfoWithName(tokenNameLatter)!!.tokenType,
+  )
 
-  fun canBeConcatWithoutSpace(tokenTypeFormer: TokenType, tokenTypeLatter: TokenType): Boolean {
+  fun canBeConcatWithoutSpace(
+    tokenTypeFormer: TokenType,
+    tokenTypeLatter: TokenType,
+  ): Boolean {
     val key = TokenTypePair(tokenTypeFormer, tokenTypeLatter)
     return tokenTypePairToNecessityOfWhiteSpaceForConcat.computeIfAbsent(key) {
       calculateNecessityOfSpaceBetweenTwoToken(
@@ -360,26 +420,34 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     return false
   }
 
-  private fun doEdgesIntersect(t1: NFAEdge, t2: NFAEdge): Boolean {
+  private fun doEdgesIntersect(
+    t1: NFAEdge,
+    t2: NFAEdge,
+  ): Boolean {
     val atnTransition1 = (t1.edge.label as PersesTransitionAst).atnTransition
     if (atnTransition1 is WildcardTransition) {
       return true
     }
-    val label1 = checkNotNull(atnTransition1.label()) {
-      "The label for the edge is null: ${t1.edge}"
-    }
+    val label1 =
+      checkNotNull(atnTransition1.label()) {
+        "The label for the edge is null: ${t1.edge}"
+      }
     val atnTransition2 = (t2.edge.label as PersesTransitionAst).atnTransition
     if (atnTransition2 is WildcardTransition) {
       return true
     }
-    val label2 = checkNotNull(atnTransition2.label()) {
-      "The label for the edge is null: ${t2.edge}"
-    }
+    val label2 =
+      checkNotNull(atnTransition2.label()) {
+        "The label for the edge is null: ${t2.edge}"
+      }
     return label1.and(label2).size() > 0
   }
 
   // WIP.
-  fun canBeSubsumed(subsumer: AbstractNFA, toBeSubsumed: AbstractNFA): Boolean {
+  fun canBeSubsumed(
+    subsumer: AbstractNFA,
+    toBeSubsumed: AbstractNFA,
+  ): Boolean {
     val stack = SimpleStack<Pair<NFAState, Set<NFAState>>>()
     val visited = HashSet<Pair<NFAState, Set<NFAState>>>()
     Pair(
@@ -395,9 +463,10 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
       val (subsumerSource, toBeSubsumedSource) = stack.remove()
       val stateListSubsumer =
         getReachableStatesWithNonEpsilonOutgoingTransition(subsumerSource)
-      val stateListToBeSubsumed = toBeSubsumedSource.flatMap {
-        getReachableStatesWithNonEpsilonOutgoingTransition(it)
-      }
+      val stateListToBeSubsumed =
+        toBeSubsumedSource.flatMap {
+          getReachableStatesWithNonEpsilonOutgoingTransition(it)
+        }
       stateListSubsumer.zip(stateListToBeSubsumed).forEach { pair ->
         val (sSubsumer, sToBeSubsumed) = pair
         if (sSubsumer.state === subsumer.acceptingState &&
@@ -428,10 +497,21 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
 
-    private val wrapperForIdentifierOnlyLexer = LexerAtnWrapper(IdentifierOnlyLexer::class.java)
-    private fun getNfaForClassicalIdentifier() = wrapperForIdentifierOnlyLexer.copyTokenNfa(
-      TokenType(IdentifierOnlyLexer.Identifier),
-    )
+    private val wrapperForIdentifierOnlyLexer =
+      createLexerWrapperFromLexerClass(IdentifierOnlyLexer::class.java)
+
+    fun createLexerWrapperFromLexerClass(lexerClass: Class<out Lexer>): LexerAtnWrapper {
+      val pair = MetaTokenInfoDB.createForLexerClass(lexerClass)
+      return LexerAtnWrapper(
+        atn = pair.second,
+        metaTokenInfoDB = pair.first,
+      )
+    }
+
+    private fun getNfaForClassicalIdentifier() =
+      wrapperForIdentifierOnlyLexer.copyTokenNfa(
+        TokenType(IdentifierOnlyLexer.Identifier),
+      )
 
     fun getReachableStatesWithNonEpsilonOutgoingTransition(
       nfaState: NFAState,
@@ -481,12 +561,18 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
         builder.add(transition)
       }
       val transitions = builder.build()
-      val resultsBuilder = ImmutableList.builder<String>()
-      for (index in 0 until countLimit) {
+      val results = ImmutableList.builder<String>()
+      outerLoop@for (index in 0 until countLimit) {
         val stringBuilder = StringBuilder()
         var currIndex = index
         for (t in transitions.reverse()) {
           val charset = t.getAllowedAsciiChars()
+          if (charset.isEmpty()) {
+            break@outerLoop
+          }
+          check(charset.isNotEmpty()) {
+            "The charset is empty on the transition $t"
+          }
           val i = currIndex % charset.size
           currIndex /= charset.size
           stringBuilder.append(charset[i])
@@ -494,26 +580,26 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
         if (currIndex > 0) {
           break
         }
-        resultsBuilder.add(stringBuilder.reverse().toString())
+        results.add(stringBuilder.reverse().toString())
       }
-      return resultsBuilder.build()
+      return results.build()
     }
   }
 
-  data class ATNPath(val stateSequence: ImmutableList<ATNState>) {
-
-    val endingState: ATNState
+  data class ATNPath(
+    val stateSequence: ImmutableList<ATNState>,
+  ) {
+    val lastState: ATNState
       get() = stateSequence.last()
 
-    fun append(other: ATNPath): ATNPath {
-      return ATNPath(
+    fun append(other: ATNPath): ATNPath =
+      ATNPath(
         ImmutableList
           .builderWithExpectedSize<ATNState>(stateSequence.size + other.stateSequence.size)
           .addAll(stateSequence)
           .addAll(other.stateSequence)
           .build(),
       )
-    }
 
     operator fun get(index: Int): ATNState = stateSequence[index]
 
@@ -528,7 +614,6 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     private val atnStatePath: ATNPath,
     private val lexeme: String,
   ) : AbstractDecisionMaker() {
-
     override fun nextBoolean(): Boolean {
       TODO("Not yet implemented")
     }
@@ -538,6 +623,7 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     }
 
     private var currentCharIndex = 0
+
     override fun sampleChar(list: List<Char>): Char {
       val currentChar = lexeme[currentCharIndex]
       ++currentCharIndex
@@ -564,12 +650,16 @@ class LexerAtnWrapper<T : Lexer>(lexerClass: Class<T>) {
     }
   }
 
-  data class TokenTypePair(val formerTokenType: TokenType, val latterTokenType: TokenType) {
+  data class TokenTypePair(
+    val formerTokenType: TokenType,
+    val latterTokenType: TokenType,
+  ) {
     companion object {
-      fun Pair<TokenType, TokenType>.toTokenTypePair() = TokenTypePair(
-        formerTokenType = first,
-        latterTokenType = second,
-      )
+      fun Pair<TokenType, TokenType>.toTokenTypePair() =
+        TokenTypePair(
+          formerTokenType = first,
+          latterTokenType = second,
+        )
     }
   }
 }

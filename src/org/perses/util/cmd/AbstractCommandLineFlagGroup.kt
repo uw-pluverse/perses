@@ -16,6 +16,8 @@
  */
 package org.perses.util.cmd
 
-abstract class AbstractCommandLineFlagGroup(val groupName: String) {
+abstract class AbstractCommandLineFlagGroup(
+  val groupName: String,
+) {
   abstract fun validate()
 }

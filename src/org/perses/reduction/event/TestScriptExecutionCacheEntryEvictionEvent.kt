@@ -20,5 +20,4 @@ class TestScriptExecutionCacheEntryEvictionEvent(
   currentTimeMillis: Long,
   val sizeBefore: Int,
   val sizeAfter: Int,
-) :
-  AbstractReductionEvent(currentTimeMillis)
+) : AbstractReductionEvent(currentTimeMillis)

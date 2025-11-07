@@ -16,8 +16,10 @@ readonly FILE="$1"
 #   exit 1
 # fi
 
-if ! grep --quiet 'Reduction algorithm is perses_node_priority_with_dfs_delta' "${FILE}"; then
-  echo "Reduction algorithm should be perses_node_priority_with_dfs_delta"
+cat "${FILE}"
+
+if ! grep --quiet '\[node_priority-dfs\] New fixpoint iteration started' "${FILE}"; then
+  echo "Reduction algorithm should be node_priority-dfs"
   exit 1
 fi
 

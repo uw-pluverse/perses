@@ -22,8 +22,6 @@ import org.perses.antlr.atn.AbstractDecisionMaker
 class AtomTransitionSimulator(
   private val transition: AtomTransition,
 ) : AbstractAtnTransitionSimulator() {
-
-  override fun simulate(decisionMaker: AbstractDecisionMaker): Char {
-    return decisionMaker.sampleChar(transition.label.toChar())
-  }
+  override fun simulate(decisionMaker: AbstractDecisionMaker): Char =
+    decisionMaker.sampleChar(transition.label.toChar())
 }

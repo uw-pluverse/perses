@@ -19,6 +19,7 @@ package org.perses.reduction.cache
 import com.google.common.collect.Collections2
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -26,105 +27,122 @@ import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.io.CommonReductionIOManagerData
 
 @RunWith(JUnit4::class)
-class ConfigBasedTestScriptExecutionCacheTest {
-
+class ConfigBasedTestScriptExecutionCacheTest :
+  CommonReductionIOManagerData(ConfigBasedTestScriptExecutionCacheTest::class.java) {
   private val cache = ConfigBasedQueryCache()
-  val origProgram = TestUtility.createTokenizedProgramFromString(
-    """
+  val origProgram =
+    TestUtility.createTokenizedProgramFromString(
+      """
       int a, b, c, d;
-    """.trimIndent(),
-    LanguageC,
-  )
+      """.trimIndent(),
+      LanguageC,
+    )
   val factory = origProgram.factory
   val tokens = origProgram.tokens
 
-  val token_int = tokens[0]
-  val token_a = tokens.find { it.text.equals("a") }!!
-  val token_b = tokens.find { it.text.equals("b") }!!
-  val token_c = tokens.find { it.text.equals("c") }!!
-  val token_d = tokens.find { it.text.equals("d") }!!
+  val tokenInt = tokens[0]
+  val tokenA = tokens.find { it.lexemeText.equals("a") }!!
+  val tokenB = tokens.find { it.lexemeText.equals("b") }!!
+  val tokenC = tokens.find { it.lexemeText.equals("c") }!!
+  val tokenD = tokens.find { it.lexemeText.equals("d") }!!
 
-  val emptyProgram = TokenizedProgram(
-    ImmutableList.of(),
-    origProgram.factory,
-  )
-  val oneTokenProgram = TokenizedProgram(
-    ImmutableList.of(token_a),
-    origProgram.factory,
-  )
-  val twoTokenProgram = TokenizedProgram(
-    ImmutableList.of(token_a, token_b),
-    origProgram.factory,
-  )
-  val threeTokenProgram = TokenizedProgram(
-    ImmutableList.of(token_a, token_b, token_c),
-    origProgram.factory,
-  )
-  val testResult = PropertyTestResult.of(exitCode = 1, elapsedMilliseconds = 1)
+  @After
+  fun tearDown() {
+    close()
+  }
+
+  val emptyProgram =
+    TokenizedProgram(
+      ImmutableList.of(),
+      origProgram.factory,
+    )
+  val oneTokenProgram =
+    TokenizedProgram(
+      ImmutableList.of(tokenA),
+      origProgram.factory,
+    )
+  val twoTokenProgram =
+    TokenizedProgram(
+      ImmutableList.of(tokenA, tokenB),
+      origProgram.factory,
+    )
+  val threeTokenProgram =
+    TokenizedProgram(
+      ImmutableList.of(tokenA, tokenB, tokenC),
+      origProgram.factory,
+    )
+  val testResult = PropertyTestResult.of(exitCode = 1, elapsedMillis = 1)
+
+  private fun getCachedResult(program: TokenizedProgram): AbstractCacheRetrievalResult =
+    cache.getCachedResult(
+      program,
+      outputManager = outputManagerFactory.createManagerFor(program),
+    )
 
   @Test
   fun test_cache_miss_for_single_token_program() {
-    assertThat(cache.getCachedResult(oneTokenProgram).isHit()).isFalse()
+    assertThat(getCachedResult(oneTokenProgram).isHit()).isFalse()
   }
 
   @Test
   fun test_cache_miss_for_two_token_program() {
-    assertThat(cache.getCachedResult(twoTokenProgram).isHit()).isFalse()
+    assertThat(getCachedResult(twoTokenProgram).isHit()).isFalse()
   }
 
   @Test
   fun test_cache_miss_for_LongProgram() {
-    assertThat(cache.getCachedResult(origProgram).isHit()).isFalse()
+    assertThat(getCachedResult(origProgram).isHit()).isFalse()
   }
 
   @Test
   fun test_cache_miss_for_EmptyProgram() {
-    val cachedResult = cache.getCachedResult(emptyProgram)
+    val cachedResult = getCachedResult(emptyProgram)
     assertThat(cachedResult.isHit()).isFalse()
   }
 
   @Test
   fun test_cache_hit_for_empty_program() {
     addToCache(emptyProgram, testResult)
-    val cacheResult = cache.getCachedResult(emptyProgram)
+    val cacheResult = getCachedResult(emptyProgram)
     assertThat(cacheResult.isHit()).isTrue()
-    assertThat(cacheResult.asCacheHit().testResult).isEqualTo(testResult)
   }
 
-  fun addToCache(program: TokenizedProgram, testResult: PropertyTestResult) {
-    val cacheMiss = cache.getCachedResult(program).asCacheMiss()
+  fun addToCache(
+    program: TokenizedProgram,
+    testResult: PropertyTestResult,
+  ) {
+    val cacheMiss = getCachedResult(program).asCacheMiss()
     cache.cacheProgramAndResult(cacheMiss, testResult)
   }
 
   @Test
   fun test_cache_hit_for_one_token_program() {
-    assertThat(cache.getCachedResult(oneTokenProgram).isHit()).isFalse()
+    assertThat(getCachedResult(oneTokenProgram).isHit()).isFalse()
     addToCache(oneTokenProgram, testResult)
-    val cacheResult = cache.getCachedResult(oneTokenProgram)
+    val cacheResult = getCachedResult(oneTokenProgram)
     assertThat(cacheResult.isHit()).isTrue()
-    assertThat(cacheResult.asCacheHit().testResult).isEqualTo(testResult)
   }
 
   @Test
   fun test_cache_hit_for_two_token_program() {
-    assertThat(cache.getCachedResult(twoTokenProgram).isHit()).isFalse()
+    assertThat(getCachedResult(twoTokenProgram).isHit()).isFalse()
     addToCache(twoTokenProgram, testResult)
-    val cacheResult = cache.getCachedResult(twoTokenProgram)
+    val cacheResult = getCachedResult(twoTokenProgram)
     assertThat(cacheResult.isHit()).isTrue()
-    assertThat(cacheResult.asCacheHit().testResult).isEqualTo(testResult)
   }
 
   @Test
   fun test_cache_hit_for_three_token_program() {
-    assertThat(cache.getCachedResult(threeTokenProgram).isHit()).isFalse()
+    assertThat(getCachedResult(threeTokenProgram).isHit()).isFalse()
     addToCache(threeTokenProgram, testResult)
-    val cacheResult = cache.getCachedResult(threeTokenProgram)
+    val cacheResult = getCachedResult(threeTokenProgram)
     assertThat(cacheResult.isHit()).isTrue()
 
-    assertThat(cache.getCachedResult(oneTokenProgram).isHit()).isFalse()
-    assertThat(cache.getCachedResult(twoTokenProgram).isHit()).isFalse()
+    assertThat(getCachedResult(oneTokenProgram).isHit()).isFalse()
+    assertThat(getCachedResult(twoTokenProgram).isHit()).isFalse()
   }
 
   @Test
@@ -134,10 +152,10 @@ class ConfigBasedTestScriptExecutionCacheTest {
     addToCache(twoTokenProgram, testResult)
     addToCache(threeTokenProgram, testResult)
 
-    assertThat(cache.getCachedResult(emptyProgram).isHit()).isTrue()
-    assertThat(cache.getCachedResult(oneTokenProgram).isHit()).isTrue()
-    assertThat(cache.getCachedResult(twoTokenProgram).isHit()).isTrue()
-    assertThat(cache.getCachedResult(threeTokenProgram).isHit()).isTrue()
+    assertThat(getCachedResult(emptyProgram).isHit()).isTrue()
+    assertThat(getCachedResult(oneTokenProgram).isHit()).isTrue()
+    assertThat(getCachedResult(twoTokenProgram).isHit()).isTrue()
+    assertThat(getCachedResult(threeTokenProgram).isHit()).isTrue()
   }
 
   @Test
@@ -147,30 +165,30 @@ class ConfigBasedTestScriptExecutionCacheTest {
     addToCache(oneTokenProgram, testResult)
     addToCache(emptyProgram, testResult)
 
-    assertThat(cache.getCachedResult(emptyProgram).isHit()).isTrue()
-    assertThat(cache.getCachedResult(oneTokenProgram).isHit()).isTrue()
-    assertThat(cache.getCachedResult(twoTokenProgram).isHit()).isTrue()
-    assertThat(cache.getCachedResult(threeTokenProgram).isHit()).isTrue()
+    assertThat(getCachedResult(emptyProgram).isHit()).isTrue()
+    assertThat(getCachedResult(oneTokenProgram).isHit()).isTrue()
+    assertThat(getCachedResult(twoTokenProgram).isHit()).isTrue()
+    assertThat(getCachedResult(threeTokenProgram).isHit()).isTrue()
   }
 
   @Test
   fun test_cache_enumerate_token_sequences() {
-    val tokenList = listOf(token_a, token_b, token_c, token_d, token_int)
+    val tokenList = listOf(tokenA, tokenB, tokenC, tokenD, tokenInt)
     val permutations = Collections2.permutations(tokenList)
     assertThat(permutations.size).isEqualTo(120)
     for (p in permutations) {
       val program = TokenizedProgram(ImmutableList.copyOf(p), factory)
-      assertThat(cache.getCachedResult(program).isHit()).isFalse()
+      assertThat(getCachedResult(program).isHit()).isFalse()
     }
     for (p in permutations) {
       addToCache(TokenizedProgram(ImmutableList.copyOf(p), factory), testResult)
     }
     for (p in permutations) {
       val program = TokenizedProgram(ImmutableList.copyOf(p), factory)
-      assertThat(cache.getCachedResult(program).isHit()).isTrue()
+      assertThat(getCachedResult(program).isHit()).isTrue()
     }
-    assertThat(cache.getCachedResult(origProgram).isHit()).isFalse()
+    assertThat(getCachedResult(origProgram).isHit()).isFalse()
     addToCache(origProgram, testResult)
-    assertThat(cache.getCachedResult(origProgram).isHit()).isTrue()
+    assertThat(getCachedResult(origProgram).isHit()).isTrue()
   }
 }

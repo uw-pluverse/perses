@@ -26,7 +26,6 @@ class SequenceASTSimulator(
   ast: PersesSequenceAst,
   private val childSimulators: ImmutableList<AbstractASTSimulator<*>>,
 ) : AbstractASTSimulator<PersesSequenceAst>(ast) {
-
   override fun simulate(
     decisionMaker: AbstractDecisionMaker,
     tree: TDTree,

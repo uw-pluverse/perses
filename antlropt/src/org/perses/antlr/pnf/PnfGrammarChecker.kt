@@ -20,9 +20,7 @@ import org.perses.antlr.ast.PersesAlternativeBlockAst
 import org.perses.antlr.util.AntlrToolWrapper.Companion.doesAntlrAcceptGrammar
 
 class PnfGrammarChecker {
-
   companion object {
-
     @JvmStatic
     fun validateIntermediateGrammar(
       grammarAfter: GrammarPair,
@@ -47,20 +45,21 @@ class PnfGrammarChecker {
       }
     }
 
-    fun checkAntlrAcceptsTheGrammar(
-      grammar: GrammarPair,
-    ) {
-      val parserGrammar = grammar.convertParserToFileContentPair()
-        ?: // if the parser file is empty, then it is not possible to check its validity.
-        return
+    fun checkAntlrAcceptsTheGrammar(grammar: GrammarPair) {
+      val parserGrammar =
+        grammar.convertParserToFileContentPair()
+          ?: // if the parser file is empty, then it is not possible to check its validity.
+          return
       val lexerGrammar = grammar.convertLexerToFileContentPair()
-      val antlrCheckingResult = doesAntlrAcceptGrammar(
-        parserGrammar,
-        lexerGrammar,
-      )
+      val antlrCheckingResult =
+        doesAntlrAcceptGrammar(
+          parserGrammar,
+          lexerGrammar,
+        )
 
       check(antlrCheckingResult.accpeted) {
-        val message = """
+        val message =
+          """
           ====Antlr tool failed==== 
           ${antlrCheckingResult.message}
           
@@ -75,7 +74,7 @@ class PnfGrammarChecker {
           
           ====lexerGrammar====
           ${lexerGrammar?.computeFileContent()}
-        """.trimIndent()
+          """.trimIndent()
 
         System.err.println(message)
         message

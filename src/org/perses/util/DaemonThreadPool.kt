@@ -23,9 +23,8 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 object DaemonThreadPool {
-
-  fun create(numThreads: Int): ListeningExecutorService {
-    return MoreExecutors.listeningDecorator(
+  fun create(numThreads: Int): ListeningExecutorService =
+    MoreExecutors.listeningDecorator(
       Executors.newFixedThreadPool(
         numThreads,
       ) { runnable ->
@@ -34,7 +33,6 @@ object DaemonThreadPool {
         thread
       },
     )
-  }
 
   fun createSingleThreadPool() = create(numThreads = 1)
 

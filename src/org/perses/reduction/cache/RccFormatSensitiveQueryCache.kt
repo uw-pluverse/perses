@@ -23,14 +23,13 @@ class RccFormatSensitiveQueryCache(
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<RccProgramEncoding, RccFormatSensitiveEncoder>(
-  tokenizedProgram,
-  profiler,
-  configuration,
-) {
+    tokenizedProgram,
+    profiler,
+    configuration,
+  ) {
   override fun createEncoder(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ): RccFormatSensitiveEncoder {
-    return RccFormatSensitiveEncoder(baseProgram, profiler, enableCompression = true)
-  }
+  ): RccFormatSensitiveEncoder =
+    RccFormatSensitiveEncoder(baseProgram, profiler, enableCompression = true)
 }

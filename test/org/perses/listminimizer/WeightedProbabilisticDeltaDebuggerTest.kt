@@ -26,7 +26,6 @@ import org.perses.reduction.PropertyTestResult.Companion.NON_INTERESTING_RESULT
 
 @RunWith(JUnit4::class)
 class WeightedProbabilisticDeltaDebuggerTest {
-
   private val input = ImmutableList.of(1, 2, 3, 5, 10)
 
   @Test
@@ -35,15 +34,16 @@ class WeightedProbabilisticDeltaDebuggerTest {
     testWProbDD(property = listOf(1, 2, 3, 5, 10), expected = listOf(1, 2, 3, 5, 10))
     testWProbDD(property = listOf(1), expected = listOf(1))
     testWProbDD(property = listOf(1, 5, 10), expected = listOf(1, 5, 10)).let { testHistory ->
-      assertThat(testHistory).containsExactly(
-        "",
-        "123",
-        "1235",
-        "1210",
-        "1510",
-        "110",
-        "510",
-      ).inOrder()
+      assertThat(testHistory)
+        .containsExactly(
+          "",
+          "123",
+          "1235",
+          "1210",
+          "1510",
+          "110",
+          "510",
+        ).inOrder()
     }
   }
 
@@ -56,29 +56,30 @@ class WeightedProbabilisticDeltaDebuggerTest {
 
     val propertyTest =
       IPropertyTester<Int, String> { configuration ->
-        val candidate = configuration.candidate
-        val deleted = configuration.deleted
+        val candidate = configuration.getCandidateOrFail()
+        val deleted = configuration.deletedElements
         testHistory.add(candidate.joinToString(""))
         delHistory.add(deleted.joinToString(""))
         if (candidate.containsAll(property)) {
-          PropertyTestResultWithPayload(INTERESTING_RESULT, "")
+          LMPropertyTestResult.Completed(INTERESTING_RESULT, "")
         } else {
-          PropertyTestResultWithPayload(NON_INTERESTING_RESULT, "")
+          LMPropertyTestResult.Completed(NON_INTERESTING_RESULT, "")
         }
       }
 
-    val debugger = WeightedProbabilisticDeltaDebugger(
-      AbstractListInputMinimizer.Arguments(
-        needToTestEmpty = true,
-        input = input,
-        propertyTester = propertyTest,
-        onBestUpdateHandler = { _, _ -> },
-        descriptionPrefix = "prefix",
-        weightProvider = { it },
-      ),
-      terminationThreshold = 1.0,
-      initialProbability = 0.25,
-    )
+    val debugger =
+      WeightedProbabilisticDeltaDebugger(
+        ListMinimizerArguments(
+          needToTestEmpty = true,
+          input = input,
+          propertyTester = propertyTest,
+          onBestUpdateHandler = { _, _ -> },
+          descriptionPrefix = "prefix",
+          weightProvider = { it },
+        ),
+        terminationThreshold = 1.0,
+        initialProbability = 0.25,
+      )
 
     val result = debugger.reduce()
     assertThat(result).isEqualTo(expected)

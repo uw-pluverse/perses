@@ -20,7 +20,6 @@ class PersesOptionalAst(
   body: AbstractPersesRuleElement,
   isGreedy: Boolean,
 ) : AbstractPersesQuantifiedAst(body, isGreedy) {
-
   override val operator: String
     get() = "?"
   override val tag: AstTag
@@ -38,12 +37,10 @@ class PersesOptionalAst(
 
   companion object {
     @JvmStatic
-    fun createGreedy(body: AbstractPersesRuleElement): PersesOptionalAst {
-      return PersesOptionalAst(body, true)
-    }
+    fun createGreedy(body: AbstractPersesRuleElement): PersesOptionalAst =
+      PersesOptionalAst(body, true)
 
-    fun createNonGreedy(body: AbstractPersesRuleElement): PersesOptionalAst {
-      return PersesOptionalAst(body, false)
-    }
+    fun createNonGreedy(body: AbstractPersesRuleElement): PersesOptionalAst =
+      PersesOptionalAst(body, false)
   }
 }

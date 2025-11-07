@@ -21,9 +21,7 @@ import org.perses.antlr.ast.DefaultAstVisitor
 import org.perses.antlr.ast.PersesActionAst
 import org.perses.antlr.ast.PersesGrammar
 
-class ActionNodeCollector private constructor() :
-  DefaultAstVisitor() {
-
+class ActionNodeCollector private constructor() : DefaultAstVisitor() {
   private val actions = ArrayList<PersesActionAst>()
 
   override fun visit(ast: PersesActionAst) {
@@ -31,15 +29,16 @@ class ActionNodeCollector private constructor() :
   }
 
   companion object {
-
     fun collectActionNodes(grammar: PersesGrammar): ArrayList<PersesActionAst> {
       val visitor = ActionNodeCollector()
       visitor.preorderGrammar(grammar)
       return visitor.actions
     }
 
-    fun collectActionNodes(ast: AbstractPersesRuleElement): ArrayList<PersesActionAst> {
-      return ActionNodeCollector().apply { preorder(ast) }.actions
-    }
+    fun collectActionNodes(ast: AbstractPersesRuleElement): ArrayList<PersesActionAst> =
+      ActionNodeCollector()
+        .apply {
+          preorder(ast)
+        }.actions
   }
 }

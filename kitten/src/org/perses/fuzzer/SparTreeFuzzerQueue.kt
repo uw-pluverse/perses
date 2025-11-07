@@ -19,19 +19,16 @@ package org.perses.fuzzer
 import java.util.Random
 import java.util.concurrent.atomic.AtomicInteger
 
-class SparTreeFuzzerQueue(sparTreeFuzzers: Iterable<SparTreeFuzzer>) {
-
+class SparTreeFuzzerQueue(
+  sparTreeFuzzers: Iterable<SparTreeFuzzer>,
+) {
   val content = ArrayList(sparTreeFuzzers.toList())
 
-  @Synchronized fun getSize(): Int {
-    return content.size
-  }
+  @Synchronized fun getSize(): Int = content.size
 
   private val index = AtomicInteger(0)
 
-  @Synchronized fun next(): SparTreeFuzzer {
-    return content[index.getAndIncrement() % getSize()]
-  }
+  @Synchronized fun next(): SparTreeFuzzer = content[index.getAndIncrement() % getSize()]
 
   @Synchronized fun add(sparTreeFuzzer: SparTreeFuzzer) {
     content.add(sparTreeFuzzer)
@@ -41,7 +38,10 @@ class SparTreeFuzzerQueue(sparTreeFuzzers: Iterable<SparTreeFuzzer>) {
     content.remove(sparTreeFuzzer)
   }
 
-  @Synchronized fun getRandomFuzzer(random: Random): SparTreeFuzzer {
-    return content[random.nextInt(getSize())]
-  }
+  @Synchronized fun getRandomFuzzer(random: Random): SparTreeFuzzer =
+    content[
+      random.nextInt(
+        getSize(),
+      ),
+    ]
 }

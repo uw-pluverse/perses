@@ -19,20 +19,24 @@ package org.perses.antlr.ast
 import org.perses.util.ast.Indent
 import java.io.PrintStream
 
-class PersesActionAst(val body: String) : AbstractPersesRuleElement() {
-
+class PersesActionAst(
+  val body: String,
+) : AbstractPersesRuleElement() {
   init {
     require(!body.isEmpty())
   }
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.print(body)
   }
 
   @Deprecated("")
-  override fun getChild(index: Int): AbstractPersesRuleElement {
+  override fun getChild(index: Int): AbstractPersesRuleElement =
     throw UnsupportedOperationException()
-  }
 
   override val childCount: Int
     get() = 0
@@ -42,9 +46,7 @@ class PersesActionAst(val body: String) : AbstractPersesRuleElement() {
 
   override fun createWithNewChildren(
     newChildren: List<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement {
-    return PersesActionAst(body)
-  }
+  ): AbstractPersesRuleElement = PersesActionAst(body)
 
   override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean {
     val otherAction = other as PersesActionAst

@@ -27,15 +27,15 @@ import org.perses.CommandOptions
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.c.LanguageC
 import org.perses.program.EnumFormatControl
-import org.perses.reduction.AbstractProgramReductionDriver.Companion.boolToString
 import org.perses.reduction.AbstractProgramReductionDriver.Companion.createConfiguration
 import org.perses.reduction.cache.EnumQueryCachingControl
 import org.perses.reduction.io.RegularReductionInputs
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
+import org.perses.reduction.scheduler.AbstractSchedulerEvent.ReducerCallEvent
+import org.perses.reduction.scheduler.AbstractSchedulerEvent.StatsSnapshotEvent
 import org.perses.reduction.scheduler.ReducerScheduler
-import org.perses.reduction.scheduler.ReducerScheduler.ReducerCallEvent
-import org.perses.reduction.scheduler.ReducerScheduler.StatsSnapshotEvent
 import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.Shells
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -48,25 +48,29 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class RegularProgramReductionDriverTest {
-
   private val workDir = Files.createTempDirectory("ReductionDriverTest_")
-  private val sourceFile = workDir.resolve("t.c").apply {
-    this.createFile()
-    check(Files.exists(this))
-  }
-  private val scriptFile = workDir.resolve("r.sh").apply {
-    this.createFile()
-    check(Files.exists(this))
-    Util.setExecutable(this)
-    check(Files.isExecutable(this))
-    this.writeText("${Shells.SHEBANG_BASH}\n")
-  }
+  private val sourceFile =
+    workDir.resolve("t.c").apply {
+      this.createFile()
+      check(Files.exists(this))
+    }
+  private val scriptFile =
+    workDir.resolve("r.sh").apply {
+      this.createFile()
+      check(Files.exists(this))
+      Util.setExecutable(this)
+      check(Files.isExecutable(this))
+      this.writeText("${Shells.SHEBANG_BASH}\n")
+    }
   private val facadeFactory = builderWithBuiltinLanguages().build()
   private val listenerManager = AsyncReductionListenerManager(listeners = ImmutableList.of())
-  private val globalContext = GlobalContext(
-    globalCacheFile = null,
-    pathToSaveUpdatedGlobalCache = null,
-  )
+  private val globalContext =
+    GlobalContext(
+      enableGlobalCache = false,
+      globalCacheFile = null,
+      pathToSaveUpdatedGlobalCache = null,
+      shaAlgorithm = EnumShaAlgorithm.SHA512,
+    )
 
   @After
   fun teardown() {
@@ -76,36 +80,33 @@ class RegularProgramReductionDriverTest {
   }
 
   @Test
-  fun testBooleanToEnabledOrDisabled() {
-    assertThat(boolToString(true)).isEqualTo("enabled")
-    assertThat(boolToString(false)).isEqualTo("disabled")
-  }
-
-  @Test
   fun testDoesNotThrowNpeWhenLanguageCannotBeDetected() {
-    val cmd = CommandOptions().apply {
-      inputFlags.inputFile = scriptFile
-      inputFlags.testScript = scriptFile
-    }
-    val exception = assertThrows(IllegalStateException::class.java) {
-      RegularReductionInputs.create(
-        testScriptPath = cmd.inputFlags.getTestScript(),
-        mainFilePath = cmd.inputFlags.getSourceFile(),
-        dependencyFiles = ImmutableList.of(),
-      ) {
-        facadeFactory.computeLanguageKindOrThrow(it)
+    val cmd =
+      CommandOptions().apply {
+        inputFlags.inputFile = scriptFile
+        inputFlags.testScript = scriptFile
       }
-    }
+    val exception =
+      assertThrows(IllegalStateException::class.java) {
+        RegularReductionInputs.create(
+          testScriptPath = cmd.inputFlags.getTestScript(),
+          mainFilePath = cmd.inputFlags.getSourceFile(),
+          dependencyFiles = ImmutableList.of(),
+        ) {
+          facadeFactory.computeLanguageKindOrThrow(it)
+        }
+      }
     assertThat(exception.message)
       .startsWith("Failed to detect the language kind for")
   }
 
   @Test
   fun testBackupMainFile() {
-    val cmd = CommandOptions().apply {
-      inputFlags.inputFile = sourceFile
-      inputFlags.testScript = scriptFile
-    }
+    val cmd =
+      CommandOptions().apply {
+        inputFlags.inputFile = sourceFile
+        inputFlags.testScript = scriptFile
+      }
     sourceFile.writeText("a;")
     scriptFile.appendText(
       """
@@ -113,54 +114,72 @@ class RegularProgramReductionDriverTest {
       |
       """.trimMargin(),
     )
-    val inputs = RegularReductionInputs.create(
-      testScriptPath = cmd.inputFlags.getTestScript(),
-      mainFilePath = cmd.inputFlags.getSourceFile(),
-      dependencyFiles = ImmutableList.of(),
-    ) {
-      facadeFactory.computeLanguageKindOrThrow(it)
-    }
-    val parserFacade = facadeFactory.getParserFacadeListForOrNull(
-      inputs.initiallyDeterminedMainDataKind,
-    )!!.defaultParserFacade.create()
-    val driver = RegularProgramReductionDriver.create(
-      globalContext,
-      cmd,
-      inputs,
-      parserFacade,
-      codeFormatControl = inputs.initiallyDeterminedMainDataKind.defaultCodeFormatControl,
-      listenerManager = listenerManager,
-    )
+    val inputs =
+      RegularReductionInputs.create(
+        testScriptPath = cmd.inputFlags.getTestScript(),
+        mainFilePath = cmd.inputFlags.getSourceFile(),
+        dependencyFiles = ImmutableList.of(),
+      ) {
+        facadeFactory.computeLanguageKindOrThrow(it)
+      }
+    val parserFacade =
+      facadeFactory
+        .getParserFacadeListForOrNull(
+          inputs.initiallyDeterminedMainDataKind,
+        )!!
+        .defaultParserFacade
+        .create()
+    val driver =
+      RegularProgramReductionDriver.create(
+        globalContext,
+        cmd,
+        inputs,
+        parserFacade,
+        codeFormatControl = inputs.initiallyDeterminedMainDataKind.defaultCodeFormatControl,
+        listenerManager = listenerManager,
+        shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
+      )
     driver.reduce()
-    val backup = sourceFile.parent.listDirectoryEntries().filter {
-      it.name.startsWith(sourceFile.name) && it.name.endsWith(".orig")
-    }
+    val backup =
+      sourceFile.parent.listDirectoryEntries().filter {
+        it.name.startsWith(sourceFile.name) && it.name.endsWith(".orig")
+      }
     assertThat(backup.size).isEqualTo(1)
     assertThat(backup[0].readText()).isEqualTo(sourceFile.readText())
   }
 
   private fun createConfigGivenCmd(cmd: CommandOptions): ReductionConfiguration {
-    val inputs = RegularReductionInputs.create(
-      testScriptPath = cmd.inputFlags.getTestScript(),
-      mainFilePath = cmd.inputFlags.getSourceFile(),
-      dependencyFiles = ImmutableList.of(),
-    ) {
-      facadeFactory.computeLanguageKindOrThrow(it)
-    }
+    val inputs =
+      RegularReductionInputs.create(
+        testScriptPath = cmd.inputFlags.getTestScript(),
+        mainFilePath = cmd.inputFlags.getSourceFile(),
+        dependencyFiles = ImmutableList.of(),
+      ) {
+        facadeFactory.computeLanguageKindOrThrow(it)
+      }
     val languageKind = inputs.initiallyDeterminedMainDataKind
-    val lexerAtnWrapper = facadeFactory.getParserFacadeListForOrNull(languageKind)!!
-      .defaultParserFacade.create().lexerAtnWrapper
-    val ioManager = RegularProgramReductionDriver.createIOManager(
-      inputs,
-      cmd.resultOutputFlags,
-      codeFormatControl = cmd.reductionControlFlags.codeFormat
-        ?: inputs.initiallyDeterminedMainDataKind.defaultCodeFormatControl,
-      lexerAtnWrapper,
-    )
+    val lexerAtnWrapper =
+      facadeFactory
+        .getParserFacadeListForOrNull(languageKind)!!
+        .defaultParserFacade
+        .create()
+        .lexerAtnWrapper
+    val ioManager =
+      RegularProgramReductionDriver.createIOManager(
+        inputs,
+        cmd.resultOutputFlags,
+        codeFormatControl =
+          cmd.reductionControlFlags.codeFormat
+            ?: inputs.initiallyDeterminedMainDataKind.defaultCodeFormatControl,
+        lexerAtnWrapper,
+        shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
+      )
     return createConfiguration(
       cmd,
-      facadeFactory.getParserFacadeListForOrNull(languageKind)!!
-        .defaultParserFacade.create(),
+      facadeFactory
+        .getParserFacadeListForOrNull(languageKind)!!
+        .defaultParserFacade
+        .create(),
       ioManager.getDefaultProgramFormat(),
     )
   }
@@ -168,87 +187,95 @@ class RegularProgramReductionDriverTest {
   @Test
   fun testEnableTestScriptExecutionCaching() {
     for (format in LanguageC.allowedCodeFormatControl) {
-      val cmd = CommandOptions().apply {
-        inputFlags.inputFile = sourceFile
-        inputFlags.testScript = scriptFile
-        reductionControlFlags.codeFormat = format
-        cacheControlFlags.nodeActionSetCaching = true
-        cacheControlFlags.queryCaching = EnumQueryCachingControl.TRUE
-      }
+      val cmd =
+        CommandOptions().apply {
+          inputFlags.inputFile = sourceFile
+          inputFlags.testScript = scriptFile
+          reductionControlFlags.codeFormat = format
+          cacheControlFlags.nodeActionSetCaching = true
+          cacheControlFlags.queryCaching = EnumQueryCachingControl.TRUE
+        }
       val config = createConfigGivenCmd(cmd)
-      assertThat(config.enableTestScriptExecutionCaching).isTrue()
+      assertThat(config.enableDeprecatedQueryCaching).isTrue()
     }
 
     for (format in LanguageC.allowedCodeFormatControl) {
-      val cmd = CommandOptions().apply {
+      val cmd =
+        CommandOptions().apply {
+          inputFlags.inputFile = sourceFile
+          inputFlags.testScript = scriptFile
+          reductionControlFlags.codeFormat = format
+          cacheControlFlags.nodeActionSetCaching = true
+          cacheControlFlags.queryCaching = EnumQueryCachingControl.FALSE
+        }
+      val config = createConfigGivenCmd(cmd)
+      assertThat(config.enableDeprecatedQueryCaching).isFalse()
+    }
+
+    CommandOptions()
+      .apply {
         inputFlags.inputFile = sourceFile
         inputFlags.testScript = scriptFile
-        reductionControlFlags.codeFormat = format
+        reductionControlFlags.codeFormat = EnumFormatControl.SINGLE_TOKEN_PER_LINE
         cacheControlFlags.nodeActionSetCaching = true
-        cacheControlFlags.queryCaching = EnumQueryCachingControl.FALSE
+        cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
+      }.let {
+        val config = createConfigGivenCmd(it)
+        assertThat(config.enableDeprecatedQueryCaching).isTrue()
       }
-      val config = createConfigGivenCmd(cmd)
-      assertThat(config.enableTestScriptExecutionCaching).isFalse()
-    }
 
-    CommandOptions().apply {
-      inputFlags.inputFile = sourceFile
-      inputFlags.testScript = scriptFile
-      reductionControlFlags.codeFormat = EnumFormatControl.SINGLE_TOKEN_PER_LINE
-      cacheControlFlags.nodeActionSetCaching = true
-      cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
-    }.let {
-      val config = createConfigGivenCmd(it)
-      assertThat(config.enableTestScriptExecutionCaching).isTrue()
-    }
-
-    CommandOptions().apply {
-      inputFlags.inputFile = sourceFile
-      inputFlags.testScript = scriptFile
-      reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
-      cacheControlFlags.nodeActionSetCaching = true
-      cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
-    }.let {
-      val config = createConfigGivenCmd(it)
-      assertThat(config.enableTestScriptExecutionCaching).isFalse()
-    }
+    CommandOptions()
+      .apply {
+        inputFlags.inputFile = sourceFile
+        inputFlags.testScript = scriptFile
+        reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
+        cacheControlFlags.nodeActionSetCaching = true
+        cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
+      }.let {
+        val config = createConfigGivenCmd(it)
+        assertThat(config.enableDeprecatedQueryCaching).isFalse()
+      }
   }
 
   @Test
   fun testStatsSnapshotEventEqualityAndHashcode() {
-    val stats = StatsOfFilesBeingReduced(
-      tokenCount = 1,
-      characterCount = 1,
-      fileContents = ImmutableList.of(),
-    )
-    val e1 = StatsSnapshotEvent(
-      stats,
-      numberOfNonDeletionIterations = 0,
-      fileContentChangedWrtPrevious = true,
-    )
-    val e2 = StatsSnapshotEvent(
-      stats,
-      numberOfNonDeletionIterations = 0,
-      fileContentChangedWrtPrevious = true,
-    )
+    val stats =
+      StatsOfFilesBeingReduced(
+        tokenCount = 1,
+        characterCount = 1,
+        fileContents = ImmutableList.of(),
+      )
+    val e1 =
+      StatsSnapshotEvent(
+        stats,
+        numberOfNonDeletionIterations = 0,
+        fileContentChangedWrtPrevious = true,
+      )
+    val e2 =
+      StatsSnapshotEvent(
+        stats,
+        numberOfNonDeletionIterations = 0,
+        fileContentChangedWrtPrevious = true,
+      )
     assertThat(e1).isNotEqualTo(e2)
   }
 
   @Test
   fun testReducerCallEventEquality() {
     val reducer = PersesNodePrioritizedDfsReducer.META
-    val e1 = ReducerCallEvent(reducer, treeAfterReduction = null)
-    val e2 = ReducerCallEvent(reducer, treeAfterReduction = null)
+    val e1 = ReducerCallEvent(reducer, exceptionStackTrace = null)
+    val e2 = ReducerCallEvent(reducer, exceptionStackTrace = null)
     assertThat(e1).isNotEqualTo(e2)
   }
 
   @Test
   fun testReducerSchedulerGetAllReducerEventsBetween() {
-    val stats = StatsOfFilesBeingReduced(
-      tokenCount = 1,
-      characterCount = 1,
-      fileContents = ImmutableList.of(),
-    )
+    val stats =
+      StatsOfFilesBeingReduced(
+        tokenCount = 1,
+        characterCount = 1,
+        fileContents = ImmutableList.of(),
+      )
     val reducer = PersesNodePrioritizedDfsReducer.META
 
     val history = ReducerScheduler.SchedulerEventHistory()
@@ -277,17 +304,17 @@ class RegularProgramReductionDriverTest {
         fileContentChangedWrtPrevious = true,
       )
 
-    val r1 = ReducerCallEvent(reducer, treeAfterReduction = null)
-    val r2 = ReducerCallEvent(reducer, treeAfterReduction = null)
-    val r3 = ReducerCallEvent(reducer, treeAfterReduction = null)
+    val r1 = ReducerCallEvent(reducer, exceptionStackTrace = null)
+    val r2 = ReducerCallEvent(reducer, exceptionStackTrace = null)
+    val r3 = ReducerCallEvent(reducer, exceptionStackTrace = null)
 
-    history.add(s1)
-    history.add(r1)
-    history.add(s2)
-    history.add(r2)
-    history.add(s3)
-    history.add(r3)
-    history.add(s4)
+    history.addStatsEvent(s1)
+    history.addReducerCallEvent(r1, treeAfterReduction = null)
+    history.addStatsEvent(s2)
+    history.addReducerCallEvent(r2, treeAfterReduction = null)
+    history.addStatsEvent(s3)
+    history.addReducerCallEvent(r3, treeAfterReduction = null)
+    history.addStatsEvent(s4)
 
     assertThat(history.findAllReducerEventsBetween(s1, s4)).containsExactly(r1, r2, r3).inOrder()
     assertThat(history.findAllReducerEventsBetween(s2, s3)).containsExactly(r2).inOrder()
@@ -295,18 +322,19 @@ class RegularProgramReductionDriverTest {
 
   @Test
   fun testTokenSizeCheckWorks() {
-    val reducer = object : ReducerAnnotation(
-      shortName = "fake",
-      description = "fake",
-      deterministic = true,
-      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
-    ) {
-      override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-        TODO("Not yet implemented")
+    val reducer =
+      object : ReducerAnnotation(
+        shortName = "fake",
+        description = "fake",
+        deterministic = true,
+        reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+      ) {
+        override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
+          TODO("Not yet implemented")
+        }
       }
-    }
     val history = ReducerScheduler.SchedulerEventHistory()
-    history.add(
+    history.addStatsEvent(
       StatsSnapshotEvent(
         StatsOfFilesBeingReduced(
           tokenCount = 1,
@@ -317,20 +345,24 @@ class RegularProgramReductionDriverTest {
         fileContentChangedWrtPrevious = true,
       ),
     )
-    history.add(ReducerCallEvent(reducer, treeAfterReduction = null))
-    val exception = assertThrows(Exception::class.java) {
-      history.add(
-        StatsSnapshotEvent(
-          StatsOfFilesBeingReduced(
-            tokenCount = 100,
-            characterCount = 100,
-            fileContents = ImmutableList.of(),
+    history.addReducerCallEvent(
+      ReducerCallEvent(reducer, exceptionStackTrace = null),
+      treeAfterReduction = null,
+    )
+    val exception =
+      assertThrows(Exception::class.java) {
+        history.addStatsEvent(
+          StatsSnapshotEvent(
+            StatsOfFilesBeingReduced(
+              tokenCount = 100,
+              characterCount = 100,
+              fileContents = ImmutableList.of(),
+            ),
+            numberOfNonDeletionIterations = 0,
+            fileContentChangedWrtPrevious = true,
           ),
-          numberOfNonDeletionIterations = 0,
-          fileContentChangedWrtPrevious = true,
-        ),
-      )
-    }
+        )
+      }
     assertThat(exception.message).contains("The reducer cannot increase the token count")
   }
 

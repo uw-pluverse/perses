@@ -21,19 +21,18 @@ import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.antlr.ast.PersesTerminalAst
 
 class ConvertAllAltToRuleReferenceOrTerminalPass : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
-    mutable.nonEmptyAltBlockSequence()
+    mutable
+      .nonEmptyAltBlockSequence()
       .toList() // Materialize the sequence to avoid concurrent modification exception
       .forEach { (name, altBlock) ->
         if (altBlock.size() < 2) {
           return@forEach
         }
-        altBlock.asSequence()
+        altBlock
+          .asSequence()
           .filter { it !is PersesRuleReferenceAst && it !is PersesTerminalAst }
           .forEach { seq ->
             val ruleName = name.createAuxiliaryRuleName(RuleType.OTHER_RULE)

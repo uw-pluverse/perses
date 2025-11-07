@@ -25,7 +25,6 @@ import org.perses.listminimizer.PristineDeltaDebugger.Companion.countBasedPartit
 
 @RunWith(JUnit4::class)
 class PartitionTest {
-
   private val baseList: ImmutableList<Int> = ImmutableList.of(0, 1, 2, 3)
 
   @Test
@@ -91,7 +90,8 @@ class PartitionTest {
   fun testPartitionSize2() {
     val listBuilder = PartitionList.Builder(baseList)
     listBuilder.createPartition(0, 2)
-    PartitionList.Builder(baseList)
+    PartitionList
+      .Builder(baseList)
       .createPartition(0, 2)
       .createPartition(2, 4)
       .build()
@@ -102,21 +102,25 @@ class PartitionTest {
         }
       }
 
-    PartitionList.Builder(baseList)
+    PartitionList
+      .Builder(baseList)
       .createPartition(0, 1)
       .createPartition(1, 3)
       .createPartition(3, 4)
-      .build().let { list ->
+      .build()
+      .let { list ->
         list.partitions[1].let {
           assertThat(it).containsExactly(1, 2).inOrder()
           assertThat(list.computeComplementFor(it).input).containsExactly(0, 3).inOrder()
         }
       }
 
-    PartitionList.Builder(baseList)
+    PartitionList
+      .Builder(baseList)
       .createPartition(0, 2)
       .createPartition(2, 4)
-      .build().let { list ->
+      .build()
+      .let { list ->
         list.partitions.last().let {
           assertThat(it).containsExactly(2, 3).inOrder()
           assertThat(list.computeComplementFor(it).input).containsExactly(0, 1).inOrder()

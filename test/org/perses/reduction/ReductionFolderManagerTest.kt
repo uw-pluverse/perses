@@ -35,35 +35,42 @@ import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.AutoDeletableFolder
 import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class ReductionFolderManagerTest {
-
   private val tempDir =
     AutoDeletableFolder.createTempDirWithClassNameAsPrefix(this)
 
   private val testScript = ScriptFile(Paths.get("test_data/delta_1/r.sh"))
   private val sourceFile = SourceFile(Paths.get("test_data/delta_1/t.c"), LanguageC)
-  private val lexerAtnWrapper = LexerAtnWrapper(PnfCLexer::class.java)
-  val reductionInputs = RegularReductionInputs(
-    testScript,
-    sourceFile,
-    dependencyFiles = ImmutableList.of(),
-  )
-  val outputManagerFactory = RegularOutputManagerFactory(
-    reductionInputs,
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    lexerAtnWrapper,
-  )
+  private val lexerAtnWrapper =
+    LexerAtnWrapper.createLexerWrapperFromLexerClass(
+      PnfCLexer::class.java,
+    )
+  val reductionInputs =
+    RegularReductionInputs(
+      testScript,
+      sourceFile,
+      dependencyFiles = ImmutableList.of(),
+    )
+  val outputManagerFactory =
+    RegularOutputManagerFactory(
+      reductionInputs,
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      lexerAtnWrapper,
+      shaAlgorithm = EnumShaAlgorithm.SHA512,
+    )
   private val outputDir = tempDir.file.resolve("perses_output_dir")
-  val ioManager = TokenReductionIOManager(
-    workingFolder = tempDir.file,
-    reductionInputs = reductionInputs,
-    outputManagerFactory = outputManagerFactory,
-    outputDirectory = outputDir,
-  )
+  val ioManager =
+    TokenReductionIOManager(
+      workingFolder = tempDir.file,
+      reductionInputs = reductionInputs,
+      outputManagerFactory = outputManagerFactory,
+      outputDirectory = outputDir,
+    )
   private val manager = ioManager.lazilyInitializedReductionFolderManager
 
   @After
@@ -75,9 +82,11 @@ class ReductionFolderManagerTest {
   fun testCreateTempDirectory() {
     val prefix = "prefix"
     val postfix = "suffix"
-    val result = (1..5).map {
-      manager.createTempDirectory(prefix, postfix)
-    }.toList()
+    val result =
+      (1..5)
+        .map {
+          manager.createTempDirectory(prefix, postfix)
+        }.toList()
     result.forEach {
       assertThat(it.fileName.toString()).startsWith(prefix)
       assertThat(it.fileName.toString()).endsWith(postfix)
@@ -106,7 +115,10 @@ class ReductionFolderManagerTest {
     assertThat(folder.folder.toFile().listFiles()!!).hasLength(3)
     folder.deleteAllOtherFiles()
     assertThat(
-      folder.folder.toFile().listFiles()!!.map { it.name },
+      folder.folder
+        .toFile()
+        .listFiles()!!
+        .map { it.name },
     ).containsExactly(
       sourceFile.baseName,
       testScript.baseName,
@@ -128,8 +140,13 @@ class ReductionFolderManagerTest {
     assertThat(folder.folder.parent.toAbsolutePath())
       .isEqualTo(manager.rootFolder)
 
-    assertThat(folder.testScript.scriptFile.parent.toAbsolutePath())
-      .isEqualTo(folder.folder.toAbsolutePath())
-    assertThat(folder.testScript.scriptFile.fileName.toString()).isEqualTo("r.sh")
+    assertThat(
+      folder.testScript.scriptFile.parent
+        .toAbsolutePath(),
+    ).isEqualTo(folder.folder.toAbsolutePath())
+    assertThat(
+      folder.testScript.scriptFile.fileName
+        .toString(),
+    ).isEqualTo("r.sh")
   }
 }

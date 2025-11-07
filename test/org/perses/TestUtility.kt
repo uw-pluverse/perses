@@ -64,153 +64,154 @@ import kotlin.io.path.writeText
 
 /** Utility class for testing.  */
 object TestUtility {
-
   @JvmField
-  val OPT_C_PARSER_RULE_NAMES = ImmutableList.builder<String>()
-    .add("primaryExpression")
-    .add("optional__extension")
-    .add("kleene_plus__StringLiteral")
-    .add("genericSelection")
-    .add("genericAssocList")
-    .add("genericAssocListPart")
-    .add("kleene_star__genericAssociationPart")
-    .add("genericAssociation")
-    .add("postfixExpression")
-    .add("optional__comma")
-    .add("optional__argumentExpressionList")
-    .add("argumentExpressionListPart")
-    .add("kleene_star__argumentExpressionListPart")
-    .add("argumentExpressionList")
-    .add("unaryExpression")
-    .add("unaryOperator")
-    .add("castExpression")
-    .add("binaryOperator")
-    .add("nonAssignmentBinaryExpressionPart")
-    .add("kleene_star__nonAssignmentBinaryExpressionPart")
-    .add("nonAssignmentBinaryExpression")
-    .add("conditionalExpressionPart")
-    .add("optional__conditionalExpressionPart")
-    .add("conditionalExpression")
-    .add("assignmentExpression")
-    .add("assignmentOperator")
-    .add("expressionPart")
-    .add("kleene_star__expressionPart")
-    .add("optional__expression")
-    .add("expression")
-    .add("constantExpression")
-    .add("declaration")
-    .add("kleene_star__declarationSpecifiers")
-    .add("kleene_plus__declarationSpecifiers")
-    .add("declarationSpecifier")
-    .add("initDeclaratorListPart")
-    .add("kleene_star__initDeclaratorListPart")
-    .add("optional__initDeclaratorList")
-    .add("initDeclaratorList")
-    .add("initDeclaratorPart")
-    .add("optional__initDeclaratorPart")
-    .add("initDeclarator")
-    .add("storageClassSpecifier")
-    .add("typeSpecifier")
-    .add("optional__identifier")
-    .add("structOrUnionSpecifier")
-    .add("structOrUnion")
-    .add("kleene_plus__structDeclarationList")
-    .add("structDeclaration")
-    .add("specifierQualifierListPart")
-    .add("kleene_plus__specifierQualifierList")
-    .add("structDeclaratorListPart")
-    .add("kleene_star__structDeclaratorList")
-    .add("structDeclaratorList")
-    .add("optional__structDeclaratorList")
-    .add("structDeclarator")
-    .add("optional__declarator")
-    .add("enumSpecifier")
-    .add("enumeratorListPart")
-    .add("kleene_star__enumeratorListPart")
-    .add("enumeratorList")
-    .add("enumeratorPart")
-    .add("optional__enumeratorPart")
-    .add("enumerator")
-    .add("atomicTypeSpecifier")
-    .add("typeQualifier")
-    .add("functionSpecifier")
-    .add("alignmentSpecifier")
-    .add("kleene_star__gccDeclaratorExtension")
-    .add("declarator")
-    .add("optional__assignmentExpression")
-    .add("directDeclaratorPart")
-    .add("kleene_star__directDeclaratorPart")
-    .add("directDeclarator")
-    .add("gccDeclaratorExtension")
-    .add("asmKeyword")
-    .add("gccAttributeSpecifier")
-    .add("gccAttributeListPart")
-    .add("kleene_star__gccAttributeListPart")
-    .add("optional__gccAttributeList")
-    .add("gccAttributeList")
-    .add("gccAttributePart")
-    .add("optional__gccAttributePart")
-    .add("gccAttribute")
-    .add("nestedParenthesesBlockPart")
-    .add("kleene_star__nestedParenthesesBlockPart")
-    .add("nestedParenthesesBlock")
-    .add("pointerPart")
-    .add("kleene_plus__pointerPart")
-    .add("kleene_star__pointerPart")
-    .add("kleene_star__typeQualifierList")
-    .add("kleene_plus__typeQualifierList")
-    .add("parameterTypeListPart")
-    .add("optional__parameterTypeListPart")
-    .add("optional__parameterTypeList")
-    .add("parameterTypeList")
-    .add("parameterListPart")
-    .add("kleene_star__parameterListPart")
-    .add("parameterList")
-    .add("parameterDeclaration")
-    .add("identifierListPart")
-    .add("kleene_star__identifierListPart")
-    .add("identifierList")
-    .add("optional__identifierList")
-    .add("typeName")
-    .add("optional__abstractDeclarator")
-    .add("abstractDeclarator")
-    .add("directAbstractDeclarator")
-    .add("typedefName")
-    .add("initializer")
-    .add("initializerListPart")
-    .add("kleene_star__initializerListPart")
-    .add("initializerList")
-    .add("optional__designation")
-    .add("designation")
-    .add("kleene_plus__designatorList")
-    .add("designator")
-    .add("staticAssertDeclaration")
-    .add("statementPartOne")
-    .add("kleene_star__statementPartOne")
-    .add("statementPartTwo")
-    .add("optional__statementPartTwo")
-    .add("statementPartThree")
-    .add("kleene_star__statementPartThree")
-    .add("statement")
-    .add("asmStatement")
-    .add("labeledStatement")
-    .add("compoundStatement")
-    .add("kleene_star__blockItem")
-    .add("blockItem")
-    .add("expressionStatement")
-    .add("selectionStatementPart")
-    .add("optional__selectionStatementPart")
-    .add("selectionStatement")
-    .add("iterationStatement")
-    .add("jumpStatement")
-    .add("compilationUnit")
-    .add("optional__translationUnit")
-    .add("kleene_plus__externalDeclaration")
-    .add("translationUnit")
-    .add("externalDeclaration")
-    .add("functionDefinition")
-    .add("kleene_star__declaration")
-    .build()
+  val OPT_C_PARSER_RULE_NAMES =
+    ImmutableList
+      .builder<String>()
+      .add("primaryExpression")
+      .add("optional__extension")
+      .add("kleene_plus__StringLiteral")
+      .add("genericSelection")
+      .add("genericAssocList")
+      .add("genericAssocListPart")
+      .add("kleene_star__genericAssociationPart")
+      .add("genericAssociation")
+      .add("postfixExpression")
+      .add("optional__comma")
+      .add("optional__argumentExpressionList")
+      .add("argumentExpressionListPart")
+      .add("kleene_star__argumentExpressionListPart")
+      .add("argumentExpressionList")
+      .add("unaryExpression")
+      .add("unaryOperator")
+      .add("castExpression")
+      .add("binaryOperator")
+      .add("nonAssignmentBinaryExpressionPart")
+      .add("kleene_star__nonAssignmentBinaryExpressionPart")
+      .add("nonAssignmentBinaryExpression")
+      .add("conditionalExpressionPart")
+      .add("optional__conditionalExpressionPart")
+      .add("conditionalExpression")
+      .add("assignmentExpression")
+      .add("assignmentOperator")
+      .add("expressionPart")
+      .add("kleene_star__expressionPart")
+      .add("optional__expression")
+      .add("expression")
+      .add("constantExpression")
+      .add("declaration")
+      .add("kleene_star__declarationSpecifiers")
+      .add("kleene_plus__declarationSpecifiers")
+      .add("declarationSpecifier")
+      .add("initDeclaratorListPart")
+      .add("kleene_star__initDeclaratorListPart")
+      .add("optional__initDeclaratorList")
+      .add("initDeclaratorList")
+      .add("initDeclaratorPart")
+      .add("optional__initDeclaratorPart")
+      .add("initDeclarator")
+      .add("storageClassSpecifier")
+      .add("typeSpecifier")
+      .add("optional__identifier")
+      .add("structOrUnionSpecifier")
+      .add("structOrUnion")
+      .add("kleene_plus__structDeclarationList")
+      .add("structDeclaration")
+      .add("specifierQualifierListPart")
+      .add("kleene_plus__specifierQualifierList")
+      .add("structDeclaratorListPart")
+      .add("kleene_star__structDeclaratorList")
+      .add("structDeclaratorList")
+      .add("optional__structDeclaratorList")
+      .add("structDeclarator")
+      .add("optional__declarator")
+      .add("enumSpecifier")
+      .add("enumeratorListPart")
+      .add("kleene_star__enumeratorListPart")
+      .add("enumeratorList")
+      .add("enumeratorPart")
+      .add("optional__enumeratorPart")
+      .add("enumerator")
+      .add("atomicTypeSpecifier")
+      .add("typeQualifier")
+      .add("functionSpecifier")
+      .add("alignmentSpecifier")
+      .add("kleene_star__gccDeclaratorExtension")
+      .add("declarator")
+      .add("optional__assignmentExpression")
+      .add("directDeclaratorPart")
+      .add("kleene_star__directDeclaratorPart")
+      .add("directDeclarator")
+      .add("gccDeclaratorExtension")
+      .add("asmKeyword")
+      .add("gccAttributeSpecifier")
+      .add("gccAttributeListPart")
+      .add("kleene_star__gccAttributeListPart")
+      .add("optional__gccAttributeList")
+      .add("gccAttributeList")
+      .add("gccAttributePart")
+      .add("optional__gccAttributePart")
+      .add("gccAttribute")
+      .add("nestedParenthesesBlockPart")
+      .add("kleene_star__nestedParenthesesBlockPart")
+      .add("nestedParenthesesBlock")
+      .add("pointerPart")
+      .add("kleene_plus__pointerPart")
+      .add("kleene_star__pointerPart")
+      .add("kleene_star__typeQualifierList")
+      .add("kleene_plus__typeQualifierList")
+      .add("parameterTypeListPart")
+      .add("optional__parameterTypeListPart")
+      .add("optional__parameterTypeList")
+      .add("parameterTypeList")
+      .add("parameterListPart")
+      .add("kleene_star__parameterListPart")
+      .add("parameterList")
+      .add("parameterDeclaration")
+      .add("identifierListPart")
+      .add("kleene_star__identifierListPart")
+      .add("identifierList")
+      .add("optional__identifierList")
+      .add("typeName")
+      .add("optional__abstractDeclarator")
+      .add("abstractDeclarator")
+      .add("directAbstractDeclarator")
+      .add("typedefName")
+      .add("initializer")
+      .add("initializerListPart")
+      .add("kleene_star__initializerListPart")
+      .add("initializerList")
+      .add("optional__designation")
+      .add("designation")
+      .add("kleene_plus__designatorList")
+      .add("designator")
+      .add("staticAssertDeclaration")
+      .add("statementPartOne")
+      .add("kleene_star__statementPartOne")
+      .add("statementPartTwo")
+      .add("optional__statementPartTwo")
+      .add("statementPartThree")
+      .add("kleene_star__statementPartThree")
+      .add("statement")
+      .add("asmStatement")
+      .add("labeledStatement")
+      .add("compoundStatement")
+      .add("kleene_star__blockItem")
+      .add("blockItem")
+      .add("expressionStatement")
+      .add("selectionStatementPart")
+      .add("optional__selectionStatementPart")
+      .add("selectionStatement")
+      .add("iterationStatement")
+      .add("jumpStatement")
+      .add("compilationUnit")
+      .add("optional__translationUnit")
+      .add("kleene_plus__externalDeclaration")
+      .add("translationUnit")
+      .add("externalDeclaration")
+      .add("functionDefinition")
+      .add("kleene_star__declaration")
+      .build()
 
   private val THIRD_PARTY_TEST_PROGRAMS_ROOT = Paths.get("test_data/")
   private val GCC_C_PROGRAM_FOLDER =
@@ -227,15 +228,18 @@ object TestUtility {
     THIRD_PARTY_TEST_PROGRAMS_ROOT.resolve("smtlibv2_programs/smtlibv2_testsuite")
   private val JAVA_PROGRAM_FOLDER =
     THIRD_PARTY_TEST_PROGRAMS_ROOT.resolve("java_programs/openjdk_testsuite")
-  private val parserFacadeFactory = SingleParserFacadeFactory.Builder().apply {
-    add(LanguageC, CParserFacade::class)
-    add(LanguageScala, PnfScalaParserFacade::class)
-    add(LanguageJava, Java8ParserFacade::class)
-    add(LanguagePhp, PhpParserFacade::class)
-    add(LanguagePython3, Python3ParserFacade::class)
-    add(LanguageSmtLibV2, SmtLibV2ParserFacade::class)
-    add(LanguageRust, PnfRustParserFacade::class)
-  }.build()
+  private val parserFacadeFactory =
+    SingleParserFacadeFactory
+      .Builder()
+      .apply {
+        add(LanguageC, CParserFacade::class)
+        add(LanguageScala, PnfScalaParserFacade::class)
+        add(LanguageJava, Java8ParserFacade::class)
+        add(LanguagePhp, PhpParserFacade::class)
+        add(LanguagePython3, Python3ParserFacade::class)
+        add(LanguageSmtLibV2, SmtLibV2ParserFacade::class)
+        add(LanguageRust, PnfRustParserFacade::class)
+      }.build()
 
   fun partitionAndGet(
     list: ImmutableList<Path>,
@@ -243,27 +247,26 @@ object TestUtility {
     ith: Int,
   ): ImmutableList<Path> {
     val counter = AtomicInteger()
-    return list.stream()
+    return list
+      .stream()
       .filter { counter.getAndIncrement() % numOfPartitions == ith }
       .collect(ImmutableList.toImmutableList())
   }
 
   @JvmStatic
-  fun createAntlrTokens(vararg lexemes: String): ImmutableList<Token> {
-    return Arrays.stream(lexemes)
+  fun createAntlrTokens(vararg lexemes: String): ImmutableList<Token> =
+    Arrays
+      .stream(lexemes)
       .map { createAntlrToken(it) }
       .collect(ImmutableList.toImmutableList())
-  }
 
-  fun createAntlrToknesFromList(lexemes: List<String>): ImmutableList<Token> {
-    return lexemes.stream()
+  fun createAntlrToknesFromList(lexemes: List<String>): ImmutableList<Token> =
+    lexemes
+      .stream()
       .map { createAntlrToken(it) }
       .collect(ImmutableList.toImmutableList())
-  }
 
-  fun getOneGccTestFile(fileName: String): Path {
-    return GCC_C_PROGRAM_FOLDER.resolve(fileName)
-  }
+  fun getOneGccTestFile(fileName: String): Path = GCC_C_PROGRAM_FOLDER.resolve(fileName)
 
   @JvmStatic
   val gccTestFiles: ImmutableList<Path>
@@ -290,10 +293,11 @@ object TestUtility {
   val openJdkJavaFiles: ImmutableList<Path>
     get() = getJavaFiles(JAVA_PROGRAM_FOLDER)
 
-  fun getFacade(languageKind: LanguageKind): AbstractParserFacade {
-    return parserFacadeFactory.getParserFacadeListForOrNull(languageKind)!!
-      .defaultParserFacade.create()
-  }
+  fun getFacade(languageKind: LanguageKind): AbstractParserFacade =
+    parserFacadeFactory
+      .getParserFacadeListForOrNull(languageKind)!!
+      .defaultParserFacade
+      .create()
 
   fun generateAdhocFacade(
     combinedGrammerPath: Path,
@@ -312,12 +316,13 @@ object TestUtility {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = tokenNamesOfIdentifiers
 
     testOptions.validate()
-    val installer = AdhocGrammarInstaller(
-      testOptions.computeAdhocGrammarConfiguration(),
-      testPersesConstants,
-      testOptions.outputFlags.output,
-      enablePnfNormalization = enablePnfNormalization,
-    )
+    val installer =
+      AdhocGrammarInstaller(
+        testOptions.computeAdhocGrammarConfiguration(),
+        testPersesConstants,
+        testOptions.outputFlags.output,
+        enablePnfNormalization = enablePnfNormalization,
+      )
     val generatedJar = installer.run()
     return generatedJar.loadMainClass().getConstructor().newInstance() as AbstractParserFacade
   }
@@ -347,14 +352,14 @@ object TestUtility {
     )
   }
 
-  fun createAntlrToken(lexeme: String) = CommonToken(
-    0, // dummy token type,
-    lexeme,
-  )
+  fun createAntlrToken(lexeme: String) =
+    CommonToken(
+      // dummy token type
+      0,
+      lexeme,
+    )
 
-  fun parseFile(file: String): ParseTreeWithParser {
-    return parseFile(Paths.get(file))
-  }
+  fun parseFile(file: String): ParseTreeWithParser = parseFile(Paths.get(file))
 
   fun parseFile(file: Path): ParseTreeWithParser {
     val sourceFile = SourceFile(file, parserFacadeFactory.computeLanguageKindWithFileName(file)!!)
@@ -362,7 +367,10 @@ object TestUtility {
     return facade.parseFile(file)
   }
 
-  fun parseString(sourceCode: String, languageKind: LanguageKind): ParseTreeWithParser {
+  fun parseString(
+    sourceCode: String,
+    languageKind: LanguageKind,
+  ): ParseTreeWithParser {
     val facade = getFacade(languageKind)
     return facade.parseString(sourceCode)
   }
@@ -378,19 +386,16 @@ object TestUtility {
     languageKind: LanguageKind,
     simplifyTree: Boolean = true,
     sparTreeNodeFactory: SparTreeNodeFactory? = null,
-  ): TokenizedProgram {
-    return createSparTreeFromString(
+  ): TokenizedProgram =
+    createSparTreeFromString(
       sourceCode,
       languageKind,
       simplifyTree,
       sparTreeNodeFactory,
     ).programSnapshot
-  }
 
   @JvmStatic
-  fun createSparTreeFromFile(file: String): SparTree {
-    return createSparTreeFromFile(Paths.get(file))
-  }
+  fun createSparTreeFromFile(file: String): SparTree = createSparTreeFromFile(Paths.get(file))
 
   fun createSparTreeFromString(
     sourceCode: String,
@@ -410,19 +415,21 @@ object TestUtility {
   ): SparTree {
     val languageKind = facade.language
     val parseTreeWithParser = facade.parseString(sourceCode)
-    val realSparTreeNodeFactory = if (sparTreeNodeFactory == null) {
-      val factory = createFactory(
-        ParseTreeUtil.getTokens(parseTreeWithParser.tree),
-        languageKind,
-      )
-      SparTreeNodeFactory(
-        facade.metaTokenInfoDb,
-        factory,
-        facade.ruleHierarchy,
-      )
-    } else {
-      sparTreeNodeFactory
-    }
+    val realSparTreeNodeFactory =
+      if (sparTreeNodeFactory == null) {
+        val factory =
+          createFactory(
+            ParseTreeUtil.getTokens(parseTreeWithParser.tree),
+            languageKind,
+          )
+        SparTreeNodeFactory(
+          facade.metaTokenInfoDb,
+          factory,
+          facade.ruleHierarchy,
+        )
+      } else {
+        sparTreeNodeFactory
+      }
     return SparTreeBuilder(
       realSparTreeNodeFactory,
       parseTreeWithParser,
@@ -433,65 +440,59 @@ object TestUtility {
   @JvmStatic
   fun createSparTreeFromFile(file: Path): SparTree {
     val (parseTree) = parseFile(file)
-    val factory = createFactory(
-      ParseTreeUtil.getTokens(parseTree),
-      parserFacadeFactory.computeLanguageKindWithFileName(file)!!,
-    )
+    val factory =
+      createFactory(
+        ParseTreeUtil.getTokens(parseTree),
+        parserFacadeFactory.computeLanguageKindWithFileName(file)!!,
+      )
     return createSparTreeFromFile(file, factory)
   }
 
-  fun createSparTreeFromFile(file: Path, factory: TokenizedProgramFactory): SparTree {
+  fun createSparTreeFromFile(
+    file: Path,
+    tokenizedProgramFactory: TokenizedProgramFactory,
+  ): SparTree {
     val sourceFile = SourceFile(file, parserFacadeFactory.computeLanguageKindWithFileName(file)!!)
     val facade = getFacade(sourceFile.dataKind)
     val parseTree = facade.parseFile(file)
     return SparTreeBuilder(
-      SparTreeNodeFactory(facade.metaTokenInfoDb, factory, facade.ruleHierarchy),
+      SparTreeNodeFactory(facade.metaTokenInfoDb, tokenizedProgramFactory, facade.ruleHierarchy),
       parseTree,
     ).result
   }
 
-  private fun getCFiles(folder: Path): ImmutableList<Path> {
-    return getFilesWithExtension(folder, ".c")
-  }
+  private fun getCFiles(folder: Path): ImmutableList<Path> = getFilesWithExtension(folder, ".c")
 
-  private fun getJavaFiles(folder: Path): ImmutableList<Path> {
-    return getFilesWithExtension(folder, ".java")
-  }
+  private fun getJavaFiles(folder: Path): ImmutableList<Path> =
+    getFilesWithExtension(folder, ".java")
 
-  private fun getGolangFiles(folder: Path): ImmutableList<Path> {
-    return getFilesWithExtension(folder, ".go")
-  }
+  private fun getGolangFiles(folder: Path): ImmutableList<Path> =
+    getFilesWithExtension(folder, ".go")
 
-  private fun getSolidityFiles(folder: Path): ImmutableList<Path> {
-    return getFilesWithExtension(folder, ".sol")
-  }
+  private fun getSolidityFiles(folder: Path): ImmutableList<Path> =
+    getFilesWithExtension(folder, ".sol")
 
-  private fun getRustFiles(folder: Path): ImmutableList<Path> {
-    return getFilesWithExtension(folder, ".rs")
-  }
+  private fun getRustFiles(folder: Path): ImmutableList<Path> = getFilesWithExtension(folder, ".rs")
 
-  private fun getSmtFiles(folder: Path): ImmutableList<Path> {
-    return getFilesWithExtension(folder, ".smt")
-  }
+  private fun getSmtFiles(folder: Path): ImmutableList<Path> = getFilesWithExtension(folder, ".smt")
 
   private fun getFilesWithExtension(
     folder: Path,
     fileExtension: String,
-  ): ImmutableList<Path> {
-    return try {
-      Files.walk(folder)
+  ): ImmutableList<Path> =
+    try {
+      Files
+        .walk(folder)
         .filter { path: Path -> Files.isRegularFile(path) }
         .filter { path: Path ->
           path.toString().endsWith(
             fileExtension,
           )
-        }
-        .sorted()
+        }.sorted()
         .collect(ImmutableList.toImmutableList())
     } catch (e: IOException) {
       throw UncheckedIOException(e)
     }
-  }
 
   fun extractTokens(tree: ParseTree): ArrayList<Token> {
     val result = ArrayList<Token>()
@@ -500,22 +501,23 @@ object TestUtility {
   }
 
   @JvmStatic
-  fun extractTokenTexts(tree: ParseTree): ImmutableList<String> {
-    return extractTokens(tree)
+  fun extractTokenTexts(tree: ParseTree): ImmutableList<String> =
+    extractTokens(tree)
       .filter { it.type != Token.EOF }
       .map { it.text }
       .toImmutableList()
-  }
 
   @JvmStatic
-  fun getBazelPathForTestingResource(klass: Class<*>, resourceName: String): String {
+  fun getBazelPathForTestingResource(
+    klass: Class<*>,
+    resourceName: String,
+  ): String {
     val pkgName = klass.getPackage().name.replace('.', '/')
     return "test/$pkgName/$resourceName"
   }
 
-  fun createCleanWorkingDirectory(klass: Class<*>): Path {
-    return Files.createTempDirectory(klass.simpleName + "_temp_")
-  }
+  fun createCleanWorkingDirectory(klass: Class<*>): Path =
+    Files.createTempDirectory(klass.simpleName + "_temp_")
 
   fun getNodeWithTokens(
     tree: SparTree,
@@ -526,7 +528,10 @@ object TestUtility {
     return map.getNode(tokens, ruleName)
   }
 
-  fun constructNodeRetrievalCode(tree: SparTree, node: AbstractSparTreeNode): String {
+  fun constructNodeRetrievalCode(
+    tree: SparTree,
+    node: AbstractSparTreeNode,
+  ): String {
     val map = createNodeToTokensMap(tree)
     return (
       "TestUtility.getNodeWithTokens(tree, " +
@@ -534,7 +539,7 @@ object TestUtility {
         ", \"" +
         node.ruleName +
         "\");"
-      )
+    )
   }
 
   fun createNodeToTokensMap(tree: SparTree): NodeToTokensMap {
@@ -548,7 +553,7 @@ object TestUtility {
     node: AbstractSparTreeNode,
   ) {
     if (node.isTokenNode()) {
-      val tokens = ImmutableList.of(node.asLexerRule().token.text)
+      val tokens = ImmutableList.of(node.asLexerRule().token.lexemeText)
       builder[node] = tokens
       return
     }
@@ -562,7 +567,10 @@ object TestUtility {
     builder[node] = value.build()
   }
 
-  private fun preOrderTraverse(tree: ParseTree, consumer: (Token) -> Unit) {
+  private fun preOrderTraverse(
+    tree: ParseTree,
+    consumer: (Token) -> Unit,
+  ) {
     if (tree is TerminalNode) {
       consumer.invoke(tree.symbol)
       return
@@ -578,11 +586,12 @@ object TestUtility {
   class NodeToTokensMap(
     private val map: ImmutableMap<AbstractSparTreeNode, ImmutableList<String>>,
   ) {
-    fun getTokens(node: AbstractSparTreeNode): ImmutableList<String> {
-      return map[node]!!
-    }
+    fun getTokens(node: AbstractSparTreeNode): ImmutableList<String> = map[node]!!
 
-    fun getNode(tokens: ImmutableList<String>, ruleName: String): AbstractSparTreeNode {
+    fun getNode(
+      tokens: ImmutableList<String>,
+      ruleName: String,
+    ): AbstractSparTreeNode {
       var result: AbstractSparTreeNode? = null
       for ((key, value) in map) {
         if (value == tokens && key.ruleName == ruleName) {

@@ -27,13 +27,12 @@ import org.perses.util.FileStreamPool
 import kotlin.io.path.name
 
 object PersesListenerManagerCreator {
-
   fun createAsyncReductionListenerManager(
     cmd: CommandOptions,
     fileStreamPool: FileStreamPool,
   ): AsyncReductionListenerManager {
     val builder = ImmutableList.builder<AbstractReductionListener>()
-    builder.add(LoggingListener())
+    builder.add(LoggingListener(hideTimestamps = cmd.verbosityFlags.hideTimestamps))
     cmd.profilingFlags.statDumpFile?.let {
       builder.add(
         StatisticsListener(
@@ -45,26 +44,29 @@ object PersesListenerManagerCreator {
       )
     }
     cmd.profilingFlags.progressDumpFile?.let {
-      val stream = fileStreamPool.rentStream(
-        path = it,
-        description = ProgressMonitorForNodeReducer::class.toString(),
-      )
+      val stream =
+        fileStreamPool.rentStream(
+          path = it,
+          description = ProgressMonitorForNodeReducer::class.toString(),
+        )
       builder.add(
         ProgressMonitorForNodeReducer(stream),
       )
     }
-    cmd.profilingFlags.statDumpFile?.parent?.resolve(
-      "testscript-" + cmd.profilingFlags.statDumpFile?.name,
-    )?.let {
-      builder.add(
-        TestScriptExecutionListener(
-          fileStreamPool.rentStream(
-            path = it,
-            description = TestScriptExecutionListener::class.toString(),
+    cmd.profilingFlags.statDumpFile
+      ?.parent
+      ?.resolve(
+        "testscript-" + cmd.profilingFlags.statDumpFile?.name,
+      )?.let {
+        builder.add(
+          TestScriptExecutionListener(
+            fileStreamPool.rentStream(
+              path = it,
+              description = TestScriptExecutionListener::class.toString(),
+            ),
           ),
-        ),
-      )
-    }
+        )
+      }
     return AsyncReductionListenerManager(listeners = builder.build())
   }
 }

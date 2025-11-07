@@ -23,29 +23,28 @@ import org.perses.reduction.ReducerContext
 class LLMBasedVariableEliminationReducer(
   reducerContext: ReducerContext,
 ) : AbstractLLMBasedReducer(META, reducerContext) {
-
-  override val primaryQuestion: String = """
+  override val primaryQuestion: String =
+    """
     |Given the following program, identify all intermediate or unused variables
     |(it can be a global variable, local variable, function parameter, etc.).
     |Please write the identified variable names into a list.
     |If no variable is identified, just give an empty list.
-  """.trimMargin()
+    """.trimMargin()
 
-  override val followupQuestion: String = """
+  override val followupQuestion: String =
+    """
     |Given the following program and the specified variable,
     |optimize it out by constant propagation or copy propagation.
     |If this variable is unused, just optimize it out.
-  """.trimMargin()
+    """.trimMargin()
 
   object META : AbstractLLMReducerAnnotation(
     shortName = NAME,
     description = "Invoke LLMs for variable elimination.",
-    deterministic = false,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(LLMBasedVariableEliminationReducer(reducerContext))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(LLMBasedVariableEliminationReducer(reducerContext))
   }
 
   companion object {

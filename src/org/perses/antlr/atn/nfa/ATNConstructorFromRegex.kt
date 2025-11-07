@@ -58,21 +58,23 @@ import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.PersesStarAst
 import org.perses.antlr.ast.PersesTerminalAst
 import org.perses.antlr.ast.PersesTokenSetAst
+import org.perses.antlr.ast.PersesUndefinedRuleElement
 import org.perses.antlr.atn.transitionSequence
 
 class ATNConstructorFromRegex {
-
   fun construct(regex: AbstractPersesRuleElement): RuleStartState {
     val constructor = ATNConstructor()
     constructor.postorder(regex)
     val bothEnds = constructor.ast2AtnEnds[regex]!!
-    val ruleEnd = RuleStopState().apply {
-      stateNumber = constructor.nextStateId()
-    }
-    val ruleStart = RuleStartState().apply {
-      stateNumber = constructor.nextStateId()
-      stopState = ruleEnd
-    }
+    val ruleEnd =
+      RuleStopState().apply {
+        stateNumber = constructor.nextStateId()
+      }
+    val ruleStart =
+      RuleStartState().apply {
+        stateNumber = constructor.nextStateId()
+        stopState = ruleEnd
+      }
     val startEpsilon = EpsilonTransition(bothEnds.start)
     ruleStart.addTransition(startEpsilon)
 
@@ -82,16 +84,16 @@ class ATNConstructorFromRegex {
   }
 
   private class ATNConstructor : AbstractAstVisitor() {
+    private var stateIdGenerator = 0
 
-    private var _stateIdGenerator = 0
-
-    fun nextStateId() = ++_stateIdGenerator
+    fun nextStateId() = ++stateIdGenerator
 
     val ast2AtnEnds = HashMap<AbstractPersesRuleElement, AtnEnds>()
 
-    private fun createBasicState() = BasicState().apply {
-      stateNumber = nextStateId()
-    }
+    private fun createBasicState() =
+      BasicState().apply {
+        stateNumber = nextStateId()
+      }
 
     override fun visit(ast: PersesTokenSetAst) {
       TODO("Not yet implemented")
@@ -101,10 +103,16 @@ class ATNConstructorFromRegex {
       TODO("Not yet implemented")
     }
 
+    override fun visit(ast: PersesUndefinedRuleElement) {
+      TODO("Not yet implemented")
+    }
+
     override fun visit(ast: PersesSequenceAst) {
-      val childAtns = ast.children.asSequence()
-        .map { ast2AtnEnds[it] ?: error("$it") }
-        .toList()
+      val childAtns =
+        ast.children
+          .asSequence()
+          .map { ast2AtnEnds[it] ?: error("$it") }
+          .toList()
       assert(childAtns.size > 1)
       val start = childAtns.first().start
       val end = childAtns.last().end
@@ -130,18 +138,22 @@ class ATNConstructorFromRegex {
     }
 
     override fun visit(ast: PersesPlusAst) {
-      val start = PlusBlockStartState().apply {
-        stateNumber = nextStateId()
-      }
-      val end = LoopEndState().apply {
-        stateNumber = nextStateId()
-      }
-      val blockEndState = BlockEndState().apply {
-        stateNumber = nextStateId()
-      }
-      val loopbackState = PlusLoopbackState().apply {
-        stateNumber = nextStateId()
-      }
+      val start =
+        PlusBlockStartState().apply {
+          stateNumber = nextStateId()
+        }
+      val end =
+        LoopEndState().apply {
+          stateNumber = nextStateId()
+        }
+      val blockEndState =
+        BlockEndState().apply {
+          stateNumber = nextStateId()
+        }
+      val loopbackState =
+        PlusLoopbackState().apply {
+          stateNumber = nextStateId()
+        }
 
       loopbackState.addTransition(EpsilonTransition(start))
       loopbackState.addTransition(EpsilonTransition(end))
@@ -159,26 +171,31 @@ class ATNConstructorFromRegex {
 
     override fun visit(ast: PersesStarAst) {
       // FIXME: handle greedy version.
-      val entryState = StarLoopEntryState().apply {
-        stateNumber = nextStateId()
-        this.nonGreedy = false // FIXME: need to handle greedy version
-      }
-      val loopbackState = StarLoopbackState().apply {
-        stateNumber = nextStateId()
-      }
+      val entryState =
+        StarLoopEntryState().apply {
+          stateNumber = nextStateId()
+          this.nonGreedy = false // FIXME: need to handle greedy version
+        }
+      val loopbackState =
+        StarLoopbackState().apply {
+          stateNumber = nextStateId()
+        }
       entryState.loopBackState = loopbackState
-      val endState = LoopEndState().apply {
-        stateNumber = nextStateId()
-      }
+      val endState =
+        LoopEndState().apply {
+          stateNumber = nextStateId()
+        }
       entryState.addTransition(EpsilonTransition(endState))
       loopbackState.addTransition(EpsilonTransition(entryState))
-      val blockStartState = StarBlockStartState().apply {
-        stateNumber = nextStateId()
-      }
+      val blockStartState =
+        StarBlockStartState().apply {
+          stateNumber = nextStateId()
+        }
       entryState.addTransition(EpsilonTransition(blockStartState))
-      val blockEndState = BlockEndState().apply {
-        stateNumber = nextStateId()
-      }
+      val blockEndState =
+        BlockEndState().apply {
+          stateNumber = nextStateId()
+        }
       blockEndState.addTransition(EpsilonTransition(loopbackState))
       blockStartState.endState = blockEndState
       val bodyEnds = ast2AtnEnds[ast.body]!!
@@ -189,12 +206,14 @@ class ATNConstructorFromRegex {
     }
 
     override fun visit(ast: PersesOptionalAst) {
-      val start = BasicBlockStartState().apply {
-        stateNumber = nextStateId()
-      }
-      val end = BlockEndState().apply {
-        stateNumber = nextStateId()
-      }
+      val start =
+        BasicBlockStartState().apply {
+          stateNumber = nextStateId()
+        }
+      val end =
+        BlockEndState().apply {
+          stateNumber = nextStateId()
+        }
       start.endState = end
       start.addTransition(EpsilonTransition(end))
       val bodyEnds = ast2AtnEnds[ast.body]!!
@@ -220,12 +239,14 @@ class ATNConstructorFromRegex {
     }
 
     override fun visit(ast: PersesAlternativeBlockAst) {
-      val start = BasicBlockStartState().apply {
-        stateNumber = nextStateId()
-      }
-      val end = BlockEndState().apply {
-        stateNumber = nextStateId()
-      }
+      val start =
+        BasicBlockStartState().apply {
+          stateNumber = nextStateId()
+        }
+      val end =
+        BlockEndState().apply {
+          stateNumber = nextStateId()
+        }
       start.endState = end
       ast.foreachChildRuleElement {
         val childEnds = ast2AtnEnds[it]!!
@@ -288,8 +309,8 @@ class ATNConstructorFromRegex {
       }
     }
 
-    private fun copyTransition(t: Transition): Transition {
-      return when (t::class.java) {
+    private fun copyTransition(t: Transition): Transition =
+      when (t::class.java) {
         // Note that we have to use the class equality,
         // as NotSetTransition is a subclass of SetTransition
         SetTransition::class.java -> SetTransition(t.target, (t as SetTransition).set)
@@ -299,8 +320,10 @@ class ATNConstructorFromRegex {
         RangeTransition::class.java -> RangeTransition(t.target, (t as RangeTransition).from, t.to)
         else -> error("Unhandled transition $t of ${t::class}")
       }
-    }
   }
 
-  private data class AtnEnds(val start: ATNState, val end: ATNState)
+  private data class AtnEnds(
+    val start: ATNState,
+    val end: ATNState,
+  )
 }

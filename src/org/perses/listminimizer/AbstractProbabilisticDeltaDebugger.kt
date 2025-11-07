@@ -21,15 +21,12 @@ import org.perses.util.toImmutableList
 import kotlin.random.Random
 
 abstract class AbstractProbabilisticDeltaDebugger<T : Any, PropertyPayload, PayloadType : Any>(
-  arguments: Arguments<T, PropertyPayload>,
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
   protected val random: Random? = null,
-) : AbstractListInputMinimizer<T, PropertyPayload>(arguments) {
-
+) : AbstractListMinimizer<T, PropertyPayload>(arguments) {
   private var hasTriedDeleteAll: Boolean = false
 
-  private fun shouldTerminate(): Boolean {
-    return best.all { shouldExcludeElementFromReduction(it) }
-  }
+  private fun shouldTerminate(): Boolean = best.all { shouldExcludeElementFromReduction(it) }
 
   protected abstract val elementComparator: Comparator<ElementWrapper<T>>
 
@@ -37,10 +34,11 @@ abstract class AbstractProbabilisticDeltaDebugger<T : Any, PropertyPayload, Payl
 
   override fun reduceNonEmptyInput() {
     while (!shouldTerminate()) {
-      val copyBest = best
-        .asSequence()
-        .filter { !shouldExcludeElementFromReduction(it) }
-        .toMutableList()
+      val copyBest =
+        best
+          .asSequence()
+          .filter { !shouldExcludeElementFromReduction(it) }
+          .toMutableList()
       check(copyBest.isNotEmpty()) {
         "The list cannot be empty."
       }
@@ -57,14 +55,14 @@ abstract class AbstractProbabilisticDeltaDebugger<T : Any, PropertyPayload, Payl
         hasTriedDeleteAll = true
       }
 
-      val config = Configuration<T>(
-        currentBest = best,
-        candidate_ = null,
-        deleted_ = toBeDeleted.toImmutableList(),
-      )
+      val config =
+        Candidate.DeletionsFromOriginal(
+          original = best,
+          deleted_ = toBeDeleted.toImmutableList(),
+        )
 
       val propertyTestResult = testProperty(config)
-      if (propertyTestResult is PropertyTestResultWithPayload<PropertyPayload> &&
+      if (propertyTestResult is LMPropertyTestResult.Completed<T, PropertyPayload> &&
         propertyTestResult.result.isInteresting
       ) {
         val newBest = Util.computeDifference(best, toBeDeleted)
@@ -81,13 +79,17 @@ abstract class AbstractProbabilisticDeltaDebugger<T : Any, PropertyPayload, Payl
     }
     copyBest.sortWith(elementComparator)
   }
+
   protected abstract fun findNextTest(
     copyBest: List<ElementWrapper<T>>,
   ): MutableList<ElementWrapper<T>>
+
   protected abstract fun updatePayload(toBeDeleted: List<ElementWrapper<T>>)
+
   protected abstract fun createInitialPayload(): PayloadType
 
-  override fun createElementWrapperFor(index: Int, element: T): ElementWrapper<T> {
-    return ElementWrapper(index, element, createInitialPayload())
-  }
+  override fun createElementWrapperFor(
+    index: Int,
+    element: T,
+  ): ElementWrapper<T> = ElementWrapper(index, element, createInitialPayload())
 }

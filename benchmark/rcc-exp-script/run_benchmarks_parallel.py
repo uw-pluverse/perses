@@ -26,8 +26,8 @@ Subjects["all"] = Subjects["perses"] + Subjects["rcc"]
 Cache = {
     "NO": "--edit-caching false --query-caching false",
     "RCC": "--query-cache-type COMPACT_QUERY_CACHE",
-    "SHA": "--query-cache-type CONTENT_SHA512",
-    "SHAFORMAT": "--query-cache-type CONTENT_SHA512_FORMAT --code-format COMPACT_ORIG_FORMAT --query-caching TRUE",
+    "SHA": "--query-cache-type CONTENT_SHA_HASH",
+    "SHAFORMAT": "--query-cache-type CONTENT_SHA_HASH_FORMAT --code-format COMPACT_ORIG_FORMAT --query-caching TRUE",
     "STR": "--query-cache-type ORIG_CONTENT_STRING_BASED",
     "ZIP": "--query-cache-type CONTENT_ZIP",
     "CC": "--query-cache-refresh-threshold 100 --query-cache-type RCC_MEM_LIT",

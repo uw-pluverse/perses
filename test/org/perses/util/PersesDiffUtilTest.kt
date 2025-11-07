@@ -27,12 +27,12 @@ import org.perses.util.PersesDiffUtil.diff
 
 @RunWith(JUnit4::class)
 class PersesDiffUtilTest {
-
   @Test
   fun testDeletion() {
-    val diff = diff(listOf("a", "b"), listOf("b")) { a, b ->
-      a == b
-    }
+    val diff =
+      diff(listOf("a", "b"), listOf("b")) { a, b ->
+        a == b
+      }
     val deltas = diff.deltas
     assertThat(deltas).hasSize(1)
     assertThat(deltas.first()).isInstanceOf(DeleteDelta::class.java)
@@ -40,9 +40,10 @@ class PersesDiffUtilTest {
 
   @Test
   fun testInsertion() {
-    val diff = diff(listOf("a", "c"), listOf("a", "b", "c")) { a, b ->
-      a == b
-    }
+    val diff =
+      diff(listOf("a", "c"), listOf("a", "b", "c")) { a, b ->
+        a == b
+      }
     val deltas = diff.deltas
     assertThat(deltas).hasSize(1)
     assertThat(deltas.first()).isInstanceOf(InsertDelta::class.java)
@@ -50,9 +51,10 @@ class PersesDiffUtilTest {
 
   @Test
   fun testReplacement() {
-    val diff = diff(listOf("a", "c"), listOf("a", "b")) { a, b ->
-      a == b
-    }
+    val diff =
+      diff(listOf("a", "c"), listOf("a", "b")) { a, b ->
+        a == b
+      }
     val deltas = diff.deltas
     assertThat(deltas).hasSize(1)
     assertThat(deltas.first()).isInstanceOf(ChangeDelta::class.java)

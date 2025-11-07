@@ -21,12 +21,18 @@ class TokenSlicingStartEvent internal constructor(
   currentTimeMillis: Long,
   programSize: Int,
   val tokenSliceGranularity: Int,
-) :
-  AbstractStartEvent(currentTimeMillis, programSize) {
-
+) : AbstractStartEvent(currentTimeMillis, programSize) {
   val iteration = fixpointIterationStartEvent.iteration
 
-  fun createEndEvent(currentTimeMillis: Long, programSize: Int): TokenSlicingEndEvent {
+  override val prefixLabelFromRootToHere: String
+    get() =
+      fixpointIterationStartEvent.prefixLabelFromRootToHere +
+        ":Granularity[$tokenSliceGranularity]"
+
+  fun createEndEvent(
+    currentTimeMillis: Long,
+    programSize: Int,
+  ): TokenSlicingEndEvent {
     check(!ended)
     ended = true
     return TokenSlicingEndEvent(
@@ -36,7 +42,5 @@ class TokenSlicingStartEvent internal constructor(
     )
   }
 
-  override fun initialProgramSize(): Int {
-    return fixpointIterationStartEvent.initialProgramSize()
-  }
+  override fun initialProgramSize(): Int = fixpointIterationStartEvent.initialProgramSize()
 }

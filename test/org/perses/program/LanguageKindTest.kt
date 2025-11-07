@@ -27,17 +27,18 @@ import org.perses.util.shell.ShellCommandOnPath.IShellCommandOnPathCreator
 
 @RunWith(JUnit4::class)
 class LanguageKindTest {
-
-  val language = object : LanguageKind(
-    name = "fake",
-    extensions = ImmutableSet.of("fake"),
-    defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-    origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-    allowedCodeFormatControl = ImmutableSet.of(EnumFormatControl.ORIG_FORMAT),
-    defaultFormatterCommandCreators = ImmutableList.of(
-      IShellCommandOnPathCreator { ShellCommandOnPath("fake-formatter-that-should-not-exit") },
-    ),
-  ) {}
+  val language =
+    object : LanguageKind(
+      name = "fake",
+      extensions = ImmutableSet.of("fake"),
+      defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+      origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+      allowedCodeFormatControl = ImmutableSet.of(EnumFormatControl.ORIG_FORMAT),
+      defaultFormatterCommandCreators =
+        ImmutableList.of(
+          IShellCommandOnPathCreator { ShellCommandOnPath("fake-formatter-that-should-not-exit") },
+        ),
+    ) {}
 
   @Test
   fun testShouldNotCrash() {

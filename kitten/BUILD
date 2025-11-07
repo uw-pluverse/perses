@@ -1,14 +1,6 @@
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain")
 
 java_binary(
-    name = "ktlint",
-    main_class = "com.pinterest.ktlint.Main",
-    runtime_deps = [
-        "@maven//:com_pinterest_ktlint",
-    ],
-)
-
-java_binary(
     name = "google_java_format",
     main_class = "com.google.googlejavaformat.java.Main",
     runtime_deps = [

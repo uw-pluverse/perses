@@ -20,7 +20,10 @@ import org.antlr.v4.tool.Grammar
 import org.perses.util.toImmutableList
 
 /** The type of a Antlr grammar node.  */
-enum class RuleType(val signaturePrefix: String, val isLexerRule: Boolean) {
+enum class RuleType(
+  val signaturePrefix: String,
+  val isLexerRule: Boolean,
+) {
   /**
    * The children of this node are all optional.
    *
@@ -65,7 +68,6 @@ enum class RuleType(val signaturePrefix: String, val isLexerRule: Boolean) {
   }
 
   companion object {
-
     @JvmStatic
     val VALUES = values().asSequence().toImmutableList()
 

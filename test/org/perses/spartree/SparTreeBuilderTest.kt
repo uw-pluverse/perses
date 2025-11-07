@@ -31,10 +31,10 @@ import org.perses.program.TokenizedProgramFactory
 import org.perses.program.printer.PrinterRegistry
 import org.perses.util.SimpleStack
 import java.io.File
+import java.nio.charset.StandardCharsets
 
 @RunWith(JUnit4::class)
 class SparTreeBuilderTest {
-
   private fun treeComparison(
     builder: SparTreeBuilder,
     parseTreeRoot: ParseTree,
@@ -71,46 +71,53 @@ class SparTreeBuilderTest {
   @Test
   fun testBuildSparTreeWithOrigParserFacade() {
     val facade: AbstractParserFacade = OrigCParserFacade()
-    val sourceCode = """
+    val sourceCode =
+      """
       |int main() {
       |    return 0;
       |}
-    """.trimMargin()
-    val tree = TestUtility.createSparTreeFromString(
-      sourceCode.trimIndent(),
-      facade,
-      simplifyTree = false,
-    )
-    val printedProgram = PrinterRegistry.getPrinter(
-      EnumFormatControl.COMPACT_ORIG_FORMAT,
-      facade.lexerAtnWrapper,
-    ).print(
-      tree.programSnapshot,
-    ).sourceCode
+      """.trimMargin()
+    val tree =
+      TestUtility.createSparTreeFromString(
+        sourceCode.trimIndent(),
+        facade,
+        simplifyTree = false,
+      )
+    val printedProgram =
+      PrinterRegistry
+        .getPrinter(
+          EnumFormatControl.COMPACT_ORIG_FORMAT,
+          facade.lexerAtnWrapper,
+        ).print(
+          tree.programSnapshot,
+        ).sourceCode
     assertThat(sourceCode.trim()).isEqualTo(printedProgram.trim())
   }
 
   @Test
   fun testSpar2AntlrMap() {
     val filename = "test_data/parentheses/t.c"
-    val source = File(filename).readText(Charsets.UTF_8)
+    val source = File(filename).readText(StandardCharsets.UTF_8)
     val facade = CParserFacade()
 
     val parseTreeWithParser = TestUtility.parseString(source, LanguageC)
-    val factory = TokenizedProgramFactory.createFactory(
-      ParseTreeUtil.getTokens(parseTreeWithParser.tree),
-      LanguageC,
-    )
-    val sparTreeNodeFactory = SparTreeNodeFactory(
-      facade.metaTokenInfoDb,
-      factory,
-      facade.ruleHierarchy,
-    )
-    val builder = SparTreeBuilder(
-      sparTreeNodeFactory,
-      parseTreeWithParser,
-      simplifyTree = false,
-    )
+    val factory =
+      TokenizedProgramFactory.createFactory(
+        ParseTreeUtil.getTokens(parseTreeWithParser.tree),
+        LanguageC,
+      )
+    val sparTreeNodeFactory =
+      SparTreeNodeFactory(
+        facade.metaTokenInfoDb,
+        factory,
+        facade.ruleHierarchy,
+      )
+    val builder =
+      SparTreeBuilder(
+        sparTreeNodeFactory,
+        parseTreeWithParser,
+        simplifyTree = false,
+      )
     val sparTree = builder.result
     treeComparison(builder, parseTreeWithParser.tree, sparTree.realRoot)
   }

@@ -23,8 +23,8 @@ import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.CommandOptions
 import org.perses.antlr.ParseTreeUtil
 import org.perses.grammar.AbstractParserFacade
-import org.perses.listminimizer.AbstractListInputMinimizerListener
-import org.perses.listminimizer.ListInputMinimizerProgressListener
+import org.perses.listminimizer.ListMinimizerProgressListener
+import org.perses.listminimizer.NullListMinimizerListener
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 import org.perses.program.SourceFile
@@ -48,9 +48,11 @@ import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TestScriptExecutorServiceStatisticsSnapshot
 import org.perses.reduction.io.ReductionFolder
 import org.perses.reduction.io.token.TokenReductionIOManager
+import org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
 import org.perses.reduction.reducer.SparTreeRootReplacementReducer
-import org.perses.reduction.reducer.TreeSlicer
+import org.perses.reduction.reducer.latra.CoarseGritLatraReducerAnnotation
+import org.perses.reduction.reducer.latra.FineGritLatraReducerAnnotation
 import org.perses.reduction.reducer.lpr.LLMBasedDataTypeEliminationReducer
 import org.perses.reduction.reducer.lpr.LLMBasedDataTypeSimplificationReducer
 import org.perses.reduction.reducer.lpr.LLMBasedFunctionInliningReducer
@@ -63,12 +65,12 @@ import org.perses.reduction.reducer.vulcan.IdentifierReplacementReducer
 import org.perses.reduction.reducer.vulcan.SubTreeReplacementReducer
 import org.perses.reduction.reducer.vulcan.pattern.LocalExhaustivePatternReducer
 import org.perses.reduction.scheduler.ReducerExecutionPlan
+import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.ContinueOnChange
 import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractExecutionPlanStep
-import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractExecutionPlanStep.Companion.concatenate
 import org.perses.reduction.scheduler.ReducerExecutionPlan.AtomicReducerStep
+import org.perses.reduction.scheduler.ReducerExecutionPlan.Companion.concatenate
 import org.perses.reduction.scheduler.ReducerExecutionPlan.Companion.fixpoint
 import org.perses.reduction.scheduler.ReducerExecutionPlan.Companion.ifProgressed
-import org.perses.reduction.scheduler.ReducerExecutionPlan.ContinueOnChange
 import org.perses.reduction.scheduler.ReducerScheduler
 import org.perses.spartree.AbstractNodeActionSetCache
 import org.perses.spartree.AbstractSparTreeEditListener
@@ -82,7 +84,6 @@ import org.perses.spartree.SparTreeSimplifier
 import org.perses.util.Serialization
 import org.perses.util.TimeSpan
 import org.perses.util.TimeUtil
-import org.perses.util.Util
 import org.perses.util.ktFine
 import org.perses.util.ktInfo
 import org.perses.util.ktSevere
@@ -90,22 +91,25 @@ import org.perses.util.ktWarning
 import org.perses.util.shell.Shells
 import org.perses.util.transformToImmutableList
 import java.lang.ref.WeakReference
+import kotlin.io.path.name
 
 abstract class AbstractProgramReductionDriver(
   globalContext: GlobalContext,
   protected val cmd: CommandOptions,
   ioManager: TokenReductionIOManager,
-  private var tree: SparTreeWithParsability,
+  internal var tree: SparTreeWithParsability,
   val configuration: ReductionConfiguration,
   val listenerManager: AsyncReductionListenerManager,
 ) : AbstractReductionDriver<TokenizedProgram, LanguageKind, TokenReductionIOManager>(
-  globalContext,
-  ioManager,
-  cmd.reductionControlFlags.getNumOfThreads(),
-  cmd.reductionControlFlags.testScriptExecutionTimeoutInSeconds,
-  cmd.reductionControlFlags.testScriptExecutionKeepWaitingAfterTimeout,
-) {
-
+    globalContext = globalContext,
+    ioManager = ioManager,
+    specifiedNumOfThreads = cmd.reductionControlFlags.getNumOfThreads(),
+    scriptExecutionTimeoutInSeconds = cmd.reductionControlFlags.testScriptExecutionTimeoutInSeconds,
+    keepWaitingAfterScriptTimeout =
+      cmd
+        .reductionControlFlags.testScriptExecutionKeepWaitingAfterTimeout,
+    hideTimestampsInLog = cmd.verbosityFlags.hideTimestamps,
+  ) {
   private fun createQueryCacheProfiler() =
     if (cmd.profilingFlags.profileQueryCacheTimeCSV != null) {
       QueryCacheTimeCsvProfiler(
@@ -133,7 +137,7 @@ abstract class AbstractProgramReductionDriver(
     }
 
   private val queryCache =
-    if (configuration.enableTestScriptExecutionCaching) {
+    if (configuration.enableDeprecatedQueryCaching) {
       QueryCacheFactory.createQueryCache(
         computeQueryCacheType(cmd.cacheControlFlags.cacheType, ioManager.getDefaultProgramFormat()),
         tree.programSnapshot,
@@ -141,6 +145,7 @@ abstract class AbstractProgramReductionDriver(
         QueryCacheConfiguration(
           cmd.cacheControlFlags.queryCacheRefreshThresholdAsFraction(),
           enableLightweightRefreshing = cmd.cacheControlFlags.enableLightweightRefreshing,
+          shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
         ),
       )
     } else {
@@ -160,9 +165,7 @@ abstract class AbstractProgramReductionDriver(
       ActionSetProfiler(cmd.profilingFlags.actionSetProfiler!!)
     }
 
-  override fun getInitialProgram(): TokenizedProgram {
-    return tree.programSnapshot
-  }
+  override fun getInitialProgram(): TokenizedProgram = tree.programSnapshot
 
   override fun reduce() {
     printStartTime()
@@ -174,18 +177,17 @@ abstract class AbstractProgramReductionDriver(
       ioManager.backupAllMutableFiles()
       sanityCheckAndLogAndMayThrow()
       ioManager.updateBestResult(parsableTree.programSnapshot)
-      val sparTreeEditListeners = createSparTreeEditListeners(
-        ioManager,
-        queryCache,
-        listenerManager,
-        nodeActionSetCache,
-      )
+      val sparTreeEditListeners =
+        createSparTreeEditListeners(
+          ioManager,
+          queryCache,
+          listenerManager,
+          nodeActionSetCache,
+        )
       parsableTree.registerSparTreeEditListeners(sparTreeEditListeners)
       val tokenizedProgramFactory = parsableTree.tokenizedProgramFactory
       val persesTokenFactory = tokenizedProgramFactory.tokenFactory
-      logger.ktInfo {
-        "The number of lexemes in the token factory is is ${persesTokenFactory.numOfLexemes()}"
-      }
+      listenerManager.notifyNumOfLexemesInPersesTokenFactory(persesTokenFactory.numOfLexemes())
 
       val actionBeforeNonFirstRunOfMainReducers = {
         updateTreeBeforeIteration(reductionStartEvent) { tree ->
@@ -201,19 +203,25 @@ abstract class AbstractProgramReductionDriver(
           check(sparTree.hasTheSameEditListeners(sparTreeEditListeners))
         }
       }
-      val reducerExecutionPlan = createReducerExecutionPlan(
-        atomicMainReducerStep = AtomicReducerStep(
-          reducer = createMainReducerCreator(),
-          actionBefore = actionBeforeNonFirstRunOfMainReducers,
-        ),
-      )
+      val reducerExecutionPlan =
+        createReducerExecutionPlan(
+          atomicMainReducerStep =
+            AtomicReducerStep(
+              reducer = createMainReducerCreator(),
+              actionBefore = actionBeforeNonFirstRunOfMainReducers,
+            ),
+        )
       listenerManager.onAdHocMessageEvent(
         reductionStartEvent.createAdHocMessageEvent(
           programSize = tree.programSnapshot.tokenCount,
+          prefixLabelFromRootToHere = "",
         ) {
           buildString {
             append("The reducer execution plan is listed below.\n")
-            append(reducerExecutionPlan.steps.toDefinition().toYamlString()).append('\n')
+            reducerExecutionPlan.steps.toDefinition().prettyPrint().lines().forEach {
+              append("    ").appendLine(it)
+            }
+            appendLine()
           }
         },
       )
@@ -224,10 +232,11 @@ abstract class AbstractProgramReductionDriver(
     } finally {
       // Just to make sure the onReductionEnd() can be called even in case of exceptions.
       val finalTokenCount = tree.updateTokenCountAndGet()
-      val reductionEndEvent = reductionStartEvent.createEndEvent(
-        programSize = finalTokenCount,
-        testScriptStatistics = executorService.statistics.createSnapshot(),
-      )
+      val reductionEndEvent =
+        reductionStartEvent.createEndEvent(
+          programSize = finalTokenCount,
+          testScriptStatistics = executorService.statistics.createSnapshot(),
+        )
       listenerManager.onReductionEnd(reductionEndEvent)
     }
     callCreduceIfEnabled()
@@ -245,95 +254,143 @@ abstract class AbstractProgramReductionDriver(
         sanityCheckResult = result,
       ),
     )
-    if (result is IReductionDriver.FailingSanityCheckResult) {
+    if (result is IReductionDriver.SanityCheckResult.Failing) {
       throw result.exception
     }
   }
 
   private fun logCacheSettings() {
-    logger.ktInfo {
-      val queryCacheStatus = boolToString(configuration.enableTestScriptExecutionCaching)
-      val editCacheStatus = boolToString(cmd.cacheControlFlags.nodeActionSetCaching)
-      val queryCacheType = cmd.cacheControlFlags.cacheType.name.lowercase()
-      "Cache setting: query-caching=$queryCacheStatus, " +
-        "edit-caching=$editCacheStatus, query-cache=$queryCacheType"
-    }
+    listenerManager.notifyCacheSettings(
+      queryCacheEnabled = configuration.enableDeprecatedQueryCaching,
+      editCacheEnabled = cmd.cacheControlFlags.nodeActionSetCaching,
+      queryCacheType = cmd.cacheControlFlags.cacheType.name,
+    )
   }
 
-  private fun createReductionStartEvent(parsableTree: SparTree) = ReductionStartEvent(
-    System.currentTimeMillis(),
-    WeakReference(parsableTree),
-    parsableTree.tokenCount,
-    commandLineOptions = Serialization.toYamlString(
-      cmd,
-      objectMapperCustomizer = Serialization::customizeObjectMapperByUsingBasenameForPath,
-    ),
-    extraData = "Parser Facade: ${configuration.parserFacade::class}",
-  )
+  private fun createReductionStartEvent(parsableTree: SparTree) =
+    ReductionStartEvent(
+      System.currentTimeMillis(),
+      WeakReference(parsableTree),
+      parsableTree.tokenCount,
+      commandLineOptions =
+        Serialization.toYamlString(
+          cmd,
+          objectMapperCustomizer = Serialization::customizeObjectMapperByUsingBasenameForPath,
+        ),
+      extraData = "Parser Facade: ${configuration.parserFacade::class}",
+    )
 
+  // TODO(cnsun): need to add the coarse-grit latra reducer here.
   private fun createReducerExecutionPlan(
     atomicMainReducerStep: AtomicReducerStep,
   ): ReducerExecutionPlan {
-    val mainReducerSteps = if (configuration.fixpointReductionForMainReducer) {
-      fixpoint { atomicMainReducerStep }
-    } else {
-      atomicMainReducerStep
-    }
-    val coarseGritReducers = createExecutionPlanForCoarseGritReducers(
-      atomicMainReducerStep = atomicMainReducerStep,
-      reducerAnnotations = listOfNotNull(
-        LineBasedConcurrentTokenSlicer.CompositeReducerAnnotation.takeIf { lineSlicerEnabled },
-        TreeSlicer.META.takeIf { cmd.algorithmControlFlags.enableTreeSlicer },
-        ConcurrentTokenSlicer.CompositeReducerAnnotation.takeIf {
-          cmd.algorithmControlFlags.enableTokenSlicer
-        },
-        /* t-rec does not further reduce tokens after vulcan, so run trec right after main */
-        TokenCanonicalizer.META.takeIf { cmd.trecFlags.enableTrec },
-      ).plus(
-        cmd.experimentFlags.onDemandCoarseGritReducerAnnotationClasses.map {
-          ReducerFactory.getReductionAlgorithm(it.name)
-        },
-      ),
-    )
+    val coarseGritLatraReducer =
+      CoarseGritLatraReducerAnnotation
+        .takeIf {
+          cmd.latraFlags.enableLatra &&
+            CoarseGritLatraReducerAnnotation.isLanguageSupported(languageKind())
+        }?.let {
+          AtomicReducerStep(reducer = it, actionBefore = {})
+        }
+    val mainReducerSteps =
+      if (configuration.fixpointReductionForMainReducer) {
+        fixpoint { atomicMainReducerStep }
+      } else {
+        atomicMainReducerStep
+      }
+    val coarseGritReducers =
+      createExecutionPlanForCoarseGritReducers(
+        atomicMainReducerStep = atomicMainReducerStep,
+        reducerAnnotations =
+          listOfNotNull(
+            LineBasedConcurrentTokenSlicer.CompositeReducerAnnotation.takeIf { lineSlicerEnabled },
+            NonSyntacticSingleTreeNodeReducer.META.takeIf {
+              cmd.algorithmControlFlags.enableTreeSlicer
+            },
+            ConcurrentTokenSlicer.CompositeReducerAnnotation.takeIf {
+              cmd.algorithmControlFlags.enableTokenSlicer
+            },
+            // t-rec does not further reduce tokens after vulcan, so run trec right after main
+            if (cmd.trecFlags.enableTRec) {
+              TokenCanonicalizer.META.takeUnless {
+                configuration.parserFacade.lexerAtnWrapper.isATNEmpty().also { isEmpty ->
+                  if (isEmpty) {
+                    logger.ktSevere {
+                      val name = TokenCanonicalizer.META::class.qualifiedName
+                      val parser = configuration.parserFacade::class.qualifiedName
+                      "$name is disabled as the parser $parser has no ATN."
+                    }
+                  }
+                }
+              }
+            } else {
+              null
+            },
+          ).plus(
+            cmd.experimentFlags.onDemandCoarseGritReducerAnnotationClasses.map {
+              ReducerFactory.getReductionAlgorithm(it.name)
+            },
+          ),
+      )
 
-    val mediumGritReducers =
+    val mediumGritLPRReducers =
       createExecutionPlanForLanguageSpecificTransformativeReducers(
         atomicMainReducerStep = atomicMainReducerStep,
-        reducerAnnotations = listOfNotNull(
-          LLMBasedFunctionInliningReducer.META.takeIf { cmd.lprFlags.enableLPR },
-          LLMBasedLoopUnrollingReducer.META.takeIf { cmd.lprFlags.enableLPR },
-          LLMBasedDataTypeEliminationReducer.META.takeIf { cmd.lprFlags.enableLPR },
-          LLMBasedDataTypeSimplificationReducer.META.takeIf { cmd.lprFlags.enableLPR },
-          LLMBasedVariableEliminationReducer.META.takeIf { cmd.lprFlags.enableLPR },
-        ).plus(
-          cmd.experimentFlags.onDemandMediumGritReducerAnnotationClasses.map {
-            ReducerFactory.getReductionAlgorithm(it.name)
-          },
-        ),
+        reducerAnnotations =
+          listOfNotNull(
+            LLMBasedFunctionInliningReducer.META.takeIf { cmd.lprFlags.enableLPR },
+            LLMBasedLoopUnrollingReducer.META.takeIf { cmd.lprFlags.enableLPR },
+            LLMBasedDataTypeEliminationReducer.META.takeIf { cmd.lprFlags.enableLPR },
+            LLMBasedDataTypeSimplificationReducer.META.takeIf { cmd.lprFlags.enableLPR },
+            LLMBasedVariableEliminationReducer.META.takeIf { cmd.lprFlags.enableLPR },
+          ).plus(
+            cmd.experimentFlags.onDemandMediumGritReducerAnnotationClasses.map {
+              ReducerFactory.getReductionAlgorithm(it.name)
+            },
+          ),
         overallFixpoint = configuration.lprConfig.lprFixpoint,
+      )
+    val mediumGritLatraReducers =
+      createExecutionPlanForLanguageSpecificTransformativeReducers(
+        atomicMainReducerStep = atomicMainReducerStep,
+        reducerAnnotations =
+          listOfNotNull(
+            FineGritLatraReducerAnnotation.takeIf { cmd.latraFlags.enableLatra },
+          ),
+        overallFixpoint = cmd.latraFlags.enableFixpoint,
       )
     val fineGritReducers =
       createExecutionPlanForFineGritReducers(
         atomicMainReducerStep = atomicMainReducerStep,
-        reducerAnnotations = listOfNotNull(
-          LocalExhaustivePatternReducer.META.takeIf { cmd.vulcanFlags.enableVulcan },
-          IdentifierReplacementReducer.META.takeIf { cmd.vulcanFlags.enableVulcan },
-          SubTreeReplacementReducer.META.takeIf { cmd.vulcanFlags.enableVulcan },
-        ).plus(
-          cmd.experimentFlags.onDemandFineGritReducerAnnotationClasses.map {
-            ReducerFactory.getReductionAlgorithm(it.name)
-          },
-        ),
+        reducerAnnotations =
+          listOfNotNull(
+            LocalExhaustivePatternReducer.META.takeIf { cmd.vulcanFlags.enableVulcan },
+            IdentifierReplacementReducer.META.takeIf { cmd.vulcanFlags.enableVulcan },
+            SubTreeReplacementReducer.META.takeIf { cmd.vulcanFlags.enableVulcan },
+          ).plus(
+            cmd.experimentFlags.onDemandFineGritReducerAnnotationClasses.map {
+              ReducerFactory.getReductionAlgorithm(it.name)
+            },
+          ),
         overallFixpoint = configuration.vulcanConfig.vulcanFixpoint,
       )
 
-    return ReducerExecutionPlan(
-      steps = concatenate(
+    val sequentialSteps =
+      concatenate(
+        coarseGritLatraReducer,
         mainReducerSteps,
         coarseGritReducers,
-        mediumGritReducers,
+        mediumGritLPRReducers,
+        mediumGritLatraReducers,
         fineGritReducers,
-      ),
+      )
+    return ReducerExecutionPlan(
+      steps =
+        if (configuration.globalFixpoint) {
+          ReducerExecutionPlan.makeSureToWrapWithFixpoint(sequentialSteps)
+        } else {
+          sequentialSteps
+        },
     )
   }
 
@@ -341,14 +398,26 @@ abstract class AbstractProgramReductionDriver(
     atomicMainReducerStep: AtomicReducerStep,
     reducerAnnotations: List<ReducerAnnotation>,
   ): AbstractExecutionPlanStep? {
-    val reducers: ImmutableList<AbstractExecutionPlanStep> = reducerAnnotations
-      .transformToImmutableList { reducer ->
-        fixpoint {
-          ifProgressed(reducer) {
-            fixpoint { atomicMainReducerStep }
+    val reducers: ImmutableList<AbstractExecutionPlanStep> =
+      reducerAnnotations
+        .transformToImmutableList { reducer ->
+          val condition =
+            when (reducer.reductionResultSizeTrend) {
+              ReducerAnnotation.ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE -> {
+                ReducerExecutionPlan.AbstractCondition.ContinueOnSmallSize.INSTANCE
+              }
+              else -> {
+                ContinueOnChange(
+                  maxCountOfAllowedChanges = configuration.vulcanConfig.nonDeletionIterationLimit,
+                )
+              }
+            }
+          fixpoint(condition) {
+            ifProgressed(reducer) {
+              fixpoint { atomicMainReducerStep }
+            }
           }
         }
-      }
     return when (reducers.size) {
       0 -> null
       1 -> reducers.single()
@@ -364,11 +433,12 @@ abstract class AbstractProgramReductionDriver(
     if (reducerAnnotations.isEmpty()) {
       return null
     }
-    val reducers = reducerAnnotations.map {
-      ifProgressed(it) {
-        atomicMainReducerStep
+    val reducers =
+      reducerAnnotations.map {
+        ifProgressed(it) {
+          atomicMainReducerStep
+        }
       }
-    }
     val concatenated = concatenate(reducers)
     return if (overallFixpoint) {
       fixpoint(ContinueOnChange(configuration.vulcanConfig.nonDeletionIterationLimit)) {
@@ -387,11 +457,12 @@ abstract class AbstractProgramReductionDriver(
     if (reducerAnnotations.isEmpty()) {
       return null
     }
-    val reducers = reducerAnnotations.map {
-      fixpoint(ContinueOnChange(configuration.vulcanConfig.nonDeletionIterationLimit)) {
-        ifProgressed(it) { atomicMainReducerStep }
+    val reducers =
+      reducerAnnotations.map {
+        fixpoint(ContinueOnChange(configuration.vulcanConfig.nonDeletionIterationLimit)) {
+          ifProgressed(it) { atomicMainReducerStep }
+        }
       }
-    }
     val concatenated = concatenate(reducers)
     return if (overallFixpoint) {
       fixpoint { concatenated }
@@ -404,26 +475,26 @@ abstract class AbstractProgramReductionDriver(
     reductionStartEvent: ReductionStartEvent,
     reducerExecutionPlan: ReducerExecutionPlan,
   ) {
-    val reducerScheduler = ReducerScheduler(
-      reducerContext = reducerContext,
-      reducerExecutionPlan = reducerExecutionPlan,
-      computeStatistics = this::computeStatistics,
-      reducerRunner = { callReducer(reductionStartEvent, it) },
-    )
-    val minimalSparTree = reducerScheduler
-      .runAndGetGlobalMinimalSparTreeIfDifferentFromCurrentBest()
+    val reducerScheduler =
+      ReducerScheduler(
+        reducerContext = reducerContext,
+        reducerExecutionPlan = reducerExecutionPlan,
+        computeStatistics = this::computeStatistics,
+        reducerRunner = { callReducer(reductionStartEvent, it) },
+      )
+    val minimalSparTree =
+      reducerScheduler
+        .runAndGetGlobalMinimalSparTree()
     listenerManager.onAdHocMessageEvent(
       reductionStartEvent.createAdHocMessageEvent(
         programSize = minimalSparTree?.tokenCount ?: tree.programSnapshot.tokenCount,
+        prefixLabelFromRootToHere = "",
         messageComputer = {
-          val events = reducerScheduler.readSchedulerEvents()
+          val historyAndStats = reducerScheduler.readSchedulerEvents()
+
           buildString {
-            append("The history of the reducer invocation.\n")
-            events.withIndex().forEach { event ->
-              append("[${event.index}]: ${event.value::class.simpleName}\n")
-              append(Serialization.toYamlString(event.value))
-              append("\n")
-            }
+            appendLine("The history of the reducer invocation.")
+            appendLine(historyAndStats.printHistoryAndStatistics())
           }
         },
       ),
@@ -431,27 +502,43 @@ abstract class AbstractProgramReductionDriver(
     if (minimalSparTree == null) {
       return
     }
-    callReducer(
-      reductionStartEvent,
-      SparTreeRootReplacementReducer(
-        reducerContext,
-        minimalSparTree.detachRootFromTree(),
-      ),
-    )
+    val bestTree = tree.getTreeRegardlessOfParsability()
+    check(minimalSparTree.tokenCount <= bestTree.tokenCount) {
+      """${minimalSparTree.tokenCount}
+        |${bestTree.tokenCount}
+        |
+        |${minimalSparTree.printTreeStructure()}
+        |
+        |${bestTree.printTreeStructure()}
+      """.trimMargin()
+    }
+    if (minimalSparTree.tokenCount < bestTree.tokenCount ||
+      (
+        minimalSparTree.tokenCount == bestTree.tokenCount &&
+          minimalSparTree.totalCharacterCount < bestTree.totalCharacterCount
+      )
+    ) {
+      callReducer(
+        reductionStartEvent,
+        SparTreeRootReplacementReducer(
+          reducerContext,
+          minimalSparTree.detachRootFromTree(),
+        ),
+      )
+    }
   }
 
-  private fun computeStatistics(): StatsOfFilesBeingReduced {
-    return StatsOfFilesBeingReduced(
+  private fun computeStatistics(): StatsOfFilesBeingReduced =
+    StatsOfFilesBeingReduced(
       tree.updateTokenCountAndGet(),
       characterCount = tree.programSnapshot.totalCharacterCount,
       ioManager.readAndTrimAllBestFiles().transformToImmutableList {
         StatsOfFilesBeingReduced.FileNameAndContentDigestPair(
           it.fileName,
-          Util.SHA512HashCode.createFromString(it.computeFileContent()),
+          configuration.shaHashAlgorithm.createFromString(it.computeFileContent()),
         )
       },
     )
-  }
 
   private inline fun updateTreeBeforeIteration(
     reductionStartEvent: ReductionStartEvent,
@@ -465,7 +552,7 @@ abstract class AbstractProgramReductionDriver(
       if (!oldSparTree.dirty) {
         message.append("The spartree is not dirty, and thus the rebuilding is skipped.")
       } else {
-        tree = reparseAndCreateSparTree(tree, configuration.parserFacade, ioManager)
+        tree = reparseResultFileAndCreateSparTree(tree, configuration.parserFacade, ioManager)
         if (oldSparTree != tree.getTreeRegardlessOfParsability()) {
           // TODO: this branch needs testing. We currently have no test which can trigger this branch.
           tree.getTreeRegardlessOfParsability().copyListenersFrom(oldSparTree)
@@ -475,7 +562,9 @@ abstract class AbstractProgramReductionDriver(
       listenerManager.onAdHocMessageEvent(
         reductionStartEvent.createAdHocMessageEvent(
           programSize = tree.getTreeRegardlessOfParsability().tokenCount,
-        ) { message.append("\n") },
+          prefixLabelFromRootToHere = "",
+          messageComputer = { message },
+        ),
       )
     }
     treeAssertion(tree)
@@ -485,6 +574,8 @@ abstract class AbstractProgramReductionDriver(
     SparTreeSimplifier.simplify(tree.getTreeRegardlessOfParsability())
   }
 
+  // TODO(cnsun): this needs to be refactored into a spearate reducer, and use calLReducer to
+  //     call creduce.
   private fun callCreduceIfEnabled() {
     if (!cmd.outputRefiningFlags.callCReduce) {
       return
@@ -495,18 +586,21 @@ abstract class AbstractProgramReductionDriver(
       "Calling C-Reduce to further refine the result. #tokens=$origTokenCount"
     }
     val creduceCmd = cmd.outputRefiningFlags.creduceCmd
-    val reductionFolder = executorService.createReductionFolder(
-      prefix = "creduce_at_the_end",
-      suffix = TimeUtil.formatDateForFileName(System.currentTimeMillis()),
-    )
-    ioManager.createOutputManager(program)
+    val reductionFolder =
+      executorService.createReductionFolder(
+        prefix = "creduce_at_the_end",
+        suffix = TimeUtil.formatDateForFileName(System.currentTimeMillis()),
+      )
+    ioManager
+      .createOutputManager(program)
       .write(reductionFolder)
-    val cmdOutput = Shells.singleton.run(
-      constructFullCreduceCommand(creduceCmd, reductionFolder),
-      reductionFolder.folder,
-      captureOutput = false,
-      environment = Shells.CURRENT_ENV,
-    )
+    val cmdOutput =
+      Shells.singleton.run(
+        constructFullCreduceCommand(creduceCmd, reductionFolder),
+        reductionFolder.folder,
+        captureOutput = false,
+        environment = Shells.CURRENT_ENV,
+      )
     if (cmdOutput.exitCode.isNonZero()) {
       val tempDir = copyFilesToTempDir(reductionFolder.folder)
       logger.ktSevere {
@@ -518,9 +612,14 @@ abstract class AbstractProgramReductionDriver(
       /* TODO: we need to put the syntax checking into the reduction script, so that
        *       the result generated by c-reduce is still syntactical valid.
        */
-      tree = ioManager.visitMainSourceFileIn(reductionFolder) {
-        createSparTree(it, configuration.parserFacade)
-      }
+      tree =
+        ioManager.visitMainSourceFileIn(reductionFolder) {
+          createSparTree(
+            fileToReduce = it,
+            parserFacade = configuration.parserFacade,
+            hideTimeStampsInLog = hideTimestampsInLog,
+          )
+        }
     } catch (e: java.lang.Exception) {
       logger.ktSevere { "The file produced by C-Reduce cannot be parsed: $e" }
       return
@@ -565,39 +664,69 @@ abstract class AbstractProgramReductionDriver(
   private fun callReducer(
     reductionStartEvent: ReductionStartEvent,
     reducer: AbstractTokenReducer,
-  ): SparTree? {
+  ): Pair<SparTree, Exception?> {
     val reducerName = reducer.reducerAnnotation.shortName
-    if (cmd.cacheControlFlags.enablePassCache && reducer.reducerAnnotation.deterministic &&
+    if (cmd.cacheControlFlags.enablePassCache &&
+      reducer.reducerAnnotation.deterministic &&
       updatePassLevelCache(reducer.reducerAnnotation) == PassLevelCacheResult.EXISTING_ALREADY
     ) {
-      logger.ktInfo {
-        "[Pass Caching]: The reducer $reducerName is skipped, " +
-          "because the input has been reduced the reducer by before and" +
-          "the input has not changed."
-      }
-      return null
+      listenerManager.onAdHocMessageEvent(
+        reductionStartEvent.createAdHocMessageEvent(
+          programSize = reductionStartEvent.programSize,
+          prefixLabelFromRootToHere = "",
+          messageComputer = {
+            "[Pass Caching]: The reducer $reducerName is skipped, " +
+              "because the input has been reduced the reducer by before and" +
+              "the input has not changed."
+          },
+        ),
+      )
+      return Pair(
+        tree
+          .getTreeRegardlessOfParsability()
+          .deepCopy(
+            AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy,
+          ).result,
+        null,
+      )
     }
     simplifySparTree()
     val preSize = tree.updateTokenCountAndGet()
-    logger.ktInfo {
-      val time = TimeUtil.formatDateForDisplay(System.currentTimeMillis())
-      "$reducerName started at $time. #tokens=$preSize"
-    }
     val currentStat = computeStatistics()
-    val fixpointIterationStartEvent = reductionStartEvent.nextFixpointIteration(
-      programSize = currentStat.tokenCount,
-
-      reducerClass = reducer.reducerAnnotation,
-      treeStructureDumper = {
-        WeakReference(tree.getTreeRegardlessOfParsability()).get()?.printTreeStructure() ?: ""
-      },
-      testScriptStatistics = executorService.statistics.createSnapshot(),
-    )
+    val fixpointIterationStartEvent =
+      reductionStartEvent.nextFixpointIteration(
+        programSize = currentStat.tokenCount,
+        reducerClass = reducer.reducerAnnotation,
+        treeStructureDumper = {
+          WeakReference(tree.getTreeRegardlessOfParsability()).get()?.printTreeStructure() ?: ""
+        },
+        testScriptStatistics = executorService.statistics.createSnapshot(),
+      )
     listenerManager.onFixpointIterationStart(fixpointIterationStartEvent)
-    reducer.reduce(FixpointReductionState(fixpointIterationStartEvent, tree))
-    logger.ktInfo {
-      val time = TimeUtil.formatDateForDisplay(System.currentTimeMillis())
-      "$reducerName ended at $time. #old=$preSize, #new=${tree.updateTokenCountAndGet()}"
+    val reductionState = FixpointReductionState(fixpointIterationStartEvent, tree)
+    val loggingListener =
+      object : AbstractSparTreeEditListener() {
+        override fun onAfterSparTreeEditApplied(event: SparTreeEditEvent) {
+          reducerContext.listenerManager.onBestProgramUpdated(
+            reductionState.fixpointIterationStartEvent.createBestProgramUpdatedEvent(
+              currentTimeMillis = System.currentTimeMillis(),
+              programSizeBefore = event.programSizeBefore,
+              programSizeAfter = event.program.tokenCount,
+            ),
+          )
+        }
+      }
+    var exception: Exception? = null
+    try {
+      tree.getTreeRegardlessOfParsability().registerSparTreeEditListener(loggingListener)
+      reducer.reduce(reductionState)
+    } catch (e: Exception) {
+      // TODO(cnsun): need to dump the stack trace to a special file.
+      e.printStackTrace()
+      listenerManager.onCriticalException(e)
+      exception = e
+    } finally {
+      tree.getTreeRegardlessOfParsability().removeSparTreeEditListener(loggingListener)
     }
     listenerManager.onFixpointIterationEnd(
       fixpointIterationStartEvent.createEndEvent(
@@ -606,38 +735,43 @@ abstract class AbstractProgramReductionDriver(
         testScriptStatistics = executorService.statistics.createSnapshot(),
       ),
     )
-    return tree.getTreeRegardlessOfParsability()
-      .deepCopy(AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy)
-      .result
+    return Pair(
+      tree
+        .getTreeRegardlessOfParsability()
+        .deepCopy(AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy)
+        .result,
+      exception,
+    )
   }
 
   private val passLevelCache = PassLevelCache()
 
-  private fun updatePassLevelCache(reducerAnnotation: ReducerAnnotation): PassLevelCacheResult {
-    return passLevelCache.update(reducerAnnotation) {
-      ioManager.outputManagerFactory.createManagerFor(tree.programSnapshot).shA512HashCode
+  private fun updatePassLevelCache(reducerAnnotation: ReducerAnnotation): PassLevelCacheResult =
+    passLevelCache.update(reducerAnnotation) {
+      ioManager.outputManagerFactory.createManagerFor(tree.programSnapshot).shaHashCode
     }
-  }
 
   // TODO: unit-test this function.
   private fun formatBestFileIfEnabled() {
     if (!cmd.outputRefiningFlags.callFormatter) {
       return
     }
-    val formatCmd = configuration.parserFacade.language.getDefaultWorkingFormatter()
+    val formatCmd = languageKind().getDefaultWorkingFormatter()
     if (formatCmd == null) {
       logger.ktSevere {
         "The default formatter is not working. cmd=" +
-          configuration.parserFacade.language.getAllDefaultFormatterCommandStrings()
+          languageKind().getAllDefaultFormatterCommandStrings()
       }
       return
     }
 
-    val formatFolder = executorService.createReductionFolder(
-      prefix = "formatter_at_the_end_",
-      suffix = TimeUtil.formatDateForFileName(System.currentTimeMillis()),
-    )
-    ioManager.createOutputManager(tree.programSnapshot)
+    val formatFolder =
+      executorService.createReductionFolder(
+        prefix = "formatter_at_the_end_",
+        suffix = TimeUtil.formatDateForFileName(System.currentTimeMillis()),
+      )
+    ioManager
+      .createOutputManager(tree.programSnapshot)
       .write(formatFolder)
     logger.ktInfo {
       "Formatting the reduction result " +
@@ -647,10 +781,11 @@ abstract class AbstractProgramReductionDriver(
     val sourceFileNames = ioManager.getAllSourceFileBaseNamesIn(formatFolder)
 
     for (sourceFileName in sourceFileNames) {
-      val cmdOutput = formatCmd.runWith(
-        ImmutableList.of(sourceFileName),
-        workingDirectory = formatFolder.folder,
-      )
+      val cmdOutput =
+        formatCmd.runWith(
+          ImmutableList.of(sourceFileName),
+          workingDirectory = formatFolder.folder,
+        )
       if (cmdOutput.exitCode.isNonZero()) {
         logger.ktSevere {
           "Failed to call formatter ${formatCmd.normalizedCommand} " +
@@ -675,9 +810,14 @@ abstract class AbstractProgramReductionDriver(
         /* TODO: we need to put the syntax checking into the reduction script, so that
          *       the result generated by c-reduce is still syntactical valid.
          */
-        tree = ioManager.visitMainSourceFileIn(formatFolder) {
-          createSparTree(it, configuration.parserFacade)
-        }
+        tree =
+          ioManager.visitMainSourceFileIn(formatFolder) {
+            createSparTree(
+              fileToReduce = it,
+              parserFacade = configuration.parserFacade,
+              hideTimeStampsInLog = hideTimestampsInLog,
+            )
+          }
       } catch (e: java.lang.Exception) {
         logger.ktSevere {
           "The file produced by the formatter '$formatCmd' cannot be parsed. $e"
@@ -690,6 +830,8 @@ abstract class AbstractProgramReductionDriver(
     }
   }
 
+  private fun languageKind() = configuration.parserFacade.language
+
   override fun close() {
     // trigger the cache to do some profiling work, before profile is closed.
     queryCache.triggerHeartBeat()
@@ -697,70 +839,71 @@ abstract class AbstractProgramReductionDriver(
   }
 
   open fun createMainReducerCreator(): ReducerAnnotation {
-    val algorithmMeta = ReducerFactory.getReductionAlgorithm(
-      cmd.algorithmControlFlags.reductionAlgorithm.let { algName ->
-        algName ?: PersesNodePrioritizedDfsReducer.NAME
-      },
-    )
-    logger.ktInfo {
-      "Reduction algorithm is ${algorithmMeta.shortName}"
-    }
+    val algorithmMeta =
+      ReducerFactory.getReductionAlgorithm(
+        cmd.algorithmControlFlags.reductionAlgorithm.let { algName ->
+          algName ?: PersesNodePrioritizedDfsReducer.NAME
+        },
+      )
     return algorithmMeta
   }
 
-  private val reducerContext = ReducerContext(
-    ioManager,
-    configuration,
-    executorService,
-    listenerManager,
-    queryCache,
-    nodeActionSetCache,
-    actionSetProfiler,
-    sparTreeNodeFactory = tree.getTreeRegardlessOfParsability().sparTreeNodeFactory,
-    deltaDebuggerListener = if (cmd.profilingFlags.profileDeltaDebugger == null) {
-      AbstractListInputMinimizerListener.NullListInputMinimizerListener
-    } else {
-      ListInputMinimizerProgressListener(cmd.profilingFlags.profileDeltaDebugger!!)
-    },
-  )
+  internal val reducerContext =
+    ReducerContext(
+      ioManager = ioManager,
+      configuration = configuration,
+      executorService = executorService,
+      listenerManager = listenerManager,
+      queryCache = queryCache,
+      globalQueryCache = globalContext.globalExecutionCache,
+      nodeActionSetCache = nodeActionSetCache,
+      actionSetProfiler = actionSetProfiler,
+      sparTreeNodeFactory = tree.getTreeRegardlessOfParsability().sparTreeNodeFactory,
+      listMinimizerListener =
+        if (cmd.profilingFlags.profileListMinimizer == null) {
+          NullListMinimizerListener
+        } else {
+          registerToClose(ListMinimizerProgressListener(cmd.profilingFlags.profileListMinimizer!!))
+        },
+    )
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
 
-    private fun reparseAndCreateSparTree(
+    private fun reparseResultFileAndCreateSparTree(
       originalTree: SparTreeWithParsability,
       parserFacade: AbstractParserFacade,
       ioManager: TokenReductionIOManager,
-    ): SparTreeWithParsability {
-      return try {
+    ): SparTreeWithParsability =
+      try {
         val parseTree = parserFacade.parseString(ioManager.readBestMainFile())
-        val sparTree = SparTreeBuilder.createSparTree(
-          originalTree.getTreeRegardlessOfParsability().sparTreeNodeFactory,
-          parseTree,
-        )
+        val sparTree =
+          SparTreeBuilder.createSparTree(
+            originalTree.getTreeRegardlessOfParsability().sparTreeNodeFactory,
+            parseTree,
+          )
         SparTreeWithParsability(sparTree, parsable = true)
       } catch (e: Exception) {
-        logger.ktWarning { "Fail to re-parse the best program." }
         SparTreeWithParsability(
           originalTree.getTreeRegardlessOfParsability(),
           parsable = false,
         )
       }
-    }
 
     internal fun computeQueryCacheType(
       specifiedQueryType: QueryCacheType,
       defaultProgramFormat: EnumFormatControl,
     ): QueryCacheType {
-      val cacheType = if (specifiedQueryType == QueryCacheType.AUTO) {
-        if (defaultProgramFormat == EnumFormatControl.SINGLE_TOKEN_PER_LINE) {
-          QueryCacheType.COMPACT_QUERY_CACHE
+      val cacheType =
+        if (specifiedQueryType == QueryCacheType.AUTO) {
+          if (defaultProgramFormat == EnumFormatControl.SINGLE_TOKEN_PER_LINE) {
+            QueryCacheType.COMPACT_QUERY_CACHE
+          } else {
+            QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE
+          }
         } else {
-          QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE
+          specifiedQueryType
         }
-      } else {
-        specifiedQueryType
-      }
       require(
         cacheType != QueryCacheType.COMPACT_QUERY_CACHE_FORMAT_SENSITIVE ||
           defaultProgramFormat != EnumFormatControl.SINGLE_TOKEN_PER_LINE,
@@ -783,18 +926,15 @@ abstract class AbstractProgramReductionDriver(
         object : AbstractSparTreeEditListener() {
           override fun onAfterSparTreeEditApplied(event: SparTreeEditEvent) {
             ioManager.updateBestResult(event.program)
-            logger.ktFine {
-              "An edit is applied to the spar-tree. New #tokens=${event.program.tokenCount}"
-            }
           }
         },
       )
       builder.add(
         object : AbstractSparTreeEditListener() {
           override fun onAfterSparTreeEditApplied(event: SparTreeEditEvent) {
-            val sizeBefore = queryCache.size()
+            val sizeBefore = queryCache.cacheSize()
             queryCache.evictEntriesLargerThan(event.program)
-            val sizeAfter = queryCache.size()
+            val sizeAfter = queryCache.cacheSize()
             listenerManager.onTestScriptExecutionCacheEntryEviction(sizeBefore, sizeAfter)
           }
         },
@@ -815,28 +955,39 @@ abstract class AbstractProgramReductionDriver(
     fun createSparTree(
       fileToReduce: SourceFile,
       parserFacade: AbstractParserFacade,
+      hideTimeStampsInLog: Boolean,
     ): SparTreeWithParsability {
       val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
-      logger.ktInfo { "Tree Building: Start building spar-tree from input file $fileToReduce" }
+      logger.ktFine {
+        "Tree Building: Start building spar-tree from input file ${fileToReduce.file.name}"
+      }
       val hierarchy = parserFacade.ruleHierarchy
-      logger.ktInfo { "Tree Building: Step 1: Antlr parsing." }
+      logger.ktFine { "Tree Building: Step 1: Antlr parsing." }
       val parseTree = parserFacade.parseString(fileToReduce.textualFileContent)
       // This needs to be enabled, once isInputCompletelyConsumed support the Python grammar.
       // Util.lazyAssert { parseTree.isInputCompletelyConsumed() }
-      val tokenizedProgramFactory = createTokenizedProgramFactory(
-        parseTree.tree,
-        parserFacade.language,
-      )
-      val sparTreeNodeFactory = SparTreeNodeFactory(
-        parserFacade.metaTokenInfoDb,
-        tokenizedProgramFactory,
-        hierarchy,
-      )
-      logger.ktInfo { "Tree Building: Step 2: Converting parse tree to spar-tree" }
+      val tokenizedProgramFactory =
+        createTokenizedProgramFactory(
+          parseTree.tree,
+          parserFacade.language,
+        )
+      val sparTreeNodeFactory =
+        SparTreeNodeFactory(
+          parserFacade.metaTokenInfoDb,
+          tokenizedProgramFactory,
+          hierarchy,
+        )
+      logger.ktFine { "Tree Building: Step 2: Converting parse tree to spar-tree" }
       val sparTree = SparTreeBuilder.createSparTree(sparTreeNodeFactory, parseTree)
-      logger.ktInfo { "Tree Building: Step 3: Simplifying spar-tree" }
-      val time = timeSpanBuilder.end(System.currentTimeMillis())
-      logger.ktInfo { "Tree Building: Finished in $time" }
+      logger.ktFine { "Tree Building: Step 3: Simplifying spar-tree" }
+
+      val time =
+        if (hideTimeStampsInLog) {
+          "<time hidden>"
+        } else {
+          timeSpanBuilder.end(System.currentTimeMillis()).formattedElapsedTime
+        }
+      logger.ktFine { "Tree Building: Finished in $time" }
       return SparTreeWithParsability(sparTree, parsable = true)
     }
 
@@ -846,37 +997,57 @@ abstract class AbstractProgramReductionDriver(
       cmd: CommandOptions,
       parserFacade: AbstractParserFacade,
       defaultProgramFormat: EnumFormatControl,
-    ): ReductionConfiguration {
-      return ReductionConfiguration(
-        fixpointReductionForMainReducer = cmd.reductionControlFlags.fixpoint,
-        enableTestScriptExecutionCaching = computeWhetherToEnableQueryCaching(
-          cmd.cacheControlFlags.queryCaching,
-          defaultProgramFormat,
-          vulcanEnabled = cmd.vulcanFlags.enableVulcan,
-        ),
-        defaultDeltaDebuggerTypeForKleene =
-        cmd.algorithmControlFlags.defaultDeltaDebuggerTypeForKleene,
+    ): ReductionConfiguration =
+      ReductionConfiguration(
+        globalFixpoint = cmd.reductionControlFlags.globalFixpoint,
+        fixpointReductionForMainReducer = cmd.reductionControlFlags.fixpointForMainReducer,
+        enableDeprecatedQueryCaching =
+          computeWhetherToEnableQueryCaching(
+            cmd.cacheControlFlags.queryCaching,
+            defaultProgramFormat,
+            vulcanEnabled = cmd.vulcanFlags.enableVulcan,
+          ),
+        fullyDeterministicMode = cmd.experimentFlags.fullyDeterministicMode,
         numOfReductionThreads = cmd.reductionControlFlags.getNumOfThreads(),
         parserFacade = parserFacade,
-        persesNodeReducerConfig = ReductionConfiguration.PersesNodeReducerConfiguration(
-          maxEditCountForRegularRuleNode = cmd.algorithmControlFlags.maxEditCountForRegularRuleNode,
-          maxBfsDepthForRegularRuleNode = cmd.algorithmControlFlags.maxBfsDepthForRegularRuleNode,
-          stopAtFirstCompatibleChildren = cmd
-            .algorithmControlFlags.stopAtFirstCompatibleChildForRegularRuleNode,
-        ),
-        vulcanConfig = ReductionConfiguration.VulcanConfig(
-          nonDeletionIterationLimit = cmd.vulcanFlags.nonDeletionIterationLimit,
-          windowSizeForLocalExhaustivePatternReduction = cmd.vulcanFlags.windowSize,
-          vulcanFixpoint = cmd.vulcanFlags.vulcanFixpoint,
-        ),
-        lprConfig = ReductionConfiguration.LPRConfig(
-          llmClientPath = cmd.lprFlags.llmClientPath,
-          lprFixpoint = cmd.lprFlags.lprFixpoint,
-        ),
+        persesNodeReducerConfig =
+          ReductionConfiguration.PersesNodeReducerConfiguration(
+            maxEditCountForRegularRuleNode =
+              cmd
+                .algorithmControlFlags.maxEditCountForRegularRuleNode,
+            maxBfsDepthForRegularRuleNode = cmd.algorithmControlFlags.maxBfsDepthForRegularRuleNode,
+            stopAtFirstCompatibleChildren =
+              cmd
+                .algorithmControlFlags.stopAtFirstCompatibleChildForRegularRuleNode,
+          ),
+        listMinimizerConfig =
+          cmd.algorithmControlFlags.let {
+            ReductionConfiguration.ListMinimizerConfig(
+              defaultListMinimizerTypeForKleene = it.defaultListMinimizerTypeForKleene,
+              defaultListMinimizerTypeForHdd = it.defaultListMinimizerTypeForHDD,
+              minSlidingWindowSize = it.minSlicingWindowSize,
+              maxSlidingWindowSize = it.maxSlicingWindowSize,
+            )
+          },
+        vulcanConfig =
+          cmd.vulcanFlags.let {
+            ReductionConfiguration.VulcanConfig(
+              nonDeletionIterationLimit = it.nonDeletionIterationLimit,
+              windowSizeForLocalExhaustivePatternReduction = it.windowSize,
+              vulcanFixpoint = it.vulcanFixpoint,
+            )
+          },
+        lprConfig =
+          ReductionConfiguration.LPRConfig(
+            llmClientPath = cmd.lprFlags.llmClientPath,
+            lprFixpoint = cmd.lprFlags.lprFixpoint,
+          ),
+        latraConfig =
+          ReductionConfiguration.LatraConfig(
+            listMinimizerForTransformations = cmd.latraFlags.transformationListMinimizer,
+          ),
+        shaHashAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
       )
-    }
-
-    fun boolToString(value: Boolean) = if (value) "enabled" else "disabled"
 
     // We should enable SHA512 by default, as it is compatible with every algorithm.
     internal fun computeWhetherToEnableQueryCaching(

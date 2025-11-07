@@ -22,12 +22,14 @@ class BestProgramUpdateEvent(
   val programSizeBefore: Int,
   programSizeAfter: Int,
 ) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSizeAfter) {
-
   init {
-    // FIXME: this also needs to check the num of chars of tokens in the case of ==.
+    // FIXME(cnsun): this also needs to check the num of chars of tokens in the case of ==.
     //   FIXME(cnsun): fix this assertion
     //   check(programSizeBefore >= programSizeAfter)
   }
 
   override fun initialProgramSize() = currentFixpointIteration.initialProgramSize()
+
+  override val prefixLabelFromRootToHere: String
+    get() = currentFixpointIteration.prefixLabelFromRootToHere
 }

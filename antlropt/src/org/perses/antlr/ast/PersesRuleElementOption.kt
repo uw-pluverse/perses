@@ -25,18 +25,25 @@ class PersesRuleElementOption(
   val key: String,
   val value: String,
 ) : AbstractPersesRuleElement() {
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
-    stream.append("<").append(key).append("=").append(value).append(">")
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
+    stream
+      .append("<")
+      .append(key)
+      .append("=")
+      .append(value)
+      .append(">")
   }
 
   override val childCount: Int
     get() = 0
 
   @Deprecated("")
-  override fun getChild(index: Int): AbstractPersesRuleElement {
+  override fun getChild(index: Int): AbstractPersesRuleElement =
     throw UnsupportedOperationException()
-  }
 
   override val tag: AstTag
     get() = AstTag.RULE_ELEMENT_OPTION
@@ -50,8 +57,7 @@ class PersesRuleElementOption(
 
   companion object {
     @JvmStatic
-    fun isRuleElementOption(ast: GrammarAST): Boolean {
-      return ast.getToken().type == ANTLRParser.ELEMENT_OPTIONS
-    }
+    fun isRuleElementOption(ast: GrammarAST): Boolean =
+      ast.getToken().type == ANTLRParser.ELEMENT_OPTIONS
   }
 }

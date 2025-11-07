@@ -26,33 +26,25 @@ import org.perses.util.Interval
 import org.perses.util.Util.fixpoint
 
 object OptionalExtractionUtil {
-
   class Candidate(
     val longSeq: CandidateElement<PersesSequenceAst>,
     val shortSeq: CandidateElement<AbstractPersesRuleElement>,
     val gapInLongSequence: Interval,
   ) {
-
-    fun getGapAst(): AbstractPersesRuleElement {
-      return longSeq.ast.subsequence(
+    fun getGapAst(): AbstractPersesRuleElement =
+      longSeq.ast.subsequence(
         gapInLongSequence.leftInclusive,
         gapInLongSequence.rightExclusive,
       )
-    }
   }
 
   class CandidateElement<T : AbstractPersesRuleElement>(
     val ast: T,
     val listRepresentation: ImmutableList<AbstractPersesRuleElement>,
   ) {
+    fun size(): Int = listRepresentation.size
 
-    fun size(): Int {
-      return listRepresentation.size
-    }
-
-    fun getChild(index: Int): AbstractPersesRuleElement {
-      return listRepresentation[index]
-    }
+    fun getChild(index: Int): AbstractPersesRuleElement = listRepresentation[index]
 
     fun asSequence(): CandidateElement<PersesSequenceAst> {
       assert(ast is PersesSequenceAst)
@@ -60,9 +52,7 @@ object OptionalExtractionUtil {
     }
 
     companion object {
-      fun create(
-        e: AbstractPersesRuleElement,
-      ): CandidateElement<AbstractPersesRuleElement> {
+      fun create(e: AbstractPersesRuleElement): CandidateElement<AbstractPersesRuleElement> {
         assert(isSeqOrRuleRefOrTerminal(e))
         return when (e.tag) {
           AstTag.RULE_REF,
@@ -90,11 +80,12 @@ object OptionalExtractionUtil {
       val gapAst = candidate.getGapAst()
       val replacement = SmartAstConstructor.createForOptional(gapAst, isGreedy = true)
       check(replacement.tag == AstTag.OPTIONAL || replacement.tag == AstTag.STAR)
-      val newAlt = AstUtil.replaceGapInSequence(
-        candidate.longSeq.ast,
-        candidate.gapInLongSequence,
-        replacement,
-      )
+      val newAlt =
+        AstUtil.replaceGapInSequence(
+          candidate.longSeq.ast,
+          candidate.gapInLongSequence,
+          replacement,
+        )
       if (!newAlt.isEquivalent(candidate.longSeq.ast)) {
         newBlock.replace(candidate.longSeq.ast, newAlt)
       }
@@ -102,14 +93,13 @@ object OptionalExtractionUtil {
     }.asRuleBody()
   }
 
-  fun searchForCandidate(
-    alternatives: Iterable<AbstractPersesRuleElement>,
-  ): Candidate? {
-    val sortedSequenceDefs = alternatives
-      .asSequence()
-      .filter { isSeqOrRuleRefOrTerminal(it) }
-      .sortedBy { it.sourceCode }
-      .toList()
+  fun searchForCandidate(alternatives: Iterable<AbstractPersesRuleElement>): Candidate? {
+    val sortedSequenceDefs =
+      alternatives
+        .asSequence()
+        .filter { isSeqOrRuleRefOrTerminal(it) }
+        .sortedBy { it.sourceCode }
+        .toList()
     val size = sortedSequenceDefs.size
     for (i in 0 until size - 1) {
       val first = CandidateElement.create(sortedSequenceDefs[i])
@@ -163,7 +153,8 @@ object OptionalExtractionUtil {
     val intervalStart = longIndex
     val intervalEnd = shortIndex + longSize - shortSize
     while (shortIndex < shortSize) {
-      if (!longSeq.getChild(shortIndex + longSize - shortSize)
+      if (!longSeq
+          .getChild(shortIndex + longSize - shortSize)
           .isEquivalent(shortSeq.getChild(shortIndex))
       ) {
         return null

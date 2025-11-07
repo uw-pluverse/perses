@@ -20,16 +20,12 @@ class TokenSlicingEndEvent internal constructor(
   startEvent: TokenSlicingStartEvent,
   currentTimeMillis: Long,
   programSize: Int,
-) :
-  AbstractEndEvent<TokenSlicingStartEvent>(startEvent, currentTimeMillis, programSize) {
-
+) : AbstractEndEvent<TokenSlicingStartEvent>(startEvent, currentTimeMillis, programSize) {
   val iteration = startEvent.iteration
 
   val reducerName: String by lazy {
     startEvent.fixpointIterationStartEvent.reducerClass.shortName
   }
 
-  override fun initialProgramSize(): Int {
-    return startEvent.initialProgramSize()
-  }
+  override fun initialProgramSize(): Int = startEvent.initialProgramSize()
 }

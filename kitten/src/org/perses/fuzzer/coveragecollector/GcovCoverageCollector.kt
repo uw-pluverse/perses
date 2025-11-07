@@ -37,13 +37,13 @@ class GcovCoverageCollector(
   val monitorInterval: Long,
   val resultFile: Path,
 ) : ICoverageCollector {
-
-  private val gcovrCommand = ShellCommandOnPath("gcovr").also {
-    val versionOutput = it.runWith(extraArguments = ImmutableList.of("--version"))
-    require(versionOutput.exitCode.isZero()) {
-      versionOutput
+  private val gcovrCommand =
+    ShellCommandOnPath("gcovr").also {
+      val versionOutput = it.runWith(extraArguments = ImmutableList.of("--version"))
+      require(versionOutput.exitCode.isZero()) {
+        versionOutput
+      }
     }
-  }
 
   override fun launch(): ExecutorService? {
     resultFile.writeText("line coverage: 0\nbranch coverage: 0\n\n")
@@ -67,18 +67,20 @@ class GcovCoverageCollector(
 
   @VisibleForTesting
   override fun getCoverageReport(): CoverageReport {
-    val cmdOutput = gcovrCommand
-      .runWith(
-        extraArguments = ImmutableList.of(
-          "-r",
-          sourcePath.toString(),
-          "--json-summary-pretty",
-          ".",
-        ),
-        captureOutput = true,
-        workingDirectory = infoPath,
-        environment = Shells.CURRENT_ENV,
-      )
+    val cmdOutput =
+      gcovrCommand
+        .runWith(
+          extraArguments =
+            ImmutableList.of(
+              "-r",
+              sourcePath.toString(),
+              "--json-summary-pretty",
+              ".",
+            ),
+          captureOutput = true,
+          workingDirectory = infoPath,
+          environment = Shells.CURRENT_ENV,
+        )
     if (cmdOutput.exitCode.isNonZero()) {
       throw RuntimeException(
         """

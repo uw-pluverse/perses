@@ -24,26 +24,30 @@ import org.perses.antlr.ast.PersesRuleElementLabel
 import org.perses.antlr.ast.TransformDecision
 
 class RemoveUnusedLabelPass : AbstractPnfPass() {
-
   override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
-    val ruleNamesWithActions = parserGrammar.parserRules.filter(
-      this::hasCode,
-    ).map { it.ruleNameHandle }
+    val ruleNamesWithActions =
+      parserGrammar.parserRules
+        .filter(
+          this::hasCode,
+        ).map { it.ruleNameHandle }
     if (ruleNamesWithActions.isNotEmpty()) {
       return grammar
     }
     val mutableGrammar = MutableGrammar.createParserRulesFrom(parserGrammar)
     mutableGrammar.nonEmptyAltBlockSequence().forEach { (_, altBlock) ->
-      val newValues = altBlock.asSequence().map { alternative ->
-        when (val decision = RemoveRuleElementLabelEdit().apply(alternative)) {
-          is TransformDecision.Keep -> alternative // Do nothing
-          is TransformDecision.Replace -> {
-            decision.newValue
-          }
-          else -> error(decision)
-        }
-      }.toList()
+      val newValues =
+        altBlock
+          .asSequence()
+          .map { alternative ->
+            when (val decision = RemoveRuleElementLabelEdit().apply(alternative)) {
+              is TransformDecision.Keep -> alternative // Do nothing
+              is TransformDecision.Replace -> {
+                decision.newValue
+              }
+              else -> error(decision)
+            }
+          }.toList()
       altBlock.clear()
       newValues.forEach {
         altBlock.addIfNotEquivalent(it)
@@ -60,22 +64,24 @@ class RemoveUnusedLabelPass : AbstractPnfPass() {
       return true
     }
     var hasCode = false
-    val visitor = object : DefaultAstVisitor() {
-      override fun visit(ast: PersesActionAst) {
-        super.visit(ast)
-        hasCode = true
+    val visitor =
+      object : DefaultAstVisitor() {
+        override fun visit(ast: PersesActionAst) {
+          super.visit(ast)
+          hasCode = true
+        }
       }
-    }
     visitor.preorder(ast.body)
     return hasCode
   }
 
-  internal class RemoveRuleElementLabelEdit : ReplaceEdit(
-    oldPredicate = {
-      it.tag == AstTag.RULE_ELEMENT_LABEL
-    },
-    newValueComputer = { oldValue ->
-      (oldValue as PersesRuleElementLabel).child
-    },
-  )
+  internal class RemoveRuleElementLabelEdit :
+    ReplaceEdit(
+      oldPredicate = {
+        it.tag == AstTag.RULE_ELEMENT_LABEL
+      },
+      newValueComputer = { oldValue ->
+        (oldValue as PersesRuleElementLabel).child
+      },
+    )
 }

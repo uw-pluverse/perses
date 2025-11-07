@@ -24,7 +24,6 @@ abstract class AbstractPersesQuantifiedAst(
   val body: AbstractPersesRuleElement,
   val isGreedy: Boolean,
 ) : AbstractPersesRuleElement() {
-
   init {
     when (body.tag) {
       AstTag.EPSILON, AstTag.STAR, AstTag.PLUS, AstTag.OPTIONAL ->
@@ -37,7 +36,11 @@ abstract class AbstractPersesQuantifiedAst(
     }
   }
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     val furtherIndent = indent.increasedIndent
     if (body.precedence.lt(precedence)) {
       stream.append('(')
@@ -62,7 +65,6 @@ abstract class AbstractPersesQuantifiedAst(
 
   protected abstract val operator: String
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("code", sourceCode).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("code", sourceCode).toString()
 }

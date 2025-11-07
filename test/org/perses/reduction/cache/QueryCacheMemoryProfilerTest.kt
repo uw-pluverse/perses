@@ -16,8 +16,8 @@
  */
 package org.perses.reduction.cache
 
-import com.google.common.primitives.ImmutableIntArray
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -26,12 +26,26 @@ import org.perses.grammar.c.LanguageC
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.cache.QueryCacheMemoryProfiler.Companion.computeMemoryInBytes
+import org.perses.reduction.io.CommonReductionIOManagerData
 import org.perses.util.Fraction
-import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
+import org.perses.util.hashing.ShaHashCode
 import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
-class QueryCacheMemoryProfilerTest {
+class QueryCacheMemoryProfilerTest :
+  CommonReductionIOManagerData(QueryCacheMemoryProfilerTest::class.java) {
+  @After
+  fun tearDown() {
+    close()
+  }
+
+  private val noLightweightRefreshingPolicy =
+    QueryCacheConfiguration(
+      refreshStepFraction = Fraction(1, 1),
+      enableLightweightRefreshing = false,
+      shaAlgorithm = EnumShaAlgorithm.SHA256,
+    )
 
   @Test
   fun testBuiltinTypes() {
@@ -42,31 +56,35 @@ class QueryCacheMemoryProfilerTest {
 
   @Test
   fun testTokenizedProgramShouldBeIgnored() {
-    val program = createTokenizedProgramFromString(
-      "int a;int b; int c;",
-      LanguageC,
-    )
+    val program =
+      createTokenizedProgramFromString(
+        "int a;int b; int c;",
+        LanguageC,
+      )
     assertThat(computeMemoryInBytes(Holder(program)).bytes).isEqualTo(16)
     assertThat(computeMemoryInBytes(Holder(program.factory)).bytes).isEqualTo(16)
     assertThat(computeMemoryInBytes(Holder(listOf(1, 2, 3, 4))).bytes).isEqualTo(136)
   }
 
-  class Holder<T>(val program: T)
+  class Holder<T>(
+    val program: T,
+  )
 
   @Test
   fun testStringQueryCache() {
     testCache(
-      expectedByteCount = 680,
-      extraIncludedClasses = setOf(
-        String::class.java.name,
-        ContentStringBasedQueryCache.ContentStringEncoding::class.java.name,
-        ByteArray::class.java.name,
-      ),
+      expectedByteCount = 544,
+      extraIncludedClasses =
+        setOf(
+          String::class.java.name,
+          ContentStringBasedQueryCache.ContentStringEncoding::class.java.name,
+          ByteArray::class.java.name,
+        ),
     ) { baseProgram ->
       ContentStringBasedQueryCache(
         baseProgram,
         AbstractQueryCacheProfiler.NULL_PROFILER,
-        QueryCacheConfiguration.noLightweightRefreshing(Fraction(1, 1)),
+        noLightweightRefreshingPolicy,
       )
     }
   }
@@ -74,20 +92,19 @@ class QueryCacheMemoryProfilerTest {
   @Test
   fun testShaQueryCache() {
     testCache(
-      expectedByteCount = 1280,
-      extraIncludedClasses = setOf(
-        ByteArray::class.java.name,
-        Util.SHA512HashCode::class.java.name,
-        ContentSHA512Encoding::class.java.name,
-        "com.google.common.hash.HashCode${'$'}BytesHashCode",
-        IntArray::class.java.name,
-        ImmutableIntArray::class.java.name,
-      ),
+      expectedByteCount = 744,
+      extraIncludedClasses =
+        setOf(
+          ByteArray::class.java.name,
+          ShaHashCode.ShaHashCodeForSingleString::class.java.name,
+          ContentShaHashEncoding::class.java.name,
+          "com.google.common.hash.HashCode${'$'}BytesHashCode",
+        ),
     ) { baseProgram ->
-      ContentSHA512BasedQueryCache(
+      ContentShaHashBasedQueryCache(
         baseProgram,
         AbstractQueryCacheProfiler.NULL_PROFILER,
-        QueryCacheConfiguration.noLightweightRefreshing(Fraction(1, 1)),
+        noLightweightRefreshingPolicy,
       )
     }
   }
@@ -95,17 +112,18 @@ class QueryCacheMemoryProfilerTest {
   @Test
   fun testRccMemLitQueryCache() {
     testCache(
-      expectedByteCount = 600,
-      extraIncludedClasses = setOf(
-        IntArray::class.java.name,
-        RccProgramEncoding::class.qualifiedName!! +
-          "$" + "Companion" + "$" + "createCompressedEncoding" + "$" + "1",
-      ),
+      expectedByteCount = 464,
+      extraIncludedClasses =
+        setOf(
+          IntArray::class.java.name,
+          RccProgramEncoding::class.qualifiedName!! +
+            "$" + "Companion" + "$" + "createCompressedEncoding" + "$" + "1",
+        ),
     ) { baseProgram ->
       RccMemLitQueryCache(
         baseProgram,
         AbstractQueryCacheProfiler.NULL_PROFILER,
-        QueryCacheConfiguration.noLightweightRefreshing(Fraction(1, 1)),
+        noLightweightRefreshingPolicy,
       )
     }
   }
@@ -113,18 +131,36 @@ class QueryCacheMemoryProfilerTest {
   @Test
   fun testRccQueryCache() {
     testCache(
-      expectedByteCount = 600,
-      extraIncludedClasses = setOf(
-        IntArray::class.java.name,
-        RccProgramEncoding::class.qualifiedName!! +
-          "$" + "Companion" + "$" + "createCompressedEncoding" + "$" + "1",
-      ),
+      expectedByteCount = 464,
+      extraIncludedClasses =
+        setOf(
+          IntArray::class.java.name,
+          RccProgramEncoding::class.qualifiedName!! +
+            "$" + "Companion" + "$" + "createCompressedEncoding" + "$" + "1",
+        ),
     ) { baseProgram ->
       RccQueryCache(
         baseProgram,
         AbstractQueryCacheProfiler.NULL_PROFILER,
-        QueryCacheConfiguration.noLightweightRefreshing(Fraction(1, 1)),
+        noLightweightRefreshingPolicy,
       )
+    }
+  }
+
+  @Test
+  fun testEnsureByteSizeForShaHashEncodingIsUpToDate() {
+    listOf(
+      EnumShaAlgorithm.SHA256 to ContentShaHashEncoding.BYTE_SIZE_OF_SHA256,
+      EnumShaAlgorithm.SHA512 to ContentShaHashEncoding.BYTE_SIZE_OF_SHA512,
+    ).forEach { pair ->
+      val result =
+        computeMemoryInBytes(
+          "hello".let { string ->
+            val shaCode = pair.first.createFromString(string)
+            ContentShaHashEncoding(shaCode, tokenCount = 1)
+          },
+        )
+      assertThat(result.bytes).isEqualTo(pair.second)
     }
   }
 
@@ -136,7 +172,12 @@ class QueryCacheMemoryProfilerTest {
     val baseProgram = createTokenizedProgramFromString("int a, b;", LanguageC)
     val cache = cacheCreator(baseProgram)
     createSubprograms(baseProgram).forEach {
-      val cacheMiss = cache.getCachedResult(it)
+      val cacheMiss =
+        cache.getCachedResult(
+          program =
+          it,
+          outputManager = outputManagerFactory.createManagerFor(it),
+        )
       if (cacheMiss.isMiss()) {
         cache.cacheProgramAndResult(
           cacheMiss.asCacheMiss(),
@@ -145,27 +186,31 @@ class QueryCacheMemoryProfilerTest {
       }
     }
     val result = computeMemoryInBytes(cache)
-    assertThat(result.includedClasses.map { it.name }).containsExactlyElementsIn(
-      (
-        extraIncludedClasses + setOf(
-          "[Ljava.util.HashMap${'$'}Node;",
+    assertThat(
+      extraIncludedClasses +
+        setOf(
+          "[Ljava.util.HashMap\$Node;",
           cache::class.java.name,
-          "java.util.HashMap${'$'}Node",
+          "java.util.HashMap\$Node",
           HashMap::class.java.name,
-        )
-        ).toSet(),
-    )
+          "java.util.HashSet",
+          "[Ljava.lang.Object;",
+          "kotlin.Pair",
+          "java.util.ArrayList",
+        ),
+    ).containsAtLeastElementsIn(result.includedClasses.map { it.name })
     assertThat(
       listOf(
         TokenizedProgram::class.java,
         AbstractQueryCacheProfiler.NULL_PROFILER.javaClass,
         PropertyTestResult::class.java,
         QueryCacheConfiguration::class.java,
-        ContentSHA512Encoder::class.java,
+        ContentShaHashEncoder::class.java,
         RccTokenizedProgramEncoder::class.java,
         ContentStringBasedQueryCache.ContentStringEncoder::class.java,
         RccMemoryLitProgramEncoder::class.java,
         ContentStringBasedQueryCache.ContentStringEncoder::class.java,
+        Object::class.java,
       ),
     ).containsAtLeastElementsIn(result.excludedClasses)
     assertThat(result.bytes.toInt()).isEqualTo(expectedByteCount)

@@ -27,8 +27,8 @@ class SeparateGrammarReductionInput(
   val parserFile: SourceFile,
   val lexerFile: SourceFile,
 ) : AbstractSingleFileReductionInputs<LanguageKind, SourceFile, SeparateGrammarReductionInput>(
-  testScript,
-  mainFile = parserFile,
-  otherMutableFiles = ImmutableList.of(lexerFile),
-  immutableDependencyFiles = ImmutableList.of(),
-)
+    testScript,
+    mainFile = parserFile,
+    otherMutableFiles = ImmutableList.of(lexerFile),
+    immutableDependencyFiles = ImmutableList.of(),
+  )

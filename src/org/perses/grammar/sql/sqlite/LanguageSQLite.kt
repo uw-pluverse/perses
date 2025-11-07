@@ -25,9 +25,10 @@ object LanguageSQLite : LanguageKind(
   extensions = ImmutableSet.of("sqlite"),
   defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  allowedCodeFormatControl = ImmutableSet.of(
-    EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-    EnumFormatControl.COMPACT_ORIG_FORMAT,
-    EnumFormatControl.ORIG_FORMAT,
-  ),
+  allowedCodeFormatControl =
+    ImmutableSet.of(
+      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+      EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.ORIG_FORMAT,
+    ),
 )

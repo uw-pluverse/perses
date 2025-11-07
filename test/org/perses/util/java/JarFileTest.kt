@@ -29,7 +29,6 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class JarFileTest {
-
   private val tempDir = Files.createTempDirectory(javaClass.simpleName)
 
   @After
@@ -48,10 +47,11 @@ class JarFileTest {
       it.write(content.toByteArray(StandardCharsets.UTF_8))
       it.closeEntry()
     }
-    val value = JarFile.readTextFileInZipFile(
-      zipFile,
-      entryName,
-    )
+    val value =
+      JarFile.readTextFileInZipFile(
+        zipFile,
+        entryName,
+      )
     assertThat(value).isEqualTo(content)
   }
 

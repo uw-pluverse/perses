@@ -17,18 +17,20 @@
 package org.perses.grammar.javascript
 
 import com.google.common.primitives.ImmutableIntArray
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 
 /** This is the facade for Java parsers  */
-class JavaScriptParserFacade : AbstractDefaultParserFacade<JavaScriptLexer, PnfJavaScriptParser>(
-  LanguageJavaScript,
-  createSeparateAntlrGrammar(
-    startRuleName = "program",
-    antlrParserGrammarFileName = "PnfJavaScriptParser.g4",
-    antlrLexerGrammarFileName = "JavaScriptLexer.g4",
-    JavaScriptParserFacade::class.java,
-  ),
-  lexerClass = JavaScriptLexer::class.java,
-  parserClass = PnfJavaScriptParser::class.java,
-  identifierTokenTypes = ImmutableIntArray.of(JavaScriptLexer.Identifier),
-)
+class JavaScriptParserFacade :
+  AbstractParserFacade(
+    language = LanguageJavaScript,
+    antlrGrammar =
+      createSeparateAntlrGrammar(
+        startRuleName = "program",
+        antlrParserGrammarFileName = "PnfJavaScriptParser.g4",
+        antlrLexerGrammarFileName = "JavaScriptLexer.g4",
+        JavaScriptParserFacade::class.java,
+      ),
+    identifierTokenTypes = ImmutableIntArray.of(JavaScriptLexer.Identifier),
+    lexerClass = JavaScriptLexer::class.java,
+    parserClass = PnfJavaScriptParser::class.java,
+  )

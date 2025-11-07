@@ -27,33 +27,32 @@ class GrammarHierarchy internal constructor(
   val ruleList: ImmutableList<RuleHierarchyEntry>,
   private val nameToRuleMap: ImmutableMap<String, RuleHierarchyEntry>,
 ) {
-
   val startRule = getRuleHierarchyEntryWithNameOrThrow(startRuleName)
 
   val reachabilityGraph: RuleReachabilityGraph by lazy {
     RuleReachabilityGraph(startRule, ruleList, nameToRuleMap)
   }
 
-  fun getRuleHierarchyEntryOrNull(tokenRuleName: String): RuleHierarchyEntry? {
-    return nameToRuleMap[tokenRuleName]
-  }
+  fun getRuleHierarchyEntryOrNull(tokenRuleName: String): RuleHierarchyEntry? =
+    nameToRuleMap[tokenRuleName]
 
-  fun getRuleHierarchyEntryWithNameOrThrow(ruleName: String): RuleHierarchyEntry {
-    return nameToRuleMap[ruleName] ?: error("Does not exist a rule for the name $ruleName")
-  }
+  fun getRuleHierarchyEntryWithNameOrThrow(ruleName: String): RuleHierarchyEntry =
+    nameToRuleMap[ruleName] ?: error("Does not exist a rule for the name $ruleName")
 
-  fun toProtoMessage(): GrammarHierarchyOuterClass.GrammarHierarchy {
-    return ruleList.fold(
-      GrammarHierarchyOuterClass.GrammarHierarchy.newBuilder(),
-    ) { acc, ele ->
-      acc.addEntries(ele.toProtoRuleHierarchyEntry())
-    }.build()
-  }
+  fun toProtoMessage(): GrammarHierarchyOuterClass.GrammarHierarchy =
+    ruleList
+      .fold(
+        GrammarHierarchyOuterClass.GrammarHierarchy.newBuilder(),
+      ) { acc, ele ->
+        acc.addEntries(ele.toProtoRuleHierarchyEntry())
+      }.build()
 
   companion object {
-
     @JvmStatic
-    fun createFromString(startRuleName: String, content: String): GrammarHierarchy {
+    fun createFromString(
+      startRuleName: String,
+      content: String,
+    ): GrammarHierarchy {
       val rawAst = AntlrGrammarParser.parseRawGrammarASTFromString(content)
       val persesGrammar = PersesAstBuilder(rawAst).grammar
       return createFromCombinedAntlrGrammar(
@@ -62,24 +61,19 @@ class GrammarHierarchy internal constructor(
     }
 
     @JvmStatic
-    fun createFromAntlrGrammar(grammar: AbstractAntlrGrammar): GrammarHierarchy {
-      return if (grammar.isCombined) {
+    fun createFromAntlrGrammar(grammar: AbstractAntlrGrammar): GrammarHierarchy =
+      if (grammar.isCombined) {
         createFromCombinedAntlrGrammar(grammar.asCombined())
       } else {
         createFromSeparateAntlrGrammar(grammar.asSeparate())
       }
-    }
 
     private fun createFromCombinedAntlrGrammar(
       grammar: AbstractAntlrGrammar.CombinedAntlrGrammar,
-    ): GrammarHierarchy {
-      return GrammarHierarchyBuilder(grammar).build()
-    }
+    ): GrammarHierarchy = GrammarHierarchyBuilder(grammar).build()
 
     private fun createFromSeparateAntlrGrammar(
       grammar: AbstractAntlrGrammar.SeparateAntlrGrammar,
-    ): GrammarHierarchy {
-      return GrammarHierarchyBuilder(grammar).build()
-    }
+    ): GrammarHierarchy = GrammarHierarchyBuilder(grammar).build()
   }
 }

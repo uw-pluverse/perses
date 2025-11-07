@@ -12,7 +12,6 @@ kt_jvm_library(
     ],
     deps = [
         "//:guava",
-        "//:kotlin_stdib",
     ],
 )
 

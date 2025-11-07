@@ -27,68 +27,76 @@ import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class PersesAstParserTest {
-
   @Test
   fun testMultipleLexerActions() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      lexer gramar Test;
-      ID: 'i' -> popMode, skip, more, pushMode(TT), more, popMode, pushMode(TT);
-      """.trimIndent(),
-    )
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        lexer gramar Test;
+        ID: 'i' -> popMode, skip, more, pushMode(TT), more, popMode, pushMode(TT);
+        """.trimIndent(),
+      )
     assertThat(grammar.flattenedAllRules).hasSize(1)
-    assertThat(grammar.flattenedAllRules.first().body.sourceCode)
-      .contains("popMode, skip, more, pushMode(TT), more, popMode, pushMode(TT)")
+    assertThat(
+      grammar.flattenedAllRules
+        .first()
+        .body.sourceCode,
+    ).contains("popMode, skip, more, pushMode(TT), more, popMode, pushMode(TT)")
   }
 
   @Test
   fun testPopMode() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      lexer grammar Test;
-      OPEN: '[' -> popMode;
-      """.trimIndent(),
-    )
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        lexer grammar Test;
+        OPEN: '[' -> popMode;
+        """.trimIndent(),
+      )
     assertThat(grammar.sourceCode).contains("'[' -> popMode")
   }
 
   @Test
   fun testSkip() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      lexer grammar Test;
-      OPEN: '[' -> skip;
-      """.trimIndent(),
-    )
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        lexer grammar Test;
+        OPEN: '[' -> skip;
+        """.trimIndent(),
+      )
     assertThat(grammar.sourceCode).contains("'[' -> skip")
   }
 
   @Test
   fun testPushMode() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      lexer grammar Test;
-      OPEN: '[' -> pushMode(CODE_MODE);
-      """.trimIndent(),
-    )
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        lexer grammar Test;
+        OPEN: '[' -> pushMode(CODE_MODE);
+        """.trimIndent(),
+      )
     assertThat(grammar.sourceCode).contains("'[' -> pushMode(CODE_MODE)")
   }
 
   @Test
   fun testChannel() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      lexer grammar Test;
-      OPEN: '[' -> channel(SKIP);
-      """.trimIndent(),
-    )
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        lexer grammar Test;
+        OPEN: '[' -> channel(SKIP);
+        """.trimIndent(),
+      )
     assertThat(grammar.sourceCode).contains("'[' -> channel(SKIP)")
   }
 
   @Test
   fun testLexerModes() {
     // A lexer grammar has to have lexer rules in the default mode.
-    val grammarContent = """
+    val grammarContent =
+      """
       lexer grammar Test;
       ID: 'id';
       
@@ -107,7 +115,7 @@ class PersesAstParserTest {
       mode M4;
       A_m4: 'a_m4';
       B_m4: 'b_m4';
-    """.trimIndent()
+      """.trimIndent()
     val grammar = PersesAstBuilder.loadGrammarFromString(grammarContent)
     val lexerRules = grammar.lexerRules
     val defaultModeLexerRules = lexerRules.defaultModeLexerRules
@@ -144,8 +152,9 @@ class PersesAstParserTest {
     )
   }
 
-  private fun normalizeGrammarString(grammar: String): ImmutableList<String> {
-    return grammar.splitToSequence("\n")
+  private fun normalizeGrammarString(grammar: String): ImmutableList<String> =
+    grammar
+      .splitToSequence("\n")
       .map { it.trim() }
       .filter { it.isNotBlank() }
       .filter { !it.startsWith("//") }
@@ -153,30 +162,31 @@ class PersesAstParserTest {
       .splitToSequence(";")
       .map { it.replace(Regex("\\s+"), "") }
       .toImmutableList()
-  }
 
   @Test
   fun testLabel() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      grammar Test;
-      start : label=(A | B) ;
-      A: 'a';
-      B: 'b';
-      """.trimIndent(),
-    )
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        grammar Test;
+        start : label=(A | B) ;
+        A: 'a';
+        B: 'b';
+        """.trimIndent(),
+      )
     assertThat(grammar.flattenedAllRules).hasSize(3)
     assertThat(grammar.getRuleDefinition("start")!!.body.sourceCode).isEqualTo("label=(A | B)")
   }
 
   @Test
   fun testWildcardDot() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      grammar T;
-      start: .;
-      """.trimIndent(),
-    )
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        grammar T;
+        start: .;
+        """.trimIndent(),
+      )
     val rule = grammar.flattenedAllRules.single().body as PersesTerminalAst
     assertThat(rule).isInstanceOf(PersesTerminalAst::class.java)
     assertThat(rule.isWildcardDot()).isTrue()
@@ -189,7 +199,8 @@ class PersesAstParserTest {
     val grammar = PersesAstBuilder.loadGrammarFromString(content)
     val sourceCode = grammar.sourceCode
     assertThat(
-      sourceCode.splitToSequence("\n")
+      sourceCode
+        .splitToSequence("\n")
         .map { it.trim() }
         .filter { it.startsWith("mode ") }
         .toImmutableList(),

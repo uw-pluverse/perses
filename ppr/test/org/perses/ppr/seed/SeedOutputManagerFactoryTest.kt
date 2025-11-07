@@ -33,8 +33,10 @@ import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.io.ReductionFolder
 import org.perses.util.ListAlignment
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.exists
 import kotlin.io.path.readText
@@ -42,29 +44,32 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class SeedOutputManagerFactoryTest {
-
   val tempDir = Files.createTempDirectory(this::class.java.canonicalName)
 
   // these files are used to initialize reduction folder
-  val origSeedFile = SourceFile(
-    Files.createFile(tempDir.resolve("seed.c")),
-    LanguageC,
-  )
-  val origVariantFile = SourceFile(
-    Files.createFile(tempDir.resolve("variant.c")),
-    LanguageC,
-  )
-  val testScript = ScriptFile(
-    Files.createFile(tempDir.resolve("r.sh")).apply {
-      this.writeText("#!/usr/bin/env bash")
-    },
-  )
+  val origSeedFile =
+    SourceFile(
+      Files.createFile(tempDir.resolve("seed.c")),
+      LanguageC,
+    )
+  val origVariantFile =
+    SourceFile(
+      Files.createFile(tempDir.resolve("variant.c")),
+      LanguageC,
+    )
+  val testScript =
+    ScriptFile(
+      Files.createFile(tempDir.resolve("r.sh")).apply {
+        this.writeText("#!/usr/bin/env bash")
+      },
+    )
 
-  val lexerAtnWrapper = LexerAtnWrapper(PnfCLexer::class.java)
+  val lexerAtnWrapper = LexerAtnWrapper.createLexerWrapperFromLexerClass(PnfCLexer::class.java)
 
   // initialize a reduction folder
   val reductionInputs = SeedReductionInputs(testScript, origSeedFile, origVariantFile)
 
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     tempDir.deleteRecursively()
@@ -74,42 +79,50 @@ class SeedOutputManagerFactoryTest {
   fun testWrite() {
     val seedTokens = listOf("static", "int", "a", "=", "1", ";")
     val variantTokens = listOf("static", "int", "a", "=", "2", ";")
-    val seedProgram = TestUtility.createTokenizedProgramFromString(
-      seedTokens.joinToString(separator = " "),
-      LanguageC,
-    )
-    val variantProgram = TestUtility.createTokenizedProgramFromString(
-      variantTokens.joinToString(separator = " "),
-      LanguageC,
-    )
-    val alignment = ListAlignment.create(
-      seedProgram.tokens,
-      variantProgram.tokens,
-      PPRDiffUtils.EQUALIZER_TOKEN,
-    )
-    val outputManagerFactory = SeedOutputManagerFactory(
-      reductionInputs,
-      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-      alignment,
-      lexerAtnWrapper,
-    )
+    val seedProgram =
+      TestUtility.createTokenizedProgramFromString(
+        seedTokens.joinToString(separator = " "),
+        LanguageC,
+      )
+    val variantProgram =
+      TestUtility.createTokenizedProgramFromString(
+        variantTokens.joinToString(separator = " "),
+        LanguageC,
+      )
+    val alignment =
+      ListAlignment.create(
+        seedProgram.tokens,
+        variantProgram.tokens,
+        PPRDiffUtils.EQUALIZER_PERSES_TOKEN,
+      )
+    val outputManagerFactory =
+      SeedOutputManagerFactory(
+        reductionInputs = reductionInputs,
+        programFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+        listAlignment = alignment,
+        lexerAtnWrapper = lexerAtnWrapper,
+        shaAlgorithmType = EnumShaAlgorithm.SHA256,
+      )
 
-    val seedProgramReduced = TokenizedProgram(
-      seedProgram.tokens.subList(1, seedProgram.tokens.size),
-      seedProgram.factory,
-    )
+    val seedProgramReduced =
+      TokenizedProgram(
+        seedProgram.tokens.subList(1, seedProgram.tokens.size),
+        seedProgram.factory,
+      )
 
     val folder = Files.createDirectories(tempDir.resolve("reduction-folder"))
-    val reductionFolder = ReductionFolder(
-      reductionInputs = reductionInputs,
-      folder = folder,
-    )
+    val reductionFolder =
+      ReductionFolder(
+        reductionInputs = reductionInputs,
+        folder = folder,
+      )
 
-    outputManagerFactory.OutputManager(
-      seedProgramReduced,
-      PrinterRegistry.getPrinter(EnumFormatControl.SINGLE_TOKEN_PER_LINE),
-      alignment,
-    ).write(reductionFolder)
+    outputManagerFactory
+      .OutputManager(
+        seedProgramReduced,
+        PrinterRegistry.getPrinter(EnumFormatControl.SINGLE_TOKEN_PER_LINE),
+        alignment,
+      ).write(reductionFolder)
 
     val seedFile = folder.resolve(origSeedFile.baseName)
     assertThat(seedFile.exists()).isTrue()

@@ -19,22 +19,19 @@ package org.perses.fuzzer.coveragecollector
 import java.util.concurrent.ExecutorService
 
 class NullCoverageCollector : ICoverageCollector {
-  override fun launch(): ExecutorService? {
-    return null
-  }
+  override fun launch(): ExecutorService? = null
 
-  override fun getCoverageReport(): ICoverageCollector.CoverageReport {
-    return NULL_COVERAGE_REPORT
-  }
+  override fun getCoverageReport(): ICoverageCollector.CoverageReport = NULL_COVERAGE_REPORT
 
   companion object {
-    private val NULL_COVERAGE_REPORT = ICoverageCollector.CoverageReport(
-      branch_covered = 0,
-      branch_total = 1,
-      line_covered = 0,
-      line_total = 1,
-      aflMapDensity = 0.0,
-      aflHitCount = 0,
-    )
+    private val NULL_COVERAGE_REPORT =
+      ICoverageCollector.CoverageReport(
+        branch_covered = 0,
+        branch_total = 1,
+        line_covered = 0,
+        line_total = 1,
+        aflMapDensity = 0.0,
+        aflHitCount = 0,
+      )
   }
 }

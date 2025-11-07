@@ -26,29 +26,35 @@ import org.perses.antlr.GrammarTestingUtility.createPersesGrammarFromString
 class DuplicateRuleEliminationPassTest {
   @Test
   fun testWithStartRuleName() {
-    val persesGrammar = createPersesGrammarFromString(
-      StringBuilder()
-        .append("start: b;")
-        .append("c: d;")
-        .append("b: 'e';")
-        .append("d: 'e';")
-        .toString(),
-    )
+    val persesGrammar =
+      createPersesGrammarFromString(
+        StringBuilder()
+          .append("start: b;")
+          .append("c: d;")
+          .append("b: 'e';")
+          .append("d: 'e';")
+          .toString(),
+      )
     run {
       val pass = DuplicateRuleEliminationPass("start")
-      val processed = pass.processGrammar(
-        GrammarPair(persesGrammar, lexerGrammar = null),
-      ).parserGrammar!!
+      val processed =
+        pass
+          .processGrammar(
+            GrammarPair(persesGrammar, lexerGrammar = null),
+          ).parserGrammar!!
       Truth.assertThat(processed.parserRuleNameList).hasSize(2)
-      Truth.assertThat(processed.getRuleDefinition("start")!!.body.sourceCode)
+      Truth
+        .assertThat(processed.getRuleDefinition("start")!!.body.sourceCode)
         .isEqualTo("b")
       Truth.assertThat(processed.getRuleDefinition("b")!!.body.sourceCode).isEqualTo("'e'")
     }
     run {
       val pass = DuplicateRuleEliminationPass("c")
-      val processed = pass.processGrammar(
-        GrammarPair(persesGrammar, lexerGrammar = null),
-      ).parserGrammar!!
+      val processed =
+        pass
+          .processGrammar(
+            GrammarPair(persesGrammar, lexerGrammar = null),
+          ).parserGrammar!!
       Truth.assertThat(processed.parserRuleNameList).hasSize(2)
       Truth.assertThat(processed.getRuleDefinition("c")!!.body.sourceCode).isEqualTo("b")
       Truth.assertThat(processed.getRuleDefinition("b")!!.body.sourceCode).isEqualTo("'e'")

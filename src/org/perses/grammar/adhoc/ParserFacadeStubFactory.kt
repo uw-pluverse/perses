@@ -33,8 +33,8 @@ class ParserFacadeStubFactory(
     parserClassSimpleName: String,
     lexerClassSimpleName: String,
     startRuleName: String,
-  ): AbstractGrammarStub {
-    return when (languageKindSetting) {
+  ): AbstractGrammarStub =
+    when (languageKindSetting) {
       is YamlLanguageKindSetting ->
         YamlParserFacadeStubTemplate(
           packageName,
@@ -62,11 +62,16 @@ class ParserFacadeStubFactory(
           tokenNamesOfIdentifiers = tokenNamesOfIdentifiers,
         )
     }
-  }
 
-  sealed class AbstractLanguageKindSetting(val content: String)
+  sealed class AbstractLanguageKindSetting(
+    val content: String,
+  )
 
-  class YamlLanguageKindSetting(content: String) : AbstractLanguageKindSetting(content)
+  class YamlLanguageKindSetting(
+    content: String,
+  ) : AbstractLanguageKindSetting(content)
 
-  class ExistingLanguageKindSetting(content: String) : AbstractLanguageKindSetting(content)
+  class ExistingLanguageKindSetting(
+    content: String,
+  ) : AbstractLanguageKindSetting(content)
 }

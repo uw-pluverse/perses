@@ -19,6 +19,5 @@ package org.perses.util.shell
 import java.io.OutputStream
 
 abstract class AbstractShellOutputStream : OutputStream() {
-
   abstract fun toOutputStringList(): ShellOutputLines
 }

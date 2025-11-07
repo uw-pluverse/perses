@@ -18,10 +18,10 @@ package org.perses.antlr.ast
 
 import com.google.common.collect.ImmutableList
 
-class PersesChannelDefinitionAst(channelNames: ImmutableList<String>) :
-  AbstractPersesEnumAst(KEYWORD_CHANNELS, channelNames) {
+class PersesChannelDefinitionAst(
+  channelNames: ImmutableList<String>,
+) : AbstractPersesEnumAst(KEYWORD_CHANNELS, channelNames) {
   companion object {
-
     @JvmField
     val KEYWORD_CHANNELS = "channels"
 

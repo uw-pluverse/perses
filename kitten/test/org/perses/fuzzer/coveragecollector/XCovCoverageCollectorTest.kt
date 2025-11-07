@@ -34,45 +34,48 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class XCovCoverageCollectorTest {
-
   private val tempDir = Util.createTempDirFor(this)
   private val srcDir = Util.ensureDirExists(tempDir.resolve("src"))
-  private val binaryFile = srcDir.resolve("t.out").also {
-    check(Files.notExists(it))
-  }
-  private val sourceFile = srcDir.resolve("t.c").apply {
-    writeText(
-      """
-      #include "stdio.h"
-
-      int main() {
-          int a = 0;
-          if (a == 0) {
-              printf("Hello, world!");
-          } else {
-              printf("Hi, world!");
-          }
-      }
-      """.trimIndent(),
-    )
-
-    Shells.singleton.run(
-      cmd = "gcc -fprofile-arcs -ftest-coverage -o ${binaryFile.name} ${this.name}",
-      workingDirectory = srcDir,
-      captureOutput = true,
-      environment = Shells.CURRENT_ENV,
-    ).let { cmdOutput ->
-      check(cmdOutput.exitCode.isZero()) {}
+  private val binaryFile =
+    srcDir.resolve("t.out").also {
+      check(Files.notExists(it))
     }
-    Shells.singleton.run(
-      cmd = "./${binaryFile.name}",
-      workingDirectory = srcDir,
-      captureOutput = true,
-      environment = Shells.CURRENT_ENV,
-    ).let { cmdOutput ->
-      check(cmdOutput.exitCode.isZero())
+  private val sourceFile =
+    srcDir.resolve("t.c").apply {
+      writeText(
+        """
+        #include "stdio.h"
+
+        int main() {
+            int a = 0;
+            if (a == 0) {
+                printf("Hello, world!");
+            } else {
+                printf("Hi, world!");
+            }
+        }
+        """.trimIndent(),
+      )
+
+      Shells.singleton
+        .run(
+          cmd = "gcc -fprofile-arcs -ftest-coverage -o ${binaryFile.name} ${this.name}",
+          workingDirectory = srcDir,
+          captureOutput = true,
+          environment = Shells.CURRENT_ENV,
+        ).let { cmdOutput ->
+          check(cmdOutput.exitCode.isZero()) {}
+        }
+      Shells.singleton
+        .run(
+          cmd = "./${binaryFile.name}",
+          workingDirectory = srcDir,
+          captureOutput = true,
+          environment = Shells.CURRENT_ENV,
+        ).let { cmdOutput ->
+          check(cmdOutput.exitCode.isZero())
+        }
     }
-  }
   private val gcdaFile = Util.listFilesInFolder(srcDir).single { it.name.endsWith(".gcda") }
   private val gcnoFile = Util.listFilesInFolder(srcDir).single { it.name.endsWith("gcno") }
 

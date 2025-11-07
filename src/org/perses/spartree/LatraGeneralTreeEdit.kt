@@ -23,10 +23,8 @@ class LatraGeneralTreeEdit internal constructor(
   tree: SparTree,
   actionSet: LatraGeneralActionSet,
 ) : AbstractSparTreeEdit<AbstractTreeEditAction>(actionSet, tree) {
-
-  override fun computeProgram(tree: SparTree): TokenizedProgram {
-    return tree.customizeProgram(TokenizedProgramConstructor(actionSet))
-  }
+  override fun computeProgram(tree: SparTree): TokenizedProgram =
+    tree.customizeProgram(TokenizedProgramConstructor(actionSet))
 
   override fun internalApplyToTree() {
     actionSet.actions.forEach { action ->
@@ -38,9 +36,7 @@ class LatraGeneralTreeEdit internal constructor(
   private class TokenizedProgramConstructor(
     private val actionSet: AbstractActionSet<AbstractTreeEditAction>,
   ) : AbstractTokenizedProgramCustomizer(actionSet) {
-    override fun visit(
-      node: AbstractSparTreeNode,
-    ): List<AbstractSparTreeNode> {
+    override fun visit(node: AbstractSparTreeNode): List<AbstractSparTreeNode> {
       lazyAssert { !node.isPermanentlyDeleted }
       if (node.isPermanentlyDeleted) {
         return emptyList()

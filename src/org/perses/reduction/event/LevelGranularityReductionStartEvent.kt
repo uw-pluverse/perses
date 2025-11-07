@@ -21,10 +21,11 @@ class LevelGranularityReductionStartEvent(
   currentTimeMillis: Long,
   programSize: Int,
   val maxNumOfNodesPerPartition: Int,
-) :
-  AbstractStartEvent(currentTimeMillis, programSize) {
-
+) : AbstractStartEvent(currentTimeMillis, programSize) {
   val iteration = levelReductionStartEvent.iteration
+
+  override val prefixLabelFromRootToHere: String
+    get() = levelReductionStartEvent.prefixLabelFromRootToHere
 
   fun createEndEvent(
     currentTimeMillis: Long,
@@ -41,7 +42,5 @@ class LevelGranularityReductionStartEvent(
     )
   }
 
-  override fun initialProgramSize(): Int {
-    return levelReductionStartEvent.initialProgramSize()
-  }
+  override fun initialProgramSize(): Int = levelReductionStartEvent.initialProgramSize()
 }

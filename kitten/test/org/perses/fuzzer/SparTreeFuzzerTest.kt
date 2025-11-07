@@ -47,18 +47,25 @@ import kotlin.io.path.writeText
 @Suppress("DEPRECATION")
 @RunWith(JUnit4::class)
 class SparTreeFuzzerTest {
-
   private val tempDir = Util.createTempDirFor(this::class.java.simpleName)
 
   private val factory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
   private val c = factory.getParserFacadeListForOrNull(LanguageC)!!.defaultParserFacade.create()
-  private val java = factory.getParserFacadeListForOrNull(
-    LanguageJava,
-  )!!.defaultParserFacade.create()
+  private val java =
+    factory
+      .getParserFacadeListForOrNull(
+        LanguageJava,
+      )!!
+      .defaultParserFacade
+      .create()
 
-  private val rust = factory.getParserFacadeListForOrNull(
-    LanguageRust,
-  )!!.defaultParserFacade.create()
+  private val rust =
+    factory
+      .getParserFacadeListForOrNull(
+        LanguageRust,
+      )!!
+      .defaultParserFacade
+      .create()
   private val rustIdentifierTokenId = PnfRustLexer.Ident
 
   private val go = factory.getParserFacadeListForOrNull(LanguageGo)!!.defaultParserFacade.create()
@@ -137,25 +144,27 @@ class SparTreeFuzzerTest {
   fun testRandomRecursiveMutation() {
     val test =
       """
-        fn main() {
-            if true {
-                println!("Hello");
-            }
-        }
+      fn main() {
+          if true {
+              println!("Hello");
+          }
+      }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
     val fuzzer = SparTreeFuzzer.fromFile(rust, testFile)
     val rn1 = Random(3)
     val rn2 = Random(5)
-    val mutant1 = fuzzer.createMutantByRepeatingRecursion(
-      rn1,
-      maxRepeatingTimes = 15,
-    )
-    val mutant2 = fuzzer.createMutantByRepeatingRecursion(
-      rn2,
-      maxRepeatingTimes = 15,
-    )
+    val mutant1 =
+      fuzzer.createMutantByRepeatingRecursion(
+        rn1,
+        maxRepeatingTimes = 15,
+      )
+    val mutant2 =
+      fuzzer.createMutantByRepeatingRecursion(
+        rn2,
+        maxRepeatingTimes = 15,
+      )
     val expectedMutant1 =
       """
         |fn main ( ) {
@@ -192,35 +201,44 @@ class SparTreeFuzzerTest {
 
   @Test
   fun testSplicingMutation() {
-    val testFile1 = tempDir.resolve("test_file_1.temp").apply {
-      writeText(
-        """
-          fn main() {
-              if true {
-                  println!("yes_splicing_1");
-              } else {
-                  println!("no_splicing_1");
-              }
-          }
-        """.trimIndent(),
-      )
-    }.toFile()
-    val testFile2 = tempDir.resolve("testFile2.temp").apply {
-      writeText(
-        """
-          fn main() {
-              if true {
-                  println!("yes_splicing_2");
-              } else {
-                  println!("no_splicing_2");
-              }
-          }
-        """.trimIndent(),
-      )
-    }.toFile()
-    val testFile3 = tempDir.resolve("testFile3.temp").apply {
-      writeText("")
-    }.toFile()
+    val testFile1 =
+      tempDir
+        .resolve("test_file_1.temp")
+        .apply {
+          writeText(
+            """
+            fn main() {
+                if true {
+                    println!("yes_splicing_1");
+                } else {
+                    println!("no_splicing_1");
+                }
+            }
+            """.trimIndent(),
+          )
+        }.toFile()
+    val testFile2 =
+      tempDir
+        .resolve("testFile2.temp")
+        .apply {
+          writeText(
+            """
+            fn main() {
+                if true {
+                    println!("yes_splicing_2");
+                } else {
+                    println!("no_splicing_2");
+                }
+            }
+            """.trimIndent(),
+          )
+        }.toFile()
+    val testFile3 =
+      tempDir
+        .resolve("testFile3.temp")
+        .apply {
+          writeText("")
+        }.toFile()
 
     val fuzzer1 = SparTreeFuzzer.fromFile(rust, testFile1)
     val fuzzer2 = SparTreeFuzzer.fromFile(rust, testFile2)
@@ -262,16 +280,16 @@ class SparTreeFuzzerTest {
   fun testReplacingWithGeneratedNode() {
     val test =
       """
-        int printf(const char*, ...);
-        int main (int argc, char *argv[]) {
-          int a = 1;
-          int b = a + 1;
-          if (b > a) {
-            printf("hello\n");
-            printf("world\n");
-          }
-          return 0;
+      int printf(const char*, ...);
+      int main (int argc, char *argv[]) {
+        int a = 1;
+        int b = a + 1;
+        if (b > a) {
+          printf("hello\n");
+          printf("world\n");
         }
+        return 0;
+      }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
@@ -294,11 +312,11 @@ class SparTreeFuzzerTest {
   fun testCreateMutantByDeletingTokens() {
     val test =
       """
-        fn main() {
-            if true {
-                println!("Hello");
-            }
-        }
+      fn main() {
+          if true {
+              println!("Hello");
+          }
+      }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
@@ -352,11 +370,11 @@ class SparTreeFuzzerTest {
   fun testCreateMutantByInsertingTokens() {
     val test =
       """
-        fn main() {
-            if true {
-                println!("Hello");
-            }
-        }
+      fn main() {
+          if true {
+              println!("Hello");
+          }
+      }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
@@ -414,11 +432,11 @@ class SparTreeFuzzerTest {
   fun testCreateMutantByReplacingTokens() {
     val test =
       """
-        fn main() {
-            if true {
-                println!("Hello");
-            }
-        }
+      fn main() {
+          if true {
+              println!("Hello");
+          }
+      }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
@@ -498,16 +516,16 @@ class SparTreeFuzzerTest {
   fun testCreateMutatedTreeByDeletingChildrenOfKleeneStarOrPlusNode() {
     val test =
       """
-        fn main() {
-            if true {
-                println!("Hello");
-                println!("Hello");
-            }
-            if true {
-                println!("Hello");
-                println!("Hello");
-            }
-        }
+      fn main() {
+          if true {
+              println!("Hello");
+              println!("Hello");
+          }
+          if true {
+              println!("Hello");
+              println!("Hello");
+          }
+      }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
@@ -573,11 +591,11 @@ class SparTreeFuzzerTest {
   fun testCreateMutantByInsertingChildrenOfKleeneStarOrPlusNode() {
     val test =
       """
-        fn main() {
-            if true {
-                println!("Hello");
-            }
-        }
+      fn main() {
+          if true {
+              println!("Hello");
+          }
+      }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
@@ -615,23 +633,23 @@ class SparTreeFuzzerTest {
   fun testTreeLevelMutations() {
     val test =
       """
-        int printf(const char*, ...);
-        int main (int argc, char *argv[]) {
-          int a = 1;
-          int b = a + 1;
-          if (b > a) {
-            printf("hello\n");
-            printf("world\n");
-          }
-          return 0;
+      int printf(const char*, ...);
+      int main (int argc, char *argv[]) {
+        int a = 1;
+        int b = a + 1;
+        if (b > a) {
+          printf("hello\n");
+          printf("world\n");
         }
+        return 0;
+      }
       """.trimIndent()
     val anotherTest =
       """
-        int foo () {
-          int a, b = 1;
-          return a + b;
-        }
+      int foo () {
+        int a, b = 1;
+        return a + b;
+      }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
@@ -647,45 +665,56 @@ class SparTreeFuzzerTest {
       fuzzer.createMutatedTreeBySplicing(anotherFuzzer, Random(0), languageModel)
     checkEqualityOfTreeAndProgram(mutatedProgram!!, mutatedTree!!)
     // Test generative mutation
-    mutatedProgram = fuzzer.createMutantByReplacingWithGeneratedNode(
-      random = Random(1),
-      generator = RandomSparTreeGenerator(c, Random(0)),
-    )
-    mutatedTree = fuzzer.createMutatedTreeByReplacingWithGeneratedNode(
-      random = Random(1),
-      generator = RandomSparTreeGenerator(c, Random(0)),
-      model = languageModel,
-    )
+    mutatedProgram =
+      fuzzer.createMutantByReplacingWithGeneratedNode(
+        random = Random(1),
+        generator = RandomSparTreeGenerator(c, Random(0)),
+      )
+    mutatedTree =
+      fuzzer.createMutatedTreeByReplacingWithGeneratedNode(
+        random = Random(1),
+        generator = RandomSparTreeGenerator(c, Random(0)),
+        model = languageModel,
+      )
     checkEqualityOfTreeAndProgram(mutatedProgram!!, mutatedTree!!)
     // Test guided mutations
-    languageModel = NDepthTreeModel(
-      contextSizeLimit = 4,
-      parserFacade = c,
-      allowToEnableGuidance = true,
-    )
+    languageModel =
+      NDepthTreeModel(
+        contextSizeLimit = 4,
+        parserFacade = c,
+        allowToEnableGuidance = true,
+      )
     languageModel.guidanceEnabled = true
     fuzzer.featureOfTheSparTree = languageModel.updateModelAndGetFeatureOfSparTree(fuzzer.sparTree)
     anotherFuzzer.featureOfTheSparTree =
       languageModel.updateModelAndGetFeatureOfSparTree(anotherFuzzer.sparTree)
-    mutatedTree = fuzzer.createMutatedTreeBySplicing(
-      anotherFuzzer,
-      Random(2),
-      languageModel,
-    )
+    mutatedTree =
+      fuzzer.createMutatedTreeBySplicing(
+        anotherFuzzer,
+        Random(2),
+        languageModel,
+      )
     assertThat(mutatedTree).isNotNull()
-    mutatedTree = fuzzer.createMutatedTreeByReplacingWithGeneratedNode(
-      Random(1),
-      RandomSparTreeGenerator(c, Random(0)),
-      languageModel,
-    )
+    mutatedTree =
+      fuzzer.createMutatedTreeByReplacingWithGeneratedNode(
+        Random(1),
+        RandomSparTreeGenerator(c, Random(0)),
+        languageModel,
+      )
     assertThat(mutatedTree).isNotNull()
   }
 
-  private fun checkEqualityOfTreeAndProgram(program: MutatedProgram, tree: SparTree) {
+  private fun checkEqualityOfTreeAndProgram(
+    program: MutatedProgram,
+    tree: SparTree,
+  ) {
     val tree1 = c.parseString(program.program).tree.toStringTree()
-    val tree2 = c.parseString(
-      SingleTokenPerLinePrinter.print(tree.programSnapshot).sourceCode,
-    ).tree.toStringTree()
+    val tree2 =
+      c
+        .parseString(
+          SingleTokenPerLinePrinter.print(tree.programSnapshot).sourceCode,
+        ).tree
+        .toStringTree()
     assertThat(tree1).isEqualTo(tree2)
   }
 }

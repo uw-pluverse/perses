@@ -6,8 +6,6 @@ kt_jvm_library(
     name = "util",
     srcs = ["Util.kt"],
     deps = [
-        "//:guava",
-        "//:kotlin_stdib",
     ],
 )
 

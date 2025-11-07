@@ -19,40 +19,45 @@ package org.perses.antlr
 import com.google.common.collect.ImmutableList
 import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Vocabulary
+import org.antlr.v4.runtime.atn.ATN
 import org.apache.commons.text.StringEscapeUtils
+import org.perses.util.ReflectionUtil
 import org.perses.util.toImmutableList
 import org.perses.util.toImmutableMap
 
 class MetaTokenInfoDB(
   val lexerClass: Class<out Lexer>,
-  tokens: ImmutableList<TokenInfoEntry>,
+  val tokens: ImmutableList<TokenInfoEntry>,
 ) {
-
   val allLiteralLexemes = tokens.mapNotNull { it.literalLexeme }.toImmutableList()
 
-  private val nameToTokenMapping = tokens
-    .asSequence()
-    .map { it.symbolicName to it }
-    .toImmutableMap()
+  private val nameToTokenMapping =
+    tokens.toImmutableMap(
+      keyFunc = { it.symbolicName },
+      valueFunc = { it },
+    )
 
-  private val typeToTokenMapping = tokens
-    .asSequence()
-    .map { it.tokenType to it }
-    .toImmutableMap()
+  private val typeToTokenMapping =
+    tokens.toImmutableMap(
+      keyFunc = { it.tokenType },
+      valueFunc = { it },
+    )
 
-  private val ruleIndexToTokenInformation = tokens
-    .asSequence()
-    .map { it.ruleIndex to it }
-    .toImmutableMap()
+  private val ruleIndexToTokenInformation =
+    tokens.toImmutableMap(
+      keyFunc = { it.ruleIndex },
+      valueFunc = { it },
+    )
 
-  fun getTokenInfoWithName(tokenName: String) =
-    nameToTokenMapping[tokenName]
+  fun hasToken(tokenType: TokenType): Boolean = getTokenInfoWithType(tokenType) != null
 
-  fun getTokenInfoWithType(tokenType: TokenType) =
-    typeToTokenMapping[tokenType]
+  fun getMaxAntlrTokenType(): TokenType = tokens.maxBy { it.tokenType.antlrTokenType }.tokenType
 
-  fun getTokenInfoWithRuleIndex(ruleIndex: RuleIndex) =
-    ruleIndexToTokenInformation[ruleIndex]
+  fun getTokenInfoWithName(tokenName: String) = nameToTokenMapping[tokenName]
+
+  fun getTokenInfoWithType(tokenType: TokenType) = typeToTokenMapping[tokenType]
+
+  fun getTokenInfoWithRuleIndex(ruleIndex: RuleIndex) = ruleIndexToTokenInformation[ruleIndex]
 
   fun asSequence(): Sequence<TokenInfoEntry> = nameToTokenMapping.values.asSequence()
 
@@ -64,27 +69,39 @@ class MetaTokenInfoDB(
   )
 
   companion object {
-    fun <T : Lexer> createFor(lexerClass: Class<T>): MetaTokenInfoDB {
-      val atn = AntlrGrammarUtil.getAtnFromLexer(lexerClass)
-      val tokenNameTypeMap = LexerRuleNameAndTypeMapping(lexerClass)
+    fun <T : Lexer> createForLexerClass(lexerClass: Class<T>): Pair<MetaTokenInfoDB, ATN> {
+      val atn =
+        AntlrGrammarUtil.getAtnFromLexer(lexerClass)
+          ?: error("Atn does not exist in $lexerClass")
+      val tokenNameAndTypeMap = TokenNameAndTokenTypeMapping(lexerClass)
       val vocabulary = getVocabulary(lexerClass)
-      return MetaTokenInfoDB(
-        lexerClass,
+      val tokenInfoList =
         atn.ruleToTokenType
           .withIndex()
           .asSequence()
-          .filter { it.value != 0 } // 0 means nothing.
-          .map { (ruleIndex, tokenType) ->
-            val tokenName = tokenNameTypeMap.getSymbolicTokenName(tokenType)!!
-            val literal = vocabulary.getLiteralName(tokenType)?.let {
-              StringEscapeUtils.unescapeJava(it.substring(1, it.length - 1))
-            }
-            TokenInfoEntry(tokenName, TokenType(tokenType), RuleIndex(ruleIndex), literal)
-          }.toImmutableList(),
-      )
+          .filter {
+            // 0 means nothing. Token type starts from 1
+            it.value != 0
+          }.map { (ruleIndex, tokenType) ->
+            TokenInfoEntry(
+              symbolicName =
+                tokenNameAndTypeMap.getSymbolicTokenName(tokenType)
+                  ?: error("No name for the token type $tokenType. $tokenNameAndTypeMap"),
+              tokenType = TokenType(tokenType),
+              ruleIndex = RuleIndex(ruleIndex),
+              literalLexeme =
+                vocabulary.getLiteralName(tokenType)?.let {
+                  StringEscapeUtils.unescapeJava(it.substring(1, it.length - 1))
+                },
+            )
+          }.toImmutableList()
+      return MetaTokenInfoDB(
+        lexerClass,
+        tokenInfoList,
+      ) to atn
     }
 
     private fun getVocabulary(lexerClass: Class<out Lexer>) =
-      lexerClass.getField("VOCABULARY").get(null) as Vocabulary
+      ReflectionUtil.readStaticField<Vocabulary>(lexerClass, "VOCABULARY")
   }
 }

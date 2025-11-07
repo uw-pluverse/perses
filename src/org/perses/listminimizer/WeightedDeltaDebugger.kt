@@ -21,15 +21,18 @@ import org.perses.util.Util
 import org.perses.util.toImmutableList
 
 class WeightedDeltaDebugger<T : Any, PropertyPayload>(
-  args: Arguments<T, PropertyPayload>,
+  args: ListMinimizerArguments<T, PropertyPayload>,
   enableCache: Boolean = false,
   enableCacheRefresh: Boolean = false,
 ) : PristineDeltaDebugger<T, PropertyPayload>(
-  args,
-  enableCache,
-  enableCacheRefresh,
-) {
-  override fun createElementWrapperFor(index: Int, element: T): ElementWrapper<T> {
+    args,
+    enableCache,
+    enableCacheRefresh,
+  ) {
+  override fun createElementWrapperFor(
+    index: Int,
+    element: T,
+  ): ElementWrapper<T> {
     val weight = arguments.weightProvider.weight(element)
     return ElementWrapper(index, element, weight)
   }
@@ -52,17 +55,7 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
         Util.lazyAssert { partitionList.partitions.size == 0 }
         break
       }
-      log {
-        buildString {
-          val partitions = partitionList.partitions
-          val size = partitions.size
-          appendLine("Partition size: $size")
-          for (i in 0 until size) {
-            val partition = partitions[i].map { it.index }
-            appendLine("----Partition $i: $partition")
-          }
-        }
-      }
+      logPartitionList(partitionList)
 
       if (arguments.partitionComplementControl.enableReducingPartitions) {
         if (reducePartitions(partitionList)) {
@@ -89,12 +82,13 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
   private fun reduceComplementsForWdd(
     originalPartitionList: PartitionList<ElementWrapper<T>>,
   ): PartitionList<ElementWrapper<T>> {
-    log {
-      "Reducing complements: ${
-        originalPartitionList.partitions.map {
-          it.map { it.index }.toString()
-        }
-      }"
+    arguments.log {
+      val idList =
+        originalPartitionList.partitions
+          .map {
+            AbstractListMinimizerListener.convertElementListToCompactString(it)
+          }.toString()
+      "Reducing complements: $idList"
     }
     var currentPartitionList = originalPartitionList
     var countOfDeletedPartitions = 0
@@ -137,14 +131,14 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
   }
 
   companion object {
-    fun <T> computeSum(list: ImmutableList<ElementWrapper<T>>): Int {
-      return list.sumOf { getWeight(it) }
-    }
+    fun <T : Any> computeSum(list: ImmutableList<ElementWrapper<T>>): Int =
+      list.sumOf { getWeight(it) }
 
-    fun <T> getWeight(list: ImmutableList<ElementWrapper<T>>, index: Int): Int {
-      return getWeight(list[index])
-    }
+    fun <T : Any> getWeight(
+      list: ImmutableList<ElementWrapper<T>>,
+      index: Int,
+    ): Int = getWeight(list[index])
 
-    fun <T> getWeight(element: ElementWrapper<T>) = element.elementPayload as Int
+    fun <T : Any> getWeight(element: ElementWrapper<T>) = element.elementPayload as Int
   }
 }

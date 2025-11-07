@@ -21,13 +21,13 @@ import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 import org.perses.fuzzer.compilers.SanitizerCrashSignatureExtractor
 
 class SlangCrashDetector : AbstractCompilerCrashDetector() {
-
   // TODO: to be refined.
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
     val builder = ImmutableList.builder<String>()
     val sanitizerCrashDetector = SanitizerCrashSignatureExtractor()
     builder.addAll(sanitizerCrashDetector.extractCrashSignatureFromStderr(stderr))
-    stderr.asSequence()
+    stderr
+      .asSequence()
       .map { it.trim() }
       .filter { it.isNotBlank() }
       .forEach { origLine ->
@@ -57,11 +57,11 @@ class SlangCrashDetector : AbstractCompilerCrashDetector() {
     const val KEYWORD_SEGMENTATION_FAULT = "Segmentation fault"
 
     val REGEXP_FILE = Regex("in file \\S+/([^/]+),\\s+line\\s+\\d+${"$"}")
-    fun isLineLocation(line: String): Boolean {
-      return line.matches(REGEXP_FILE)
-    }
+
+    fun isLineLocation(line: String): Boolean = line.matches(REGEXP_FILE)
 
     private val FUNCTION_LINE = Regex("^function: .+\\([^()]*\\)[^()]*$")
+
     fun isFunctionLine(line: String) = line.matches(FUNCTION_LINE)
   }
 }

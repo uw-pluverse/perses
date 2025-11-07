@@ -1,0 +1,10 @@
+---
+name: Alice
+age: 30
+isStudent: false
+hobbies:
+  - reading
+  - hiking
+  - coding
+address:
+  zip: "12345"

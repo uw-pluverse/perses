@@ -21,16 +21,21 @@ import org.perses.program.AbstractReductionFile
 import org.perses.util.AbstractFileContent
 import org.perses.util.FileNameContentPair
 import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
+import org.perses.util.hashing.ShaHashCode
 
-abstract class AbstractOutputManager(private val reductionInputs: AbstractReductionInputs<*, *>) {
-
-  val shA512HashCode: Util.SHA512HashCode by lazy {
-    Util.SHA512HashCode.createFromListOfFileContents(
-      fileContentList.map { it.content },
+abstract class AbstractOutputManager(
+  private val reductionInputs: AbstractReductionInputs<*, *>,
+  private val shaAlgorithm: EnumShaAlgorithm,
+) {
+  val shaHashCode: ShaHashCode by lazy {
+    AbstractFileContent.createFromListOfFileContents(
+      shaHash = shaAlgorithm,
+      fileContents = fileContentList.map { it.content },
     )
   }
 
-  val fileContentList by lazy {
+  val fileContentList: ImmutableList<FileNameContentPair<AbstractReductionFile<*, *>>> by lazy {
     val list = internalComputeFileContentList()
     check(list.size == reductionInputs.mutableFiles.size) {
       """
@@ -46,6 +51,13 @@ abstract class AbstractOutputManager(private val reductionInputs: AbstractReduct
       }
     }
     list
+  }
+
+  fun tryToGetMainFileContentOrThrow(): FileNameContentPair<AbstractReductionFile<*, *>> {
+    check(reductionInputs is AbstractSingleFileReductionInputs<*, *, *>) {
+      "The reduction inputs have to have a single main file."
+    }
+    return fileContentList.single { it.fileName === reductionInputs.mainFile }
   }
 
   /**
@@ -74,10 +86,10 @@ abstract class AbstractOutputManager(private val reductionInputs: AbstractReduct
   ): String
 
   fun write(folder: ReductionFolder) {
-    fileContentList.forEach { pair ->
-      val destinationFile = folder.computeAbsPathForOrigFile(pair.fileName)
+    fileContentList.forEach { (fileName, content) ->
+      val destinationFile = folder.computeAbsPathForOrigFile(fileName)
       Util.ensureDirExists(destinationFile.parent)
-      pair.content.writeToFile(destinationFile)
+      content.writeToFile(destinationFile)
     }
     writeMore(folder)
   }

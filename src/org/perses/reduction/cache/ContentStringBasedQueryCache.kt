@@ -16,10 +16,9 @@
  */
 package org.perses.reduction.cache
 
-import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.AbstractOutputManager
 import java.lang.UnsupportedOperationException
-import java.util.stream.Collectors
 
 /**
  * The content-based caching used in the following paper.
@@ -35,54 +34,48 @@ class ContentStringBasedQueryCache(
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<
-  ContentStringBasedQueryCache.ContentStringEncoding,
-  ContentStringBasedQueryCache.ContentStringEncoder,
+    ContentStringBasedQueryCache.ContentStringEncoding,
+    ContentStringBasedQueryCache.ContentStringEncoder,
   >(
-  tokenizedProgram,
-  profiler,
-  configuration,
-) {
+    tokenizedProgram,
+    profiler,
+    configuration,
+  ) {
   override fun createEncoder(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ): ContentStringEncoder {
-    return ContentStringEncoder(baseProgram, profiler)
-  }
+  ): ContentStringEncoder = ContentStringEncoder(baseProgram, profiler)
 
   class ContentStringEncoder(
     tokenizedProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
   ) : AbstractTokenizedProgramEncoder<ContentStringEncoding>(
-    tokenizedProgram,
-    profiler,
-    supportsRccReEncoding = false,
-  ) {
-
-    override fun encode(program: TokenizedProgram): ContentStringEncoding {
-      return ContentStringEncoding(
-        program.tokens.stream()
-          .map { obj: PersesTokenFactory.PersesToken -> obj.text }
-          .collect(Collectors.joining("\n")),
+      tokenizedProgram,
+      profiler,
+      supportsRccReEncoding = false,
+    ) {
+    override fun encode(
+      program: TokenizedProgram,
+      outputManager: AbstractOutputManager,
+    ): ContentStringEncoding =
+      ContentStringEncoding(
+        program.tokens.joinToString(separator = "\n") { it.lexemeText },
         program.tokenCount,
       )
-    }
 
-    override fun reEncode(
-      previousEncoding: ContentStringEncoding,
-    ): ContentStringEncoding? {
+    override fun reEncode(previousEncoding: ContentStringEncoding): ContentStringEncoding =
       throw UnsupportedOperationException()
-    }
 
     override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {}
   }
 
-  class ContentStringEncoding(private val content: String, tokenCount: Int) :
-    AbstractProgramEncoding<ContentStringEncoding>(
+  class ContentStringEncoding(
+    private val content: String,
+    tokenCount: Int,
+  ) : AbstractProgramEncoding<ContentStringEncoding>(
       content.hashCode(),
       tokenCount,
     ) {
-    override fun extraEquals(other: ContentStringEncoding): Boolean {
-      return content == other.content
-    }
+    override fun extraEquals(other: ContentStringEncoding): Boolean = content == other.content
   }
 }

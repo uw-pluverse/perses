@@ -24,7 +24,6 @@ import org.perses.fuzzer.compilers.ICompilerCrashDetector.CrashSignature
 
 @RunWith(JUnit4::class)
 class CrashSignatureTest {
-
   @Test
   fun testEquality() {
     val s1 = CrashSignature.build(listOf("a", "b"))

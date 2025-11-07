@@ -23,21 +23,25 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility.createTokenizedProgramFromString
 import org.perses.grammar.c.LanguageC
 import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.io.CommonReductionIOManagerData
 
 @RunWith(JUnit4::class)
-class NullQueryCacheTest {
-
+class NullQueryCacheTest : CommonReductionIOManagerData(NullQueryCacheTest::class.java) {
   private val cache = NullQueryCache()
 
   @Test
   fun test() {
-    assertThat(cache.size()).isEqualTo(0)
+    assertThat(cache.cacheSize()).isEqualTo(0)
     val program = createTokenizedProgramFromString("int a;", LanguageC)
-    val cachedResult = cache.getCachedResult(program)
+    val cachedResult =
+      cache.getCachedResult(
+        program,
+        outputManager = outputManagerFactory.createManagerFor(program),
+      )
     assertThat(cachedResult.isMiss()).isTrue()
     cache.cacheProgramAndResult(cachedResult.asCacheMiss(), PropertyTestResult.INTERESTING_RESULT)
-    assertThat(cache.size()).isEqualTo(0)
+    assertThat(cache.cacheSize()).isEqualTo(0)
     cache.evictEntriesLargerThan(program)
-    assertThat(cache.size()).isEqualTo(0)
+    assertThat(cache.cacheSize()).isEqualTo(0)
   }
 }

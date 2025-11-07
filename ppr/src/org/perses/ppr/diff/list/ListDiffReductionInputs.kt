@@ -30,19 +30,19 @@ class ListDiffReductionInputs(
   val variantFile: SourceFile,
   immutableDependencyFiles: ImmutableList<BinaryReductionFile>,
 ) : AbstractReductionInputs<LanguageKind, ListDiffReductionInputs>(
-  testScript,
-  initiallyDeterminedMainDataKind = seedFile.dataKind,
-  rootDirectory = seedFile.parentFile,
-  mutableFiles = ImmutableList.of(seedFile, variantFile),
-  immutableDependencyFiles = immutableDependencyFiles,
-) {
-
+    testScript,
+    initiallyDeterminedMainDataKind = seedFile.dataKind,
+    rootDirectory = seedFile.parentFile,
+    mutableFiles = ImmutableList.of(seedFile, variantFile),
+    immutableDependencyFiles = immutableDependencyFiles,
+  ) {
   init {
     require(seedFile.parentFile.toAbsolutePath() == testScript.parentFile.toAbsolutePath()) {
       "The seed file and the test script should reside in the same folder. " +
         "seedFile:$seedFile, testScript:$testScript"
     }
   }
+
   companion object {
     fun create(
       seedPath: Path,

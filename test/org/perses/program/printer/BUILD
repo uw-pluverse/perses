@@ -10,7 +10,6 @@ kt_jvm_test(
     ],
     deps = [
         "//:guava",
-        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/program",
         "//src/org/perses/program/printer",
@@ -25,7 +24,7 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses/program",
-        "//src/org/perses/program/printer",
+        "//src/org/perses/program/printer:orig_format_visitor_interface",
         "//test/org/perses:test_util",
     ],
 )

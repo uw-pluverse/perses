@@ -23,13 +23,11 @@ import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.PersesRuleReferenceAst
 
 class OutlineAltBlockPass : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
-    mutable.nonEmptyAltBlockSequence()
+    mutable
+      .nonEmptyAltBlockSequence()
       .toList()
       .forEach { (name, altBlock) ->
         altBlock.forEach { ruleElement ->

@@ -26,6 +26,67 @@ import java.util.Random
 
 @RunWith(JUnit4::class)
 class PersesKtExtsTest {
+  @Test
+  fun shouldPadEvenlyWithDefaultSpaceCharacter() {
+    assertThat("kotlin".padBothEnds(12)).isEqualTo("   kotlin   ")
+  }
+
+  @Test
+  fun shouldPadWithASpecifiedCharacter() {
+    assertThat(
+      "hello".padBothEnds(10, '-'),
+    ).isEqualTo("--hello---") // 2 left, 3 right
+  }
+
+  @Test
+  fun shouldHandleOddTotalPaddingCorrectly() {
+    assertThat("abc".padBothEnds(8, '*'))
+      .isEqualTo("**abc***") // 2 left, 3 right
+  }
+
+  @Test
+  fun shouldReturnOriginalStringIfDesiredLengthIsLessThanOriginalLength() {
+    assertThat("abcdefg".padBothEnds(5)).isEqualTo("abcdefg")
+  }
+
+  @Test
+  fun shouldReturnOriginalStringIfDesiredLengthIsEqualToOriginalLength() {
+    assertThat("test".padBothEnds(4)).isEqualTo("test")
+  }
+
+  @Test
+  fun shouldHandleEmptyStringAsInput() {
+    assertThat("".padBothEnds(5, '#')).isEqualTo("#####")
+  }
+
+  @Test
+  fun shouldThrowIllegalArgumentExceptionForNegativeDesiredLength() {
+    val exception =
+      kotlin
+        .runCatching {
+          "abc".padBothEnds(-5)
+        }.exceptionOrNull()
+    assertThat(exception).isNotNull()
+  }
+
+  @Test
+  fun shouldHandleLargePaddingAmounts() {
+    assertThat(
+      "x".padBothEnds(100, '='),
+    ).isEqualTo(
+      "=================================================x==================================================",
+    ) // 49 left, 50 right
+  }
+
+  @Test
+  fun shouldHandleSingleCharacterStringAndEvenPadding() {
+    assertThat("A".padBothEnds(5, '.')).isEqualTo("..A..")
+  }
+
+  @Test
+  fun shouldHandleSingleCharacterStringAndOddPadding() {
+    assertThat("B".padBothEnds(6, '~')).isEqualTo("~~B~~~")
+  }
 
   @Test
   fun testIsSorted() {
@@ -52,9 +113,10 @@ class PersesKtExtsTest {
   fun testToImmutableBiMap() {
     sequenceOf(Pair("a", 1), Pair("b", 2)).toImmutableBiMap().let {
       assertThat(
-        it.entries.map { entry ->
-          entry.key + "-" + entry.value
-        }.toList(),
+        it.entries
+          .map { entry ->
+            entry.key + "-" + entry.value
+          }.toList(),
       ).containsExactly("a-1", "b-2")
     }
   }
@@ -66,17 +128,18 @@ class PersesKtExtsTest {
 
   @Test
   fun testTransformToImmutableList() {
-    assertThat(listOf("", "1").transformToImmutableList { it.length }).containsExactly(
-      0,
-      1,
-    ).inOrder()
+    assertThat(listOf("", "1").transformToImmutableList { it.length })
+      .containsExactly(
+        0,
+        1,
+      ).inOrder()
     assertThat(
       (
         listOf(
           "",
           "a",
         ) as Iterable<String>
-        ).transformToImmutableList { it.length },
+      ).transformToImmutableList { it.length },
     ).containsExactly(0, 1).inOrder()
   }
 
@@ -143,13 +206,15 @@ class PersesKtExtsTest {
 
     val intRange = 0..5
 
-    val result1 = Random(1).let { r1 ->
-      intRange.asSequence().map { r1.sample(list) }.toList()
-    }
+    val result1 =
+      Random(1).let { r1 ->
+        intRange.asSequence().map { r1.sample(list) }.toList()
+      }
 
-    val result2 = Random(1).let { r2 ->
-      intRange.asSequence().map { list[r2.nextInt(list.size)] }.toList()
-    }
+    val result2 =
+      Random(1).let { r2 ->
+        intRange.asSequence().map { list[r2.nextInt(list.size)] }.toList()
+      }
 
     assertThat(result1).isEqualTo(result2)
   }
@@ -168,6 +233,12 @@ class PersesKtExtsTest {
     assertThat(" ".containsNoWhitespace()).isFalse()
     assertThat("\n".containsNoWhitespace()).isFalse()
     assertThat("".containsNoWhitespace()).isTrue()
+  }
+
+  @Test
+  fun testCombineImmutableList() {
+    assertThat(ImmutableList.of<Int>().combine(1)).isEqualTo(ImmutableList.of(1))
+    assertThat(ImmutableList.of(1).combine(2)).isEqualTo(ImmutableList.of(1, 2))
   }
 
   @Test

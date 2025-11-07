@@ -23,26 +23,27 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class RuleReachabilityGraphTest {
-
   @Test
   fun testReachabilityGraph() {
-    val hierarchy = GrammarHierarchy.createFromString(
-      startRuleName = "a",
-      content = """
-      grammar graph;
-      
-      a : (b | c) + c | b a;
-      b : b c | c;
-      c : 'c';
-      
-      d : d c | c;
-      e : e c | c;
-      f : f b | b;
-      
-      g : c g | c h | c;
-      h : c g | c h | c;
-      """.trimIndent(),
-    )
+    val hierarchy =
+      GrammarHierarchy.createFromString(
+        startRuleName = "a",
+        content =
+          """
+          grammar graph;
+          
+          a : (b | c) + c | b a;
+          b : b c | c;
+          c : 'c';
+          
+          d : d c | c;
+          e : e c | c;
+          f : f b | b;
+          
+          g : c g | c h | c;
+          h : c g | c h | c;
+          """.trimIndent(),
+      )
     val pathCounts = hierarchy.reachabilityGraph.numOfIncomingPathsPerNode
 
     val a = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")

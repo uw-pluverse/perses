@@ -17,8 +17,9 @@
 package org.perses.util.shell
 
 @JvmInline
-value class ExitCode(val intValue: Int) {
-
+value class ExitCode(
+  val intValue: Int,
+) {
   init {
     require(intValue in MIN_EXIT_CODE_INT..MAX_EXIT_CODE_INT) { intValue }
   }

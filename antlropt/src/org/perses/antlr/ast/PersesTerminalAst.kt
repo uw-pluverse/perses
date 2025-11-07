@@ -27,7 +27,6 @@ class PersesTerminalAst(
   val text: String,
   val tokenType: Int,
 ) : AbstractPersesTerminalAst() {
-
   init {
     require(text.isNotEmpty()) { text }
   }
@@ -42,7 +41,11 @@ class PersesTerminalAst(
     return PersesTerminalAst(text, tokenType)
   }
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.print(text)
   }
 
@@ -52,9 +55,7 @@ class PersesTerminalAst(
     return result
   }
 
-  fun isWildcardDot(): Boolean {
-    return text == "."
-  }
+  fun isWildcardDot(): Boolean = text == "."
 
   fun getStringLiteralOrThrow(): String {
     check(isStringLiteral()) { text }
@@ -72,9 +73,12 @@ class PersesTerminalAst(
 
   override val tag = AstTag.TERMINAL
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("text", text).add("type", tokenType).toString()
-  }
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
+      .add("text", text)
+      .add("type", tokenType)
+      .toString()
 
   override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean {
     val ast = other as PersesTerminalAst
@@ -82,7 +86,6 @@ class PersesTerminalAst(
   }
 
   companion object {
-
     fun createTokenReference(lexerRuleName: String): PersesTerminalAst {
       require(RuleType.isLexerRule(lexerRuleName)) { lexerRuleName }
       return PersesTerminalAst(lexerRuleName, tokenType = ANTLRParser.TOKEN_REF)

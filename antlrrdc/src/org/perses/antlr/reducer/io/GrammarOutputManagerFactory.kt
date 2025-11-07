@@ -25,6 +25,7 @@ import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.reduction.io.ReductionFolder
 import org.perses.util.AutoDeletableFolder
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -33,20 +34,18 @@ class GrammarOutputManagerFactory(
   val startRuleName: String,
   val jarFileName: String,
   val testPrograms: ImmutableList<Path>,
+  val shaAlgorithmType: EnumShaAlgorithm,
 ) : AbstractOutputManagerFactory<PersesGrammar>() {
-
-  override fun createManagerFor(program: PersesGrammar): AbstractOutputManager {
-    return OutputManager(program)
-  }
+  override fun createManagerFor(program: PersesGrammar): AbstractOutputManager =
+    OutputManager(program)
 
   inner class OutputManager(
     private val program: PersesGrammar,
-  ) : AbstractOutputManager(reductionInputs) {
-
+  ) : AbstractOutputManager(reductionInputs, shaAlgorithmType) {
     override fun internalComputeContentForFile(
       origReductionFile: AbstractReductionFile<*, *>,
-    ): String {
-      return when (origReductionFile) {
+    ): String =
+      when (origReductionFile) {
         reductionInputs.mainFile -> {
           program.sourceCode
         }
@@ -55,7 +54,6 @@ class GrammarOutputManagerFactory(
         }
         else -> error("unhandled file $origReductionFile")
       }
-    }
 
     override fun writeMore(folder: ReductionFolder) {
       val parserFile = folder.computeAbsPathForOrigFile(reductionInputs.mainFile)
@@ -64,15 +62,16 @@ class GrammarOutputManagerFactory(
       AutoDeletableFolder(
         folder.folder.resolve("temp_antlr_compiler_folder"),
       ).use {
-        val compiler = AntlrCompiler.createFromFiles(
-          parserFile = parserFile,
-          lexerFile = lexerFile,
-          startRuleName = startRuleName,
-          workingDirectory = it.file,
-          stubFactory = GrammarMainStubFactory(testPrograms = testPrograms),
-          packageName = "org.perses.antlr",
-          jarFileCustomizer = {},
-        )
+        val compiler =
+          AntlrCompiler.createFromFiles(
+            parserFile = parserFile,
+            lexerFile = lexerFile,
+            startRuleName = startRuleName,
+            workingDirectory = it.file,
+            stubFactory = GrammarMainStubFactory(testPrograms = testPrograms),
+            packageName = "org.perses.antlr",
+            jarFileCustomizer = {},
+          )
         val jarFile = compiler.run()
         jarFile.copyTo(jarFilePath)
       }

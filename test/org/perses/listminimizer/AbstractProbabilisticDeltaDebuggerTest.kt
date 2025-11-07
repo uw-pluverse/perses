@@ -28,12 +28,12 @@ import org.perses.reduction.PropertyTestResult.Companion.NON_INTERESTING_RESULT
 class AbstractProbabilisticDeltaDebuggerTest {
   val input = ImmutableList.of("a", "b", "c", "d", "e", "f", "g", "h")
   val dummyHandler = {
-      _: ImmutableList<AbstractListInputMinimizer.ElementWrapper<String>>, _: String ->
+    _: ImmutableList<ElementWrapper<String>>,
+    _: String,
+    ->
   }
 
-  private fun checkOrder(
-    list: ImmutableList<String>?,
-  ): Boolean {
+  private fun checkOrder(list: ImmutableList<String>?): Boolean {
     var currVal = 0
     for (str in list!!) {
       for (c in str) {
@@ -56,19 +56,20 @@ class AbstractProbabilisticDeltaDebuggerTest {
       true,
     )
     test(property = listOf("c", "h"), expected = listOf("c", "h"), true).let { testHistory ->
-      assertThat(testHistory).containsExactly(
-        "",
-        "efgh",
-        "abcd",
-        "cdefgh",
-        "efgh",
-        "cdgh",
-        "cd",
-        "dgh",
-        "cgh",
-        "ch",
-        "c",
-      ).inOrder()
+      assertThat(testHistory)
+        .containsExactly(
+          "",
+          "efgh",
+          "abcd",
+          "cdefgh",
+          "efgh",
+          "cdgh",
+          "cd",
+          "dgh",
+          "cgh",
+          "ch",
+          "c",
+        ).inOrder()
     }
 
     test(property = listOf("c", "h"), expected = listOf("c", "h"), true).let { delHistory ->
@@ -95,19 +96,20 @@ class AbstractProbabilisticDeltaDebuggerTest {
       false,
     )
     test(property = listOf("c", "h"), expected = listOf("c", "h"), false).let { testHistory ->
-      assertThat(testHistory).containsExactly(
-        "",
-        "efgh",
-        "abcd",
-        "cdefgh",
-        "efgh",
-        "cdgh",
-        "cd",
-        "dgh",
-        "cgh",
-        "ch",
-        "c",
-      ).inOrder()
+      assertThat(testHistory)
+        .containsExactly(
+          "",
+          "efgh",
+          "abcd",
+          "cdefgh",
+          "efgh",
+          "cdgh",
+          "cd",
+          "dgh",
+          "cgh",
+          "ch",
+          "c",
+        ).inOrder()
     }
 
     test(property = listOf("c", "h"), expected = listOf("c", "h"), false).let { delHistory ->
@@ -132,19 +134,20 @@ class AbstractProbabilisticDeltaDebuggerTest {
       expected = listOf("c", "d", "h"),
       false,
     ).let { testHistory ->
-      assertThat(testHistory).containsExactly(
-        "",
-        "efgh",
-        "abcd",
-        "cdefgh",
-        "efgh",
-        "cdgh",
-        "cd",
-        "dgh",
-        "cgh",
-        "cdh",
-        "cd",
-      ).inOrder()
+      assertThat(testHistory)
+        .containsExactly(
+          "",
+          "efgh",
+          "abcd",
+          "cdefgh",
+          "efgh",
+          "cdgh",
+          "cd",
+          "dgh",
+          "cgh",
+          "cdh",
+          "cd",
+        ).inOrder()
     }
   }
 
@@ -155,21 +158,22 @@ class AbstractProbabilisticDeltaDebuggerTest {
       expected = listOf("a", "c", "e", "f"),
       false,
     ).let { testHistory ->
-      assertThat(testHistory).containsExactly(
-        "",
-        "efgh",
-        "abcd",
-        "cdefgh",
-        "abefgh",
-        "abcdgh",
-        "abcdef",
-        "bcdef",
-        "acdef",
-        "adef",
-        "acef",
-        "acf",
-        "ace",
-      ).inOrder()
+      assertThat(testHistory)
+        .containsExactly(
+          "",
+          "efgh",
+          "abcd",
+          "cdefgh",
+          "abefgh",
+          "abcdgh",
+          "abcdef",
+          "bcdef",
+          "acdef",
+          "adef",
+          "acef",
+          "acf",
+          "ace",
+        ).inOrder()
     }
   }
 
@@ -183,29 +187,31 @@ class AbstractProbabilisticDeltaDebuggerTest {
 
     val propertyTest =
       IPropertyTester<String, String> { configuration ->
-        val candidate = configuration.candidate
-        val deleted = configuration.deleted
+        val candidate = configuration.getCandidateOrFail()
+        val deleted = configuration.deletedElements
         testHistory.add(candidate.joinToString(separator = ""))
         delHistory.add(deleted.joinToString(separator = ""))
         if (candidate.containsAll(property)) {
-          PropertyTestResultWithPayload(INTERESTING_RESULT, "payload")
+          LMPropertyTestResult.Completed(INTERESTING_RESULT, "payload")
         } else {
-          PropertyTestResultWithPayload(NON_INTERESTING_RESULT, "payload")
+          LMPropertyTestResult.Completed(NON_INTERESTING_RESULT, "payload")
         }
       }
 
-    val arguments = AbstractListInputMinimizer.Arguments(
-      needToTestEmpty = true,
-      input,
-      propertyTest,
-      dummyHandler,
-      descriptionPrefix = "",
-    )
-    val debugger = if (isProbabilisticDeltaDebugger) {
-      PristineProbabilisticDeltaDebugger<String, String>(arguments)
-    } else {
-      CounterBasedDeltaDebugger<String, String>(arguments)
-    }
+    val arguments =
+      ListMinimizerArguments(
+        needToTestEmpty = true,
+        input,
+        propertyTest,
+        dummyHandler,
+        descriptionPrefix = "",
+      )
+    val debugger =
+      if (isProbabilisticDeltaDebugger) {
+        PristineProbabilisticDeltaDebugger<String, String>(arguments)
+      } else {
+        CounterBasedDeltaDebugger<String, String>(arguments)
+      }
 
     val result = debugger.reduce()
     assertThat(result).isEqualTo(expected)

@@ -28,11 +28,11 @@ import me.lemire.integercompression.differential.SkippableIntegratedIntegerCODEC
  * Better to use Java.
  */
 class CompressorForIntArrayList {
-
-  private val codec: SkippableIntegratedIntegerCODEC = SkippableIntegratedComposition(
-    IntegratedBinaryPacking(),
-    IntegratedVariableByte(),
-  )
+  private val codec: SkippableIntegratedIntegerCODEC =
+    SkippableIntegratedComposition(
+      IntegratedBinaryPacking(),
+      IntegratedVariableByte(),
+    )
 
   fun compress(intArrayList: IntArrayList): IntArray {
     val input = intArrayList.elements()

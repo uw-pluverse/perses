@@ -23,8 +23,8 @@ class ReductionEndEvent internal constructor(
   val testScriptExecutorServiceStatistics: TestScriptExecutorServiceStatisticsSnapshot,
   val extraData: String? = null,
 ) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
+  override fun initialProgramSize(): Int = startEvent.initialProgramSize()
 
-  override fun initialProgramSize(): Int {
-    return startEvent.initialProgramSize()
-  }
+  override val prefixLabelFromRootToHere: String
+    get() = ""
 }

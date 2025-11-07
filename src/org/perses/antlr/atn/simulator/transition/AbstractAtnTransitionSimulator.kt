@@ -19,6 +19,5 @@ package org.perses.antlr.atn.simulator.transition
 import org.perses.antlr.atn.AbstractDecisionMaker
 
 abstract class AbstractAtnTransitionSimulator {
-
   abstract fun simulate(decisionMaker: AbstractDecisionMaker): Char?
 }

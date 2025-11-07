@@ -20,10 +20,8 @@ class PersesLexerRuleAst(
   ruleNameHandle: RuleNameRegistry.RuleNameHandle,
   body: AbstractPersesRuleElement,
 ) : AbstractPersesLexerRuleAst(ruleNameHandle, body) {
-
-  override fun copyWithNewBody(newBody: AbstractPersesRuleElement): PersesLexerRuleAst {
-    return PersesLexerRuleAst(ruleNameHandle, newBody)
-  }
+  override fun copyWithNewBody(newBody: AbstractPersesRuleElement): PersesLexerRuleAst =
+    PersesLexerRuleAst(ruleNameHandle, newBody)
 
   override val tag: AstTag
     get() = AstTag.RULE_DEFINITION_LEXER

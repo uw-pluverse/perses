@@ -24,7 +24,7 @@ import org.perses.antlr.TokenType
 import org.perses.fuzzer.languagemodel.AbstractLanguageModel
 import org.perses.fuzzer.languagemodel.FeatureOfSparTree
 import org.perses.grammar.AbstractParserFacade
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.program.TokenizedProgramFactory
 import org.perses.spartree.AbstractSparTreeGenerator
@@ -51,25 +51,27 @@ class SparTreeFuzzer private constructor(
   tree: SparTree?,
   val isInitial: Boolean,
 ) {
-
-  private val identifierTokenType = parserFacade.identifierTokenTypes
-  val sparTree: SparTree = tree ?: run {
-    val parseTree = parserFacade.parseFile(seedFile.toPath())
-    val tokens = ParseTreeUtil.getTokens(parseTree.tree)
-    val tokenizedProgramFactory = TokenizedProgramFactory.createFactory(
-      tokens,
-      parserFacade.language,
-    )
-    val sparTreeNodeFactory = SparTreeNodeFactory(
-      parserFacade.metaTokenInfoDb,
-      tokenizedProgramFactory,
-      parserFacade.ruleHierarchy,
-    )
-    SparTreeBuilder(
-      sparTreeNodeFactory,
-      parseTree,
-    ).result
-  }
+  private val identifierTokenType: ImmutableList<TokenType> = parserFacade.identifierTokenTypes
+  val sparTree: SparTree =
+    tree ?: run {
+      val parseTree = parserFacade.parseFile(seedFile.toPath())
+      val tokens = ParseTreeUtil.getTokens(parseTree.tree)
+      val tokenizedProgramFactory =
+        TokenizedProgramFactory.createFactory(
+          tokens,
+          parserFacade.language,
+        )
+      val sparTreeNodeFactory =
+        SparTreeNodeFactory(
+          parserFacade.metaTokenInfoDb,
+          tokenizedProgramFactory,
+          parserFacade.ruleHierarchy,
+        )
+      SparTreeBuilder(
+        sparTreeNodeFactory,
+        parseTree,
+      ).result
+    }
   private val identifierIndex: ImmutableIntArray
 
   // cache the result of encoding
@@ -108,6 +110,9 @@ class SparTreeFuzzer private constructor(
   }
 
   private fun flatSparTree(tree: SparTree): ImmutableList<AbstractSparTreeNode> {
+    if (!tree.hasRealRoot()) {
+      return ImmutableList.of()
+    }
     val root = tree.realRoot
     val currentList = ImmutableList.builder<AbstractSparTreeNode>()
     val bufferStack = Stack<AbstractSparTreeNode>()
@@ -127,8 +132,8 @@ class SparTreeFuzzer private constructor(
     }
     val randomIndex1 = identifierIndex[random.nextInt(identifierIndex.length())]
     val randomIndex2 = identifierIndex[random.nextInt(identifierIndex.length())]
-    check(seedProgram.tokens[randomIndex1].type in identifierTokenType)
-    check(seedProgram.tokens[randomIndex2].type in identifierTokenType)
+    check(seedProgram.tokens[randomIndex1].tokenType in identifierTokenType)
+    check(seedProgram.tokens[randomIndex2].tokenType in identifierTokenType)
     numOfTokenLevelMutationApplied++
     return MutatedProgram.replaceToken(
       seedProgram.tokens,
@@ -140,15 +145,17 @@ class SparTreeFuzzer private constructor(
   // Token level, syntactically valid
   fun createMutantByReplacingSameToken(random: Random): MutatedProgram? {
     val randomIndex = random.nextInt(seedProgram.tokens.size)
-    val tokenType = seedProgram.tokens[randomIndex].type
+    val tokenType: TokenType = seedProgram.tokens[randomIndex].tokenType
     val tokenIndex = buildTokenIndex(seedProgram.tokens, tokenType)
     if (tokenIndex.length() == 1) {
       return null
     }
     val randomTokenIndex = tokenIndex[random.nextInt(tokenIndex.length())]
-    assert(seedProgram.tokens[randomIndex].type == tokenType)
-    assert(seedProgram.tokens[randomTokenIndex].type == tokenType)
-    if (seedProgram.tokens[randomIndex].text == seedProgram.tokens[randomTokenIndex].text) {
+    assert(seedProgram.tokens[randomIndex].tokenType == tokenType)
+    assert(seedProgram.tokens[randomTokenIndex].tokenType == tokenType)
+    if (seedProgram.tokens[randomIndex].lexemeText ==
+      seedProgram.tokens[randomTokenIndex].lexemeText
+    ) {
       return null
     }
     numOfTokenLevelMutationApplied++
@@ -161,22 +168,30 @@ class SparTreeFuzzer private constructor(
 
   // Node level, syntactically valid
   @Deprecated("Should use tree-level mutation version instead (not implemented yet)")
-  fun createMutantByRepeatingRecursion(random: Random, maxRepeatingTimes: Int): MutatedProgram? {
+  fun createMutantByRepeatingRecursion(
+    random: Random,
+    maxRepeatingTimes: Int,
+  ): MutatedProgram? {
     val recursiveNodesToCorrespondingChildrenMap =
       hashMapOf<AbstractSparTreeNode, List<AbstractSparTreeNode>>()
-    val recursiveNodes = sparTree.realRoot.boundedBreadthFirstSearchForFirstQualifiedNodes(
-      { node -> findAllRecursiveChildren(node, recursiveNodesToCorrespondingChildrenMap, random) },
-      maxBfsDepth = 10,
-    ).toImmutableList()
+    val recursiveNodes =
+      sparTree.realRoot
+        .boundedBreadthFirstSearchForFirstQualifiedNodes(
+          { node ->
+            findAllRecursiveChildren(node, recursiveNodesToCorrespondingChildrenMap, random)
+          },
+          maxBfsDepth = 10,
+        ).toImmutableList()
     if (recursiveNodes.isEmpty()) {
       return null
     }
     val pickedNode = recursiveNodes[random.nextInt(recursiveNodes.size)]
-    val pickedChild = recursiveNodesToCorrespondingChildrenMap[pickedNode]!![
-      random.nextInt(
-        recursiveNodesToCorrespondingChildrenMap[pickedNode]!!.size,
-      ),
-    ]
+    val pickedChild =
+      recursiveNodesToCorrespondingChildrenMap[pickedNode]!![
+        random.nextInt(
+          recursiveNodesToCorrespondingChildrenMap[pickedNode]!!.size,
+        ),
+      ]
     return MutatedProgram.repeatRecursion(
       seedProgram.tokens,
       pickedNode,
@@ -187,30 +202,39 @@ class SparTreeFuzzer private constructor(
 
   // Node level, syntactically valid
   @Deprecated("Should use tree-level mutation version instead")
-  fun createMutantBySplicing(another: SparTreeFuzzer, random: Random): MutatedProgram? {
-    val nodeList = flattenedTree.filter {
-      it.isNonRootParserRuleNode() && it.payload != null
-    }
+  fun createMutantBySplicing(
+    another: SparTreeFuzzer,
+    random: Random,
+  ): MutatedProgram? {
+    val nodeList =
+      flattenedTree.filter {
+        it.isNonRootParserRuleNode() && it.payload != null
+      }
     if (nodeList.isEmpty()) {
       return null
     }
     val nodeToBeReplaced = nodeList[random.nextInt(nodeList.size)]
-    val expectedSuperRuleType = nodeToBeReplaced
-      ?.payload?.expectedAntlrRuleType ?: return null
-    val anotherNodeList = another.flattenedTree.filter { node ->
-      !node.isTokenNode() && expectedSuperRuleType.isEqualToOrSuperOf(
-        node.antlrRule!!,
-      )
-    }
+    val expectedSuperRuleType =
+      nodeToBeReplaced
+        ?.payload
+        ?.expectedAntlrRuleType ?: return null
+    val anotherNodeList =
+      another.flattenedTree.filter { node ->
+        !node.isTokenNode() &&
+          expectedSuperRuleType.isEqualToOrSuperOf(
+            node.antlrRule!!,
+          )
+      }
     if (anotherNodeList.isEmpty()) {
       return null
     }
     val replacementNode = anotherNodeList[random.nextInt(anotherNodeList.size)]
     val anotherTokenList = another.seedProgram.tokens
-    val replacement = anotherTokenList.subList(
-      anotherTokenList.indexOf(replacementNode.beginToken!!.token),
-      anotherTokenList.indexOf(replacementNode.endToken!!.token) + 1,
-    )
+    val replacement =
+      anotherTokenList.subList(
+        anotherTokenList.indexOf(replacementNode.beginToken!!.token),
+        anotherTokenList.indexOf(replacementNode.endToken!!.token) + 1,
+      )
     return MutatedProgram.replaceNode(seedProgram.tokens, nodeToBeReplaced, replacement)
   }
 
@@ -220,28 +244,36 @@ class SparTreeFuzzer private constructor(
     random: Random,
     model: AbstractLanguageModel,
   ): SparTree? {
-    val nodeList = flattenedTree.filter {
-      it.isNonRootParserRuleNode() && it.payload != null
-    }
-    val selectedIndex = model.selectIndexOfNodeToBeReplaced(nodeList, featureOfTheSparTree, random)
-      ?: return null
+    val nodeList =
+      flattenedTree.filter {
+        it.isNonRootParserRuleNode() && it.payload != null
+      }
+    val selectedIndex =
+      model.selectIndexOfNodeToBeReplaced(nodeList, featureOfTheSparTree, random)
+        ?: return null
     val copiedSparTree = sparTree.deepCopy(ReuseNodeIdStrategy).result
-    val copiedNodeList = flatSparTree(copiedSparTree).filter {
-      it.isNonRootParserRuleNode() && it.payload != null
-    }
+    val copiedNodeList =
+      flatSparTree(copiedSparTree).filter {
+        it.isNonRootParserRuleNode() && it.payload != null
+      }
     val nodeToBeReplaced = copiedNodeList[selectedIndex]
-    val expectedSuperRuleType = nodeToBeReplaced
-      ?.payload?.expectedAntlrRuleType ?: return null
-    val anotherNodeList = another.flattenedTree.filter { node ->
-      !node.isTokenNode() && expectedSuperRuleType.isEqualToOrSuperOf(
-        node.antlrRule!!,
-      )
-    }
-    val replacingNode = model.selectReplacingNode(
-      anotherNodeList,
-      featureOfTheSparTree,
-      random,
-    ) ?: return null
+    val expectedSuperRuleType =
+      nodeToBeReplaced
+        ?.payload
+        ?.expectedAntlrRuleType ?: return null
+    val anotherNodeList =
+      another.flattenedTree.filter { node ->
+        !node.isTokenNode() &&
+          expectedSuperRuleType.isEqualToOrSuperOf(
+            node.antlrRule!!,
+          )
+      }
+    val replacingNode =
+      model.selectReplacingNode(
+        anotherNodeList,
+        featureOfTheSparTree,
+        random,
+      ) ?: return null
     numOfTreeLevelMutationApplied++
     return editTreeByReplacingNode(copiedSparTree, nodeToBeReplaced, replacingNode)
   }
@@ -252,9 +284,10 @@ class SparTreeFuzzer private constructor(
     random: Random,
     generator: AbstractSparTreeGenerator,
   ): MutatedProgram? {
-    val nodesWithAntlrRule = flattenedTree.filter {
-      it.parent != null && it.antlrRule != null && it.antlrRule!!.ruleDef.isParserRule
-    }
+    val nodesWithAntlrRule =
+      flattenedTree.filter {
+        it.parent != null && it.antlrRule != null && it.antlrRule!!.ruleDef.isParserRule
+      }
     if (nodesWithAntlrRule.isEmpty()) {
       return null
     }
@@ -278,15 +311,17 @@ class SparTreeFuzzer private constructor(
       flattenedTree.filter {
         it.parent != null && it.antlrRule != null && it.antlrRule!!.ruleDef.isParserRule
       }
-    val selectedIndex = model.selectIndexOfNodeToBeReplaced(
-      nodeList,
-      featureOfTheSparTree,
-      random,
-    ) ?: return null
+    val selectedIndex =
+      model.selectIndexOfNodeToBeReplaced(
+        nodeList,
+        featureOfTheSparTree,
+        random,
+      ) ?: return null
     val copiedSparTree = sparTree.deepCopy(ReuseNodeIdStrategy).result
-    val nodesWithAntlrRule = flatSparTree(copiedSparTree).filter {
-      it.parent != null && it.antlrRule != null && it.antlrRule!!.ruleDef.isParserRule
-    }
+    val nodesWithAntlrRule =
+      flatSparTree(copiedSparTree).filter {
+        it.parent != null && it.antlrRule != null && it.antlrRule!!.ruleDef.isParserRule
+      }
     assert(nodesWithAntlrRule.size == nodeList.size)
     val nodeToBeReplaced = nodesWithAntlrRule[selectedIndex]
     val ruleToStart = nodeToBeReplaced.antlrRule!!.ruleDef.ruleNameHandle
@@ -299,14 +334,17 @@ class SparTreeFuzzer private constructor(
   fun createMutatedTreeByDeletingChildrenOfKleeneStarOrPlusNode(random: Random): SparTree? {
     // adjust this parameter to change the repeating times
     val repeatingTimes = 3
-    val builder = NodeDeletionActionSet.Builder(
-      "randomly deleting child of kleene node for mutation",
-    )
+    val builder =
+      NodeDeletionActionSet.Builder(
+        "randomly deleting child of kleene node for mutation",
+      )
     val nodesToBeDeleted = HashSet<AbstractSparTreeNode>()
-    val removedTokens = HashSet<PersesToken>()
+    val removedTokens = HashSet<AbstractPersesToken>()
     val copiedTree = sparTree.deepCopy(ReuseNodeIdStrategy).result
-    val kleeneNodes = flatSparTree(copiedTree).filterIsInstance<ParserRuleSparTreeNode>()
-      .filter { it.ruleType == RuleType.KLEENE_STAR || it.ruleType == RuleType.KLEENE_PLUS }
+    val kleeneNodes =
+      flatSparTree(copiedTree)
+        .filterIsInstance<ParserRuleSparTreeNode>()
+        .filter { it.ruleType == RuleType.KLEENE_STAR || it.ruleType == RuleType.KLEENE_PLUS }
     if (kleeneNodes.isEmpty()) {
       return null
     }
@@ -355,18 +393,23 @@ class SparTreeFuzzer private constructor(
   ): MutatedProgram? {
     // adjust this parameter to change the repeating times
     val repeatingTimes = 3
-    val kleeneNodes = flattenedTree.filterIsInstance<ParserRuleSparTreeNode>()
-      .filter { it.ruleType == RuleType.KLEENE_STAR || it.ruleType == RuleType.KLEENE_PLUS }
+    val kleeneNodes =
+      flattenedTree
+        .filterIsInstance<ParserRuleSparTreeNode>()
+        .filter { it.ruleType == RuleType.KLEENE_STAR || it.ruleType == RuleType.KLEENE_PLUS }
     if (kleeneNodes.isEmpty()) {
       return null
     }
-    val tokenListsBuilder = ImmutableList.builder<ImmutableList<PersesToken>>()
-    val insertPositionsBuilder = ImmutableList.builder<PersesToken>()
+    val tokenListsBuilder = ImmutableList.builder<ImmutableList<AbstractPersesToken>>()
+    val insertPositionsBuilder = ImmutableList.builder<AbstractPersesToken>()
     for (i in 1..repeatingTimes) {
       val targetKleeneNode = kleeneNodes[random.nextInt(kleeneNodes.size)]
       assert(targetKleeneNode.childCount > 0)
-      val targetRule = targetKleeneNode.getChild(0)
-        .payload!!.expectedAntlrRuleType ?: continue
+      val targetRule =
+        targetKleeneNode
+          .getChild(0)
+          .payload!!
+          .expectedAntlrRuleType ?: continue
       // generate from scratch
       val generatedNode =
         generator.generateParserRuleSparTreeNode(targetRule.ruleDef.ruleNameHandle) ?: continue
@@ -385,50 +428,44 @@ class SparTreeFuzzer private constructor(
   }
 
   // Token level, cannot promise syntactical correctness
-  fun createMutantByInsertingTokensOnRandomPositions(random: Random): MutatedProgram? {
-    return createMutantByInsertingTokens(
+  fun createMutantByInsertingTokensOnRandomPositions(random: Random): MutatedProgram? =
+    createMutantByInsertingTokens(
       random = random,
       continuousPositions = false,
     )
-  }
 
   // Token level, cannot promise syntactical correctness
-  fun createMutantByDeletingTokensOnRandomPositions(random: Random): MutatedProgram? {
-    return createMutantByDeletingTokens(
+  fun createMutantByDeletingTokensOnRandomPositions(random: Random): MutatedProgram? =
+    createMutantByDeletingTokens(
       random = random,
       continuousPositions = false,
     )
-  }
 
-  fun createMutantByReplacingTokensOnRandomPositions(random: Random): MutatedProgram? {
-    return createMutantByReplacingTokens(
+  fun createMutantByReplacingTokensOnRandomPositions(random: Random): MutatedProgram? =
+    createMutantByReplacingTokens(
       random = random,
       continuousPositions = false,
     )
-  }
 
   // Token level, cannot promise syntactical correctness
-  fun createMutantByInsertingARangeOfTokens(random: Random): MutatedProgram? {
-    return createMutantByInsertingTokens(
+  fun createMutantByInsertingARangeOfTokens(random: Random): MutatedProgram? =
+    createMutantByInsertingTokens(
       random = random,
       continuousPositions = true,
     )
-  }
 
   // Token level, cannot promise syntactical correctness
-  fun createMutantByDeletingARangeOfTokens(random: Random): MutatedProgram? {
-    return createMutantByDeletingTokens(
+  fun createMutantByDeletingARangeOfTokens(random: Random): MutatedProgram? =
+    createMutantByDeletingTokens(
       random = random,
       continuousPositions = true,
     )
-  }
 
-  fun createMutantByReplacingARangeOfTokens(random: Random): MutatedProgram? {
-    return createMutantByReplacingTokens(
+  fun createMutantByReplacingARangeOfTokens(random: Random): MutatedProgram? =
+    createMutantByReplacingTokens(
       random = random,
       continuousPositions = true,
     )
-  }
 
   private fun createMutantByInsertingTokens(
     random: Random,
@@ -439,7 +476,7 @@ class SparTreeFuzzer private constructor(
       return null
     }
     val indicesToInsert = ImmutableIntArray.builder()
-    val tokensToInsert = ImmutableList.builder<PersesToken>()
+    val tokensToInsert = ImmutableList.builder<AbstractPersesToken>()
     // adjust this parameter to change the number of inserting tokens
     val numberOfTokensToInsert = 2
     for (i in 0..numberOfTokensToInsert) {
@@ -494,7 +531,7 @@ class SparTreeFuzzer private constructor(
       return null
     }
     val indicesToReplace = ImmutableIntArray.builder()
-    val tokensToReplace = ImmutableList.Builder<PersesToken>()
+    val tokensToReplace = ImmutableList.Builder<AbstractPersesToken>()
     for (i in 0..numberOfTokensToReplace) {
       tokensToReplace.add(tokenList[random.nextInt(tokenList.size)])
     }
@@ -514,21 +551,28 @@ class SparTreeFuzzer private constructor(
       .replaceTokens(tokenList, indicesToReplace.build(), tokensToReplace.build())
   }
 
-  private fun buildIdentifierIndex(tokens: ImmutableList<PersesToken>) =
-    tokens.withIndex()
+  private fun buildIdentifierIndex(tokens: ImmutableList<out AbstractPersesToken>) =
+    tokens
+      .withIndex()
       .asSequence()
-      .filter { it.value.type in identifierTokenType }
+      .filter { it.value.tokenType in identifierTokenType }
       .map { it.index }
       .toImmutableIntArray()
 
-  private fun buildTokenIndex(tokens: ImmutableList<PersesToken>, tokenType: TokenType) =
-    tokens.withIndex()
-      .asSequence()
-      .filter { it.value.type == tokenType }
-      .map { it.index }
-      .toImmutableIntArray()
+  private fun buildTokenIndex(
+    tokens: ImmutableList<out AbstractPersesToken>,
+    tokenType: TokenType,
+  ) = tokens
+    .withIndex()
+    .asSequence()
+    .filter { it.value.tokenType == tokenType }
+    .map { it.index }
+    .toImmutableIntArray()
 
-  private fun haveSameTokens(node1: AbstractSparTreeNode, node2: AbstractSparTreeNode): Boolean {
+  private fun haveSameTokens(
+    node1: AbstractSparTreeNode,
+    node2: AbstractSparTreeNode,
+  ): Boolean {
     if (node1.isTokenNode() || node2.isTokenNode()) {
       return node1 === node2
     }
@@ -548,18 +592,21 @@ class SparTreeFuzzer private constructor(
       return false
     }
     val children =
-      node.boundedBreadthFirstSearchForFirstQualifiedNodes(
-        { child: AbstractSparTreeNode ->
-          val expectedSuperRuleType = child
-            .payload!!.expectedAntlrRuleType
-            ?: return@boundedBreadthFirstSearchForFirstQualifiedNodes false
-          if (haveSameTokens(child, node)) {
-            return@boundedBreadthFirstSearchForFirstQualifiedNodes false
-          }
-          expectedSuperRuleType.isEqualToOrSuperOf(node.antlrRule!!)
-        },
-        5,
-      ).toImmutableList()
+      node
+        .boundedBreadthFirstSearchForFirstQualifiedNodes(
+          { child: AbstractSparTreeNode ->
+            val expectedSuperRuleType =
+              child
+                .payload!!
+                .expectedAntlrRuleType
+                ?: return@boundedBreadthFirstSearchForFirstQualifiedNodes false
+            if (haveSameTokens(child, node)) {
+              return@boundedBreadthFirstSearchForFirstQualifiedNodes false
+            }
+            expectedSuperRuleType.isEqualToOrSuperOf(node.antlrRule!!)
+          },
+          5,
+        ).toImmutableList()
     if (children.isNotEmpty()) {
       recursiveChildren[node] = children
       return true
@@ -577,13 +624,14 @@ class SparTreeFuzzer private constructor(
   }
 
   fun printFeatureOfSparTree(): String {
-    return StringBuilder().apply {
-      featureOfTheSparTree?.forEach {
-        val ruleName = it.key.antlrRule!!.ruleName
-        val sequence = it.value
-        this.append("$ruleName : $sequence\n")
-      } ?: return ""
-    }.toString()
+    return StringBuilder()
+      .apply {
+        featureOfTheSparTree?.forEach {
+          val ruleName = it.key.antlrRule!!.ruleName
+          val sequence = it.value
+          this.append("$ruleName : $sequence\n")
+        } ?: return ""
+      }.toString()
   }
 
   companion object {
@@ -591,40 +639,39 @@ class SparTreeFuzzer private constructor(
       parserFacade: AbstractParserFacade,
       seedFile: File,
       isInitial: Boolean = false,
-    ): SparTreeFuzzer {
-      return SparTreeFuzzer(
+    ): SparTreeFuzzer =
+      SparTreeFuzzer(
         parserFacade,
         seedFile,
         tree = null,
         isInitial,
       )
-    }
 
     fun fromSparTree(
       parserFacade: AbstractParserFacade,
       seedFile: File,
       sparTree: SparTree,
-    ): SparTreeFuzzer {
-      return SparTreeFuzzer(
+    ): SparTreeFuzzer =
+      SparTreeFuzzer(
         parserFacade,
         seedFile,
         sparTree,
         isInitial = false,
       )
-    }
 
     private fun editTreeByReplacingNode(
       sparTree: SparTree,
       targetNode: AbstractSparTreeNode,
       replacingNode: AbstractSparTreeNode,
     ): SparTree {
-      val edit = sparTree.createAnyNodeReplacementEdit(
-        NodeReplacementActionSet.createByReplacingSingleNode(
-          targetNode,
-          replacingNode,
-          actionsDescription = "Replacing for generative mutation",
-        ),
-      )
+      val edit =
+        sparTree.createAnyNodeReplacementEdit(
+          NodeReplacementActionSet.createByReplacingSingleNode(
+            targetNode,
+            replacingNode,
+            actionsDescription = "Replacing for generative mutation",
+          ),
+        )
       sparTree.applyEdit(edit)
       return sparTree
     }

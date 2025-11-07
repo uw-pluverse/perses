@@ -27,9 +27,7 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.pnf.OptionalExtractionUtil.searchForCandidate
 
 class OptionalIntroducerPass : AbstractPnfPass() {
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     // To make the process deterministic.
@@ -52,42 +50,46 @@ class OptionalIntroducerPass : AbstractPnfPass() {
   ) {
     val originalGapAst = candidate.getGapAst()
     mutable.getAltBlock(ruleName).removeAlt(candidate.shortSeq.ast)
-    val processedGapAst = if (originalGapAst is PersesAlternativeBlockAst) {
-      // If this is an alt-block, then decompose it and replace it with a rule reference.
-      val wrapperRuleName = ruleName.createAuxiliaryRuleName(RuleType.ALT_BLOCKS)
-      mutable.getAltBlock(wrapperRuleName)
-        .decomposeAltBlockAndAddIfInequivalent(originalGapAst)
-      PersesRuleReferenceAst.create(wrapperRuleName)
-    } else {
-      originalGapAst
-    }
-    val gapAstReplacement = when (processedGapAst.tag) {
-      AstTag.STAR, AstTag.OPTIONAL -> return // Do nothing, to let other passes take care of this.
-      AstTag.PLUS -> {
-        val starRuleName = ruleName.createAuxiliaryRuleName(RuleType.KLEENE_STAR)
-        mutable.getAltBlock(starRuleName).addIfNotEquivalent(
-          (processedGapAst as PersesPlusAst).let { PersesStarAst(it.body, it.isGreedy) },
-        )
-        starRuleName
+    val processedGapAst =
+      if (originalGapAst is PersesAlternativeBlockAst) {
+        // If this is an alt-block, then decompose it and replace it with a rule reference.
+        val wrapperRuleName = ruleName.createAuxiliaryRuleName(RuleType.ALT_BLOCKS)
+        mutable
+          .getAltBlock(wrapperRuleName)
+          .decomposeAltBlockAndAddIfInequivalent(originalGapAst)
+        PersesRuleReferenceAst.create(wrapperRuleName)
+      } else {
+        originalGapAst
       }
-      AstTag.TERMINAL, AstTag.RULE_REF -> {
-        val optionalRuleName = ruleName
-          .createAuxiliaryRuleName(RuleType.OPTIONAL)
-        mutable.getAltBlock(optionalRuleName).addIfNotEquivalent(
-          PersesOptionalAst.createGreedy(processedGapAst),
-        )
-        optionalRuleName
+    val gapAstReplacement =
+      when (processedGapAst.tag) {
+        AstTag.STAR, AstTag.OPTIONAL -> return // Do nothing, to let other passes take care of this.
+        AstTag.PLUS -> {
+          val starRuleName = ruleName.createAuxiliaryRuleName(RuleType.KLEENE_STAR)
+          mutable.getAltBlock(starRuleName).addIfNotEquivalent(
+            (processedGapAst as PersesPlusAst).let { PersesStarAst(it.body, it.isGreedy) },
+          )
+          starRuleName
+        }
+        AstTag.TERMINAL, AstTag.RULE_REF -> {
+          val optionalRuleName =
+            ruleName
+              .createAuxiliaryRuleName(RuleType.OPTIONAL)
+          mutable.getAltBlock(optionalRuleName).addIfNotEquivalent(
+            PersesOptionalAst.createGreedy(processedGapAst),
+          )
+          optionalRuleName
+        }
+        else -> {
+          val wrapperRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
+          mutable.getAltBlock(wrapperRuleName).addIfNotEquivalent(processedGapAst)
+          val optionalRuleName = ruleName.createAuxiliaryRuleName(RuleType.OPTIONAL)
+          mutable.getAltBlock(optionalRuleName).addIfNotEquivalent(
+            PersesOptionalAst.createGreedy(PersesRuleReferenceAst.create(wrapperRuleName)),
+          )
+          optionalRuleName
+        }
       }
-      else -> {
-        val wrapperRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
-        mutable.getAltBlock(wrapperRuleName).addIfNotEquivalent(processedGapAst)
-        val optionalRuleName = ruleName.createAuxiliaryRuleName(RuleType.OPTIONAL)
-        mutable.getAltBlock(optionalRuleName).addIfNotEquivalent(
-          PersesOptionalAst.createGreedy(PersesRuleReferenceAst.create(wrapperRuleName)),
-        )
-        optionalRuleName
-      }
-    }
     mutable.getAltBlock(ruleName).replace(
       candidate.longSeq.ast,
       replaceGapWithRuleReference(

@@ -17,33 +17,35 @@
 package org.perses.fuzzer.languagemodel
 
 @JvmInline
-value class NodeRepresentation @PublishedApi internal constructor(
-  val longValue: Long,
-) {
+value class NodeRepresentation
+  @PublishedApi
+  internal constructor(
+    val longValue: Long,
+  ) {
+    override fun toString(): String =
+      buildString {
+        append(NodeRepresentation::class.java.simpleName).append('(')
+        append("nodeType=").append(nodeType).append(", ")
+        append("featureValue=").append(featureValue)
+        append(')')
+      }
 
-  override fun toString(): String {
-    return buildString {
-      append(NodeRepresentation::class.java.simpleName).append('(')
-      append("nodeType=").append(nodeType).append(", ")
-      append("featureValue=").append(featureValue)
-      append(')')
+    val nodeType: Int
+      get() = longValue.ushr(32).toInt()
+
+    val featureValue: Int
+      // TODO: can we just simply downcast the long to an int?
+      get() = longValue.and(0xFFFFL).toInt()
+
+    companion object {
+      fun create(
+        nodeType: Int,
+        featureValue: Int,
+      ): NodeRepresentation = NodeRepresentation(encodeToLong(nodeType, featureValue))
+
+      private fun encodeToLong(
+        nodeType: Int,
+        featureValue: Int,
+      ): Long = nodeType.toLong().shl(32).or(featureValue.toLong())
     }
   }
-
-  val nodeType: Int
-    get() = longValue.ushr(32).toInt()
-
-  val featureValue: Int
-    // TODO: can we just simply downcast the long to an int?
-    get() = longValue.and(0xFFFFL).toInt()
-
-  companion object {
-    fun create(nodeType: Int, featureValue: Int): NodeRepresentation {
-      return NodeRepresentation(encodeToLong(nodeType, featureValue))
-    }
-
-    private fun encodeToLong(nodeType: Int, featureValue: Int): Long {
-      return nodeType.toLong().shl(32).or(featureValue.toLong())
-    }
-  }
-}

@@ -40,58 +40,66 @@ import org.perses.reduction.event.TokenSlicingStartEvent
 /** The listener to access the internal reduction state.  */
 abstract class AbstractReductionListener : AutoCloseable {
   /** Called on the start of the reduction.  */
-  abstract fun onReductionStart(event: ReductionStartEvent)
+  open fun onReductionStart(event: ReductionStartEvent) {}
 
   /** Called on the end of the reduction.  */
-  abstract fun onReductionEnd(event: ReductionEndEvent)
+  open fun onReductionEnd(event: ReductionEndEvent) {}
 
   /** Called on the start of a fixpoint iteration.  */
-  abstract fun onFixpointIterationStart(event: FixpointIterationStartEvent)
+  open fun onFixpointIterationStart(event: FixpointIterationStartEvent) {}
 
   /** Called on the end of a fixpoint iteration  */
-  abstract fun onFixpointIterationEnd(
-    event: FixpointIterationEndEvent,
-  )
+  open fun onFixpointIterationEnd(event: FixpointIterationEndEvent) {}
 
-  abstract fun onLevelReductionStart(event: LevelReductionStartEvent)
-  abstract fun onLevelReductionEnd(event: LevelReductionEndEvent)
-  abstract fun onLevelGranularityReductionStart(
-    event: LevelGranularityReductionStartEvent,
-  )
+  open fun onLevelReductionStart(event: LevelReductionStartEvent) {}
 
-  abstract fun onLevelGranularityReductionEnd(
-    event: LevelGranularityReductionEndEvent,
-  )
+  open fun onLevelReductionEnd(event: LevelReductionEndEvent) {}
 
-  abstract fun onNodeReductionStart(event: NodeReductionStartEvent)
-  abstract fun onNodeReductionEnd(event: NodeReductionEndEvent)
-  abstract fun onTestScriptExecutionCacheEntryEviction(
+  open fun onLevelGranularityReductionStart(event: LevelGranularityReductionStartEvent) {}
+
+  open fun onLevelGranularityReductionEnd(event: LevelGranularityReductionEndEvent) {}
+
+  open fun onNodeReductionStart(event: NodeReductionStartEvent) {}
+
+  open fun onNodeReductionEnd(event: NodeReductionEndEvent) {}
+
+  open fun onCriticalException(exception: Exception) {}
+
+  open fun onTestScriptExecutionCacheEntryEviction(
     event: TestScriptExecutionCacheEntryEvictionEvent,
-  )
+  ) {}
 
-  abstract fun onNodeActionSetCacheClearance(
-    event: NodeEditActionSetCacheClearanceEvent,
-  )
+  open fun onNodeActionSetCacheClearance(event: NodeEditActionSetCacheClearanceEvent) {}
 
-  abstract fun onTestScriptExecution(
+  open fun onTestScriptExecution(
     event: AbstractTestScriptExecutionEvent.TestScriptExecutionEvent,
-  )
-  abstract fun onTestResultCacheHit(
-    event: AbstractTestScriptExecutionEvent.TestResultCacheHitEvent,
-  )
-  abstract fun onNodeEditActionSetCacheHit(
-    event: NodeEditActionSetCacheHitEvent,
-  )
+  ) {}
 
-  abstract fun onTestScriptExecutionCancelled(
+  open fun onTestResultCacheHit(event: AbstractTestScriptExecutionEvent.TestResultCacheHitEvent) {}
+
+  open fun onNodeEditActionSetCacheHit(event: NodeEditActionSetCacheHitEvent) {}
+
+  open fun onTestScriptExecutionCancelled(
     event: AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent,
-  )
+  ) {}
 
-  abstract fun onSlicingTokensStart(event: TokenSlicingStartEvent)
-  abstract fun onSlicingTokensEnd(event: TokenSlicingEndEvent)
-  abstract fun onBestProgramUpdated(event: BestProgramUpdateEvent)
-  abstract fun onReductionSkipped(event: ReductionSkippedEvent)
-  abstract fun onSanityCheck(event: SanityCheckEvent)
+  open fun onSlicingTokensStart(event: TokenSlicingStartEvent) {}
 
-  abstract fun onAdHocMessageEvent(event: AdHocMessageEvent)
+  open fun onSlicingTokensEnd(event: TokenSlicingEndEvent) {}
+
+  open fun onBestProgramUpdated(event: BestProgramUpdateEvent) {}
+
+  open fun onReductionSkipped(event: ReductionSkippedEvent) {}
+
+  open fun onSanityCheck(event: SanityCheckEvent) {}
+
+  open fun onAdHocMessageEvent(event: AdHocMessageEvent) {}
+
+  open fun notifyCacheSettings(
+    queryCacheEnabled: Boolean,
+    editCacheEnabled: Boolean,
+    queryCacheType: String,
+  ) {}
+
+  open fun notifyNumOfLexemesInPersesTokenFactory(numOfLexemes: Int) {}
 }

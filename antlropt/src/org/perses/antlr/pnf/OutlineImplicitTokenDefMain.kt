@@ -29,15 +29,15 @@ import kotlin.io.path.writeText
 class OutlineImplicitTokenDefMain(
   cmd: CommandFlags,
 ) : AbstractMain<OutlineImplicitTokenDefMain.CommandFlags>(cmd) {
-
   override fun internalRun() {
     val parserGrammar = loadGrammarFromFile(cmd.parserFile!!)
     val lexerGrammar = cmd.lexerFile?.let { loadGrammarFromFile(it) }
     val original = GrammarPair(parserGrammar, lexerGrammar)
-    val passManager = PnfPassManager(
-      repetitivePassCreator = { ImmutableList.of(OutlineImplicitTokenDefPass()) },
-      finalizingPassCreator = { ImmutableList.of() },
-    )
+    val passManager =
+      PnfPassManager(
+        repetitivePassCreator = { ImmutableList.of(OutlineImplicitTokenDefPass()) },
+        finalizingPassCreator = { ImmutableList.of() },
+      )
     val after = passManager.process(original, cmd.startRuleName.trim())
     after.parserGrammar!!.let {
       cmd.parserOutput!!.writeText(it.sourceCode)
@@ -48,7 +48,6 @@ class OutlineImplicitTokenDefMain(
   }
 
   class CommandFlags : AbstractCommandOptions() {
-
     @Parameter(
       names = ["--start_rule_name"],
       required = true,
@@ -100,11 +99,12 @@ class OutlineImplicitTokenDefMain(
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { CommandFlags() },
-        programName = OutlineImplicitTokenDefMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { CommandFlags() },
+          programName = OutlineImplicitTokenDefMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }

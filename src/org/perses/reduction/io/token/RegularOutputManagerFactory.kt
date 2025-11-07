@@ -16,7 +16,6 @@
  */
 package org.perses.reduction.io.token
 
-import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.AbstractLazySourceCode
 import org.perses.program.AbstractReductionFile
@@ -28,32 +27,30 @@ import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractSingleFileReductionInputs
+import org.perses.util.hashing.EnumShaAlgorithm
 
 class RegularOutputManagerFactory(
   private val reductionInputs: AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>,
   codeFormatControl: EnumFormatControl,
-  lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
+  lexerAtnWrapper: LexerAtnWrapper,
+  private val shaAlgorithm: EnumShaAlgorithm,
 ) : AbstractTokenOutputManagerFactory(
-  codeFormatControl,
-  lexerAtnWrapper,
-) {
-
-  override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager {
-    return OutputManager(program, defaultProgramPrinter)
-  }
+    codeFormatControl,
+    lexerAtnWrapper,
+  ) {
+  override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager =
+    OutputManager(program, defaultProgramPrinter)
 
   override fun createManagerFor(
     program: TokenizedProgram,
     format: EnumFormatControl,
-  ): AbstractOutputManager {
-    return OutputManager(program, PrinterRegistry.getPrinter(format, lexerAtnWrapper))
-  }
+  ): AbstractOutputManager =
+    OutputManager(program, PrinterRegistry.getPrinter(format, lexerAtnWrapper))
 
   inner class OutputManager(
     private val program: TokenizedProgram,
     private val programPrinter: AbstractTokenizedProgramPrinter,
-  ) : AbstractOutputManager(reductionInputs) {
-
+  ) : AbstractOutputManager(reductionInputs, shaAlgorithm) {
     val sourceCode: AbstractLazySourceCode by lazy {
       programPrinter.print(program)
     }

@@ -13,7 +13,7 @@ reduction_golden_test(
     enable_edit_caching = True,
     enable_query_caching = False,
     golden_reduced_file = "golden.xml",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "hello.xml",
     test_script = "r.sh",
 )

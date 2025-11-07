@@ -21,72 +21,80 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.ListToByteFunnel.Companion.BYTE_LIST_END_SEPARATOR
-import org.perses.util.ListToByteFunnel.Companion.BYTE_LIST_START_SEPARATOR
-import org.perses.util.ListToByteFunnel.Companion.ELEMENT_SEPARATOR
+import org.perses.util.hashing.ListToByteFunnel
+import org.perses.util.hashing.ListToByteFunnel.Companion.BYTE_LIST_END_SEPARATOR
+import org.perses.util.hashing.ListToByteFunnel.Companion.BYTE_LIST_START_SEPARATOR
+import org.perses.util.hashing.ListToByteFunnel.Companion.ELEMENT_SEPARATOR
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
 
 @RunWith(JUnit4::class)
 class StringListToByteFunnelTest {
-
   val funnel = ListToByteFunnel.StringListToByteFunnel
   val sinkData = mutableListOf<String>()
-  val sink = object : PrimitiveSink {
-    override fun putByte(p0: Byte): PrimitiveSink {
-      sinkData.add(p0.toString())
-      return this
-    }
+  val sink =
+    object : PrimitiveSink {
+      override fun putByte(p0: Byte): PrimitiveSink {
+        sinkData.add(p0.toString())
+        return this
+      }
 
-    override fun putBytes(p0: ByteArray): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putBytes(p0: ByteArray): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putBytes(p0: ByteArray, p1: Int, p2: Int): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putBytes(
+        p0: ByteArray,
+        p1: Int,
+        p2: Int,
+      ): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putBytes(p0: ByteBuffer): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putBytes(p0: ByteBuffer): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putShort(p0: Short): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putShort(p0: Short): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putInt(p0: Int): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putInt(p0: Int): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putLong(p0: Long): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putLong(p0: Long): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putFloat(p0: Float): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putFloat(p0: Float): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putDouble(p0: Double): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putDouble(p0: Double): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putBoolean(p0: Boolean): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putBoolean(p0: Boolean): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putChar(p0: Char): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putChar(p0: Char): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putUnencodedChars(p0: CharSequence): PrimitiveSink {
-      TODO("Not yet implemented")
-    }
+      override fun putUnencodedChars(p0: CharSequence): PrimitiveSink {
+        TODO("Not yet implemented")
+      }
 
-    override fun putString(p0: CharSequence, p1: Charset): PrimitiveSink {
-      sinkData.add(p0.toString())
-      return this
+      override fun putString(
+        p0: CharSequence,
+        p1: Charset,
+      ): PrimitiveSink {
+        sinkData.add(p0.toString())
+        return this
+      }
     }
-  }
 
   @Test
   fun testEmptyList() {

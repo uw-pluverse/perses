@@ -30,12 +30,13 @@ import org.perses.grammar.c.PnfCLexer
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
-import org.perses.reduction.AbstractExternalTestScriptExecutionCache.NullCache
+import org.perses.reduction.AbstractGlobalExecutionCache.NullCache
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
 import org.perses.reduction.io.RegularReductionInputs
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.ExitCode
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
@@ -59,20 +60,26 @@ class TestScriptExecutorServiceTest {
   private val slowTestScript = ScriptFile(Paths.get(FOLDER, "slow_r.sh"))
   private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot
   private val dummyPayload = "dummy payload"
-  private val lexerAtnWrapper = LexerAtnWrapper(PnfCLexer::class.java)
-  private val reductionInputs = RegularReductionInputs(
-    testScript,
-    sourceFile,
-    dependencyFiles = ImmutableList.of(),
-  )
+  private val lexerAtnWrapper =
+    LexerAtnWrapper.createLexerWrapperFromLexerClass(
+      PnfCLexer::class.java,
+    )
+  private val reductionInputs =
+    RegularReductionInputs(
+      testScript,
+      sourceFile,
+      dependencyFiles = ImmutableList.of(),
+    )
 
   private val workingDirectory =
     TestUtility.createCleanWorkingDirectory(TestScriptExecutorServiceTest::class.java)
-  private val outputManagerFactory = RegularOutputManagerFactory(
-    reductionInputs,
-    ORIG_FORMAT,
-    lexerAtnWrapper,
-  )
+  private val outputManagerFactory =
+    RegularOutputManagerFactory(
+      reductionInputs,
+      ORIG_FORMAT,
+      lexerAtnWrapper,
+      shaAlgorithm = EnumShaAlgorithm.SHA256,
+    )
 
   private val outputDir = workingDirectory.resolve("perses_output_dir")
 
@@ -100,37 +107,42 @@ class TestScriptExecutorServiceTest {
     val oldSysout = System.out
     val oldSyserr = System.err
     val byteArrayOutputStream = ByteArrayOutputStream()
-    val newOut = PrintStream(
-      byteArrayOutputStream,
-      true, // auto_flush
-      StandardCharsets.UTF_8.name(),
-    )
+    val newOut =
+      PrintStream(
+        byteArrayOutputStream,
+        // autoFlush=true
+        true,
+        StandardCharsets.UTF_8.name(),
+      )
     System.setOut(newOut)
     System.setErr(newOut)
     try {
-      val reductionInputs = RegularReductionInputs(
-        slowTestScript,
-        sourceFile,
-        dependencyFiles = ImmutableList.of(),
-      )
-      val ioManager = TokenReductionIOManager(
-        workingFolder = workingDirectory,
-        reductionInputs = reductionInputs,
-        outputManagerFactory = outputManagerFactory,
-        outputDirectory = outputDir,
-      )
+      val reductionInputs =
+        RegularReductionInputs(
+          slowTestScript,
+          sourceFile,
+          dependencyFiles = ImmutableList.of(),
+        )
+      val ioManager =
+        TokenReductionIOManager(
+          workingFolder = workingDirectory,
+          reductionInputs = reductionInputs,
+          outputManagerFactory = outputManagerFactory,
+          outputDirectory = outputDir,
+        )
       TestScriptExecutorService(
         ioManager.lazilyInitializedReductionFolderManager,
         1,
         scriptExecutionTimeoutInSeconds = 1L,
-        externalTestScriptExecutionCache = NullCache(),
+        globalExecutionCache = NullCache(),
       ).use {
-        it.testProgramAsync(
-          ALWAYS_TRUE_PRECHECK,
-          IDENTITY_POST_CHECK,
-          outputManagerFactory.createManagerFor(program),
-          dummyPayload,
-        ).getWithTimeoutWarnings()
+        it
+          .testProgramAsync(
+            ALWAYS_TRUE_PRECHECK,
+            IDENTITY_POST_CHECK,
+            outputManagerFactory.createManagerFor(program),
+            dummyPayload,
+          ).getWithTimeoutWarnings()
       }
       newOut.flush()
       val stdout = byteArrayOutputStream.toString(StandardCharsets.UTF_8.name())
@@ -143,21 +155,24 @@ class TestScriptExecutorServiceTest {
 
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
-    val ioManager = TokenReductionIOManager(
-      workingDirectory,
-      reductionInputs,
-      outputManagerFactory = RegularOutputManagerFactory(
+    val ioManager =
+      TokenReductionIOManager(
+        workingDirectory,
         reductionInputs,
-        ORIG_FORMAT,
-        lexerAtnWrapper,
-      ),
-      outputDirectory = outputDir,
-    )
+        outputManagerFactory =
+          RegularOutputManagerFactory(
+            reductionInputs,
+            ORIG_FORMAT,
+            lexerAtnWrapper,
+            shaAlgorithm = EnumShaAlgorithm.SHA256,
+          ),
+        outputDirectory = outputDir,
+      )
     TestScriptExecutorService(
       ioManager.lazilyInitializedReductionFolderManager,
       threadCount,
       scriptExecutionTimeoutInSeconds = 4 * 60L,
-      externalTestScriptExecutionCache = NullCache(),
+      globalExecutionCache = NullCache(),
     ).use {
       // TODO: refine this test.
       testPassing(it)
@@ -172,14 +187,16 @@ class TestScriptExecutorServiceTest {
   }
 
   private fun testpostCheckPassing(service: TestScriptExecutorService) {
-    val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
-      .programSnapshot
+    val invalidProgram =
+      TestUtility
+        .createSparTreeFromFile(invalidSourceFile.file)
+        .programSnapshot
     val futureList: MutableList<TestScriptExecResult<String>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
         service.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
-          { _, _ -> PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMilliseconds = 1) },
+          { _, _ -> PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMillis = 1) },
           outputManagerFactory.createManagerFor(invalidProgram),
           dummyPayload,
         ),
@@ -191,13 +208,15 @@ class TestScriptExecutorServiceTest {
   }
 
   private fun testPrecheckFailing(service: TestScriptExecutorService) {
-    val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
-      .programSnapshot
+    val invalidProgram =
+      TestUtility
+        .createSparTreeFromFile(invalidSourceFile.file)
+        .programSnapshot
     val futureList: MutableList<TestScriptExecResult<String>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
         service.testProgramAsync(
-          { PropertyTestResult(exitCode = ExitCode.ONE, elapsedMilliseconds = 1) },
+          { PropertyTestResult(exitCode = ExitCode.ONE, elapsedMillis = 1) },
           IDENTITY_POST_CHECK,
           outputManagerFactory.createManagerFor(invalidProgram),
           dummyPayload,
@@ -210,8 +229,10 @@ class TestScriptExecutorServiceTest {
   }
 
   private fun testFailing(it: TestScriptExecutorService) {
-    val invalidProgram = TestUtility.createSparTreeFromFile(invalidSourceFile.file)
-      .programSnapshot
+    val invalidProgram =
+      TestUtility
+        .createSparTreeFromFile(invalidSourceFile.file)
+        .programSnapshot
     val futureList: MutableList<TestScriptExecResult<String>> = ArrayList()
     for (i in 0..49) {
       futureList.add(

@@ -24,7 +24,6 @@ import org.perses.fuzzer.RustTestUtil
 
 @RunWith(JUnit4::class)
 class OrganizerDriverTest {
-
   private val util = RustTestUtil()
 
   @After

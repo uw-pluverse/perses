@@ -18,6 +18,7 @@ package org.perses.ppr
 
 import com.google.common.collect.ImmutableList
 import org.perses.AbstractMain
+import org.perses.HelperForPersesMain
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.ppr.seed.SeedReductionInputs
 import org.perses.reduction.AsyncReductionListenerManager
@@ -29,14 +30,13 @@ class Main(
   cmd: CmdOptions,
   globalContext: GlobalContext,
 ) : AbstractMain<CmdOptions, PPRMetaReductionDriver, SeedReductionInputs>(
-  cmd,
-  globalContext,
-) {
-
+    cmd,
+    globalContext,
+  ) {
   override fun createSequenceOfReductionDriverCreators(
     reductionInputs: SeedReductionInputs,
-  ): Sequence<ReductionDriverCreator<PPRMetaReductionDriver>> {
-    return sequenceOf(
+  ): Sequence<ReductionDriverCreator<PPRMetaReductionDriver>> =
+    sequenceOf(
       ReductionDriverCreator(
         creator = {
           PPRMetaReductionDriver.create(globalContext, cmd, parserFacadeFactory)
@@ -44,11 +44,17 @@ class Main(
         descriptor = { "" },
       ),
     )
-  }
 
-  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager {
-    return AsyncReductionListenerManager(listeners = ImmutableList.of())
-  }
+  override fun computeLanguageAndParserConfiguration(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): LanguageAndParserConfiguration =
+    HelperForPersesMain.computeLanguageAndParserConfiguration(
+      parserFacadeFactory,
+      cmd.languageControlFlags,
+    )
+
+  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager =
+    AsyncReductionListenerManager(listeners = ImmutableList.of())
 
   override fun createReductionInputs(
     parserFacadeFactory: AbstractParserFacadeFactory,
@@ -59,10 +65,7 @@ class Main(
       variantPath = inputFlags.variantFile!!,
       testScriptPath = inputFlags.testScript!!,
       languageKindComputer = { sourceFileAbsPath ->
-        parserFacadeFactory.computeLanguage(
-          cmd.languageControlFlags.languageName,
-          sourceFileAbsPath,
-        )
+        computeLanguageForFile(sourceFileAbsPath)
       },
     )
   }
@@ -70,20 +73,27 @@ class Main(
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor<CmdOptions>(
-        cmdCreator = { CmdOptions() },
-        programName = Main::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor<CmdOptions>(
+          cmdCreator = { CmdOptions() },
+          programName = Main::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }
       val cmd = processor.cmd
+      // The token reducer is not compatible with PPR, so we need to disable TRec.
+      cmd.trecFlags.enableTRec = false
+      // TODO(cnsun): need to have a systematic way to disable flags and copy flags for PPR.
+      cmd.latraFlags.enableLatra = false
       Util.useResources(
         {
           GlobalContext(
+            enableGlobalCache = cmd.cacheControlFlags.enableGlobalCache,
             globalCacheFile = cmd.cacheControlFlags.globalCacheFile,
             pathToSaveUpdatedGlobalCache = cmd.cacheControlFlags.pathToSaveUpdatedGlobalCache,
+            shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
           )
         },
         { globalContext -> Main(cmd, globalContext) },

@@ -44,16 +44,16 @@ class ExtensionScript(
   val extensionScript: Path,
   val resultFolder: Path,
 ) : AbstractExtensionScript() {
-
   val absResultFolder = resultFolder.toAbsolutePath()
 
   override fun run(mutantFile: Path) {
     val cmd = "$extensionScript $mutantFile $absResultFolder"
-    val cmdOutput = Shells.singleton.run(
-      cmd,
-      false,
-      Shells.CURRENT_ENV,
-    )
+    val cmdOutput =
+      Shells.singleton.run(
+        cmd,
+        false,
+        Shells.CURRENT_ENV,
+      )
     if (cmdOutput.exitCode == ERROR_EXIT_CODE) {
       val message = "Fatal error in extension script $extensionScript"
       logger.atSevere().log(message)

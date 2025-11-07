@@ -25,30 +25,33 @@ import org.perses.util.cmd.AbstractCommandOptions
 
 @RunWith(JUnit4::class)
 class CommandOptionTest {
+  val cmd =
+    object : AbstractCommandOptions() {
+      @Parameter(names = ["--a"])
+      var value = ""
+    }
 
-  val cmd = object : AbstractCommandOptions() {
-    @Parameter(names = ["--a"])
-    var value = ""
-  }
-
-  val commander = cmd.parseArguments(
-    "program_name",
-    arrayOf("--a", "value", "--verbosity", "ERROR"),
-  )
+  val commander =
+    cmd.parseArguments(
+      "program_name",
+      arrayOf("--a", "value", "--verbosity", "ERROR"),
+    )
 
   @Test
   fun testFlagNameValueMap() {
-    val map = commander.getLongestFlagNameToValueMap().asSequence()
-      .map { it.key to it.value }
-      .toList()
-    assertThat(map).isEqualTo(
-      listOf(
-        "--a" to "value",
-        "--help" to "false",
-        "--list-verbosity-levels" to "false",
-        "--verbosity" to "ERROR",
-        "--version" to "false",
-      ),
+    val map =
+      commander
+        .getLongestFlagNameToValueMap()
+        .asSequence()
+        .map { it.key to it.value }
+        .toList()
+    assertThat(map).containsExactly(
+      "--a" to "value",
+      "--help" to "false",
+      "--list-verbosity-levels" to "false",
+      "--verbosity" to "ERROR",
+      "--version" to "false",
+      "--hide-timestamps" to "false",
     )
   }
 
@@ -68,6 +71,9 @@ class CommandOptionTest {
       |      Default: INFO
       |    --list-verbosity-levels
       |      list all verbosity levels
+      |    --hide-timestamps
+      |      hide the timestamps in the log messages
+      |      Default: false
       |
       |[Version]  Options:
       |    --version

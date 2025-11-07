@@ -23,7 +23,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 abstract class AbstractLazySourceCode {
-
   val sourceCode: String by lazy {
     stringBuilder.toString()
   }

@@ -17,6 +17,7 @@
 package org.perses.reduction.cache
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,27 +27,34 @@ import org.perses.grammar.c.LanguageC
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.cache.AbstractQueryCacheProfiler.Companion.NULL_PROFILER
 import org.perses.reduction.cache.AbstractRccLinearScanEncoder.Companion.NOT_FOUND
+import org.perses.reduction.io.CommonReductionIOManagerData
 import kotlin.system.measureTimeMillis
 
 @RunWith(JUnit4::class)
-class LinearScanEncoderTest {
+class LinearScanEncoderTest : CommonReductionIOManagerData(LinearScanEncoderTest::class.java) {
+  @After
+  fun tearDown() {
+    close()
+  }
 
-  private val antlrTokens = TestUtility
-    .createAntlrTokens("a", "b", "c", "a", "b", "c")
+  private val antlrTokens =
+    TestUtility
+      .createAntlrTokens("a", "b", "c", "a", "b", "c")
   private val factory = TokenizedProgramFactory.createFactory(antlrTokens, LanguageC)
   private val baseProgram = factory.create(antlrTokens)
   private val tokens = baseProgram.tokens
-  private val token_a1 = tokens[0]
-  private val token_b1 = tokens[1]
-  private val token_c1 = tokens[2]
-  private val token_a2 = tokens[3]
-  private val token_b2 = tokens[4]
-  private val token_c2 = tokens[5]
-  private val encoder = RccTokenizedProgramEncoder(
-    baseProgram,
-    NULL_PROFILER,
-    enableCompression = true,
-  )
+  private val tokenA1 = tokens[0]
+  private val tokenB1 = tokens[1]
+  private val tokenC1 = tokens[2]
+  private val tokenA2 = tokens[3]
+  private val tokenB2 = tokens[4]
+  private val tokenC2 = tokens[5]
+  private val encoder =
+    RccTokenizedProgramEncoder(
+      baseProgram,
+      NULL_PROFILER,
+      enableCompression = true,
+    )
   private val lexemeIdArray = encoder.persesLexemeIdArray
 
   @Ignore("disabled by default.")
@@ -54,27 +62,34 @@ class LinearScanEncoderTest {
   fun benchmarkEncoding() {
     val minToken = 0
     val maxToken = 2000000
-    val antlrTokens = TestUtility.createAntlrToknesFromList(
-      (minToken..maxToken).map { it.toString() }.toList(),
-    )
+    val antlrTokens =
+      TestUtility.createAntlrToknesFromList(
+        (minToken..maxToken).map { it.toString() }.toList(),
+      )
     val factory = TokenizedProgramFactory.createFactory(antlrTokens, LanguageC)
     val baseProgram = factory.create(antlrTokens)
-    val encoder = RccTokenizedProgramEncoder(
-      baseProgram,
-      NULL_PROFILER,
-      enableCompression = true,
-    )
+    val encoder =
+      RccTokenizedProgramEncoder(
+        baseProgram,
+        NULL_PROFILER,
+        enableCompression = true,
+      )
 
-    val middleIndex = antlrTokens.size / 2
-    val testProgram = factory.create(
-      antlrTokens.subList(0, middleIndex) + antlrTokens.subList(middleIndex + 2, antlrTokens.size),
-    )
+    val midIndex = antlrTokens.size / 2
+    val testProgram =
+      factory.create(
+        antlrTokens.subList(0, midIndex) + antlrTokens.subList(midIndex + 2, antlrTokens.size),
+      )
     val repetitions = 20
-    val time = measureTimeMillis {
-      (1..repetitions).forEach { _ ->
-        encoder.encode(testProgram)
+    val time =
+      measureTimeMillis {
+        (1..repetitions).forEach { _ ->
+          encoder.encode(
+            testProgram,
+            outputManager = outputManagerFactory.createManagerFor(testProgram),
+          )
+        }
       }
-    }
     assertThat(time / repetitions).isEqualTo(0)
   }
 
@@ -85,11 +100,12 @@ class LinearScanEncoderTest {
     val antlrTokens = TestUtility.createAntlrToknesFromList(intList)
     val factory = TokenizedProgramFactory.createFactory(antlrTokens, LanguageC)
     val baseProgram = factory.create(antlrTokens)
-    val encoder = RccTokenizedProgramEncoder(
-      baseProgram,
-      NULL_PROFILER,
-      enableCompression = true,
-    )
+    val encoder =
+      RccTokenizedProgramEncoder(
+        baseProgram,
+        NULL_PROFILER,
+        enableCompression = true,
+      )
     assertThat(encoder.persesLexemeIdArray.maxLogicalSize).isEqualTo(initialSize)
     encoder.updateEncoder(factory.create(listOf(antlrTokens[0], antlrTokens[1])))
     assertThat(encoder.persesLexemeIdArray.maxLogicalSize).isEqualTo(2)
@@ -98,35 +114,35 @@ class LinearScanEncoderTest {
   @Test
   fun testSearchforlexemeid() {
     assertThat(
-      encoder.searchForLexemeId(0, tokens.size, token_a1.persesLexemeId, lexemeIdArray),
+      encoder.searchForLexemeId(0, tokens.size, tokenA1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(0)
 
     assertThat(
-      encoder.searchForLexemeId(0, tokens.size, token_b1.persesLexemeId, lexemeIdArray),
+      encoder.searchForLexemeId(0, tokens.size, tokenB1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(1)
 
     assertThat(
-      encoder.searchForLexemeId(3, tokens.size, token_a1.persesLexemeId, lexemeIdArray),
+      encoder.searchForLexemeId(3, tokens.size, tokenA1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(3)
 
     assertThat(
-      encoder.searchForLexemeId(3, tokens.size, token_c2.persesLexemeId, lexemeIdArray),
+      encoder.searchForLexemeId(3, tokens.size, tokenC2.persesLexemeId, lexemeIdArray),
     ).isEqualTo(5)
 
     assertThat(
-      encoder.searchForLexemeId(4, tokens.size, token_a1.persesLexemeId, lexemeIdArray),
+      encoder.searchForLexemeId(4, tokens.size, tokenA1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(NOT_FOUND)
 
     assertThat(
-      encoder.searchForLexemeId(0, 3, token_a1.persesLexemeId, lexemeIdArray),
+      encoder.searchForLexemeId(0, 3, tokenA1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(0)
 
     assertThat(
-      encoder.searchForLexemeId(1, 3, token_a1.persesLexemeId, lexemeIdArray),
+      encoder.searchForLexemeId(1, 3, tokenA1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(NOT_FOUND)
 
     assertThat(
-      encoder.searchForLexemeId(1, tokens.size, token_a1.persesLexemeId, lexemeIdArray),
+      encoder.searchForLexemeId(1, tokens.size, tokenA1.persesLexemeId, lexemeIdArray),
     ).isEqualTo(3)
   }
 }

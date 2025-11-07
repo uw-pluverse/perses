@@ -27,10 +27,7 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.util.Interval
 
 abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
-
-  final override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  final override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     var changed: Boolean
@@ -59,22 +56,26 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
   abstract class AbstractCandidate(
     val sequences: List<PersesSequenceAst>,
   ) {
-
     init {
       require(sequences.size > 1) { sequences }
     }
 
-    fun apply(ruleName: RuleNameHandle, grammar: MutableGrammar) {
+    fun apply(
+      ruleName: RuleNameHandle,
+      grammar: MutableGrammar,
+    ) {
       sequences.forEach { grammar.getAltBlock(ruleName).removeAlt(it) }
-      val alternatives = AstUtil.flattenAndDeduplicateAlternatives(
-        getGapsToDelete(),
-      )
+      val alternatives =
+        AstUtil.flattenAndDeduplicateAlternatives(
+          getGapsToDelete(),
+        )
       check(alternatives.size > 1)
       val altBlockName = ruleName.createAuxiliaryRuleName(RuleType.ALT_BLOCKS)
 
       grammar.getAltBlock(altBlockName).addAllIfInequivalent(alternatives)
-      val processedSequences = sequences
-        .map { replaceGapWithRuleReference(it, getGapInterval(it), altBlockName) }
+      val processedSequences =
+        sequences
+          .map { replaceGapWithRuleReference(it, getGapInterval(it), altBlockName) }
       check(processedSequences.size == sequences.size)
       processedSequences.forEach { processedSequences.first().isEquivalent(it) }
       grammar.getAltBlock(ruleName).addIfNotEquivalent(processedSequences.first())
@@ -82,40 +83,35 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
     abstract fun getGapInterval(sequence: PersesSequenceAst): Interval
 
-    fun getGapsToDelete(): List<AbstractPersesRuleElement> {
-      return sequences.map {
+    fun getGapsToDelete(): List<AbstractPersesRuleElement> =
+      sequences.map {
         val interval = getGapInterval(it)
         it.subsequence(interval.leftInclusive, interval.rightExclusive)
       }
-    }
   }
 
   class CommonPrefixCandidate(
     sequences: List<PersesSequenceAst>,
     val prefixLength: Int,
   ) : AbstractCandidate(sequences) {
-
     init {
       require(prefixLength > 0)
     }
 
-    override fun getGapInterval(sequence: PersesSequenceAst): Interval {
-      return Interval(prefixLength, sequence.childCount)
-    }
+    override fun getGapInterval(sequence: PersesSequenceAst): Interval =
+      Interval(prefixLength, sequence.childCount)
   }
 
   class CommonPostfixCandidate(
     sequences: List<PersesSequenceAst>,
     val postfixLength: Int,
   ) : AbstractCandidate(sequences) {
-
     init {
       require(postfixLength > 0)
     }
 
-    override fun getGapInterval(sequence: PersesSequenceAst): Interval {
-      return Interval(0, sequence.childCount - postfixLength)
-    }
+    override fun getGapInterval(sequence: PersesSequenceAst): Interval =
+      Interval(0, sequence.childCount - postfixLength)
   }
 
   class InfixCandidate(
@@ -128,29 +124,28 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
       require(postfixLength > 0)
     }
 
-    override fun getGapInterval(sequence: PersesSequenceAst): Interval {
-      return Interval(prefixLength, sequence.childCount - postfixLength)
-    }
+    override fun getGapInterval(sequence: PersesSequenceAst): Interval =
+      Interval(prefixLength, sequence.childCount - postfixLength)
   }
 
   companion object {
-
     fun getAllSequences(
       defMap: MutableGrammar,
       ruleName: RuleNameRegistry.RuleNameHandle,
-    ): List<PersesSequenceAst> {
-      return defMap.getAltBlock(ruleName)
+    ): List<PersesSequenceAst> =
+      defMap
+        .getAltBlock(ruleName)
         .asSequence()
         .filter { it.tag == AstTag.SEQUENCE }
         .map { it as PersesSequenceAst }
         .toList()
-    }
 
-    private val candidateTypePreferenceGreatestToLeast = ImmutableList.of(
-      InfixCandidate::class.java,
-      CommonPrefixCandidate::class.java,
-      CommonPostfixCandidate::class.java,
-    )
+    private val candidateTypePreferenceGreatestToLeast =
+      ImmutableList.of(
+        InfixCandidate::class.java,
+        CommonPrefixCandidate::class.java,
+        CommonPostfixCandidate::class.java,
+      )
 
     private fun createCandidateComparator(
       tiebreaker: ImmutableMap<AbstractCandidate, TieBreaker>,
@@ -181,10 +176,8 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
       val minIndex: Int,
       val continuity: Int,
     ) : Comparable<TieBreaker> {
-
-      override fun compareTo(other: TieBreaker): Int {
-        return compareBy<TieBreaker> { it.continuity }.thenBy { it.minIndex }.compare(this, other)
-      }
+      override fun compareTo(other: TieBreaker): Int =
+        compareBy<TieBreaker> { it.continuity }.thenBy { it.minIndex }.compare(this, other)
     }
 
     private fun createTieBreakers(
@@ -193,34 +186,41 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
     ): ImmutableMap<AbstractCandidate, TieBreaker> {
       val builder = ImmutableMap.builder<AbstractCandidate, TieBreaker>()
       candidates.forEach { candidate ->
-        val indices = candidate.sequences
-          .asSequence()
-          .map { originalSequences.indexOf(it).apply { check(this >= 0) } }
-          .sorted()
-          .toList()
-        val continuity = indices
-          .zipWithNext()
-          .map { (first, second) -> second - first }
-          .sum()
+        val indices =
+          candidate.sequences
+            .asSequence()
+            .map { originalSequences.indexOf(it).apply { check(this >= 0) } }
+            .sorted()
+            .toList()
+        val continuity =
+          indices
+            .zipWithNext()
+            .map { (first, second) -> second - first }
+            .sum()
         builder.put(candidate, TieBreaker(minIndex = indices.first(), continuity))
       }
       return builder.build()
     }
 
     private abstract class AbstractDirection {
-      abstract fun getElement(seq: PersesSequenceAst, index: Int): AbstractPersesRuleElement
+      abstract fun getElement(
+        seq: PersesSequenceAst,
+        index: Int,
+      ): AbstractPersesRuleElement
     }
 
     private object ForwardDirection : AbstractDirection() {
-      override fun getElement(seq: PersesSequenceAst, index: Int): AbstractPersesRuleElement {
-        return seq.getChild(index)
-      }
+      override fun getElement(
+        seq: PersesSequenceAst,
+        index: Int,
+      ): AbstractPersesRuleElement = seq.getChild(index)
     }
 
     private object BackwardDirection : AbstractDirection() {
-      override fun getElement(seq: PersesSequenceAst, index: Int): AbstractPersesRuleElement {
-        return seq.getChild(seq.childCount - index - 1)
-      }
+      override fun getElement(
+        seq: PersesSequenceAst,
+        index: Int,
+      ): AbstractPersesRuleElement = seq.getChild(seq.childCount - index - 1)
     }
 
     private class PrefixSequenceEntry(
@@ -228,13 +228,14 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
       sequence: PersesSequenceAst,
       val direction: AbstractDirection,
     ) {
-
-      private val prefix = ArrayList<AbstractPersesRuleElement>().apply {
-        add(prefix)
-      }
-      private val sequences = ArrayList<PersesSequenceAst>().apply {
-        add(sequence)
-      }
+      private val prefix =
+        ArrayList<AbstractPersesRuleElement>().apply {
+          add(prefix)
+        }
+      private val sequences =
+        ArrayList<PersesSequenceAst>().apply {
+          add(sequence)
+        }
 
       fun isEquivalentToPrefix(other: AbstractPersesRuleElement): Boolean {
         check(prefix.size == 1)
@@ -261,9 +262,10 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
         var i = prefix.size
         val minSequenceLength = sequences.map { it.childCount }.minOrNull()!!
         while (i < minSequenceLength) {
-          val equivalentClasses = AstUtil.findEquivalenceAst(
-            sequences.map { direction.getElement(it, i) }.toList(),
-          )
+          val equivalentClasses =
+            AstUtil.findEquivalenceAst(
+              sequences.map { direction.getElement(it, i) }.toList(),
+            )
           ++i
           if (equivalentClasses.size == 1) {
             prefix.add(equivalentClasses.first().representative)
@@ -276,25 +278,23 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
 
     fun computeCandidatesClosedPrefix(
       sequences: List<PersesSequenceAst>,
-    ): List<CommonPrefixCandidate> {
-      return computeCandidatesClosedPrefixOrPostfix(
+    ): List<CommonPrefixCandidate> =
+      computeCandidatesClosedPrefixOrPostfix(
         sequences,
         ForwardDirection,
       ) { sequencesList, lengthOfPrefix ->
         CommonPrefixCandidate(sequencesList, lengthOfPrefix)
       }
-    }
 
     fun computeCandidatesClosedPostfix(
       sequences: List<PersesSequenceAst>,
-    ): List<CommonPostfixCandidate> {
-      return computeCandidatesClosedPrefixOrPostfix(
+    ): List<CommonPostfixCandidate> =
+      computeCandidatesClosedPrefixOrPostfix(
         sequences,
         BackwardDirection,
       ) { sequencesList, lengthOfPrefix ->
         CommonPostfixCandidate(sequencesList, lengthOfPrefix)
       }
-    }
 
     fun computeCandidateInfix(
       prefixCandidates: List<CommonPrefixCandidate>,
@@ -331,7 +331,8 @@ abstract class AbstractAltBlockExtractionPass : AbstractPnfPass() {
           existing.addSequence(s)
         }
       }
-      return firstBatch.onEach { it.maximizePrefix() }
+      return firstBatch
+        .onEach { it.maximizePrefix() }
         .filter { it.countOfSequences > 1 }
         .map { candidateCreator(it.cloneSequences(), it.prefixLength) }
         .toList()

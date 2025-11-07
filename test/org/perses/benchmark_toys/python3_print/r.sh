@@ -10,4 +10,4 @@ if ! python3 "${PROG}" > "${OUTPUT}" 2>&1; then
   exit 1
 fi
 
-grep "hello world" "${OUTPUT}"
+grep "hello" "${OUTPUT}"

@@ -25,7 +25,6 @@ abstract class AbstractPersesRuleDefAst protected constructor(
   val ruleNameHandle: RuleNameHandle,
   val body: AbstractPersesRuleElement,
 ) : AbstractPersesAst() {
-
   init {
     require(RuleType.isLexerRule(ruleNameHandle.ruleName) == isLexerRule) {
       "$ruleNameHandle ::= body"

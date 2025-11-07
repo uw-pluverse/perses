@@ -21,12 +21,12 @@ import com.google.common.base.MoreObjects
 abstract class AbstractStackOrQueue<T, Self : AbstractStackOrQueue<T, Self>>(
   initialCapacity: Int,
 ) {
-
-  protected val deque = if (initialCapacity > 0) {
-    ArrayDeque<T>(initialCapacity)
-  } else {
-    ArrayDeque()
-  }
+  protected val deque =
+    if (initialCapacity > 0) {
+      ArrayDeque<T>(initialCapacity)
+    } else {
+      ArrayDeque()
+    }
 
   abstract fun add(element: T): Self
 
@@ -40,9 +40,7 @@ abstract class AbstractStackOrQueue<T, Self : AbstractStackOrQueue<T, Self>>(
     return copy
   }
 
-  override fun hashCode(): Int {
-    return deque.hashCode()
-  }
+  override fun hashCode(): Int = deque.hashCode()
 
   override fun equals(other: Any?): Boolean {
     if (other == null) {
@@ -83,69 +81,47 @@ abstract class AbstractStackOrQueue<T, Self : AbstractStackOrQueue<T, Self>>(
 
   fun isNotEmpty() = !isEmpty()
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("deque", deque).toString()
-  }
+  override fun toString(): String = MoreObjects.toStringHelper(this).add("deque", deque).toString()
 }
 
 class SimpleStack<T : Any>(
   initialCapacity: Int = 0,
 ) : AbstractStackOrQueue<T, SimpleStack<T>>(initialCapacity) {
-
   override fun add(element: T): SimpleStack<T> {
     deque.addLast(element)
     return this
   }
 
-  override fun remove(): T {
-    return deque.removeLast()
-  }
+  override fun remove(): T = deque.removeLast()
 
-  override fun peek(): T {
-    return deque.last()
-  }
+  override fun peek(): T = deque.last()
 
-  fun peekBottom(): T {
-    return deque.first()
-  }
+  fun peekBottom(): T = deque.first()
 
-  fun sequenceFromTop(): Sequence<T> {
-    return deque.asReversed().asSequence()
-  }
+  fun sequenceFromTop(): Sequence<T> = deque.asReversed().asSequence()
 
-  fun sequenceFromBottom(): Sequence<T> {
-    return deque.asSequence()
-  }
+  fun sequenceFromBottom(): Sequence<T> = deque.asSequence()
 
-  override fun createEmpty(): SimpleStack<T> {
-    return SimpleStack()
-  }
+  override fun createEmpty(): SimpleStack<T> = SimpleStack()
 
   companion object {
-    fun <T : Any>of(element: T) = SimpleStack<T>().add(element)
+    fun <T : Any> of(element: T) = SimpleStack<T>().add(element)
   }
 }
 
 class SimpleQueue<T>(
   initialCapacity: Int = 0,
 ) : AbstractStackOrQueue<T, SimpleQueue<T>>(initialCapacity) {
-
   override fun add(element: T): SimpleQueue<T> {
     deque.addLast(element)
     return this
   }
 
-  override fun remove(): T {
-    return deque.removeFirst()
-  }
+  override fun remove(): T = deque.removeFirst()
 
-  override fun peek(): T {
-    return deque.first()
-  }
+  override fun peek(): T = deque.first()
 
-  override fun createEmpty(): SimpleQueue<T> {
-    return SimpleQueue()
-  }
+  override fun createEmpty(): SimpleQueue<T> = SimpleQueue()
 
   companion object {
     fun <T> of(element: T) = SimpleQueue<T>().also { it.add(element) }

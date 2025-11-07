@@ -33,9 +33,7 @@ fun <T> Random.sample(list: List<T>): T {
 inline fun <T> Iterable<T>.forEachElementAndGap(
   elementVisitor: (T) -> Unit,
   gapVisitor: () -> Unit,
-) {
-  return asSequence().forEachElementAndGap(elementVisitor, gapVisitor)
-}
+) = asSequence().forEachElementAndGap(elementVisitor, gapVisitor)
 
 inline fun <T> Sequence<T>.forEachElementAndGap(
   elementVisitor: (T) -> Unit,
@@ -53,38 +51,46 @@ inline fun <T> Sequence<T>.forEachElementAndGap(
   }
 }
 
-fun Sequence<Int>.toImmutableIntArray(): ImmutableIntArray {
-  return fold(ImmutableIntArray.builder()) { builder, e ->
+fun Iterable<Int>.toImmutableIntArray(): ImmutableIntArray = this.asSequence().toImmutableIntArray()
+
+fun Sequence<Int>.toImmutableIntArray(): ImmutableIntArray =
+  fold(ImmutableIntArray.builder()) { builder, e ->
     builder.add(e)
     builder
   }.build()
-}
 
-fun <T : Any, V : Any> List<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
-  return fold(ImmutableList.builderWithExpectedSize<V>(size)) { builder, e ->
-    builder.add(transform(e))
-    builder
-  }.build()
-}
-
-fun <T : Any> List<T>.filterToImmutableList(
-  predicateForDeletion: (T) -> Boolean,
-): ImmutableList<T> {
-  return asSequence().filter { !predicateForDeletion(it) }.toImmutableList()
-}
-
-fun <T : Any, V : Any> Sequence<T>.transformToImmutableList(transform: (T) -> V): ImmutableList<V> {
-  return fold(ImmutableList.builder<V>()) { builder, e ->
-    builder.add(transform(e))
-    builder
-  }.build()
-}
-
-fun <T : Any, V : Any> Iterable<T>.transformToImmutableList(
+inline fun <T : Any, V : Any> Set<T>.transformToImmutableSet(
   transform: (T) -> V,
-) = asSequence().transformToImmutableList(
-  transform,
-)
+): ImmutableSet<V> =
+  fold(ImmutableSet.builderWithExpectedSize<V>(size)) { builder, e ->
+    builder.add(transform(e))
+    builder
+  }.build()
+
+inline fun <T : Any, V : Any> List<T>.transformToImmutableList(
+  transform: (T) -> V,
+): ImmutableList<V> =
+  fold(ImmutableList.builderWithExpectedSize<V>(size)) { builder, e ->
+    builder.add(transform(e))
+    builder
+  }.build()
+
+inline fun <T : Any> List<T>.filterToImmutableList(
+  crossinline predicateForDeletion: (T) -> Boolean,
+): ImmutableList<T> = asSequence().filter { !predicateForDeletion(it) }.toImmutableList()
+
+inline fun <T : Any, V : Any> Sequence<T>.transformToImmutableList(
+  transform: (T) -> V,
+): ImmutableList<V> =
+  fold(ImmutableList.builder<V>()) { builder, e ->
+    builder.add(transform(e))
+    builder
+  }.build()
+
+inline fun <T : Any, V : Any> Iterable<T>.transformToImmutableList(transform: (T) -> V) =
+  asSequence().transformToImmutableList(
+    transform,
+  )
 
 fun <T : Any> ImmutableList<T>.excludesRegion(
   leftIndexInclusive: Int,
@@ -132,97 +138,122 @@ inline fun <T, R : Comparable<R>> Iterable<T>.isSortedAscendinglyBy(
   return true
 }
 
-fun <T : Comparable<T>> Iterable<T>.isSortedAscendingly(): Boolean {
-  return isSortedAscendinglyBy { it }
-}
+fun <T : Comparable<T>> Iterable<T>.isSortedAscendingly(): Boolean = isSortedAscendinglyBy { it }
 
-fun <T> Iterable<T>.toImmutableList(): ImmutableList<T> {
-  return if (this is ImmutableList) {
+fun <T : Any> Iterable<T>.toImmutableList(): ImmutableList<T> =
+  if (this is ImmutableList) {
     this
   } else {
     ImmutableList.copyOf(this)
   }
-}
 
-fun <T> Array<T>.toImmutableList(): ImmutableList<T> {
-  return ImmutableList.copyOf(this)
-}
+fun <T : Any> Array<T>.toImmutableList(): ImmutableList<T> = ImmutableList.copyOf(this)
 
-operator fun <T> ImmutableList<T>.plus(other: Iterable<T>): ImmutableList<T> {
-  val sizeOther = if (other is Collection<T>) {
-    other.size
-  } else {
-    1
-  }
+operator fun <T : Any> ImmutableList<T>.plus(other: Iterable<T>): ImmutableList<T> {
+  val sizeOther =
+    if (other is Collection<T>) {
+      other.size
+    } else {
+      1
+    }
   val builder = ImmutableList.builderWithExpectedSize<T>(size + sizeOther)
   builder.addAll(this)
   builder.addAll(other)
   return builder.build()
 }
 
-fun <T : Any> Sequence<T>.toImmutableList(): ImmutableList<T> {
-  return fold(ImmutableList.builder<T>()) { builder, e ->
+fun <T : Any> Sequence<T>.toImmutableList(): ImmutableList<T> =
+  fold(ImmutableList.builder<T>()) { builder, e ->
     builder.add(e)
   }.build()
-}
 
-fun <T : Any> Iterable<T>.toImmutableSet(): ImmutableSet<T> {
-  return ImmutableSet.copyOf(this)
-}
+fun <T : Any> Iterable<T>.toImmutableSet(): ImmutableSet<T> = ImmutableSet.copyOf(this)
 
-fun <T : Any> Sequence<T>.toImmutableSet(): ImmutableSet<T> {
-  return fold(ImmutableSet.builder<T>()) { builder, e ->
+fun <T : Any> Sequence<T>.toImmutableSet(): ImmutableSet<T> =
+  fold(ImmutableSet.builder<T>()) { builder, e ->
     builder.add(e)
   }.build()
-}
 
-fun <K : Any, V : Any> Sequence<Map.Entry<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
-  return fold(ImmutableMap.builder<K, V>()) { builder, e ->
+fun <K : Any, V : Any> Sequence<Map.Entry<K, V>>.toImmutableMap(): ImmutableMap<K, V> =
+  fold(ImmutableMap.builder<K, V>()) { builder, e ->
     builder.put(e.key, e.value)
   }.build()
-}
 
-fun <K : Any, V : Any> Iterable<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
-  return fold(ImmutableMap.builder<K, V>()) { builder, e ->
+@JvmName("toImmutableMapFromPairs")
+fun <K : Any, V : Any> Iterable<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> =
+  fold(ImmutableMap.builder<K, V>()) { builder, e ->
     builder.put(e.first, e.second)
   }.build()
-}
+
+// TODO(cnsun): needs test.
+fun <K : Any, V : Any> Map<K, V>.toImmutableMap(): ImmutableMap<K, V> = entries.toImmutableMap()
+
+// TODO(cnsun): needs tests
+@JvmName("toImmutableMapFromEntries")
+fun <K : Any, V : Any> Iterable<Map.Entry<K, V>>.toImmutableMap(): ImmutableMap<K, V> =
+  fold(ImmutableMap.builder<K, V>()) { builder, entry ->
+    builder.put(entry.key, entry.value)
+  }.build()
 
 fun <K : Any, V : Any, T> Iterable<T>.toImmutableMap(
   keyFunc: (T) -> K,
   valueFunc: (T) -> V,
-): ImmutableMap<K, V> {
-  return fold(ImmutableMap.builder<K, V>()) { builder, e ->
+): ImmutableMap<K, V> =
+  fold(ImmutableMap.builder<K, V>()) { builder, e ->
     builder.put(keyFunc(e), valueFunc(e))
   }.build()
-}
 
-fun <K : Any, V : Any> Sequence<Pair<K, V>>.toImmutableBiMap(): ImmutableBiMap<K, V> {
-  return fold(ImmutableBiMap.builder<K, V>()) { builder, pair ->
+fun <K : Any, V : Any> Sequence<Pair<K, V>>.toImmutableBiMap(): ImmutableBiMap<K, V> =
+  fold(ImmutableBiMap.builder<K, V>()) { builder, pair ->
     builder.put(pair.first, pair.second)
   }.build()
-}
 
 inline fun <K : Any, V : Any, T> Sequence<T>.toImmutableMap(
   keyFunc: (T) -> K,
   valueFunc: (T) -> V,
-): ImmutableMap<K, V> {
-  return fold(ImmutableMap.builder<K, V>()) { builder, t ->
+): ImmutableMap<K, V> =
+  fold(ImmutableMap.builder<K, V>()) { builder, t ->
     builder.put(keyFunc(t), valueFunc(t))
   }.build()
-}
 
 @JvmName("toImmutableMapPair")
-fun <K : Any, V : Any> Sequence<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> {
-  return fold(ImmutableMap.builder<K, V>()) { builder, e ->
+fun <K : Any, V : Any> Sequence<Pair<K, V>>.toImmutableMap(): ImmutableMap<K, V> =
+  fold(ImmutableMap.builder<K, V>()) { builder, e ->
     builder.put(e.first, e.second)
   }.build()
-}
+
+fun <T : Any> ImmutableList<T>.combine(element: T): ImmutableList<T> =
+  ImmutableList.builderWithExpectedSize<T>(this.size + 1).let {
+    it.addAll(this)
+    it.add(element)
+    it.build()
+  }
 
 fun CharSequence.removeWhitespaces() = this.filterNot { it.isWhitespace() }
 
-fun CharSequence.containsNoWhitespace(): Boolean {
-  return none { it.isWhitespace() }
+fun CharSequence.containsNoWhitespace(): Boolean = none { it.isWhitespace() }
+
+fun String.padBothEnds(
+  desiredLength: Int,
+  padChar: Char = ' ',
+): String {
+  require(desiredLength > 0) { desiredLength }
+
+  val originalLength = this.length
+
+  if (originalLength >= desiredLength) {
+    return this // No padding needed or string is already longer
+  }
+
+  val totalPadding = desiredLength - originalLength
+  val leftPadding = totalPadding / 2
+  val rightPadding = totalPadding - leftPadding
+
+  return buildString {
+    repeat(leftPadding) { append(padChar) }
+    append(this@padBothEnds)
+    repeat(rightPadding) { append(padChar) }
+  }
 }
 
 /**

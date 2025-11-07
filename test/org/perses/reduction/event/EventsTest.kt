@@ -28,57 +28,62 @@ import java.lang.ref.WeakReference
 
 @RunWith(JUnit4::class)
 class EventsTest {
-
-  private val INITIAL_PROGRAM_SIZE = 3
-
   private val tree = TestUtility.createSparTreeFromString("int a;", LanguageC)
 
-  private val reductionStartEvent = ReductionStartEvent(
-    currentTimeMillis = System.currentTimeMillis(),
-    tree = WeakReference(tree),
-    programSize = INITIAL_PROGRAM_SIZE,
-    commandLineOptions = "<cmd>",
-  )
+  private val reductionStartEvent =
+    ReductionStartEvent(
+      currentTimeMillis = System.currentTimeMillis(),
+      tree = WeakReference(tree),
+      programSize = INITIAL_PROGRAM_SIZE,
+      commandLineOptions = "<cmd>",
+    )
 
-  val firstIterationStart = reductionStartEvent.nextFixpointIteration(
-    programSize = 2,
-    reducerClass = ConcurrentTokenSlicer.getAnnotationForGranularity(granularity = 1),
-    treeStructureDumper = { tree.printTreeStructure() },
-    TestScriptExecutorServiceStatisticsSnapshot(
-      scriptExecutionNumber = 1,
-      externalCacheHitNumber = 0,
-    ),
-  )
+  val firstIterationStart =
+    reductionStartEvent.nextFixpointIteration(
+      programSize = 2,
+      reducerClass = ConcurrentTokenSlicer.getAnnotationForGranularity(granularity = 1),
+      treeStructureDumper = { tree.printTreeStructure() },
+      TestScriptExecutorServiceStatisticsSnapshot(
+        scriptExecutionNumber = 1,
+        externalCacheHitNumber = 0,
+      ),
+    )
 
-  val nodeReductionStartEvent = firstIterationStart.createNodeReductionStartEvent(
-    currentTimeMillis = System.currentTimeMillis(),
-    program = tree.programSnapshot,
-    node = tree.realRoot,
-    outputCreator = { ImmutableList.of() },
-  )
+  val nodeReductionStartEvent =
+    firstIterationStart.createNodeReductionStartEvent(
+      currentTimeMillis = System.currentTimeMillis(),
+      program = tree.programSnapshot,
+      node = tree.realRoot,
+      outputCreator = { ImmutableList.of() },
+    )
 
-  val nodeReductionEndEvent = nodeReductionStartEvent.createEndEvent(
-    currentTimeMillis = System.currentTimeMillis(),
-    program = tree.programSnapshot,
-    remainingQueueSize = 1000,
-  )
+  val nodeReductionEndEvent =
+    nodeReductionStartEvent.createEndEvent(
+      currentTimeMillis = System.currentTimeMillis(),
+      program = tree.programSnapshot,
+      remainingQueueSize = 1000,
+    )
 
-  val firstIterationEnd = firstIterationStart.createEndEvent(
-    currentTimeMillis = System.currentTimeMillis(),
-    programSize = 2,
-    testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
-      scriptExecutionNumber = 2,
-      externalCacheHitNumber = 2,
-    ),
-  )
+  val firstIterationEnd =
+    firstIterationStart.createEndEvent(
+      currentTimeMillis = System.currentTimeMillis(),
+      programSize = 2,
+      testScriptStatistics =
+        TestScriptExecutorServiceStatisticsSnapshot(
+          scriptExecutionNumber = 2,
+          externalCacheHitNumber = 2,
+        ),
+    )
 
-  val reductionEndEvent = reductionStartEvent.createEndEvent(
-    programSize = 1,
-    testScriptStatistics = TestScriptExecutorServiceStatisticsSnapshot(
-      scriptExecutionNumber = 100 + 2,
-      externalCacheHitNumber = 2,
-    ),
-  )
+  val reductionEndEvent =
+    reductionStartEvent.createEndEvent(
+      programSize = 1,
+      testScriptStatistics =
+        TestScriptExecutorServiceStatisticsSnapshot(
+          scriptExecutionNumber = 100 + 2,
+          externalCacheHitNumber = 2,
+        ),
+    )
 
   @Test
   fun testReductionStartEvent() {
@@ -113,5 +118,9 @@ class EventsTest {
   @Test
   fun testFixpointIterationEndEvent() {
     assertThat(firstIterationEnd.initialProgramSize()).isEqualTo(INITIAL_PROGRAM_SIZE)
+  }
+
+  companion object {
+    private val INITIAL_PROGRAM_SIZE = 3
   }
 }

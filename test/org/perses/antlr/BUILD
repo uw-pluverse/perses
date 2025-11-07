@@ -46,6 +46,7 @@ kt_jvm_test(
         "//:truth",
         "//antlrrdc/src/org/perses/antlr/reducer/codegen:templates",
         "//src/org/perses/antlr:antlr_compiler",
+        "//src/org/perses/grammar/adhoc:language_kind",
         "//src/org/perses/grammar/adhoc:parser_facade_template",
         "//test/org/perses/antlr:AbstractAntlrrdcTest",
     ],
@@ -64,10 +65,7 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
-        "//src/org/perses/antlr:antlr_grammar_parser",
-        "//src/org/perses/antlr:antlr_hierarchy",
         "//src/org/perses/grammar/c:optc_parser_facade",
-        "//test/org/perses:test_util",
     ],
 )
 
@@ -90,16 +88,8 @@ kt_jvm_library(
     name = "GrammarTestingUtility",
     srcs = ["GrammarTestingUtility.kt"],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
-        "//:jgrapht",
-        "//:kotlin_stdib",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
-        "//antlropt/src/org/perses/antlr/ast:ast_builder",
         "//antlropt/src/org/perses/antlr/pnf",
-        "//src/org/perses/antlr:antlr_grammar_parser",
-        "//src/org/perses/util",
     ],
 )
 
@@ -109,20 +99,12 @@ kt_binary_for_genrule(
     jvm_flags = ["-ea"],
     main_class = "org.perses.antlr.GrammarHierarchyDumpMain",
     deps = [
-        ":GrammarTestingUtility",
         "//:antlr_tool",
         "//:guava",
-        "//:jcommander",
-        "//:truth",
         "//antlropt/src/org/perses/antlr/ast",
-        "//src/org/perses/antlr:antlr_grammar_parser",
-        "//src/org/perses/antlr:antlr_hierarchy",
-        "//src/org/perses/grammar/c:optc_parser_facade",
         "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/grammar/go:parser_facade",
         "//src/org/perses/grammar/scala:parser_facade",
-        "//test/org/perses:test_util",
-        "@com_google_protobuf//:protobuf_java",
     ],
 )
 
@@ -131,7 +113,7 @@ kt_jvm_test(
     srcs = ["RuleReachabilityGraphTest.kt"],
     deps = [
         "//:truth",
-        "//test/org/perses:test_util",
+        "//src/org/perses/grammar:parser_facade_interface",
     ],
 )
 
@@ -141,9 +123,6 @@ kt_jvm_library(
         "AbstractAntlrrdcTest.kt",
     ],
     deps = [
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/util",
     ],
 )
 

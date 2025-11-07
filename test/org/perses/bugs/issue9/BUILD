@@ -17,7 +17,7 @@ reduction_golden_test(
         "--lang": "java",
     },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "T.java.txt",
     test_script = "r.sh",
 )

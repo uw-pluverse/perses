@@ -16,12 +16,11 @@
  */
 package org.perses.util
 
+import com.google.common.base.MoreObjects
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
-import com.google.common.hash.HashCode
-import com.google.common.hash.Hashing
-import com.google.common.primitives.ImmutableIntArray
 import java.io.ByteArrayOutputStream
 import java.io.Closeable
 import java.io.IOException
@@ -48,6 +47,7 @@ import java.util.function.Predicate
 import java.util.zip.Deflater
 import java.util.zip.DeflaterOutputStream
 import java.util.zip.InflaterOutputStream
+import java.util.zip.ZipFile
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.deleteRecursively
@@ -56,7 +56,6 @@ import kotlin.io.path.outputStream
 import kotlin.io.path.writeText
 
 object Util {
-
   data class UseResourcesResultTuple<A, B, R>(
     val resourceA: A,
     val resourceB: B,
@@ -119,20 +118,52 @@ object Util {
     path: Path,
     autoFlush: Boolean = false,
     charset: Charset = StandardCharsets.UTF_8,
-  ): PrintStream {
-    return PrintStream(path.outputStream(), autoFlush, charset.name())
-  }
+  ): PrintStream = PrintStream(path.outputStream(), autoFlush, charset.name())
 
   @JvmStatic
-  fun computePercentage(numerator: Int, denominator: Int): String {
-    return String.format("%.2f%%", numerator * 100.0 / denominator)
+  fun computePercentage(
+    numerator: Int,
+    denominator: Int,
+    prefix: String = "$numerator/$denominator=",
+  ): String {
+    val percentageValue = numerator * 100.0 / denominator
+    if (percentageValue < 0.000000000001) {
+      return prefix + "0.00%"
+    }
+    val string = String.format("%.30f%%", percentageValue)
+    val length = string.length
+    var places: Int = 2
+    if (percentageValue >= 1) {
+      return prefix + printDecimalWithPlaces(percentageValue, places)
+    }
+    val dotIndex = string.indexOf('.')
+    if (dotIndex > 0) {
+      // adjust the places
+      var indexOfFirstZero = dotIndex + 1
+      while (indexOfFirstZero < length) {
+        if (string[indexOfFirstZero] != '0') {
+          break
+        }
+        ++indexOfFirstZero
+      }
+      if (indexOfFirstZero < length && indexOfFirstZero - dotIndex > places) {
+        places = indexOfFirstZero - dotIndex + 1
+      }
+    }
+    return prefix + printDecimalWithPlaces(percentageValue, places)
   }
+
+  private fun printDecimalWithPlaces(
+    value: Double,
+    places: Int,
+  ): String = String.format("%.${places}f%%", value)
 
   @JvmStatic
   @Suppress("NOTHING_TO_INLINE")
-  fun countElementsInList(endIndexExclusive: Int, startIndexInclusive: Int): Int {
-    return endIndexExclusive - startIndexInclusive
-  }
+  fun countElementsInList(
+    endIndexExclusive: Int,
+    startIndexInclusive: Int,
+  ): Int = endIndexExclusive - startIndexInclusive
 
   @JvmStatic
   fun <T> removeElementsFromLinkedList(
@@ -151,26 +182,32 @@ object Util {
     }
   }
 
-  fun <T> swap(list: ArrayList<T>, i: Int, j: Int) {
+  fun <T> swap(
+    list: ArrayList<T>,
+    i: Int,
+    j: Int,
+  ) {
     val temp = list[i]
     list[i] = list[j]
     list[j] = temp
   }
 
   @Suppress("NOTHING_TO_INLINE")
-  inline fun <T> Iterator<T>.nextOrNull(): T? {
-    return if (hasNext()) {
+  inline fun <T> Iterator<T>.nextOrNull(): T? =
+    if (hasNext()) {
       next()
     } else {
       null
     }
-  }
 
   @JvmStatic
   fun <T> createConcurrentSet(): MutableSet<T> = ConcurrentHashMap.newKeySet()
 
   @JvmStatic
-  fun <T> removeElementBySwappingLastElement(list: ArrayList<T>, index: Int) {
+  fun <T> removeElementBySwappingLastElement(
+    list: ArrayList<T>,
+    index: Int,
+  ) {
     require(list.size > 0)
     val last = list.size - 1
     if (index != last) {
@@ -232,14 +269,14 @@ object Util {
     return result.build()
   }
 
-  data class NonEmptySublist<T>(
+  data class NonEmptySublist<T : Any>(
     val interval: NonEmptyInternal,
     val originalList: ImmutableList<T>,
   ) {
-    val sublist = originalList.subList(interval.inclusiveStart, interval.exclusiveEnd)
+    val elements = originalList.subList(interval.inclusiveStart, interval.exclusiveEnd)
 
     init {
-      lazyAssert { sublist.size == interval.size() }
+      lazyAssert { elements.size == interval.size() }
     }
   }
 
@@ -256,10 +293,16 @@ object Util {
     fun size() = exclusiveEnd - inclusiveStart
 
     fun isInRange(value: Int) = value in inclusiveStart until exclusiveEnd
+
+    companion object {
+      // TODO(cnsun): needs tests.
+      fun <T : Any> ImmutableList<T>.sublist(interval: NonEmptyInternal): ImmutableList<T> =
+        subList(interval.inclusiveStart, interval.exclusiveEnd)
+    }
   }
 
   @JvmStatic
-  fun <T> slideReverseIfSlideable(
+  fun <T : Any> slideReverseIfSlideable(
     list: ImmutableList<T>,
     slidingWindowSize: Int,
   ): Sequence<NonEmptySublist<T>> {
@@ -325,7 +368,10 @@ object Util {
   }
 
   @JvmStatic
-  fun createDirsAndWriteText(file: Path, text: String): Path {
+  fun createDirsAndWriteText(
+    file: Path,
+    text: String,
+  ): Path {
     var parent = file.parent
     if (parent == null) {
       parent = file.toAbsolutePath().parent
@@ -339,7 +385,10 @@ object Util {
   }
 
   @JvmStatic
-  fun replaceFileExtension(path: String, newExt: String): String {
+  fun replaceFileExtension(
+    path: String,
+    newExt: String,
+  ): String {
     require(newExt.isNotBlank())
     require(newExt.trim().length == newExt.length)
     require(newExt[0] != '.')
@@ -363,7 +412,11 @@ object Util {
 
   // TODO: test
   @JvmStatic
-  fun copyDirectory(source: Path, target: Path, vararg options: CopyOption) {
+  fun copyDirectory(
+    source: Path,
+    target: Path,
+    vararg options: CopyOption,
+  ) {
     require(Files.isDirectory(source))
     if (!Files.exists(target)) {
       Files.createDirectories(target)
@@ -380,7 +433,10 @@ object Util {
           return FileVisitResult.CONTINUE
         }
 
-        override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
+        override fun visitFile(
+          file: Path,
+          attrs: BasicFileAttributes,
+        ): FileVisitResult {
           Files.copy(file, target.resolve(source.relativize(file)), *options)
           return FileVisitResult.CONTINUE
         }
@@ -389,7 +445,10 @@ object Util {
   }
 
   @JvmStatic
-  fun copyFileToDirectory(srcFilePath: Path, destDir: Path): Path {
+  fun copyFileToDirectory(
+    srcFilePath: Path,
+    destDir: Path,
+  ): Path {
     val destFilePath = destDir.resolve(srcFilePath.fileName)
     require(!srcFilePath.toAbsolutePath().equals(destFilePath.toAbsolutePath())) {
       "Destination path cannot be the same as the original path."
@@ -413,7 +472,10 @@ object Util {
 
   @OptIn(ExperimentalPathApi::class)
   @JvmStatic
-  fun deleteFilesConditionally(dir: Path, deletePredicate: (Path) -> Boolean) {
+  fun deleteFilesConditionally(
+    dir: Path,
+    deletePredicate: (Path) -> Boolean,
+  ) {
     Files.newDirectoryStream(dir).use { stream ->
       for (path in stream) {
         if (deletePredicate(path)) {
@@ -428,14 +490,19 @@ object Util {
   }
 
   @JvmStatic
-  fun globWithRegex(dir: Path, pattern: Regex): ImmutableList<Path> {
-    return globWithFilter(dir) {
+  fun globWithRegex(
+    dir: Path,
+    pattern: Regex,
+  ): ImmutableList<Path> =
+    globWithFilter(dir) {
       pattern.matches(it.fileName.toString())
     }
-  }
 
   @JvmStatic
-  fun globWithFileNameExts(dir: Path, ext: String): ImmutableList<Path> {
+  fun globWithFileNameExts(
+    dir: Path,
+    ext: String,
+  ): ImmutableList<Path> {
     require(ext.trim().length == ext.length)
     require(ext.isNotBlank())
     return globWithFilter(dir) {
@@ -446,25 +513,32 @@ object Util {
   private fun globWithFilter(
     dir: Path,
     regualrFileFilter: (Path) -> Boolean,
-  ): ImmutableList<Path> {
-    return Files
+  ): ImmutableList<Path> =
+    Files
       .walk(dir)
       .use { stream ->
-        stream.filter { file ->
-          Files.isRegularFile(file) && regualrFileFilter(file)
-        }.collect(ImmutableList.toImmutableList())
+        stream
+          .filter { file ->
+            Files.isRegularFile(file) && regualrFileFilter(file)
+          }.collect(ImmutableList.toImmutableList())
       }
-  }
 
   @JvmStatic
-  fun <T : Any> computeDifference(superList: List<T>, subList: List<T>): ImmutableList<T> {
+  fun <T : Any> computeDifference(
+    superList: List<T>,
+    subList: List<T>,
+  ): ImmutableList<T> {
     val builder = ImmutableList.builder<T>()
     visitDifference(superList, subList) { builder.add(it) }
     return builder.build()
   }
 
   @JvmStatic
-  inline fun <T> visitDifference(superList: List<T>, subList: List<T>, visitor: (T) -> Unit) {
+  inline fun <T> visitDifference(
+    superList: List<T>,
+    subList: List<T>,
+    visitor: (T) -> Unit,
+  ) {
     lazyAssert { countDistinctObjects(superList) == superList.size }
     lazyAssert { countDistinctObjects(subList) == subList.size }
     var subIndex = 0
@@ -481,7 +555,10 @@ object Util {
       }
     }
     check(subIndex == subSize) {
-      "$subIndex, $subSize"
+      """subIndex=$subIndex, subSize=$subSize
+        |superList=$superList
+        |subList=$subList
+      """.trimMargin()
     }
   }
 
@@ -489,71 +566,49 @@ object Util {
   fun <T> countDistinctObjects(collection: Collection<T>): Int {
     val map = IdentityHashMap<T, T>(collection.size)
     for (t in collection) {
-      map.put(t, t)
+      map[t] = t
     }
     return map.size
   }
 
-  data class SHA512HashCode private constructor(
-    private val stringLengths: ImmutableIntArray,
-    val digest: HashCode,
-  ) {
-
-    val numOfStrings: Int
-      get() = stringLengths.length()
-
-    fun getLengthOfString(index: Int) = stringLengths[index]
-
-    companion object {
-      fun createFromString(string: String) = SHA512HashCode(
-        stringLengths = ImmutableIntArray.of(string.length),
-        digest = Hashing.sha512().hashString(string, StandardCharsets.UTF_8),
-      )
-
-      fun createFromListOfStrings(strings: List<String>) = SHA512HashCode(
-        stringLengths = ImmutableIntArray.builder(strings.size).apply {
-          strings.forEach { s -> add(s.length) }
-        }.build(),
-        digest = hashListOfStrings(strings),
-      )
-
-      fun createFromListOfFileContents(fileContents: List<AbstractFileContent>) = SHA512HashCode(
-        stringLengths = ImmutableIntArray.builder(fileContents.size).apply {
-          fileContents.forEach { fileContent -> add(fileContent.length) }
-        }.build(),
-        digest = Hashing.sha512().hashObject(
-          fileContents,
-          ListToByteFunnel { element, sink ->
-            element.hash(sink)
-          },
-        ),
-      )
+  // TODO(cnsun): needs tests.
+  fun readZipFileContents(zipFilePath: Path): ImmutableMap<String, String> =
+    ZipFile(zipFilePath.toFile()).use { zipFile ->
+      zipFile
+        .entries()
+        .asSequence()
+        .map { entry ->
+          if (entry.isDirectory) {
+            null
+          } else {
+            val content = zipFile.getInputStream(entry).use { it.readAllBytes().decodeToString() }
+            entry.name to content
+          }
+        }.filterNotNull()
+        .toImmutableMap()
     }
-  }
 
   @JvmStatic
-  fun hashListOfStrings(list: List<String>) = Hashing.sha512().hashObject(
-    list,
-    ListToByteFunnel.StringListToByteFunnel,
-  )
-
-  @JvmStatic
-  fun zipCompress(text: String): ByteArray {
-    val bArray = text.toByteArray(Charsets.UTF_8)
+  fun compressStringToZipByteArray(text: String): ByteArray {
+    val bArray = text.toByteArray(StandardCharsets.UTF_8)
     val compressor = Deflater(Deflater.BEST_COMPRESSION)
-    val output = ByteArrayOutputStream().use { output ->
-      DeflaterOutputStream(output, compressor).use { dos ->
-        dos.write(bArray)
-        dos.finish()
+    val output =
+      ByteArrayOutputStream().use { output ->
+        DeflaterOutputStream(output, compressor).use { dos ->
+          dos.write(bArray)
+          dos.finish()
+        }
+        output.toByteArray()
       }
-      output.toByteArray()
-    }
     return output
   }
 
+  /**
+   *
+   */
   @JvmStatic
-  fun zipDecompress(bArray: ByteArray): ByteArray {
-    return useResources(
+  fun decompressZipByteArray(bArray: ByteArray): ByteArray =
+    useResources(
       { ByteArrayOutputStream() },
       { bos -> InflaterOutputStream(bos) },
     ) { bos, ios ->
@@ -561,7 +616,6 @@ object Util {
       ios.finish()
       bos.toByteArray()
     }.result
-  }
 
   @JvmStatic
   fun getUserHomeDirectory(): Path {
@@ -612,6 +666,35 @@ object Util {
     }
   }
 
+  fun hasWhitespace(string: String): Boolean {
+    val length = string.length
+    for (i in 0 until length) {
+      val c = string[i]
+      if (Character.isWhitespace(c)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  data class UtfChar(
+    val char: Char,
+    val indexInString: Int,
+  ) {
+    override fun toString(): String =
+      MoreObjects
+        .toStringHelper(this)
+        .add("char", char)
+        .add("code", char.code)
+        .add("index_in_string", indexInString)
+        .toString()
+  }
+
+  fun findUtf16Chars(string: String): ImmutableList<UtfChar> =
+    string.toCharArray().withIndex().filter { it.value.code > 255 }.transformToImmutableList {
+      UtfChar(char = it.value, indexInString = it.index)
+    }
+
   @JvmField
   val ASSERTION_ENABLED = Util::class.java.desiredAssertionStatus()
 
@@ -619,7 +702,10 @@ object Util {
     lazyAssert(test) { "" }
   }
 
-  inline fun lazyAssert(test: () -> Boolean, message: () -> Any?) {
+  inline fun lazyAssert(
+    test: () -> Boolean,
+    message: () -> Any?,
+  ) {
     if (ASSERTION_ENABLED) {
       val result: Boolean
       try {
@@ -637,13 +723,12 @@ object Util {
     ;
 
     companion object {
-      fun stopIfTrue(value: Boolean): EnumStopCriterion {
-        return if (value) {
+      fun stopIfTrue(value: Boolean): EnumStopCriterion =
+        if (value) {
           STOP
         } else {
           CONTINUE
         }
-      }
 
       fun continueIfTrue(value: Boolean) = stopIfTrue(!value)
     }
@@ -666,28 +751,65 @@ object Util {
     return current
   }
 
-  class AtomicSequenceGenerator(start: Int = 1, private val minLengthForPadding: Int) {
+  class AtomicSequenceGenerator(
+    start: Int = 1,
+    private val minLengthForPadding: Int,
+  ) {
     init {
       require(minLengthForPadding > 0)
     }
 
     private val generator = AtomicInteger(start)
 
-    fun next(): String {
-      return Strings.padStart(generator.getAndIncrement().toString(), minLengthForPadding, '0')
-    }
+    fun next(): String =
+      Strings.padStart(generator.getAndIncrement().toString(), minLengthForPadding, '0')
   }
 
-  data class SpaceSize(val bytes: Int) {
+  data class SpaceSize(
+    val bytes: Long,
+  ) {
+    fun toKiloBytes() = bytes / 1000
+
+    fun toMegaBytes() = toKiloBytes() / 1000
+
+    fun toGigaBytes() = toMegaBytes() / 1000
 
     companion object {
-      fun megaBytes(mb: Int): SpaceSize = kiloBytes(kb = mb * 1000)
+      fun megaBytes(mb: Long): SpaceSize = kiloBytes(kb = mb * 1000)
 
-      fun kiloBytes(kb: Int) = SpaceSize(bytes = kb * 1000)
+      fun kiloBytes(kb: Long) = SpaceSize(bytes = kb * 1000)
     }
   }
 
-  fun createTempDirFor(any: Any): Path {
-    return Files.createTempDirectory(any::class.java.canonicalName)
+  fun createTempDirFor(any: Any): Path = Files.createTempDirectory(any::class.java.canonicalName)
+
+  /**
+   * TODO(cnsun): needs tests.
+   */
+  inline fun <T> clusterIdsIntoRanges(
+    list: List<T>,
+    idExtractor: (T) -> Int,
+  ): List<String> {
+    val size = list.size
+    if (size == 0) {
+      return ImmutableList.of()
+    }
+    val result = mutableListOf<String>()
+    var i = 0
+    while (i < size) {
+      val start = idExtractor(list[i])
+      var end = start
+      while ((i + 1) < size && idExtractor(list[i + 1]) == idExtractor(list[i]) + 1) {
+        end = idExtractor(list[i + 1])
+        ++i
+      }
+      if (start == end) {
+        result.add(start.toString())
+      } else {
+        result.add("$start-$end")
+      }
+      ++i
+    }
+    return result
   }
 }

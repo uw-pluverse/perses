@@ -25,8 +25,10 @@ import org.perses.util.FileStreamPool
 class QueryCacheMemoryProfiler(
   writer: FileStreamPool.ManagedPrintStream,
 ) : AbstractQueryCacheProfiler(writer) {
-
-  override fun afterCacheProgramAndResult(cache: AbstractQueryCache, nanoDuration: Long) {
+  override fun afterCacheProgramAndResult(
+    cache: AbstractQueryCache,
+    nanoDuration: Long,
+  ) {
     writeNumOfBytesToFileSubjectToTimeInterval(cache)
   }
 
@@ -36,7 +38,10 @@ class QueryCacheMemoryProfiler(
     prevTime = currentTimeMillis
   }
 
-  override fun afterCacheEviction(cache: AbstractQueryCache, nanoDuration: Long) {
+  override fun afterCacheEviction(
+    cache: AbstractQueryCache,
+    nanoDuration: Long,
+  ) {
     val currentTimeMillis = System.currentTimeMillis()
     writeNumOfBytesToFile(currentTimeMillis, cache)
     prevTime = currentTimeMillis
@@ -57,7 +62,10 @@ class QueryCacheMemoryProfiler(
     prevTime = currentTimeMillis
   }
 
-  private fun writeNumOfBytesToFile(currentTimeMillis: Long, cache: AbstractQueryCache) {
+  private fun writeNumOfBytesToFile(
+    currentTimeMillis: Long,
+    cache: AbstractQueryCache,
+  ) {
     val profilingResults = computeMemoryInBytes(cache)
     writer!!
       .append(currentTimeMillis.toString())
@@ -75,23 +83,25 @@ class QueryCacheMemoryProfiler(
   }
 
   companion object {
-
     private val INTERVAL = readTimeIntervalFromEnv()
     private val logger = FluentLogger.forEnclosingClass()
 
-    private val CLASS_EXCLUSION_FILTER: ImmutableList<(Any) -> Boolean> = ImmutableList.of(
-      { klass -> klass is AbstractQueryCacheProfiler },
-      { klass -> klass is QueryCacheConfiguration },
-      { klass -> klass is PropertyTestResult },
-      { klass -> klass is AbstractTokenizedProgramEncoder<*> },
-    )
+    private val CLASS_EXCLUSION_FILTER: ImmutableList<(Any) -> Boolean> =
+      ImmutableList.of(
+        { klass -> klass is AbstractQueryCacheProfiler },
+        { klass -> klass is QueryCacheConfiguration },
+        { klass -> klass is PropertyTestResult },
+        { klass -> klass is AbstractTokenizedProgramEncoder<*> },
+        { klass -> klass.javaClass === Object::class.java },
+      )
 
     private val CLASS_NAME_EXCLUSION_FILTER: ImmutableList<(String) -> Boolean> =
-      ImmutableList.of { className ->
-        className.startsWith(
-          "org.perses.program.",
-        )
-      }
+      ImmutableList.of(
+        { className -> className.startsWith("org.perses.program.") },
+        { className -> className.startsWith("jdk.") },
+        { className -> className.startsWith("java.lang.ThreadLocal") },
+        { className -> className.startsWith("java.security") },
+      )
 
     private fun readTimeIntervalFromEnv(): Long {
       val value = System.getenv("PERSES_CACHE_MEMORY_PROFILING_TIME_INTERVAL")
@@ -108,14 +118,21 @@ class QueryCacheMemoryProfiler(
     fun computeMemoryInBytes(cache: Any): ProfilingResults {
       val includedClasses = HashSet<Class<*>>()
       val excludedClasses = HashSet<Class<*>>()
+      val root =
+        if (cache is AbstractQueryCache) {
+          cache.constructObjectsForMemoryMeasurement()
+        } else {
+          cache
+        }
       return ProfilingResults(
-        bytes = MemoryMeasurer.measureBytes(cache) {
-          whetherToProfileMemory(
-            includedClasses,
-            excludedClasses,
-            it,
-          )
-        },
+        bytes =
+          MemoryMeasurer.measureBytes(root) {
+            whetherToProfileMemory(
+              includedClasses,
+              excludedClasses,
+              it,
+            )
+          },
         includedClasses = includedClasses,
         excludedClasses = excludedClasses,
       )

@@ -29,18 +29,21 @@ class AntlrToolWrapper(
   lexerFile: Path?,
   outputDir: String,
 ) {
-  val arguments = ImmutableList.builder<String>().apply {
-    add("-no-listener")
-    add("-no-visitor")
-    add("-package")
-    add(packageName)
-    add("-o")
-    add(outputDir)
-    add(parserFile.toString())
-    if (lexerFile != null) {
-      add(lexerFile.toString())
-    }
-  }.build()
+  val arguments =
+    ImmutableList
+      .builder<String>()
+      .apply {
+        add("-no-listener")
+        add("-no-visitor")
+        add("-package")
+        add(packageName)
+        add("-o")
+        add(outputDir)
+        add(parserFile.toString())
+        if (lexerFile != null) {
+          add(lexerFile.toString())
+        }
+      }.build()
 
   internal val antlr = Tool(arguments.toTypedArray())
 
@@ -59,37 +62,45 @@ class AntlrToolWrapper(
     val errorManager: ErrorManager,
   ) : RuntimeException(msg)
 
-  data class AntlrAcceptanceResult(val accpeted: Boolean, val message: String?)
+  data class AntlrAcceptanceResult(
+    val accpeted: Boolean,
+    val message: String?,
+  )
 
-  data class Grammar(val name: String, val content: String)
+  data class Grammar(
+    val name: String,
+    val content: String,
+  )
 
   companion object {
     fun doesAntlrAcceptGrammar(
       parserGrammar: FileNameContentLinesPair,
       lexerGrammar: FileNameContentLinesPair? = null,
     ): AntlrAcceptanceResult {
-      AutoDeletableFolder.createTempDir(
-        AntlrToolWrapper::class.java.simpleName,
-      ).use {
-        val dir = it.file
-        val parserFile = parserGrammar.writeToDirectory(dir)
-        val lexerFile: Path? = lexerGrammar?.writeToDirectory(dir)
-        val packageName = "org.perses.antlr.temp.grammartest"
-        val outputDir = dir.resolve("temp_output_dir")
-        val antlrTool = AntlrToolWrapper(
-          packageName,
-          parserFile,
-          lexerFile,
-          outputDir.toString(),
-        )
-        try {
-          antlrTool.call()
-          return AntlrAcceptanceResult(accpeted = true, message = null)
-        } catch (e: AntlrException) {
-          val log = antlrTool.antlr.logMgr.toString()
-          return AntlrAcceptanceResult(accpeted = false, message = log)
+      AutoDeletableFolder
+        .createTempDir(
+          AntlrToolWrapper::class.java.simpleName,
+        ).use {
+          val dir = it.file
+          val parserFile = parserGrammar.writeToDirectory(dir)
+          val lexerFile: Path? = lexerGrammar?.writeToDirectory(dir)
+          val packageName = "org.perses.antlr.temp.grammartest"
+          val outputDir = dir.resolve("temp_output_dir")
+          val antlrTool =
+            AntlrToolWrapper(
+              packageName,
+              parserFile,
+              lexerFile,
+              outputDir.toString(),
+            )
+          try {
+            antlrTool.call()
+            return AntlrAcceptanceResult(accpeted = true, message = null)
+          } catch (e: AntlrException) {
+            val log = antlrTool.antlr.logMgr.toString()
+            return AntlrAcceptanceResult(accpeted = false, message = log)
+          }
         }
-      }
     }
   }
 }

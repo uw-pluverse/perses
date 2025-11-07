@@ -17,18 +17,16 @@
 package org.perses.program.printer
 
 import com.google.common.annotations.VisibleForTesting
-import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
 
 object PrinterRegistry {
-
   fun getPrinter(
     format: EnumFormatControl,
-    lexerAtnWrapper: LexerAtnWrapper<out Lexer>? = null,
-  ): AbstractTokenizedProgramPrinter {
-    return if (lexerAtnWrapper != null) {
+    lexerAtnWrapper: LexerAtnWrapper? = null,
+  ): AbstractTokenizedProgramPrinter =
+    if (lexerAtnWrapper != null) {
       getPrinter(
         format,
         AbstractTokenizedProgramPrinter.DeducedPositionProvider(lexerAtnWrapper),
@@ -39,7 +37,6 @@ object PrinterRegistry {
         AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider.DefaultProvider,
       )
     }
-  }
 
   @VisibleForTesting
   fun getPrinter(
@@ -56,22 +53,23 @@ object PrinterRegistry {
         PythonPrinter.getOrigFormat(tokenPositionProvider)
       EnumFormatControl.COMPACT_PYTHON3_FORMAT ->
         PythonPrinter.getCompactOrigFormat(tokenPositionProvider)
+      EnumFormatControl.YAML_FORMAT -> YamlTokenizedProgramPrinter()
     }
 
   fun printToString(
     program: TokenizedProgram,
     format: EnumFormatControl,
-    lexerAtnWrapper: LexerAtnWrapper<out Lexer>? = null,
+    lexerAtnWrapper: LexerAtnWrapper? = null,
   ) = getPrinter(format, lexerAtnWrapper).print(program).sourceCode
 
   fun printToStringInOrigFormat(
     program: TokenizedProgram,
-    lexerAtnWrapper: LexerAtnWrapper<out Lexer>? = null,
+    lexerAtnWrapper: LexerAtnWrapper? = null,
   ) = printToString(program, EnumFormatControl.ORIG_FORMAT, lexerAtnWrapper)
 
   fun printToStringInCompactFormat(
     program: TokenizedProgram,
-    lexerAtnWrapper: LexerAtnWrapper<out Lexer>? = null,
+    lexerAtnWrapper: LexerAtnWrapper? = null,
   ) = printToString(program, EnumFormatControl.COMPACT_ORIG_FORMAT, lexerAtnWrapper)
 
   fun printToStringInSingleLineFormat(program: TokenizedProgram) =
@@ -79,6 +77,6 @@ object PrinterRegistry {
 
   fun printToStringInPythonFormat(
     program: TokenizedProgram,
-    lexerAtnWrapper: LexerAtnWrapper<out Lexer>? = null,
+    lexerAtnWrapper: LexerAtnWrapper? = null,
   ) = printToString(program, EnumFormatControl.PYTHON3_FORMAT, lexerAtnWrapper)
 }

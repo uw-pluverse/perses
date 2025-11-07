@@ -27,15 +27,15 @@ abstract class AbstractRccLinearScanEncoder protected constructor(
   profiler: AbstractQueryCacheProfiler,
   enableCompression: Boolean,
 ) : AbstractRccProgramEncoder(baseProgram, profiler, enableCompression) {
-
   internal var persesLexemeIdArray = LogicalSizedArray.createWithSize(baseProgram.tokenCount)
   protected val refreshThreshold = Math.max(1000, baseProgram.tokenCount * 5 / 100)
 
   init {
-    val nanoDuration = measureNanoTime {
-      fillLexemeIdArray(baseProgram.tokens, persesLexemeIdArray)
-      lazyAssert { persesLexemeIdArray.logicalSize == baseProgram.tokenCount }
-    }
+    val nanoDuration =
+      measureNanoTime {
+        fillLexemeIdArray(baseProgram.tokens, persesLexemeIdArray)
+        lazyAssert { persesLexemeIdArray.logicalSize == baseProgram.tokenCount }
+      }
     profiler.onCreatingEncoder(baseProgram.tokens, nanoDuration)
   }
 
@@ -54,11 +54,12 @@ abstract class AbstractRccLinearScanEncoder protected constructor(
   }
 
   override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {
-    persesLexemeIdArray = shrinkLogicalArrayIfNecessary(
-      persesLexemeIdArray,
-      encoderBaseProgram,
-      refreshThreshold,
-    )
+    persesLexemeIdArray =
+      shrinkLogicalArrayIfNecessary(
+        persesLexemeIdArray,
+        encoderBaseProgram,
+        refreshThreshold,
+      )
     fillLexemeIdArray(encoderBaseProgram.tokens, persesLexemeIdArray)
     lazyAssert { encoderBaseProgram.tokenCount == persesLexemeIdArray.logicalSize }
   }
@@ -67,7 +68,7 @@ abstract class AbstractRccLinearScanEncoder protected constructor(
     const val NOT_FOUND = Int.MIN_VALUE
 
     private fun fillLexemeIdArray(
-      tokens: ImmutableList<PersesTokenFactory.PersesToken>,
+      tokens: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
       persesLexemeIdArray: LogicalSizedArray,
     ) {
       val tokenCount = tokens.size

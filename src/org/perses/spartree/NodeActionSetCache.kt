@@ -19,13 +19,10 @@ package org.perses.spartree
 import org.perses.util.Util
 
 class NodeActionSetCache : AbstractNodeActionSetCache() {
-
   // For thread-safety.
   private val cache = Util.createConcurrentSet<AbstractActionSet<*>>()
 
-  override fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): Boolean {
-    return !cache.add(actionSet)
-  }
+  override fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): Boolean = !cache.add(actionSet)
 
   override fun clear() {
     cache.clear()

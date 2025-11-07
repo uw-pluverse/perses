@@ -22,6 +22,6 @@ class BinaryReductionFile(
   file: Path,
   dataKind: AbstractDataKind,
 ) : AbstractReductionFile<AbstractDataKind, BinaryReductionFile>(
-  dataKind,
-  file,
-)
+    dataKind,
+    file,
+  )

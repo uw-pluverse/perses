@@ -21,8 +21,8 @@ kt_jvm_library(
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:jgrapht",
-        "//src/org/perses/antlr/atn:AbstractRandom",
+        "//antlropt/src/org/perses/antlr/pnf:mutable_ast_and_util",
+        "//src/org/perses/antlr:antlr_type_wrappers",
         "//src/org/perses/antlr/atn:atn_kt_utils",
-        "//src/org/perses/antlr/atn/tdtree",
     ],
 )

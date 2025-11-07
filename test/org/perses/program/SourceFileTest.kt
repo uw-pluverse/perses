@@ -31,7 +31,6 @@ import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class SourceFileTest {
-
   val origFile = Paths.get("test_data/delta_1/t.c")
   val tempDir = Files.createTempDirectory(this::class.java.simpleName)
   val source = SourceFile(origFile, LanguageC)

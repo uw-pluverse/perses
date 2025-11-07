@@ -23,12 +23,14 @@ class PersesFragmentLexerRuleAst(
   ruleNameHandle: RuleNameRegistry.RuleNameHandle,
   body: AbstractPersesRuleElement,
 ) : AbstractPersesLexerRuleAst(ruleNameHandle, body) {
+  override fun copyWithNewBody(newBody: AbstractPersesRuleElement): PersesFragmentLexerRuleAst =
+    PersesFragmentLexerRuleAst(ruleNameHandle, newBody)
 
-  override fun copyWithNewBody(newBody: AbstractPersesRuleElement): PersesFragmentLexerRuleAst {
-    return PersesFragmentLexerRuleAst(ruleNameHandle, newBody)
-  }
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.print("fragment ")
     super.toSourceCode(stream, indent, multiLineMode)
   }

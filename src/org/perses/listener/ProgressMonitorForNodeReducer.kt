@@ -18,6 +18,7 @@ package org.perses.listener
 
 import com.google.common.base.Splitter
 import com.google.common.base.Strings
+import org.perses.reduction.AbstractReductionListener
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestResultCacheHitEvent
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent
@@ -37,13 +38,14 @@ import org.perses.util.FileStreamPool
 /** Note that this listener will NOT close the stream. The client needs to close it manually.  */
 class ProgressMonitorForNodeReducer(
   private val stream: FileStreamPool.ManagedPrintStream,
-) : DefaultReductionListener() {
+) : AbstractReductionListener() {
   private var beforeSize = 0
   private var testSuccessCount = 0
   private var testFailureCount = 0
   private var testResultCacheHitCount = 0
   private var testExcecutionCancelled = 0
   private var nodeEditActionSetCacheHitCount = 0
+
   override fun onReductionStart(event: ReductionStartEvent) {
     printBegin("Reduction starts.")
     stream.println("The initial program size is ${event.initialProgramSize()}")
@@ -60,8 +62,15 @@ class ProgressMonitorForNodeReducer(
     )
   }
 
+  override fun notifyNumOfLexemesInPersesTokenFactory(numOfLexemes: Int) {
+    stream.print("The number of lexemes in PersesTokenFactory is $numOfLexemes\n")
+  }
+
   override fun onAdHocMessageEvent(event: AdHocMessageEvent) {
-    stream.println(event.message)
+    val origTokenCount = event.reductionStartEvent.programSize
+    val currentTokenCount = event.programSize
+    val prefix = "${event.prefixLabelFromRootToHere}($currentTokenCount/$origTokenCount) "
+    stream.println("$prefix ${event.message}")
   }
 
   override fun onFixpointIterationStart(event: FixpointIterationStartEvent) {
@@ -126,10 +135,7 @@ class ProgressMonitorForNodeReducer(
   }
 
   override fun onTestResultCacheHit(event: TestResultCacheHitEvent) {
-    val result = event.result
-    printBegin(
-      "Cache hit for the following program: " + if (result.isInteresting) "pass" else "fail",
-    )
+    printBegin("Cache hit for the following uninteresting program:")
     printCode(event.textualProgram.textualContent)
     printEnd()
     ++testResultCacheHitCount
@@ -147,7 +153,7 @@ class ProgressMonitorForNodeReducer(
   }
 
   override fun onNodeReductionStart(event: NodeReductionStartEvent) {
-    val node = event.node
+    val node = event.nodeInfo
     val programSize = event.programSize
     printBegin(String.format("Reducing node %d, size=%d", node.nodeId, programSize))
     beforeSize = programSize
@@ -165,7 +171,7 @@ class ProgressMonitorForNodeReducer(
   override fun onNodeReductionEnd(event: NodeReductionEndEvent) {
     printBegin("Node reduction is done")
     val programSize = event.programSize
-    val node = event.node
+    val node = event.nodeInfo
     if (beforeSize > programSize) {
       stream.printf(
         "Succeeded to reduce node %d from %d to %d\n",
@@ -176,6 +182,12 @@ class ProgressMonitorForNodeReducer(
     } else {
       stream.printf("Failed to reduce node %d\n", node.nodeId)
     }
+    printEnd()
+  }
+
+  override fun onCriticalException(exception: Exception) {
+    printBegin("A critical exception occurred.")
+    stream.println(exception.stackTraceToString())
     printEnd()
   }
 
@@ -190,6 +202,19 @@ class ProgressMonitorForNodeReducer(
       event.sizeAfter,
     )
     printEnd()
+  }
+
+  override fun notifyCacheSettings(
+    queryCacheEnabled: Boolean,
+    editCacheEnabled: Boolean,
+    queryCacheType: String,
+  ) {
+    stream.printf(
+      "Cache setting: query-caching=%s, edit-caching=%s, query-cache-type=%s\n",
+      queryCacheEnabled.toString(),
+      editCacheEnabled.toString(),
+      queryCacheType,
+    )
   }
 
   private fun printBegin(section: String) {

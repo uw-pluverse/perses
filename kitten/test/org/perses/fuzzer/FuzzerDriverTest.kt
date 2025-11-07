@@ -43,9 +43,10 @@ import java.io.UncheckedIOException
 
 @RunWith(JUnit4::class)
 class FuzzerDriverTest {
-
-  private val workingDirectory = java.nio.file.Files.createTempDirectory(javaClass.simpleName)
-    .toFile()
+  private val workingDirectory =
+    java.nio.file.Files
+      .createTempDirectory(javaClass.simpleName)
+      .toFile()
 
   @After
   fun teardown() {
@@ -66,36 +67,43 @@ class FuzzerDriverTest {
 
   private fun systemTestingWithRustcMock(rustcMock: String) {
     val cmdOptions = CommandOptions()
-    cmdOptions.compilerFlags.testingConfiguration = TestingConfiguration(
-      language = "RUST",
-      seedFolders = listOf(
-        SeedFolder(
-          path = File(workingDirectory, "seeds").apply {
-            check(mkdirs())
-          }.absolutePath,
-          fileExtentions = listOf(".rs"),
-        ),
-      ),
-      programsUnderTest = listOf(
-        ProgramUnderTest(
-          command = File(rustcMock).absolutePath,
-          flagsToTest = listOf(CmdFlags.EMPTY),
-          versionFlags = CmdFlags(listOf("--version", "--verbose")),
-          crashDetectorClassName = RustcCrashDetector::class.java.canonicalName,
-        ),
-      ),
-    )
+    cmdOptions.compilerFlags.testingConfiguration =
+      TestingConfiguration(
+        language = "RUST",
+        seedFolders =
+          listOf(
+            SeedFolder(
+              path =
+                File(workingDirectory, "seeds")
+                  .apply {
+                    check(mkdirs())
+                  }.absolutePath,
+              fileExtentions = listOf(".rs"),
+            ),
+          ),
+        programsUnderTest =
+          listOf(
+            ProgramUnderTest(
+              command = File(rustcMock).absolutePath,
+              flagsToTest = listOf(CmdFlags.EMPTY),
+              versionFlags = CmdFlags(listOf("--version", "--verbose")),
+              crashDetectorClassName = RustcCrashDetector::class.java.canonicalName,
+            ),
+          ),
+      )
 
-    val findingsFolder = File(workingDirectory, "findings").apply {
-      check(mkdirs())
-    }
+    val findingsFolder =
+      File(workingDirectory, "findings").apply {
+        check(mkdirs())
+      }
 
     cmdOptions.generalFlags.setFindingFolder(findingsFolder.absoluteFile)
 
-    val driver = FuzzerDriver(
-      cmdOptions,
-      AdditionalFuzzerControl(1),
-    )
+    val driver =
+      FuzzerDriver(
+        cmdOptions,
+        AdditionalFuzzerControl(1),
+      )
     val facade = driver.facades.first()
     val action = facade.compilationActions.first()
     val mutantFile = File(workingDirectory, "t.rs").apply { createNewFile() }
@@ -113,12 +121,13 @@ class FuzzerDriverTest {
     val deltaFolder = DeltaFolder(File(foundBugFolder, crashInstance.info().deltaFolderName))
     val reductionScriptFile = deltaFolder.scriptFile
     println(reductionScriptFile.readText())
-    val cmdOutput = Shells.singleton.run(
-      "./${deltaFolder.info().scriptFileName}",
-      deltaFolder.folder.toPath(),
-      captureOutput = true,
-      environment = Shells.CURRENT_ENV,
-    )
+    val cmdOutput =
+      Shells.singleton.run(
+        "./${deltaFolder.info().scriptFileName}",
+        deltaFolder.folder.toPath(),
+        captureOutput = true,
+        environment = Shells.CURRENT_ENV,
+      )
     assertThat(cmdOutput.exitCode.intValue).isEqualTo(0)
   }
 
@@ -131,15 +140,17 @@ class FuzzerDriverTest {
     val fc = createFile(da, "c.rs")
     val fd = createFile(da, "d.cc")
 
-    val rsFiles = FuzzerDriver.collectSeedFilesRecursively(
-      listOf(SeedFolder(workingDirectory.absolutePath, listOf(".rs"))),
-    )
+    val rsFiles =
+      FuzzerDriver.collectSeedFilesRecursively(
+        listOf(SeedFolder(workingDirectory.absolutePath, listOf(".rs"))),
+      )
     assertThat(rsFiles).hasSize(2)
     assertThat(rsFiles).containsExactly(fa, fc).inOrder()
 
-    val ccFiles = FuzzerDriver.collectSeedFilesRecursively(
-      listOf(SeedFolder(workingDirectory.absolutePath, listOf(".cc"))),
-    )
+    val ccFiles =
+      FuzzerDriver.collectSeedFilesRecursively(
+        listOf(SeedFolder(workingDirectory.absolutePath, listOf(".cc"))),
+      )
     assertThat(ccFiles).hasSize(2)
     assertThat(ccFiles).containsExactly(fb, fd).inOrder()
   }
@@ -151,45 +162,57 @@ class FuzzerDriverTest {
   }
 
   companion object {
-
-    private fun createDirectory(parent: File, name: String): File {
+    private fun createDirectory(
+      parent: File,
+      name: String,
+    ): File {
       val file = File(parent, name)
       Preconditions.checkState(file.mkdir())
       return file
     }
 
-    private fun createFile(parent: File, name: String): File {
-      return try {
+    private fun createFile(
+      parent: File,
+      name: String,
+    ): File =
+      try {
         val file = File(parent, name)
         Preconditions.checkState(file.createNewFile())
         file
       } catch (e: IOException) {
         throw UncheckedIOException(e)
       }
-    }
 
-    fun getTokenizedProgram(file: File, language: LanguageKind): TokenizedProgram {
-      val parserFacade = SingleParserFacadeFactory
-        .builderWithBuiltinLanguages()
-        .build()
-        .getParserFacadeListForOrNull(language)!!
-        .defaultParserFacade.create()
+    fun getTokenizedProgram(
+      file: File,
+      language: LanguageKind,
+    ): TokenizedProgram {
+      val parserFacade =
+        SingleParserFacadeFactory
+          .builderWithBuiltinLanguages()
+          .build()
+          .getParserFacadeListForOrNull(language)!!
+          .defaultParserFacade
+          .create()
 
       val treeByOpt = parserFacade.parseFile(file.toPath())
       val tokens = ParseTreeUtil.getTokens(treeByOpt.tree)
-      val tokenizedProgramFactory = TokenizedProgramFactory.createFactory(
-        tokens,
-        parserFacade.language,
-      )
-      val sparTreeNodeFactory = SparTreeNodeFactory(
-        parserFacade.metaTokenInfoDb,
-        tokenizedProgramFactory,
-        parserFacade.ruleHierarchy,
-      )
-      val sparTree = SparTreeBuilder(
-        sparTreeNodeFactory,
-        treeByOpt,
-      ).result
+      val tokenizedProgramFactory =
+        TokenizedProgramFactory.createFactory(
+          tokens,
+          parserFacade.language,
+        )
+      val sparTreeNodeFactory =
+        SparTreeNodeFactory(
+          parserFacade.metaTokenInfoDb,
+          tokenizedProgramFactory,
+          parserFacade.ruleHierarchy,
+        )
+      val sparTree =
+        SparTreeBuilder(
+          sparTreeNodeFactory,
+          treeByOpt,
+        ).result
 
       return sparTree.programSnapshot
     }

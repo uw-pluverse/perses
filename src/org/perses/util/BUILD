@@ -8,6 +8,17 @@ package(default_visibility = [
     "//visibility:public",
 ])
 
+kt_jvm_library(
+    name = "GCMonitoring",
+    srcs = [
+        "GCMonitoring.kt",
+    ],
+    deps = [
+        ":util",
+        "//:flogger",
+    ],
+)
+
 kt_jvm_binary(
     name = "antlr_parse_tree_pdfier_main",
     srcs = [
@@ -15,10 +26,8 @@ kt_jvm_binary(
     ],
     main_class = "org.perse.util.AntlrParseTreePdfierMain",
     deps = [
-        "//:jcommander",
         "//src/org/perses/dotgraph",
         "//src/org/perses/spartree",
-        "//src/org/perses/util/cmd",
     ],
 )
 
@@ -33,18 +42,31 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "util",
+    name = "file_content",
     srcs = [
         "AbstractFileContent.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//src/org/perses/util/hashing",
+    ],
+)
+
+kt_jvm_library(
+    name = "util",
+    srcs = [
         "DaemonThreadPool.kt",
         "FileStreamPool.kt",
         "GlobalSequenceGenerator.kt",
-        "ListToByteFunnel.kt",
         "PersesKtExts.kt",
+        "ReflectionUtil.kt",
+        "TableForTextPrinting.kt",
         "Util.kt",
     ],
+    exports = [
+        ":file_content",
+    ],
     deps = [
-        "//:flogger",
         "//:guava",
     ],
 )
@@ -66,7 +88,6 @@ kt_jvm_library(
     ],
     deps = [
         "//:jackson",
-        "//:kotlin_stdib",
     ],
 )
 
@@ -142,7 +163,14 @@ kt_jvm_library(
 
 kt_jvm_library(
     name = "default_logging_configurations",
-    srcs = ["DefaultLoggingConfigurations.kt"],
+    srcs = [
+        "DefaultLoggingConfigurations.kt",
+        "RelativeTimeFormatter.kt",
+    ],
+    deps = [
+        ":timeutil",
+        "//src/org/perses/util",
+    ],
 )
 
 kt_jvm_library(
@@ -187,7 +215,5 @@ kt_jvm_library(
     name = "auto_deltable_folder",
     srcs = ["AutoDeletableFolder.kt"],
     deps = [
-        "//:guava",
-        "//:kotlin_stdib",
     ],
 )

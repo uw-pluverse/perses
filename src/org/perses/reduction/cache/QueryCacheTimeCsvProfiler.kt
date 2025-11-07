@@ -23,7 +23,6 @@ import org.perses.util.FileStreamPool
 class QueryCacheTimeCsvProfiler(
   writer: FileStreamPool.ManagedPrintStream,
 ) : AbstractQueryCacheProfiler(writer) {
-
   private val createEncoderNanoTime = mutableListOf<Long>()
   private val decodeProgramNanoTime = mutableListOf<Long>()
   private val getCachedResultNanoTime = mutableListOf<Long>()
@@ -31,21 +30,30 @@ class QueryCacheTimeCsvProfiler(
   private val cacheProgramAndResultNanoTime = mutableListOf<Long>()
   private val heavyWeightCacheRefreshing = mutableListOf<Long>()
 
-  override fun afterGetCachedResult(cache: AbstractQueryCache, nanoDuration: Long) {
+  override fun afterGetCachedResult(
+    cache: AbstractQueryCache,
+    nanoDuration: Long,
+  ) {
     getCachedResultNanoTime.add(nanoDuration)
   }
 
-  override fun afterCacheProgramAndResult(cache: AbstractQueryCache, nanoDuration: Long) {
+  override fun afterCacheProgramAndResult(
+    cache: AbstractQueryCache,
+    nanoDuration: Long,
+  ) {
     cacheProgramAndResultNanoTime.add(nanoDuration)
   }
 
-  override fun afterCacheEviction(cache: AbstractQueryCache, nanoDuration: Long) {
+  override fun afterCacheEviction(
+    cache: AbstractQueryCache,
+    nanoDuration: Long,
+  ) {
     cacheEvictionNanoTime.add(nanoDuration)
   }
 
   override fun afterHeavyweightCacheRefreshing(
-    oldBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
-    newBestProgram: ImmutableList<PersesTokenFactory.PersesToken>,
+    oldBestProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
+    newBestProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
     nanoDuration: Long,
@@ -54,14 +62,14 @@ class QueryCacheTimeCsvProfiler(
   }
 
   override fun onCreatingEncoder(
-    tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     nanoDuration: Long,
   ) {
     createEncoderNanoTime.add(nanoDuration)
   }
 
   override fun onDecodingProgram(
-    tokensInOrigin: ImmutableList<PersesTokenFactory.PersesToken>,
+    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
     encoding: RccProgramEncoding,
     nanoDuration: Long,
   ) {
@@ -69,14 +77,15 @@ class QueryCacheTimeCsvProfiler(
   }
 
   override fun close() {
-    val fields = listOf(
-      ::createEncoderNanoTime,
-      ::decodeProgramNanoTime,
-      ::getCachedResultNanoTime,
-      ::cacheEvictionNanoTime,
-      ::cacheProgramAndResultNanoTime,
-      ::heavyWeightCacheRefreshing,
-    )
+    val fields =
+      listOf(
+        ::createEncoderNanoTime,
+        ::decodeProgramNanoTime,
+        ::getCachedResultNanoTime,
+        ::cacheEvictionNanoTime,
+        ::cacheProgramAndResultNanoTime,
+        ::heavyWeightCacheRefreshing,
+      )
     var totalNano: Long = 0
     fields.forEach { field ->
       val value = field.get()

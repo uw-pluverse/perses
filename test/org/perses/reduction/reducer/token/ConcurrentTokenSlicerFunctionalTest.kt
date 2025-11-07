@@ -19,40 +19,37 @@ package org.perses.reduction.reducer.token
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 
 @RunWith(JUnit4::class)
-class ConcurrentTokenSlicerFunctionalTest : AbstractReducerFunctionalTest() {
-
+class ConcurrentTokenSlicerFunctionalTest {
   @Test
   fun test_delta_1_grep_based() {
-    test(
+    ReducerFunctionalTestUtility(
       reductionFolder = "test/org/perses/benchmark_toys/delta_1",
       testScript = "grep_based_r.sh",
       sourceFile = "t.c",
-      algorithmType = ConcurrentTokenSlicer.CompositeReducerAnnotation,
+      reducerAnnotation = ConcurrentTokenSlicer.CompositeReducerAnnotation,
       cmdCustomizer = {},
+    ).use {
       // It is not possible to get only the string literal, because our token slicer
       // checks syntactical validity before each property test.
-      expected = """
-        printf { ("world\n");}
-      """.trim(),
-    )
+      it.runReducerAndTest(expected = """printf { ("world\n");}""".trim())
+    }
   }
 
   @Test
   fun test_delta_1_grep_based_line_based() {
-    test(
+    ReducerFunctionalTestUtility(
       reductionFolder = "test/org/perses/benchmark_toys/delta_1",
       testScript = "grep_based_r.sh",
       sourceFile = "t.c",
-      algorithmType = LineBasedConcurrentTokenSlicer.CompositeReducerAnnotation,
+      reducerAnnotation = LineBasedConcurrentTokenSlicer.CompositeReducerAnnotation,
       cmdCustomizer = {},
+    ).use {
       // It is not possible to get only the string literal, because our token slicer
       // checks syntactical validity before each property test.
-      expected = """
-        main{("world\n");}
-      """.trim(),
-    )
+      it.runReducerAndTest(expected = """main{("world\n");}""".trim())
+    }
   }
 }

@@ -33,16 +33,22 @@ import java.nio.file.Path
 class AntlrParseTreePdfierMain(
   cmd: CommandOptions,
 ) : AbstractMain<AntlrParseTreePdfierMain.CommandOptions>(cmd) {
-
   override fun internalRun() {
-    val parserFacadeFactory = SingleParserFacadeFactory
-      .builderWithBuiltinLanguages().build()
+    val parserFacadeFactory =
+      SingleParserFacadeFactory
+        .builderWithBuiltinLanguages()
+        .build()
     val inputFile = cmd.flags.input!!
     val language = parserFacadeFactory.computeLanguageKindWithFileName(inputFile)!!
 
-    val treeWithParser = parserFacadeFactory.getParserFacadeListForOrNull(
-      language,
-    )!!.defaultParserFacade.create().parseFile(inputFile)
+    val treeWithParser =
+      parserFacadeFactory
+        .getParserFacadeListForOrNull(
+          language,
+        )!!
+        .defaultParserFacade
+        .create()
+        .parseFile(inputFile)
     val outputFile = cmd.flags.output!!
 
     dotifyAntlrParseTree(
@@ -61,7 +67,6 @@ class AntlrParseTreePdfierMain(
   }
 
   class CommandOptions : AbstractCommandOptions() {
-
     val flags = registerFlags(RequiredFlagGroup())
 
     class RequiredFlagGroup : AbstractCommandLineFlagGroup(groupName = "Compulsory") {
@@ -84,14 +89,14 @@ class AntlrParseTreePdfierMain(
   }
 
   companion object {
-
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { CommandOptions() },
-        programName = AntlrParseTreePdfierMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { CommandOptions() },
+          programName = AntlrParseTreePdfierMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }

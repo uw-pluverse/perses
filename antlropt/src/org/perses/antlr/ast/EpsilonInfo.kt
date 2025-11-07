@@ -22,12 +22,8 @@ class EpsilonInfo(
   val epsilonableRules: ImmutableSet<AbstractPersesRuleDefAst>,
   private val epsilonableElements: ImmutableSet<AbstractPersesRuleElement>,
 ) {
+  fun canBeEpsilon(ruleDef: AbstractPersesRuleDefAst): Boolean = epsilonableRules.contains(ruleDef)
 
-  fun canBeEpsilon(ruleDef: AbstractPersesRuleDefAst): Boolean {
-    return epsilonableRules.contains(ruleDef)
-  }
-
-  fun canBeEpsilon(element: AbstractPersesRuleElement): Boolean {
-    return epsilonableElements.contains(element)
-  }
+  fun canBeEpsilon(element: AbstractPersesRuleElement): Boolean =
+    epsilonableElements.contains(element)
 }

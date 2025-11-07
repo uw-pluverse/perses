@@ -30,14 +30,8 @@ kt_jvm_library(
         "//antlropt/test:__subpackages__",
     ],
     deps = [
-        "//:antlr_tool",
-        "//:guava",
-        "//:jgrapht",
         "//:truth",
-        "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf",
-        "//src/org/perses/antlr:antlr_grammar_parser",
-        "//src/org/perses/util:file_name_content_pair",
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )

@@ -30,9 +30,11 @@ import org.perses.antlr.ast.PersesStarAst.Companion.createGreedy
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
-
   @VisibleForTesting
-  fun introduceStars(mutableGrammar: MutableGrammar, ruleName: RuleNameHandle) {
+  fun introduceStars(
+    mutableGrammar: MutableGrammar,
+    ruleName: RuleNameHandle,
+  ) {
     val nonRecursivePartsInRecursiveDef = ArrayList<AbstractPersesRuleElement>()
     val nonRecursiveDefs = LinkedHashSet<AbstractPersesRuleElement>()
     val ruleDef = mutableGrammar.getAltBlock(ruleName)
@@ -63,9 +65,10 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     mutableGrammar.removeRule(ruleName)
     val starRuleName = ruleName.createAuxiliaryRuleName(RuleType.KLEENE_STAR)
     val quantifiedRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
-    val quantifiedBodyRule = AstUtil.flattenAndDeduplicateAlternatives(
-      nonRecursivePartsInRecursiveDef,
-    )
+    val quantifiedBodyRule =
+      AstUtil.flattenAndDeduplicateAlternatives(
+        nonRecursivePartsInRecursiveDef,
+      )
     mutableGrammar.getAltBlock(quantifiedRuleName).addAllIfInequivalent(quantifiedBodyRule)
     val starRule = createGreedy(create(quantifiedRuleName))
     mutableGrammar.getAltBlock(starRuleName).addIfNotEquivalent(starRule)
@@ -128,12 +131,11 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     nonRecursiveDefs: LinkedHashSet<AbstractPersesRuleElement>,
   )
 
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
-    mutable.ruleNameSequence()
+    mutable
+      .ruleNameSequence()
       .sorted()
       .toList() // Materialize the elements to avoid concurrent modification to mutable.
       .forEach { ruleName ->

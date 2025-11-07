@@ -17,18 +17,18 @@
 package org.perses.reduction.cache
 
 import org.perses.reduction.ReducerAnnotation
-import org.perses.util.Util
+import org.perses.util.hashing.ShaHashCode
 
 class PassLevelCache {
-
   enum class PassLevelCacheResult {
-    NEW, EXISTING_ALREADY
+    NEW,
+    EXISTING_ALREADY,
   }
 
   @PublishedApi
   internal data class PassLevelCacheKey(
     val reducer: ReducerAnnotation,
-    val contentsOfFiles: Util.SHA512HashCode,
+    val contentsOfFiles: ShaHashCode,
   ) {
     init {
       require(contentsOfFiles.numOfStrings != 0) { "Cannot be empty." }
@@ -41,7 +41,7 @@ class PassLevelCache {
   // Might need to get rid of the stale keys if the memory consumption is a problem.
   inline fun update(
     reducer: ReducerAnnotation,
-    contentsOfFilesProvider: () -> Util.SHA512HashCode,
+    contentsOfFilesProvider: () -> ShaHashCode,
   ): PassLevelCacheResult {
     val hashcodeOfAllInputs = contentsOfFilesProvider()
     val passLevelCacheKey = PassLevelCacheKey(reducer, hashcodeOfAllInputs)

@@ -9,7 +9,6 @@ kt_jvm_test(
         "ruby_bug.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",

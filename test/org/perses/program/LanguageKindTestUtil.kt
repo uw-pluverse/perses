@@ -27,7 +27,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 class LanguageKindTestUtil {
-
   companion object {
     fun assertCodeFormatsDoNotProduceSyntacticallyInvalidPrograms(
       facade: AbstractParserFacade,
@@ -35,41 +34,47 @@ class LanguageKindTestUtil {
     ) {
       val language = facade.language
       val parseTree = facade.parseFile(program)
-      val tokenizedProgramFactory = createFactory(
-        ParseTreeUtil.getTokens(parseTree.tree),
-        language,
-      )
-      val sparTreeNodeFactory = SparTreeNodeFactory(
-        facade.metaTokenInfoDb,
-        tokenizedProgramFactory,
-        facade.ruleHierarchy,
-      )
-      val sparTreeBuilder = SparTreeBuilder(
-        sparTreeNodeFactory,
-        parseTree,
-      )
+      val tokenizedProgramFactory =
+        createFactory(
+          ParseTreeUtil.getTokens(parseTree.tree),
+          language,
+        )
+      val sparTreeNodeFactory =
+        SparTreeNodeFactory(
+          facade.metaTokenInfoDb,
+          tokenizedProgramFactory,
+          facade.ruleHierarchy,
+        )
+      val sparTreeBuilder =
+        SparTreeBuilder(
+          sparTreeNodeFactory,
+          parseTree,
+        )
       val sparTree = sparTreeBuilder.result
       val tokenizedProgram = sparTree.programSnapshot
 
       val allowedCodeFormatControl = language.allowedCodeFormatControl
       for (formatControl in allowedCodeFormatControl) {
-        val tempFile = Files.createTempFile(
-          LanguageKindTestUtil::class.java.simpleName,
-          ".test_file",
-        )
+        val tempFile =
+          Files.createTempFile(
+            LanguageKindTestUtil::class.java.simpleName,
+            ".test_file",
+          )
         try {
           val printer = PrinterRegistry.getPrinter(formatControl)
           printer.print(tokenizedProgram).writeTo(tempFile)
           val reconstructedParseTree = facade.parseFile(tempFile)
-          val reconstructedSparTree = SparTreeBuilder(
-            sparTree.sparTreeNodeFactory,
-            reconstructedParseTree,
-          ).result
-          val reconstructedTokens = reconstructedSparTree.programSnapshot.tokens.map {
-            it.text
-          }
+          val reconstructedSparTree =
+            SparTreeBuilder(
+              sparTree.sparTreeNodeFactory,
+              reconstructedParseTree,
+            ).result
+          val reconstructedTokens =
+            reconstructedSparTree.programSnapshot.tokens.map {
+              it.lexemeText
+            }
           assertThat(reconstructedTokens).containsExactlyElementsIn(
-            tokenizedProgram.tokens.map { it.text },
+            tokenizedProgram.tokens.map { it.lexemeText },
           )
         } finally {
           Files.delete(tempFile)

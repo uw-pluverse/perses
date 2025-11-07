@@ -19,4 +19,6 @@ package org.perses.antlr.atn.nfa
 /**
  * Not a data class because we need system identity hashing.
  */
-class PersesATNState(val stateNumber: Int)
+class PersesATNState(
+  val stateNumber: Int,
+)

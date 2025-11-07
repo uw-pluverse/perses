@@ -25,18 +25,19 @@ import org.perses.antlr.GrammarTestingUtility.loadGrammarFromFile
 
 @RunWith(JUnit4::class)
 class QuantifiedAstNormalizationPassTest {
-  private var starGrammar = GrammarTestingUtility.createPersesGrammarFromString(
-    """
-    start
-    : rule*
-    | ID*
-    | 'test'*
-    | ('A' | 'B')*
-    | ('C' | 'D' | 'E')*
-    | ('F' | 'G' | another)*
-    ;
-    """.trimIndent(),
-  )
+  private var starGrammar =
+    GrammarTestingUtility.createPersesGrammarFromString(
+      """
+      start
+      : rule*
+      | ID*
+      | 'test'*
+      | ('A' | 'B')*
+      | ('C' | 'D' | 'E')*
+      | ('F' | 'G' | another)*
+      ;
+      """.trimIndent(),
+    )
 
   @Test
   fun testQuantifiedAstNormalizationPass_idempotency_nested_quantified() {

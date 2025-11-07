@@ -23,9 +23,9 @@ class AntlrFailureException(
   val file: String,
   val details: String,
 ) : RuntimeException(
-  """Error in parsing file: $file
+    """Error in parsing file: $file
     |Details: $details
     |
-  """.trimMargin(),
-  cause,
-)
+    """.trimMargin(),
+    cause,
+  )

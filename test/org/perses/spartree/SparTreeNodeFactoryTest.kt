@@ -26,14 +26,14 @@ import org.perses.program.TokenizedProgramFactory
 
 @RunWith(JUnit4::class)
 class SparTreeNodeFactoryTest {
-
   val language = LanguageC
   val facade = TestUtility.getFacade(language)
-  val sparTreeNodeFactory = SparTreeNodeFactory(
-    metaTokenInfoDb = facade.metaTokenInfoDb,
-    tokenizedProgramFactory = TokenizedProgramFactory.createEmptyFactory(language),
-    grammarHierarchy = facade.ruleHierarchy,
-  )
+  val sparTreeNodeFactory =
+    SparTreeNodeFactory(
+      metaTokenInfoDb = facade.metaTokenInfoDb,
+      tokenizedProgramFactory = TokenizedProgramFactory.createEmptyFactory(language),
+      grammarHierarchy = facade.ruleHierarchy,
+    )
 
   @Test
   fun testCreateGroupingSparTreeNodeForTokens() {
@@ -48,10 +48,11 @@ class SparTreeNodeFactoryTest {
         assertThat(payload.expectedAntlrRuleType).isNull()
       }
     }
-    assertThat(result.immutableChildView.map { it.asLexerRule().token.text }).containsExactly(
-      "int",
-      "a",
-      ";",
-    ).inOrder()
+    assertThat(result.immutableChildView.map { it.asLexerRule().token.lexemeText })
+      .containsExactly(
+        "int",
+        "a",
+        ";",
+      ).inOrder()
   }
 }

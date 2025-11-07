@@ -17,11 +17,11 @@
 package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
-import org.antlr.v4.runtime.Lexer
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.PersesTokenFactory.PersesAntlrToken
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.program.printer.PrinterRegistry
@@ -29,37 +29,35 @@ import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.util.AbstractEditOperation
 import org.perses.util.ListAlignment
+import org.perses.util.hashing.EnumShaAlgorithm
 
 class ListDiffOutputManagerFactory(
   private val reductionInputs: ListDiffReductionInputs,
   private val seedProgram: TokenizedProgram,
-  val originalListAlignment: ListAlignment<PersesToken>,
-  val originalDiff: List<AbstractEditOperation<PersesToken>>,
+  val originalListAlignment: ListAlignment<AbstractPersesToken>,
+  val originalDiff: List<AbstractEditOperation<AbstractPersesToken>>,
   programFormatControl: EnumFormatControl,
-  lexerAtnWrapper: LexerAtnWrapper<out Lexer>,
+  lexerAtnWrapper: LexerAtnWrapper,
+  val shaAlgorithm: EnumShaAlgorithm,
 ) : AbstractOutputManagerFactory<
-  ImmutableList<AbstractEditOperation<PersesToken>>,
+    ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
   >() {
-
   protected val defaultProgramPrinter =
     PrinterRegistry.getPrinter(programFormatControl, lexerAtnWrapper)
 
   override fun createManagerFor(
-    program: ImmutableList<AbstractEditOperation<PersesToken>>,
-  ): AbstractOutputManager {
-    return OutputManager(program, defaultProgramPrinter, seedProgram)
-  }
+    program: ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
+  ): AbstractOutputManager = OutputManager(program, defaultProgramPrinter, seedProgram)
 
   inner class OutputManager(
-    private val diff: ImmutableList<AbstractEditOperation<PersesToken>>,
+    private val diff: ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
     private val printer: AbstractTokenizedProgramPrinter,
     private val seedProgram: TokenizedProgram,
-  ) : AbstractOutputManager(reductionInputs) {
-
+  ) : AbstractOutputManager(reductionInputs, shaAlgorithm) {
     override fun internalComputeContentForFile(
       origReductionFile: AbstractReductionFile<*, *>,
-    ): String {
-      return when (origReductionFile) {
+    ): String =
+      when (origReductionFile) {
         reductionInputs.seedFile -> {
           printer.print(seedProgram).sourceCode
         }
@@ -73,7 +71,10 @@ class ListDiffOutputManagerFactory(
           val newListAlignmentWithoutReplace = ListAlignment.splitReplace(newListAlignment)
 
           // compute the variant program
-          val variantTokens = newListAlignmentWithoutReplace.computeRevision(seedProgram.tokens)
+          val variantTokens =
+            newListAlignmentWithoutReplace.computeRevision(
+              seedProgram.tokens.map { it as PersesAntlrToken },
+            )
           val variantTokenizedProgram = TokenizedProgram(variantTokens, seedProgram.factory)
 
           // write variant program to given folder
@@ -81,15 +82,14 @@ class ListDiffOutputManagerFactory(
         }
         else -> error("unhandled file $origReductionFile")
       }
-    }
 
     // remove deleted operations to derive a new listAlignment
     // Note that Replace need to be replaced by Keep
     fun removeDeletedOperations(
-      deletedDiff: List<AbstractEditOperation<PersesToken>>,
-      originalListAlignment: ListAlignment<PersesToken>,
-    ): ListAlignment<PersesToken> {
-      val newAlignment = ImmutableList.builder<AbstractEditOperation<PersesToken>>()
+      deletedDiff: List<AbstractEditOperation<AbstractPersesToken>>,
+      originalListAlignment: ListAlignment<AbstractPersesToken>,
+    ): ListAlignment<AbstractPersesToken> {
+      val newAlignment = ImmutableList.builder<AbstractEditOperation<AbstractPersesToken>>()
       var idx = 0
       for (t in originalListAlignment.alignment) {
         if (idx < deletedDiff.size && t == deletedDiff[idx]) {

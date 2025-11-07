@@ -22,7 +22,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 class FileStreamPool : Closeable {
-
   private val map = mutableMapOf<Path, ManagedPrintStream>()
 
   private var used = false
@@ -41,16 +40,21 @@ class FileStreamPool : Closeable {
     map.clear()
   }
 
-  fun rentStream(path: Path, description: String?): ManagedPrintStream {
+  fun rentStream(
+    path: Path,
+    description: String?,
+  ): ManagedPrintStream {
     val normalizedPath = path.toAbsolutePath().normalize()
     require(!Files.isSymbolicLink(normalizedPath)) {
       "Should not be a symbolic link. $normalizedPath"
     }
-    val stream = map.computeIfAbsent(normalizedPath) {
-      ManagedPrintStream(Util.createNonAppendablePrintStream(it))
-    }
-    val rentingObject = "Description: " + (description ?: "") + "\n" +
-      Thread.currentThread().stackTrace.joinToString(separator = "\n")
+    val stream =
+      map.computeIfAbsent(normalizedPath) {
+        ManagedPrintStream(Util.createNonAppendablePrintStream(it))
+      }
+    val rentingObject =
+      "Description: " + (description ?: "") + "\n" +
+        Thread.currentThread().stackTrace.joinToString(separator = "\n")
     if (stream.currentRenter == null) {
       stream.currentRenter = rentingObject
     } else {
@@ -59,8 +63,9 @@ class FileStreamPool : Closeable {
     return stream
   }
 
-  inner class ManagedPrintStream(internal val stream: PrintStream) : AutoCloseable {
-
+  inner class ManagedPrintStream(
+    internal val stream: PrintStream,
+  ) : AutoCloseable {
     internal var currentRenter: Any? = null
 
     fun println(content: String) {
@@ -85,7 +90,10 @@ class FileStreamPool : Closeable {
       stream.println()
     }
 
-    fun printf(format: String, vararg args: Any) {
+    fun printf(
+      format: String,
+      vararg args: Any,
+    ) {
       stream.printf(format, *args)
     }
 

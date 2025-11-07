@@ -23,11 +23,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.reduction.ReducerFactory.isValidReducerName
+import org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducer
 import org.perses.reduction.reducer.PersesNodeBfsReducer
 import org.perses.reduction.reducer.PersesNodeDfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
 import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
-import org.perses.reduction.reducer.TreeSlicer
 import org.perses.reduction.reducer.hdd.HDDReducer
 import org.perses.reduction.reducer.hdd.PristineHDDReducer
 import org.perses.reduction.reducer.token.ConcurrentStateBasedDeltaReducer
@@ -41,27 +41,28 @@ import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class ReducerFactoryTest {
-
   /**
    * Note that the following is intended to be a class but not an object.
    */
-  class TestReducerAnnotationAsClass : ReducerAnnotation(
-    shortName = "test annotation that is a class but not an object",
-    description = "Test reducer annotation",
-    deterministic = true,
-    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
-  ) {
+  class TestReducerAnnotationAsClass :
+    ReducerAnnotation(
+      shortName = "test annotation that is a class but not an object",
+      description = "Test reducer annotation",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+    ) {
     override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
       TODO("not meant to be called.")
     }
   }
 
-  class TestReducerAnnotationAsObject : ReducerAnnotation(
-    shortName = "test annotation that is an object but not a class",
-    description = "Test reducer annotation",
-    deterministic = true,
-    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
-  ) {
+  class TestReducerAnnotationAsObject :
+    ReducerAnnotation(
+      shortName = "test annotation that is an object but not a class",
+      description = "Test reducer annotation",
+      deterministic = true,
+      reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
+    ) {
     override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
       TODO("not meant to be called.")
     }
@@ -69,17 +70,19 @@ class ReducerFactoryTest {
 
   @Test
   fun testAnnotationClassCanBeLoadedWithName() {
-    val annotation = ReducerFactory.getReducerAnnotationWithReducerClassName(
-      TestReducerAnnotationAsClass::class.java.name,
-    )
+    val annotation =
+      ReducerFactory.getReducerAnnotationWithReducerClassName(
+        TestReducerAnnotationAsClass::class.java.name,
+      )
     assertThat(annotation).isInstanceOf(TestReducerAnnotationAsClass::class.java)
   }
 
   @Test
   fun testAnnotationObjectCanBeLoadedWithName() {
-    val annotation = ReducerFactory.getReducerAnnotationWithReducerClassName(
-      TestReducerAnnotationAsObject::class.java.name,
-    )
+    val annotation =
+      ReducerFactory.getReducerAnnotationWithReducerClassName(
+        TestReducerAnnotationAsObject::class.java.name,
+      )
     assertThat(annotation).isInstanceOf(TestReducerAnnotationAsObject::class.java)
   }
 
@@ -121,16 +124,17 @@ class ReducerFactoryTest {
 
   @Test
   fun testGetAllReducerAlgorithms() {
-    val names = ReducerFactory.registeredReductionAlgorithms.values
-      .map { it.shortName }
-      .toImmutableList()
+    val names =
+      ReducerFactory.registeredReductionAlgorithms.values
+        .map { it.shortName }
+        .toImmutableList()
     assertThat(names)
       .containsAtLeast(
         DeltaDebuggingReducer.NAME,
         HDDReducer.NAME,
         PristineHDDReducer.NAME,
         TokenSlicer.NAME,
-        TreeSlicer.NAME,
+        NonSyntacticSingleTreeNodeReducer.NAME,
         PersesNodeBfsReducer.NAME,
         PersesNodeDfsReducer.NAME,
         PersesNodePrioritizedBfsReducer.NAME,

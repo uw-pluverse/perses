@@ -33,7 +33,6 @@ import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class OrigSolidityParserTest {
-
   @Test
   fun test_helloworld() {
     testProgram(
@@ -44,16 +43,20 @@ class OrigSolidityParserTest {
 
   @Test
   fun test() {
-    val parsableFiles = Files.readLines(
-      Paths.get("test/org/perses/grammar/solidity/parsable_solidity_programs.txt").toFile(),
-      StandardCharsets.UTF_8,
-    )
+    val parsableFiles =
+      Files.readLines(
+        Paths.get("test/org/perses/grammar/solidity/parsable_solidity_programs.txt").toFile(),
+        StandardCharsets.UTF_8,
+      )
     for (program in parsableFiles) {
       assertThat(testProgram(Paths.get(program), enableException = true)).isTrue()
     }
   }
 
-  fun testProgram(program: Path, enableException: Boolean): Boolean {
+  fun testProgram(
+    program: Path,
+    enableException: Boolean,
+  ): Boolean {
     try {
       val lexer = SolidityLexer(CharStreams.fromPath(program, StandardCharsets.UTF_8))
       val tokens = CommonTokenStream(lexer)

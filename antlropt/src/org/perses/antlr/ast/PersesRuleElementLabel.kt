@@ -28,18 +28,22 @@ class PersesRuleElementLabel(
   private val operator: String,
   val child: AbstractPersesRuleElement,
 ) : AbstractPersesRuleElement() {
-
   init {
     require(!Strings.isNullOrEmpty(label))
     require("=" == operator || "+=" == operator)
   }
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.append(label).append(operator)
-    val needParentheses = when (child.tag) {
-      AstTag.ALTERNATIVE_BLOCK, AstTag.SEQUENCE -> true
-      else -> false
-    }
+    val needParentheses =
+      when (child.tag) {
+        AstTag.ALTERNATIVE_BLOCK, AstTag.SEQUENCE -> true
+        else -> false
+      }
     if (needParentheses) {
       stream.append('(')
     }

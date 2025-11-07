@@ -44,7 +44,6 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class ReductionFolderTest {
-
   val tempDir = Files.createTempDirectory(this::class.java.canonicalName)
 
   @OptIn(ExperimentalPathApi::class)
@@ -73,43 +72,51 @@ class ReductionFolderTest {
 
     val testScript = createTestScript(root.resolve("r.sh"))
 
-    class ReductionInputs : AbstractReductionInputs<LanguageKind, ReductionInputs>(
-      testScript,
-      initiallyDeterminedMainDataKind = LanguageC,
-      rootDirectory = root,
-      mutableFiles = sequenceOf(
-        fileA,
-        file1,
-        file2,
-      ).map { SourceFile(it, LanguageC) }.toImmutableList(),
-      immutableDependencyFiles = ImmutableList.of(
-        BinaryReductionFile(file = depFile1, dataKind = AbstractDataKind.UnknownDataKind),
-        BinaryReductionFile(file = depFile2, dataKind = AbstractDataKind.UnknownDataKind),
-      ),
-    )
+    class ReductionInputs :
+      AbstractReductionInputs<LanguageKind, ReductionInputs>(
+        testScript,
+        initiallyDeterminedMainDataKind = LanguageC,
+        rootDirectory = root,
+        mutableFiles =
+          sequenceOf(
+            fileA,
+            file1,
+            file2,
+          ).map { SourceFile(it, LanguageC) }.toImmutableList(),
+        immutableDependencyFiles =
+          ImmutableList.of(
+            BinaryReductionFile(file = depFile1, dataKind = AbstractDataKind.UnknownDataKind),
+            BinaryReductionFile(file = depFile2, dataKind = AbstractDataKind.UnknownDataKind),
+          ),
+      )
 
     val reductionInputs = ReductionInputs()
 
-    val reductionFolder = ReductionFolder(
-      reductionInputs = reductionInputs,
-      folder = Files.createDirectories(tempDir.resolve("reduction-folder")),
-    )
+    val reductionFolder =
+      ReductionFolder(
+        reductionInputs = reductionInputs,
+        folder = Files.createDirectories(tempDir.resolve("reduction-folder")),
+      )
     assertThat(
-      reductionFolder.folder.toFile().listFiles()?.map { it.name },
+      reductionFolder.folder
+        .toFile()
+        .listFiles()
+        ?.map { it.name },
     ).containsExactly(
       testScript.baseName,
       depDir1.name,
       depDir2.name,
     )
-    reductionInputs.computeAbsPathListWrt(
-      reductionFolder.folder,
-      reductionFileSelectionPredicate = {
-        reductionInputs.mutableFiles.contains(it.origFile)
-      },
-    ).forEach {
-      Files.createDirectories(it.parent)
-      Files.createFile(it)
-    }
+    reductionInputs
+      .computeAbsPathListWrt(
+        reductionFolder.folder,
+        reductionFileSelectionPredicate = {
+          reductionInputs.mutableFiles.contains(it.origFile)
+        },
+      ).forEach {
+        Files.createDirectories(it.parent)
+        Files.createFile(it)
+      }
     assertThat(
       reductionInputs.sequenceOfMutableFiles().transformToImmutableList {
         it.origFile.file.name
@@ -121,26 +128,34 @@ class ReductionFolderTest {
     )
     val extraFileName = "extra.txt"
     Files.createFile(reductionFolder.folder.resolve(extraFileName))
-    assertThat(reductionFolder.folder.toFile().listFiles()?.map { it.name })
-      .containsExactly(
-        testScript.baseName,
-        dir1.name,
-        dir2.name,
-        depDir1.name,
-        depDir2.name,
-        fileA.name,
-        extraFileName,
-      )
+    assertThat(
+      reductionFolder.folder
+        .toFile()
+        .listFiles()
+        ?.map { it.name },
+    ).containsExactly(
+      testScript.baseName,
+      dir1.name,
+      dir2.name,
+      depDir1.name,
+      depDir2.name,
+      fileA.name,
+      extraFileName,
+    )
     reductionFolder.deleteAllOtherFiles()
-    assertThat(reductionFolder.folder.toFile().listFiles()?.map { it.name })
-      .containsExactly(
-        dir1.name,
-        dir2.name,
-        testScript.baseName,
-        depDir1.name,
-        depDir2.name,
-        fileA.name,
-      )
+    assertThat(
+      reductionFolder.folder
+        .toFile()
+        .listFiles()
+        ?.map { it.name },
+    ).containsExactly(
+      dir1.name,
+      dir2.name,
+      testScript.baseName,
+      depDir1.name,
+      depDir2.name,
+      fileA.name,
+    )
 
     assertThat(Files.isRegularFile(reductionFolder.folder.resolve("a.txt"))).isTrue()
     assertThat(Files.isRegularFile(reductionFolder.folder.resolve("${dir1.name}/z.txt"))).isTrue()
@@ -162,19 +177,21 @@ class ReductionFolderTest {
     val file = Files.createFile(root.resolve("a.txt"))
     val scriptFile = createTestScript(root.resolve("r.sh"))
 
-    class ReductionInputs : AbstractReductionInputs<LanguageKind, ReductionInputs> (
-      testScript = scriptFile,
-      initiallyDeterminedMainDataKind = LanguageC,
-      rootDirectory = root,
-      mutableFiles = ImmutableList.of(SourceFile(file, LanguageC)),
-      immutableDependencyFiles = ImmutableList.of(),
-    )
+    class ReductionInputs :
+      AbstractReductionInputs<LanguageKind, ReductionInputs>(
+        testScript = scriptFile,
+        initiallyDeterminedMainDataKind = LanguageC,
+        rootDirectory = root,
+        mutableFiles = ImmutableList.of(SourceFile(file, LanguageC)),
+        immutableDependencyFiles = ImmutableList.of(),
+      )
 
     val folderPath = Files.createDirectories(tempDir.resolve("reduction-folder"))
-    val reductionFolder = ReductionFolder(
-      ReductionInputs(),
-      folder = folderPath,
-    )
+    val reductionFolder =
+      ReductionFolder(
+        ReductionInputs(),
+        folder = folderPath,
+      )
 
     assertThat(Files.exists(folderPath)).isTrue()
     reductionFolder.deleteThisDirectoryRecursively()
@@ -200,22 +217,25 @@ class ReductionFolderTest {
     val file3 = Files.createFile(subdir.resolve("c.txt"))
     file3.writeText("file3")
 
-    class ReductionInputs : AbstractReductionInputs<LanguageKind, ReductionInputs> (
-      testScript = scriptFile,
-      initiallyDeterminedMainDataKind = LanguageC,
-      rootDirectory = root,
-      mutableFiles = ImmutableList.of(SourceFile(file, LanguageC)),
-      immutableDependencyFiles = ImmutableList.of(),
-    )
+    class ReductionInputs :
+      AbstractReductionInputs<LanguageKind, ReductionInputs>(
+        testScript = scriptFile,
+        initiallyDeterminedMainDataKind = LanguageC,
+        rootDirectory = root,
+        mutableFiles = ImmutableList.of(SourceFile(file, LanguageC)),
+        immutableDependencyFiles = ImmutableList.of(),
+      )
 
-    val reductionFolder1 = ReductionFolder(
-      ReductionInputs(),
-      folder = dir1,
-    )
-    val reductionFolder2 = ReductionFolder(
-      ReductionInputs(),
-      folder = dir2,
-    )
+    val reductionFolder1 =
+      ReductionFolder(
+        ReductionInputs(),
+        folder = dir1,
+      )
+    val reductionFolder2 =
+      ReductionFolder(
+        ReductionInputs(),
+        folder = dir2,
+      )
 
     reductionFolder1.copyTo(reductionFolder2)
 
@@ -231,12 +251,11 @@ class ReductionFolderTest {
     assertThat(copyedFile3.readText()).isEqualTo(file3.readText())
   }
 
-  private fun createTestScript(path: Path): ScriptFile {
-    return ScriptFile(
+  private fun createTestScript(path: Path): ScriptFile =
+    ScriptFile(
       Files.createFile(path).apply {
         this.writeText(Shells.SHEBANG_BASH)
         Util.setExecutable(this)
       },
     )
-  }
 }

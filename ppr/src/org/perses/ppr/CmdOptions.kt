@@ -17,14 +17,13 @@
 package org.perses.ppr
 
 import com.beust.jcommander.Parameter
-import org.perses.CommandOptions
 import org.perses.cmd.InputFlagGroup
+import org.perses.ppr.AbstractPPRCommandOptions
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class CmdOptions : CommandOptions() {
-
+class CmdOptions : AbstractPPRCommandOptions() {
   override fun createInputFlags() = OverallInputFlagGroup()
 
   val overallInputFlags = inputFlags as OverallInputFlagGroup
@@ -81,8 +80,9 @@ class CmdOptions : CommandOptions() {
     @JvmField
     @Parameter(
       names = ["--enable-diff-ddmin"],
-      description = "Enable diff delta debugging reducer " +
-        "after syntax-guided variant reduction is done.",
+      description =
+        "Enable diff delta debugging reducer " +
+          "after syntax-guided variant reduction is done.",
       arity = 1,
       order = 15,
     )
@@ -93,9 +93,10 @@ class CmdOptions : CommandOptions() {
       names = ["--enable-mirror"],
       required = false,
       arity = 1,
-      description = "List-based diff is not as symmetrical as Tree-based diff. " +
-        "If mirror is enabled, it swaps the position of seed and variant, " +
-        "and perform the same reduce algorithm once more.",
+      description =
+        "List-based diff is not as symmetrical as Tree-based diff. " +
+          "If mirror is enabled, it swaps the position of seed and variant, " +
+          "and perform the same reduce algorithm once more.",
       order = 16,
     )
     var mirror: Boolean = false

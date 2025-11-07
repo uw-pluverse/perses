@@ -27,10 +27,11 @@ import java.io.Closeable
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 
-class DumpPnfPassManagerLog(cmd: Options) : AbstractMain<DumpPnfPassManagerLog.Options>(
-  cmd,
-) {
-
+class DumpPnfPassManagerLog(
+  cmd: Options,
+) : AbstractMain<DumpPnfPassManagerLog.Options>(
+    cmd,
+  ) {
   override fun internalRun() {
     val output = cmd.file!!
     val antlrGrammarContent = readAntlrGrammarContent("OrigC.g4", CParserFacade::class.java)
@@ -48,11 +49,12 @@ class DumpPnfPassManagerLog(cmd: Options) : AbstractMain<DumpPnfPassManagerLog.O
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor<Options>(
-        cmdCreator = { Options() },
-        programName = DumpPnfPassManagerLog::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor<Options>(
+          cmdCreator = { Options() },
+          programName = DumpPnfPassManagerLog::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }
@@ -69,24 +71,36 @@ class DumpPnfPassManagerLog(cmd: Options) : AbstractMain<DumpPnfPassManagerLog.O
     }
   }
 
-  private class PassListener(file: String) : PnfPassManager.Listener(), Closeable {
-
+  private class PassListener(
+    file: String,
+  ) : PnfPassManager.Listener(),
+    Closeable {
     private val stream = PrintStream(file, StandardCharsets.UTF_8.name())
 
     override fun close() {
       stream.close()
     }
 
-    override fun start(grammar: GrammarPair, startRuleName: String) {
+    override fun start(
+      grammar: GrammarPair,
+      startRuleName: String,
+    ) {
       stream.println(grammar.parserGrammar!!.sourceCode.trim { it <= ' ' })
     }
 
-    override fun afterPass(grammar: GrammarPair, passClass: Class<*>, iteration: Int) {
+    override fun afterPass(
+      grammar: GrammarPair,
+      passClass: Class<*>,
+      iteration: Int,
+    ) {
       print(passClass, iteration)
       stream.println(grammar.parserGrammar!!.sourceCode.trim { it <= ' ' })
     }
 
-    private fun print(passClass: Class<*>, iteration: Int) {
+    private fun print(
+      passClass: Class<*>,
+      iteration: Int,
+    ) {
       stream.printf("Iteration %d, pass=%s", iteration, passClass)
     }
   }

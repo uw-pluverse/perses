@@ -27,10 +27,10 @@ import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class NodePayloadTest {
-
-  val hierarchy = GrammarHierarchy.createFromString(
-    startRuleName = "a",
-    """
+  val hierarchy =
+    GrammarHierarchy.createFromString(
+      startRuleName = "a",
+      """
       grammar T;
       a : 'a';
       b : 'b';
@@ -38,8 +38,8 @@ class NodePayloadTest {
       d : 'd';
       e : 'e';
       f : 'f';
-    """.trimIndent(),
-  )
+      """.trimIndent(),
+    )
 
   val ruleA = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")
   val ruleB = hierarchy.getRuleHierarchyEntryWithNameOrThrow("b")

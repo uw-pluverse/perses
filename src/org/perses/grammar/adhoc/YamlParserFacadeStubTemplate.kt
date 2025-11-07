@@ -31,21 +31,21 @@ class YamlParserFacadeStubTemplate(
   parserFacadeClassSimpleName: String,
   tokenNamesOfIdentifiers: List<String>,
 ) : AbstractParserFacadeStubTemplate(
-  packageName,
-  parserClassSimpleName,
-  lexerClassSimpleName,
-  startRuleName,
-  grammarName,
-  parserFile,
-  lexerFile,
-  parserFacadeClassSimpleName, tokenNamesOfIdentifiers,
-) {
-
-  override fun createLanguageKind(): String {
-    return """
+    packageName,
+    parserClassSimpleName,
+    lexerClassSimpleName,
+    startRuleName,
+    grammarName,
+    parserFile,
+    lexerFile,
+    parserFacadeClassSimpleName,
+    tokenNamesOfIdentifiers,
+  ) {
+  override fun createLanguageKind(): String =
+    """
     private static String LANGUAGE_YAML_BASE64_ENCODED = 
       "${BaseEncoding.base64().encode(languageKindYamlString.toByteArray())}";
-   
+    
     static {
       $fieldNameLanguage = SerializableLanguageKind.fromYamlString(
         new String(BaseEncoding.base64().decode(LANGUAGE_YAML_BASE64_ENCODED), 
@@ -53,5 +53,4 @@ class YamlParserFacadeStubTemplate(
       );
     }
     """.trimIndent()
-  }
 }

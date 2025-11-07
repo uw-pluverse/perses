@@ -26,16 +26,15 @@ class CompositeParserFacadeFactory(
   private val builtinFactory: AbstractParserFacadeFactory,
   private val extFactory: AbstractParserFacadeFactory,
 ) : AbstractParserFacadeFactory() {
-
-  override fun languageSequence(): Sequence<LanguageKind> {
-    return extFactory.languageSequence() + builtinFactory.languageSequence()
-  }
+  override fun languageSequence(): Sequence<LanguageKind> =
+    extFactory.languageSequence() + builtinFactory.languageSequence()
 
   override fun getParserFacadeListForOrNull(languageKind: LanguageKind): ParserFacadeList? {
-    val resultCandidates = listOfNotNull(
-      extFactory.getParserFacadeListForOrNull(languageKind),
-      builtinFactory.getParserFacadeListForOrNull(languageKind),
-    ).flatMap { it.sequenceOfCreators() }
+    val resultCandidates =
+      listOfNotNull(
+        extFactory.getParserFacadeListForOrNull(languageKind),
+        builtinFactory.getParserFacadeListForOrNull(languageKind),
+      ).flatMap { it.sequenceOfCreators() }
     if (resultCandidates.isEmpty()) {
       return null
     }
@@ -43,5 +42,15 @@ class CompositeParserFacadeFactory(
       defaultParserFacade = resultCandidates.first(),
       otherParserFacades = resultCandidates.drop(1).toImmutableList(),
     )
+  }
+
+  override fun getParserFacadeClassForClassNameOrNull(
+    className: String,
+  ): Pair<LanguageKind, ParserFacadeCreator>? {
+    val extResult = extFactory.getParserFacadeClassForClassNameOrNull(className)
+    if (extResult != null) {
+      return extResult
+    }
+    return builtinFactory.getParserFacadeClassForClassNameOrNull(className)
   }
 }

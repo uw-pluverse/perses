@@ -42,7 +42,6 @@ antlr_codegen_parser(
     parser_grammar_file = "PhpParser.g4",
     parser_java_file_name = "PhpParser.java",
     deps = [
-        ":php_lexer",
     ],
 )
 
@@ -53,7 +52,6 @@ antlr_codegen_parser(
     parser_grammar_file = "PnfPhpParser.g4",
     parser_java_file_name = "PnfPhpParser.java",
     deps = [
-        ":php_lexer",
     ],
 )
 
@@ -69,7 +67,7 @@ kt_jvm_library(
         "//:flogger",
         "//:guava",
         "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/program:language_kind",
     ],
 )

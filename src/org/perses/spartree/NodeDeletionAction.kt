@@ -21,7 +21,6 @@ import com.google.common.base.MoreObjects
 class NodeDeletionAction(
   targetNode: AbstractSparTreeNode,
 ) : AbstractTreeEditAction(targetNode) {
-
   override fun internalCompareTo(o: AbstractTreeEditAction): Int {
     require(o is NodeDeletionAction)
     return targetNode.nodeId.compareTo(o.targetNode.nodeId)
@@ -30,13 +29,9 @@ class NodeDeletionAction(
   override val description: String
     get() = MoreObjects.toStringHelper(this).add("target_node", targetNode.nodeId).toString()
 
-  override fun specificEquals(other: AbstractTreeEditAction): Boolean {
-    return other.javaClass == javaClass
-  }
+  override fun specificEquals(other: AbstractTreeEditAction): Boolean = other.javaClass == javaClass
 
-  override fun specificHashCode(): Int {
-    return 0
-  }
+  override fun specificHashCode(): Int = 0
 
   override fun internalApply() {
     // TODO: Move this check to deletion action set

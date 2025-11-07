@@ -17,7 +17,7 @@
 package org.perses.reduction.reducer.hdd
 
 import com.google.common.collect.ImmutableList
-import org.perses.listminimizer.PristineDeltaDebugger
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
@@ -28,7 +28,6 @@ import org.perses.spartree.SparTreeSimplifier
 class PristineHDDReducer(
   reducerContext: ReducerContext,
 ) : AbstractTokenReducer(META, reducerContext) {
-
   /**
    * Need to remove
    *   1) optional nodes,
@@ -39,18 +38,18 @@ class PristineHDDReducer(
     SparTreeSimplifier.simplify(tree)
     var currentLevel = ImmutableList.of(tree.realRoot)
     while (currentLevel.isNotEmpty()) {
-      val debugger = PristineDeltaDebugger(
-        createDeltaArguments(
-          needToTestEmpty = true,
-          tree,
-          actionsDescription = "[pristine-hdd]",
+      val reducedCurrentLevel =
+        runListMinimizerOverNodes(
+          tree = tree,
+          fixpointReductionState = fixpointReductionState,
           input = currentLevel,
-        ),
-      )
-      val reducedCurrentLevel = debugger.reduce()
+        )
       currentLevel = moveToNextLevel(reducedCurrentLevel)
     }
   }
+
+  override fun computeListMinimizerType(): EnumListMinimizerType =
+    EnumListMinimizerType.PRISTINE_DDMIN
 
   object META : ReducerAnnotation(
     shortName = NAME,
@@ -58,18 +57,19 @@ class PristineHDDReducer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext) = ImmutableList.of<AbstractTokenReducer>(
-      PristineHDDReducer(
-        reducerContext,
-      ),
-    )
+    override fun create(reducerContext: ReducerContext) =
+      ImmutableList.of<AbstractTokenReducer>(
+        PristineHDDReducer(
+          reducerContext,
+        ),
+      )
   }
-  companion object {
 
+  companion object {
     const val NAME = "pristine_hdd"
 
     fun moveToNextLevel(
-      current: ImmutableList<AbstractSparTreeNode>,
+      current: ImmutableList<out AbstractSparTreeNode>,
     ): ImmutableList<AbstractSparTreeNode> {
       val builder = ImmutableList.builder<AbstractSparTreeNode>()
       for (node in current) {

@@ -33,10 +33,11 @@ class OutlineImplicitTokenDefPass : AbstractPnfPass() {
     val lexerGrammar = LexerGrammarPair.createFrom(grammar)
     val edits = mutableListOf<RuleEditTriple>()
     mutableParserRules.ruleNameAltPairSequence().forEach { (name, alt) ->
-      val edit = OutlineImplicitTokenDefEdit(
-        hostRuleName = name,
-        lexerGrammar,
-      )
+      val edit =
+        OutlineImplicitTokenDefEdit(
+          hostRuleName = name,
+          lexerGrammar,
+        )
       when (val decision = edit.apply(alt)) {
         is TransformDecision.Keep -> Unit // do nothing.
         is TransformDecision.Replace ->
@@ -51,9 +52,10 @@ class OutlineImplicitTokenDefPass : AbstractPnfPass() {
       }
     }
     edits.forEach { it.applyTo(mutableParserRules) }
-    val newParserGrammar = parserGrammar.copyWithNewParserRuleDefs(
-      mutableParserRules.toParserRuleAstList(),
-    )
+    val newParserGrammar =
+      parserGrammar.copyWithNewParserRuleDefs(
+        mutableParserRules.toParserRuleAstList(),
+      )
     return grammar.withNewParserAndExtraLexerRules(
       newParserGrammar,
       lexerGrammar.newLexerRules,
@@ -64,12 +66,12 @@ class OutlineImplicitTokenDefPass : AbstractPnfPass() {
     val combinedLexerGrammar: LexerRuleList,
     val separateLexerGrammar: LexerRuleList?,
   ) {
-
     val newLexerRules = mutableListOf<PersesLexerRuleAst>()
 
     fun allAsSequence(): Sequence<AbstractPersesLexerRuleAst> {
-      val separateLexerGrammarSequence = separateLexerGrammar?.flattenedLexerRules?.asSequence()
-        ?: sequenceOf<AbstractPersesLexerRuleAst>()
+      val separateLexerGrammarSequence =
+        separateLexerGrammar?.flattenedLexerRules?.asSequence()
+          ?: sequenceOf<AbstractPersesLexerRuleAst>()
       return combinedLexerGrammar.flattenedLexerRules.asSequence() +
         separateLexerGrammarSequence +
         newLexerRules.asSequence()
@@ -79,28 +81,29 @@ class OutlineImplicitTokenDefPass : AbstractPnfPass() {
       hostRuleName: RuleNameHandle,
       implicitTokenDef: PersesTerminalAst,
     ): RuleNameHandle {
-      val existingRule = allAsSequence().singleOrNull { lexerRule ->
-        lexerRule.body.isEquivalent(implicitTokenDef)
-      }
+      val existingRule =
+        allAsSequence().singleOrNull { lexerRule ->
+          lexerRule.body.isEquivalent(implicitTokenDef)
+        }
       if (existingRule != null) {
         return existingRule.ruleNameHandle
       }
       val newRuleName = hostRuleName.createAuxiliaryRuleName(RuleType.TOKEN)
-      val newRuleDef = PersesLexerRuleAst(
-        ruleNameHandle = newRuleName,
-        body = implicitTokenDef.deepCopyTreeStructure(),
-      )
+      val newRuleDef =
+        PersesLexerRuleAst(
+          ruleNameHandle = newRuleName,
+          body = implicitTokenDef.deepCopyTreeStructure(),
+        )
       newLexerRules.add(newRuleDef)
       return newRuleName
     }
 
     companion object {
-      fun createFrom(grammar: GrammarPair): LexerGrammarPair {
-        return LexerGrammarPair(
+      fun createFrom(grammar: GrammarPair): LexerGrammarPair =
+        LexerGrammarPair(
           grammar.parserGrammar!!.lexerRules,
           grammar.lexerGrammar?.lexerRules,
         )
-      }
     }
   }
 
@@ -108,18 +111,20 @@ class OutlineImplicitTokenDefPass : AbstractPnfPass() {
     val hostRuleName: RuleNameHandle,
     val lexerGrammarPair: LexerGrammarPair,
   ) : ReplaceEdit(
-    oldPredicate = { old -> old is PersesTerminalAst && old.isStringLiteral() },
-    newValueComputer = { old ->
-      val tokenDefName = lexerGrammarPair.getOrCreateLexerRule(
-        hostRuleName = hostRuleName,
-        implicitTokenDef = old as PersesTerminalAst,
-      )
-      PersesTerminalAst.createTokenReference(tokenDefName.ruleName)
-    },
-  )
+      oldPredicate = { old -> old is PersesTerminalAst && old.isStringLiteral() },
+      newValueComputer = { old ->
+        val tokenDefName =
+          lexerGrammarPair.getOrCreateLexerRule(
+            hostRuleName = hostRuleName,
+            implicitTokenDef = old as PersesTerminalAst,
+          )
+        PersesTerminalAst.createTokenReference(tokenDefName.ruleName)
+      },
+    )
 
   internal class ImplicitTokenDefCollector : DefaultAstVisitor() {
     val implicitDefs = mutableListOf<PersesTerminalAst>()
+
     override fun visit(ast: PersesTerminalAst) {
       if (ast.isStringLiteral()) {
         implicitDefs.add(ast)
@@ -127,7 +132,6 @@ class OutlineImplicitTokenDefPass : AbstractPnfPass() {
     }
 
     companion object {
-
       fun collectImplicitTokenDefs(ast: AbstractPersesRuleElement): List<PersesTerminalAst> {
         val collector = ImplicitTokenDefCollector()
         collector.postorder(ast)

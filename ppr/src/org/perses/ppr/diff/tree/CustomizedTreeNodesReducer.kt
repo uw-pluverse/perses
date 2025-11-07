@@ -31,25 +31,50 @@ class CustomizedTreeNodesReducer(
   reducerContext: ReducerContext,
   private val startNodes: List<AbstractSparTreeNode>,
 ) : PersesNodeReducer(
-  reducerAnnotation,
-  reducerContext,
-  reductionQueueStrategy = IReductionQueueStrategy.FOR_PRIORITY_QUEUE,
-) {
+    reducerAnnotation,
+    reducerContext,
+    reductionQueueStrategy = IReductionQueueStrategy.FOR_PRIORITY_QUEUE,
+  ) {
+  init {
+    require(startNodes.isNotEmpty()) {
+      "The start nodes are empty."
+    }
+    require(startNodes.all { !it.isPermanentlyDeleted }) {
+      """Some nodes in the startNodes are deleted already.
+        |${startNodes.filter { !it.isPermanentlyDeleted }.map { it.nodeId }}
+      """.trimMargin()
+    }
+  }
 
-  override fun initializeReductionQueue(queue: Queue<AbstractSparTreeNode>, tree: SparTree) {
+  override fun initializeReductionQueue(
+    queue: Queue<AbstractSparTreeNode>,
+    tree: SparTree,
+  ) {
     queue.addAll(startNodes)
   }
 
-  class ExtendedReducerAnnotation(private val startNodes: ImmutableList<AbstractSparTreeNode>) :
-    ReducerAnnotation(
+  class ExtendedReducerAnnotation(
+    private val startNodes: ImmutableList<AbstractSparTreeNode>,
+  ) : ReducerAnnotation(
       shortName = NAME,
       description = "",
       deterministic = true,
       reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
     ) {
-    override fun create(reducerContext: ReducerContext) = ImmutableList.of<AbstractTokenReducer>(
-      CustomizedTreeNodesReducer(reducerAnnotation = this, reducerContext, startNodes),
-    )
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
+      val nonDeletedStartNodes = startNodes.filter { !it.isPermanentlyDeleted }
+      return if (nonDeletedStartNodes.isEmpty()) {
+        ImmutableList.of()
+      } else {
+        ImmutableList.of(
+          CustomizedTreeNodesReducer(
+            reducerAnnotation = this,
+            reducerContext = reducerContext,
+            startNodes = nonDeletedStartNodes,
+          ),
+        )
+      }
+    }
   }
 
   companion object {

@@ -23,24 +23,25 @@ import org.perses.util.ast.Indent
 import java.io.PrintStream
 
 class PersesEpsilonAst : AbstractPersesRuleElement() {
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     stream.print("/* Epsilon. */")
   }
 
   @Deprecated("")
-  override fun getChild(index: Int): AbstractPersesRuleElement {
+  override fun getChild(index: Int): AbstractPersesRuleElement =
     throw UnsupportedOperationException()
-  }
 
   override val childCount: Int
     get() = 0
 
   override val tag = AstTag.EPSILON
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this).add("code", sourceCode).toString()
-  }
+  override fun toString(): String =
+    MoreObjects.toStringHelper(this).add("code", sourceCode).toString()
 
   override fun createWithNewChildren(
     newChildren: List<AbstractPersesRuleElement>,
@@ -51,8 +52,6 @@ class PersesEpsilonAst : AbstractPersesRuleElement() {
 
   companion object {
     @JvmStatic
-    fun isEpsilonAst(ast: GrammarAST): Boolean {
-      return ast.getToken().type == ANTLRParser.EPSILON
-    }
+    fun isEpsilonAst(ast: GrammarAST): Boolean = ast.getToken().type == ANTLRParser.EPSILON
   }
 }

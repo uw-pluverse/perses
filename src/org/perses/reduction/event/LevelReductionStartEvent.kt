@@ -22,12 +22,16 @@ class LevelReductionStartEvent internal constructor(
   programSize: Int,
   val level: Int,
   val nodeCountOnLevel: Int,
-) :
-  AbstractStartEvent(currentTimeMillis, programSize) {
-
+) : AbstractStartEvent(currentTimeMillis, programSize) {
   val iteration = currentFixpointIteration.iteration
 
-  fun createEndEvent(currentTimeMillis: Long, programSize: Int): LevelReductionEndEvent {
+  override val prefixLabelFromRootToHere: String
+    get() = currentFixpointIteration.prefixLabelFromRootToHere
+
+  fun createEndEvent(
+    currentTimeMillis: Long,
+    programSize: Int,
+  ): LevelReductionEndEvent {
     check(!ended)
     ended = true
     return LevelReductionEndEvent(
@@ -42,16 +46,13 @@ class LevelReductionStartEvent internal constructor(
     currentTimeMillis: Long,
     programSize: Int,
     maxNumOfNodesPerPartition: Int,
-  ): LevelGranularityReductionStartEvent {
-    return LevelGranularityReductionStartEvent(
+  ): LevelGranularityReductionStartEvent =
+    LevelGranularityReductionStartEvent(
       levelReductionStartEvent = this,
       currentTimeMillis = currentTimeMillis,
       programSize = programSize,
       maxNumOfNodesPerPartition = maxNumOfNodesPerPartition,
     )
-  }
 
-  override fun initialProgramSize(): Int {
-    return currentFixpointIteration.initialProgramSize()
-  }
+  override fun initialProgramSize(): Int = currentFixpointIteration.initialProgramSize()
 }

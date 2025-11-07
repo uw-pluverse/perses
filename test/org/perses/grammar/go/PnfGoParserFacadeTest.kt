@@ -48,7 +48,10 @@ class PnfGoParserFacadeTest {
     }
   }
 
-  fun testString(program: String, name: String) {
+  fun testString(
+    program: String,
+    name: String,
+  ) {
     val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program, name)
     val tokensByOrigParser = TestUtility.extractTokenTexts(parseTreeFromOrigParser.tree)
 

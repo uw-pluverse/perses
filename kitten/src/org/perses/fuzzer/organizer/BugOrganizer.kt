@@ -20,8 +20,9 @@ import com.google.common.flogger.FluentLogger
 import org.perses.fuzzer.FindingFolder
 import org.perses.util.ktInfo
 
-class BugOrganizer(val options: CommandOptions) {
-
+class BugOrganizer(
+  val options: CommandOptions,
+) {
   val findingFolder = FindingFolder(options.findingFolder)
 
   init {

@@ -21,8 +21,9 @@ import org.perses.util.shell.CmdOutput
 import java.util.concurrent.atomic.AtomicInteger
 
 abstract class AbstractCompilerCrashDetector : ICompilerCrashDetector {
-
-  enum class CommonCrashExitCodes(val exitCode: Int) {
+  enum class CommonCrashExitCodes(
+    val exitCode: Int,
+  ) {
     SIGILL(132),
     SIGTRAP(133),
     SIGABRT(134),
@@ -37,17 +38,16 @@ abstract class AbstractCompilerCrashDetector : ICompilerCrashDetector {
     ;
 
     companion object {
-      private val EXIT_CODES = ImmutableIntArray.copyOf(
-        values()
-          .asSequence()
-          .map { it.exitCode }
-          .distinct()
-          .asIterable(),
-      )
+      private val EXIT_CODES =
+        ImmutableIntArray.copyOf(
+          values()
+            .asSequence()
+            .map { it.exitCode }
+            .distinct()
+            .asIterable(),
+        )
 
-      fun isCrashExitCode(exitCode: Int): Boolean {
-        return EXIT_CODES.contains(exitCode)
-      }
+      fun isCrashExitCode(exitCode: Int): Boolean = EXIT_CODES.contains(exitCode)
     }
   }
 
@@ -58,16 +58,20 @@ abstract class AbstractCompilerCrashDetector : ICompilerCrashDetector {
     return detectCrash(cmdOutput.stderr.lines, cmdOutput.exitCode.intValue)
   }
 
-  final override fun detectCrash(stderr: String, exitCodeForCrash: Int):
-    ICompilerCrashDetector.AbstractResult {
+  final override fun detectCrash(
+    stderr: String,
+    exitCodeForCrash: Int,
+  ): ICompilerCrashDetector.AbstractResult {
     require(exitCodeForCrash > 0) {
       "The exit code should be greater than 0."
     }
     return detectCrash(stderr.split('\n'), exitCodeForCrash)
   }
 
-  final override fun detectCrash(stderr: List<String>, exitCodeForCrash: Int):
-    ICompilerCrashDetector.AbstractResult {
+  final override fun detectCrash(
+    stderr: List<String>,
+    exitCodeForCrash: Int,
+  ): ICompilerCrashDetector.AbstractResult {
     require(exitCodeForCrash > 0) {
       "The exit code should be non-zero."
     }
@@ -85,7 +89,10 @@ abstract class AbstractCompilerCrashDetector : ICompilerCrashDetector {
     }
   }
 
-  private fun checkRawSignaturesAreInStdErr(rawSignature: List<String>, stderr: List<String>) {
+  private fun checkRawSignaturesAreInStdErr(
+    rawSignature: List<String>,
+    stderr: List<String>,
+  ) {
     for (signature in rawSignature) {
       check(stderr.asSequence().filter { it.contains(signature) }.count() > 0) {
         /*
@@ -99,16 +106,24 @@ abstract class AbstractCompilerCrashDetector : ICompilerCrashDetector {
 
   abstract fun detectCrashSignatureFromStderr(stderr: List<String>): List<String>
 
-  abstract class AbstractSignatureElement(val value: String)
+  abstract class AbstractSignatureElement(
+    val value: String,
+  )
 
-  protected class CrashMessageLine(value: String) : AbstractSignatureElement(value)
+  protected class CrashMessageLine(
+    value: String,
+  ) : AbstractSignatureElement(value)
 
-  protected class StackTraceLine(value: String) : AbstractSignatureElement(value)
+  protected class StackTraceLine(
+    value: String,
+  ) : AbstractSignatureElement(value)
 
   companion object {
     @JvmStatic
-    fun limitStackTraceLines(signature: List<AbstractSignatureElement>, limit: Int):
-      Sequence<AbstractSignatureElement> {
+    fun limitStackTraceLines(
+      signature: List<AbstractSignatureElement>,
+      limit: Int,
+    ): Sequence<AbstractSignatureElement> {
       require(limit > 0)
       val counter = AtomicInteger(0)
       return signature.asSequence().filter {

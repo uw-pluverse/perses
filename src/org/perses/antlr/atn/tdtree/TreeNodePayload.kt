@@ -16,4 +16,6 @@
  */
 package org.perses.antlr.atn.tdtree
 
-class TreeNodePayload(val char: Char)
+class TreeNodePayload(
+  val char: Char,
+)

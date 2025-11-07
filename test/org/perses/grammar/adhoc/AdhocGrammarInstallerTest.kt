@@ -31,14 +31,15 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
+  val workingDir =
+    tempDir.resolve("empty_working_dir").apply {
+      Files.createDirectories(this)
+    }
 
-  val workingDir = tempDir.resolve("empty_working_dir").apply {
-    Files.createDirectories(this)
-  }
-
-  val languageKindYamlFile = tempDir.resolve("language_kind_adhoc.yaml").apply {
-    writeText(LanguageAdhoc.INSTANCE.toYamlString())
-  }
+  val languageKindYamlFile =
+    tempDir.resolve("language_kind_adhoc.yaml").apply {
+      writeText(LanguageAdhoc.INSTANCE.toYamlString())
+    }
 
   @After
   fun teardown() {
@@ -56,26 +57,33 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = listOf("ID")
     testOptions.validate()
 
-    val installer = AdhocGrammarInstaller(
-      testOptions.computeAdhocGrammarConfiguration(),
-      testPersesConstants,
-      testOptions.outputFlags.output,
-      enablePnfNormalization = true,
-    )
+    val installer =
+      AdhocGrammarInstaller(
+        testOptions.computeAdhocGrammarConfiguration(),
+        testPersesConstants,
+        testOptions.outputFlags.output,
+        enablePnfNormalization = true,
+      )
     val generatedJar = installer.run()
     assertThat(generatedJar.path.toString()).isEqualTo(
-      workingDir.resolve(
-        ".perses/installed_adhoc_languages/TestParser/" +
-          testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
-          "/perses_adhoc_language_support.jar",
-      ).toString(),
+      workingDir
+        .resolve(
+          ".perses/installed_adhoc_languages/TestParser/" +
+            testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
+            "/perses_adhoc_language_support.jar",
+        ).toString(),
     )
     assertThat(generatedJar.mainClassFullName).isEqualTo(
       "org.perses.grammar.adhoc.testparser.TestParserAdhocParserFacade",
     )
 
     ZipFile(generatedJar.path.toFile()).use { zipFile ->
-      val entryNames = zipFile.entries().asSequence().map { it.name }.toList()
+      val entryNames =
+        zipFile
+          .entries()
+          .asSequence()
+          .map { it.name }
+          .toList()
       assertThat(entryNames).containsExactly(
         "META-INFO/language_info.yaml",
         "org/perses/grammar/adhoc/testparser/PnfTestParser${'$'}StartContext.class",
@@ -108,26 +116,33 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = listOf("ID")
     testOptions.validate()
 
-    val installer = AdhocGrammarInstaller(
-      testOptions.computeAdhocGrammarConfiguration(),
-      testPersesConstants,
-      testOptions.outputFlags.output,
-      enablePnfNormalization = true,
-    )
+    val installer =
+      AdhocGrammarInstaller(
+        testOptions.computeAdhocGrammarConfiguration(),
+        testPersesConstants,
+        testOptions.outputFlags.output,
+        enablePnfNormalization = true,
+      )
     val generatedJar = installer.run()
     assertThat(generatedJar.path.toString()).isEqualTo(
-      workingDir.resolve(
-        ".perses/installed_adhoc_languages/TestCombined/" +
-          testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
-          "/perses_adhoc_language_support.jar",
-      ).toString(),
+      workingDir
+        .resolve(
+          ".perses/installed_adhoc_languages/TestCombined/" +
+            testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
+            "/perses_adhoc_language_support.jar",
+        ).toString(),
     )
     assertThat(generatedJar.mainClassFullName).isEqualTo(
       "org.perses.grammar.adhoc.testcombined.TestCombinedAdhocParserFacade",
     )
 
     ZipFile(generatedJar.path.toFile()).use { zipFile ->
-      val entryNames = zipFile.entries().asSequence().map { it.name }.toList()
+      val entryNames =
+        zipFile
+          .entries()
+          .asSequence()
+          .map { it.name }
+          .toList()
       assertThat(entryNames).containsExactly(
         "META-INFO/language_info.yaml",
         "org/perses/grammar/adhoc/testcombined/PnfTestCombinedParser${'$'}StartContext.class",
@@ -154,12 +169,13 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = listOf("ID")
 
     testOptions.validate()
-    val installer = AdhocGrammarInstaller(
-      testOptions.computeAdhocGrammarConfiguration(),
-      testPersesConstants,
-      testOptions.outputFlags.output,
-      enablePnfNormalization = true,
-    )
+    val installer =
+      AdhocGrammarInstaller(
+        testOptions.computeAdhocGrammarConfiguration(),
+        testPersesConstants,
+        testOptions.outputFlags.output,
+        enablePnfNormalization = true,
+      )
     val generatedJar = installer.run()
     val facade = generatedJar.loadMainClass().getConstructor().newInstance() as AbstractParserFacade
     val langauge = facade.language
@@ -193,10 +209,12 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
       defaultFormatterCommands: []
     """
 
-    val languageKindNonFormmatterFile = tempDir.resolve("language_kind_adhoc_non_format.yaml")
-      .apply {
-        writeText(nonFormmatterConfiguration)
-      }
+    val languageKindNonFormmatterFile =
+      tempDir
+        .resolve("language_kind_adhoc_non_format.yaml")
+        .apply {
+          writeText(nonFormmatterConfiguration)
+        }
 
     val testPersesConstants = PersesConstants.createCustomizedConstants(workingDir)
     val testOptions = CommandOptions()
@@ -207,19 +225,21 @@ class AdhocGrammarInstallerTest : AbstractAntlrrdcTest() {
     testOptions.compulsoryFlags.tokenNamesOfIdentifiers = listOf("ID")
     testOptions.validate()
 
-    val installer = AdhocGrammarInstaller(
-      testOptions.computeAdhocGrammarConfiguration(),
-      testPersesConstants,
-      testOptions.outputFlags.output,
-      enablePnfNormalization = true,
-    )
+    val installer =
+      AdhocGrammarInstaller(
+        testOptions.computeAdhocGrammarConfiguration(),
+        testPersesConstants,
+        testOptions.outputFlags.output,
+        enablePnfNormalization = true,
+      )
     val generatedJar = installer.run()
     assertThat(generatedJar.path.toString()).isEqualTo(
-      workingDir.resolve(
-        ".perses/installed_adhoc_languages/TestParser/" +
-          testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
-          "/perses_adhoc_language_support.jar",
-      ).toString(),
+      workingDir
+        .resolve(
+          ".perses/installed_adhoc_languages/TestParser/" +
+            testOptions.compulsoryFlags.createAdhocGrammarConfiguration().computeContentHashCode() +
+            "/perses_adhoc_language_support.jar",
+        ).toString(),
     )
     assertThat(generatedJar.mainClassFullName).isEqualTo(
       "org.perses.grammar.adhoc.testparser.TestParserAdhocParserFacade",

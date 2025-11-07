@@ -34,10 +34,12 @@ class PersesGrammarTest {
   fun testGetGrammarName() {
     val cGrammar = CParserFacade().antlrGrammar.asCombined().grammar
     assertThat(cGrammar.grammarName).isEqualTo("OptC")
-    val ruleNames = cGrammar.flattenedAllRules.stream()
-      .filter { obj: AbstractPersesRuleDefAst -> obj.isParserRule }
-      .map { it.ruleNameHandle.ruleName }
-      .collect(ImmutableList.toImmutableList())
+    val ruleNames =
+      cGrammar.flattenedAllRules
+        .stream()
+        .filter { obj: AbstractPersesRuleDefAst -> obj.isParserRule }
+        .map { it.ruleNameHandle.ruleName }
+        .collect(ImmutableList.toImmutableList())
     assertThat(ruleNames).containsExactlyElementsIn(TestUtility.OPT_C_PARSER_RULE_NAMES)
     val javaGrammar = Java8ParserFacade().antlrGrammar.asSeparate().parserGrammar
     assertThat(javaGrammar.grammarName).isEqualTo("PnfJava8Parser")
@@ -280,6 +282,7 @@ class PersesGrammarTest {
 
   private class TokenCollector : DefaultAstVisitor() {
     val tokens = ArrayList<String?>()
+
     override fun visit(ast: PersesTerminalAst) {
       val text = ast.text
       if (text.isEmpty()) {

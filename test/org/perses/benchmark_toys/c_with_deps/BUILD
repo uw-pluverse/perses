@@ -24,7 +24,7 @@ reduction_golden_test(
         "--deps": "$(location dep1.c),$(location dep2.c)",
     },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "t.c",
     test_script = "r.sh",
     deps = [

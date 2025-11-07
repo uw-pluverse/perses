@@ -39,13 +39,17 @@ class PersesAstTest {
 
   @Test
   fun testChildrenOfTokenSetKeptInInitOrder() {
-    val childrenA = createTerminalList("A", "B").stream()
-      .map { it as AbstractPersesTerminalAst }
-      .collect(ImmutableList.toImmutableList())
+    val childrenA =
+      createTerminalList("A", "B")
+        .stream()
+        .map { it as AbstractPersesTerminalAst }
+        .collect(ImmutableList.toImmutableList())
     val a = PersesTokenSetAst(childrenA)
-    val childrenB = createTerminalList("B", "A").stream()
-      .map { it as AbstractPersesTerminalAst }
-      .collect(ImmutableList.toImmutableList())
+    val childrenB =
+      createTerminalList("B", "A")
+        .stream()
+        .map { it as AbstractPersesTerminalAst }
+        .collect(ImmutableList.toImmutableList())
     val b = PersesTokenSetAst(childrenB)
     assertThat(a.getChild(0).sourceCode).isEqualTo(b.getChild(1).sourceCode)
     assertThat(a.getChild(1).sourceCode).isEqualTo(b.getChild(0).sourceCode)
@@ -54,9 +58,10 @@ class PersesAstTest {
 
   @Test
   fun testBlockComment() {
-    val grammar = createPersesGrammarFromString(
-      "BlockComment: '/*' .*? '*/' -> skip ;",
-    )
+    val grammar =
+      createPersesGrammarFromString(
+        "BlockComment: '/*' .*? '*/' -> skip ;",
+      )
     val body = grammar.getRuleDefinition("BlockComment")!!.body
     assertThat(body).isInstanceOf(PersesLexerCommandAst::class.java)
     val child = body.getChild(0)
@@ -72,30 +77,33 @@ class PersesAstTest {
 
   @Test
   fun testPersesLexerCommandAstMultipleCommands() {
-    val grammar = createPersesGrammarFromString(
-      "TOKEN: i -> popMode, skip;",
-    )
+    val grammar =
+      createPersesGrammarFromString(
+        "TOKEN: i -> popMode, skip;",
+      )
     assertThat(grammar.sourceCode).contains("i -> popMode, skip")
   }
 
   @Test
   fun testPushMode() {
-    val grammar = createPersesGrammarFromString(
-      """
-      XMLDeclOpen : '<' -> pushMode(INSIDE) ;
-      """.trimIndent(),
-    )
+    val grammar =
+      createPersesGrammarFromString(
+        """
+        XMLDeclOpen : '<' -> pushMode(INSIDE) ;
+        """.trimIndent(),
+      )
     val body = grammar.getRuleDefinition("XMLDeclOpen")!!.body
     assertThat(body.sourceCode.trim()).isEqualTo("'<' -> pushMode(INSIDE)")
   }
 
   @Test
   fun testTokenSpecifications() {
-    val grammar = createPersesGrammarFromString(
-      """
+    val grammar =
+      createPersesGrammarFromString(
+        """
         tokens { INDENT, DEDENT }
-      """.trimIndent(),
-    )
+        """.trimIndent(),
+      )
     val code = grammar.sourceCode
     assertThat(code.trim().replace(Regex("\\s"), ""))
       .contains("tokens {INDENT, DEDENT}".replace("\\s".toRegex(), ""))
@@ -103,8 +111,11 @@ class PersesAstTest {
 
   @Test
   fun testPersesParserAttributes() {
-    createPersesGrammarFromString("start locals [int a = 0] : 'a';").parserRules.single()
-      .attributes.let { attributes ->
+    createPersesGrammarFromString("start locals [int a = 0] : 'a';")
+      .parserRules
+      .single()
+      .attributes
+      .let { attributes ->
         assertThat(attributes.hasArguments()).isFalse()
         assertThat(attributes.hasLocals()).isTrue()
         assertThat(attributes.hasReturn()).isFalse()
@@ -114,8 +125,11 @@ class PersesAstTest {
         assertThat(attributes.isEmpty()).isFalse()
         assertThat(attributes.isNotEmpty()).isTrue()
       }
-    createPersesGrammarFromString("start returns [int a] : 'a';").parserRules.single()
-      .attributes.let { attributes ->
+    createPersesGrammarFromString("start returns [int a] : 'a';")
+      .parserRules
+      .single()
+      .attributes
+      .let { attributes ->
         assertThat(attributes.hasArguments()).isFalse()
         assertThat(attributes.hasLocals()).isFalse()
         assertThat(attributes.hasReturn()).isTrue()
@@ -125,8 +139,11 @@ class PersesAstTest {
         assertThat(attributes.isEmpty()).isFalse()
         assertThat(attributes.isNotEmpty()).isTrue()
       }
-    createPersesGrammarFromString("start[int a]:'a';").parserRules.single()
-      .attributes.let { attributes ->
+    createPersesGrammarFromString("start[int a]:'a';")
+      .parserRules
+      .single()
+      .attributes
+      .let { attributes ->
         assertThat(attributes.hasReturn()).isFalse()
         assertThat(attributes.hasLocals()).isFalse()
         assertThat(attributes.hasArguments()).isTrue()

@@ -12,7 +12,7 @@ kt_jvm_library(
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",
-        "//src/org/perses/antlr/atn",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
         "//src/org/perses/antlr/atn/tdtree",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reducer_context_interface",

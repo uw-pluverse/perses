@@ -16,6 +16,7 @@
  */
 package org.perses
 
+import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.AntlrFailureException
@@ -31,46 +32,54 @@ import org.perses.reduction.io.IReductionInputs
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.ktSevere
 import java.io.Closeable
+import java.nio.file.Path
 
 abstract class AbstractMain<
   Cmd : AbstractCommandOptions,
   ReductionDriver : IReductionDriver,
   ReductionInputs : IReductionInputs<LanguageKind, ReductionInputs>,
-  >(
+>(
   cmd: Cmd,
   protected val globalContext: GlobalContext,
-) : org.perses.util.cmd.AbstractMain<Cmd>(cmd), Closeable {
-
+) : org.perses.util.cmd.AbstractMain<Cmd>(cmd),
+  Closeable {
   protected val parserFacadeFactory by lazy {
     initializeParserFacadeFactory()
   }
 
-  protected val reductionInputs: ReductionInputs by lazy {
+  protected val languageAndParserConfiguration: LanguageAndParserConfiguration by lazy {
+    computeLanguageAndParserConfiguration(parserFacadeFactory)
+  }
+
+  val reductionInputs: ReductionInputs by lazy {
     createReductionInputs(parserFacadeFactory)
   }
 
-  protected lateinit var listenerManager: AsyncReductionListenerManager
+  protected val listenerManager: AsyncReductionListenerManager by lazy {
+    createAsyncReductionListenerManager()
+  }
 
   final override fun internalRun() {
-    listenerManager = createAsyncReductionListenerManager()
     val suppressedExceptions = mutableListOf<Exception>()
     for (driverCreator in createSequenceOfReductionDriverCreators(reductionInputs)) {
       val driver: ReductionDriver
       try {
         driver = driverCreator.creator()
       } catch (e: AntlrFailureException) {
-        logger.ktSevere {
-          """Failed to parse the input program with the reduction driver: 
+        suppressedExceptions.add(
+          RuntimeException(
+            """Failed to parse the input program with the reduction driver: 
             |${driverCreator.description}
             |
             |Perses will try to create a different reduction driver to parse the program.
-          """.trimMargin()
-        }
-        suppressedExceptions.add(e)
+            """.trimMargin(),
+            e,
+          ),
+        )
         continue
       }
       val sanityCheckResult = driver.cachedSanityCheckResult
-      if (sanityCheckResult is IReductionDriver.FailingSanityCheckResult) {
+      if (sanityCheckResult is IReductionDriver.SanityCheckResult.Failing) {
         suppressedExceptions.add(sanityCheckResult.exception)
         logger.ktSevere {
           """
@@ -92,13 +101,53 @@ abstract class AbstractMain<
       break
     }
     if (suppressedExceptions.isNotEmpty()) {
-      val exception = SanityCheckFailedException(
-        "Failed to create a reduction driver for the input program.",
-      )
+      val exception =
+        SanityCheckFailedException(
+          "Failed to create a reduction driver for the input program.",
+        )
       suppressedExceptions.forEach { exception.addSuppressed(it) }
       throw exception
     }
   }
+
+  protected fun computeLanguageForFile(file: Path): LanguageKind =
+    when (val configuration = languageAndParserConfiguration) {
+      is LanguageAndParserConfiguration.Automatic ->
+        parserFacadeFactory.computeLanguageKindOrThrow(file)
+
+      is LanguageAndParserConfiguration.UserSpecifiedParser ->
+        configuration.languageKind
+
+      is LanguageAndParserConfiguration.UserSpecifiedLanguage ->
+        configuration.languageKind
+    }
+
+  protected fun computePlausibleParserFacades(): AbstractParserFacadeFactory.ParserFacadeList {
+    val configuration = languageAndParserConfiguration
+    val result =
+      if (configuration is LanguageAndParserConfiguration.UserSpecifiedParser) {
+        AbstractParserFacadeFactory.ParserFacadeList(
+          defaultParserFacade = configuration.parserFacade,
+          otherParserFacades = ImmutableList.of(),
+        )
+      } else {
+        parserFacadeFactory.getParserFacadeListForOrNull(
+          reductionInputs.initiallyDeterminedMainDataKind,
+        )
+      }
+    checkNotNull(result) {
+      """
+        |$reductionInputs
+        |
+        |$languageAndParserConfiguration
+      """.trimMargin()
+    }
+    return result
+  }
+
+  abstract fun computeLanguageAndParserConfiguration(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): LanguageAndParserConfiguration
 
   protected abstract fun createAsyncReductionListenerManager(): AsyncReductionListenerManager
 
@@ -115,6 +164,19 @@ abstract class AbstractMain<
     )
   }
 
+  sealed class LanguageAndParserConfiguration {
+    object Automatic : LanguageAndParserConfiguration()
+
+    class UserSpecifiedLanguage(
+      val languageKind: LanguageKind,
+    ) : LanguageAndParserConfiguration()
+
+    class UserSpecifiedParser(
+      val languageKind: LanguageKind,
+      val parserFacade: AbstractParserFacadeFactory.ParserFacadeCreator,
+    ) : LanguageAndParserConfiguration()
+  }
+
   class ReductionDriverCreator<ReductionDriver : IReductionDriver>(
     val creator: () -> ReductionDriver,
     descriptor: () -> String,
@@ -124,25 +186,21 @@ abstract class AbstractMain<
     }
   }
 
-  protected abstract fun createSequenceOfReductionDriverCreators(
+  abstract fun createSequenceOfReductionDriverCreators(
     reductionInputs: ReductionInputs,
   ): Sequence<ReductionDriverCreator<ReductionDriver>>
 
-  protected open fun createExtFacadeFactory(): AbstractParserFacadeFactory {
-    return SingleParserFacadeFactory.createEmptyFactory()
-  }
+  protected open fun createExtFacadeFactory(): AbstractParserFacadeFactory =
+    SingleParserFacadeFactory.createEmptyFactory()
 
   override fun close() {
-    if (this::listenerManager.isInitialized) {
-      listenerManager.close()
-    }
+    listenerManager.close()
   }
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
 
-    fun createBuiltinParserFacadeFactory(): AbstractParserFacadeFactory {
-      return builderWithBuiltinLanguages().build()
-    }
+    fun createBuiltinParserFacadeFactory(): AbstractParserFacadeFactory =
+      builderWithBuiltinLanguages().build()
   }
 }

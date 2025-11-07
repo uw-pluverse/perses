@@ -28,7 +28,6 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class SerializationTest {
-
   private val tempDir = Files.createTempDirectory(this::class.java.simpleName)
 
   @OptIn(ExperimentalPathApi::class)
@@ -75,10 +74,11 @@ class SerializationTest {
   fun testJsonStringWithTypeReference() {
     val expected = listOf("a", "b", "c")
     val json = Serialization.toJsonString(expected)
-    val copy = Serialization.fromJsonString(
-      json,
-      Serialization.TYPE_REFERENCE_LIST_OF_STRINGS,
-    )
+    val copy =
+      Serialization.fromJsonString(
+        json,
+        Serialization.TYPE_REFERENCE_LIST_OF_STRINGS,
+      )
     assertThat(copy).isEqualTo(expected)
   }
 
@@ -90,7 +90,12 @@ class SerializationTest {
     assertThat(data).isEqualTo(copy)
   }
 
-  data class TestData(val a: String, val b: Int)
+  data class TestData(
+    val a: String,
+    val b: Int,
+  )
 
-  data class ParentTestData(val data: TestData)
+  data class ParentTestData(
+    val data: TestData,
+  )
 }

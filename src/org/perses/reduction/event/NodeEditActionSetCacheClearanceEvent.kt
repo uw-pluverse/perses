@@ -19,5 +19,4 @@ package org.perses.reduction.event
 class NodeEditActionSetCacheClearanceEvent(
   currentTimeMillis: Long,
   val originalEntrySize: Int,
-) :
-  AbstractReductionEvent(currentTimeMillis)
+) : AbstractReductionEvent(currentTimeMillis)

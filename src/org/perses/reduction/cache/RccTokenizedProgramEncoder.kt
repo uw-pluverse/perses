@@ -17,7 +17,7 @@
 package org.perses.reduction.cache
 
 import it.unimi.dsi.fastutil.ints.IntArrayList
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.util.Util.lazyAssert
 import org.perses.util.Util.nextOrNull
@@ -27,9 +27,8 @@ class RccTokenizedProgramEncoder(
   profiler: AbstractQueryCacheProfiler,
   enableCompression: Boolean,
 ) : AbstractRccLinearScanEncoder(baseProgram, profiler, enableCompression) {
-
   public override fun encodeUncompressed(
-    tokenIterator: Iterator<PersesToken>,
+    tokenIterator: Iterator<PersesTokenFactory.AbstractPersesToken>,
     tokenCount: Int,
   ): IntArrayList? {
     val intervals = IntArrayList(DEFAULT_INTERVAL_CAPACITY)
@@ -38,18 +37,19 @@ class RccTokenizedProgramEncoder(
     lazyAssert { persesLexemeIdArray.maxLogicalSize >= baseProgram.tokens.size }
     lazyAssert { persesLexemeIdArray.logicalSize == baseProgram.tokens.size }
 
-    var currentTokenHolder: PersesToken?
+    var currentTokenHolder: PersesTokenFactory.AbstractPersesToken?
     currentTokenHolder = tokenIterator.nextOrNull()
     var origIndex = 0
     while (currentTokenHolder != null) {
       val currentPersesLexemeId = currentTokenHolder.persesLexemeId
       // Search for start of the internal.
-      origIndex = searchForLexemeId(
-        origIndex,
-        origTokenCount,
-        currentPersesLexemeId,
-        persesLexemeIdInOrigin,
-      )
+      origIndex =
+        searchForLexemeId(
+          origIndex,
+          origTokenCount,
+          currentPersesLexemeId,
+          persesLexemeIdInOrigin,
+        )
       if (origIndex == NOT_FOUND) {
         return null
       }

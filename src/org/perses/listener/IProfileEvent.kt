@@ -24,10 +24,10 @@ interface IProfileEvent : Serializable {
   abstract class AbstractProfileEvent protected constructor(
     val programSize: Int,
     val isStartEvent: Boolean,
-  ) :
-    IProfileEvent {
-    val eventId: Int = ++EVENT_ID_SEQ
+  ) : IProfileEvent {
+    val eventId: Int = ++eventIdSequence
     override val timeInMilliseconds: Long = System.currentTimeMillis()
+
     override fun toString(): String {
       val klassName = this::class.java.simpleName
       return buildString {
@@ -42,24 +42,32 @@ interface IProfileEvent : Serializable {
     protected abstract fun specificPropertiesToString(builder: StringBuilder)
 
     companion object {
-      private var EVENT_ID_SEQ = -1
+      private var eventIdSequence = -1
     }
   }
 
-  class FixpointIterationEvent(programSize: Int, isStartEvent: Boolean) :
-    AbstractProfileEvent(programSize, isStartEvent) {
+  class FixpointIterationEvent(
+    programSize: Int,
+    isStartEvent: Boolean,
+  ) : AbstractProfileEvent(programSize, isStartEvent) {
     override fun specificPropertiesToString(builder: StringBuilder) {}
   }
 
-  class LevelReductionEvent(programSize: Int, isStartEvent: Boolean, val level: Int) :
-    AbstractProfileEvent(programSize, isStartEvent) {
+  class LevelReductionEvent(
+    programSize: Int,
+    isStartEvent: Boolean,
+    val level: Int,
+  ) : AbstractProfileEvent(programSize, isStartEvent) {
     override fun specificPropertiesToString(builder: StringBuilder) {
       builder.append("level=").append(level).append('\t')
     }
   }
 
-  class GranularityEvent(programSize: Int, isStartEvent: Boolean, val granularity: Int) :
-    AbstractProfileEvent(programSize, isStartEvent) {
+  class GranularityEvent(
+    programSize: Int,
+    isStartEvent: Boolean,
+    val granularity: Int,
+  ) : AbstractProfileEvent(programSize, isStartEvent) {
     override fun specificPropertiesToString(builder: StringBuilder) {
       builder.append("granularity=").append(granularity).append('\t')
     }

@@ -25,7 +25,6 @@ kt_jvm_library(
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:guava",
-        "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
     ],
@@ -51,15 +50,6 @@ kt_jvm_library(
     ],
     deps = [
         ":antlr_grammar_info",
-        ":util",
-        "//:antlr_runtime",
-        "//:antlr_tool",
-        "//:flogger",
-        "//:guava",
-        "//antlropt/src/org/perses/antlr:enum_rule_type",
-        "//antlropt/src/org/perses/antlr/ast",
-        "//antlropt/src/org/perses/antlr/ast:ast_builder",
-        "//src/org/perses/antlr:antlr_grammar_parser",
         "//src/org/perses/antlr/protobuf:grammar_hierarchy_java_proto",
         "@maven//:org_antlr_antlr_runtime",
     ],
@@ -72,12 +62,7 @@ kt_jvm_library(
         ":abstract_grammar_stub",
         "//:guava",
         "//antlropt/src/org/perses/antlr/ast",
-        "//antlropt/src/org/perses/antlr/ast:ast_builder",
-        "//antlropt/src/org/perses/antlr/util",
-        "//antlropt/src/org/perses/antlr/util:antlr_tool_wrapper",
-        "//src/org/perses/program:source_file",
         "//src/org/perses/util",
-        "//src/org/perses/util:file_name_content_pair",
         "//src/org/perses/util/java",
     ],
 )
@@ -89,15 +74,14 @@ kt_jvm_library(
     ],
     deps = [
         "//:antlr_runtime",
-        "//:antlr_tool",
     ],
 )
 
 kt_jvm_library(
     name = "meta_token_info_db",
     srcs = [
-        "LexerRuleNameAndTypeMapping.kt",
         "MetaTokenInfoDB.kt",
+        "TokenNameAndTokenTypeMapping.kt",
     ],
     deps = [
         ":antlr_type_wrappers",
@@ -115,9 +99,6 @@ kt_jvm_library(
         "AbstractGrammarStubFactory.kt",
     ],
     deps = [
-        "//:guava",
-        "//antlropt/src/org/perses/antlr/ast",
-        "//src/org/perses/util:file_name_content_pair",
     ],
 )
 

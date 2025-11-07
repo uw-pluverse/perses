@@ -25,7 +25,6 @@ import java.lang.RuntimeException
 
 @RunWith(JUnit4::class)
 class VerbosityFlagsTest {
-
   @Test
   fun testInvalidValueTriggersException() {
     val flags = VerbosityFlagGroup()

@@ -21,15 +21,21 @@ import org.perses.util.shell.CmdOutput
 import java.io.File
 
 interface ICompilerCrashDetector {
-
   fun detectCrash(cmdOutput: CmdOutput): AbstractResult
 
-  fun detectCrash(stderr: String, exitCodeForCrash: Int = 101): AbstractResult
+  fun detectCrash(
+    stderr: String,
+    exitCodeForCrash: Int = 101,
+  ): AbstractResult
 
-  fun detectCrash(stderr: List<String>, exitCodeForCrash: Int = 101): AbstractResult
+  fun detectCrash(
+    stderr: List<String>,
+    exitCodeForCrash: Int = 101,
+  ): AbstractResult
 
-  data class CrashSignature(val elements: ImmutableList<String>) {
-
+  data class CrashSignature(
+    val elements: ImmutableList<String>,
+  ) {
     fun isNotEmpty() = elements.isNotEmpty()
 
     fun isEmpty() = elements.isEmpty()
@@ -38,32 +44,31 @@ interface ICompilerCrashDetector {
       file.writeText(toString())
     }
 
-    override fun toString() =
-      elements.joinToString(separator = "\n")
+    override fun toString() = elements.joinToString(separator = "\n")
 
     companion object {
+      fun build(strings: Iterable<String>) = CrashSignature(ImmutableList.copyOf(strings))
 
-      fun build(strings: Iterable<String>) =
-        CrashSignature(ImmutableList.copyOf(strings))
-
-      fun readFrom(file: File) = CrashSignature(
-        file
-          .readLines()
-          .asSequence()
-          .map { it.trim() }
-          .filter { it.isNotBlank() }
-          .fold(
-            ImmutableList.builder<String>(),
-            { builder, line ->
-              builder.add(line)
-            },
-          ).build(),
-      )
+      fun readFrom(file: File) =
+        CrashSignature(
+          file
+            .readLines()
+            .asSequence()
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
+            .fold(
+              ImmutableList.builder<String>(),
+              { builder, line ->
+                builder.add(line)
+              },
+            ).build(),
+        )
     }
   }
 
-  abstract class AbstractResult(val crashDetectorClass: Class<in ICompilerCrashDetector>) {
-
+  abstract class AbstractResult(
+    val crashDetectorClass: Class<in ICompilerCrashDetector>,
+  ) {
     init {
       assert(
         Class.forName(crashDetectorClass.canonicalName).getConstructor().newInstance() != null,
@@ -79,7 +84,6 @@ interface ICompilerCrashDetector {
       val exitCode: Int,
       val signature: CrashSignature,
     ) : AbstractResult(crashDetectorClass) {
-
       override fun isCrashDetected() = true
 
       init {
@@ -105,8 +109,9 @@ interface ICompilerCrashDetector {
       }
     }
 
-    class NonCrashResult(crashDetectorClass: Class<in ICompilerCrashDetector>) :
-      AbstractResult(crashDetectorClass) {
+    class NonCrashResult(
+      crashDetectorClass: Class<in ICompilerCrashDetector>,
+    ) : AbstractResult(crashDetectorClass) {
       override fun isCrashDetected() = false
     }
   }

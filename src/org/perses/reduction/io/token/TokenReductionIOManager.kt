@@ -34,36 +34,36 @@ class TokenReductionIOManager(
   outputManagerFactory: AbstractTokenOutputManagerFactory,
   outputDirectory: Path?,
 ) : AbstractReductionIOManager<TokenizedProgram, LanguageKind, TokenReductionIOManager>(
-  workingFolder,
-  reductionInputs,
-  outputManagerFactory,
-  outputDirectory,
-) {
-
+    workingFolder,
+    reductionInputs,
+    outputManagerFactory,
+    outputDirectory,
+  ) {
   private val concreteOutputManagerFactory: AbstractTokenOutputManagerFactory
     get() = outputManagerFactory as AbstractTokenOutputManagerFactory
 
   fun updateBestResultInOrigFormat(program: TokenizedProgram) {
-    concreteOutputManagerFactory.createManagerFor(
-      program,
-      reductionInputs.initiallyDeterminedMainDataKind.origCodeFormatControl,
-    ).write(resultFolder)
+    concreteOutputManagerFactory
+      .createManagerFor(
+        program,
+        reductionInputs.initiallyDeterminedMainDataKind.origCodeFormatControl,
+      ).write(resultFolder)
   }
 
-  fun readAndTrimAllBestFiles(): ImmutableList<FileNameContentLinesPair> {
-    return readAndTrimOutputFiles(resultFolder)
-  }
+  fun readAndTrimAllBestFiles(): ImmutableList<FileNameContentLinesPair> =
+    readAndTrimOutputFiles(resultFolder)
 
   fun readAndTrimOutputFiles(
     reductionFolder: ReductionFolder,
-  ): ImmutableList<FileNameContentLinesPair> {
-    return reductionInputs.sequenceOfMutableFiles()
+  ): ImmutableList<FileNameContentLinesPair> =
+    reductionInputs
+      .sequenceOfMutableFiles()
       .map {
         FileNameContentLinesPair.createFromFile(
           file = reductionFolder.folder.resolve(it.relativePath),
         )
-      }.toImmutableList().also { check(it.isNotEmpty()) }
-  }
+      }.toImmutableList()
+      .also { check(it.isNotEmpty()) }
 
   fun readBestMainFile(): String {
     val concreteInputs = getConcreteReductionInputs()
@@ -85,7 +85,7 @@ class TokenReductionIOManager(
     LanguageKind,
     SourceFile,
     *,
-    > {
+  > {
     @Suppress("UNCHECKED_CAST")
     return reductionInputs as AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>
   }

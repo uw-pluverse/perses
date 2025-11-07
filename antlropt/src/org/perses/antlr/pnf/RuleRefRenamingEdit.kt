@@ -28,7 +28,6 @@ class RuleRefRenamingEdit(
   private val oldName: RuleNameHandle,
   private val newName: RuleNameHandle,
 ) : AstEdit() {
-
   init {
     require(oldName.ruleName != newName.ruleName) {
       "$oldName, $newName"
@@ -55,7 +54,6 @@ class RuleRefRenamingEdit(
   }
 
   companion object {
-
     fun renameDefMap(
       defMap: MutableGrammar,
       oldName: RuleNameHandle,
@@ -66,9 +64,10 @@ class RuleRefRenamingEdit(
       defMap.ruleNameAltPairSequence().forEach { (ruleName, alt) ->
         when (val decision = edit.apply(alt)) {
           is TransformDecision.Keep -> Unit // Do nothing
-          is TransformDecision.Replace -> ruleEditTriples.add(
-            RuleEditTriple(ruleName, alt, decision.newValue),
-          )
+          is TransformDecision.Replace ->
+            ruleEditTriples.add(
+              RuleEditTriple(ruleName, alt, decision.newValue),
+            )
           else -> TODO(decision.toString())
         }
       }

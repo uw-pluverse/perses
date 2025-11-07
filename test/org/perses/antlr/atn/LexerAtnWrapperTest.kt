@@ -23,22 +23,68 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.antlr.TokenType
 import org.perses.antlr.toTokenType
+import org.perses.grammar.jackson.JacksonParserFacade
+import org.perses.grammar.python3.Python3Lexer
 import org.perses.grammar.rust.PnfRustLexer
 import org.perses.util.Util
 
 @RunWith(JUnit4::class)
 class LexerAtnWrapperTest {
+  val c = LexerAtnWrapper.createLexerWrapperFromLexerClass(OrigCLexer::class.java)
+  val rust = LexerAtnWrapper.createLexerWrapperFromLexerClass(PnfRustLexer::class.java)
+  val test = LexerAtnWrapper.createLexerWrapperFromLexerClass(TestLexer::class.java)
+  val javascript = LexerAtnWrapper.createLexerWrapperFromLexerClass(TestJavaScriptLexer::class.java)
+  val python = LexerAtnWrapper.createLexerWrapperFromLexerClass(Python3Lexer::class.java)
 
-  val c = LexerAtnWrapper(OrigCLexer::class.java)
-  val rust = LexerAtnWrapper(PnfRustLexer::class.java)
-  val test = LexerAtnWrapper(TestLexer::class.java)
-  val javascript = LexerAtnWrapper(TestJavaScriptLexer::class.java)
+  // TODO(cnsun): this needs improvement. The graph traversal has a bug.
+  @Test
+  fun testGetAcyclicPathsToGenerateGivenTokenType() {
+    val result =
+      python.getAcyclicPathsToGenerateGivenTokenType(Python3Lexer.NEWLINE.toTokenType())
+    assertThat(result).isNotEmpty()
+  }
+
+  @Test
+  fun testGenerateCandidateCanonicalTokenTestsGivenTokenType() {
+    val result =
+      python.generateCandidateCanonicalTokenTextsGivenTokenType(
+        ruleType = TokenType(Python3Lexer.NEWLINE),
+        countLimit = 2,
+      )
+    assertThat(result).containsExactly("\n", " ")
+  }
+
+  @Test
+  fun testHasInformationForTokenFalse() {
+    val wrapper = JacksonParserFacade().lexerAtnWrapper
+    val tokens = wrapper.metaTokenInfoDB.tokens
+    tokens.forEach { token ->
+      assertThat(wrapper.hasInformationForToken(token.tokenType)).isFalse()
+    }
+    assertThat(wrapper.hasInformationForToken(100000.toTokenType())).isFalse()
+    assertThat(wrapper.hasInformationForToken(999999.toTokenType())).isFalse()
+  }
+
+  @Test
+  fun testHasInformationForTokenTrue() {
+    val wrapper = python
+    listOf(Python3Lexer.FOR, Python3Lexer.IF, Python3Lexer.WHILE)
+      .map { it.toTokenType() }
+      .forEach {
+        assertThat(wrapper.hasInformationForToken(it)).isTrue()
+      }
+    assertThat(wrapper.hasInformationForToken(Python3Lexer.INDENT.toTokenType())).isFalse()
+    assertThat(wrapper.hasInformationForToken(Python3Lexer.DEDENT.toTokenType())).isFalse()
+  }
 
   @Test
   fun test() {
-    c.metaTokenInfoDB.asSequence()
-      .zip(c.metaTokenInfoDB.asSequence()).forEach { (first, second) ->
+    c.metaTokenInfoDB
+      .asSequence()
+      .zip(c.metaTokenInfoDB.asSequence())
+      .forEach { (first, second) ->
         println("$first, $second")
         try {
           c.canBeConcatWithoutSpace(first.tokenType, second.tokenType)
@@ -54,13 +100,15 @@ class LexerAtnWrapperTest {
         }
       }
     val klasses = HashSet<Class<*>>()
-    val bytes = MemoryMeasurer.measureBytes(c) {
-      val klass = it::class.java
-      klasses.add(klass)
-      true
-    }.toInt()
+    val bytes =
+      MemoryMeasurer
+        .measureBytes(c) {
+          val klass = it::class.java
+          klasses.add(klass)
+          true
+        }
     klasses.sortedBy { it.canonicalName }.forEach { println(it) }
-    assertThat(bytes).isLessThan(Util.SpaceSize.megaBytes(11).bytes)
+    assertThat(bytes).isLessThan(Util.SpaceSize.megaBytes(11L).bytes)
   }
 
   @Ignore("The current algorithm does not handle non-greedy matching.")
@@ -82,10 +130,11 @@ class LexerAtnWrapperTest {
 
   @Test
   fun testJavaScriptStringLiteral() {
-    val atnPath = javascript.findATNPathForLexeme(
-      lexeme = "''",
-      ruleType = javascript.metaTokenInfoDB.getTokenInfoWithName("StringLiteral")!!.tokenType,
-    )
+    val atnPath =
+      javascript.findATNPathForLexeme(
+        lexeme = "''",
+        ruleType = javascript.metaTokenInfoDB.getTokenInfoWithName("StringLiteral")!!.tokenType,
+      )!!
     assertThat(atnPath.stateSequence).isNotEmpty()
   }
 

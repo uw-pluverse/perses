@@ -18,12 +18,10 @@ package org.perses.reduction.cache
 
 abstract class AbstractProgramEncoding<T : AbstractProgramEncoding<T>>(
   protected val hashcode: Int,
-  val tokenCount: Int, // TODO: check if tokenCount needs to be 'internal'
+  // TODO: check if tokenCount needs to be 'internal',
+  val tokenCount: Int,
 ) {
-
-  override fun hashCode(): Int {
-    return hashcode
-  }
+  override fun hashCode(): Int = hashcode
 
   override fun equals(other: Any?): Boolean {
     if (this === other) {

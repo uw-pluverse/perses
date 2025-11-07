@@ -23,28 +23,28 @@ import org.perses.reduction.ReducerContext
 class LLMBasedLoopUnrollingReducer(
   reducerContext: ReducerContext,
 ) : AbstractLLMBasedReducer(META, reducerContext) {
-
-  override val primaryQuestion: String = """
+  override val primaryQuestion: String =
+    """
     |Given the following program, identify all loop structures.
     |Please write the identified lines (just copy the first line of code from this loop,
     |e.g., for (xxx) {, while (xxx) {.) into a list.
     |If no loop is identified, just give an empty list.
-  """.trimMargin()
+    """.trimMargin()
 
-  override val followupQuestion: String = """
+  override val followupQuestion: String =
+    """
     |Given the following program and the first line of a loop, optimize it out via loop unrolling.
-  """.trimMargin()
+    """.trimMargin()
 
   object META : AbstractLLMReducerAnnotation(
     shortName = NAME,
     description = "Invoke LLMs for loop unrolling.",
-    deterministic = false,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(LLMBasedLoopUnrollingReducer(reducerContext))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(LLMBasedLoopUnrollingReducer(reducerContext))
   }
+
   companion object {
     const val NAME = "llm_based_loop_unrolling_reducer"
   }

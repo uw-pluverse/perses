@@ -17,5 +17,6 @@
 package org.perses.listminimizer.localexhaust
 
 enum class EnumOperation {
-  KEEP, DELETE
+  KEEP,
+  DELETE,
 }

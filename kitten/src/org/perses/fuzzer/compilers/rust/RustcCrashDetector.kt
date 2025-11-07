@@ -19,7 +19,6 @@ package org.perses.fuzzer.compilers.rust
 import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 
 class RustcCrashDetector : AbstractCompilerCrashDetector() {
-
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
     val nonBlankLines = stderr.filter { it.isNotBlank() }
     val rawSignatures = ArrayList<String>()
@@ -40,8 +39,9 @@ class RustcCrashDetector : AbstractCompilerCrashDetector() {
           rawSignatures.add(line)
         }
         line.contains(KEYWORD_INTERNAL_COMPILER_ERROR) -> {
-          val startIndex = line.indexOf(KEYWORD_INTERNAL_COMPILER_ERROR).also { check(it >= 0) } +
-            KEYWORD_INTERNAL_COMPILER_ERROR.length
+          val startIndex =
+            line.indexOf(KEYWORD_INTERNAL_COMPILER_ERROR).also { check(it >= 0) } +
+              KEYWORD_INTERNAL_COMPILER_ERROR.length
           val nextColon = line.indexOf(':', startIndex)
           if (nextColon < 0) {
             rawSignatures.add(line)

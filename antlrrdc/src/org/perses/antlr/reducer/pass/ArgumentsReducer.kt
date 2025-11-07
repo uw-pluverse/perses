@@ -32,21 +32,18 @@ class ArgumentsReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractParserRuleAttributeReducer(
-  nameAndDesc = object : AbstractReducerNameAndDesc(
-    shortName = ArgumentsReducer::class.simpleName!!,
-    description = "",
-  ) {},
-  ioManager = ioManager,
-  testScriptExecutorService = testScriptExecutorService,
-) {
+    nameAndDesc =
+      object : AbstractReducerNameAndDesc(
+        shortName = ArgumentsReducer::class.simpleName!!,
+        description = "",
+      ) {},
+    ioManager = ioManager,
+    testScriptExecutorService = testScriptExecutorService,
+  ) {
+  override fun hasAttribute(attributes: ParserRuleAttributes): Boolean = attributes.hasArguments()
 
-  override fun hasAttribute(attributes: ParserRuleAttributes): Boolean {
-    return attributes.hasArguments()
-  }
-
-  override fun removeAttribute(attributes: ParserRuleAttributes): ParserRuleAttributes {
-    return attributes.copyWithArguments(null)
-  }
+  override fun removeAttribute(attributes: ParserRuleAttributes): ParserRuleAttributes =
+    attributes.copyWithArguments(null)
 
   override fun createNewGrammarWithNewDef(
     bestProgram: PersesGrammar,
@@ -58,9 +55,9 @@ class ArgumentsReducer(
     return editor.bottomUpApply(tempGrammar)
   }
 
-  class RuleRefArgumentsRemover(val ruleName: RuleNameRegistry.RuleNameHandle) :
-    AbstractAstEditor() {
-
+  class RuleRefArgumentsRemover(
+    val ruleName: RuleNameRegistry.RuleNameHandle,
+  ) : AbstractAstEditor() {
     override fun visit(
       ast: PersesRuleReferenceAst,
       newChildren: ImmutableList<AbstractPersesRuleElement>,

@@ -1,0 +1,3770 @@
+=====================Reduction starts.======================
+
+The initial program size is 56
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: false
+versionFlags:
+  groupName: "Version"
+  version: false
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFile: "t.c"
+  deps: []
+  sourceFile: "t.c"
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_with_designated_parser_facade_golden_test_node_priority-dfs_t.c"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  reductionAlgorithm: "node_priority-dfs"
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  enableLineSlicer: false
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: "org.perses.grammar.c.CParserFacade"
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "_reduction_with_designated_parser_facade_golden_test_by_default_progress.txt"
+  appendToProgressDumpFile: true
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  nodeActionSetCaching: true
+  queryCacheRefreshThreshold: 0
+  enableLightweightRefreshing: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+
+Parser Facade: class org.perses.grammar.c.CParserFacade
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 27
+(56/56)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
+
+
+(56/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
+
+The spar-tree is the following.
+translationUnit {id=1,slot_type=translationUnit}
+|___(+) {id=2,slot_type=kleene_plus__externalDeclaration}
+    |___(|:declaration) {id=219,slot_type=[externalDeclaration,declaration]}
+    |   |___(+) {id=220,slot_type=kleene_plus__declarationSpecifiers}
+    |   |   |___Token:int {id=253,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+    |   |___(?) {id=221,slot_type=optional__initDeclaratorList}
+    |   |   |___directDeclarator {id=226,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=227,slot_type=Identifier}
+    |   |       |___(*) {id=228,slot_type=kleene_star__directDeclaratorPart}
+    |   |           |___(|:directDeclaratorPart) {id=229,slot_type=directDeclaratorPart}
+    |   |               |___Token:( {id=230,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=231,slot_type=parameterTypeList}
+    |   |               |   |___parameterDeclaration {id=238,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=239,slot_type=kleene_plus__declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=250,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=248,slot_type=[declarationSpecifier,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=240,slot_type=optional__abstractDeclarator}
+    |   |               |   |       |___(+) {id=242,slot_type=[abstractDeclarator,kleene_plus__pointerPart]}
+    |   |               |   |           |___Token:* {id=244,slot_type=[pointerPart,Star]}
+    |   |               |   |___(?) {id=234,slot_type=optional__parameterTypeListPart}
+    |   |               |       |___parameterTypeListPart {id=235,slot_type=parameterTypeListPart}
+    |   |               |           |___Token:, {id=236,slot_type=Comma}
+    |   |               |           |___Token:... {id=237,slot_type=Ellipsis}
+    |   |               |___Token:) {id=232,slot_type=RightParen}
+    |   |___Token:; {id=222,slot_type=Semi}
+    |___functionDefinition {id=5,slot_type=[externalDeclaration,functionDefinition]}
+        |___(*) {id=6,slot_type=kleene_star__declarationSpecifiers}
+        |   |___Token:int {id=218,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |___directDeclarator {id=181,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=182,slot_type=Identifier}
+        |   |___(*) {id=183,slot_type=kleene_star__directDeclaratorPart}
+        |       |___(|:directDeclaratorPart) {id=184,slot_type=directDeclaratorPart}
+        |           |___Token:( {id=185,slot_type=LeftParen}
+        |           |___parameterList {id=188,slot_type=[parameterTypeList,parameterList]}
+        |           |   |___(+) {id=208,slot_type=[parameterDeclaration,kleene_plus__declarationSpecifiers]}
+        |           |   |   |___Token:int {id=215,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |           |   |   |___Token:argc {id=213,slot_type=[declarationSpecifier,typeSpecifier,typedefName,Identifier]}
+        |           |   |___(*) {id=190,slot_type=kleene_star__parameterListPart}
+        |           |       |___parameterListPart {id=191,slot_type=parameterListPart}
+        |           |           |___Token:, {id=192,slot_type=Comma}
+        |           |           |___parameterDeclaration {id=193,slot_type=parameterDeclaration}
+        |           |               |___(+) {id=194,slot_type=kleene_plus__declarationSpecifiers}
+        |           |               |   |___Token:char {id=207,slot_type=[declarationSpecifier,typeSpecifier,Char]}
+        |           |               |___declarator {id=195,slot_type=declarator}
+        |           |                   |___(*) {id=196,slot_type=kleene_star__pointerPart}
+        |           |                   |   |___Token:* {id=204,slot_type=[pointerPart,Star]}
+        |           |                   |___directDeclarator {id=197,slot_type=directDeclarator}
+        |           |                       |___Token:argv {id=198,slot_type=Identifier}
+        |           |                       |___(*) {id=199,slot_type=kleene_star__directDeclaratorPart}
+        |           |                           |___(|:directDeclaratorPart) {id=200,slot_type=directDeclaratorPart}
+        |           |                               |___Token:[ {id=201,slot_type=LeftBracket}
+        |           |                               |___Token:] {id=202,slot_type=RightBracket}
+        |           |___Token:) {id=187,slot_type=RightParen}
+        |___compoundStatement {id=8,slot_type=compoundStatement}
+            |___Token:{ {id=9,slot_type=LeftBrace}
+            |___(*) {id=10,slot_type=kleene_star__blockItem}
+            |   |___(|:declaration) {id=157,slot_type=[blockItem,declaration]}
+            |   |   |___(+) {id=158,slot_type=kleene_plus__declarationSpecifiers}
+            |   |   |   |___Token:int {id=180,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |   |   |___(?) {id=159,slot_type=optional__initDeclaratorList}
+            |   |   |   |___initDeclarator {id=162,slot_type=[initDeclaratorList,initDeclarator]}
+            |   |   |       |___Token:a {id=177,slot_type=[declarator,directDeclarator,Identifier]}
+            |   |   |       |___(?) {id=164,slot_type=optional__initDeclaratorPart}
+            |   |   |           |___initDeclaratorPart {id=165,slot_type=initDeclaratorPart}
+            |   |   |               |___Token:= {id=166,slot_type=Assign}
+            |   |   |               |___Token:1 {id=175,slot_type=[initializer,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression,primaryExpression,Constant]}
+            |   |   |___Token:; {id=160,slot_type=Semi}
+            |   |___(|:declaration) {id=124,slot_type=[blockItem,declaration]}
+            |   |   |___(+) {id=125,slot_type=kleene_plus__declarationSpecifiers}
+            |   |   |   |___Token:int {id=156,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+            |   |   |___(?) {id=126,slot_type=optional__initDeclaratorList}
+            |   |   |   |___initDeclarator {id=129,slot_type=[initDeclaratorList,initDeclarator]}
+            |   |   |       |___Token:b {id=153,slot_type=[declarator,directDeclarator,Identifier]}
+            |   |   |       |___(?) {id=131,slot_type=optional__initDeclaratorPart}
+            |   |   |           |___initDeclaratorPart {id=132,slot_type=initDeclaratorPart}
+            |   |   |               |___Token:= {id=133,slot_type=Assign}
+            |   |   |               |___nonAssignmentBinaryExpression {id=137,slot_type=[initializer,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression]}
+            |   |   |                   |___Token:a {id=151,slot_type=[castExpression,unaryExpression,postfixExpression,primaryExpression,Identifier]}
+            |   |   |                   |___(*) {id=139,slot_type=kleene_star__nonAssignmentBinaryExpressionPart}
+            |   |   |                       |___nonAssignmentBinaryExpressionPart {id=140,slot_type=nonAssignmentBinaryExpressionPart}
+            |   |   |                           |___Token:+ {id=147,slot_type=[binaryOperator,Plus]}
+            |   |   |                           |___Token:1 {id=146,slot_type=[castExpression,unaryExpression,postfixExpression,primaryExpression,Constant]}
+            |   |   |___Token:; {id=127,slot_type=Semi}
+            |   |___expressionStatement {id=87,slot_type=[blockItem,statement,expressionStatement]}
+            |   |   |___(?) {id=88,slot_type=optional__expression}
+            |   |   |   |___(|:postfixExpression) {id=96,slot_type=[expression,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression]}
+            |   |   |       |___Token:printf {id=123,slot_type=[postfixExpression,primaryExpression,Identifier]}
+            |   |   |       |___Token:( {id=98,slot_type=LeftParen}
+            |   |   |       |___(?) {id=99,slot_type=optional__argumentExpressionList}
+            |   |   |       |   |___argumentExpressionList {id=101,slot_type=argumentExpressionList}
+            |   |   |       |       |___(+) {id=120,slot_type=[assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression,primaryExpression,kleene_plus__StringLiteral]}
+            |   |   |       |       |   |___Token:"%d\n" {id=121,slot_type=StringLiteral}
+            |   |   |       |       |___(*) {id=103,slot_type=kleene_star__argumentExpressionListPart}
+            |   |   |       |           |___argumentExpressionListPart {id=104,slot_type=argumentExpressionListPart}
+            |   |   |       |               |___Token:, {id=105,slot_type=Comma}
+            |   |   |       |               |___Token:b {id=113,slot_type=[assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression,primaryExpression,Identifier]}
+            |   |   |       |___Token:) {id=100,slot_type=RightParen}
+            |   |   |___Token:; {id=89,slot_type=Semi}
+            |   |___expressionStatement {id=60,slot_type=[blockItem,statement,expressionStatement]}
+            |   |   |___(?) {id=61,slot_type=optional__expression}
+            |   |   |   |___(|:postfixExpression) {id=69,slot_type=[expression,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression]}
+            |   |   |       |___Token:printf {id=85,slot_type=[postfixExpression,primaryExpression,Identifier]}
+            |   |   |       |___Token:( {id=71,slot_type=LeftParen}
+            |   |   |       |___(?) {id=72,slot_type=optional__argumentExpressionList}
+            |   |   |       |   |___(+) {id=82,slot_type=[argumentExpressionList,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression,primaryExpression,kleene_plus__StringLiteral]}
+            |   |   |       |       |___Token:"hello\n" {id=83,slot_type=StringLiteral}
+            |   |   |       |___Token:) {id=73,slot_type=RightParen}
+            |   |   |___Token:; {id=62,slot_type=Semi}
+            |   |___expressionStatement {id=33,slot_type=[blockItem,statement,expressionStatement]}
+            |   |   |___(?) {id=34,slot_type=optional__expression}
+            |   |   |   |___(|:postfixExpression) {id=42,slot_type=[expression,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression]}
+            |   |   |       |___Token:printf {id=58,slot_type=[postfixExpression,primaryExpression,Identifier]}
+            |   |   |       |___Token:( {id=44,slot_type=LeftParen}
+            |   |   |       |___(?) {id=45,slot_type=optional__argumentExpressionList}
+            |   |   |       |   |___(+) {id=55,slot_type=[argumentExpressionList,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression,primaryExpression,kleene_plus__StringLiteral]}
+            |   |   |       |       |___Token:"world\n" {id=56,slot_type=StringLiteral}
+            |   |   |       |___Token:) {id=46,slot_type=RightParen}
+            |   |   |___Token:; {id=35,slot_type=Semi}
+            |   |___(|:jumpStatement) {id=19,slot_type=[blockItem,statement,jumpStatement]}
+            |       |___Token:return {id=20,slot_type=Return}
+            |       |___(?) {id=21,slot_type=optional__expression}
+            |       |   |___Token:0 {id=31,slot_type=[expression,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression,primaryExpression,Constant]}
+            |       |___Token:; {id=22,slot_type=Semi}
+            |___Token:} {id=11,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__externalDeclaration]remove whole except first
+    --file: t.c--
+    int printf(const char*, ...);
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:56/56=100.00%
+FixPt[1][node_priority-dfs][DFS](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__externalDeclaration]dd@2
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__externalDeclaration]dd@1
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+FixPt[1][node_priority-dfs][DFS](56/56)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=5}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+                  ;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+                  ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+                           ;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+                           ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+                      ;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+                      ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+                ;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+                ;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+         int a = 1;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+         int a = 1;
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+              int b = a + 1;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+              int b = a + 1;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=56==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Minimizer DfsListMinimizer starts. Input=[0-5]#6. Global ratio:56/56=100.00%
+FixPt[1][node_priority-dfs][DFS](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__blockItem]dd@6
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__blockItem]dd@3
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [3-5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__blockItem]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](56/56)  Try deleting [5]#1: Interesting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 11 --> 11.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 14
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 56 -> 53
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](53/56)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:53/56=94.64%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__blockItem]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](53/56)  Try deleting [4]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:53/56=94.64%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__blockItem]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](53/56)  Try deleting [3]#1: Interesting. Local ratio: 5/6=83.33%. Global ratio:53/56=94.64%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 12 --> 11.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 53 -> 48
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__blockItem]dd@3
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](48/56)  Try deleting [0-2]#3: Interesting. Local ratio: 4/6=66.67%. Global ratio:48/56=85.71%
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 11 --> 9.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 48 -> 29
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](29/56)  Minimizer DfsListMinimizer ends. Result=[4]#1. Local ratio: 1/6=16.67%. Global ratio:29/56=51.79%
+===================Node reduction is done===================
+
+Succeeded to reduce node 10 from 56 to 29
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int           argc                {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int           argc                {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 181
+------------------------------------------------------------
+
+
+=================Reducing node 219, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                                ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+                                ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 219
+------------------------------------------------------------
+
+
+=================Reducing node 183, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](29/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/56=51.79%
+FixPt[1][node_priority-dfs][DFS](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](29/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/56=51.79%
+FixPt[1][node_priority-dfs][DFS](29/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/56=51.79%
+===================Node reduction is done===================
+
+Failed to reduce node 183
+------------------------------------------------------------
+
+
+=================Reducing node 184, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=184}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 184
+------------------------------------------------------------
+
+
+=================Reducing node 221, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](29/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/56=51.79%
+FixPt[1][node_priority-dfs][DFS](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__initDeclaratorList]dd@1
+    --file: t.c--
+    int                         ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int                         ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](29/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/56=51.79%
+FixPt[1][node_priority-dfs][DFS](29/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/56=51.79%
+===================Node reduction is done===================
+
+Failed to reduce node 221
+------------------------------------------------------------
+
+
+=================Reducing node 226, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=226}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf                  ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 226
+------------------------------------------------------------
+
+
+=================Reducing node 188, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int                   ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int                   ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (    argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (    argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (          char        ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (          char        ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: pass=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (          char *argv[]) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (          char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 18 --> 17.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 13
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 29 -> 23
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 188 from 29 to 23
+------------------------------------------------------------
+
+
+=================Reducing node 228, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Testing the empty input. Global ratio:23/56=41.07%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__directDeclaratorPart]dd@1
+    --file: t.c--
+    int printf                  ;
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/56=41.07%
+===================Node reduction is done===================
+
+Failed to reduce node 228
+------------------------------------------------------------
+
+
+=================Reducing node 229, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=229}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 229
+------------------------------------------------------------
+
+
+=================Reducing node 231, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const           );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const           );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(      char      );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char      );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char      );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char      );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*     );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*     );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 231
+------------------------------------------------------------
+
+
+=================Reducing node 33, size=23==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 33
+------------------------------------------------------------
+
+
+=================Reducing node 34, size=23==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Testing the empty input. Global ratio:23/56=41.07%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/56=41.07%
+===================Node reduction is done===================
+
+Failed to reduce node 34
+------------------------------------------------------------
+
+
+=================Reducing node 42, size=23==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=42}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf           ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 42
+------------------------------------------------------------
+
+
+=================Reducing node 238, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const      , ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const      , ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(      char , ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char , ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char , ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char , ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 238
+------------------------------------------------------------
+
+
+=================Reducing node 239, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__declarationSpecifiers]remove whole except first
+    --file: t.c--
+    int printf(const     *, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const     *, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Testing the empty input. Global ratio:23/56=41.07%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__declarationSpecifiers]dd@2
+    --file: t.c--
+    int printf(          *, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(          *, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:23/56=41.07%
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=248}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:23/56=41.07%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__declarationSpecifiers]dd@1
+    --file: t.c--
+    int printf(      char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:23/56=41.07%
+===================Node reduction is done===================
+
+Failed to reduce node 239
+------------------------------------------------------------
+
+
+=================Reducing node 234, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Testing the empty input. Global ratio:23/56=41.07%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*     );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*     );
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/56=41.07%
+===================Node reduction is done===================
+
+Failed to reduce node 234
+------------------------------------------------------------
+
+
+=================Reducing node 235, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=235}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 235
+------------------------------------------------------------
+
+
+=================Reducing node 208, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc              ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int                   ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (int                   ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:23/56=41.07%
+FixPt[1][node_priority-dfs][DFS](23/56)  Testing the empty input. Global ratio:23/56=41.07%
+============Testing the following program: pass=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__declarationSpecifiers]dd@2
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](23/56)  Try deleting [0-1]#2: Interesting. Local ratio: 2/2=100.00%. Global ratio:23/56=41.07%
+===========TestScriptExecutionCacheEntryEviction============
+
+12 entries are removed: 32 --> 20.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 20
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 23 -> 21
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[]#0. Local ratio: 0/2=0.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Succeeded to reduce node 208 from 23 to 21
+------------------------------------------------------------
+
+
+=================Reducing node 250, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 250
+------------------------------------------------------------
+
+
+=================Reducing node 248, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 248
+------------------------------------------------------------
+
+
+=================Reducing node 240, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[1][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__abstractDeclarator]dd@1
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[1][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 240
+------------------------------------------------------------
+
+
+=================Reducing node 242, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=242}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 242
+------------------------------------------------------------
+
+
+=================Reducing node 244, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 244
+------------------------------------------------------------
+
+
+=================Reducing node 237, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 237
+------------------------------------------------------------
+
+
+=================Reducing node 236, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 236
+------------------------------------------------------------
+
+
+=================Reducing node 232, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 232
+------------------------------------------------------------
+
+
+=================Reducing node 230, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 230
+------------------------------------------------------------
+
+
+=================Reducing node 227, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 227
+------------------------------------------------------------
+
+
+=================Reducing node 222, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 222
+------------------------------------------------------------
+
+
+=================Reducing node 220, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 220
+------------------------------------------------------------
+
+
+=================Reducing node 253, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 253
+------------------------------------------------------------
+
+
+=================Reducing node 187, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 187
+------------------------------------------------------------
+
+
+=================Reducing node 185, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 185
+------------------------------------------------------------
+
+
+=================Reducing node 182, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 182
+------------------------------------------------------------
+
+
+=================Reducing node 58, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 58
+------------------------------------------------------------
+
+
+=================Reducing node 46, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 46
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[1][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__argumentExpressionList]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[1][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 55, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=55}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 55
+------------------------------------------------------------
+
+
+=================Reducing node 56, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 56
+------------------------------------------------------------
+
+
+=================Reducing node 44, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 44
+------------------------------------------------------------
+
+
+=================Reducing node 35, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=21==================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[1][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__declarationSpecifiers]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[1][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+=================Reducing node 218, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 218
+------------------------------------------------------------
+
+
+(21/56)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 2. Reducer: node_priority-dfs======
+
+The spar-tree is the following.
+translationUnit {id=255,slot_type=translationUnit}
+|___(+) {id=256,slot_type=kleene_plus__externalDeclaration}
+    |___(|:declaration) {id=303,slot_type=[externalDeclaration,declaration]}
+    |   |___(+) {id=304,slot_type=kleene_plus__declarationSpecifiers}
+    |   |   |___Token:int {id=337,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+    |   |___(?) {id=305,slot_type=optional__initDeclaratorList}
+    |   |   |___directDeclarator {id=310,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=311,slot_type=Identifier}
+    |   |       |___(*) {id=312,slot_type=kleene_star__directDeclaratorPart}
+    |   |           |___(|:directDeclaratorPart) {id=313,slot_type=directDeclaratorPart}
+    |   |               |___Token:( {id=314,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=315,slot_type=parameterTypeList}
+    |   |               |   |___parameterDeclaration {id=322,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=323,slot_type=kleene_plus__declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=334,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=332,slot_type=[declarationSpecifier,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=324,slot_type=optional__abstractDeclarator}
+    |   |               |   |       |___(+) {id=326,slot_type=[abstractDeclarator,kleene_plus__pointerPart]}
+    |   |               |   |           |___Token:* {id=328,slot_type=[pointerPart,Star]}
+    |   |               |   |___(?) {id=318,slot_type=optional__parameterTypeListPart}
+    |   |               |       |___parameterTypeListPart {id=319,slot_type=parameterTypeListPart}
+    |   |               |           |___Token:, {id=320,slot_type=Comma}
+    |   |               |           |___Token:... {id=321,slot_type=Ellipsis}
+    |   |               |___Token:) {id=316,slot_type=RightParen}
+    |   |___Token:; {id=306,slot_type=Semi}
+    |___functionDefinition {id=259,slot_type=[externalDeclaration,functionDefinition]}
+        |___(*) {id=260,slot_type=kleene_star__declarationSpecifiers}
+        |   |___Token:int {id=302,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |___directDeclarator {id=294,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=295,slot_type=Identifier}
+        |   |___(*) {id=296,slot_type=kleene_star__directDeclaratorPart}
+        |       |___(|:directDeclaratorPart) {id=297,slot_type=directDeclaratorPart}
+        |           |___Token:( {id=298,slot_type=LeftParen}
+        |           |___Token:) {id=299,slot_type=RightParen}
+        |___compoundStatement {id=262,slot_type=compoundStatement}
+            |___Token:{ {id=263,slot_type=LeftBrace}
+            |___(*) {id=264,slot_type=kleene_star__blockItem}
+            |   |___expressionStatement {id=268,slot_type=[blockItem,statement,expressionStatement]}
+            |       |___(?) {id=269,slot_type=optional__expression}
+            |       |   |___(|:postfixExpression) {id=277,slot_type=[expression,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression]}
+            |       |       |___Token:printf {id=293,slot_type=[postfixExpression,primaryExpression,Identifier]}
+            |       |       |___Token:( {id=279,slot_type=LeftParen}
+            |       |       |___(?) {id=280,slot_type=optional__argumentExpressionList}
+            |       |       |   |___(+) {id=290,slot_type=[argumentExpressionList,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression,primaryExpression,kleene_plus__StringLiteral]}
+            |       |       |       |___Token:"world\n" {id=291,slot_type=StringLiteral}
+            |       |       |___Token:) {id=281,slot_type=RightParen}
+            |       |___Token:; {id=270,slot_type=Semi}
+            |___Token:} {id=265,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+=================Reducing node 256, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=259}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__externalDeclaration]dd@1
+    --file: t.c--
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 256
+------------------------------------------------------------
+
+
+=================Reducing node 259, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=259}
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+                      ;
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+                      ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 259
+------------------------------------------------------------
+
+
+=================Reducing node 303, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=303}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                                ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+                                ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 303
+------------------------------------------------------------
+
+
+=================Reducing node 305, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__initDeclaratorList]dd@1
+    --file: t.c--
+    int                         ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int                         ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 305
+------------------------------------------------------------
+
+
+=================Reducing node 310, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=310}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 310
+------------------------------------------------------------
+
+
+=================Reducing node 312, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 312
+------------------------------------------------------------
+
+
+=================Reducing node 313, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=313}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 313
+------------------------------------------------------------
+
+
+=================Reducing node 262, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 262
+------------------------------------------------------------
+
+
+=================Reducing node 315, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const           );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const           );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(      char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char      );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 315
+------------------------------------------------------------
+
+
+=================Reducing node 264, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__blockItem]dd@1
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 264
+------------------------------------------------------------
+
+
+=================Reducing node 268, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=268}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 268
+------------------------------------------------------------
+
+
+=================Reducing node 269, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 269
+------------------------------------------------------------
+
+
+=================Reducing node 277, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=277}
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+            "world\n" ;
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+            "world\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 277
+------------------------------------------------------------
+
+
+=================Reducing node 322, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(const      , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const      , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int printf(      char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 322
+------------------------------------------------------------
+
+
+=================Reducing node 294, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 294
+------------------------------------------------------------
+
+
+=================Reducing node 323, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+============Testing the following program: fail=============
+
+// edit action set type: [kleene_plus:kleene_plus__declarationSpecifiers]remove whole except first
+    --file: t.c--
+    int printf(const     *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const     *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__declarationSpecifiers]dd@2
+    --file: t.c--
+    int printf(          *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(          *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=332}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__declarationSpecifiers]dd@1
+    --file: t.c--
+    int printf(      char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(      char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 323
+------------------------------------------------------------
+
+
+=================Reducing node 318, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 318
+------------------------------------------------------------
+
+
+=================Reducing node 319, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=319}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 319
+------------------------------------------------------------
+
+
+=================Reducing node 296, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 296
+------------------------------------------------------------
+
+
+=================Reducing node 297, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=297}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 297
+------------------------------------------------------------
+
+
+=================Reducing node 334, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 334
+------------------------------------------------------------
+
+
+=================Reducing node 332, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 332
+------------------------------------------------------------
+
+
+=================Reducing node 324, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 324
+------------------------------------------------------------
+
+
+=================Reducing node 326, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=326}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 326
+------------------------------------------------------------
+
+
+=================Reducing node 328, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 328
+------------------------------------------------------------
+
+
+=================Reducing node 321, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 321
+------------------------------------------------------------
+
+
+=================Reducing node 320, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 320
+------------------------------------------------------------
+
+
+=================Reducing node 316, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 316
+------------------------------------------------------------
+
+
+=================Reducing node 314, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 314
+------------------------------------------------------------
+
+
+=================Reducing node 311, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 311
+------------------------------------------------------------
+
+
+=================Reducing node 306, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 306
+------------------------------------------------------------
+
+
+=================Reducing node 304, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 304
+------------------------------------------------------------
+
+
+=================Reducing node 337, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 337
+------------------------------------------------------------
+
+
+=================Reducing node 299, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 299
+------------------------------------------------------------
+
+
+=================Reducing node 298, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 298
+------------------------------------------------------------
+
+
+=================Reducing node 295, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 295
+------------------------------------------------------------
+
+
+=================Reducing node 293, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 293
+------------------------------------------------------------
+
+
+=================Reducing node 281, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 281
+------------------------------------------------------------
+
+
+=================Reducing node 280, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 280
+------------------------------------------------------------
+
+
+=================Reducing node 290, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    NodeDeletionAction{target_node=290}
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 290
+------------------------------------------------------------
+
+
+=================Reducing node 291, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 291
+------------------------------------------------------------
+
+
+=================Reducing node 279, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 279
+------------------------------------------------------------
+
+
+=================Reducing node 270, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 270
+------------------------------------------------------------
+
+
+=================Reducing node 265, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 265
+------------------------------------------------------------
+
+
+=================Reducing node 263, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 263
+------------------------------------------------------------
+
+
+=================Reducing node 260, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority-dfs][DFS](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][node_priority-dfs][DFS](21/56)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+===================Node reduction is done===================
+
+Failed to reduce node 260
+------------------------------------------------------------
+
+
+=================Reducing node 302, size=21=================
+
+The current best program is the following
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 302
+------------------------------------------------------------
+
+
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
+
+The spar-tree is the following.
+translationUnit {id=255,slot_type=translationUnit}
+|___(+) {id=256,slot_type=kleene_plus__externalDeclaration}
+    |___(|:declaration) {id=303,slot_type=[externalDeclaration,declaration]}
+    |   |___(+) {id=304,slot_type=kleene_plus__declarationSpecifiers}
+    |   |   |___Token:int {id=337,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+    |   |___(?) {id=305,slot_type=optional__initDeclaratorList}
+    |   |   |___directDeclarator {id=310,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+    |   |       |___Token:printf {id=311,slot_type=Identifier}
+    |   |       |___(*) {id=312,slot_type=kleene_star__directDeclaratorPart}
+    |   |           |___(|:directDeclaratorPart) {id=313,slot_type=directDeclaratorPart}
+    |   |               |___Token:( {id=314,slot_type=LeftParen}
+    |   |               |___parameterTypeList {id=315,slot_type=parameterTypeList}
+    |   |               |   |___parameterDeclaration {id=322,slot_type=[parameterList,parameterDeclaration]}
+    |   |               |   |   |___(+) {id=323,slot_type=kleene_plus__declarationSpecifiers}
+    |   |               |   |   |   |___Token:const {id=334,slot_type=[declarationSpecifier,typeQualifier,Const]}
+    |   |               |   |   |   |___Token:char {id=332,slot_type=[declarationSpecifier,typeSpecifier,Char]}
+    |   |               |   |   |___(?) {id=324,slot_type=optional__abstractDeclarator}
+    |   |               |   |       |___(+) {id=326,slot_type=[abstractDeclarator,kleene_plus__pointerPart]}
+    |   |               |   |           |___Token:* {id=328,slot_type=[pointerPart,Star]}
+    |   |               |   |___(?) {id=318,slot_type=optional__parameterTypeListPart}
+    |   |               |       |___parameterTypeListPart {id=319,slot_type=parameterTypeListPart}
+    |   |               |           |___Token:, {id=320,slot_type=Comma}
+    |   |               |           |___Token:... {id=321,slot_type=Ellipsis}
+    |   |               |___Token:) {id=316,slot_type=RightParen}
+    |   |___Token:; {id=306,slot_type=Semi}
+    |___functionDefinition {id=259,slot_type=[externalDeclaration,functionDefinition]}
+        |___(*) {id=260,slot_type=kleene_star__declarationSpecifiers}
+        |   |___Token:int {id=302,slot_type=[declarationSpecifier,typeSpecifier,Int]}
+        |___directDeclarator {id=294,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=295,slot_type=Identifier}
+        |   |___(*) {id=296,slot_type=kleene_star__directDeclaratorPart}
+        |       |___(|:directDeclaratorPart) {id=297,slot_type=directDeclaratorPart}
+        |           |___Token:( {id=298,slot_type=LeftParen}
+        |           |___Token:) {id=299,slot_type=RightParen}
+        |___compoundStatement {id=262,slot_type=compoundStatement}
+            |___Token:{ {id=263,slot_type=LeftBrace}
+            |___(*) {id=264,slot_type=kleene_star__blockItem}
+            |   |___expressionStatement {id=268,slot_type=[blockItem,statement,expressionStatement]}
+            |       |___(?) {id=269,slot_type=optional__expression}
+            |       |   |___(|:postfixExpression) {id=277,slot_type=[expression,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression]}
+            |       |       |___Token:printf {id=293,slot_type=[postfixExpression,primaryExpression,Identifier]}
+            |       |       |___Token:( {id=279,slot_type=LeftParen}
+            |       |       |___(?) {id=280,slot_type=optional__argumentExpressionList}
+            |       |       |   |___(+) {id=290,slot_type=[argumentExpressionList,assignmentExpression,conditionalExpression,nonAssignmentBinaryExpression,castExpression,unaryExpression,postfixExpression,primaryExpression,kleene_plus__StringLiteral]}
+            |       |       |       |___Token:"world\n" {id=291,slot_type=StringLiteral}
+            |       |       |___Token:) {id=281,slot_type=RightParen}
+            |       |___Token:; {id=270,slot_type=Semi}
+            |___Token:} {id=265,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer](21/56)  For c, there are 46 transformations.
+FixPt[3][FineGritLatraReducer](21/56)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 40 --> 40.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 33
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 21 -> 21
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](21/56)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[3][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](21/56)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[3][FineGritLatraReducer][DivideOperationSimplification](21/56)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[3][FineGritLatraReducer][MultiplyOperationSimplification](21/56)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[3][FineGritLatraReducer][MinusOperationSimplification](21/56)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[3][FineGritLatraReducer][PlusOperationSimplification](21/56)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation](21/56)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[3][FineGritLatraReducer][UnionToStruct](21/56)  Found matches: 0 in transformation UnionToStruct
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](21/56)  Found matches: 1 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](21/56)  Built a LatraGeneralActionSet subroot(id=341,#10) in VoidReturnFunctionDeclLatraTransformation
+============Testing the following program: fail=============
+
+// edit action set type: Latra Transformation VoidReturnFunctionDeclLatraTransformation created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+     void  printf   ( const char*, ...   );
+    int main (                      ) {
+     printf("world\n");
+    }
+    --file: <formatted tokenized program in its original format>--
+     void  printf   ( const char*, ...   );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](21/56)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[3][FineGritLatraReducer][FunctionInlining4Args](21/56)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[3][FineGritLatraReducer][FunctionInlining4ArgsNoType](21/56)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInliningLatraTransformation](21/56)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[3][FineGritLatraReducer][FunctionInlining3ArgsNoType](21/56)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInlining2Args](21/56)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[3][FineGritLatraReducer][FunctionInlining2ArgsNoType](21/56)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInlining1Arg](21/56)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[3][FineGritLatraReducer][FunctionInlining1ArgNoType](21/56)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[3][FineGritLatraReducer][FunctionInliningNoArg](21/56)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[3][FineGritLatraReducer][FunctionInliningNoArg](21/56)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[3][FineGritLatraReducer][LiftAssignmentExpr](21/56)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[3][FineGritLatraReducer][CopyPropagation](21/56)  Found matches: 0 in transformation CopyPropagation
+FixPt[3][FineGritLatraReducer][CallExprToValue](21/56)  Found matches: 0 in transformation CallExprToValue
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr1Arg](21/56)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr2Arg](21/56)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr3Arg](21/56)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[3][FineGritLatraReducer][SimplifyCallExpr](21/56)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[3][FineGritLatraReducer][SimplifyIf](21/56)  Found matches: 0 in transformation SimplifyIf
+FixPt[3][FineGritLatraReducer][SimplifyIf2](21/56)  Found matches: 0 in transformation SimplifyIf2
+FixPt[3][FineGritLatraReducer][ReduceArrayDim3](21/56)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[3][FineGritLatraReducer][ReduceArrayDim2](21/56)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[3][FineGritLatraReducer][ReduceArrayDim](21/56)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl](21/56)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl2](21/56)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam](21/56)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam](21/56)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](21/56)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](21/56)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[3][FineGritLatraReducer][SimplifyComma](21/56)  Found matches: 0 in transformation SimplifyComma
+FixPt[3][FineGritLatraReducer][TypeDefTransform](21/56)  Found matches: 0 in transformation TypeDefTransform
+FixPt[3][FineGritLatraReducer][EmptyStructToInt](21/56)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[3][FineGritLatraReducer][RemoveAssignment](21/56)  Found matches: 0 in transformation RemoveAssignment
+FixPt[3][FineGritLatraReducer][RemoveAddrTaken](21/56)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[3][FineGritLatraReducer][ReplaceArrayAccessWithIndex](21/56)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[3][FineGritLatraReducer][SimplifyUnionDecl](21/56)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[3][FineGritLatraReducer][SimplifyStructDecl](21/56)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[3][FineGritLatraReducer][ReplaceDefByDecl](21/56)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[3][FineGritLatraReducer][CombineLocalVarDecl](21/56)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[3][FineGritLatraReducer][UnifyFunctionDecl](21/56)  Found matches: 0 in transformation UnifyFunctionDecl
+(21/56)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer #Tokens #Chars #NonDeletions
+ 0    node_priority-dfs     -35    -78             0
+ 1    node_priority-dfs       0      0             0
+ 2 FineGritLatraReducer       0      0             0
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times #Tokens #Chars
+   node_priority-dfs     2     -35    -78
+FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
+
+
+#test success = 5
+#test failure = 57
+#test result cache hits = 17
+#test execution cancelled = 1
+#node edit action set cache hits = 22
+#external test execution cache hits = 0

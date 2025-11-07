@@ -19,13 +19,17 @@ package org.perses.antlr
 import org.antlr.v4.runtime.atn.ATNState
 
 @JvmInline
-value class TokenType(val antlrTokenType: Int)
+value class TokenType(
+  val antlrTokenType: Int,
+)
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Int.toTokenType() = TokenType(this)
 
 @JvmInline
-value class RuleIndex(val antlrRuleIndex: Int)
+value class RuleIndex(
+  val antlrRuleIndex: Int,
+)
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun ATNState.obtainRuleIndex() = RuleIndex(ruleIndex)

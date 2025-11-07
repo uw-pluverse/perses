@@ -21,7 +21,6 @@ import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets
 
 class ShellOutputStream : AbstractShellOutputStream() {
-
   private var current: ByteArrayOutputStream? = ByteArrayOutputStream()
   private val builderList = ImmutableList.builder<String>()
 

@@ -15,9 +15,8 @@ kt_jvm_library(
     ],
     deps = [
         "//:guava",
-        "//src/org/perses/antlr:antlr_hierarchy",
-        "//src/org/perses/listminimizer/localexhaust",
         "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction/cache:null_query_cache",
         "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
         "//src/org/perses/reduction/reducer/token:concurrent_slicing_tasks",
         "//src/org/perses/reduction/reducer/token:token_slicer",

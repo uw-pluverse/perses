@@ -30,8 +30,9 @@ import java.io.File
  *     3. handle duplicate
  */
 @Deprecated("not being used any more")
-class ProcessingFolder(val folder: File) {
-
+class ProcessingFolder(
+  val folder: File,
+) {
   init {
     if (!folder.exists()) {
       folder.mkdirs()
@@ -61,9 +62,10 @@ class ProcessingFolder(val folder: File) {
   }
 
   private fun locateCrashClusterWithSignature(crashSignature: CrashSignature): CrashClusterFolder? {
-    val filter = getAllClustersAndDeleteEmptyOnes().filter {
-      it.crashSignature == crashSignature
-    }
+    val filter =
+      getAllClustersAndDeleteEmptyOnes().filter {
+        it.crashSignature == crashSignature
+      }
     return if (filter.isEmpty()) {
       null
     } else if (filter.size == 1) {
@@ -95,14 +97,14 @@ class ProcessingFolder(val folder: File) {
     return builder.build()
   }
 
-  fun getAllCrashInstances(): ImmutableList<CrashInstanceFolder> {
-    return getAllClustersAndDeleteEmptyOnes().flatMap {
-      it.getCrashInstances()
-    }.fold(
-      ImmutableList.builder<CrashInstanceFolder>(),
-      { builder, crash -> builder.add(crash) },
-    ).build()
-  }
+  fun getAllCrashInstances(): ImmutableList<CrashInstanceFolder> =
+    getAllClustersAndDeleteEmptyOnes()
+      .flatMap {
+        it.getCrashInstances()
+      }.fold(
+        ImmutableList.builder<CrashInstanceFolder>(),
+        { builder, crash -> builder.add(crash) },
+      ).build()
 
   fun reduceAll() = getAllCrashInstances().forEach { it.reduce() }
 
@@ -130,22 +132,20 @@ class ProcessingFolder(val folder: File) {
     CrashClusterFolder.createByMovingCrashInstance(clusterFolder, crashInstance)
   }
 
-  private fun nextClusterFolder() = File(folder, nextClusterFolderName()).apply {
-    check(mkdir())
-  }
+  private fun nextClusterFolder() =
+    File(folder, nextClusterFolderName()).apply {
+      check(mkdir())
+    }
 
-  private fun nextClusterFolderName() =
-    constructClusterFolderName(getCurrentMaxClusterId() + 1)
+  private fun nextClusterFolderName() = constructClusterFolderName(getCurrentMaxClusterId() + 1)
 
-  fun getCurrentMaxClusterId(): Int {
-    return getAllClustersAndDeleteEmptyOnes()
+  fun getCurrentMaxClusterId(): Int =
+    getAllClustersAndDeleteEmptyOnes()
       .map { it.folder.name }
       .map { getClusterFolderIdFromName(it) }
       .maxOrNull() ?: 0
-  }
 
   companion object {
-
     fun constructClusterFolderName(clusterId: Int) = CLUSTER_FOLDER_PREFIX + clusterId
 
     fun getClusterFolderIdFromName(clusterFolderName: String) =

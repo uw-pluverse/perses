@@ -24,15 +24,15 @@ import kotlin.io.path.absolute
 import kotlin.io.path.bufferedWriter
 
 object NFADumpMain {
-
   @JvmStatic
   fun main(args: Array<String>) {
     require(args.size == 1)
     val outputFile = Paths.get(args.single()).absolute()
     Util.ensureDirExists(outputFile.parent)
-    val atn = LexerAtnWrapper(OrigCLexer::class.java)
+    val atn = LexerAtnWrapper.createLexerWrapperFromLexerClass(OrigCLexer::class.java)
     outputFile.bufferedWriter().use { stream ->
-      atn.metaTokenInfoDB.asSequence()
+      atn.metaTokenInfoDB
+        .asSequence()
         .map { token ->
           Pair(token, MutableNFA.copyOf(atn.getOriginalStartState(token.tokenType)))
         }.forEach { (token, nfa) ->

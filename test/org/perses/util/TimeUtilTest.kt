@@ -24,7 +24,6 @@ import java.time.ZoneId
 
 @RunWith(JUnit4::class)
 class TimeUtilTest {
-
   @Test
   fun testFormatDateForFileName() {
     val epochMillis = 1569287074745L
@@ -44,10 +43,11 @@ class TimeUtilTest {
   @Test
   fun testConvertToLocalDateTime() {
     val epochMillis = 1569287074745L
-    val time = TimeUtil.converToLocalDateTime(
-      epochMillis,
-      ZoneId.of("America/Indiana/Indianapolis"),
-    )
+    val time =
+      TimeUtil.converToLocalDateTime(
+        epochMillis,
+        ZoneId.of("America/Indiana/Indianapolis"),
+      )
     assertThat(time.toString()).isEqualTo("2019-09-23T21:04:34.745")
   }
 

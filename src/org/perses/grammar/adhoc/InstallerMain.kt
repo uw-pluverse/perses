@@ -30,17 +30,18 @@ import kotlin.io.path.deleteRecursively
 
 class InstallerMain(
   cmd: CommandOptions,
-) : AbstractMain<CommandOptions>(cmd), Closeable {
-
+) : AbstractMain<CommandOptions>(cmd),
+  Closeable {
   private var tempDir: Path? = null
 
   override fun internalRun() {
-    val persesConstants: PersesConstants = if (cmd.outputFlags.output != null) {
-      tempDir = Files.createTempDirectory(InstallerMain::class.java.canonicalName)
-      createCustomizedConstants(tempDir!!)
-    } else {
-      createDefaultConstants()
-    }
+    val persesConstants: PersesConstants =
+      if (cmd.outputFlags.output != null) {
+        tempDir = Files.createTempDirectory(InstallerMain::class.java.canonicalName)
+        createCustomizedConstants(tempDir!!)
+      } else {
+        createDefaultConstants()
+      }
     AdhocGrammarInstaller(
       cmd.computeAdhocGrammarConfiguration(),
       persesConstants,
@@ -69,11 +70,12 @@ class InstallerMain(
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { CommandOptions() },
-        programName = InstallerMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { CommandOptions() },
+          programName = InstallerMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == HelpRequestProcessingDecision.EXIT) {
         return
       }

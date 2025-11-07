@@ -28,14 +28,14 @@ import org.perses.util.SimpleStack
 
 @RunWith(JUnit4::class)
 class SparTreeCopierTest {
-
-  val original = TestUtility.createSparTreeFromString(
-    """
+  val original =
+    TestUtility.createSparTreeFromString(
+      """
       int a = b;
       int c = d;
-    """.trimIndent(),
-    LanguageC,
-  )
+      """.trimIndent(),
+      LanguageC,
+    )
 
   val copy = original.deepCopy(ReuseNodeIdStrategy).result
 
@@ -54,7 +54,7 @@ class SparTreeCopierTest {
       val (a, b) = stack.remove()
       assertThat(a::class.java).isSameInstanceAs(b::class.java)
       if (a is LexerRuleSparTreeNode && b is LexerRuleSparTreeNode) {
-        assertThat(a.token.text).isEqualTo(b.token.text)
+        assertThat(a.token.lexemeText).isEqualTo(b.token.lexemeText)
       }
       assertThat(a.nodeId).isNotEqualTo(b.nodeId)
       assertThat(a.antlrRule).isSameInstanceAs(b.antlrRule)
@@ -68,10 +68,16 @@ class SparTreeCopierTest {
 
   @Test
   fun testVisitRemainingTokens() {
-    val originalTokens = original.leafNodeSequence()
-      .map { it.token.text }.toList()
-    val copyTokens = copy.leafNodeSequence()
-      .map { it.token.text }.toList()
+    val originalTokens =
+      original
+        .leafNodeSequence()
+        .map { it.token.lexemeText }
+        .toList()
+    val copyTokens =
+      copy
+        .leafNodeSequence()
+        .map { it.token.lexemeText }
+        .toList()
 
     assertThat(originalTokens).isEqualTo(copyTokens)
   }
@@ -109,10 +115,16 @@ class SparTreeCopierTest {
 
   @Test
   fun testPrintTreeStructureShouldBeTheSame() {
-    val origString = original.printTreeStructure()
-      .split('\n').map { it.trimEnd() }
-    val copyString = copy.printTreeStructure()
-      .split('\n').map { it.trimEnd() }
+    val origString =
+      original
+        .printTreeStructure()
+        .split('\n')
+        .map { it.trimEnd() }
+    val copyString =
+      copy
+        .printTreeStructure()
+        .split('\n')
+        .map { it.trimEnd() }
     assertThat(origString.size).isEqualTo(copyString.size)
     origString.asSequence().zip(copyString.asSequence()).forEach {
       assertThat(it.first).isEqualTo(it.second)

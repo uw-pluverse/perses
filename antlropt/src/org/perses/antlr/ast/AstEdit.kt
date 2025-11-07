@@ -22,9 +22,7 @@ import org.perses.util.exhaustive
 
 abstract class AstEdit {
   // TODO: replace Optional with nullable types.
-  fun apply(ast: AbstractPersesRuleElement): NonDeleteTransformDecision {
-    return apply(ast, isRoot = true)
-  }
+  fun apply(ast: AbstractPersesRuleElement): NonDeleteTransformDecision = apply(ast, isRoot = true)
 
   private fun apply(
     ast: AbstractPersesRuleElement,

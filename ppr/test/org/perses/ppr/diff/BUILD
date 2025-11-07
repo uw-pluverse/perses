@@ -4,6 +4,7 @@ kt_jvm_test(
     name = "PPRDiffUtilsTest",
     srcs = ["PPRDiffUtilsTest.kt"],
     deps = [
+        "//:truth",
         "//ppr/src/org/perses/ppr/diff:ppr_diff_utils",
         "//test/org/perses:test_util",
     ],

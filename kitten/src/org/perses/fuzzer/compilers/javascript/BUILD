@@ -8,8 +8,6 @@ kt_jvm_library(
     name = "javascript",
     srcs = glob(["*.kt"]),
     deps = [
-        "//:flogger",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
-        "//src/org/perses/grammar/javascript:language_kind",
     ],
 )

@@ -27,6 +27,7 @@ BAZEL_DIRS=(
 readonly SUBMODULE_BAZEL_DIRS=(
   "antlrrdc"
   "arabica"
+  "benchmark_wasm"
   "buildopt"
   "global_cache/src"
   "global_cache/test"

@@ -22,22 +22,20 @@ import org.perses.util.cmd.AbstractCommandOptions
 import java.nio.file.Path
 
 class CommandOptions : AbstractCommandOptions() {
-
   val compulsoryFlags = registerFlags(GrammarFlagGroup())
 
   @JvmField
   val outputFlags = registerFlags(OutputFlagGroup())
 
-  fun computeAdhocGrammarConfiguration() =
-    compulsoryFlags.createAdhocGrammarConfiguration()
+  fun computeAdhocGrammarConfiguration() = compulsoryFlags.createAdhocGrammarConfiguration()
 }
 
 class OutputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Output") {
-
   @Parameter(
     names = ["--output"],
-    description = "The path to save the generated JAR file. " +
-      "Note that you should not use this flag if you want to install a new language for Perses.",
+    description =
+      "The path to save the generated JAR file. " +
+        "Note that you should not use this flag if you want to install a new language for Perses.",
     required = false,
     hidden = true,
   )

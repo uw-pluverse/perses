@@ -25,17 +25,17 @@ import org.perses.antlr.ast.PersesRuleReferenceAst
 
 @RunWith(JUnit4::class)
 class MutableRuleDefMapTest {
-
   @Test
   fun test() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      grammar Test;
-      start : s1;
-      s1: s2;
-      s2: 'a';
-      """.trimIndent(),
-    )
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        grammar Test;
+        start : s1;
+        s1: s2;
+        s2: 'a';
+        """.trimIndent(),
+      )
     val mutable = MutableGrammar.createParserRulesFrom(grammar)
     val startRuleName = grammar.getRuleNameHandleOrThrow("start")
     val s2RuleName = grammar.getRuleNameHandleOrThrow("s2")

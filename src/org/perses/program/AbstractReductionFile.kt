@@ -24,7 +24,6 @@ abstract class AbstractReductionFile<K : AbstractDataKind, Self : AbstractReduct
   val dataKind: K,
   file: Path,
 ) {
-
   val fileWithContent = FilePathWithContent(file)
 
   val file by fileWithContent::file
@@ -42,10 +41,10 @@ abstract class AbstractReductionFile<K : AbstractDataKind, Self : AbstractReduct
     return path
   }
 
-  final override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
+  final override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
       .add("file", fileWithContent)
       .add("lang", dataKind)
       .toString()
-  }
 }

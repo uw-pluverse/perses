@@ -25,17 +25,20 @@ class CommandLineProcessor<Cmd : AbstractCommandOptions>(
   args: Array<String>,
 ) {
   val cmd = cmdCreator()
-  private val commander: AbstractCommandOptions.CmdUsagePrinter = cmd.parseArguments(
-    programName,
-    args,
-  )
+  private val commander: AbstractCommandOptions.CmdUsagePrinter =
+    cmd.parseArguments(
+      programName,
+      args,
+    )
 
   fun process(): HelpRequestProcessingDecision {
     adjustLoggingLevel()
     logger.ktInfo {
-      val keyValuePairs = commander.getLongestFlagNameToValueMap()
-        .map { it.key + " " + '"' + it.value + '"' }
-        .joinToString(separator = " ")
+      val keyValuePairs =
+        commander
+          .getLongestFlagNameToValueMap()
+          .map { it.key + " " + '"' + it.value + '"' }
+          .joinToString(separator = " ")
       "The command-line options are: $keyValuePairs"
     }
     return printCommonHelpMessageIfRequested()
@@ -66,7 +69,8 @@ class CommandLineProcessor<Cmd : AbstractCommandOptions>(
   }
 
   enum class HelpRequestProcessingDecision {
-    EXIT, NO_EXIT
+    EXIT,
+    NO_EXIT,
   }
 
   companion object {

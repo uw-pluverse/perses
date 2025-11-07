@@ -22,24 +22,19 @@ import org.jgrapht.traverse.BreadthFirstIterator
 abstract class AbstractNFABasedOnJGraphT(
   protected val graph: Graph<PersesATNState, Edge>,
 ) : AbstractNFA() {
-
-  override fun containsState(state: PersesATNState): Boolean {
-    return graph.containsVertex(state)
-  }
+  override fun containsState(state: PersesATNState): Boolean = graph.containsVertex(state)
 
   override fun edgeSequence() = graph.edgeSet().asSequence()
-  override fun getSourceState(edge: Edge): PersesATNState {
-    return graph.getEdgeSource(edge)!!
-  }
 
-  override fun getTargetState(edge: Edge): PersesATNState {
-    return graph.getEdgeTarget(edge)!!
-  }
+  override fun getSourceState(edge: Edge): PersesATNState = graph.getEdgeSource(edge)!!
+
+  override fun getTargetState(edge: Edge): PersesATNState = graph.getEdgeTarget(edge)!!
 
   override fun getOutgoingEdgesOf(sourceState: PersesATNState): Set<Edge> =
     graph.outgoingEdgesOf(sourceState)
 
   override fun outDegreeOf(state: PersesATNState) = graph.outDegreeOf(state)
+
   override fun printGraph(): String {
     val result = StringBuilder()
     val iterator = BreadthFirstIterator(graph, startState)
@@ -47,14 +42,16 @@ abstract class AbstractNFABasedOnJGraphT(
       val vertex = iterator.next()
       result.append(getLabelForState(vertex)).append('\n')
       graph.outgoingEdgesOf(vertex).forEach { edge ->
-        result.append("    ").append(edge.toString()).append("--->")
-          .append(getLabelForState(graph.getEdgeTarget(edge))).append('\n')
+        result
+          .append("    ")
+          .append(edge.toString())
+          .append("--->")
+          .append(getLabelForState(graph.getEdgeTarget(edge)))
+          .append('\n')
       }
     }
     return result.toString()
   }
 
-  override fun stateSequence(): Sequence<PersesATNState> {
-    return graph.vertexSet().asSequence()
-  }
+  override fun stateSequence(): Sequence<PersesATNState> = graph.vertexSet().asSequence()
 }

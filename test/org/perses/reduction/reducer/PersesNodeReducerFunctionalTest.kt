@@ -19,12 +19,11 @@ package org.perses.reduction.reducer
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
-class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
-
+class PersesNodeReducerFunctionalTest {
   @Test
   fun testFunctionalTest() {
     test(
@@ -40,36 +39,47 @@ class PersesNodeReducerFunctionalTest : AbstractReducerFunctionalTest() {
 
   @Test
   fun testFunctionalTestOnCreduceExample() {
-    runCTestSubject(
-      "test_data/creduce_example",
-      PersesNodePrioritizedDfsReducer.META,
-      { cmd ->
+    ReducerFunctionalTestUtility.runCTestSubject(
+      reductionFolder = "test_data/creduce_example",
+      reducerAnnotation = PersesNodePrioritizedDfsReducer.META,
+      cmdCustomizer = { cmd ->
         cmd.outputRefiningFlags.callCReduce = true
         cmd.outputRefiningFlags.creduceCmd =
-          Paths.get("test/org/perses/reduction/reducer/dummy-creduce.sh")
-            .toAbsolutePath().toString()
+          Paths
+            .get("test/org/perses/reduction/reducer/dummy-creduce.sh")
+            .toAbsolutePath()
+            .toString()
       },
-      """
-        | int printf(const char*, ...);
-        | int main() {
-        |     printf("world\n");
-        | }
-      """.trimMargin(),
+      expected =
+        """
+              | int printf(const char*, ...);
+              | int main() {
+              |     printf("world\n");
+              | }
+        """.trimMargin(),
     )
   }
 
   fun debug() {
-    runBenchmarkSubject(
-      "benchmark/gcc-71626",
-      PersesNodePrioritizedDfsReducer.META,
-      {},
-      "typedeflongllong;test1char8(c){}" +
-        "typedefllongvllong1__attribute__((__vector_size__(sizeof(llong))));" +
-        "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}",
+    ReducerFunctionalTestUtility.runBenchmarkSubject(
+      reductionFolder = "benchmark/gcc-71626",
+      reducerAnnotation = PersesNodePrioritizedDfsReducer.META,
+      cmdCustomizer = {},
+      expected =
+        "typedeflongllong;test1char8(c){}" +
+          "typedefllongvllong1__attribute__((__vector_size__(sizeof(llong))));" +
+          "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}",
     )
   }
 
-  private fun test(folder: String, expected: String) {
-    runCTestSubject("test_data/$folder", PersesNodeDfsReducer.META, expected)
+  private fun test(
+    folder: String,
+    expected: String,
+  ) {
+    ReducerFunctionalTestUtility.runCTestSubject(
+      reductionFolder = "test_data/$folder",
+      reducerAnnotation = PersesNodeDfsReducer.META,
+      expected = expected,
+    )
   }
 }

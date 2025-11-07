@@ -10,7 +10,6 @@ kt_jvm_test(
         "jerry_crash_ubsan.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/javascript",

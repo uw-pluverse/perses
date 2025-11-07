@@ -22,7 +22,6 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.listminimizer.AbstractListInputMinimizer.OnBestUpdateHandler
 import org.perses.listminimizer.PristineDeltaDebugger.Companion.computePartitionSize
 import org.perses.listminimizer.PristineDeltaDebugger.Companion.countBasedPartition
 import org.perses.reduction.PropertyTestResult
@@ -30,30 +29,31 @@ import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class AbstractDeltaDebuggerTest {
-
   companion object {
-    val dummyPropertyTest = IPropertyTester<String, String> {
-      PropertyTestResultWithPayload(PropertyTestResult.INTERESTING_RESULT, "dummy")
-    }
+    val dummyPropertyTest =
+      IPropertyTester<String, String> {
+        LMPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "dummy")
+      }
 
     val dummyHandler =
       OnBestUpdateHandler {
-          _: ImmutableList<AbstractListInputMinimizer.ElementWrapper<String>>, _: String ->
+        _: ImmutableList<ElementWrapper<String>>,
+        _: String,
+        ->
       }
   }
 
   class DummyDeltaDebugger(
     input: ImmutableList<String>,
-  ) : AbstractListInputMinimizer<String, String>(
-    Arguments(
-      needToTestEmpty = true,
-      input,
-      dummyPropertyTest,
-      dummyHandler,
-      descriptionPrefix = "",
-    ),
-  ) {
-
+  ) : AbstractListMinimizer<String, String>(
+      ListMinimizerArguments(
+        needToTestEmpty = true,
+        input,
+        dummyPropertyTest,
+        dummyHandler,
+        descriptionPrefix = "",
+      ),
+    ) {
     override fun reduceNonEmptyInput() {
       TODO("Not yet implemented")
     }
@@ -78,41 +78,49 @@ class AbstractDeltaDebuggerTest {
   fun testToList() {
     val base = ImmutableList.of("a", "b", "c")
 
-    PartitionList.Builder(base)
+    PartitionList
+      .Builder(base)
       .createPartition(0, 1)
       .createPartition(1, 3)
-      .build().let { list ->
+      .build()
+      .let { list ->
         list.partitions.first().let {
           assertThat(it).containsExactly("a")
           assertThat(list.computeComplementFor(it).input).containsExactly("b", "c")
         }
       }
 
-    PartitionList.Builder(base)
+    PartitionList
+      .Builder(base)
       .createPartition(0, 2)
       .createPartition(2, 3)
-      .build().let { list ->
+      .build()
+      .let { list ->
         list.partitions.first().let {
           assertThat(it).containsExactly("a", "b")
           assertThat(list.computeComplementFor(it).input).containsExactly("c")
         }
       }
 
-    PartitionList.Builder(base)
+    PartitionList
+      .Builder(base)
       .createPartition(0, 1)
       .createPartition(1, 2)
       .createPartition(2, 3)
-      .build().let { list ->
+      .build()
+      .let { list ->
         list.partitions[1].let {
           assertThat(it).containsExactly("b")
           assertThat(list.computeComplementFor(it).input).containsExactly("a", "c")
         }
       }
 
-    PartitionList.Builder(base)
+    PartitionList
+      .Builder(base)
       .createPartition(0, 2)
       .createPartition(2, 3)
-      .build().let { list ->
+      .build()
+      .let { list ->
         list.partitions.last().let {
           assertThat(it).containsExactly("c")
           assertThat(list.computeComplementFor(it).input).containsExactly("a", "b")
@@ -151,20 +159,25 @@ class AbstractDeltaDebuggerTest {
     }
   }
 
-  private fun partitionString(s: String, numOfPartitions: Int): PartitionList<Char> {
-    return countBasedPartition(s.asSequence().toImmutableList(), numOfPartitions)
-  }
+  private fun partitionString(
+    s: String,
+    numOfPartitions: Int,
+  ): PartitionList<Char> = countBasedPartition(s.asSequence().toImmutableList(), numOfPartitions)
 
-  private fun partition(s: String, numOfPartitions: Int): ImmutableList<String> {
+  private fun partition(
+    s: String,
+    numOfPartitions: Int,
+  ): ImmutableList<String> {
     val partitionsList = partitionString(s, numOfPartitions)
     return toListOfStrings(partitionsList)
   }
 
-  private fun toListOfStrings(partitionsList: PartitionList<Char>) = partitionsList
-    .partitions
-    .map { it }
-    .map { it.joinToString(separator = "") }
-    .toImmutableList()
+  private fun toListOfStrings(partitionsList: PartitionList<Char>) =
+    partitionsList
+      .partitions
+      .map { it }
+      .map { it.joinToString(separator = "") }
+      .toImmutableList()
 
   @Test
   fun testPartition3Partitions() {
@@ -209,5 +222,19 @@ class AbstractDeltaDebuggerTest {
       val b = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(element))
       assertThat(a).isEqualTo(b)
     }
+  }
+
+  @Test
+  fun testElementWrapperDeletion() {
+    val element =
+      ElementWrapper(
+        index = 1,
+        element = 1,
+        elementPayload = Any(),
+      )
+    assertThat(element.deleted).isFalse()
+    element.markAsDeleted()
+    assertThat(element.deleted).isTrue()
+    assertThat(kotlin.runCatching { element.markAsDeleted() }.exceptionOrNull()).isNotNull()
   }
 }

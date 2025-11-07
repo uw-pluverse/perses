@@ -19,30 +19,26 @@ package org.perses.listminimizer
 import kotlin.random.Random
 
 open class PristineProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
-  arguments: Arguments<T, PropertyPayload>,
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
   random: Random? = null,
   private val terminationThreshold: Double = 0.8,
   protected val initialProbability: Double = 0.25,
 ) : AbstractProbabilisticDeltaDebugger<
-  T,
-  PropertyPayload,
-  PristineProbabilisticDeltaDebugger.ProbabilityPayload,
+    T,
+    PropertyPayload,
+    PristineProbabilisticDeltaDebugger.ProbabilityPayload,
   >(
-  arguments,
-  random,
-) {
-
-  override fun shouldExcludeElementFromReduction(element: ElementWrapper<T>): Boolean {
-    return getProbability(element) >= terminationThreshold
-  }
+    arguments,
+    random,
+  ) {
+  override fun shouldExcludeElementFromReduction(element: ElementWrapper<T>): Boolean =
+    getProbability(element) >= terminationThreshold
 
   override val elementComparator =
     compareBy<ElementWrapper<T>>({ getProbability(it) }, { it.index })
 
   // uses the sorted copyBest and generates new deleteForNextTest
-  override fun findNextTest(
-    copyBest: List<ElementWrapper<T>>,
-  ): MutableList<ElementWrapper<T>> {
+  override fun findNextTest(copyBest: List<ElementWrapper<T>>): MutableList<ElementWrapper<T>> {
     var lastGain = 0.0
     val toBeDeleted = mutableListOf<ElementWrapper<T>>()
     var product = 1.0
@@ -61,9 +57,8 @@ open class PristineProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
     return toBeDeleted
   }
 
-  protected fun getProbability(element: ElementWrapper<T>): Double {
-    return (element.elementPayload as ProbabilityPayload).probability
-  }
+  protected fun getProbability(element: ElementWrapper<T>): Double =
+    (element.elementPayload as ProbabilityPayload).probability
 
   override fun updatePayload(toBeDeleted: List<ElementWrapper<T>>) {
     var product = 1.0
@@ -77,15 +72,14 @@ open class PristineProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
     }
   }
 
-  override fun createInitialPayload(): ProbabilityPayload {
-    return ProbabilityPayload(initialProbability)
-  }
+  override fun createInitialPayload(): ProbabilityPayload = ProbabilityPayload(initialProbability)
 
   open class ProbabilityPayload(
     val probability: Double,
   ) {
-    open fun duplicateWithNewProbability(newProbability: Double) = ProbabilityPayload(
-      probability = newProbability,
-    )
+    open fun duplicateWithNewProbability(newProbability: Double) =
+      ProbabilityPayload(
+        probability = newProbability,
+      )
   }
 }

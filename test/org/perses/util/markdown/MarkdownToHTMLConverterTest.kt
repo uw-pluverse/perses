@@ -46,15 +46,16 @@ class MarkdownToHTMLConverterTest {
 
   @Test
   fun testFindAllBulletList() {
-    val document = MarkdownToHTMLConverter.parseMarkdownDocument(
-      """
+    val document =
+      MarkdownToHTMLConverter.parseMarkdownDocument(
+        """
         |+ a b c
         |+ b c d 
         |+ c d e
         |   + e f g 
         |   + f i j
-      """.trimMargin(),
-    )
+        """.trimMargin(),
+      )
     val bulletList = MarkdownToHTMLConverter.findAllBulletLists(document)
     assertThat(bulletList).hasSize(2)
     bulletList.first().listItemSequence().toList().let { list ->
@@ -76,14 +77,15 @@ class MarkdownToHTMLConverterTest {
 
   @Test
   fun testFindAllCodeBlocks() {
-    val document = MarkdownToHTMLConverter.parseMarkdownDocument(
-      """
+    val document =
+      MarkdownToHTMLConverter.parseMarkdownDocument(
+        """
         | code below
         | ```bash
         | aaa
         | ```
-      """.trimMargin(),
-    )
+        """.trimMargin(),
+      )
     val codeBlocks = MarkdownToHTMLConverter.findAllFencedCodeBlocks(document)
     assertThat(codeBlocks).hasSize(1)
     assertThat(codeBlocks.single().literal).isEqualTo("aaa\n")
@@ -102,9 +104,10 @@ class MarkdownToHTMLConverterTest {
   fun testFileNotFound() {
     val fileName = "this_file_does_not_exist"
     val wrongPath = tempDir.resolve(fileName)
-    val exception = assertThrows(Throwable::class.java) {
-      MarkdownToHTMLConverter.convertMarkdownToHTML(wrongPath, htmlResultFile)
-    }
+    val exception =
+      assertThrows(Throwable::class.java) {
+        MarkdownToHTMLConverter.convertMarkdownToHTML(wrongPath, htmlResultFile)
+      }
     assertThat(exception.message).contains(fileName)
   }
 }

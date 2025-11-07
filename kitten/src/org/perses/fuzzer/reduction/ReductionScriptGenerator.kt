@@ -23,7 +23,6 @@ class ReductionScriptGenerator(
   val cmd: String,
   val crashSignature: ICompilerCrashDetector.AbstractResult.CrashResult,
 ) {
-
   private var builder: StringBuilder? = StringBuilder()
 
   fun generate(): String {
@@ -66,14 +65,15 @@ class ReductionScriptGenerator(
   }
 
   companion object {
-
-    private val escaper = Escapers.builder()
-      .addEscape('\n', "\\n")
-      .addEscape('\r', "\\r")
-      .addEscape('"', "\\\"")
-      .addEscape('`', "\\`")
-      .addEscape('$', "\\$")
-      .build()
+    private val escaper =
+      Escapers
+        .builder()
+        .addEscape('\n', "\\n")
+        .addEscape('\r', "\\r")
+        .addEscape('"', "\\\"")
+        .addEscape('`', "\\`")
+        .addEscape('$', "\\$")
+        .build()
 
     fun escapeString(string: String) = escaper.escape(string)
   }

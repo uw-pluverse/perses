@@ -19,41 +19,44 @@ package org.perses.reduction.reducer.hdd
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 
 /** Functional test for [HDDReducer]  */
 @RunWith(JUnit4::class)
-class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
-
-  val expectedForDelta1 = """
+class HddReducerFunctionalTest {
+  val expectedForDelta1 =
+    """
       |int printf();
       |int main(){
       |  printf("world\n");
       |}
-  """.trimMargin()
+    """.trimMargin()
 
   // Note that, since we remove --ensureAntlrValidity, we no longer check whether the reduced
   // program conforms to the grammar. Therefore, it is possible to reduce some invalid programs,
   // accepted by the compiler, but not the grammar used by Perses.
   @Test
   fun testReduceDelta1_hdd() {
-    runCTestSubject(
-      "test_data/delta_1",
-      HDDReducer.META,
-      expectedForDelta1,
+    ReducerFunctionalTestUtility.runCTestSubject(
+      reductionFolder = "test_data/delta_1",
+      reducerAnnotation = HDDReducer.META,
+      cmdCustomizer = {},
+      expected = expectedForDelta1,
     )
   }
 
   @Test
   fun testReduceDelta1_pristine_hdd() {
-    runCTestSubject(
-      "test_data/delta_1",
-      PristineHDDReducer.META,
-      expectedForDelta1,
+    ReducerFunctionalTestUtility.runCTestSubject(
+      reductionFolder = "test_data/delta_1",
+      reducerAnnotation = PristineHDDReducer.META,
+      cmdCustomizer = {},
+      expected = expectedForDelta1,
     )
   }
 
-  private val expectedForJavaHelloWorld = """
+  private val expectedForJavaHelloWorld =
+    """
         |class t {
         |  static int counter() {
         |    return 100;
@@ -64,23 +67,25 @@ class HddReducerFunctionalTest : AbstractReducerFunctionalTest() {
         |    }
         |  }
         |}
-  """.trimMargin()
+    """.trimMargin()
 
   @Test
   fun testJavaFunctionalTest_hdd() {
-    runJavaTestSubject(
-      "test_data/java_helloworld",
-      HDDReducer.META,
-      expectedForJavaHelloWorld,
+    ReducerFunctionalTestUtility.runJavaTestSubject(
+      reductionFolder = "test_data/java_helloworld",
+      reducerAnnotation = HDDReducer.META,
+      cmdCustomizer = {},
+      expected = expectedForJavaHelloWorld,
     )
   }
 
   @Test
   fun testJavaFunctionalTest_pristine_hdd() {
-    runJavaTestSubject(
-      "test_data/java_helloworld",
-      PristineHDDReducer.META,
-      expectedForJavaHelloWorld,
+    ReducerFunctionalTestUtility.runJavaTestSubject(
+      reductionFolder = "test_data/java_helloworld",
+      reducerAnnotation = PristineHDDReducer.META,
+      cmdCustomizer = {},
+      expected = expectedForJavaHelloWorld,
     )
   }
 }

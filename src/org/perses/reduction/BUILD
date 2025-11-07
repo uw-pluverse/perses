@@ -19,8 +19,9 @@ kt_jvm_library(
         "EditTestPayload.kt",
     ],
     deps = [
-        ":test_script_executor_service",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/program",
+        "//src/org/perses/reduction/cache:query_cache_interface",
         "//src/org/perses/spartree",
     ],
 )
@@ -32,7 +33,6 @@ kt_jvm_library(
     ],
     deps = [
         "//:flogger",
-        "//src/org/perses/util",
     ],
 )
 
@@ -40,7 +40,7 @@ kt_jvm_library(
     name = "tree_edit_with_its_program",
     srcs = ["TreeEditWithItsResult.kt"],
     deps = [
-        ":test_script",
+        ":property_test_result",
         "//src/org/perses/program",
         "//src/org/perses/spartree",
     ],
@@ -85,7 +85,7 @@ kt_jvm_library(
     ],
     deps = [
         "//:guava",
-        "//src/org/perses/util",
+        "//src/org/perses/util/hashing",
     ],
 )
 
@@ -95,15 +95,12 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//src/org/perses/antlr:parse_tree_with_parser",
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/listminimizer:enum_list_input_minimizer_type",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/program/printer",
-        "//src/org/perses/reduction/io",
         "//src/org/perses/util",
-        "//src/org/perses/util:timeutil",
     ],
 )
 
@@ -148,12 +145,11 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "SparTreeDdminPayload",
+    name = "SparTreeListMinimizerPayload",
     srcs = [
-        "SparTreeDdminPayload.kt",
+        "SparTreeListMinimizerPayload.kt",
     ],
     deps = [
-        "//src/org/perses/reduction/cache:query_cache_interface",
         "//src/org/perses/spartree",
     ],
 )
@@ -171,7 +167,7 @@ kt_jvm_library(
         "SparTreeWithParsability.kt",
     ],
     deps = [
-        ":SparTreeDdminPayload",
+        ":SparTreeListMinimizerPayload",
         ":actionset_profiler",
         ":future_execution_result_triple",
         ":reducer_context_interface",
@@ -183,8 +179,9 @@ kt_jvm_library(
         ":tree_edit_with_its_program",
         "//:guava",
         "//src/org/perses/listminimizer",
+        "//src/org/perses/listminimizer:ListMinimizerFactory",
+        "//src/org/perses/listminimizer:interfaces",
         "//src/org/perses/program",
-        "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/reduction/event",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//src/org/perses/spartree",
@@ -199,7 +196,7 @@ kt_jvm_library(
     ],
     deps = [
         "//:guava",
-        "//src/org/perses/reduction:external_test_script_execution_cache",
+        "//src/org/perses/reduction:global_execution_cache",
         "//src/org/perses/util",
     ],
 )
@@ -212,13 +209,11 @@ kt_jvm_library(
         "TestScriptExecutorService.kt",
     ],
     deps = [
-        ":external_test_script_execution_cache",
+        ":global_execution_cache",
         ":test_script",
         "//:guava",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/program",
-        "//src/org/perses/reduction/cache:query_cache",
-        "//src/org/perses/reduction/io",
         "//src/org/perses/util",
         "//src/org/perses/util:timeutil",
     ],
@@ -233,9 +228,9 @@ kt_jvm_library(
         ":test_script_executor_service",
         "//:guava",
         "//src/org/perses/reduction/reducer:node_based_reducer",
-        "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
+        "//src/org/perses/reduction/reducer/latra:reducer",
         "//src/org/perses/reduction/reducer/lpr",
-        "//src/org/perses/reduction/reducer/token:token_slicer",
+        "//src/org/perses/reduction/reducer/trec",
         "//src/org/perses/reduction/reducer/vulcan",
     ],
 )
@@ -254,6 +249,7 @@ kt_jvm_library(
         "TestScriptHistory.kt",
     ],
     deps = [
+        "//src/org/perses/reduction:property_test_result",
         "//src/org/perses/util",
         "//src/org/perses/util/shell:ExitCode",
         "@maven//:org_apache_commons_commons_csv",
@@ -261,9 +257,9 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "external_test_script_execution_cache",
+    name = "global_execution_cache",
     srcs = [
-        "AbstractExternalTestScriptExecutionCache.kt",
+        "AbstractGlobalExecutionCache.kt",
     ],
     deps = [
         "//src/org/perses/reduction:TestScriptHistory",
@@ -305,9 +301,7 @@ kt_jvm_library(
         "//:flogger",
         "//:guava",
         "//src/org/perses:command_options",
-        "//src/org/perses/antlr:antlr_hierarchy",
-        "//src/org/perses/grammar:grammar_facade",
-        "//src/org/perses/listener:listeners",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/program",
         "//src/org/perses/reduction/cache:PassLevelCache",
         "//src/org/perses/reduction/cache:enum_query_caching_control",

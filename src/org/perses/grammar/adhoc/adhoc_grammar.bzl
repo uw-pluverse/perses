@@ -130,7 +130,7 @@ def _parser_facade_library(
             "//:antlr_runtime",
             "//:flogger",
             "//src/org/perses/antlr:parse_tree_with_parser",
-            "//src/org/perses/grammar:grammar_facade",
+            "//src/org/perses/grammar:parser_facade_interface",
             "//src/org/perses/program:language_kind",
         ] + deps,
     )

@@ -31,10 +31,7 @@ import org.perses.util.exhaustive
 import java.lang.RuntimeException
 
 class PnfCheckPass : AbstractPnfPass() {
-
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     for (rule in grammar.flattenedAllRuleSequence()) {
       val name = rule.ruleNameHandle
       if (RuleType.isLexerRule(name.ruleName)) {
@@ -74,6 +71,7 @@ class PnfCheckPass : AbstractPnfPass() {
 
   internal class QuantifiedRuleDetector : DefaultAstVisitor() {
     internal val detectedNodes = ArrayList<AbstractPersesQuantifiedAst>()
+
     override fun visit(ast: PersesPlusAst) {
       detectedNodes.add(ast)
     }
@@ -89,20 +87,23 @@ class PnfCheckPass : AbstractPnfPass() {
 
   private class AltBlockRuleDetector : DefaultAstVisitor() {
     private val detectedNodes = ArrayList<PersesAlternativeBlockAst>()
+
     override fun visit(ast: PersesAlternativeBlockAst) {
       detectedNodes.add(ast)
     }
   }
 
   companion object {
-
     private fun checkNoQuantifiedDescendant(ast: AbstractPersesRuleElement) {
       val detector = QuantifiedRuleDetector()
       detector.preorder(ast)
       check(detector.detectedNodes.isEmpty()) { detector.detectedNodes }
     }
 
-    private fun checkQuantifiedAst(ast: AbstractPersesRuleElement, expectedTag: AstTag) {
+    private fun checkQuantifiedAst(
+      ast: AbstractPersesRuleElement,
+      expectedTag: AstTag,
+    ) {
       check(ast.tag === expectedTag)
       check(ast.childCount == 1)
       val child = ast.getChild(0)

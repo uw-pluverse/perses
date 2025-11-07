@@ -19,8 +19,10 @@ package org.perses.program
 import com.google.common.collect.ImmutableSet
 import org.perses.util.containsNoWhitespace
 
-abstract class AbstractDataKind(val name: String, val extensions: ImmutableSet<String>) {
-
+abstract class AbstractDataKind(
+  val name: String,
+  val extensions: ImmutableSet<String>,
+) {
   init {
     extensions.forEach {
       require(it.isNotBlank() && it.first() != '.') {
@@ -52,9 +54,7 @@ abstract class AbstractDataKind(val name: String, val extensions: ImmutableSet<S
 
   protected open fun onEquals(other: Any) {}
 
-  final override fun hashCode(): Int {
-    return name.hashCode()
-  }
+  final override fun hashCode(): Int = name.hashCode()
 
   object UnknownDataKind : AbstractDataKind(name = "", extensions = ImmutableSet.of())
 }

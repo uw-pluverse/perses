@@ -16,197 +16,72 @@
  */
 package org.perses.reduction.reducer.hdd
 
-import com.google.common.collect.ImmutableList
-import org.perses.listminimizer.Partition
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.reduction.AbstractTokenReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.ReductionLevel
-import org.perses.reduction.event.LevelReductionStartEvent
-import org.perses.reduction.partition.AbstractLevelPartitionPolicy
-import org.perses.reduction.partition.SimpleLevelPartitionPolicy
-import org.perses.reduction.reducer.TreeTransformations
-import org.perses.spartree.AbstractSparTreeEdit
-import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.NodeReplacementAction
 import org.perses.spartree.SparTree
-import org.perses.util.Util.lazyAssert
-import java.io.IOException
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.StandardOpenOption
 
-/** The base class for reducers that perform level-based reduction.  */
+/**
+ * The base class for reducers that perform level-based reduction.
+ **/
 abstract class AbstractLevelBasedReducer protected constructor(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
 ) : AbstractTokenReducer(reducerAnnotation, reducerContext) {
-
-  private val partitionPolicy: AbstractLevelPartitionPolicy = SimpleLevelPartitionPolicy()
+  override fun internalReduce(fixpointReductionState: FixpointReductionState) {
+    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+    var currentLevel = getInitialRegion(tree)
+    while (!currentLevel.isEmpty) {
+      check(currentLevel.nodeCount > 0) { "The level cannot be empty." }
+      val levelStartEvent =
+        fixpointReductionState
+          .fixpointIterationStartEvent
+          .createLevelReductionStartEvent(
+            System.currentTimeMillis(),
+            tree.tokenCount,
+            currentLevel.level,
+            currentLevel.nodeCount,
+          )
+      reducerContext.listenerManager.onLevelReductionStart(levelStartEvent)
+      check(!currentLevel.isEmpty)
+      reduceOneLevel(tree, currentLevel, fixpointReductionState)
+      reducerContext.listenerManager.onLevelReductionEnd(
+        levelStartEvent.createEndEvent(System.currentTimeMillis(), tree.tokenCount),
+      )
+      currentLevel = currentLevel.createNextLevel()
+    }
+  }
 
   protected fun getInitialRegion(tree: SparTree): ReductionLevel {
-    val level = ReductionLevel(1)
+    val level = ReductionLevel(level = 1)
     tree.realRoot.forEachChild { level.addNode(it) }
     return level
   }
 
-  /**
-   * TODO: if a node and all its children are irreducible, then avoid adding it to the next level.
-   *
-   * @param tree
-   * @param level
-   * @return
-   */
-  protected fun moveToNextLevel(
-    level: ReductionLevel,
-  ): ReductionLevel {
-    val nextLevel = ReductionLevel(level.level + 1)
-    // FIXME: need to make sure that single path cannot contain more than two nodes.
-    //        Otherwise this algorithm will be very slow.
-    level.forEachNode { it.forEachChild { node -> nextLevel.addNode(node) } }
-    return nextLevel
-  }
+  override fun computeListMinimizerType(): EnumListMinimizerType =
+    reducerContext.configuration.listMinimizerConfig.defaultListMinimizerTypeForHdd
 
   protected fun reduceOneLevel(
     tree: SparTree,
     level: ReductionLevel,
-    levelStartEvent: LevelReductionStartEvent,
+    fixpointReductionState: FixpointReductionState,
   ) {
-    var maxNodesPerPartition = getInitialMaxNodesPerPartition(level)
-    while (maxNodesPerPartition > 0) {
-      partitionLevelAndReduce(tree, level, maxNodesPerPartition, levelStartEvent)
-      if (maxNodesPerPartition == 1) {
-        break
-      }
-      maxNodesPerPartition = (maxNodesPerPartition + 1) / 2
-    }
-  }
-
-  protected fun getInitialMaxNodesPerPartition(level: ReductionLevel): Int {
-    // Usually reducing the whole level does not help, so use halves.
-    return (level.nodeCount + 1) / 2
-  }
-
-  /**
-   * Create a set of tree edits, by deleting the ndoes in the partition, or deleteing some child
-   * nodes.
-   */
-  protected fun createTreeEditListByDisablingPartition(
-    partition: Iterable<AbstractSparTreeNode>,
-    tree: SparTree,
-  ): List<AbstractSparTreeEdit<*>> {
-    val actionSet = TreeTransformations.createNodeDeletionActionSetFor(partition, "HDD")
-    if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
-      reducerContext.listenerManager.onNodeEditActionSetCacheHit(actionSet)
-      return emptyList()
-    }
-    return ImmutableList.of(tree.createNodeDeletionEdit(actionSet))
-  }
-
-  private fun partitionLevelAndReduce(
-    tree: SparTree,
-    reductionLevel: ReductionLevel,
-    maxNodesPerPartition: Int,
-    levelStartEvent: LevelReductionStartEvent,
-  ) {
-    lazyAssert { maxNodesPerPartition > 0 }
-    val listenerManager = reducerContext.listenerManager
-    val oldTokenCount = tree.tokenCount
-    val granularityReductionStartEvent = levelStartEvent.createGranularityReductionStartEvent(
-      System.currentTimeMillis(),
-      maxNodesPerPartition,
-      oldTokenCount,
+    runListMinimizerOverNodes(
+      tree = tree,
+      fixpointReductionState = fixpointReductionState,
+      input = level.toImmutableList(),
     )
-    listenerManager.onLevelGranularityReductionStart(granularityReductionStartEvent)
-    val partitions = partitionPolicy.partition(reductionLevel, maxNodesPerPartition)
-    for (partition in partitions) {
-      if (partition.isEmpty()) {
-        continue
-      }
-      val editList = createTreeEditListByDisablingPartition(partition, tree)
-      if (editList.isEmpty()) {
-        logEmptyEdits(partition)
-      }
-      val (treeEdit) = testAllTreeEditsAndReturnTheBest(editList) ?: continue
-      tree.applyEdit(treeEdit)
-      treeEdit.actionSet.actions.asSequence()
-        .filter { it is NodeReplacementAction }
-        .map { it as NodeReplacementAction }
-        .filter { isReplacingNodeAtTheLevel(reductionLevel, it) }
-        .forEach { reductionLevel.replaceNode(it.targetNode, it.replacingNode) }
-    }
-    val newTokenCount = tree.tokenCount
-    val granularityReductionEndEvent = granularityReductionStartEvent.createEndEvent(
-      System.currentTimeMillis(),
-      newTokenCount,
-      maxNodesPerPartition,
-    )
-    listenerManager.onLevelGranularityReductionEnd(granularityReductionEndEvent)
-    reductionLevel.cleanDeletedNodes()
-  }
-
-  private fun logEmptyEdits(partition: Partition<AbstractSparTreeNode>) {
-    Files.newBufferedWriter(
-      Paths.get("temp_empty_edits_dump.txt"),
-      StandardCharsets.UTF_8,
-      StandardOpenOption.APPEND,
-      StandardOpenOption.CREATE,
-    ).use { sink ->
-      sink.write("Empty partition: ")
-      sink.write(partition.toString())
-      sink.write("\n")
-      sink.write("Tree:\n")
-      partition.forEach { child: AbstractSparTreeNode ->
-
-        sink.write(
-          """
-            ${child.parent!!.printTreeStructure()}
-  
-          """.trimIndent(),
-        )
-      }
-    }
-  }
-
-  override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val listenerManager = reducerContext.listenerManager
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
-    val initialRegion = getInitialRegion(tree)
-    var currentLevel = initialRegion
-    while (!currentLevel.isEmpty) {
-      lazyAssert({ currentLevel.nodeCount > 0 }) { "The level cannot be empty." }
-      val preSize = tree.tokenCount
-      val levelStartEvent = fixpointReductionState
-        .fixpointIterationStartEvent
-        .createLevelReductionStartEvent(
-          System.currentTimeMillis(),
-          preSize,
-          currentLevel.level,
-          currentLevel.nodeCount,
-        )
-      listenerManager.onLevelReductionStart(levelStartEvent)
-      lazyAssert { !currentLevel.isEmpty }
-      try {
-        reduceOneLevel(tree, currentLevel, levelStartEvent)
-      } catch (e: IOException) {
-        throw RuntimeException(e)
-      }
-      val postSize = tree.tokenCount
-      listenerManager.onLevelReductionEnd(
-        levelStartEvent.createEndEvent(System.currentTimeMillis(), postSize),
-      )
-      currentLevel = moveToNextLevel(currentLevel)
-    }
+    level.cleanDeletedNodes()
   }
 
   companion object {
     private fun isReplacingNodeAtTheLevel(
       level: ReductionLevel,
       action: NodeReplacementAction,
-    ): Boolean {
-      return level.containsNode(action.targetNode)
-    }
+    ): Boolean = level.containsNode(action.targetNode)
   }
 }

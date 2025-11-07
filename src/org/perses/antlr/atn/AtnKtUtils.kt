@@ -31,9 +31,10 @@ import org.perses.util.SimpleQueue
 import org.perses.util.SimpleStack
 import org.perses.util.toImmutableList
 
-fun ATNState.transitionSequence(): Sequence<Transition> {
-  return (0 until numberOfTransitions).asSequence().map { transition(it) }
-}
+fun ATNState.transitionSequence(): Sequence<Transition> =
+  (0 until numberOfTransitions).asSequence().map {
+    transition(it)
+  }
 
 fun dfsATN(
   startState: ATNState,
@@ -67,7 +68,8 @@ private fun traverseATN(
       continue
     }
     stateVisitor(state)
-    state.transitionSequence()
+    state
+      .transitionSequence()
       .sortedBy { it.target.stateNumber } // For deterministic traversal
       .forEach {
         transitionVisitor(state, it)
@@ -75,8 +77,9 @@ private fun traverseATN(
       }
   }
 }
-fun Transition.getAllowedAsciiChars(): ImmutableList<Char> {
-  return when (this) {
+
+fun Transition.getAllowedAsciiChars(): ImmutableList<Char> =
+  when (this) {
     is AtomTransition -> {
       ImmutableList.of(this.label.toChar())
     }
@@ -98,11 +101,11 @@ fun Transition.getAllowedAsciiChars(): ImmutableList<Char> {
       error("unhandled transition type: ${this::class.java}")
     }
   }
-}
 
 private fun intersectPrintableCharacters(intervals: IntervalSet): ImmutableList<Char> {
   val ascii = PrintableCharacters.createPrintableIntervalSet()
-  return ascii.and(intervals)
+  return ascii
+    .and(intervals)
     .toList()
     .map { it.toChar() }
     .toImmutableList()

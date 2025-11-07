@@ -25,17 +25,17 @@ import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
 class PnfCppParserFacadeTest {
-
   val facade = PnfCppParserFacade()
 
   @Test
   fun test() {
-    val tree = facade.parseFile(
-      Paths.get("test/org/perses/benchmark_toys/cpp_print/t.cpp"),
-    )
+    val tree =
+      facade.parseFile(
+        Paths.get("test/org/perses/benchmark_toys/cpp_print/t.cpp"),
+      )
     val tokenizedProgram = AntlrGrammarUtil.convertParseTreeToProgram(tree.tree, facade.language)
     assertThat(tokenizedProgram.tokens).isNotEmpty()
-    assertThat(tokenizedProgram.tokens.first().text)
+    assertThat(tokenizedProgram.tokens.first().lexemeText)
       .isEqualTo("#include <iostream>")
   }
 }

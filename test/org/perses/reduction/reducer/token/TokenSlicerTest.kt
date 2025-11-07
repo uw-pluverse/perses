@@ -22,13 +22,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.SparTree
 
 @RunWith(JUnit4::class)
-class TokenSlicerTest : AbstractReducerFunctionalTest() {
-
+class TokenSlicerTest {
   private var sparTree: SparTree? = null
   private var tokens: List<LexerRuleSparTreeNode>? = null
 
@@ -47,38 +46,42 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
   fun testExtractLexerRuleNodes() {
     val textTokens = tokens!!.asSequence().map { it.token }.toList()
     assertThat(textTokens)
-      .containsExactlyElementsIn(sparTree!!.programSnapshot.tokens).inOrder()
+      .containsExactlyElementsIn(sparTree!!.programSnapshot.tokens)
+      .inOrder()
   }
 
   @Test
   fun testCreateNodeDeletionActionSetReverse_last_element_with_count_eq_1() {
-    val actionSet = TokenSlicer.createNodeDeletionActionSetReverse(
-      tokens!!,
-      inclusiveEndIndex = tokens!!.size - 1,
-      tokenCountToDelete = 1,
-    )
+    val actionSet =
+      TokenSlicer.createNodeDeletionActionSetReverse(
+        tokens!!,
+        inclusiveEndIndex = tokens!!.size - 1,
+        tokenCountToDelete = 1,
+      )
     assertThat(actionSet.actions).hasSize(1)
     assertThat(actionSet.actions.first().targetNode).isSameInstanceAs(tokens!!.last())
   }
 
   @Test
   fun testCreateNodeDeletionActionSetReverse_first_element_with_count_eq_1() {
-    val actionSet = TokenSlicer.createNodeDeletionActionSetReverse(
-      tokens!!,
-      inclusiveEndIndex = 0,
-      tokenCountToDelete = 1,
-    )
+    val actionSet =
+      TokenSlicer.createNodeDeletionActionSetReverse(
+        tokens!!,
+        inclusiveEndIndex = 0,
+        tokenCountToDelete = 1,
+      )
     assertThat(actionSet.actions).hasSize(1)
     assertThat(actionSet.actions.first().targetNode).isSameInstanceAs(tokens!!.first())
   }
 
   @Test
   fun testCreateNodeDeletionActionSetReverse_last_element_with_count_eq_2() {
-    val actionSet = TokenSlicer.createNodeDeletionActionSetReverse(
-      tokens!!,
-      inclusiveEndIndex = tokens!!.size - 1,
-      tokenCountToDelete = 2,
-    )
+    val actionSet =
+      TokenSlicer.createNodeDeletionActionSetReverse(
+        tokens!!,
+        inclusiveEndIndex = tokens!!.size - 1,
+        tokenCountToDelete = 2,
+      )
     assertThat(actionSet.actions).hasSize(2)
     assertThat(actionSet.actions.first().targetNode).isSameInstanceAs(tokens!!.last())
     assertThat(actionSet.actions.last().targetNode).isSameInstanceAs(tokens!![tokens!!.size - 2])
@@ -86,11 +89,12 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
 
   @Test
   fun testCreateNodeDeletionActionSetReverse_second_element_with_count_eq_2() {
-    val actionSet = TokenSlicer.createNodeDeletionActionSetReverse(
-      tokens!!,
-      inclusiveEndIndex = 1,
-      tokenCountToDelete = 2,
-    )
+    val actionSet =
+      TokenSlicer.createNodeDeletionActionSetReverse(
+        tokens!!,
+        inclusiveEndIndex = 1,
+        tokenCountToDelete = 2,
+      )
     assertThat(actionSet.actions).hasSize(2)
     assertThat(actionSet.actions.first().targetNode).isSameInstanceAs(tokens!![1])
     assertThat(actionSet.actions.last().targetNode).isSameInstanceAs(tokens!!.first())
@@ -98,29 +102,33 @@ class TokenSlicerTest : AbstractReducerFunctionalTest() {
 
   @Test
   fun testReduceDelta1() {
-    runCTestSubject(
-      "test_data/delta_1",
-      TokenSlicer.META,
-      """
+    ReducerFunctionalTestUtility.runCTestSubject(
+      reductionFolder = "test_data/delta_1",
+      reducerAnnotation = TokenSlicer.META,
+      cmdCustomizer = {},
+      expected =
+        """
         |int printf();
         |int main() {
         |  printf("world\n");
         |}
-      """.trimMargin(),
+        """.trimMargin(),
     )
   }
 
   @Test
   fun testReduceScalaHelloWorld() {
-    runScalaTestSubject(
-      "test_data/scala_helloworld",
-      TokenSlicer.META,
-      """
+    ReducerFunctionalTestUtility.runScalaTestSubject(
+      reductionFolder = "test_data/scala_helloworld",
+      reducerAnnotation = TokenSlicer.META,
+      cmdCustomizer = {},
+      expected =
+        """
       |object Hello {
       | def main(args: Array[String]) =
       |   println("Hello, world")
       |}
-      """.trimMargin(),
+        """.trimMargin(),
     )
   }
 }

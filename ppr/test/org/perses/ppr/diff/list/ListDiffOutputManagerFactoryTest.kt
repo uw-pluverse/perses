@@ -31,6 +31,7 @@ import org.perses.program.SourceFile
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.io.ReductionFolder
 import org.perses.util.ListAlignment
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.toImmutableList
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -42,31 +43,34 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class ListDiffOutputManagerFactoryTest {
-
   val tempDir = Files.createTempDirectory(this::class.java.canonicalName)
 
   // these files are used to initialize reduction folder
-  val origSeedFile = SourceFile(
-    Files.createFile(tempDir.resolve("seed.c")),
-    LanguageC,
-  )
-  val origVariantFile = SourceFile(
-    Files.createFile(tempDir.resolve("variant.c")),
-    LanguageC,
-  )
-  val testScript = ScriptFile(
-    Files.createFile(tempDir.resolve("r.sh")).apply {
-      this.writeText("#!/usr/bin/env bash")
-    },
-  )
+  val origSeedFile =
+    SourceFile(
+      Files.createFile(tempDir.resolve("seed.c")),
+      LanguageC,
+    )
+  val origVariantFile =
+    SourceFile(
+      Files.createFile(tempDir.resolve("variant.c")),
+      LanguageC,
+    )
+  val testScript =
+    ScriptFile(
+      Files.createFile(tempDir.resolve("r.sh")).apply {
+        this.writeText("#!/usr/bin/env bash")
+      },
+    )
 
   // initialize a reduction folder
-  val reductionInputs = ListDiffReductionInputs(
-    testScript,
-    origSeedFile,
-    origVariantFile,
-    immutableDependencyFiles = ImmutableList.of(),
-  )
+  val reductionInputs =
+    ListDiffReductionInputs(
+      testScript,
+      origSeedFile,
+      origVariantFile,
+      immutableDependencyFiles = ImmutableList.of(),
+    )
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -78,50 +82,58 @@ class ListDiffOutputManagerFactoryTest {
   fun testWrite() {
     val seedTokens = listOf("int", "a", "=", "1", ";")
     val variantTokens = listOf("int", "a", "=", "1", "+", "2", "-", "3", ";")
-    val seedProgram = TestUtility.createTokenizedProgramFromString(
-      seedTokens.joinToString(separator = " "),
-      LanguageC,
-    )
-    val variantProgram = TestUtility.createTokenizedProgramFromString(
-      variantTokens.joinToString(separator = " "),
-      LanguageC,
-    )
-    val listAlignment = ListAlignment.create(
-      seedProgram.tokens,
-      variantProgram.tokens,
-      PPRDiffUtils.EQUALIZER_TOKEN,
-    )
+    val seedProgram =
+      TestUtility.createTokenizedProgramFromString(
+        seedTokens.joinToString(separator = " "),
+        LanguageC,
+      )
+    val variantProgram =
+      TestUtility.createTokenizedProgramFromString(
+        variantTokens.joinToString(separator = " "),
+        LanguageC,
+      )
+    val listAlignment =
+      ListAlignment.create(
+        seedProgram.tokens,
+        variantProgram.tokens,
+        PPRDiffUtils.EQUALIZER_PERSES_TOKEN,
+      )
     val listAlignmentWithReplace = ListAlignment.mergeIntoReplace(listAlignment)
     val originalDiff = listAlignmentWithReplace.onlyInserts.toImmutableList()
     val parserFacade = TestUtility.getFacade(LanguageC)
-    val inputs = ListDiffReductionInputs(
-      testScript,
-      seedFile = origSeedFile,
-      variantFile = origVariantFile,
-      immutableDependencyFiles = ImmutableList.of(),
-    )
-    val outputManagerFactory = ListDiffOutputManagerFactory(
-      inputs,
-      seedProgram,
-      listAlignmentWithReplace,
-      originalDiff,
-      EnumFormatControl.SINGLE_TOKEN_PER_LINE,
-      parserFacade.lexerAtnWrapper,
-    )
+    val inputs =
+      ListDiffReductionInputs(
+        testScript,
+        seedFile = origSeedFile,
+        variantFile = origVariantFile,
+        immutableDependencyFiles = ImmutableList.of(),
+      )
+    val outputManagerFactory =
+      ListDiffOutputManagerFactory(
+        reductionInputs = inputs,
+        seedProgram = seedProgram,
+        originalListAlignment = listAlignmentWithReplace,
+        originalDiff = originalDiff,
+        programFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+        lexerAtnWrapper = parserFacade.lexerAtnWrapper,
+        shaAlgorithm = EnumShaAlgorithm.SHA256,
+      )
 
     val reducedDiff = originalDiff.subList(0, 2)
 
     val folder = Files.createDirectories(tempDir.resolve("reduction-folder"))
-    val reductionFolder = ReductionFolder(
-      reductionInputs = reductionInputs,
-      folder = folder,
-    )
+    val reductionFolder =
+      ReductionFolder(
+        reductionInputs = reductionInputs,
+        folder = folder,
+      )
 
-    outputManagerFactory.OutputManager(
-      reducedDiff,
-      PrinterRegistry.getPrinter(EnumFormatControl.SINGLE_TOKEN_PER_LINE),
-      seedProgram,
-    ).write(reductionFolder)
+    outputManagerFactory
+      .OutputManager(
+        reducedDiff,
+        PrinterRegistry.getPrinter(EnumFormatControl.SINGLE_TOKEN_PER_LINE),
+        seedProgram,
+      ).write(reductionFolder)
 
     val seedFile = folder.resolve(origSeedFile.baseName)
     assertThat(seedFile.exists()).isTrue()

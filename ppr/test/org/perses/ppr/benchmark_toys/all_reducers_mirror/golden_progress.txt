@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -22,10 +23,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -38,13 +40,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -55,6 +60,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -63,7 +69,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -73,27 +79,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 treeDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -106,10 +121,11 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<atomic>
-reducer: customized_tree_diff_node_reducer
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 23
+(38/38)  The reducer execution plan is listed below.
+    customized_tree_diff_node_reducer
 
 
 =Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
@@ -369,48 +385,16 @@ Failed to reduce node 98
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 38
-  characterCount: 84
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(33/38)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                           Reducer #Tokens #Chars #NonDeletions
+ 0 customized_tree_diff_node_reducer      -5     -7             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "customized_tree_diff_node_reducer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 33
-  characterCount: 77
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
+----------------------------------- Summary ------------------------------------
+                          Reducer Times #Tokens #Chars
+customized_tree_diff_node_reducer     1      -5     -7
+------------------------------------- End --------------------------------------
 
 
 #test success = 1
@@ -431,6 +415,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -443,10 +428,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -459,13 +445,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -476,6 +465,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -484,7 +474,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -494,27 +484,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 treeDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -527,10 +526,11 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<atomic>
-reducer: customized_tree_diff_node_reducer
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 22
+(36/36)  The reducer execution plan is listed below.
+    customized_tree_diff_node_reducer
 
 
 =Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
@@ -782,48 +782,16 @@ Failed to reduce node 98
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 36
-  characterCount: 81
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(33/36)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                           Reducer #Tokens #Chars #NonDeletions
+ 0 customized_tree_diff_node_reducer      -3     -4             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "customized_tree_diff_node_reducer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 33
-  characterCount: 77
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
+----------------------------------- Summary ------------------------------------
+                          Reducer Times #Tokens #Chars
+customized_tree_diff_node_reducer     1      -3     -4
+------------------------------------- End --------------------------------------
 
 
 #test success = 2
@@ -844,6 +812,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -858,10 +827,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -874,13 +844,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -891,6 +864,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -899,7 +873,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -909,27 +883,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 listDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -983,6 +966,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -997,10 +981,11 @@ inputFlags:
   sourceFile: "variant.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -1013,13 +998,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -1030,6 +1018,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -1038,7 +1027,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -1048,27 +1037,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 listDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -1122,6 +1120,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -1134,10 +1133,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -1150,13 +1150,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -1167,6 +1170,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -1175,7 +1179,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -1185,27 +1189,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 seedInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -1218,13 +1231,14 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<atomic>
-reducer: perses_node_priority_with_dfs_delta
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 21
+(33/33)  The reducer execution plan is listed below.
+    node_priority-dfs
 
 
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -1346,9 +1360,22 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](33/33)  Minimizer DeltaDebugger starts. Input=[0-1]#2. Global ratio:33/33=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](33/33)  Testing the empty input. Global ratio:33/33=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@2
+    --file: seed.c--
+    --file: variant.c--
+                     c
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](33/33)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:33/33=100.00%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -1379,15 +1406,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](33/33)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:33/33=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+0 entries are removed: 2 --> 2.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 2
+    size before clearance = 3
 ------------------------------------------------------------
 
 
@@ -1397,9 +1425,8 @@ token count change 33 -> 32
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
     --file: seed.c--
     --file: variant.c--
                      c
@@ -1407,12 +1434,15 @@ token count change 33 -> 32
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [1]#1: Uninteresting. Local ratio: 1/2=50.00%. Global ratio:32/33=96.97%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=5}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [1]#1: Skipped. Local ratio: 1/2=50.00%. Global ratio:32/33=96.97%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Minimizer DeltaDebugger ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:32/33=96.97%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 2 from 33 to 32
@@ -1441,32 +1471,6 @@ The current best program is the following
         printf("%d", c);
         return 0;
     }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.c--
-                 ;
-    --file: variant.c--
-                 ;
-                     c
-    --file: <formatted tokenized program in its original format>--
-                 ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.c--
-                 ;
-    --file: variant.c--
-                 ;
-                     c
-    --file: <formatted tokenized program in its original format>--
-                 ;
 ------------------------------------------------------------
 
 
@@ -1609,9 +1613,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:32/33=96.97%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Testing the empty input. Global ratio:32/33=96.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -1628,6 +1634,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:32/33=96.97%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:32/33=96.97%
 ===================Node reduction is done===================
 
 Failed to reduce node 10
@@ -1687,9 +1695,30 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Minimizer DeltaDebugger starts. Input=[0-4]#5. Global ratio:32/33=96.97%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Testing the empty input. Global ratio:32/33=96.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: seed.c--
+    int main(void)
+    {
+    }
+    --file: variant.c--
+    int main(void)
+    {
+                     c
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main(void)
+    {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:32/33=96.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: seed.c--
     int main(void)
     {
@@ -1711,9 +1740,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:32/33=96.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: seed.c--
     int main(void)
     {
@@ -1739,9 +1769,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:32/33=96.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: seed.c--
     int main(void)
     {
@@ -1766,9 +1797,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [0-1]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:32/33=96.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -1796,9 +1828,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:32/33=96.97%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -1827,9 +1860,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:32/33=96.97%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -1857,15 +1891,16 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](32/33)  Try deleting [4]#1: Interesting. Local ratio: 5/5=100.00%. Global ratio:32/33=96.97%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+0 entries are removed: 15 --> 15.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 17
+    size before clearance = 18
 ------------------------------------------------------------
 
 
@@ -1877,7 +1912,7 @@ token count change 32 -> 29
 
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: seed.c--
     int main(void)
     {
@@ -1899,9 +1934,10 @@ token count change 32 -> 29
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](29/33)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/5=80.00%. Global ratio:29/33=87.88%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -1926,9 +1962,9 @@ token count change 32 -> 29
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](29/33)  Try deleting [2]#1: Uninteresting. Local ratio: 4/5=80.00%. Global ratio:29/33=87.88%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -1954,9 +1990,10 @@ token count change 32 -> 29
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](29/33)  Try deleting [3]#1: Uninteresting. Local ratio: 4/5=80.00%. Global ratio:29/33=87.88%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -1981,9 +2018,10 @@ token count change 32 -> 29
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](29/33)  Try deleting [0]#1: Uninteresting. Local ratio: 4/5=80.00%. Global ratio:29/33=87.88%
 ============Testing the following program: pass=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -2008,9 +2046,10 @@ token count change 32 -> 29
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](29/33)  Try deleting [1]#1: Interesting. Local ratio: 4/5=80.00%. Global ratio:29/33=87.88%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+4 entries are removed: 18 --> 14.
 ------------------------------------------------------------
 
 
@@ -2026,9 +2065,8 @@ token count change 29 -> 24
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -2050,6 +2088,8 @@ token count change 29 -> 24
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 3/5=60.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0,2-3]#3. Local ratio: 3/5=60.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 13 from 32 to 24
@@ -2156,9 +2196,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -2183,6 +2224,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 49
@@ -2462,9 +2505,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -2489,6 +2533,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 69
@@ -2603,9 +2649,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: seed.c--
     int main
     {
@@ -2630,6 +2677,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 230
@@ -2690,9 +2739,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -2717,6 +2768,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 194
@@ -2804,9 +2857,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -2831,6 +2886,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 120
@@ -2918,9 +2975,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -2945,6 +3004,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 73
@@ -2975,33 +3036,6 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=75}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.c--
-    int main(void)
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"   );
-    }
-    --file: variant.c--
-    int main(void)
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"  c);
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main(void)
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"   );
-    }
 ------------------------------------------------------------
 
 
@@ -3086,9 +3120,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -3113,6 +3148,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 199
@@ -3173,9 +3210,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -3200,6 +3238,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 125
@@ -3260,9 +3300,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Testing the empty input. Global ratio:24/33=72.73%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__expression_1]dd@1
     --file: seed.c--
     int main(void)
     {
@@ -3287,6 +3328,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](24/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/33=72.73%
 ===================Node reduction is done===================
 
 Failed to reduce node 77
@@ -3403,7 +3446,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+0 entries are removed: 30 --> 30.
 ------------------------------------------------------------
 
 
@@ -4094,9 +4137,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/33)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/33=69.70%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/33)  Testing the empty input. Global ratio:23/33=69.70%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: seed.c--
         main(    )
     {
@@ -4121,6 +4166,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/33)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/33=69.70%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/33)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/33=69.70%
 ===================Node reduction is done===================
 
 Failed to reduce node 6
@@ -4187,53 +4234,21 @@ Failed to reduce node 250
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 33
-  characterCount: 77
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(23/33)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID           Reducer #Tokens #Chars #NonDeletions
+ 0 node_priority-dfs     -10    -37             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: true
+----------------------------------- Summary ------------------------------------
+          Reducer Times #Tokens #Chars
+node_priority-dfs     1     -10    -37
+------------------------------------- End --------------------------------------
 
 
 #test success = 4
-#test failure = 46
-#test result cache hits = 0
+#test failure = 35
+#test result cache hits = 10
 #test execution cancelled = 0
 #node edit action set cache hits = 13
 #external test execution cache hits = 0
@@ -4249,6 +4264,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -4261,10 +4277,11 @@ inputFlags:
   sourceFile: "variant.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -4277,13 +4294,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -4294,6 +4314,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -4302,7 +4323,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -4312,27 +4333,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 seedInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -4345,13 +4375,14 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<atomic>
-reducer: perses_node_priority_with_dfs_delta
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 15
+(23/23)  The reducer execution plan is listed below.
+    node_priority-dfs
 
 
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -4478,19 +4509,6 @@ The current best program is the following
 
 // edit action set type: [regular node]compatible replacement
     --file: variant.c--
-                 ;
-    --file: seed.c--
-                 ;
-                     a
-    --file: <formatted tokenized program in its original format>--
-                 ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: variant.c--
                        ;
     --file: seed.c--
                      a ;
@@ -4579,9 +4597,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -4598,6 +4618,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 9
@@ -4653,9 +4675,30 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0-2]#3. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: variant.c--
+    int main(    )
+    {
+    }
+    --file: seed.c--
+    int main(    )
+    {
+                     a
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main(    )
+    {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: variant.c--
     int main(    )
     {
@@ -4674,9 +4717,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -4699,9 +4743,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -4723,9 +4768,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -4747,6 +4793,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 12
@@ -4834,9 +4882,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -4861,6 +4910,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 19
@@ -5122,9 +5173,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -5149,6 +5201,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 39
@@ -5263,9 +5317,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -5290,6 +5346,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 127
@@ -5377,9 +5435,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -5404,6 +5464,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 90
@@ -5491,9 +5553,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -5518,6 +5582,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 43
@@ -5548,33 +5614,6 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=45}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: variant.c--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"   );
-    }
-    --file: seed.c--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"  a);
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"   );
-    }
 ------------------------------------------------------------
 
 
@@ -5659,9 +5698,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: variant.c--
     int main
     {
@@ -5686,6 +5726,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 163
@@ -5746,9 +5788,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -5773,6 +5816,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 132
@@ -5833,9 +5878,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -5860,6 +5906,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 95
@@ -5920,9 +5968,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__expression_1]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -5947,6 +5996,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 47
@@ -6682,9 +6733,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: variant.c--
         main(    )
     {
@@ -6709,6 +6762,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 5
@@ -6775,53 +6830,21 @@ Failed to reduce node 174
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(23/23)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID           Reducer #Tokens #Chars #NonDeletions
+ 0 node_priority-dfs       0      0             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+          Reducer Times #Tokens #Chars
+node_priority-dfs     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 0
-#test failure = 33
-#test result cache hits = 0
+#test failure = 25
+#test result cache hits = 7
 #test execution cancelled = 0
 #node edit action set cache hits = 14
 #external test execution cache hits = 0
@@ -6837,6 +6860,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -6849,10 +6873,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -6865,13 +6890,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -6882,6 +6910,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -6890,7 +6919,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -6900,27 +6929,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 treeDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -6933,10 +6971,11 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<atomic>
-reducer: customized_tree_diff_node_reducer
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 15
+(23/23)  The reducer execution plan is listed below.
+    customized_tree_diff_node_reducer
 
 
 =Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
@@ -7028,48 +7067,16 @@ Failed to reduce node 67
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(23/23)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                           Reducer #Tokens #Chars #NonDeletions
+ 0 customized_tree_diff_node_reducer       0      0             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "customized_tree_diff_node_reducer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+                          Reducer Times #Tokens #Chars
+customized_tree_diff_node_reducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 0
@@ -7090,6 +7097,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -7102,10 +7110,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -7118,13 +7127,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -7135,6 +7147,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -7143,7 +7156,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -7153,27 +7166,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 treeDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -7186,10 +7208,11 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<atomic>
-reducer: customized_tree_diff_node_reducer
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 15
+(23/23)  The reducer execution plan is listed below.
+    customized_tree_diff_node_reducer
 
 
 =Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
@@ -7281,48 +7304,16 @@ Failed to reduce node 67
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(23/23)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                           Reducer #Tokens #Chars #NonDeletions
+ 0 customized_tree_diff_node_reducer       0      0             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "customized_tree_diff_node_reducer"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+                          Reducer Times #Tokens #Chars
+customized_tree_diff_node_reducer     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 0
@@ -7343,6 +7334,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -7357,10 +7349,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -7373,13 +7366,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -7390,6 +7386,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -7398,7 +7395,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -7408,27 +7405,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 listDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -7482,6 +7488,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -7496,10 +7503,11 @@ inputFlags:
   sourceFile: "variant.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -7512,13 +7520,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -7529,6 +7540,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -7537,7 +7549,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -7547,27 +7559,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 listDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -7621,6 +7642,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -7633,10 +7655,11 @@ inputFlags:
   sourceFile: "seed.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -7649,13 +7672,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -7666,6 +7692,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -7674,7 +7701,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -7684,27 +7711,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 seedInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -7717,13 +7753,14 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<atomic>
-reducer: perses_node_priority_with_dfs_delta
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 15
+(23/23)  The reducer execution plan is listed below.
+    node_priority-dfs
 
 
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -7850,19 +7887,6 @@ The current best program is the following
 
 // edit action set type: [regular node]compatible replacement
     --file: seed.c--
-                 ;
-    --file: variant.c--
-                 ;
-                     c
-    --file: <formatted tokenized program in its original format>--
-                 ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.c--
                        ;
     --file: variant.c--
                      c ;
@@ -7951,9 +7975,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -7970,6 +7996,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 9
@@ -8025,9 +8053,30 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0-2]#3. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: seed.c--
+    int main(    )
+    {
+    }
+    --file: variant.c--
+    int main(    )
+    {
+                     c
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main(    )
+    {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: seed.c--
     int main(    )
     {
@@ -8046,9 +8095,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -8071,9 +8121,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -8095,9 +8146,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -8119,6 +8171,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 12
@@ -8206,9 +8260,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -8233,6 +8288,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 19
@@ -8494,9 +8551,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -8521,6 +8579,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 39
@@ -8635,9 +8695,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -8662,6 +8724,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 127
@@ -8749,9 +8813,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -8776,6 +8842,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 90
@@ -8863,9 +8931,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -8890,6 +8960,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 43
@@ -8920,33 +8992,6 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=45}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.c--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"   );
-    }
-    --file: variant.c--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"  c);
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"   );
-    }
 ------------------------------------------------------------
 
 
@@ -9031,9 +9076,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: seed.c--
     int main
     {
@@ -9058,6 +9104,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 163
@@ -9118,9 +9166,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -9145,6 +9194,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 132
@@ -9205,9 +9256,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -9232,6 +9284,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 95
@@ -9292,9 +9346,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__expression_1]dd@1
     --file: seed.c--
     int main(    )
     {
@@ -9319,6 +9374,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 47
@@ -10054,9 +10111,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: seed.c--
         main(    )
     {
@@ -10081,6 +10140,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 5
@@ -10147,53 +10208,21 @@ Failed to reduce node 174
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(23/23)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID           Reducer #Tokens #Chars #NonDeletions
+ 0 node_priority-dfs       0      0             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+          Reducer Times #Tokens #Chars
+node_priority-dfs     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 0
-#test failure = 33
-#test result cache hits = 0
+#test failure = 25
+#test result cache hits = 7
 #test execution cancelled = 0
 #node edit action set cache hits = 14
 #external test execution cache hits = 0
@@ -10209,6 +10238,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -10221,10 +10251,11 @@ inputFlags:
   sourceFile: "variant.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_perses_node_priority_with_dfs_delta_seed.c_variant.c"
+  outputDir: "result_ppr_reduction_golden_test_all_reducers_mirror_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: false
+  globalFixpoint: false
+  fixpointForMainReducer: false
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -10237,13 +10268,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForKleene: "PERSES_VARIANT_OF_PRISTINE"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -10254,6 +10288,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -10262,7 +10297,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress.txt"
@@ -10272,27 +10307,36 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
   lprFixpoint: false
   llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 seedInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
@@ -10305,13 +10349,14 @@ Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<atomic>
-reducer: perses_node_priority_with_dfs_delta
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 15
+(23/23)  The reducer execution plan is listed below.
+    node_priority-dfs
 
 
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -10438,19 +10483,6 @@ The current best program is the following
 
 // edit action set type: [regular node]compatible replacement
     --file: variant.c--
-                 ;
-    --file: seed.c--
-                 ;
-                     a
-    --file: <formatted tokenized program in its original format>--
-                 ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: variant.c--
                        ;
     --file: seed.c--
                      a ;
@@ -10539,9 +10571,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -10558,6 +10592,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 9
@@ -10613,9 +10649,30 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0-2]#3. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: variant.c--
+    int main(    )
+    {
+    }
+    --file: seed.c--
+    int main(    )
+    {
+                     a
+    }
+    --file: <formatted tokenized program in its original format>--
+    int main(    )
+    {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: variant.c--
     int main(    )
     {
@@ -10634,9 +10691,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -10659,9 +10717,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -10683,9 +10742,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -10707,6 +10767,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 12
@@ -10794,9 +10856,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -10821,6 +10884,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 19
@@ -11082,9 +11147,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -11109,6 +11175,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 39
@@ -11223,9 +11291,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -11250,6 +11320,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 127
@@ -11337,9 +11409,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -11364,6 +11438,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 90
@@ -11451,9 +11527,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -11478,6 +11556,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 43
@@ -11508,33 +11588,6 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=45}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: variant.c--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"   );
-    }
-    --file: seed.c--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"  a);
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main(    )
-    {
-        int a = 1;
-        int c = 3;
-        printf("%d"   );
-    }
 ------------------------------------------------------------
 
 
@@ -11619,9 +11672,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: variant.c--
     int main
     {
@@ -11646,6 +11700,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 163
@@ -11706,9 +11762,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -11733,6 +11790,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 132
@@ -11793,9 +11852,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -11820,6 +11880,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 95
@@ -11880,9 +11942,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__expression_1]dd@1
     --file: variant.c--
     int main(    )
     {
@@ -11907,6 +11970,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 47
@@ -12642,9 +12707,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger starts. Input=[0]#1. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Testing the empty input. Global ratio:23/23=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: PERSES_VARIANT_OF_PRISTINE in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: variant.c--
         main(    )
     {
@@ -12669,6 +12736,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
+FixPt[1][node_priority-dfs][PERSES_VARIANT_OF_PRISTINE](23/23)  Minimizer DeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:23/23=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 5
@@ -12735,53 +12804,21 @@ Failed to reduce node 174
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+(23/23)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID           Reducer #Tokens #Chars #NonDeletions
+ 0 node_priority-dfs       0      0             0
 
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 23
-  characterCount: 40
-  fileContents:
-  - fileName: "variant.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-  - fileName: "seed.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
+----------------------------------- Summary ------------------------------------
+          Reducer Times #Tokens #Chars
+node_priority-dfs     1       0      0
+------------------------------------- End --------------------------------------
 
 
 #test success = 0
-#test failure = 33
-#test result cache hits = 0
+#test failure = 25
+#test result cache hits = 7
 #test execution cancelled = 0
 #node edit action set cache hits = 14
 #external test execution cache hits = 0

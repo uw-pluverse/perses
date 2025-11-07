@@ -40,8 +40,7 @@ import java.util.ArrayDeque
 
 @RunWith(JUnit4::class)
 class NFATest {
-
-  val atn = LexerAtnWrapper(TestLexer::class.java)
+  val atn = LexerAtnWrapper.createLexerWrapperFromLexerClass(TestLexer::class.java)
 
   @Test
   fun testConvertingPlusOfSingleCharFormManuallyCreatedATN() {
@@ -173,11 +172,17 @@ class NFATest {
 
   fun testConstructATNFromTransition(ruleType: TokenType): AbstractPersesRuleElement {
     val origAtnStartState = atn.getOriginalStartState(ruleType)
-    val regex = MutableNFA.copyOf(origAtnStartState)
-      .removeStatesUnreachableFromAcceptingState().simplifyToRegex()
+    val regex =
+      MutableNFA
+        .copyOf(origAtnStartState)
+        .removeStatesUnreachableFromAcceptingState()
+        .simplifyToRegex()
     val recoveredATN = ATNConstructorFromRegex().construct(regex)
-    val recoveredRegex = MutableNFA.copyOf(recoveredATN)
-      .removeStatesUnreachableFromAcceptingState().simplifyToRegex()
+    val recoveredRegex =
+      MutableNFA
+        .copyOf(recoveredATN)
+        .removeStatesUnreachableFromAcceptingState()
+        .simplifyToRegex()
     assertThat(regex.isEquivalent(recoveredRegex)).isTrue()
     return regex
   }
@@ -236,8 +241,9 @@ class NFATest {
 
   @Test
   fun testImmutableNFAAndMutableNFAHaveTheSameTopology() {
-    val atn = LexerAtnWrapper(OrigCLexer::class.java)
-    atn.metaTokenInfoDB.asSequence()
+    val atn = LexerAtnWrapper.createLexerWrapperFromLexerClass(OrigCLexer::class.java)
+    atn.metaTokenInfoDB
+      .asSequence()
       .map { token ->
         val mutableNFA = MutableNFA.copyOf(atn.getOriginalStartState(token.tokenType))
         mutableNFA to mutableNFA.toImmutableNFA()
@@ -253,10 +259,10 @@ class NFATest {
     assertThat(regex.sourceCode).isEqualTo('A'.code.toString())
   }
 
-  private fun createNFA(ruleType: TokenType): MutableNFA {
-    return MutableNFA.copyOf(atn.getOriginalStartState(ruleType))
+  private fun createNFA(ruleType: TokenType): MutableNFA =
+    MutableNFA
+      .copyOf(atn.getOriginalStartState(ruleType))
       .removeStatesUnreachableFromAcceptingState()
-  }
 
   @Test
   fun testNfaAndAtnHaveTheSameTopology() {
@@ -274,13 +280,15 @@ class NFATest {
     assertThat(nfa.stateSequence().count())
       .isEqualTo(
         edgesInATN
-          .keys.asSequence()
+          .keys
+          .asSequence()
           .flatMap { sequenceOf(it.first, it.second) }
           .distinct()
           .count(),
       )
 
-    nfa.edgeSequence()
+    nfa
+      .edgeSequence()
       .map { edge ->
         val sourceNode = nfa.getSourceState(edge)
         val targetNode = nfa.getTargetState(edge)
@@ -302,9 +310,7 @@ class NFATest {
     assertThat(nfa.acceptingState.stateNumber).isEqualTo(startState.stopState.stateNumber)
   }
 
-  private fun getEdgesFromATN(
-    startState: RuleStartState,
-  ): Map<Pair<Int, Int>, Transition> {
+  private fun getEdgesFromATN(startState: RuleStartState): Map<Pair<Int, Int>, Transition> {
     val result = HashMap<Pair<Int, Int>, Transition>()
     val worklist = ArrayDeque<ATNState>().apply { add(startState) }
     val visited = HashSet<ATNState>()

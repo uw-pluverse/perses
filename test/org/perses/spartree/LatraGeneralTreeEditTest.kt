@@ -40,9 +40,7 @@ class LatraGeneralTreeEditTest {
     builder.replaceNode(nodeInt, nodeMainCopy)
     builder.deleteNode(nodeMainCopy)
 
-    val edit = tree.createLatraGeneralEdit(
-      builder.build()!!,
-    )
+    val edit = tree.createLatraGeneralEdit(builder.buildOrNull()!!)
 
     val bufferParentOfPrintf = nodePrintf.parent
     tree.applyEdit(edit)
@@ -57,9 +55,10 @@ class LatraGeneralTreeEditTest {
 
   @Test
   fun testLatraEditComputeProgram() {
-    val expectOutput = """
+    val expectOutput =
+      """
       main ( ) { { { { { ; ( ( "hello world\n" ) ) ; } } } } }
-    """.trimIndent()
+      """.trimIndent()
     val builder = LatraGeneralActionSet.Builder("test 2")
     val nodeSemicolCopy = nodeSemicol.recursiveDeepCopy(ReuseNodeIdStrategy).result
     val nodeMainCopy = nodeMain.recursiveDeepCopy(ReuseNodeIdStrategy).result
@@ -68,19 +67,21 @@ class LatraGeneralTreeEditTest {
     builder.replaceNode(nodeInt, nodeMainCopy)
     builder.deleteNode(nodeMainCopy)
 
-    val edit = tree.createLatraGeneralEdit(
-      builder.build()!!,
-    )
+    val edit = tree.createLatraGeneralEdit(builder.buildOrNull()!!)
 
     tree.applyEdit(edit)
     assertThat(
-      edit.computeProgram(tree).tokens.asSequence()
-        .map { it.text }
+      edit
+        .computeProgram(tree)
+        .tokens
+        .asSequence()
+        .map { it.lexemeText }
         .joinToString(" "),
     ).isEqualTo(expectOutput)
     assertThat(
-      tree.programSnapshot.tokens.asSequence()
-        .map { it.text }
+      tree.programSnapshot.tokens
+        .asSequence()
+        .map { it.lexemeText }
         .joinToString(" "),
     ).isEqualTo(expectOutput)
   }
@@ -88,44 +89,53 @@ class LatraGeneralTreeEditTest {
   @Test
   fun testReplaceRootWithLatraEdit() {
     val tree = TestUtility.createSparTreeFromString("int a;", LanguageC)
-    val another = TestUtility.createSparTreeFromString(
-      "char c;",
-      LanguageC,
-    ).detachRootFromTree().also { root ->
-      val firstToken = root.beginToken!!
-      firstToken.parent!!.replaceChild(
-        firstToken,
-        newChild = TestUtility.createSparTreeFromString(
-          ";",
+    val another =
+      TestUtility
+        .createSparTreeFromString(
+          "char c;",
           LanguageC,
-        ).detachRootFromTree(),
-        firstToken.payload!!,
-      )
-    }
+        ).detachRootFromTree()
+        .also { root ->
+          val firstToken = root.beginToken!!
+          firstToken.parent!!.replaceChild(
+            firstToken,
+            newChild =
+              TestUtility
+                .createSparTreeFromString(
+                  ";",
+                  LanguageC,
+                ).detachRootFromTree(),
+            firstToken.payload!!,
+          )
+        }
     another.fixLinkIntegrity()
 
-    val edit = tree.createLatraGeneralEdit(
-      LatraGeneralActionSet.Builder(
-        actionsDescription = "test action",
-      ).replaceNode(
-        targetNode = tree.realRoot,
-        replacingNode = another,
-      ).build()!!,
-    )
-    edit.computeProgram(tree).tokens.map { it.text }.let { tokens ->
-      assertThat(tokens).containsExactly(
-        ";",
-        "c",
-        ";",
-      ).inOrder()
+    val edit =
+      tree.createLatraGeneralEdit(
+        LatraGeneralActionSet
+          .Builder(
+            actionsDescription = "test action",
+          ).replaceNode(
+            targetNode = tree.realRoot,
+            replacingNode = another,
+          ).buildOrNull()!!,
+      )
+    edit.computeProgram(tree).tokens.map { it.lexemeText }.let { tokens ->
+      assertThat(tokens)
+        .containsExactly(
+          ";",
+          "c",
+          ";",
+        ).inOrder()
     }
     tree.applyEdit(edit)
-    tree.programSnapshot.tokens.map { it.text }.let { tokens ->
-      assertThat(tokens).containsExactly(
-        ";",
-        "c",
-        ";",
-      ).inOrder()
+    tree.programSnapshot.tokens.map { it.lexemeText }.let { tokens ->
+      assertThat(tokens)
+        .containsExactly(
+          ";",
+          "c",
+          ";",
+        ).inOrder()
     }
   }
 }

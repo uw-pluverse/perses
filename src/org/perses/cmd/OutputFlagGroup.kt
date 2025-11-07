@@ -21,7 +21,6 @@ import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Path
 
 class OutputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Outputs") {
-
   @Parameter(
     names = ["--output-dir", "-o"],
     description = "The output directory to save the reduced result.",

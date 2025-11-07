@@ -47,7 +47,7 @@ def kt_binary_for_genrule(
     )
 
 DEFAULT_PERSES_BIN = "//src/org/perses:perses"
-DEFAULT_MAIN_REDUCTION_ALGORITHM = "perses_node_priority_with_dfs_delta"
+DEFAULT_MAIN_REDUCTION_ALGORITHM = "node_priority-dfs"
 
 def reduce(
         name,
@@ -58,6 +58,8 @@ def reduce(
         names_of_other_files_in_output_dir = None,
         enable_query_caching = None,
         enable_edit_caching = None,
+        enable_token_reducer = None,
+        enable_vulcan = None,
         statistics_file = None,
         progress_dump_file = None,
         thread_count = None,
@@ -67,7 +69,7 @@ def reduce(
         query_cache_type = None,
         other_flags = None,
         extra_output_files = None,
-        delta_debugger_profile = None,
+        list_minimizer_profile = None,
         perses_bin = DEFAULT_PERSES_BIN,
         cmd_deps = None,
         deps = None):
@@ -94,6 +96,17 @@ def reduce(
         args.append("--query-caching %s" % ("true" if enable_query_caching else "false"))
     if enable_edit_caching != None:
         args.append("--edit-caching %s" % ("true" if enable_edit_caching else "false"))
+
+    if enable_token_reducer != None:
+        args.append("--enable-trec %s" % ("true" if enable_token_reducer else "false"))
+    else:
+        args.append("--enable-trec false")
+
+    if enable_vulcan != None:
+        args.append("--enable-vulcan %s" % ("true" if enable_vulcan else "false"))
+    else:
+        args.append("--enable-vulcan false")
+
     if call_formatter != None:
         args.append("--call-formatter %s" % ("true" if call_formatter else "false"))
     if query_cache_type:
@@ -104,9 +117,9 @@ def reduce(
     if statistics_file:
         args.append("--stat-dump-file $(location %s)" % statistics_file)
         outs.append(statistics_file)
-    if delta_debugger_profile:
-        args.append("--profile-delta-debugger $(location %s)" % delta_debugger_profile)
-        outs.append(delta_debugger_profile)
+    if list_minimizer_profile:
+        args.append("--profile-list-minimizer $(location %s)" % list_minimizer_profile)
+        outs.append(list_minimizer_profile)
 
     if output_dir != None:
         main_result_file = "%s/%s" % (output_dir, source_file)

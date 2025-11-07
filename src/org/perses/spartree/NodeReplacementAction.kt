@@ -24,7 +24,6 @@ class NodeReplacementAction(
   targetNode: AbstractSparTreeNode,
   val replacingNode: AbstractSparTreeNode,
 ) : AbstractTreeEditAction(targetNode) {
-
   init {
     Util.lazyAssert {
       val errors = replacingNode.checkLeafLinkIntegrity()
@@ -38,24 +37,27 @@ class NodeReplacementAction(
   override fun internalCompareTo(o: AbstractTreeEditAction): Int {
     check(o is NodeReplacementAction) { "$o. ${o::class}" }
     // TODO, refactor this with kotlin's comparator.
-    return ComparisonChain.start()
+    return ComparisonChain
+      .start()
       .compare(targetNode.nodeId, o.targetNode.nodeId)
       .compare(replacingNode.nodeId, o.replacingNode.nodeId)
       .result()
   }
 
   override val description: String
-    get() = MoreObjects.toStringHelper(this)
-      .add("target_node", targetNode.nodeId)
-      .add("replacement", replacingNode.nodeId)
-      .toString()
+    get() =
+      MoreObjects
+        .toStringHelper(this)
+        .add("target_node", targetNode.nodeId)
+        .add("replacement", replacingNode.nodeId)
+        .toString()
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
       .add("target", targetNode)
       .add("replacement", replacingNode)
       .toString()
-  }
 
   override fun specificEquals(other: AbstractTreeEditAction): Boolean {
     if (other !is NodeReplacementAction) {
@@ -64,9 +66,7 @@ class NodeReplacementAction(
     return other.replacingNode === replacingNode
   }
 
-  override fun specificHashCode(): Int {
-    return replacingNode.nodeId
-  }
+  override fun specificHashCode(): Int = replacingNode.nodeId
 
   override fun internalApply() {
     check(!targetNode.isPermanentlyDeleted)
@@ -74,14 +74,15 @@ class NodeReplacementAction(
     check(replacingNode.parent == null)
     val parentNode = targetNode.parent!!
     val targetPayload = targetNode.payload!!
-    val payload = if (replacingNode.payload != null) {
-      AbstractNodePayload.concatenatePaylods(
-        targetPayload,
-        replacingNode.payload!!,
-      )
-    } else {
-      targetPayload
-    }
+    val payload =
+      if (replacingNode.payload != null) {
+        AbstractNodePayload.concatenatePaylods(
+          targetPayload,
+          replacingNode.payload!!,
+        )
+      } else {
+        targetPayload
+      }
     replacingNode.resetPayload()
     parentNode.replaceChild(
       targetNode,
@@ -93,16 +94,18 @@ class NodeReplacementAction(
     targetNode.delete()
 
     // maintain leaf list
-    val targetNodePre = if (targetNode is LexerRuleSparTreeNode) {
-      targetNode.prev
-    } else {
-      targetNode.beginToken?.prev
-    }
-    val targetNodeNext = if (targetNode is LexerRuleSparTreeNode) {
-      targetNode.next
-    } else {
-      targetNode.endToken?.next
-    }
+    val targetNodePre =
+      if (targetNode is LexerRuleSparTreeNode) {
+        targetNode.prev
+      } else {
+        targetNode.beginToken?.prev
+      }
+    val targetNodeNext =
+      if (targetNode is LexerRuleSparTreeNode) {
+        targetNode.next
+      } else {
+        targetNode.endToken?.next
+      }
     if (targetNodePre != null) {
       targetNodePre.next = replacingNode.beginToken
       replacingNode.beginToken?.prev = targetNodePre

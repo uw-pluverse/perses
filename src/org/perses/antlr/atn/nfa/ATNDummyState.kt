@@ -18,7 +18,9 @@ package org.perses.antlr.atn.nfa
 
 import org.antlr.v4.runtime.atn.ATNState
 
-class ATNDummyState(stateNumber: Int) : ATNState() {
+class ATNDummyState(
+  stateNumber: Int,
+) : ATNState() {
   init {
     this.stateNumber = stateNumber
   }

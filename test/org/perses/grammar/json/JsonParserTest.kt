@@ -32,7 +32,8 @@ class JsonParserTest {
     /* This program is obtained from
      * https://github.com/antlr/grammars-v4/blob/master/json/examples/example1.json
      */
-    val funcProgram = """
+    val funcProgram =
+      """
         {
             "glossary": {
                 "title": "example glossary",
@@ -64,7 +65,8 @@ class JsonParserTest {
     val origTokens = TestUtility.extractTokenTexts(origParseTree.tree)
     assertThat(origTokens.joinToString(separator = ""))
       .isEqualTo(
-        program.splitToSequence('\n')
+        program
+          .splitToSequence('\n')
           .map { it.removeWhitespaces() }
           .joinToString(separator = ""),
       )

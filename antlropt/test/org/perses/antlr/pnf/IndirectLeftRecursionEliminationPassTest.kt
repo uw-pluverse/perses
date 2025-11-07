@@ -30,7 +30,6 @@ import org.perses.antlr.ast.RuleNameRegistry
 
 @RunWith(JUnit4::class)
 class IndirectLeftRecursionEliminationPassTest : PnfLeftTestGrammar() {
-
   private var pass: IndirectLeftRecursionEliminationPass = IndirectLeftRecursionEliminationPass()
 
   @Test
@@ -87,10 +86,11 @@ class IndirectLeftRecursionEliminationPassTest : PnfLeftTestGrammar() {
 
   @Test
   fun test_transformLeftForScc() {
-    val grammars: List<Set<RuleNameRegistry.RuleNameHandle>> = getSortedSccList(graph)
-      .asSequence()
-      .map { it.vertexSet() }
-      .toList()
+    val grammars: List<Set<RuleNameRegistry.RuleNameHandle>> =
+      getSortedSccList(graph)
+        .asSequence()
+        .map { it.vertexSet() }
+        .toList()
     run {
       val g = grammars[0]
       val result = MutableGrammar.createParserRulesFrom(grammar)
@@ -105,11 +105,12 @@ class IndirectLeftRecursionEliminationPassTest : PnfLeftTestGrammar() {
       run {
         val defs = result.getAltBlock(b)
         assertThat(defs).hasSize(2)
-        val defStrings = defs
-          .asSequence()
-          .map { it.sourceCode }
-          .sorted()
-          .toList()
+        val defStrings =
+          defs
+            .asSequence()
+            .map { it.sourceCode }
+            .sorted()
+            .toList()
         assertThat(defStrings).containsExactly("c d", "(b c | d)? d")
       }
     }
@@ -131,8 +132,7 @@ class IndirectLeftRecursionEliminationPassTest : PnfLeftTestGrammar() {
           .asSequence()
           .map { it.sourceCode }
           .toList(),
-      )
-        .containsExactly("'d'")
+      ).containsExactly("'d'")
     }
   }
 }

@@ -12,8 +12,9 @@ reduction_golden_test(
     name = "reduction_golden_test",
     enable_edit_caching = True,
     enable_query_caching = True,
+    enable_token_reducer = True,
     golden_reduced_file = "golden.smt2",
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "hello.smt2",
     statistics_file = "statistics.txt",
     test_script = "r.sh",
@@ -22,12 +23,11 @@ reduction_golden_test(
 reduction_golden_test(
     name = "vulcan_reduction_golden_test",
     enable_edit_caching = True,
-    enable_query_caching = False,  # Cannot enable caching for vulcan. FIXME(cnsun)
+    enable_query_caching = True,
+    enable_token_reducer = True,
+    enable_vulcan = True,
     golden_reduced_file = "vulcan_golden.smt2",
-    other_flags = {
-        "--enable-vulcan": "true",
-    },
-    reduction_algorithm = "perses_node_priority_with_dfs_delta",
+    reduction_algorithm = "node_priority-dfs",
     source_file = "hello.smt2",
     test_script = "r.sh",
 )

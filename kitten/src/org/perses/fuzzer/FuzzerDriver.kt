@@ -67,26 +67,29 @@ class FuzzerDriver(
   options: CommandOptions,
   private val control: AdditionalFuzzerControl,
 ) : AutoCloseable {
-
-  val parserFacadeFactory = CompositeParserFacadeFactory(
-    builtinFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build(),
-    extFactory = AdhocParserFacadeFactoryUtil.createParserFacadeFactory(
-      options.languageExtFlags.languageJarFiles,
-    ),
-  )
-  val testingConfiguration = options.testingConfiguration!!
-  val facades = createFacadeList(
-    testingConfiguration,
-    parserFacadeFactory,
-  )
-  val extension: AbstractExtensionScript = if (options.generalFlags.extensionScript == null) {
-    NullExtensionScript()
-  } else {
-    ExtensionScript(
-      options.generalFlags.extensionScript!!,
-      options.generalFlags.extensionScriptResultFolder!!,
+  val parserFacadeFactory =
+    CompositeParserFacadeFactory(
+      builtinFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build(),
+      extFactory =
+        AdhocParserFacadeFactoryUtil.createParserFacadeFactory(
+          options.languageExtFlags.languageJarFiles,
+        ),
     )
-  }
+  val testingConfiguration = options.testingConfiguration!!
+  val facades =
+    createFacadeList(
+      testingConfiguration,
+      parserFacadeFactory,
+    )
+  val extension: AbstractExtensionScript =
+    if (options.generalFlags.extensionScript == null) {
+      NullExtensionScript()
+    } else {
+      ExtensionScript(
+        options.generalFlags.extensionScript!!,
+        options.generalFlags.extensionScriptResultFolder!!,
+      )
+    }
 
   private val tempFolder = options.generalFlags.getTempFolder()
   private val mutantsFolder = options.generalFlags.getMutantsFolder()
@@ -109,12 +112,16 @@ class FuzzerDriver(
   private val allowToEnableGuidance = options.generalFlags.allowToEnableGuidance
 
   private val shuffleSeeds = options.generalFlags.shuffleSeeds
-  private val languageKind = parserFacadeFactory
-    .computeLanguageKindWithLanguageNameIgnoreCase(
-      testingConfiguration.language,
-    )!!
-  val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(languageKind)!!
-    .defaultParserFacade.create()
+  private val languageKind =
+    parserFacadeFactory
+      .computeLanguageKindWithLanguageNameIgnoreCase(
+        testingConfiguration.language,
+      )!!
+  val parserFacade =
+    parserFacadeFactory
+      .getParserFacadeListForOrNull(languageKind)!!
+      .defaultParserFacade
+      .create()
   private val languageModel: AbstractLanguageModel =
     when (options.generalFlags.languageModelType) {
       LanguageModelType.NULL_MODEL -> NullLanguageModel(parserFacade)
@@ -123,24 +130,25 @@ class FuzzerDriver(
         NDepthTreeModel(contextSizeLimit = 3, parserFacade, allowToEnableGuidance)
       else -> error("invalid language model option.")
     }
-  private val generator = when (options.mutationControl.generatorType) {
-    SparTreeGeneratorType.NULL_GENERATOR -> null
-    SparTreeGeneratorType.RANDOM_GENERATOR -> {
-      RandomSparTreeGenerator(parserFacade, random)
-    }
-    SparTreeGeneratorType.GUIDED_GENERATOR -> {
-      if (languageModel is NDepthTreeModel) {
-        GuidedSparTreeGenerator(
-          parserFacade,
-          random,
-          languageModel,
-        )
-      } else {
-        error("The language model selected cannot guide the generator")
+  private val generator =
+    when (options.mutationControl.generatorType) {
+      SparTreeGeneratorType.NULL_GENERATOR -> null
+      SparTreeGeneratorType.RANDOM_GENERATOR -> {
+        RandomSparTreeGenerator(parserFacade, random)
       }
+      SparTreeGeneratorType.GUIDED_GENERATOR -> {
+        if (languageModel is NDepthTreeModel) {
+          GuidedSparTreeGenerator(
+            parserFacade,
+            random,
+            languageModel,
+          )
+        } else {
+          error("The language model selected cannot guide the generator")
+        }
+      }
+      else -> error("Unreachable")
     }
-    else -> error("Unreachable")
-  }
   private val scheduler: FuzzingScheduler
   private val coverageCollector: ICoverageCollector =
     CoverageCollectorFactory().getCoverageCollector(options.coverageFlags)
@@ -224,23 +232,28 @@ class FuzzerDriver(
             e.printStackTrace()
           }
           logger.atInfo().ifEnabled {
-            it.atMostEvery(30, TimeUnit.SECONDS)
+            it
+              .atMostEvery(30, TimeUnit.SECONDS)
               .log("Status of guidance: ${scheduler.model.guidanceEnabled}")
           }
           logger.atInfo().ifEnabled {
-            it.atMostEvery(30, TimeUnit.SECONDS)
+            it
+              .atMostEvery(30, TimeUnit.SECONDS)
               .log("Number of generated mutants: ${successfullyCreatedMutantCounter.get()}")
           }
           logger.atInfo().ifEnabled {
-            it.atMostEvery(30, TimeUnit.SECONDS)
+            it
+              .atMostEvery(30, TimeUnit.SECONDS)
               .log("Queue size: ${scheduler.fuzzerInstances.content.size}")
           }
           logger.atInfo().ifEnabled {
-            it.atMostEvery(30, TimeUnit.SECONDS)
+            it
+              .atMostEvery(30, TimeUnit.SECONDS)
               .log("Size of language model database: ${languageModel.size}")
           }
           logger.atInfo().ifEnabled {
-            it.atMostEvery(30, TimeUnit.SECONDS)
+            it
+              .atMostEvery(30, TimeUnit.SECONDS)
               .log("Number of obsoleted seeds: ${scheduler.numberOfObsoletedInstances}")
           }
         }
@@ -340,11 +353,12 @@ class FuzzerDriver(
       }
       val mutatedProgram =
         mutationOperatorExecutor.mutateWithoutSavingTreeStructure(treeFuzzer) ?: return
-      val mutantFile = File(
-        mutantsFolder,
-        "mutant_${mutationOperationCounter.incrementAndGet()}_${System.currentTimeMillis()}." +
-          Files.getFileExtension(seedFile.name),
-      )
+      val mutantFile =
+        File(
+          mutantsFolder,
+          "mutant_${mutationOperationCounter.incrementAndGet()}_${System.currentTimeMillis()}." +
+            Files.getFileExtension(seedFile.name),
+        )
       mutatedProgram.writeToFile(mutantFile)
       extension.run(mutantFile.toPath())
     }
@@ -355,8 +369,7 @@ class FuzzerDriver(
     for (i in 1..numOfThreads) {
       futures.add(
         executor.submit {
-          while (scheduler.fuzzerInstances.getSize() < limit
-          ) {
+          while (scheduler.fuzzerInstances.getSize() < limit) {
             generateNewInstanceAndAddToFuzzerInstances()
           }
         },
@@ -371,17 +384,19 @@ class FuzzerDriver(
     assert(generator != null)
     val generatedTree = generator!!.generateFromStartSymbol() ?: return
     val generatedSource = SingleTokenPerLinePrinter.print(generatedTree.programSnapshot).sourceCode
-    val generatedFile = File(
-      interestingFolder,
-      "generated_${numberOfGeneratedTreeFuzzer.getAndIncrement()}." +
-        languageKind.extensions.first(),
-    )
+    val generatedFile =
+      File(
+        interestingFolder,
+        "generated_${numberOfGeneratedTreeFuzzer.getAndIncrement()}." +
+          languageKind.extensions.first(),
+      )
     if (numberOfGeneratedTreeFuzzer.get() % 100 == 0) {
       logger.ktInfo { "Successfully generated $numberOfGeneratedTreeFuzzer instances." }
     }
     generatedFile.writeText(generatedSource)
-    val newTreeFuzzer = SparTreeFuzzer
-      .fromSparTree(parserFacade, generatedFile, generatedTree)
+    val newTreeFuzzer =
+      SparTreeFuzzer
+        .fromSparTree(parserFacade, generatedFile, generatedTree)
     scheduler.updateOnNewSeed(newTreeFuzzer)
     scheduler.fuzzerInstances.add(newTreeFuzzer)
   }
@@ -399,11 +414,12 @@ class FuzzerDriver(
         "Generating the $i-th mutant from the seed file $seedFile"
       }
       createMutationFolder().use { mutantFolder ->
-        val mutantFile = File(
-          mutantFolder.file.toFile(),
-          "mutant." +
-            Files.getFileExtension(seedFile.name),
-        )
+        val mutantFile =
+          File(
+            mutantFolder.file.toFile(),
+            "mutant." +
+              Files.getFileExtension(seedFile.name),
+          )
         if (i <= numOfTreeLevelMutationToApply) {
           val mutationResult =
             mutationOperatorExecutor.mutateWithTreeLevelMutation(treeFuzzer) ?: return@use
@@ -439,11 +455,12 @@ class FuzzerDriver(
     seedProgram: TokenizedProgram,
     crashDetector: ICompilerCrashDetector,
   ) {
-    val result = coverageCollector.executeActionWithCoverageCollection(
-      action,
-      mutantFile,
-      Thread.currentThread().id,
-    )
+    val result =
+      coverageCollector.executeActionWithCoverageCollection(
+        action,
+        mutantFile,
+        Thread.currentThread().id,
+      )
     logger.ktAt(Level.FINE) { "test cmd: ${result.cmd}" }
     logger.ktAt(Level.FINE) { "stderr: ${result.cmdOutput.stderr.combinedLines}" }
     val crashDetectorResult = crashDetector.detectCrash(result.cmdOutput)
@@ -483,14 +500,15 @@ class FuzzerDriver(
           logger.ktInfo { "Reached the limit of seed files: $numberLimitOfSeedFiles" }
           break
         }
-        val future = executor.submit<SparTreeFuzzer> {
-          logger.ktAt(Level.FINE) { "Parsing($index/$totalCount) $seed" }
-          SparTreeFuzzer.fromFile(
-            parserFacade,
-            seed,
-            isInitial = true,
-          )
-        }
+        val future =
+          executor.submit<SparTreeFuzzer> {
+            logger.ktAt(Level.FINE) { "Parsing($index/$totalCount) $seed" }
+            SparTreeFuzzer.fromFile(
+              parserFacade,
+              seed,
+              isInitial = true,
+            )
+          }
         result.add(future.get(1, TimeUnit.SECONDS))
         ++passedCounter
         logger.ktAt(Level.FINE) { "Parsed($index/$totalCount) $seed" }
@@ -527,49 +545,55 @@ class FuzzerDriver(
       check(facades.isNotEmpty())
     }
     val seedFolders = options.testingConfiguration!!.seedFolders
-    val seedFiles = collectSeedFilesRecursively(
-      seedFolders,
-    )
+    val seedFiles =
+      collectSeedFilesRecursively(
+        seedFolders,
+      )
     logger.ktInfo {
       "Collected ${seedFiles.size} seed files in folder $seedFolders"
     }
-    val fuzzerInstances = if (!noInitialSeed) {
-      SparTreeFuzzerQueue(
-        createSparTreeFuzzers(
-          seedFiles,
-          options.generalFlags.numberLimitOfSeedFiles,
-        ),
-      )
-    } else {
-      SparTreeFuzzerQueue(emptyList())
-    }
+    val fuzzerInstances =
+      if (!noInitialSeed) {
+        SparTreeFuzzerQueue(
+          createSparTreeFuzzers(
+            seedFiles,
+            options.generalFlags.numberLimitOfSeedFiles,
+          ),
+        )
+      } else {
+        SparTreeFuzzerQueue(emptyList())
+      }
     if (generator != null) {
       for (fuzzerInstance in fuzzerInstances.content) {
         generator.updateCorpus(fuzzerInstance.sparTree)
       }
     }
-    val mutationFrequencyController = MutationFrequencyController(
-      languageModel,
-    )
-    scheduler = FuzzingScheduler(
-      languageModel,
-      fuzzerInstances,
-      maxSeedPoolSize,
-      mutationFrequencyController,
-      interestingFolder,
-    )
-    mutationOperatorExecutor = MutationOperatorExecutor(
-      options.mutationControl,
-      random,
-      generator,
-      scheduler,
-    )
+    val mutationFrequencyController =
+      MutationFrequencyController(
+        languageModel,
+      )
+    scheduler =
+      FuzzingScheduler(
+        languageModel,
+        fuzzerInstances,
+        maxSeedPoolSize,
+        mutationFrequencyController,
+        interestingFolder,
+      )
+    mutationOperatorExecutor =
+      MutationOperatorExecutor(
+        options.mutationControl,
+        random,
+        generator,
+        scheduler,
+      )
     logger.ktInfo { "Created ${fuzzerInstances.getSize()} spar-tree fuzzers." }
     findingFolder = FindingFolder(options.generalFlags.getFindingFolder())
   }
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
+
     fun createFacadeList(
       testingConfiguration: TestingConfiguration,
       parserFacadeFactory: AbstractParserFacadeFactory,
@@ -578,11 +602,12 @@ class FuzzerDriver(
       testingConfiguration.programsUnderTest.forEach { prog ->
         builder.add(
           DefaultCompilationConfigurationFacade(
-            languageKind = requireNotNull(
-              parserFacadeFactory.computeLanguageKindWithLanguageNameIgnoreCase(
-                testingConfiguration.language,
-              ),
-            ) { "Cannot found language '${testingConfiguration.language}'" },
+            languageKind =
+              requireNotNull(
+                parserFacadeFactory.computeLanguageKindWithLanguageNameIgnoreCase(
+                  testingConfiguration.language,
+                ),
+              ) { "Cannot found language '${testingConfiguration.language}'" },
             programUnderTest = prog,
           ),
         )
@@ -590,13 +615,10 @@ class FuzzerDriver(
       return builder.build()
     }
 
-    fun getMutantFileName(seedFileName: String) =
-      "mutant." + Files.getFileExtension(seedFileName)
+    fun getMutantFileName(seedFileName: String) = "mutant." + Files.getFileExtension(seedFileName)
 
     @VisibleForTesting
-    fun collectSeedFilesRecursively(
-      seedFolders: List<SeedFolder>,
-    ): ImmutableList<File> {
+    fun collectSeedFilesRecursively(seedFolders: List<SeedFolder>): ImmutableList<File> {
       require(seedFolders.isNotEmpty())
 
       val builder = ArrayList<File>()
@@ -610,7 +632,10 @@ class FuzzerDriver(
           seedFolder.toPath(),
           object : SimpleFileVisitor<Path>() {
             @Throws(IOException::class)
-            override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
+            override fun visitFile(
+              file: Path,
+              attrs: BasicFileAttributes,
+            ): FileVisitResult {
               if (seedFileNamePostfixList.any { file.toFile().name.endsWith(it) }) {
                 builder.add(file.toFile())
               }

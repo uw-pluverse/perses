@@ -37,9 +37,7 @@ import org.perses.util.exhaustive
 import org.perses.util.toImmutableList
 
 class PlusIntroducerLeftPass : AbstractPnfPass() {
-  override fun processGrammar(
-    grammar: GrammarPair,
-  ): GrammarPair {
+  override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
     val edit = PlusIntroducerEdit(parserGrammar)
@@ -64,11 +62,14 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
   }
 
   @VisibleForTesting
-  class PlusIntroducerEdit(private val grammar: PersesGrammar) : AstEdit() {
+  class PlusIntroducerEdit(
+    private val grammar: PersesGrammar,
+  ) : AstEdit() {
     @JvmField
     @VisibleForTesting
-    val toAdd = LinkedHashMultimap
-      .create<RuleNameHandle, AbstractPersesRuleElement>()
+    val toAdd =
+      LinkedHashMultimap
+        .create<RuleNameHandle, AbstractPersesRuleElement>()
 
     public override fun internalApply(
       element: AbstractPersesRuleElement,
@@ -81,7 +82,7 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
       val childCount = element.childCount
       check(childCount > 1)
       val sequence = element as PersesSequenceAst
-      val childrenCopy = ArrayList(sequence.children)
+      val childrenCopy = ArrayList<AbstractPersesRuleElement?>(sequence.children)
       var i = 0
       while (i < childCount) {
         val child = sequence.getChild(i)
@@ -104,17 +105,19 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
         i = transformStarToPlus(sequence, i, childrenCopy, quantified, ruleName, starAst)
         ++i
       }
-      val newChildren = childrenCopy
-        .asSequence()
-        .filter { it != null }
-        .toImmutableList()
+      val newChildren =
+        childrenCopy
+          .asSequence()
+          .filterNotNull()
+          .toImmutableList()
       check(element.tag === AstTag.SEQUENCE)
       check(newChildren.size > 0)
-      val finalResult = if (newChildren.size == 1) {
-        newChildren.single()
-      } else {
-        PersesSequenceAst(newChildren)
-      }
+      val finalResult =
+        if (newChildren.size == 1) {
+          newChildren.single()
+        } else {
+          PersesSequenceAst(newChildren)
+        }
 
       return if (finalResult.isEquivalent(sequence)) {
         // FIXME(cnsun): this is a bug, which needs to be fixed.
@@ -134,11 +137,12 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
       starRuleName: RuleNameHandle,
       starAst: PersesStarAst,
     ): Int {
-      val bodySequence = if (bodyToMatch.tag === AstTag.SEQUENCE) {
-        (bodyToMatch as PersesSequenceAst).children
-      } else {
-        ImmutableList.of(bodyToMatch)
-      }
+      val bodySequence =
+        if (bodyToMatch.tag === AstTag.SEQUENCE) {
+          (bodyToMatch as PersesSequenceAst).children
+        } else {
+          ImmutableList.of(bodyToMatch)
+        }
       if (reverseMatch(element, currentIndexOfStar - 1, bodySequence)) {
         newChildren[currentIndexOfStar] = mergeStarIntoPlus(starRuleName, starAst)
         var i = 0

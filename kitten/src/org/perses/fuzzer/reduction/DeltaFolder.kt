@@ -23,7 +23,6 @@ import java.util.Properties
 class DeltaFolder(
   val folder: File,
 ) {
-
   fun info() = DeltaFolderInfo.readFrom(File(folder, INFO_FILE_NAME))
 
   val scriptFile = File(folder, info().scriptFileName)
@@ -72,24 +71,25 @@ class DeltaFolder(
     val reducedFileName: String,
     val buggyCompilerVersionFileName: String,
   ) {
-
-    fun saveTo(file: File) = file.bufferedWriter().use {
-      Properties().apply {
-        put(KEY_SCRIPT_FILE, scriptFileName)
-        put(KEY_SOURCE_FILE, programFileName)
-        put(KEY_REDUCED_FILE, reducedFileName)
-        put(KEY_VERSION_FILE, buggyCompilerVersionFileName)
-      }.store(it, null)
-    }
+    fun saveTo(file: File) =
+      file.bufferedWriter().use {
+        Properties()
+          .apply {
+            put(KEY_SCRIPT_FILE, scriptFileName)
+            put(KEY_SOURCE_FILE, programFileName)
+            put(KEY_REDUCED_FILE, reducedFileName)
+            put(KEY_VERSION_FILE, buggyCompilerVersionFileName)
+          }.store(it, null)
+      }
 
     companion object {
-
       fun readFrom(file: File): DeltaFolderInfo {
-        val properties = Properties().apply {
-          file.bufferedReader().use {
-            load(it)
+        val properties =
+          Properties().apply {
+            file.bufferedReader().use {
+              load(it)
+            }
           }
-        }
         return DeltaFolderInfo(
           scriptFileName = properties.getProperty(KEY_SCRIPT_FILE)!!,
           programFileName = properties.getProperty(KEY_SOURCE_FILE)!!,
@@ -113,7 +113,6 @@ class DeltaFolder(
     val reducedProgramName: String,
     val buggyCompilerVersionFileName: String,
   ) {
-
     val reductionScript = File(folder, scriptName)
     val programFile = File(folder, programName)
     val buggyCompilerVersionFile = File(folder, buggyCompilerVersionFileName)
@@ -164,21 +163,23 @@ class DeltaFolder(
       check(reductionScript.exists())
       check(programFile.exists())
 
-      Shells.singleton.run(
-        "./$scriptName",
-        folder.toPath(),
-        captureOutput = true,
-        environment = Shells.CURRENT_ENV,
-      ).let {
-        check(it.exitCode.isZero()) { it }
-      }
+      Shells.singleton
+        .run(
+          "./$scriptName",
+          folder.toPath(),
+          captureOutput = true,
+          environment = Shells.CURRENT_ENV,
+        ).let {
+          check(it.exitCode.isZero()) { it }
+        }
 
-      val info = DeltaFolderInfo(
-        scriptName,
-        programName,
-        reducedProgramName,
-        buggyCompilerVersionFileName,
-      )
+      val info =
+        DeltaFolderInfo(
+          scriptName,
+          programName,
+          reducedProgramName,
+          buggyCompilerVersionFileName,
+        )
       val infoFile = File(folder, INFO_FILE_NAME)
       check(!infoFile.exists())
       info.saveTo(infoFile)

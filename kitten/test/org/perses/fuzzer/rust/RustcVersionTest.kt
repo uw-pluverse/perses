@@ -35,7 +35,6 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class RustcVersionTest {
-
   private val workingDir = Files.createTempDirectory(javaClass.simpleName)
   private val parserFacadeFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
 
@@ -49,47 +48,56 @@ class RustcVersionTest {
     assertThat(RustcVersion.VERSION_STRINGS).isNotEmpty()
     assertThat(RustcVersion.VERSIONS.size).isEqualTo(RustcVersion.VERSION_STRINGS.size)
 
-    val file = File(workingDir.toFile(), "t.rs").apply {
-      writeText("fn main() {}")
-    }
-
-    val first = RustcVersion.VERSIONS.firstOrNull { version ->
-      try {
-        val versionPrintFlag = version.versionFlag
-        val testingConfiguration = TestingConfiguration(
-          language = "RUST",
-          seedFolders = listOf(
-            SeedFolder(
-              path = File(workingDir.toFile(), version.versionString).apply {
-                check(mkdirs())
-              }.absolutePath,
-              fileExtentions = listOf(".rs"),
-            ),
-          ),
-          programsUnderTest = listOf(
-            ProgramUnderTest(
-              command = "rustc",
-              flagsToTest = listOf(CmdFlags.EMPTY),
-              versionFlags = CmdFlags(listOf(versionPrintFlag, "--version", "--verbose")),
-              crashDetectorClassName = RustcCrashDetector::class.java.canonicalName,
-            ),
-          ),
-        )
-        val facade = DefaultCompilationConfigurationFacade(
-          languageKind = parserFacadeFactory.computeLanguageKindWithLanguageNameIgnoreCase(
-            testingConfiguration.language,
-          )!!,
-          programUnderTest = testingConfiguration.programsUnderTest[0],
-        )
-        val action = facade.compilationActions[0]
-        val (cmdOutput, _) = action.compile(file)
-        assertThat(cmdOutput.exitCode.intValue).isEqualTo(0)
-        assertThat(action.getVersion()).contains(version.versionString)
-        true
-      } catch (e: java.lang.RuntimeException) {
-        false
+    val file =
+      File(workingDir.toFile(), "t.rs").apply {
+        writeText("fn main() {}")
       }
-    }
+
+    val first =
+      RustcVersion.VERSIONS.firstOrNull { version ->
+        try {
+          val versionPrintFlag = version.versionFlag
+          val testingConfiguration =
+            TestingConfiguration(
+              language = "RUST",
+              seedFolders =
+                listOf(
+                  SeedFolder(
+                    path =
+                      File(workingDir.toFile(), version.versionString)
+                        .apply {
+                          check(mkdirs())
+                        }.absolutePath,
+                    fileExtentions = listOf(".rs"),
+                  ),
+                ),
+              programsUnderTest =
+                listOf(
+                  ProgramUnderTest(
+                    command = "rustc",
+                    flagsToTest = listOf(CmdFlags.EMPTY),
+                    versionFlags = CmdFlags(listOf(versionPrintFlag, "--version", "--verbose")),
+                    crashDetectorClassName = RustcCrashDetector::class.java.canonicalName,
+                  ),
+                ),
+            )
+          val facade =
+            DefaultCompilationConfigurationFacade(
+              languageKind =
+                parserFacadeFactory.computeLanguageKindWithLanguageNameIgnoreCase(
+                  testingConfiguration.language,
+                )!!,
+              programUnderTest = testingConfiguration.programsUnderTest[0],
+            )
+          val action = facade.compilationActions[0]
+          val (cmdOutput, _) = action.compile(file)
+          assertThat(cmdOutput.exitCode.intValue).isEqualTo(0)
+          assertThat(action.getVersion()).contains(version.versionString)
+          true
+        } catch (e: java.lang.RuntimeException) {
+          false
+        }
+      }
     assertThat(first).isNotNull()
   }
 
@@ -98,15 +106,16 @@ class RustcVersionTest {
     assertThat(RustcVersion.parse("rustc +nightly").versionString)
       .isEqualTo("nightly")
 
-    val firstAvailable = RustcVersion.getAllStables().firstOrNull {
-      try {
-        RustcVersion.parse(it.commandWithVersion)
-        true
-      } catch (e: RuntimeException) {
-        e.printStackTrace()
-        false
+    val firstAvailable =
+      RustcVersion.getAllStables().firstOrNull {
+        try {
+          RustcVersion.parse(it.commandWithVersion)
+          true
+        } catch (e: RuntimeException) {
+          e.printStackTrace()
+          false
+        }
       }
-    }
     check(firstAvailable != null) {
       RustcVersion.getAllStables().joinToString(separator = "\n")
     }

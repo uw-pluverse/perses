@@ -26,7 +26,6 @@ class PlusAstSimulator(
   ast: PersesPlusAst,
   val bodySimulator: AbstractASTSimulator<*>,
 ) : AbstractASTSimulator<PersesPlusAst>(ast) {
-
   override fun simulate(
     decisionMaker: AbstractDecisionMaker,
     tree: TDTree,

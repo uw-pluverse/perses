@@ -54,8 +54,11 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses/reduction/cache:query_cache",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:parser_facade",
+        "//src/org/perses/reduction/cache:null_query_cache",
         "//test/org/perses:test_util",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )
 
@@ -71,6 +74,8 @@ kt_binary_for_genrule(
     main_class = "org.perses.reduction.cache.CompactQueryCacheBenchmark",
     deps = [
         "//:guava",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/program",
         "//src/org/perses/reduction:property_test_result",
         "//src/org/perses/reduction:test_script",
@@ -80,21 +85,22 @@ kt_binary_for_genrule(
         "//src/org/perses/reduction/cache:query_cache_interface",
         "//src/org/perses/util:percentage",
         "//test/org/perses:test_util",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )
 
 kt_jvm_test(
-    name = "ContentSHA512BasedQueryCacheTest",
+    name = "ContentShaHashBasedQueryCacheTest",
     srcs = [
-        "ContentSHA512BasedQueryCacheTest.kt",
+        "ContentShaHashBasedQueryCacheTest.kt",
     ],
     associates = [
-        "//src/org/perses/reduction/cache:sha512_cache",
+        "//src/org/perses/reduction/cache:sha_hash_cache",
     ],
     deps = [
         "//:antlr_runtime",
         "//:guava",
-        "//src/org/perses/reduction/cache:query_cache",
+        "//:truth",
         "//test/org/perses:test_util",
     ],
 )
@@ -110,8 +116,11 @@ kt_jvm_test(
     deps = [
         "//:antlr_runtime",
         "//:guava",
-        "//src/org/perses/reduction/cache:query_cache",
+        "//:truth",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )
 
@@ -126,8 +135,11 @@ kt_jvm_test(
     deps = [
         "//:antlr_runtime",
         "//:guava",
-        "//src/org/perses/reduction/cache:query_cache",
+        "//:truth",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )
 
@@ -147,18 +159,19 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar:grammar_facade",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/c:language_kind",
+        "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/program/printer",
-        "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
         "//src/org/perses/reduction/cache:linear_scan_cache",
         "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/spartree",
         "//test/org/perses:test_util",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )
 
@@ -168,8 +181,7 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses/reduction:reduction_configuration",
-        "//src/org/perses/reduction/cache:query_cache",
+        "//src/org/perses/reduction/cache:interval_expander",
         "//src/org/perses/util",
         "//test/org/perses:test_util",
     ],
@@ -182,12 +194,16 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/reduction/cache:content_based_cache",
         "//src/org/perses/reduction/cache:linear_scan_cache",
         "//src/org/perses/reduction/cache:query_cache_profiler",
-        "//src/org/perses/reduction/cache:sha512_cache",
+        "//src/org/perses/reduction/cache:sha_hash_cache",
         "//src/org/perses/util",
+        "//src/org/perses/util/hashing",
         "//test/org/perses:test_util",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
         "//third_party/memory_measurer:object_explorer",
     ],
 )
@@ -198,9 +214,11 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses/reduction:reduction_configuration",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/util",
         "//test/org/perses:test_util",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )

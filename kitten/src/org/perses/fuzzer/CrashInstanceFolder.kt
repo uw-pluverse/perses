@@ -37,8 +37,9 @@ import java.io.File
 import java.util.Properties
 import java.util.logging.Level
 
-class CrashInstanceFolder(val folder: File) {
-
+class CrashInstanceFolder(
+  val folder: File,
+) {
   private val bugDescriptorFile = File(folder, FILE_NAME_BUG_DESCRIPTOR)
 
   init {
@@ -47,17 +48,19 @@ class CrashInstanceFolder(val folder: File) {
       "The bug folder is not completed yet. $folder"
     }
     check(bugDescriptorFile.isFile) { bugDescriptorFile }
-    info() // Validate the bugDescriptorFile.
+    // Validate the bugDescriptorFile.
+    info()
   }
 
   fun info() = Info.readFrom(bugDescriptorFile)
 
   fun reduce() = getDeltaFolder().reduce()
 
-  fun createCrashDetector(): ICompilerCrashDetector {
-    return Class.forName(info().crashDetectorClassName)
-      .getDeclaredConstructor().newInstance() as ICompilerCrashDetector
-  }
+  fun createCrashDetector(): ICompilerCrashDetector =
+    Class
+      .forName(info().crashDetectorClassName)
+      .getDeclaredConstructor()
+      .newInstance() as ICompilerCrashDetector
 
   private fun getDeltaFolder() = DeltaFolder(File(folder, info().deltaFolderName))
 
@@ -73,12 +76,13 @@ class CrashInstanceFolder(val folder: File) {
 
   fun isReproducible(): ReproductionResult {
     val reproduceScript = getReproductionScriptFile()
-    val cmdOutput = Shells.singleton.run(
-      "./${reproduceScript.name}",
-      workingDirectory = folder.toPath(),
-      captureOutput = true,
-      environment = Shells.CURRENT_ENV,
-    )
+    val cmdOutput =
+      Shells.singleton.run(
+        "./${reproduceScript.name}",
+        workingDirectory = folder.toPath(),
+        captureOutput = true,
+        environment = Shells.CURRENT_ENV,
+      )
     val detectResult = createCrashDetector().detectCrash(cmdOutput)
     if (!detectResult.isCrashDetected()) {
       return ReproductionResult.NO_CRASH
@@ -92,18 +96,21 @@ class CrashInstanceFolder(val folder: File) {
   private fun getReproductionScriptFile() = File(folder, info().reproduceScriptFileName)
 
   private fun getReproductionCommand(): String {
-    val lines = getReproductionScriptFile().readLines()
-      .asSequence()
-      .map { it.trim() }
-      .filter { it.isNotBlank() }
-      .toList()
+    val lines =
+      getReproductionScriptFile()
+        .readLines()
+        .asSequence()
+        .map { it.trim() }
+        .filter { it.isNotBlank() }
+        .toList()
     check(lines.size == 2)
     check(lines.first().startsWith("#"))
     return lines[1]
   }
 
   fun move(destination: File) {
-    java.nio.file.Files.move(folder.toPath(), destination.toPath())
+    java.nio.file.Files
+      .move(folder.toPath(), destination.toPath())
   }
 
   enum class ReproductionResult {
@@ -132,15 +139,17 @@ class CrashInstanceFolder(val folder: File) {
       return
     }
     val deltaFolder = getDeltaFolder()
-    val reductionScriptBackupFile = File(
-      deltaFolder.folder,
-      "backup_" + timeComponent + "_" + deltaFolder.info().scriptFileName,
-    )
+    val reductionScriptBackupFile =
+      File(
+        deltaFolder.folder,
+        "backup_" + timeComponent + "_" + deltaFolder.info().scriptFileName,
+      )
     Files.copy(deltaFolder.scriptFile, reductionScriptBackupFile)
-    val reductionScriptGenerator = ReductionScriptGenerator(
-      getReproductionCommand(),
-      result.asCrash(),
-    )
+    val reductionScriptGenerator =
+      ReductionScriptGenerator(
+        getReproductionCommand(),
+        result.asCrash(),
+      )
     deltaFolder.scriptFile.writeText(
       reductionScriptGenerator.generate(),
     )
@@ -158,12 +167,12 @@ class CrashInstanceFolder(val folder: File) {
     ;
 
     companion object {
-
-      fun parse(string: String) = when (val normalized = string.trim().lowercase()) {
-        "fixed" -> FIXED
-        "", "new" -> NEW
-        else -> throw RuntimeException("Unhandled value: $normalized")
-      }
+      fun parse(string: String) =
+        when (val normalized = string.trim().lowercase()) {
+          "fixed" -> FIXED
+          "", "new" -> NEW
+          else -> throw RuntimeException("Unhandled value: $normalized")
+        }
     }
   }
 
@@ -181,26 +190,27 @@ class CrashInstanceFolder(val folder: File) {
     val bugResolution: BugResolution,
     val crashDetectorClassName: String,
   ) {
-
     fun save(file: File) {
-      val p = Properties().apply {
-        setProperty(KEY_SEED, seedFileName)
-        setProperty(KEY_MUTANT, mutantFileName)
-        setProperty(KEY_STDOUT, stdoutFileName)
-        setProperty(KEY_STDERR, stderrFileName)
-        setProperty(KEY_LANGUAGE, language)
-        setProperty(KEY_REPRODUCE_SCRIPT, reproduceScriptFileName)
-        setProperty(KEY_CRASH_SIGNATURES, crashSignatureFileName)
-        setProperty(KEY_DELTA_FOLDER, deltaFolderName)
-        setProperty(KEY_BUG_REPORT_URL, bugReportUrl)
-        setProperty(KEY_BUG_ID, bugId)
-        setProperty(KEY_BUG_RESOLUTION, bugResolution.toString())
-        setProperty(KEY_CRASH_DETECTOR_CLASS_NAME, crashDetectorClassName)
-      }
+      val p =
+        Properties().apply {
+          setProperty(KEY_SEED, seedFileName)
+          setProperty(KEY_MUTANT, mutantFileName)
+          setProperty(KEY_STDOUT, stdoutFileName)
+          setProperty(KEY_STDERR, stderrFileName)
+          setProperty(KEY_LANGUAGE, language)
+          setProperty(KEY_REPRODUCE_SCRIPT, reproduceScriptFileName)
+          setProperty(KEY_CRASH_SIGNATURES, crashSignatureFileName)
+          setProperty(KEY_DELTA_FOLDER, deltaFolderName)
+          setProperty(KEY_BUG_REPORT_URL, bugReportUrl)
+          setProperty(KEY_BUG_ID, bugId)
+          setProperty(KEY_BUG_RESOLUTION, bugResolution.toString())
+          setProperty(KEY_CRASH_DETECTOR_CLASS_NAME, crashDetectorClassName)
+        }
       file.bufferedWriter().use {
         p.store(
           it,
-          null, // comments
+          // comments
+          null,
         )
       }
     }
@@ -220,9 +230,10 @@ class CrashInstanceFolder(val folder: File) {
       const val KEY_CRASH_DETECTOR_CLASS_NAME = "crash_detector_class"
 
       fun readFrom(file: File): Info {
-        val p = Properties().apply {
-          file.bufferedReader().use { load(it) }
-        }
+        val p =
+          Properties().apply {
+            file.bufferedReader().use { load(it) }
+          }
         if (p.getProperty(KEY_CRASH_DETECTOR_CLASS_NAME) == null) {
           logger.ktInfo { "The folder $file does not have all fields" }
         }
@@ -231,7 +242,8 @@ class CrashInstanceFolder(val folder: File) {
           mutantFileName = p.getProperty(KEY_MUTANT)!!,
           stdoutFileName = p.getProperty(KEY_STDOUT)!!,
           stderrFileName = p.getProperty(KEY_STDERR)!!,
-          language = p.getProperty(KEY_LANGUAGE, "")!!, // TODO: remove rust.
+          // TODO remove rust.
+          language = p.getProperty(KEY_LANGUAGE, "")!!,
           reproduceScriptFileName = p.getProperty(KEY_REPRODUCE_SCRIPT, "")!!,
           crashSignatureFileName = p.getProperty(KEY_CRASH_SIGNATURES)!!,
           deltaFolderName = p.getProperty(KEY_DELTA_FOLDER)!!,
@@ -293,34 +305,36 @@ class CrashInstanceFolder(val folder: File) {
         check(setExecutable(true))
       }
 
-      val bugInfo = Info(
-        seedFileName = seedFileName,
-        mutantFileName = mutantFile.name,
-        stdoutFileName = FILE_NAME_STDOUT,
-        stderrFileName = FILE_NAME_STDERR,
-        language = action.getLanguage().name,
-        reproduceScriptFileName = FILE_NAME_REPRODUCE_SCRIPT,
-        crashSignatureFileName = FILE_NAME_CRASH_SIGNATURE,
-        deltaFolderName = FOLDER_NAME_DELTA,
-        bugReportUrl = "",
-        bugId = "",
-        bugResolution = BugResolution.NEW,
-        crashDetectorClassName = crashDetectorResult.crashDetectorClass.canonicalName,
-      )
+      val bugInfo =
+        Info(
+          seedFileName = seedFileName,
+          mutantFileName = mutantFile.name,
+          stdoutFileName = FILE_NAME_STDOUT,
+          stderrFileName = FILE_NAME_STDERR,
+          language = action.getLanguage().name,
+          reproduceScriptFileName = FILE_NAME_REPRODUCE_SCRIPT,
+          crashSignatureFileName = FILE_NAME_CRASH_SIGNATURE,
+          deltaFolderName = FOLDER_NAME_DELTA,
+          bugReportUrl = "",
+          bugId = "",
+          bugResolution = BugResolution.NEW,
+          crashDetectorClassName = crashDetectorResult.crashDetectorClass.canonicalName,
+        )
       bugInfo.save(File(bugFolder, FILE_NAME_BUG_DESCRIPTOR))
 
       crashDetectorResult.signature.writeTo(File(bugFolder, FILE_NAME_CRASH_SIGNATURE))
 
       try {
-        DeltaFolder.Builder(
-          File(bugFolder, FOLDER_NAME_DELTA),
-          scriptName = "r.sh",
-          programName = mutantFile.name,
-          reducedProgramName = "reduced_${mutantFile.name}",
-          buggyCompilerVersionFileName = "compiler_version.txt",
-        ).populateReductionScript(
-          ReductionScriptGenerator(cmd = result.cmd, crashSignature = crashDetectorResult),
-        ).populateProgramFile(mutantFile.readText())
+        DeltaFolder
+          .Builder(
+            File(bugFolder, FOLDER_NAME_DELTA),
+            scriptName = "r.sh",
+            programName = mutantFile.name,
+            reducedProgramName = "reduced_${mutantFile.name}",
+            buggyCompilerVersionFileName = "compiler_version.txt",
+          ).populateReductionScript(
+            ReductionScriptGenerator(cmd = result.cmd, crashSignature = crashDetectorResult),
+          ).populateProgramFile(mutantFile.readText())
           .populateBuggyCompilerVersionFile(action.getVersion())
           .build()
       } catch (e: Throwable) {

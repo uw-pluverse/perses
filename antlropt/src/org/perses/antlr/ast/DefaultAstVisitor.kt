@@ -20,23 +20,44 @@ package org.perses.antlr.ast
 //      miss some cases.
 open class DefaultAstVisitor : AbstractAstVisitor() {
   override fun visit(ast: PersesTokenSetAst) {}
+
   override fun visit(ast: PersesRangeAst) {}
+
   override fun visit(ast: PersesTerminalAst) {}
+
   override fun visit(ast: PersesSequenceAst) {}
+
   override fun visit(ast: PersesPlusAst) {}
+
   override fun visit(ast: PersesStarAst) {}
+
   override fun visit(ast: PersesOptionalAst) {}
+
   override fun visit(ast: PersesNotAst) {}
+
   override fun visit(ast: PersesLexerCommandAst) {}
+
   override fun visit(ast: PersesLexerCharSet) {}
+
   override fun visit(ast: PersesEpsilonAst) {}
+
   override fun visit(ast: PersesAlternativeBlockAst) {}
+
   override fun visit(ast: PersesActionAst) {}
+
   override fun visit(ast: PersesRuleElementOption) {}
+
   override fun visit(ast: PersesFragmentLexerRuleAst) {}
+
   override fun visit(ast: PersesParserRuleAst) {}
+
   override fun visit(ast: PersesLexerRuleAst) {}
+
   override fun visit(ast: PersesRuleReferenceAst) {}
+
   override fun visit(ast: PersesRuleElementLabel) {}
+
   override fun visit(ast: PersesGrammar) {}
+
+  override fun visit(ast: PersesUndefinedRuleElement) {}
 }

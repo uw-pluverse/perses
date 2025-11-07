@@ -17,6 +17,7 @@
 package org.perses.ppr.diff.tree
 
 import org.perses.AbstractMain
+import org.perses.HelperForPersesMain
 import org.perses.PersesListenerManagerCreator
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.ppr.diff.tree.TreeDiffReductionDriver.TreeDiffReductionTwinDriver
@@ -32,43 +33,50 @@ class TreeDiffMain(
   cmd: TreeDiffCmdOptions,
   globalContext: GlobalContext,
 ) : AbstractMain<TreeDiffCmdOptions, TreeDiffReductionTwinDriver, TreeDiffReductionInputs>(
-  cmd,
-  globalContext,
-) {
-
+    cmd,
+    globalContext,
+  ) {
   override fun createSequenceOfReductionDriverCreators(
     reductionInputs: TreeDiffReductionInputs,
   ): Sequence<ReductionDriverCreator<TreeDiffReductionTwinDriver>> {
-    val parserFacade = parserFacadeFactory.getParserFacadeListForOrNull(
-      reductionInputs.initiallyDeterminedMainDataKind,
-    )!!.defaultParserFacade.create()
-    return sequenceOf(
-      ReductionDriverCreator(
-        creator = {
-          TreeDiffReductionDriver.create(
-            globalContext,
-            cmd,
-            reductionInputs,
-            parserFacade,
-            listenerManager,
-          )
-        },
-        descriptor = {
-          """
-          ${reductionInputs.initiallyDeterminedMainDataKind},
-          ${parserFacade::class}
-          """.trimIndent()
-        },
-      ),
-    )
+    val facadeCreatorList = computePlausibleParserFacades()
+    return facadeCreatorList
+      .sequenceOfCreators()
+      .map { facadeCreator ->
+        val parserFacade = facadeCreator.create()
+        ReductionDriverCreator(
+          creator = {
+            TreeDiffReductionDriver.create(
+              globalContext = globalContext,
+              cmd = cmd,
+              reductionInputs = reductionInputs,
+              parserFacade = parserFacade,
+              listenerManager = listenerManager,
+            )
+          },
+          descriptor = {
+            """
+            ${reductionInputs.initiallyDeterminedMainDataKind},
+            ${parserFacade::class}
+            """.trimIndent()
+          },
+        )
+      }
   }
 
-  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager {
-    return PersesListenerManagerCreator.createAsyncReductionListenerManager(
+  override fun computeLanguageAndParserConfiguration(
+    parserFacadeFactory: AbstractParserFacadeFactory,
+  ): LanguageAndParserConfiguration =
+    HelperForPersesMain.computeLanguageAndParserConfiguration(
+      parserFacadeFactory,
+      cmd.languageControlFlags,
+    )
+
+  override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager =
+    PersesListenerManagerCreator.createAsyncReductionListenerManager(
       cmd,
       globalContext.fileStreamPool,
     )
-  }
 
   override fun createReductionInputs(
     parserFacadeFactory: AbstractParserFacadeFactory,
@@ -78,14 +86,12 @@ class TreeDiffMain(
       seedPath = inputFlags.inputFile!!,
       variantPath = inputFlags.variantFile!!,
       testScriptPath = inputFlags.testScript!!,
-      immutableDependencyFiles = inputFlags.deps.transformToImmutableList { path ->
-        BinaryReductionFile(path, AbstractDataKind.UnknownDataKind)
-      },
+      immutableDependencyFiles =
+        inputFlags.deps.transformToImmutableList { path ->
+          BinaryReductionFile(path, AbstractDataKind.UnknownDataKind)
+        },
       languageKindComputer = { sourceFileAbsPath ->
-        parserFacadeFactory.computeLanguage(
-          cmd.languageControlFlags.languageName,
-          sourceFileAbsPath,
-        )
+        computeLanguageForFile(sourceFileAbsPath)
       },
     )
   }
@@ -93,20 +99,26 @@ class TreeDiffMain(
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor<TreeDiffCmdOptions>(
-        cmdCreator = { TreeDiffCmdOptions() },
-        programName = TreeDiffMain::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor<TreeDiffCmdOptions>(
+          cmdCreator = { TreeDiffCmdOptions() },
+          programName = TreeDiffMain::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }
       val cmd = processor.cmd
+      // TODO(cnsun): need to have a better solution. TRec does not work with PPR.
+      cmd.trecFlags.enableTRec = false
+      cmd.latraFlags.enableLatra = false
       Util.useResources(
         {
           GlobalContext(
+            enableGlobalCache = cmd.cacheControlFlags.enableGlobalCache,
             globalCacheFile = cmd.cacheControlFlags.globalCacheFile,
             pathToSaveUpdatedGlobalCache = cmd.cacheControlFlags.pathToSaveUpdatedGlobalCache,
+            shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
           )
         },
         { globalContext -> TreeDiffMain(cmd, globalContext) },

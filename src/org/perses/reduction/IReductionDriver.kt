@@ -19,20 +19,17 @@ package org.perses.reduction
 import java.io.Closeable
 
 interface IReductionDriver : Closeable {
-
-  val cachedSanityCheckResult: AbstractSanityCheckResult
+  val cachedSanityCheckResult: SanityCheckResult
 
   fun reduce()
 
-  sealed class AbstractSanityCheckResult {
-    override fun toString(): String {
-      return this::class.simpleName.toString()
-    }
+  sealed class SanityCheckResult {
+    override fun toString(): String = this::class.simpleName.toString()
+
+    object Passing : SanityCheckResult()
+
+    class Failing(
+      val exception: SanityCheckFailedException,
+    ) : SanityCheckResult()
   }
-
-  object PassingSanityCheckResult : AbstractSanityCheckResult()
-
-  class FailingSanityCheckResult(
-    val exception: SanityCheckFailedException,
-  ) : AbstractSanityCheckResult()
 }

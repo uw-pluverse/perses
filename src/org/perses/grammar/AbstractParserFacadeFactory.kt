@@ -18,17 +18,18 @@ package org.perses.grammar
 
 import com.google.common.collect.ImmutableList
 import com.google.common.io.Files
+import org.perses.grammar.c.PnfCLexer
+import org.perses.grammar.dyck.AbstractDyckParserFacade
 import org.perses.program.LanguageKind
 import org.perses.util.transformToImmutableList
 import java.nio.file.Path
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.primaryConstructor
 
 abstract class AbstractParserFacadeFactory {
-
-  fun containsLanguage(languageKind: LanguageKind): Boolean {
-    return languageSequence().any { it == languageKind }
-  }
+  fun containsLanguage(languageKind: LanguageKind): Boolean =
+    languageSequence().any { it == languageKind }
 
   fun computeLanguageKindWithFileName(file: Path): LanguageKind? {
     val ext = Files.getFileExtension(file.fileName.toString())
@@ -39,7 +40,7 @@ abstract class AbstractParserFacadeFactory {
 
   fun computeLanguageKindWithLanguageNameIgnoreCase(languageName: String): LanguageKind? {
     val lowerCase = languageName.lowercase()
-    return languageSequence().firstOrNull() {
+    return languageSequence().firstOrNull {
       it.name.lowercase() == lowerCase
     }
   }
@@ -54,41 +55,64 @@ abstract class AbstractParserFacadeFactory {
 
   fun computeLanguage(
     specifiedLanguageName: String,
+    designatedParserFacadeClassName: String,
     sourceFileAbsPath: Path,
-  ): LanguageKind {
-    return if (specifiedLanguageName.isNotBlank()) {
-      computeLanguageKindWithLanguageNameIgnoreCase(specifiedLanguageName)!!
-    } else {
-      computeLanguageKindOrThrow(sourceFileAbsPath)
+  ): LanguageKind =
+    when {
+      designatedParserFacadeClassName.isNotBlank() ->
+        getParserFacadeClassForClassNameOrNull(designatedParserFacadeClassName).let { result ->
+          if (result == null) {
+            error(
+              "Cannot find the parser facade with the given parser facade class" +
+                designatedParserFacadeClassName,
+            )
+          }
+          result.first
+        }
+      specifiedLanguageName.isNotBlank() ->
+        computeLanguageKindWithLanguageNameIgnoreCase(specifiedLanguageName)!!
+      else -> computeLanguageKindOrThrow(sourceFileAbsPath)
     }
-  }
 
   abstract fun languageSequence(): Sequence<LanguageKind>
 
   abstract fun getParserFacadeListForOrNull(languageKind: LanguageKind): ParserFacadeList?
 
+  abstract fun getParserFacadeClassForClassNameOrNull(
+    className: String,
+  ): Pair<LanguageKind, ParserFacadeCreator>?
+
   internal fun reportError(prefix: String): Nothing {
-    val errorMessage = buildString {
-      append(prefix).append('\n')
-      append("The available languages are listed below:\n")
-      languageSequence().forEach { language ->
-        append("  ${language.name}: exts=${language.extensions}\n")
+    val errorMessage =
+      buildString {
+        append(prefix).append('\n')
+        append("The available languages are listed below:\n")
+        languageSequence().forEach { language ->
+          append("  ${language.name}: exts=${language.extensions}\n")
+        }
       }
-    }
     error(errorMessage)
   }
 
-  data class ParserFacadeCreator(
+  open class ParserFacadeCreator(
     val klass: KClass<out AbstractParserFacade>,
   ) {
-    fun create(): AbstractParserFacade {
-      return klass.createInstance()
-    }
+    open fun create(): AbstractParserFacade = klass.createInstance()
+  }
+
+  class DyckParserFacadeCreator(
+    klass: KClass<out AbstractDyckParserFacade>,
+  ) : ParserFacadeCreator(klass) {
+    override fun create(): AbstractDyckParserFacade =
+      klass.primaryConstructor!!.call(
+        // TODO(cnsun): need to figure out a way to let users specify the lexer class.
+        PnfCLexer::class.java,
+      ) as AbstractDyckParserFacade
   }
 
   data class ParserFacadeList(
     val defaultParserFacade: ParserFacadeCreator,
-    val otherParserFacades: ImmutableList<ParserFacadeCreator>,
+    val otherParserFacades: ImmutableList<ParserFacadeCreator> = ImmutableList.of(),
   ) {
     init {
       require(!otherParserFacades.contains(defaultParserFacade)) {
@@ -99,12 +123,11 @@ abstract class AbstractParserFacadeFactory {
       }
     }
 
-    fun sequenceOfCreators(): Sequence<ParserFacadeCreator> {
-      return sequence {
+    fun sequenceOfCreators(): Sequence<ParserFacadeCreator> =
+      sequence {
         yield(defaultParserFacade)
         yieldAll(otherParserFacades)
       }
-    }
 
     fun numberOfParserFacades() = 1 + otherParserFacades.size
 
@@ -112,14 +135,14 @@ abstract class AbstractParserFacadeFactory {
       fun create(
         defaultParserFacade: KClass<out AbstractParserFacade>,
         otherParserFacades: Iterable<KClass<out AbstractParserFacade>>,
-      ): ParserFacadeList {
-        return ParserFacadeList(
+      ): ParserFacadeList =
+        ParserFacadeList(
           defaultParserFacade = ParserFacadeCreator(defaultParserFacade),
-          otherParserFacades = otherParserFacades.transformToImmutableList {
-            ParserFacadeCreator(it)
-          },
+          otherParserFacades =
+            otherParserFacades.transformToImmutableList {
+              ParserFacadeCreator(it)
+            },
         )
-      }
     }
   }
 }

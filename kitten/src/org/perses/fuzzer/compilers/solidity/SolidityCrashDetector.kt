@@ -21,12 +21,12 @@ import org.perses.fuzzer.compilers.AbstractCompilerCrashDetector
 import org.perses.fuzzer.compilers.SanitizerCrashSignatureExtractor
 
 class SolidityCrashDetector : AbstractCompilerCrashDetector() {
-
   override fun detectCrashSignatureFromStderr(stderr: List<String>): List<String> {
     val builder = ImmutableList.builder<String>()
     val sanitizerCrashDetector = SanitizerCrashSignatureExtractor()
     builder.addAll(sanitizerCrashDetector.extractCrashSignatureFromStderr(stderr))
-    stderr.asSequence()
+    stderr
+      .asSequence()
       .map { it.trim() }
       .filter { it.isNotBlank() }
       .forEach { origLine ->
@@ -65,12 +65,10 @@ class SolidityCrashDetector : AbstractCompilerCrashDetector() {
     const val KEYWORD_SEGMENTATION_FAULT = "Segmentation fault"
 
     val REGEXP_FILE = Regex("^(\\S+)\\/([^\\/]+)\\.\\S+")
-    fun isFilePath(line: String): Boolean {
-      return line.matches(REGEXP_FILE)
-    }
 
-    fun isExceptionThrowLine(line: String): Boolean {
-      return line.contains(REGEXP_FILE) && line.lowercase().contains(Regex("\\sthrow\\s"))
-    }
+    fun isFilePath(line: String): Boolean = line.matches(REGEXP_FILE)
+
+    fun isExceptionThrowLine(line: String): Boolean =
+      line.contains(REGEXP_FILE) && line.lowercase().contains(Regex("\\sthrow\\s"))
   }
 }

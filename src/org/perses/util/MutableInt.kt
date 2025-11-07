@@ -16,8 +16,9 @@
  */
 package org.perses.util
 
-class MutableInt(private var value: Int) {
-
+class MutableInt(
+  private var value: Int,
+) {
   fun increment() {
     ++value
   }

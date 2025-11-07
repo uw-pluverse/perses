@@ -110,9 +110,10 @@ class CommandOptions : AbstractCommandOptions() {
 
     @Parameter(
       names = ["--language-model"],
-      description = "language model to guide the scheduler. " +
-        "Now only two options are valid: ngram and" +
-        " ndepth tree model",
+      description =
+        "language model to guide the scheduler. " +
+          "Now only two options are valid: ngram and" +
+          " ndepth tree model",
       order = FlagOrder.GENERAL_CONTROL + 900,
     )
     var languageModelType = LanguageModelType.NULL_MODEL
@@ -169,12 +170,14 @@ class CommandOptions : AbstractCommandOptions() {
       order = FlagOrder.GENERAL_CONTROL + 1600,
     )
     var allowToEnableGuidance = true
+
     fun getMutantsFolder(): File {
       if (mutantsFolder == null) {
-        mutantsFolder = File(
-          "kitten/default_mutants_folder_" +
-            Preconditions.checkNotNull<String>(testingConfiguration!!.language),
-        )
+        mutantsFolder =
+          File(
+            "kitten/default_mutants_folder_" +
+              Preconditions.checkNotNull<String>(testingConfiguration!!.language),
+          )
       }
       if (!mutantsFolder!!.exists()) {
         Preconditions.checkState(mutantsFolder!!.mkdirs())
@@ -184,10 +187,11 @@ class CommandOptions : AbstractCommandOptions() {
 
     fun getInterestingFolder(): File {
       if (interestingFolder == null) {
-        interestingFolder = File(
-          "kitten/default_interesting_folder_" +
-            Preconditions.checkNotNull<String>(testingConfiguration!!.language),
-        )
+        interestingFolder =
+          File(
+            "kitten/default_interesting_folder_" +
+              Preconditions.checkNotNull<String>(testingConfiguration!!.language),
+          )
       }
       if (!interestingFolder!!.exists()) {
         Preconditions.checkState(interestingFolder!!.mkdirs())
@@ -202,10 +206,11 @@ class CommandOptions : AbstractCommandOptions() {
 
     fun getFindingFolder(): File {
       if (findingFolder == null) {
-        findingFolder = File(
-          "kitten/default_finding_folder_" +
-            Preconditions.checkNotNull<String>(testingConfiguration!!.language),
-        )
+        findingFolder =
+          File(
+            "kitten/default_finding_folder_" +
+              Preconditions.checkNotNull<String>(testingConfiguration!!.language),
+          )
       }
       if (!findingFolder!!.exists()) {
         Preconditions.checkState(findingFolder!!.mkdirs())
@@ -215,10 +220,11 @@ class CommandOptions : AbstractCommandOptions() {
 
     fun getTempFolder(): File {
       if (tempFolder == null) {
-        tempFolder = File(
-          "kitten/default_temp_folder_" +
-            Preconditions.checkNotNull<String>(testingConfiguration!!.language),
-        )
+        tempFolder =
+          File(
+            "kitten/default_temp_folder_" +
+              Preconditions.checkNotNull<String>(testingConfiguration!!.language),
+          )
       }
       if (!tempFolder!!.exists()) {
         Preconditions.checkState(tempFolder!!.mkdirs())
@@ -352,13 +358,17 @@ class CommandOptions : AbstractCommandOptions() {
       order = FlagOrder.MUTATION_CONTROL + 1300,
     )
     var enableInsertingChildrenOfKleeneNode = false
+
     override fun validate() {
       Preconditions.checkState(
         (
           generatorType !== SparTreeGeneratorType.NULL_GENERATOR &&
-            enableReplacingWithGeneratedNode || enableReplacingIdentifier ||
-            enableSplicing || maxRecursionDepth > 0
-          ) || enableDeletingOnRandomPositions ||
+            enableReplacingWithGeneratedNode ||
+            enableReplacingIdentifier ||
+            enableSplicing ||
+            maxRecursionDepth > 0
+        ) ||
+          enableDeletingOnRandomPositions ||
           enableDeletingOnContinuousPositions ||
           enableInsertingOnRandomPositions ||
           enableInsertingOnContinuousPositions ||
@@ -369,7 +379,7 @@ class CommandOptions : AbstractCommandOptions() {
           (
             generatorType !== SparTreeGeneratorType.NULL_GENERATOR &&
               enableInsertingChildrenOfKleeneNode
-            ),
+          ),
         "At least one mutation need to be enabled.",
       )
     }
@@ -384,14 +394,13 @@ class CommandOptions : AbstractCommandOptions() {
       order = FlagOrder.COMPILER_CONTROL,
     )
     var testingConfiguration: TestingConfiguration? = null
+
     override fun validate() {
       testingConfiguration!!.validate()
     }
 
     class TestingConfigurationConverter : IStringConverter<TestingConfiguration> {
-      override fun convert(path: String): TestingConfiguration {
-        return readFrom(Paths.get(path))
-      }
+      override fun convert(path: String): TestingConfiguration = readFrom(Paths.get(path))
     }
   }
 
@@ -429,21 +438,21 @@ class CommandOptions : AbstractCommandOptions() {
       description = "the path that the coverage result saved at",
       order = FlagOrder.COVERAGE_CONTROL + 40,
     )
-    private var coverageResultFile_: Path? = null
+    private var coverageResultFile: Path? = null
 
     fun getCoverageResultFile(): Path? {
       if (coverageInfoPath != null && compilerSourcePath != null || aflCoverageMode) {
-        if (coverageResultFile_ == null) {
-          coverageResultFile_ = Paths.get("kitten/temp_coverage")
+        if (coverageResultFile == null) {
+          coverageResultFile = Paths.get("kitten/temp_coverage")
         }
-        coverageResultFile_!!.let {
+        coverageResultFile!!.let {
           if (Files.notExists(it)) {
             Util.ensureDirExists(it.parent)
             Files.createFile(it)
           }
         }
       }
-      return coverageResultFile_
+      return coverageResultFile
     }
 
     @Parameter(
@@ -455,9 +464,10 @@ class CommandOptions : AbstractCommandOptions() {
 
     @Parameter(
       names = ["--afl-coverage-mode"],
-      description = "enable afl coverage collection mode, " +
-        "the target should be compiled by afl-wrapped" +
-        " compiler",
+      description =
+        "enable afl coverage collection mode, " +
+          "the target should be compiled by afl-wrapped" +
+          " compiler",
       order = FlagOrder.COVERAGE_CONTROL + 50,
       arity = 1,
     )
@@ -465,8 +475,9 @@ class CommandOptions : AbstractCommandOptions() {
 
     @Parameter(
       names = ["--gcc-coverage-mode"],
-      description = "enable gcc coverage collection mode, " +
-        "gcc should be compiled with '--enable-coverage'",
+      description =
+        "enable gcc coverage collection mode, " +
+          "gcc should be compiled with '--enable-coverage'",
       order = FlagOrder.COVERAGE_CONTROL + 60,
       arity = 1,
     )

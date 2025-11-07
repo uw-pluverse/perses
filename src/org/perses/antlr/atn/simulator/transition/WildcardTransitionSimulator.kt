@@ -19,8 +19,6 @@ package org.perses.antlr.atn.simulator.transition
 import org.perses.antlr.atn.AbstractDecisionMaker
 
 class WildcardTransitionSimulator : AbstractAtnTransitionSimulator() {
-
-  override fun simulate(decisionMaker: AbstractDecisionMaker): Char {
-    return decisionMaker.sampleChar(PrintableCharacters.ALL_PRINTABLE_CHARS_LIST)
-  }
+  override fun simulate(decisionMaker: AbstractDecisionMaker): Char =
+    decisionMaker.sampleChar(PrintableCharacters.ALL_PRINTABLE_CHARS_LIST)
 }

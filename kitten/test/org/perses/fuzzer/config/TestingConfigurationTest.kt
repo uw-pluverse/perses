@@ -27,28 +27,33 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class TestingConfigurationTest {
-
   private val tempDir = Files.createTempDirectory(javaClass.simpleName)
 
-  val seedFolderA = SeedFolder(
-    tempDir.resolve("seed_folder_a").apply {
-      Files.createDirectory(this)
-    }.toString(),
-    ArrayList<String>().apply {
-      add(".cc")
-      add(".hh")
-    },
-  )
+  val seedFolderA =
+    SeedFolder(
+      tempDir
+        .resolve("seed_folder_a")
+        .apply {
+          Files.createDirectory(this)
+        }.toString(),
+      ArrayList<String>().apply {
+        add(".cc")
+        add(".hh")
+      },
+    )
 
-  val seedFolderB = SeedFolder(
-    tempDir.resolve("seed_folder_b").apply {
-      Files.createDirectory(this)
-    }.toString(),
-    ArrayList<String>().apply {
-      add(".c")
-      add(".h")
-    },
-  )
+  val seedFolderB =
+    SeedFolder(
+      tempDir
+        .resolve("seed_folder_b")
+        .apply {
+          Files.createDirectory(this)
+        }.toString(),
+      ArrayList<String>().apply {
+        add(".c")
+        add(".h")
+      },
+    )
 
   @After
   fun teardown() {
@@ -58,21 +63,24 @@ class TestingConfigurationTest {
   @Test
   fun test() {
     val file = tempDir.resolve("temp.txt")
-    val config = TestingConfiguration(
-      language = "RUST",
-      seedFolders = listOf(seedFolderA, seedFolderB),
-      programsUnderTest = listOf(
-        ProgramUnderTest(
-          command = "gcc",
-          flagsToTest = listOf(
-            CmdFlags(listOf("-g", "-O3")),
-            CmdFlags(listOf("-s")),
+    val config =
+      TestingConfiguration(
+        language = "RUST",
+        seedFolders = listOf(seedFolderA, seedFolderB),
+        programsUnderTest =
+          listOf(
+            ProgramUnderTest(
+              command = "gcc",
+              flagsToTest =
+                listOf(
+                  CmdFlags(listOf("-g", "-O3")),
+                  CmdFlags(listOf("-s")),
+                ),
+              versionFlags = CmdFlags(listOf("-v")),
+              crashDetectorClassName = GccCrashDetector::class.java.canonicalName,
+            ),
           ),
-          versionFlags = CmdFlags(listOf("-v")),
-          crashDetectorClassName = GccCrashDetector::class.java.canonicalName,
-        ),
-      ),
-    )
+      )
     config.writeToYamlFile(file)
     val another = TestingConfiguration.readFrom(file)
     assertThat(config).isEqualTo(another)

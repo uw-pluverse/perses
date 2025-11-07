@@ -16,8 +16,6 @@
  */
 package org.perses.antlr
 
-import com.google.common.base.Charsets
-import com.google.common.base.Preconditions
 import com.google.common.io.CharStreams
 import org.antlr.runtime.ANTLRStringStream
 import org.antlr.runtime.CharStream
@@ -33,23 +31,24 @@ import org.antlr.v4.tool.ast.GrammarRootAST
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 
 /** A parser for grammars written in Antlr. It parses a grammar file into an AST.  */
 class AntlrGrammarParser : Tool() {
-
   fun loadGrammarFromString(string: String?): Grammar {
     val grammarRootAST = parse("<empty>", ANTLRStringStream(string))
     return createGrammarFromRootAst(grammarRootAST)
   }
 
   fun loadGrammarFromInputStream(inputStream: InputStream?): Grammar {
-    val grammarRootAST = parse(
-      "<empty>",
-      ANTLRStringStream(
-        CharStreams.toString(InputStreamReader(inputStream, Charsets.UTF_8)),
-      ),
-    )
+    val grammarRootAST =
+      parse(
+        "<empty>",
+        ANTLRStringStream(
+          CharStreams.toString(InputStreamReader(inputStream, StandardCharsets.UTF_8)),
+        ),
+      )
     return createGrammarFromRootAst(grammarRootAST)
   }
 
@@ -61,30 +60,25 @@ class AntlrGrammarParser : Tool() {
   }
 
   companion object {
-    fun loadAntlrGrammarFromFile(file: Path): Grammar {
-      return AntlrGrammarParser().loadGrammar(file.toAbsolutePath().toString())
-    }
+    fun loadAntlrGrammarFromFile(file: Path): Grammar =
+      AntlrGrammarParser().loadGrammar(file.toAbsolutePath().toString())
 
     @Throws(IOException::class)
-    fun loadAntlrGrammarFromInputStream(inputStream: InputStream?): Grammar {
-      return AntlrGrammarParser().loadGrammarFromInputStream(inputStream)
-    }
+    fun loadAntlrGrammarFromInputStream(inputStream: InputStream?): Grammar =
+      AntlrGrammarParser().loadGrammarFromInputStream(inputStream)
 
-    fun loadAntlrGrammarFromString(content: String?): Grammar {
-      return AntlrGrammarParser().loadGrammarFromString(content)
-    }
+    fun loadAntlrGrammarFromString(content: String?): Grammar =
+      AntlrGrammarParser().loadGrammarFromString(content)
 
-    fun parseRawGrammarASTFromString(grammar: String?): GrammarRootAST {
-      return parseRawGrammarAST(ANTLRStringStream(grammar))
-    }
+    fun parseRawGrammarASTFromString(grammar: String?): GrammarRootAST =
+      parseRawGrammarAST(ANTLRStringStream(grammar))
 
-    fun parseRawGrammarAST(grammar: InputStream?): GrammarRootAST {
-      return parseRawGrammarAST(
+    fun parseRawGrammarAST(grammar: InputStream?): GrammarRootAST =
+      parseRawGrammarAST(
         ANTLRStringStream(
-          CharStreams.toString(InputStreamReader(grammar, Charsets.UTF_8)),
+          CharStreams.toString(InputStreamReader(grammar, StandardCharsets.UTF_8)),
         ),
       )
-    }
 
     fun parseRawGrammarAST(`in`: CharStream?): GrammarRootAST {
       val adaptor = GrammarASTAdaptor(`in`)
@@ -94,16 +88,17 @@ class AntlrGrammarParser : Tool() {
       val p = ANTLRParser(tokens)
       p.treeAdaptor = adaptor
       val r: ParserRuleReturnScope
-      r = try {
-        p.grammarSpec()
-      } catch (e: Exception) {
-        throw RuntimeException("Fail to parse the char stream.", e)
-      }
+      r =
+        try {
+          p.grammarSpec()
+        } catch (e: Exception) {
+          throw RuntimeException("Fail to parse the char stream.", e)
+        }
       val root = r.tree as GrammarAST
       if (root is GrammarRootAST) {
         val grammarRootAST = root
         grammarRootAST.hasErrors = lexer.numberOfSyntaxErrors > 0 || p.numberOfSyntaxErrors > 0
-        Preconditions.checkState(grammarRootAST.tokenStream === tokens)
+        check(grammarRootAST.tokenStream === tokens)
         return grammarRootAST
       }
       throw AssertionError("Cannot reach here. The root is $root")

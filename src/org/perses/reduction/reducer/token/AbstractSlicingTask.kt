@@ -24,6 +24,7 @@ import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScriptExecResult
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
+import org.perses.reduction.TreeEditWithItsResult
 import org.perses.reduction.cache.AbstractProgramEncoding
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.spartree.NodeDeletionActionSet
@@ -45,12 +46,11 @@ abstract class AbstractSlicingTask(
     payload: EditTestPayload,
   ) -> TestScriptExecResult<EditTestPayload>,
 ) {
-
   protected var future: TestScriptExecResult<EditTestPayload>? = null
 
-  abstract fun tryAsyncRunPreconditionCheck(): Boolean
+  protected abstract fun tryAsyncRunPreconditionCheck(): Boolean
 
-  abstract fun createNodeDeletionActionSet(): NodeDeletionActionSet
+  protected abstract fun createNodeDeletionActionSet(): NodeDeletionActionSet
 
   enum class EnumAsyncRunResult {
     PRECONDITION_FAIL,
@@ -58,9 +58,7 @@ abstract class AbstractSlicingTask(
     TEST_SUBMITTED,
   }
 
-  fun tryAsyncRun(
-    visitedCacheKeys: HashSet<AbstractProgramEncoding<*>>,
-  ): EnumAsyncRunResult {
+  fun tryAsyncRun(visitedCacheKeys: HashSet<AbstractProgramEncoding<*>>): EnumAsyncRunResult {
     check(future == null)
 
     if (!tryAsyncRunPreconditionCheck()) {
@@ -77,16 +75,18 @@ abstract class AbstractSlicingTask(
 
     val treeEdit = tree.createNodeDeletionEdit(nodeDeletionActionSet)
     val testProgram = treeEdit.program
-    val cachedResult = reducerContext.queryCache.getCachedResult(testProgram)
+    val outputManager = reducerContext.ioManager.createOutputManager(testProgram)
+    val cachedResult =
+      reducerContext.queryCache.getCachedResult(
+        testProgram,
+        outputManager = outputManager,
+      )
     if (cachedResult.isHit()) {
-      val testResult = cachedResult.asCacheHit().testResult
-      check(testResult.isNotInteresting) { "Only failed programs can be cached." }
       listenerManager.onTestResultCacheHit(
-        testResult,
         testProgram,
         treeEdit,
         outputCreator = {
-          reducerContext.ioManager.createOutputManager(it).fileContentList
+          outputManager.fileContentList
             .transformToImmutableList {
               FileNameContentPair(
                 fileName = it.fileName.baseName,
@@ -104,12 +104,13 @@ abstract class AbstractSlicingTask(
     }
 
     check(future == null)
-    future = methodToTestProgramAsynchronously(
-      ALWAYS_TRUE_PRECHECK,
-      createParsabilityPostCheck(testProgram),
-      reducerContext.ioManager.createOutputManager(testProgram),
-      EditTestPayload(treeEdit, cachedResult.asCacheMiss()),
-    )
+    future =
+      methodToTestProgramAsynchronously(
+        ALWAYS_TRUE_PRECHECK,
+        createParsabilityPostCheck(testProgram),
+        outputManager,
+        EditTestPayload(treeEdit, cachedResult.asCacheMiss()),
+      )
     return EnumAsyncRunResult.TEST_SUBMITTED
   }
 
@@ -122,15 +123,17 @@ abstract class AbstractSlicingTask(
       } else {
         PropertyTestResult(
           exitCode = INVALID_SYNTAX_EXIT_CODE,
-          elapsedMilliseconds = -1,
+          elapsedMillis = -1,
         )
       }
     }
 
   private fun isProgramParsable(testProgram: TokenizedProgram) =
     reducerContext.configuration.parserFacade.isSourceCodeParsable(
-      PrinterRegistry.getPrinter(reducerContext.ioManager.getDefaultProgramFormat())
-        .print(testProgram).sourceCode,
+      PrinterRegistry
+        .getPrinter(reducerContext.ioManager.getDefaultProgramFormat())
+        .print(testProgram)
+        .sourceCode,
     )
 
   fun cancel() {
@@ -140,17 +143,18 @@ abstract class AbstractSlicingTask(
     }
   }
 
-  fun waitAndApplyEditIfSuccess(): Boolean {
-    check(future != null)
-    val best = analyzeResultsAndGetBest(listOf(future!!)) ?: return false
-    tree.applyEdit(best.payload!!.edit)
+  fun waitToGetTheBestEditIfSuccess(): TreeEditWithItsResult? {
+    val localFuture = future
+    check(localFuture != null) { "The future is null." }
+    val best = analyzeResultAndGetBest(localFuture) ?: return null
+    localFuture.close()
     future = null
-    return true
+    return best
   }
 
-  abstract fun analyzeResultsAndGetBest(
-    futureResult: List<TestScriptExecResult<EditTestPayload>>,
-  ): TestScriptExecResult<EditTestPayload>?
+  abstract fun analyzeResultAndGetBest(
+    futureResult: TestScriptExecResult<EditTestPayload>,
+  ): TreeEditWithItsResult?
 
   companion object {
     val INVALID_SYNTAX_EXIT_CODE = ExitCode(99)

@@ -1,5 +1,6 @@
-int main() {
+  int  b
+                ;int main() {
   int a = 99;
-  int b =                                      a                                     ;
+    b =                                      a                                     ;
   return b;
 }

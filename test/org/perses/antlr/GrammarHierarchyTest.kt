@@ -34,18 +34,21 @@ import java.util.TreeSet
 
 @RunWith(JUnit4::class)
 class GrammarHierarchyTest {
-
   @Test
   fun testParsingCGrammar() {
     val grammarFileContent = readAntlrFileToString("C.g4")
-    val grammar = AntlrGrammarParser.loadAntlrGrammarFromInputStream(
-      ByteArrayInputStream(grammarFileContent.toByteArray(StandardCharsets.UTF_8)),
-    )
+    val grammar =
+      AntlrGrammarParser.loadAntlrGrammarFromInputStream(
+        ByteArrayInputStream(grammarFileContent.toByteArray(StandardCharsets.UTF_8)),
+      )
     assertThat(grammar.rules.keys)
       .containsExactlyElementsIn(RULE_NAMES_IN_ORIGINAL_C_PARSER)
       .inOrder()
-    assertThat(grammar.rules.values.map { it.name }.toList())
-      .containsExactlyElementsIn(RULE_NAMES_IN_ORIGINAL_C_PARSER)
+    assertThat(
+      grammar.rules.values
+        .map { it.name }
+        .toList(),
+    ).containsExactlyElementsIn(RULE_NAMES_IN_ORIGINAL_C_PARSER)
       .inOrder()
   }
 
@@ -72,10 +75,11 @@ class GrammarHierarchyTest {
 
   @Test
   fun testSubruleExtractionForStar() {
-    val hierarchy = createFromFile(
-      startRuleName = "start",
-      "subrule_star.g4",
-    )
+    val hierarchy =
+      createFromFile(
+        startRuleName = "start",
+        "subrule_star.g4",
+      )
     val start = hierarchy.getRuleHierarchyEntryWithNameOrThrow("start")
     val a = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")
     val b = hierarchy.getRuleHierarchyEntryWithNameOrThrow("b")
@@ -88,10 +92,11 @@ class GrammarHierarchyTest {
 
   @Test
   fun testSubruleExtractionForPlus() {
-    val hierarchy = createFromFile(
-      startRuleName = "start",
-      "subrule_plus.g4",
-    )
+    val hierarchy =
+      createFromFile(
+        startRuleName = "start",
+        "subrule_plus.g4",
+      )
     val start = hierarchy.getRuleHierarchyEntryWithNameOrThrow("start")
     val a = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")
     val b = hierarchy.getRuleHierarchyEntryWithNameOrThrow("b")
@@ -104,10 +109,11 @@ class GrammarHierarchyTest {
 
   @Test
   fun testSubruleExtractionForOptional() {
-    val hierarchy = createFromFile(
-      startRuleName = "start",
-      "subrule_optional.g4",
-    )
+    val hierarchy =
+      createFromFile(
+        startRuleName = "start",
+        "subrule_optional.g4",
+      )
     val start = hierarchy.getRuleHierarchyEntryWithNameOrThrow("start")
     val a = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")
     val b = hierarchy.getRuleHierarchyEntryWithNameOrThrow("b")
@@ -120,16 +126,17 @@ class GrammarHierarchyTest {
 
   @Test
   fun testReachabilityGraph() {
-    val hierarchy = GrammarHierarchy.createFromString(
-      startRuleName = "a",
-      """
-      grammar graph;
-      
-      a : (b | c) + c;
-      b : c;
-      c : 'c';
-      """.trimIndent(),
-    )
+    val hierarchy =
+      GrammarHierarchy.createFromString(
+        startRuleName = "a",
+        """
+        grammar graph;
+        
+        a : (b | c) + c;
+        b : c;
+        c : 'c';
+        """.trimIndent(),
+      )
     val graph = hierarchy.reachabilityGraph.graph
     val a = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")
     val b = hierarchy.getRuleHierarchyEntryWithNameOrThrow("b")
@@ -147,10 +154,11 @@ class GrammarHierarchyTest {
 
   @Test
   fun testSubruleExtractionForSequence() {
-    val hierarchy = createFromFile(
-      startRuleName = "start",
-      "subrule_sequence.g4",
-    )
+    val hierarchy =
+      createFromFile(
+        startRuleName = "start",
+        "subrule_sequence.g4",
+      )
     val start = hierarchy.getRuleHierarchyEntryWithNameOrThrow("start")
     val a = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")
     val b = hierarchy.getRuleHierarchyEntryWithNameOrThrow("b")
@@ -167,10 +175,11 @@ class GrammarHierarchyTest {
 
   @Test
   fun testSubruleExtractionForAlternative() {
-    val hierarchy = createFromFile(
-      startRuleName = "start",
-      "subrule_alternative.g4",
-    )
+    val hierarchy =
+      createFromFile(
+        startRuleName = "start",
+        "subrule_alternative.g4",
+      )
     val start = hierarchy.getRuleHierarchyEntryWithNameOrThrow("start")
     val a = hierarchy.getRuleHierarchyEntryWithNameOrThrow("a")
     val b = hierarchy.getRuleHierarchyEntryWithNameOrThrow("b")
@@ -189,10 +198,11 @@ class GrammarHierarchyTest {
 
   @Test
   fun testGrammarHierarchyProtoMessage() {
-    val hierarchy = createFromFile(
-      startRuleName = "start",
-      "subrule_alternative.g4",
-    )
+    val hierarchy =
+      createFromFile(
+        startRuleName = "start",
+        "subrule_alternative.g4",
+      )
     testProtoMessageIsCreatedCorrectly(hierarchy)
   }
 
@@ -216,92 +226,94 @@ class GrammarHierarchyTest {
   }
 
   companion object {
-    private val RULE_NAMES_IN_ORIGINAL_C_PARSER = ImmutableList.builder<String>()
-      .add("primaryExpression")
-      .add("genericSelection")
-      .add("genericAssocList")
-      .add("genericAssociation")
-      .add("postfixExpression")
-      .add("argumentExpressionList")
-      .add("unaryExpression")
-      .add("unaryOperator")
-      .add("castExpression")
-      .add("multiplicativeExpression")
-      .add("additiveExpression")
-      .add("shiftExpression")
-      .add("relationalExpression")
-      .add("equalityExpression")
-      .add("andExpression")
-      .add("exclusiveOrExpression")
-      .add("inclusiveOrExpression")
-      .add("logicalAndExpression")
-      .add("logicalOrExpression")
-      .add("conditionalExpression")
-      .add("assignmentExpression")
-      .add("assignmentOperator")
-      .add("expression")
-      .add("constantExpression")
-      .add("declaration")
-      .add("declarationSpecifiers")
-      .add("declarationSpecifiers2")
-      .add("declarationSpecifier")
-      .add("initDeclaratorList")
-      .add("initDeclarator")
-      .add("storageClassSpecifier")
-      .add("typeSpecifier")
-      .add("structOrUnionSpecifier")
-      .add("structOrUnion")
-      .add("structDeclarationList")
-      .add("structDeclaration")
-      .add("specifierQualifierList")
-      .add("structDeclaratorList")
-      .add("structDeclarator")
-      .add("enumSpecifier")
-      .add("enumeratorList")
-      .add("enumerator")
-      .add("enumerationConstant")
-      .add("atomicTypeSpecifier")
-      .add("typeQualifier")
-      .add("functionSpecifier")
-      .add("alignmentSpecifier")
-      .add("declarator")
-      .add("directDeclarator")
-      .add("gccDeclaratorExtension")
-      .add("gccAttributeSpecifier")
-      .add("gccAttributeList")
-      .add("gccAttribute")
-      .add("nestedParenthesesBlock")
-      .add("pointer")
-      .add("typeQualifierList")
-      .add("parameterTypeList")
-      .add("parameterList")
-      .add("parameterDeclaration")
-      .add("identifierList")
-      .add("typeName")
-      .add("abstractDeclarator")
-      .add("directAbstractDeclarator")
-      .add("typedefName")
-      .add("initializer")
-      .add("initializerList")
-      .add("designation")
-      .add("designatorList")
-      .add("designator")
-      .add("staticAssertDeclaration")
-      .add("statement")
-      .add("labeledStatement")
-      .add("compoundStatement")
-      .add("blockItemList")
-      .add("blockItem")
-      .add("expressionStatement")
-      .add("selectionStatement")
-      .add("iterationStatement")
-      .add("jumpStatement")
-      .add("compilationUnit")
-      .add("translationUnit")
-      .add("externalDeclaration")
-      .add("functionDefinition")
-      .add("declarationList")
-      .build()
+    private val RULE_NAMES_IN_ORIGINAL_C_PARSER =
+      ImmutableList
+        .builder<String>()
+        .add("primaryExpression")
+        .add("genericSelection")
+        .add("genericAssocList")
+        .add("genericAssociation")
+        .add("postfixExpression")
+        .add("argumentExpressionList")
+        .add("unaryExpression")
+        .add("unaryOperator")
+        .add("castExpression")
+        .add("multiplicativeExpression")
+        .add("additiveExpression")
+        .add("shiftExpression")
+        .add("relationalExpression")
+        .add("equalityExpression")
+        .add("andExpression")
+        .add("exclusiveOrExpression")
+        .add("inclusiveOrExpression")
+        .add("logicalAndExpression")
+        .add("logicalOrExpression")
+        .add("conditionalExpression")
+        .add("assignmentExpression")
+        .add("assignmentOperator")
+        .add("expression")
+        .add("constantExpression")
+        .add("declaration")
+        .add("declarationSpecifiers")
+        .add("declarationSpecifiers2")
+        .add("declarationSpecifier")
+        .add("initDeclaratorList")
+        .add("initDeclarator")
+        .add("storageClassSpecifier")
+        .add("typeSpecifier")
+        .add("structOrUnionSpecifier")
+        .add("structOrUnion")
+        .add("structDeclarationList")
+        .add("structDeclaration")
+        .add("specifierQualifierList")
+        .add("structDeclaratorList")
+        .add("structDeclarator")
+        .add("enumSpecifier")
+        .add("enumeratorList")
+        .add("enumerator")
+        .add("enumerationConstant")
+        .add("atomicTypeSpecifier")
+        .add("typeQualifier")
+        .add("functionSpecifier")
+        .add("alignmentSpecifier")
+        .add("declarator")
+        .add("directDeclarator")
+        .add("gccDeclaratorExtension")
+        .add("gccAttributeSpecifier")
+        .add("gccAttributeList")
+        .add("gccAttribute")
+        .add("nestedParenthesesBlock")
+        .add("pointer")
+        .add("typeQualifierList")
+        .add("parameterTypeList")
+        .add("parameterList")
+        .add("parameterDeclaration")
+        .add("identifierList")
+        .add("typeName")
+        .add("abstractDeclarator")
+        .add("directAbstractDeclarator")
+        .add("typedefName")
+        .add("initializer")
+        .add("initializerList")
+        .add("designation")
+        .add("designatorList")
+        .add("designator")
+        .add("staticAssertDeclaration")
+        .add("statement")
+        .add("labeledStatement")
+        .add("compoundStatement")
+        .add("blockItemList")
+        .add("blockItem")
+        .add("expressionStatement")
+        .add("selectionStatement")
+        .add("iterationStatement")
+        .add("jumpStatement")
+        .add("compilationUnit")
+        .add("translationUnit")
+        .add("externalDeclaration")
+        .add("functionDefinition")
+        .add("declarationList")
+        .build()
 
     private fun <T> dumpRuleWithSubrules(
       rules: ImmutableList<RuleHierarchyEntry>,
@@ -323,28 +335,32 @@ class GrammarHierarchyTest {
       return builder.toString().trim { it <= ' ' }
     }
 
-    private fun createFromFile(startRuleName: String, filename: String): GrammarHierarchy {
-      return try {
+    private fun createFromFile(
+      startRuleName: String,
+      filename: String,
+    ): GrammarHierarchy =
+      try {
         val file = Paths.get("test_data/antlr_grammars/", filename)
         val content = Files.asCharSource(file.toFile(), StandardCharsets.UTF_8).read()
         createFromString(startRuleName, content)
       } catch (e: Exception) {
         throw RuntimeException(e)
-      }
-    } // TODO: test token type retrieval.
+      } // TODO: test token type retrieval.
   }
 
   @Test
   fun testDotInParserRule() {
-    val grammar = PersesAstBuilder.loadGrammarFromString(
-      """
-      grammar T;
-      start: . ;
-      """.trimIndent(),
-    )
-    val hierarchy = GrammarHierarchyBuilder(
-      AbstractAntlrGrammar.CombinedAntlrGrammar(startRuleName = "start", grammar),
-    ).build()
+    val grammar =
+      PersesAstBuilder.loadGrammarFromString(
+        """
+        grammar T;
+        start: . ;
+        """.trimIndent(),
+      )
+    val hierarchy =
+      GrammarHierarchyBuilder(
+        AbstractAntlrGrammar.CombinedAntlrGrammar(startRuleName = "start", grammar),
+      ).build()
     assertThat(hierarchy.ruleList).hasSize(1)
     val entry = hierarchy.getRuleHierarchyEntryWithNameOrThrow("start")
     assertThat(entry.immediateSubRuleNames).isEmpty()

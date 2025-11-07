@@ -25,7 +25,6 @@ import org.junit.runners.JUnit4
 // TODO(cnsun): more tests.
 @RunWith(JUnit4::class)
 class SortedIntArrayReferenceTest {
-
   @Test
   fun test_empty_single_integer() {
     val i = SortedIntArrayReference.SingleInteger()

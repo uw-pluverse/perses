@@ -13,13 +13,27 @@ kt_jvm_library(
     ],
     deps = [
         "//:antlr_runtime",
+        "//src/org/perses/util",
     ],
 )
 
 kt_jvm_library(
-    name = "grammar_facade",
+    name = "lexer_adaptor",
     srcs = [
-        "AbstractDefaultParserFacade.kt",
+        "AbstractLexerAdaptor.kt",
+        "AbstractTwinLexerAntlrBridge.kt",
+    ],
+    deps = [
+        "//:antlr_runtime",
+        "//:guava",
+        "//src/org/perses/antlr:antlr_type_wrappers",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
+    ],
+)
+
+kt_jvm_library(
+    name = "parser_facade_interface",
+    srcs = [
         "AbstractParserFacade.kt",
         "ParserFacadeTag.kt",
     ],
@@ -30,13 +44,9 @@ kt_jvm_library(
         "//:flogger",
         "//:guava",
         "//antlropt/src/org/perses/antlr/ast",
-        "//antlropt/src/org/perses/antlr/ast:ast_builder",
-        "//src/org/perses/antlr:antlr_grammar_info",
-        "//src/org/perses/antlr:antlr_grammar_parser",
-        "//src/org/perses/antlr:antlr_hierarchy",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/antlr:util",
-        "//src/org/perses/antlr/atn",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
     ],
@@ -50,15 +60,17 @@ kt_jvm_library(
         "SingleParserFacadeFactory.kt",
     ],
     deps = [
-        ":grammar_facade",
+        ":parser_facade_interface",
         "//:flogger",
         "//:guava",
         "//src/org/perses/grammar/c:optc_parser_facade",
         "//src/org/perses/grammar/c:orig_parser_facade",
         "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/grammar/cpp:parser_facade",
+        "//src/org/perses/grammar/dyck:parser_facade",
         "//src/org/perses/grammar/glsl:parser_facade",
         "//src/org/perses/grammar/go:parser_facade",
+        "//src/org/perses/grammar/jackson:parser_facade",
         "//src/org/perses/grammar/java:parser_facade_java20",
         "//src/org/perses/grammar/java:parser_facade_java8",
         "//src/org/perses/grammar/javascript:parser_facade",
@@ -75,6 +87,7 @@ kt_jvm_library(
         "//src/org/perses/grammar/sql/sqlite:parser_facade",
         "//src/org/perses/grammar/sql/tidb:language_kind",
         "//src/org/perses/grammar/sysverilog:parser_facade",
+        "//src/org/perses/grammar/wasm:parser_facade",
         "//src/org/perses/grammar/xml:parser_facade",
         "//src/org/perses/program:language_kind",
     ],

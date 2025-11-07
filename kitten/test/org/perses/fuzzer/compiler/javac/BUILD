@@ -10,7 +10,6 @@ kt_jvm_test(
         "bug2.txt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",

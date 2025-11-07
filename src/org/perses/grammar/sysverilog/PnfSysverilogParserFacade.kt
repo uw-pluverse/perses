@@ -17,17 +17,23 @@
 package org.perses.grammar.sysverilog
 
 import com.google.common.primitives.ImmutableIntArray
-import org.perses.grammar.AbstractDefaultParserFacade
+import org.perses.grammar.AbstractParserFacade
 
-class PnfSysverilogParserFacade : AbstractDefaultParserFacade<SV3_1aLexer, PnfSysVerilogHDL>(
-  LanguageSystemVerilog,
-  createSeparateAntlrGrammar(
-    startRuleName = "source_text",
-    antlrParserGrammarFileName = "PnfSysVerilogHDL.g4",
-    antlrLexerGrammarFileName = "SV3_1aLexer.g4",
-    classUnderSamePkg = PnfSysverilogParserFacade::class.java,
-  ),
-  SV3_1aLexer::class.java,
-  PnfSysVerilogHDL::class.java,
-  ImmutableIntArray.of(SV3_1aLexer.Escaped_identifier, SV3_1aLexer.Simple_identifier),
-)
+class PnfSysverilogParserFacade :
+  AbstractParserFacade(
+    language = LanguageSystemVerilog,
+    antlrGrammar =
+      createSeparateAntlrGrammar(
+        startRuleName = "source_text",
+        antlrParserGrammarFileName = "PnfSysVerilogHDL.g4",
+        antlrLexerGrammarFileName = "SV3_1aLexer.g4",
+        classUnderSamePkg = PnfSysverilogParserFacade::class.java,
+      ),
+    identifierTokenTypes =
+      ImmutableIntArray.of(
+        SV3_1aLexer.Escaped_identifier,
+        SV3_1aLexer.Simple_identifier,
+      ),
+    lexerClass = SV3_1aLexer::class.java,
+    parserClass = PnfSysVerilogHDL::class.java,
+  )

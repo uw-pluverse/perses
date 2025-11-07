@@ -26,10 +26,10 @@ sealed class AbstractActionSet<ACTION : AbstractTreeEditAction>(
   val actionsDescription: String,
   canBeSorted: Boolean,
 ) {
-
-  private val targetToActionMap = actions
-    .asSequence()
-    .toImmutableMap(keyFunc = { it.targetNode }, valueFunc = { it!! })
+  private val targetToActionMap =
+    actions
+      .asSequence()
+      .toImmutableMap(keyFunc = { it.targetNode }, valueFunc = { it!! })
 
   init {
     if (canBeSorted) {
@@ -42,17 +42,13 @@ sealed class AbstractActionSet<ACTION : AbstractTreeEditAction>(
   val targets: ImmutableSet<AbstractSparTreeNode>
     get() = targetToActionMap.keys
 
-  fun containsNodeAsTarget(node: AbstractSparTreeNode): Boolean {
-    return targetToActionMap.containsKey(node)
-  }
+  fun containsNodeAsTarget(node: AbstractSparTreeNode): Boolean =
+    targetToActionMap.containsKey(node)
 
-  fun getActionForTarget(targetNode: AbstractSparTreeNode): ACTION? {
-    return targetToActionMap[targetNode]!!
-  }
+  fun getActionForTarget(targetNode: AbstractSparTreeNode): ACTION? =
+    targetToActionMap[targetNode]!!
 
-  fun size(): Int {
-    return actions.size
-  }
+  fun size(): Int = actions.size
 
   val isEmpty: Boolean
     get() = actions.isEmpty()
@@ -70,9 +66,7 @@ sealed class AbstractActionSet<ACTION : AbstractTreeEditAction>(
     return actions == other.actions
   }
 
-  override fun hashCode(): Int {
-    return actions.hashCode()
-  }
+  override fun hashCode(): Int = actions.hashCode()
 
   private fun checkSortedAndDistinct(actions: ImmutableList<ACTION>) {
     val size = actions.size

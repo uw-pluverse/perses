@@ -24,7 +24,6 @@ import java.io.PrintStream
 class PersesAlternativeBlockAst(
   val alternatives: ImmutableList<AbstractPersesRuleElement>,
 ) : AbstractPersesRuleElement() {
-
   private val sortedAlternatives =
     alternatives.asSequence().sorted().toImmutableList()
 
@@ -41,11 +40,14 @@ class PersesAlternativeBlockAst(
     }
   }
 
-  override fun getChildForEquivalenceChecking(index: Int): AbstractPersesRuleElement {
-    return sortedAlternatives[index]
-  }
+  override fun getChildForEquivalenceChecking(index: Int): AbstractPersesRuleElement =
+    sortedAlternatives[index]
 
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     var first = true
     for (alt in alternatives) {
       if (first) {
@@ -65,21 +67,15 @@ class PersesAlternativeBlockAst(
   override val childCount: Int
     get() = alternatives.size
 
-  override fun getChild(index: Int): AbstractPersesRuleElement {
-    return alternatives[index]
-  }
+  override fun getChild(index: Int): AbstractPersesRuleElement = alternatives[index]
 
   override val tag = AstTag.ALTERNATIVE_BLOCK
 
   override fun createWithNewChildren(
     newChildren: List<AbstractPersesRuleElement>,
-  ): AbstractPersesRuleElement {
-    return PersesAlternativeBlockAst(ImmutableList.copyOf(newChildren))
-  }
+  ): AbstractPersesRuleElement = PersesAlternativeBlockAst(ImmutableList.copyOf(newChildren))
 
-  override fun toString(): String {
-    return sourceCode
-  }
+  override fun toString(): String = sourceCode
 
   companion object {
     @JvmStatic

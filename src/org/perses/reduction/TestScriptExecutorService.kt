@@ -34,9 +34,8 @@ class TestScriptExecutorService(
   val specifiedNumOfThreads: Int,
   private val scriptExecutionTimeoutInSeconds: Long,
   private val scriptExecutionKeepTryingAfterTimeout: Boolean = true,
-  private val externalTestScriptExecutionCache: AbstractExternalTestScriptExecutionCache,
+  private val globalExecutionCache: AbstractGlobalExecutionCache,
 ) : Closeable {
-
   val statistics = Statistics()
 
   private val scriptExecutorService = DaemonThreadPool.create(specifiedNumOfThreads)
@@ -49,10 +48,10 @@ class TestScriptExecutorService(
     }
   }
 
-  fun createReductionFolder(prefix: String, suffix: String) =
-    reductionFolderManager.createNextFolder(prefix, suffix)
-
-  fun <T> submitGenericTask(task: () -> T): ListenableFuture<T> = genericThreadPool.submit(task)
+  fun createReductionFolder(
+    prefix: String,
+    suffix: String,
+  ) = reductionFolderManager.createNextFolder(prefix, suffix)
 
   @Override
   override fun close() {
@@ -62,7 +61,10 @@ class TestScriptExecutorService(
   }
 
   fun interface IPostCheck<Payload> {
-    fun perform(currentResult: PropertyTestResult, payload: Payload): PropertyTestResult
+    fun perform(
+      currentResult: PropertyTestResult,
+      payload: Payload,
+    ): PropertyTestResult
   }
 
   fun interface IPreCheck<Payload : Any> {
@@ -74,24 +76,21 @@ class TestScriptExecutorService(
     postCheck: IPostCheck<Payload>,
     outputManager: AbstractOutputManager,
     payload: Payload,
-  ): TestScriptExecResult<Payload> {
-    return testProgramAsync(preCheck, postCheck) {
+  ): TestScriptExecResult<Payload> =
+    testProgramAsync(preCheck, postCheck) {
       ProceedResult(outputManager, payload)
     }
-  }
 
   fun testProgramAsyncWithoutPayload(
     preCheck: IPreCheck<Any>,
     postCheck: IPostCheck<Any>,
     outputManager: AbstractOutputManager,
-  ): TestScriptExecResult<Any> {
-    return testProgramAsync(preCheck, postCheck) {
+  ): TestScriptExecResult<Any> =
+    testProgramAsync(preCheck, postCheck) {
       ProceedResult(outputManager, DUMMY_PAYLOAD)
     }
-  }
 
   sealed class AbstractOutputManagerCreatorResult<Payload : Any> {
-
     class EmptyResult<Payload : Any> : AbstractOutputManagerCreatorResult<Payload>()
 
     class ProceedResult<Payload : Any>(
@@ -109,61 +108,63 @@ class TestScriptExecutorService(
     postCheck: IPostCheck<Payload>,
     outputManagerCreator: () -> AbstractOutputManagerCreatorResult<Payload>,
   ): TestScriptExecResult<Payload> {
-    val outputManagerCreatorFuture = createRestrictedFuture(
-      outputManagerCreatorService.submit(
-        Callable { outputManagerCreator() },
-      ),
-    )
+    val outputManagerCreatorFuture =
+      createRestrictedFuture(
+        outputManagerCreatorService.submit(
+          Callable { outputManagerCreator() },
+        ),
+      )
 
     statistics.onSubmitTest()
     val workingDirectory = reductionFolderManager.createNextFolder()
-    val testScriptExecFuture = createRestrictedFuture(
-      scriptExecutorService.submit(
-        Callable<PropertyTestResult?> {
-          if (outputManagerCreatorFuture.isCancelled()) {
-            return@Callable null
-          }
-          val outputManagerWithPayload = try {
-            when (val t = outputManagerCreatorFuture.getWithTimeoutWarnings()) {
-              is ProceedResult<Payload> -> t
-              else -> return@Callable null
+    val testScriptExecFuture =
+      createRestrictedFuture(
+        scriptExecutorService.submit(
+          Callable<PropertyTestResult?> {
+            if (outputManagerCreatorFuture.isCancelled()) {
+              return@Callable null
             }
-          } catch (e: Exception) {
-            when (e) {
-              is CancellationException, is InterruptedException -> return@Callable null
-              else -> throw e
+            val outputManagerWithPayload =
+              try {
+                when (val t = outputManagerCreatorFuture.getWithTimeoutWarnings()) {
+                  is ProceedResult<Payload> -> t
+                  else -> return@Callable null
+                }
+              } catch (e: Exception) {
+                when (e) {
+                  is CancellationException, is InterruptedException -> return@Callable null
+                  else -> throw e
+                }
+              }
+            statistics.onRunPrecheck()
+            preCheck.perform(outputManagerWithPayload.payload).let {
+              if (it.isNotInteresting) {
+                return@Callable it
+              }
             }
-          }
-          statistics.onRunPrecheck()
-          preCheck.perform(outputManagerWithPayload.payload).let {
-            if (it.isNotInteresting) {
-              return@Callable it
-            }
-          }
-          statistics.onExecuteScript()
-          // TODO(cnsun): add the execution history here.
-          // Note that we still write the files to the folder, for debugging purpose only.
-          val outputManager = outputManagerWithPayload.outputManager
-          outputManager.write(workingDirectory)
-          val externalCachedResult = externalTestScriptExecutionCache.getCachedResultOrNull(
-            outputManager,
-          )
-          val result = if (externalCachedResult == null) {
-            val result = workingDirectory.runTestScript()
-            externalTestScriptExecutionCache.cacheTestScriptResult(outputManager, result)
-            result
-          } else {
-            statistics.onExternalCacheHit()
-            PropertyTestResult(
-              externalCachedResult.exitCode,
-              externalCachedResult.ellapsedMillies.toLong(),
-            )
-          }
-          workingDirectory.deleteAllOtherFiles()
-          return@Callable postCheck.perform(result, outputManagerWithPayload.payload)
-        },
-      ),
-    )
+            statistics.onExecuteScript()
+            // TODO(cnsun): add the execution history here.
+            // Note that we still write the files to the folder, for debugging purpose only.
+            val outputManager = outputManagerWithPayload.outputManager
+            outputManager.write(workingDirectory)
+            val cachedResult =
+              globalExecutionCache.getCachedResultOrNull(
+                outputManager,
+              )
+            val result =
+              if (cachedResult == null) {
+                val result = workingDirectory.runTestScript()
+                globalExecutionCache.cacheTestScriptResult(outputManager, result)
+                result
+              } else {
+                statistics.onExternalCacheHit()
+                cachedResult
+              }
+            workingDirectory.deleteAllOtherFiles()
+            return@Callable postCheck.perform(result, outputManagerWithPayload.payload)
+          },
+        ),
+      )
     return TestScriptExecResult(
       workingDirectory,
       outputManagerCreatorFuture = outputManagerCreatorFuture,
@@ -171,13 +172,12 @@ class TestScriptExecutorService(
     )
   }
 
-  private fun <T> createRestrictedFuture(future: ListenableFuture<T>): RestrictedFuture<T> {
-    return RestrictedFuture(
+  private fun <T> createRestrictedFuture(future: ListenableFuture<T>): RestrictedFuture<T> =
+    RestrictedFuture(
       future,
       defaultTimeoutInSeconds = scriptExecutionTimeoutInSeconds,
       defaultKeepTrying = scriptExecutionKeepTryingAfterTimeout,
     )
-  }
 
   class Statistics {
     private val submittedTestCounter = AtomicInteger()
@@ -214,7 +214,7 @@ class TestScriptExecutorService(
 
   companion object {
     val ALWAYS_TRUE_PRECHECK = { _: Any ->
-      PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMilliseconds = 0)
+      PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMillis = 0)
     }
     val IDENTITY_POST_CHECK = { currentResult: PropertyTestResult, _: Any ->
       currentResult

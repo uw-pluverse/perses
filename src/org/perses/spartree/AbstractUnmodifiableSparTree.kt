@@ -23,7 +23,6 @@ import org.perses.program.TokenizedProgram
  * immutable information provider.
  */
 abstract class AbstractUnmodifiableSparTree {
-
   val tokenCount: Int
     get() = programSnapshot.tokenCount
 
@@ -31,6 +30,8 @@ abstract class AbstractUnmodifiableSparTree {
     get() = programSnapshot.totalCharacterCount
 
   abstract val programSnapshot: TokenizedProgram
+
+  abstract fun hasRealRoot(): Boolean
 
   abstract val realRoot: AbstractSparTreeNode
 

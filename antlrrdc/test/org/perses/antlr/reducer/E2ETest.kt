@@ -30,7 +30,6 @@ import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class E2ETest : AbstractAntlrrdcTest() {
-
   val outputDir = tempDir.resolve("perses_antlr_output")
 
   @After
@@ -91,28 +90,29 @@ class E2ETest : AbstractAntlrrdcTest() {
     val corpusPath = Paths.get("test_data/solidity_programs")
     Files.copy(origParser, parser)
     Files.copy(origLexer, lexer)
-    val flags = listOf(
-      "--parser",
-      parser.toString(),
-      "--lexer",
-      lexer.toString(),
-      "--start",
-      "sourceUnit",
-      "--corpus",
-      corpusPath.toString(),
-      "--file-ext",
-      ".sol",
-      "--enable-action-remover",
-      "false",
-      "--enable-argument-remover",
-      "false",
-      "--enable-local-remover",
-      "false",
-      "--enable-return-remover",
-      "false",
-      "--output-dir",
-      outputDir.toString(),
-    )
+    val flags =
+      listOf(
+        "--parser",
+        parser.toString(),
+        "--lexer",
+        lexer.toString(),
+        "--start",
+        "sourceUnit",
+        "--corpus",
+        corpusPath.toString(),
+        "--file-ext",
+        ".sol",
+        "--enable-action-remover",
+        "false",
+        "--enable-argument-remover",
+        "false",
+        "--enable-local-remover",
+        "false",
+        "--enable-return-remover",
+        "false",
+        "--output-dir",
+        outputDir.toString(),
+      )
     Main.main(flags.toTypedArray())
     val content = outputDir.resolve(parser.fileName)
     assertThat(content).isEmpty()
@@ -125,8 +125,8 @@ class E2ETest : AbstractAntlrrdcTest() {
     return outputFile.readText()
   }
 
-  fun createFlags(parserFile: Path): List<String> {
-    return listOf(
+  fun createFlags(parserFile: Path): List<String> =
+    listOf(
       "--parser",
       parserFile.toString(),
       "--lexer",
@@ -140,5 +140,4 @@ class E2ETest : AbstractAntlrrdcTest() {
       "--output-dir",
       outputDir.toString(),
     )
-  }
 }

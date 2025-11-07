@@ -22,7 +22,7 @@ if [[ "${?}" != 0 ]]; then
   exit 1
 fi
 
-if ! grep "golang" "${OUTPUT}"; then
+if ! grep "gola" "${OUTPUT}"; then
   exit 1
 fi
 

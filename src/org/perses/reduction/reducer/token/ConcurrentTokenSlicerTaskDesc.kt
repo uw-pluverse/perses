@@ -18,12 +18,11 @@ package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
 
-class ConcurrentTokenSlicerTaskDesc<T>(
+class ConcurrentTokenSlicerTaskDesc<T : Any>(
   private val tokens: ImmutableList<T>,
   val startIndex: Int,
   val slicingGranularity: Int,
 ) {
-
   init {
     val size = tokens.size
     require(size > 0)

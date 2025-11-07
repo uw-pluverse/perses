@@ -32,28 +32,31 @@ abstract class AbstractRuleElementReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
 ) : AbstractAntlrReducer(
-  nameAndDesc,
-  ioManager,
-  testScriptExecutorService,
-) {
-
+    nameAndDesc,
+    ioManager,
+    testScriptExecutorService,
+  ) {
   final override fun reduce(state: ListenableReductionState<PersesGrammar>) {
     val program = state.bestEntity
 
     val mutableGrammar = MutableGrammar.createParserRulesFrom(program)
-    val sortedRuleNames = mutableGrammar
-      .ruleNameSequence().sorted().toList()
+    val sortedRuleNames =
+      mutableGrammar
+        .ruleNameSequence()
+        .sorted()
+        .toList()
 
     for (ruleName in sortedRuleNames) {
       logger.ktInfo { "${javaClass.simpleName}: processing rule $ruleName" }
       val old2NewRules = LinkedHashMap<AbstractPersesRuleElement, AbstractPersesRuleElement>()
       for (origDef in mutableGrammar.getAltBlock(ruleName)) {
-        var newDef = reduceRuleDef(
-          origDef,
-          program,
-          mutableGrammar,
-          ruleName,
-        )
+        var newDef =
+          reduceRuleDef(
+            origDef,
+            program,
+            mutableGrammar,
+            ruleName,
+          )
         old2NewRules[origDef] = newDef
       }
       check(old2NewRules.size == mutableGrammar.getAltBlock(ruleName).size())
@@ -83,13 +86,15 @@ abstract class AbstractRuleElementReducer(
     oldDef: AbstractPersesRuleElement,
     newDef: AbstractPersesRuleElement,
   ): Boolean {
-    val copyGrammar = mutableGrammar.duplicateByReplacing(
-      ruleName,
-      oldDef,
-      newDef,
-    )
-    val newPersesGrammar = immutableRuleDefMap
-      .copyWithNewParserRuleDefs(copyGrammar.toParserRuleAstList())
+    val copyGrammar =
+      mutableGrammar.duplicateByReplacing(
+        ruleName,
+        oldDef,
+        newDef,
+      )
+    val newPersesGrammar =
+      immutableRuleDefMap
+        .copyWithNewParserRuleDefs(copyGrammar.toParserRuleAstList())
     return testProgram(newPersesGrammar)
   }
 

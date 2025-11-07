@@ -38,49 +38,58 @@ class SparTreeNodeFactory(
   val tokenizedProgramFactory: TokenizedProgramFactory,
   val grammarHierarchy: GrammarHierarchy,
 ) : AbstractTreeNode.NodeIdCopyStrategy {
-
   private var nodeIdGenerator = 0
 
-  private fun nextNodeId(): Int {
-    return ++nodeIdGenerator
-  }
+  private fun nextNodeId(): Int = ++nodeIdGenerator
 
   override fun computeNodeId(oldNodeId: Int): Int {
     // Ignore the oldNodeId
     return nextNodeId()
   }
 
-  fun createSentinelRootNode(): SparTreeSentinelRootNode {
-    return SparTreeSentinelRootNode(nextNodeId())
-  }
+  fun createSentinelRootNode(): SparTreeSentinelRootNode = SparTreeSentinelRootNode(nextNodeId())
 
-  fun createLexerRuleSparTreeNode(
-    node: TerminalNode,
-  ): LexerRuleSparTreeNode {
+  fun createLexerRuleSparTreeNode(node: TerminalNode): LexerRuleSparTreeNode {
     val antlrToken = node.symbol
-    return createLexerRuleSparTreeNode(antlrToken)
+    return createLexerRuleSparTreeNodeForAntlrToken(antlrToken)
   }
 
-  fun createLexerRuleSparTreeNode(
-    antlrToken: Token,
-  ): LexerRuleSparTreeNode {
-    val persesToken = tokenizedProgramFactory
-      .tokenFactory
-      .createPersesToken(antlrToken)
+  fun createLexerRuleSparTreeNodeForText(text: String): LexerRuleSparTreeNode {
+    val persesToken =
+      tokenizedProgramFactory
+        .tokenFactory
+        .createPlainTextToken(text)
+    return createLexerRuleSparTreeNode(persesToken)
+  }
+
+  fun createLexerRuleSparTreeNodeForAntlrToken(antlrToken: Token): LexerRuleSparTreeNode {
+    val persesToken =
+      tokenizedProgramFactory
+        .tokenFactory
+        .createPersesToken(antlrToken)
     return createLexerRuleSparTreeNode(persesToken)
   }
 
   fun copyWithNewToken(
     originalLexerTreeNode: LexerRuleSparTreeNode,
-    newToken: PersesTokenFactory.PersesToken,
-  ): LexerRuleSparTreeNode {
-    return LexerRuleSparTreeNode(nextNodeId(), newToken, originalLexerTreeNode.antlrRule)
-  }
+    newToken: PersesTokenFactory.PersesAntlrToken,
+  ): LexerRuleSparTreeNode =
+    LexerRuleSparTreeNode(nextNodeId(), newToken, originalLexerTreeNode.antlrRule)
 
   fun createLexerRuleSparTreeNode(
-    persesToken: PersesTokenFactory.PersesToken,
+    persesToken: PersesTokenFactory.AbstractPersesToken,
   ): LexerRuleSparTreeNode {
-    val tokenRuleName = metaTokenInfoDb.getTokenInfoWithType(persesToken.type)?.symbolicName
+    val tokenRuleName =
+      when (persesToken) {
+        is PersesTokenFactory.PersesAntlrToken ->
+          metaTokenInfoDb
+            .getTokenInfoWithType(
+              persesToken.tokenType,
+            )?.symbolicName
+        is PersesTokenFactory.PersesTokenPlaceholder -> null
+        is PersesTokenFactory.PersesPlainText -> null
+        is PersesTokenFactory.InvalidToken -> null
+      }
     val nodeId = nextNodeId()
     return LexerRuleSparTreeNode(
       nodeId,
@@ -89,14 +98,20 @@ class SparTreeNodeFactory(
     )
   }
 
-  fun createParserRuleSparTreeNode(ruleNode: RuleNode, parser: Parser): ParserRuleSparTreeNode {
+  fun createParserRuleSparTreeNode(
+    ruleNode: RuleNode,
+    parser: Parser,
+  ): ParserRuleSparTreeNode {
     val ruleName = getParserRuleName(ruleNode, parser)
     return createParserRuleSparTreeNode(ruleName)
   }
 
-  fun createGroupingSparTreeNodeForTokens(tokens: Iterable<Token>): GroupingSparTreeNode {
-    return createGroupingSparTreeNode(tokens.map { createLexerRuleSparTreeNode(it) })
-  }
+  fun createGroupingSparTreeNodeForTokens(tokens: Iterable<Token>): GroupingSparTreeNode =
+    createGroupingSparTreeNode(
+      tokens.map {
+        createLexerRuleSparTreeNodeForAntlrToken(it)
+      },
+    )
 
   fun createGroupingSparTreeNode(children: Iterable<AbstractSparTreeNode>): GroupingSparTreeNode {
     val result = GroupingSparTreeNode(nextNodeId())
@@ -106,9 +121,10 @@ class SparTreeNodeFactory(
   }
 
   fun createParserRuleSparTreeNode(ruleName: String): ParserRuleSparTreeNode {
-    val antlrRule = grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(
-      ruleName,
-    )
+    val antlrRule =
+      grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(
+        ruleName,
+      )
     val nodeId = nextNodeId()
     return ParserRuleSparTreeNode(
       nodeId,
@@ -133,18 +149,17 @@ class SparTreeNodeFactory(
 
   fun createPlaceholderSparTreeNode(
     ruleElement: AbstractPersesRuleElement,
-  ): PlaceholderSparTreeNode {
-    return PlaceholderSparTreeNode(
+  ): PlaceholderSparTreeNode =
+    PlaceholderSparTreeNode(
       nodeId = nextNodeId(),
       source = ruleElement.sourceCode,
       predicateForCompatibility = extractPredicateFromRuleElement(ruleElement),
     )
-  }
 
   private fun extractPredicateFromRuleElement(
     source: AbstractPersesRuleElement,
-  ): (AbstractSparTreeNode) -> Boolean {
-    return { node: AbstractSparTreeNode ->
+  ): (AbstractSparTreeNode) -> Boolean =
+    { node: AbstractSparTreeNode ->
       when (source) {
         is PersesTerminalAst -> {
           check(source.text == ".") {
@@ -160,7 +175,6 @@ class SparTreeNodeFactory(
         }
       }
     }
-  }
 
   private fun isCompatibleWithTheTokenSetNegation(
     tokenSetNegation: PersesNotAst,
@@ -175,13 +189,15 @@ class SparTreeNodeFactory(
 
   private fun extractTokenRulesFromTokenSetNegation(
     tokenSetNegation: AbstractPersesRuleElement,
-  ): ImmutableList<RuleHierarchyEntry> {
-    return tokenSetNegation.getChild(0).childSequence().map { tokenSource ->
-      check(tokenSource.tag == AstTag.TERMINAL) {
-        "Unexpected token set negation source: $tokenSource"
-      }
-      val tokenName = (tokenSource as PersesTerminalAst).text
-      grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(tokenName)
-    }.toImmutableList()
-  }
+  ): ImmutableList<RuleHierarchyEntry> =
+    tokenSetNegation
+      .getChild(0)
+      .childSequence()
+      .map { tokenSource ->
+        check(tokenSource.tag == AstTag.TERMINAL) {
+          "Unexpected token set negation source: $tokenSource"
+        }
+        val tokenName = (tokenSource as PersesTerminalAst).text
+        grammarHierarchy.getRuleHierarchyEntryWithNameOrThrow(tokenName)
+      }.toImmutableList()
 }

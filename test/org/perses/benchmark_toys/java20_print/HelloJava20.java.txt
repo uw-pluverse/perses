@@ -2,7 +2,7 @@ public sealed class HelloJava20 {
   public static void main(String[] args) {
     var message = "hello";
     System.out.println(message);
-    message = "world";
+    message = "!!world";
     System.out.println(message);
   }
 }

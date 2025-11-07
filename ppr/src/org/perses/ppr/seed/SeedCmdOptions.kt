@@ -17,20 +17,28 @@
 package org.perses.ppr.seed
 
 import com.beust.jcommander.Parameter
-import org.perses.CommandOptions
 import org.perses.cmd.InputFlagGroup
+import org.perses.ppr.AbstractPPRCommandOptions
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class SeedCmdOptions : CommandOptions() {
-
+class SeedCmdOptions : AbstractPPRCommandOptions() {
   override fun createInputFlags() = SeedInputFlagGroup()
 
   val seedInputFlags = inputFlags as SeedInputFlagGroup
 
-  class SeedInputFlagGroup : InputFlagGroup() {
+  override fun validateExtra() {
+    super.validateExtra()
+    check(!trecFlags.enableTRec) {
+      "The token reducer is not compatible with PPR."
+    }
+    check(!latraFlags.enableLatra) {
+      "The latra reducer is not compatible with PPR."
+    }
+  }
 
+  class SeedInputFlagGroup : InputFlagGroup() {
     @JvmField
     @Parameter(
       names = ["--variant-file", "--variant"],

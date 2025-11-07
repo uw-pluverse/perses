@@ -17,7 +17,10 @@
 package org.perses.util
 
 class DoubleLinkedList<T> {
-  class Node<T>(val value: T?, internal var list: DoubleLinkedList<T>?) {
+  class Node<T>(
+    val value: T?,
+    internal var list: DoubleLinkedList<T>?,
+  ) {
     internal var prev: Node<T>? = null
     internal var next: Node<T>? = null
   }

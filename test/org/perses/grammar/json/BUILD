@@ -12,6 +12,5 @@ kt_jvm_test(
         "//src/org/perses/antlr:util",
         "//src/org/perses/grammar/json:parser_facade",
         "//test/org/perses:test_util",
-        "//test/org/perses/program:LanguageKindTestUtil",
     ],
 )

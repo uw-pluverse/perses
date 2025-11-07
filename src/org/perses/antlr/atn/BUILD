@@ -16,7 +16,7 @@ antlr_codegen_lexer(
 )
 
 kt_jvm_library(
-    name = "atn",
+    name = "lexer_wrapper",
     srcs = [
         "ATNSimulator.kt",
         "LexerAtnWrapper.kt",
@@ -27,11 +27,13 @@ kt_jvm_library(
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:guava",
-        "//src/org/perses/antlr:meta_token_info_db",
         "//src/org/perses/antlr:util",
         "//src/org/perses/antlr/atn/nfa",
         "//src/org/perses/antlr/atn/simulator/state",
         "//src/org/perses/antlr/atn/simulator/transition",
+        "//src/org/perses/antlr/atn/tdtree",
+        "//src/org/perses/program",
+        "//src/org/perses/spartree",
         "//src/org/perses/util",
     ],
 )
@@ -43,7 +45,6 @@ kt_jvm_library(
     ],
     deps = [
         "//:antlr_runtime",
-        "//:antlr_tool",
         "//:guava",
     ],
 )
@@ -55,7 +56,6 @@ kt_jvm_library(
     ],
     deps = [
         "//:antlr_runtime",
-        "//:antlr_tool",
         "//src/org/perses/antlr/atn/simulator/transition:printable_characters",
         "//src/org/perses/util:simple_stack_and_queue",
     ],

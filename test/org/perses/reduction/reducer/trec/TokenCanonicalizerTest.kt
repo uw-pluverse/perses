@@ -17,12 +17,47 @@
 package org.perses.reduction.reducer.trec
 
 import com.google.common.truth.Truth.assertThat
+import org.antlr.v4.runtime.CommonToken
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.reduction.ReducerFunctionalTestUtility
 
 @RunWith(JUnit4::class)
 class TokenCanonicalizerTest {
+  @Test
+  fun testBuildTDTree() {
+    ReducerFunctionalTestUtility(
+      reductionFolder = "test/org/perses/benchmark_toys/wasm/",
+      testScript = "r.sh",
+      sourceFile = "t.wat",
+      reducerAnnotation = TokenCanonicalizer.META,
+    ).use {
+      val driver = it.reductionDriver
+      val reducer =
+        driver
+          .createMainReducerCreator()
+          .create(it.reducerContext)
+          .single() as TokenCanonicalizer
+      assertThat(reducer.reducerAnnotation).isSameInstanceAs(TokenCanonicalizer.META)
+      val floatToken =
+        it.reducerContext.configuration.parserFacade.transformLiteralIntoSingleToken(
+          "0.9",
+        )
+      val intToken =
+        it.reducerContext.configuration.parserFacade.transformLiteralIntoSingleToken(
+          "0",
+        )
+      assertThat(floatToken.type).isNotEqualTo(intToken.type)
+      val tdTree =
+        reducer.buildTDTree(
+          it.sparTree.sparTreeNodeFactory.createLexerRuleSparTreeNodeForAntlrToken(
+            CommonToken(floatToken.type, intToken.text),
+          ),
+        )
+      assertThat(tdTree.toLexeme()).isEqualTo(intToken.text)
+    }
+  }
 
   @Test
   fun testConversionBetweenIndexAndId0() {

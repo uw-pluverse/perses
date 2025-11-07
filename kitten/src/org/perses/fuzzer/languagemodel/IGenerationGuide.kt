@@ -23,6 +23,7 @@ import java.util.Random
 
 interface IGenerationGuide {
   val contextSizeLimit: Int
+
   fun getValueWithLowestProbability(
     rule: RuleNameHandle,
     context: GenerationContext,
@@ -35,6 +36,7 @@ interface IGenerationGuide {
   ) {
     val content = HashMap<ParserRuleSparTreeNode, MutableNodeRepresentationList>()
     private var ancestorNodesForCurrentNode = ImmutableList.of<ParserRuleSparTreeNode>()
+
     fun getAncestorNodesForCurrentNode(): ImmutableList<ParserRuleSparTreeNode> =
       ancestorNodesForCurrentNode
 
@@ -42,14 +44,17 @@ interface IGenerationGuide {
       node: ParserRuleSparTreeNode,
       featureValue: Int,
     ) {
-      val representation = NodeRepresentation.create(
-        node.antlrRule!!.ruleDef.ruleNameHandle.id,
-        featureValue,
-      )
+      val representation =
+        NodeRepresentation.create(
+          node.antlrRule!!
+            .ruleDef.ruleNameHandle.id,
+          featureValue,
+        )
       assert(content[node] == null)
-      content[node] = MutableNodeRepresentationList.create(sizeLimit).apply {
-        add(representation)
-      }
+      content[node] =
+        MutableNodeRepresentationList.create(sizeLimit).apply {
+          add(representation)
+        }
       ancestorNodesForCurrentNode.iterator().forEach {
         val entry = content[it] ?: return@forEach
         if (entry.size == sizeLimit) {
@@ -65,9 +70,7 @@ interface IGenerationGuide {
       }
     }
 
-    fun setAncestorsForGuidance(
-      node: ParserRuleSparTreeNode,
-    ) {
+    fun setAncestorsForGuidance(node: ParserRuleSparTreeNode) {
       val builder = ImmutableList.builder<ParserRuleSparTreeNode>()
       var ancestor = node.parent
       while (ancestor != null) {

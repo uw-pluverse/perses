@@ -23,7 +23,6 @@ import org.perses.reduction.event.NodeEditActionSetCacheHitEvent
 
 @RunWith(JUnit4::class)
 class ClassNotFoundTestCase {
-
   @Test
   fun test() {
     // Cannot reproduce this issue: https://github.com/chengniansun/perses-private/issues/239

@@ -22,7 +22,6 @@ data class Indent private constructor(
   val numOfIndents: Int,
   private val numOfSpacesPerIndent: Int,
 ) {
-
   init {
     require(numOfIndents >= 0)
     require(numOfSpacesPerIndent >= 0)

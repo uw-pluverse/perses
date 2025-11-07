@@ -18,14 +18,9 @@ package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
-import org.perses.listminimizer.AbstractListInputMinimizer
-import org.perses.listminimizer.AbstractListInputMinimizer.Arguments
-import org.perses.listminimizer.EnumListInputMinimizerType
-import org.perses.listminimizer.ListInputMinimizerFactory
+import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.SparTreeDdminPayload
-import org.perses.reduction.reducer.PersesNodeReducer.IDeltaDebuggerStrategy.SelectableDeltaDebuggerStrategy
 import org.perses.reduction.reducer.TreeTransformations.findCompatibleDescendants
 import org.perses.reduction.reducer.TreeTransformations.findCompatibleKleeneDescendantsForKleeneQuantifiedNode
 import org.perses.spartree.AbstractSparTreeEdit
@@ -37,55 +32,59 @@ import org.perses.spartree.NodeReplacementActionSet
 import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.util.Util.lazyAssert
+import org.perses.util.ktFine
 import org.perses.util.toImmutableList
-import java.util.concurrent.Future
 
 /** Perses reducer. The granularity is parse tree nodes, but not level-based.  */
 open class PersesNodeReducer(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
   reductionQueueStrategy: IReductionQueueStrategy,
-  private val deltaDebuggerStrategy: IDeltaDebuggerStrategy = SelectableDeltaDebuggerStrategy {
-    reducerContext.configuration.defaultDeltaDebuggerTypeForKleene
-  },
 ) : AbstractNodeReducer(
-  reducerAnnotation,
-  reducerContext,
-  reductionQueueStrategy,
-  requiresParsableTree = true,
-) {
-
+    reducerAnnotation = reducerAnnotation,
+    reducerContext = reducerContext,
+    reductionQueueStrategy = reductionQueueStrategy,
+    requiresParsableTree = true,
+  ) {
   protected val nodeReducerConfiguation =
     reducerContext.configuration.persesNodeReducerConfig
 
   override fun reduceOneNode(
     tree: SparTree,
     node: AbstractSparTreeNode,
-  ): ImmutableList<AbstractSparTreeNode> {
-    return when (node) {
+    fixpointReductionState: FixpointReductionState,
+  ): ImmutableList<AbstractSparTreeNode> =
+    when (node) {
       is LexerRuleSparTreeNode -> ImmutableList.of()
-      is ParserRuleSparTreeNode -> when (node.ruleType) {
-        RuleType.KLEENE_PLUS -> reduceKleenePlus(tree, node)
-        RuleType.KLEENE_STAR, RuleType.OPTIONAL -> reduceKleeneStar(tree, node)
-        RuleType.ALT_BLOCKS, RuleType.OTHER_RULE -> reduceRegularRule(tree, node)
-        else -> error("unhandled type: ${node.ruleType}")
-      }
+      is ParserRuleSparTreeNode ->
+        when (node.ruleType) {
+          RuleType.KLEENE_PLUS -> reduceKleenePlus(tree, node, fixpointReductionState)
+          RuleType.KLEENE_STAR, RuleType.OPTIONAL ->
+            reduceKleeneStar(
+              tree,
+              node,
+              fixpointReductionState,
+            )
+          RuleType.ALT_BLOCKS, RuleType.OTHER_RULE -> reduceRegularRule(tree, node)
+          else -> error("unhandled type: ${node.ruleType}")
+        }
+
       else -> error("unhandled type: ${node::class}")
     }
-  }
 
   private fun reduceRegularRule(
     tree: SparTree,
     regularRuleNode: AbstractSparTreeNode,
   ): ImmutableList<AbstractSparTreeNode> {
     // TODO(cnsun): make testAllTreeEditsAndReturnTheBest take a list of futures.
-    val editList = createEditListForRegularRuleNode(tree, regularRuleNode)
-      .asSequence()
-      .map { it.get() }
-      .filterNotNull()
-      .toList()
-    val best = testAllTreeEditsAndReturnTheBest(editList)
-      ?: return ImmutableList.copyOf(regularRuleNode.immutableChildView)
+    logger.ktFine {
+      "The node has ${regularRuleNode.leafTokenCount} tokens under."
+    }
+    val editList =
+      createEditListForRegularRuleNode(tree, regularRuleNode).toList()
+    val best =
+      testAllTreeEditsAndReturnTheBest(editList)
+        ?: return ImmutableList.copyOf(regularRuleNode.immutableChildView)
     val edit = best.edit
     tree.applyEdit(edit)
     return computePendingNodes(regularRuleNode, edit)
@@ -94,7 +93,7 @@ open class PersesNodeReducer(
   private fun createEditListForRegularRuleNode(
     tree: SparTree,
     regularRuleNode: AbstractSparTreeNode,
-  ): List<Future<AbstractSparTreeEdit<*>?>> {
+  ): List<AbstractSparTreeEdit<*>> {
     lazyAssert({ regularRuleNode.antlrRule!!.ruleDef.isParserRule }) {
       regularRuleNode.antlrRule!!.ruleDef
     }
@@ -103,38 +102,46 @@ open class PersesNodeReducer(
       return emptyList()
     }
     val maxEditCount = nodeReducerConfiguation.maxEditCountForRegularRuleNode
-    val editList = ArrayList<Future<AbstractSparTreeEdit<*>?>>(maxEditCount)
+    val result = java.util.ArrayList<AbstractSparTreeEdit<*>>(maxEditCount)
     if (canBeEpsilon(regularRuleNode)) {
-      editList.add(
-        asyncCreateTreeEdit {
-          optionallyCreateDeletionEditAndLog(
-            NodeDeletionActionSet.createByDeleteSingleNode(
-              regularRuleNode,
-              "[regular_node]can be epsilon",
-            ),
-            tree,
-          )
-        },
-      )
+      // This should be the best edit that can delete the most tokens.
+      val edit =
+        optionallyCreateDeletionEditAndLog(
+          NodeDeletionActionSet.createByDeleteSingleNode(
+            regularRuleNode,
+            "[regular_node]can be epsilon",
+          ),
+          tree,
+        )
+      if (edit != null) {
+        result.add(edit)
+        if (result.size >= maxEditCount) {
+          return result
+        }
+      }
     }
     val actionSetProfiler = reducerContext.actionSetProfiler
     findCompatibleKleeneDescendantsForKleeneQuantifiedNode(
       kleeneQuantifiedCurrentNode = regularRuleNode,
       maxBfsDepth = 3,
     ).forEach { replacement ->
-      val action = NodeReplacementAction(targetNode = regularRuleNode, replacingNode = replacement)
+      val action =
+        NodeReplacementAction(targetNode = regularRuleNode, replacingNode = replacement)
       actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(action)
-      editList.add(
-        asyncCreateTreeEdit {
-          optionallyCreateReplacementEditAndLog(
-            NodeReplacementActionSet.createByReplacingSingleNode(
-              action,
-              "[regular_node]kleene replacement",
-            ),
-            tree,
-          )
-        },
-      )
+      val edit =
+        optionallyCreateReplacementEditAndLog(
+          NodeReplacementActionSet.createByReplacingSingleNode(
+            action,
+            "[regular_node]kleene replacement",
+          ),
+          tree,
+        )
+      if (edit != null) {
+        result.add(edit)
+        if (result.size >= maxEditCount) {
+          return result
+        }
+      }
     }
     findCompatibleDescendants(
       currentNode = regularRuleNode,
@@ -143,46 +150,40 @@ open class PersesNodeReducer(
     ).forEach {
       val action = NodeReplacementAction(targetNode = regularRuleNode, replacingNode = it)
       actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(action)
-      editList.add(
-        asyncCreateTreeEdit {
-          optionallyCreateReplacementEditAndLog(
-            NodeReplacementActionSet.createByReplacingSingleNode(
-              action,
-              "[regular node]compatible replacement",
-            ),
-            tree,
-          )
-        },
-      )
+      val edit =
+        optionallyCreateReplacementEditAndLog(
+          NodeReplacementActionSet.createByReplacingSingleNode(
+            action,
+            "[regular node]compatible replacement",
+          ),
+          tree,
+        )
+      if (edit != null) {
+        result.add(edit)
+        if (result.size >= maxEditCount) {
+          return result
+        }
+      }
     }
-    return editList
-  }
 
-  private inline fun asyncCreateTreeEdit(
-    crossinline creator: () -> AbstractSparTreeEdit<*>?,
-  ): Future<AbstractSparTreeEdit<*>?> {
-    return executorService.submitGenericTask {
-      val result = creator()
-      result?.program // early compute the program.
-      result
-    }
+    return result
   }
 
   /** Perform delta debugging.  */
   private fun reduceKleeneStar(
     tree: SparTree,
     kleeneStar: AbstractSparTreeNode,
+    fixpointReductionState: FixpointReductionState,
   ): ImmutableList<AbstractSparTreeNode> {
     val childCount = kleeneStar.childCount
     if (childCount == 0) {
       return ImmutableList.of()
     }
-    // FIXME: the best program is not saved.
-    performDelta(
-      needToTestEmpty = true,
-      tree,
-      "[kleene_star:${kleeneStar.ruleName}]",
-      kleeneStar.immutableChildView.toImmutableList(),
+    runListMinimizerOverNodes(
+      tree = tree,
+      fixpointReductionState = fixpointReductionState,
+      input = kleeneStar.immutableChildView.toImmutableList(),
+      actionsDescriptionPostfix = "[kleene_star:${kleeneStar.ruleName}]",
     )
     return if (kleeneStar.isPermanentlyDeleted) {
       ImmutableList.of()
@@ -191,26 +192,10 @@ open class PersesNodeReducer(
     }
   }
 
-  private fun performDelta(
-    needToTestEmpty: Boolean,
-    tree: SparTree,
-    actionsDescription: String,
-    nodes: ImmutableList<AbstractSparTreeNode>,
-  ) {
-    require(nodes.isNotEmpty())
-    val arguments = createDeltaArguments(
-      needToTestEmpty,
-      tree,
-      actionsDescription,
-      nodes,
-    )
-    val deltaDebugger = deltaDebuggerStrategy.createDeltaDebugger(arguments)
-    deltaDebugger.reduce()
-  }
-
   private fun reduceKleenePlus(
     tree: SparTree,
     kleenePlus: AbstractSparTreeNode,
+    fixpointReductionState: FixpointReductionState,
   ): ImmutableList<AbstractSparTreeNode> {
     val childCount = kleenePlus.childCount
     if (childCount == 0) {
@@ -231,9 +216,11 @@ open class PersesNodeReducer(
       // Skip the first element
       val wholePartition = kleenePlus.immutableChildView.drop(1).toImmutableList()
       optionallyCreateDeletionEditAndLog(
-        NodeDeletionActionSet.Builder(
-          "${kleeneActionSetPrefix}remove whole except first",
-        ).deleteNodes(wholePartition).build(),
+        NodeDeletionActionSet
+          .Builder(
+            "${kleeneActionSetPrefix}remove whole except first",
+          ).deleteNodes(wholePartition)
+          .build(),
         tree,
       )?.let { editList.add(it) }
     }
@@ -243,38 +230,14 @@ open class PersesNodeReducer(
       return computePendingNodes(kleenePlus, best.edit)
     }
     if (childCount > 1) {
-      performDelta(
-        needToTestEmpty = false, // Cannot delete all elements at once as this is kleene-plus.
-        tree,
-        kleeneActionSetPrefix,
-        kleenePlus.immutableChildView.toImmutableList(),
+      runListMinimizerOverNodes(
+        // Cannot delete all elements at once as this is kleene-plus.
+        tree = tree,
+        fixpointReductionState = fixpointReductionState,
+        input = kleenePlus.immutableChildView.toImmutableList(),
+        actionsDescriptionPostfix = kleeneActionSetPrefix,
       )
     }
     return ImmutableList.copyOf(kleenePlus.immutableChildView)
-  }
-  fun interface IDeltaDebuggerStrategy {
-    fun createDeltaDebugger(
-      args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
-    ): AbstractListInputMinimizer<AbstractSparTreeNode, SparTreeDdminPayload>
-
-    class SelectableDeltaDebuggerStrategy(
-      val typeProvider: () -> EnumListInputMinimizerType,
-    ) : IDeltaDebuggerStrategy {
-      override fun createDeltaDebugger(
-        args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
-      ): AbstractListInputMinimizer<AbstractSparTreeNode, SparTreeDdminPayload> {
-        return ListInputMinimizerFactory.create(typeProvider.invoke(), args)
-      }
-    }
-
-    class SimpleDeltaDebuggerStrategy(
-      val type: EnumListInputMinimizerType,
-    ) : IDeltaDebuggerStrategy {
-      override fun createDeltaDebugger(
-        args: Arguments<AbstractSparTreeNode, SparTreeDdminPayload>,
-      ): AbstractListInputMinimizer<AbstractSparTreeNode, SparTreeDdminPayload> {
-        return ListInputMinimizerFactory.create(type, args)
-      }
-    }
   }
 }

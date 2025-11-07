@@ -22,8 +22,9 @@ import org.perses.util.cmd.AbstractCommandLineFlagGroup
 class VulcanFlagGroup : AbstractCommandLineFlagGroup(groupName = "Vulcan Reducer Control") {
   @Parameter(
     names = ["--enable-vulcan"],
-    description = "Enable vulcan (using auxiliary reducers to help produce " +
-      "smaller reduction output).",
+    description =
+      "Enable vulcan (using auxiliary reducers to help produce " +
+        "smaller reduction output).",
     arity = 1,
     order = 0,
   )
@@ -45,8 +46,9 @@ class VulcanFlagGroup : AbstractCommandLineFlagGroup(groupName = "Vulcan Reducer
 
   @Parameter(
     names = ["--vulcan-fixpoint"],
-    description = "Enable vulcan fixpoint iteratively using auxiliary reducers until no " +
-      "progress can be made",
+    description =
+      "Enable vulcan fixpoint iteratively using auxiliary reducers until no " +
+        "progress can be made",
     arity = 1,
     order = 3,
   )

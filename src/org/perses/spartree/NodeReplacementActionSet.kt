@@ -24,17 +24,17 @@ class NodeReplacementActionSet private constructor(
   childHoistingActions: ImmutableList<NodeReplacementAction>,
   actionsDescription: String,
 ) : AbstractActionSet<NodeReplacementAction>(
-  childHoistingActions,
-  actionsDescription,
-  canBeSorted = true,
-) {
-
+    childHoistingActions,
+    actionsDescription,
+    canBeSorted = true,
+  ) {
   init {
     require(childHoistingActions.isNotEmpty())
   }
 
-  class Builder(private val actionsDescription: String) {
-
+  class Builder(
+    private val actionsDescription: String,
+  ) {
     private val node2ReplacementMap = LinkedHashMap<AbstractSparTreeNode, AbstractSparTreeNode>()
 
     fun replaceNode(
@@ -44,8 +44,8 @@ class NodeReplacementActionSet private constructor(
       check(node2ReplacementMap.put(targetNode, replacement) == null)
     }
 
-    fun build(): NodeReplacementActionSet {
-      return NodeReplacementActionSet(
+    fun build(): NodeReplacementActionSet =
+      NodeReplacementActionSet(
         node2ReplacementMap.entries
           .asSequence()
           .map { (key, value) -> NodeReplacementAction(key, value) }
@@ -53,35 +53,32 @@ class NodeReplacementActionSet private constructor(
           .toImmutableList(),
         actionsDescription,
       )
-    }
   }
 
-  override fun toString(): String {
-    return MoreObjects.toStringHelper(this)
+  override fun toString(): String =
+    MoreObjects
+      .toStringHelper(this)
       .add("desc", actionsDescription)
-      .add("actions", actions).toString()
-  }
+      .add("actions", actions)
+      .toString()
 
   companion object {
-
     @JvmStatic
     fun createByReplacingSingleNode(
       targetNode: AbstractSparTreeNode,
       replacingNode: AbstractSparTreeNode,
       actionsDescription: String,
-    ): NodeReplacementActionSet {
-      return createByReplacingSingleNode(
+    ): NodeReplacementActionSet =
+      createByReplacingSingleNode(
         NodeReplacementAction(targetNode, replacingNode),
         actionsDescription,
       )
-    }
 
     @JvmStatic
     fun createByReplacingSingleNode(
       action: NodeReplacementAction,
       actionsDescription: String,
-    ): NodeReplacementActionSet {
-      return NodeReplacementActionSet(ImmutableList.of(action), actionsDescription)
-    }
+    ): NodeReplacementActionSet =
+      NodeReplacementActionSet(ImmutableList.of(action), actionsDescription)
   }
 }

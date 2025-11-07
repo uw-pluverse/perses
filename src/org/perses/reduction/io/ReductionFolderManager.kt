@@ -26,17 +26,24 @@ class ReductionFolderManager internal constructor(
   private val reductionInputs: AbstractReductionInputs<*, *>,
   val rootFolder: Path,
 ) {
-  private val sequenceGenerator = Util.AtomicSequenceGenerator(
-    start = 0,
-    minLengthForPadding = FOLDER_NAME_MIN_LENGTH,
-  )
+  private val sequenceGenerator =
+    Util.AtomicSequenceGenerator(
+      start = 0,
+      minLengthForPadding = FOLDER_NAME_MIN_LENGTH,
+    )
 
-  fun createNextFolder(prefix: String = "", postfix: String = ""): ReductionFolder {
+  fun createNextFolder(
+    prefix: String = "",
+    postfix: String = "",
+  ): ReductionFolder {
     val folderName = prefix + sequenceGenerator.next() + postfix
     return ReductionFolder(reductionInputs, createDirectory(folderName))
   }
 
-  fun createTempDirectory(prefix: String = "", postfix: String = ""): Path {
+  fun createTempDirectory(
+    prefix: String = "",
+    postfix: String = "",
+  ): Path {
     val directoryName = prefix + sequenceGenerator.next() + postfix
     return createDirectory(directoryName).also { directory ->
       check(Files.isDirectory(directory)) { directory }

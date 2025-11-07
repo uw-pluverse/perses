@@ -17,12 +17,10 @@
 package org.perses.antlr.ast
 
 abstract class AbstractPersesTerminalAst protected constructor() : AbstractPersesRuleElement() {
-
   final override val childCount: Int
     get() = 0
 
   @Deprecated("")
-  final override fun getChild(index: Int): AbstractPersesRuleElement {
+  final override fun getChild(index: Int): AbstractPersesRuleElement =
     throw UnsupportedOperationException()
-  }
 }

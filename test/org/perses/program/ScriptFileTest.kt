@@ -80,9 +80,7 @@ class ScriptFileTest {
     Truth.assertThat(readShebang()).isEqualTo("/usr/bin/env bash")
   }
 
-  private fun readShebang(): String {
-    return ScriptFile(tempFile).shebang
-  }
+  private fun readShebang(): String = ScriptFile(tempFile).shebang
 
   private fun write(string: String) {
     try {

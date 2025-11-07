@@ -33,36 +33,37 @@ class LargeLanguageModel(
   llmClientScript: Path,
   private val tempDirectoryCreator: () -> AutoDeletableFolder,
 ) {
-
   private val llmClientScript = llmClientScript.toAbsolutePath()
 
-  fun callLLMScript(
-    message: String,
-  ): LLMScriptResult {
+  fun callLLMScript(message: String): LLMScriptResult {
     tempDirectoryCreator().use {
       val tempDir = it.file
       val argumentFile = tempDir.resolve("arguments.json")
       val outputFile = tempDir.resolve("output_file.txt")
-      val arguments = mapOf(
-        "message" to message,
-        "output_file" to outputFile.toAbsolutePath().toString(),
-      )
+      val arguments =
+        mapOf(
+          "message" to message,
+          "output_file" to outputFile.toAbsolutePath().toString(),
+        )
 
       Serialization.toJsonFile(arguments, argumentFile)
-      val cmd = "${llmClientScript.toAbsolutePath()} " +
-        "--input-file \"${argumentFile.toAbsolutePath()}\" " +
-        "--output-file \"${outputFile.toAbsolutePath()}\""
-      val cmdOutput = Shells.singleton.run(
-        cmd,
-        captureOutput = true,
-        environment = Shells.CURRENT_ENV,
-      )
+      val cmd =
+        "${llmClientScript.toAbsolutePath()} " +
+          "--input-file \"${argumentFile.toAbsolutePath()}\" " +
+          "--output-file \"${outputFile.toAbsolutePath()}\""
+      val cmdOutput =
+        Shells.singleton.run(
+          cmd,
+          captureOutput = true,
+          environment = Shells.CURRENT_ENV,
+        )
       return LLMScriptResult(
         cmdOutput = cmdOutput,
-        llmOutput = Serialization.fromJsonFile(
-          outputFile,
-          Serialization.TYPE_REFERENCE_LIST_OF_STRINGS,
-        ),
+        llmOutput =
+          Serialization.fromJsonFile(
+            outputFile,
+            Serialization.TYPE_REFERENCE_LIST_OF_STRINGS,
+          ),
       )
     }
   }
@@ -112,24 +113,24 @@ class LargeLanguageModel(
     promptSystem: String,
     promptToGenerateProgram: String,
     followupQuestion: String,
-  ): List<String> {
-    return promptLLM(
+  ): List<String> =
+    promptLLM(
       program,
       promptSystem,
       promptToGenerateProgram,
       followupQuestion,
     ) { responses ->
-      responses.llmOutput.mapNotNull { response ->
-        val codeBlock = extractLastFencedCodeBlockFromDocstring(response)
-        if (codeBlock == null) {
-          logger.ktWarning {
-            "No code block is extracted from $response"
+      responses.llmOutput
+        .mapNotNull { response ->
+          val codeBlock = extractLastFencedCodeBlockFromDocstring(response)
+          if (codeBlock == null) {
+            logger.ktWarning {
+              "No code block is extracted from $response"
+            }
           }
-        }
-        codeBlock
-      }.toImmutableList()
+          codeBlock
+        }.toImmutableList()
     }
-  }
 
   data class LLMScriptResult(
     val cmdOutput: CmdOutput,
@@ -137,7 +138,6 @@ class LargeLanguageModel(
   )
 
   companion object {
-
     internal val logger = FluentLogger.forEnclosingClass()
 
     /**

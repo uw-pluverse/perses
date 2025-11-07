@@ -37,10 +37,16 @@ class SlicingTaskConcurrentExecutor<TASK : AbstractSlicingTask>(
     val visitedCacheKeys = HashSet<AbstractProgramEncoding<*>>()
     while (true) {
       val next = nextTask(visitedCacheKeys) ?: return
-      val bestFound = next.waitAndApplyEditIfSuccess()
-      if (bestFound) {
+      val bestEdit = next.waitToGetTheBestEditIfSuccess()
+      if (bestEdit != null) {
         cancelTasks()
         visitedCacheKeys.clear()
+        // We need to apply the edit after all tasks are canceled. Otherwise, if we apply the edit
+        // first, some elements might be marked as deleted while other tasks are trying to delete
+        // these elements at the same time.
+        bestEdit.edit.let { edit ->
+          edit.tree.applyEdit(treeEdit = edit)
+        }
       }
       populateTasks(visitedCacheKeys)
     }
@@ -58,9 +64,7 @@ class SlicingTaskConcurrentExecutor<TASK : AbstractSlicingTask>(
     return result
   }
 
-  private fun populateTasks(
-    visitedCacheKeys: HashSet<AbstractProgramEncoding<*>>,
-  ) {
+  private fun populateTasks(visitedCacheKeys: HashSet<AbstractProgramEncoding<*>>) {
     while (workingDeque.size < workingDequeExpectedSize && pendingDeque.isNotEmpty()) {
       val newTask = pendingDeque.removeFirst()
       when (newTask.tryAsyncRun(visitedCacheKeys)) {

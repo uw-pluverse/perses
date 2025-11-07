@@ -26,7 +26,6 @@ class ParserRuleSparTreeNode internal constructor(
   nodeId: Int,
   antlrRule: RuleHierarchyEntry,
 ) : AbstractInternalSparTreeNode(nodeId, antlrRule) {
-
   val ruleType = AstUtil.computeNodeType(antlrRule.ruleDef)
 
   init {
@@ -36,30 +35,29 @@ class ParserRuleSparTreeNode internal constructor(
   fun getKleeneElementRuleTypeOrThrow(): RuleHierarchyEntry {
     lazyAssert({ isKleenePlusRuleNode || isKleeneStarRuleNode }) { this }
     lazyAssert({ childCount > 0 }) { this }
-    val elementTypeCandidates = children
-      .asSequence()
-      .mapNotNull { it.payload!!.expectedAntlrRuleType }
-      .distinct()
-      .toList()
+    val elementTypeCandidates =
+      children
+        .asSequence()
+        .mapNotNull { it.payload!!.expectedAntlrRuleType }
+        .distinct()
+        .toList()
     lazyAssert({ elementTypeCandidates.size == 1 }) { elementTypeCandidates }
     return elementTypeCandidates.single()
   }
 
   override val labelPrefix: String
-    get() = when (ruleType) {
-      RuleType.KLEENE_PLUS -> "(+)"
-      RuleType.KLEENE_STAR -> "(*)"
-      RuleType.OPTIONAL -> "(?)"
-      RuleType.ALT_BLOCKS -> "(|:$ruleName)"
-      RuleType.OTHER_RULE -> ruleName
-      else -> error("Cannot reach here. $this")
-    }
+    get() =
+      when (ruleType) {
+        RuleType.KLEENE_PLUS -> "(+)"
+        RuleType.KLEENE_STAR -> "(*)"
+        RuleType.OPTIONAL -> "(?)"
+        RuleType.ALT_BLOCKS -> "(|:$ruleName)"
+        RuleType.OTHER_RULE -> ruleName ?: "<N.A.>"
+        else -> error("Cannot reach here. $this")
+      }
 
-  override fun asParserRule(): ParserRuleSparTreeNode {
-    return this
-  }
+  override fun asParserRule(): ParserRuleSparTreeNode = this
 
-  override fun internalCopyCurrentNode(computedNewNodeId: Int): ParserRuleSparTreeNode {
-    return ParserRuleSparTreeNode(computedNewNodeId, antlrRule!!)
-  }
+  override fun internalCopyCurrentNode(computedNewNodeId: Int): ParserRuleSparTreeNode =
+    ParserRuleSparTreeNode(computedNewNodeId, antlrRule!!)
 }

@@ -18,6 +18,7 @@ package org.perses.grammar.adhoc
 
 import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.antlr.ast.PersesGrammar
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Path
 import kotlin.io.path.readText
 
@@ -25,14 +26,17 @@ class OrigGrammar private constructor(
   val origGrammarFile: Path,
   val persesGrammar: PersesGrammar,
 ) {
-
-  val hash = AdhocGrammarUtil.computeHash(origGrammarFile)
+  val hash =
+    AdhocGrammarUtil.computeHash(
+      origGrammarFile,
+      shaAlgorithmType = EnumShaAlgorithm.SHA512,
+    )
 
   companion object {
-
-    fun create(origGrammarFile: Path) = OrigGrammar(
-      origGrammarFile = origGrammarFile,
-      persesGrammar = PersesAstBuilder.loadGrammarFromString(origGrammarFile.readText()),
-    )
+    fun create(origGrammarFile: Path) =
+      OrigGrammar(
+        origGrammarFile = origGrammarFile,
+        persesGrammar = PersesAstBuilder.loadGrammarFromString(origGrammarFile.readText()),
+      )
   }
 }

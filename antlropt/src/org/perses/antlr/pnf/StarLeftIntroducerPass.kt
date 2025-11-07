@@ -24,7 +24,6 @@ import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 class StarLeftIntroducerPass : AbstractStarIntroducerPass() {
-
   override fun classifyAndExtractPartsFromSequenceDef(
     ruleName: RuleNameHandle,
     sequenceDef: PersesSequenceAst,
@@ -45,7 +44,5 @@ class StarLeftIntroducerPass : AbstractStarIntroducerPass() {
   override fun constructNewSequenceDef(
     nonRecursiveDef: AbstractPersesRuleElement,
     starRuleRef: PersesRuleReferenceAst,
-  ): ImmutableList<AbstractPersesRuleElement> {
-    return ImmutableList.of(nonRecursiveDef, starRuleRef)
-  }
+  ): ImmutableList<AbstractPersesRuleElement> = ImmutableList.of(nonRecursiveDef, starRuleRef)
 }

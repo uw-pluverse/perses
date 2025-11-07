@@ -20,7 +20,6 @@ import com.beust.jcommander.Parameter
 import org.perses.util.DefaultLoggingConfigurations
 
 class VerbosityFlagGroup : AbstractCommandLineFlagGroup(groupName = "Verbosity") {
-
   @Parameter(
     names = ["--verbosity"],
     description = "verbosity of logging",
@@ -36,11 +35,19 @@ class VerbosityFlagGroup : AbstractCommandLineFlagGroup(groupName = "Verbosity")
   )
   var listVerbosity = false
 
+  @Parameter(
+    names = ["--hide-timestamps"],
+    description = "hide the timestamps in the log messages",
+    order = 30,
+    arity = 1,
+  )
+  var hideTimestamps = false
+
   override fun validate() {
     val allowedLoggingLevels = DefaultLoggingConfigurations.ALLOWED_LOGGING_LEVELS
 
     check(allowedLoggingLevels.contains(verbosity)) {
-      "The specified versobity $verbosity is not valid. Valid ones are $allowedLoggingLevels"
+      "The specified verbosity $verbosity is not valid. Valid ones are $allowedLoggingLevels"
     }
   }
 
@@ -50,6 +57,9 @@ class VerbosityFlagGroup : AbstractCommandLineFlagGroup(groupName = "Verbosity")
 
   fun adjustLoggingLevel() {
     validate()
-    DefaultLoggingConfigurations.configureLogManager(verbosity.uppercase())
+    DefaultLoggingConfigurations.configureLogManager(
+      loggingLevel = verbosity.uppercase(),
+      hideTimestamps = hideTimestamps,
+    )
   }
 }

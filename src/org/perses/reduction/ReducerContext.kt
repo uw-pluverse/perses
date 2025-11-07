@@ -16,7 +16,7 @@
  */
 package org.perses.reduction
 
-import org.perses.listminimizer.AbstractListInputMinimizerListener
+import org.perses.listminimizer.AbstractListMinimizerListener
 import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.cache.AbstractQueryCache
@@ -30,11 +30,12 @@ class ReducerContext(
   executorService: TestScriptExecutorService,
   val listenerManager: AsyncReductionListenerManager,
   val queryCache: AbstractQueryCache,
+  val globalQueryCache: AbstractGlobalExecutionCache,
   val nodeActionSetCache: AbstractNodeActionSetCache,
   val actionSetProfiler: AbstractActionSetProfiler,
   val sparTreeNodeFactory: SparTreeNodeFactory,
-  val deltaDebuggerListener: AbstractListInputMinimizerListener,
+  val listMinimizerListener: AbstractListMinimizerListener,
 ) : AbstractReducerContext<TokenizedProgram, LanguageKind, TokenReductionIOManager, ReducerContext>(
-  ioManager,
-  executorService,
-)
+    ioManager,
+    executorService,
+  )

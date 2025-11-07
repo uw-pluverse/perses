@@ -22,6 +22,7 @@ import org.perses.reduction.EditTestPayload
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScriptExecResult
+import org.perses.reduction.TreeEditWithItsResult
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
@@ -33,21 +34,23 @@ class ConcurrentTokenSlicer(
   reducerContext: ReducerContext,
   reducerAnnotation: ConcurrentTokenSlicerAnnotation,
 ) : AbstractConcurrentTokenSlicer(
-  reducerAnnotation,
-  reducerContext,
-) {
-
+    reducerAnnotation,
+    reducerContext,
+  ) {
   override fun createSequenceOfIndependentSlicingTasks(
     tokenSlicingGranularity: Int,
     tree: SparTree,
-  ): Sequence<IndependentSlicingTasks> {
+  ): Sequence<ListOfIndependentSlicingTasks> {
     val tokens = tree.remainingLexerRuleNodes
     return sequenceOf(
-      IndependentSlicingTasks(
-        Util.slideReverseIfSlideable(
-          tokens,
-          slidingWindowSize = tokenSlicingGranularity,
-        ).transformToImmutableList { sublist -> TokenSlicingTask(tokens, sublist.interval, tree) },
+      ListOfIndependentSlicingTasks(
+        Util
+          .slideReverseIfSlideable(
+            tokens,
+            slidingWindowSize = tokenSlicingGranularity,
+          ).transformToImmutableList { sublist ->
+            TokenSlicingTask(tokens, sublist.interval, tree)
+          },
       ),
     )
   }
@@ -57,26 +60,23 @@ class ConcurrentTokenSlicer(
     val interval: Util.NonEmptyInternal,
     tree: SparTree,
   ) : AbstractSlicingTask(
-    tree,
-    reducerContext,
-    this@ConcurrentTokenSlicer.executorService::testProgramAsync,
-  ) {
+      tree,
+      reducerContext,
+      this@ConcurrentTokenSlicer.executorService::testProgramAsync,
+    ) {
+    override fun tryAsyncRunPreconditionCheck(): Boolean =
+      !tokens[interval.exclusiveEnd - 1].isPermanentlyDeleted
 
-    override fun tryAsyncRunPreconditionCheck(): Boolean {
-      return !tokens[interval.exclusiveEnd - 1].isPermanentlyDeleted
-    }
-
-    override fun createNodeDeletionActionSet(): NodeDeletionActionSet {
-      return NodeDeletionActionSet.createByDeletingNodes(
+    override fun createNodeDeletionActionSet(): NodeDeletionActionSet =
+      NodeDeletionActionSet.createByDeletingNodes(
         tokens.subList(interval.inclusiveStart, interval.exclusiveEnd),
         "token slicer@${interval.size()}",
       )
-    }
 
-    override fun analyzeResultsAndGetBest(
-      futureResult: List<TestScriptExecResult<EditTestPayload>>,
-    ) =
-      this@ConcurrentTokenSlicer.analyzeResultsAndGetBest(futureResult)
+    override fun analyzeResultAndGetBest(
+      futureResult: TestScriptExecResult<EditTestPayload>,
+    ): TreeEditWithItsResult? =
+      this@ConcurrentTokenSlicer.analyzeOneTestFutureAndGetBest(futureResult)
   }
 
   object CompositeReducerAnnotation : ReducerAnnotation(
@@ -85,36 +85,36 @@ class ConcurrentTokenSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return REDUCER_ANNOTATIONS
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      REDUCER_ANNOTATIONS
         .asSequence()
         .flatMap { it.create(reducerContext) }
         .toImmutableList()
-    }
   }
-  companion object {
 
+  companion object {
     private const val NAME_PREFIX = "concurrent_token_slicer"
 
-    val REDUCER_ANNOTATIONS = IntRange(start = 1, endInclusive = 14)
-      .asSequence()
-      .map { ConcurrentTokenSlicerAnnotation(granularity = it) }
-      .toImmutableList()
+    val REDUCER_ANNOTATIONS =
+      IntRange(start = 1, endInclusive = 14)
+        .asSequence()
+        .map { ConcurrentTokenSlicerAnnotation(granularity = it) }
+        .toImmutableList()
 
-    fun getAnnotationForGranularity(granularity: Int): ConcurrentTokenSlicerAnnotation {
-      return REDUCER_ANNOTATIONS.single { it.granularity == granularity }
-    }
+    fun getAnnotationForGranularity(granularity: Int): ConcurrentTokenSlicerAnnotation =
+      REDUCER_ANNOTATIONS.single {
+        it.windowSize == granularity
+      }
   }
 
-  class ConcurrentTokenSlicerAnnotation internal constructor(granularity: Int) :
-    AbstractTokenSlicerAnnotation(
+  class ConcurrentTokenSlicerAnnotation internal constructor(
+    granularity: Int,
+  ) : AbstractTokenSlicerAnnotation(
       NAME_PREFIX,
       granularity,
       description = "concurrent token slicer",
     ) {
-
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(ConcurrentTokenSlicer(reducerContext, this))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(ConcurrentTokenSlicer(reducerContext, this))
   }
 }

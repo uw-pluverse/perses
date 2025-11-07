@@ -25,7 +25,6 @@ class MutationFrequencyController(
   private val minNumOfTokenLevelMutationPerSeed: Int = 1,
   private val maxNumOfTokenLevelMutationPerSeed: Int = 9,
 ) {
-
   private var maxScore = Double.MIN_VALUE
   private var minScore = Double.MAX_VALUE
 
@@ -49,7 +48,6 @@ class MutationFrequencyController(
     }
   }
 
-  private fun calculateScore(fuzzer: SparTreeFuzzer): Double {
-    return log2(languageModel.getRarenessOfMostRareFeature(fuzzer.featureOfTheSparTree!!))
-  }
+  private fun calculateScore(fuzzer: SparTreeFuzzer): Double =
+    log2(languageModel.getRarenessOfMostRareFeature(fuzzer.featureOfTheSparTree!!))
 }

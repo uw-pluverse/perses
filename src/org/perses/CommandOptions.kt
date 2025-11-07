@@ -21,6 +21,7 @@ import org.perses.cmd.ExperimentFlagGroup
 import org.perses.cmd.InputFlagGroup
 import org.perses.cmd.LPRFlagGroup
 import org.perses.cmd.LanguageControlFlagGroup
+import org.perses.cmd.LatraFlagGroup
 import org.perses.cmd.OutputFlagGroup
 import org.perses.cmd.OutputRefiningFlagGroup
 import org.perses.cmd.ProfilingFlagGroup
@@ -32,7 +33,6 @@ import org.perses.util.cmd.AbstractCommandOptions
 
 /** Parser for command line arguments.  */
 open class CommandOptions : AbstractCommandOptions() {
-
   val inputFlags = registerFlags(createInputFlags())
 
   val resultOutputFlags = registerFlags(OutputFlagGroup())
@@ -41,9 +41,10 @@ open class CommandOptions : AbstractCommandOptions() {
 
   val outputRefiningFlags = registerFlags(OutputRefiningFlagGroup())
 
-  val algorithmControlFlags = registerFlags(
-    ReductionAlgorithmControlFlagGroup(),
-  )
+  val algorithmControlFlags =
+    registerFlags(
+      ReductionAlgorithmControlFlagGroup(),
+    )
 
   val languageControlFlags = registerFlags(LanguageControlFlagGroup())
 
@@ -58,6 +59,8 @@ open class CommandOptions : AbstractCommandOptions() {
   val experimentFlags = registerFlags(ExperimentFlagGroup())
 
   val lprFlags = registerFlags(LPRFlagGroup())
+
+  val latraFlags = registerFlags(LatraFlagGroup())
 
   open fun createInputFlags() = InputFlagGroup()
 }

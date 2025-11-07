@@ -10,6 +10,7 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
+  hideTimestamps: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -21,10 +22,11 @@ inputFlags:
   sourceFile: "t.c"
 resultOutputFlags:
   groupName: "Outputs"
-  outputDir: "result_lpr_fixpoint_reduction_golden_test_perses_node_priority_with_dfs_delta_t.c"
+  outputDir: "result_lpr_fixpoint_reduction_golden_test_node_priority-dfs_t.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
-  fixpoint: true
+  globalFixpoint: false
+  fixpointForMainReducer: true
   numOfThreads: 1
   codeFormat: "COMPACT_ORIG_FORMAT"
   testScriptExecutionTimeoutInSeconds: 600
@@ -37,13 +39,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "perses_node_priority_with_dfs_delta"
+  reductionAlgorithm: "node_priority-dfs"
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
   enableLineSlicer: false
-  defaultDeltaDebuggerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForKleene: "DFS"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
   maxEditCountForRegularRuleNode: 100
   maxBfsDepthForRegularRuleNode: 5
   stopAtFirstCompatibleChildForRegularRuleNode: false
@@ -54,6 +59,7 @@ languageControlFlags:
   designatedParserFacadeClassName: ""
   listParserFacades: false
   languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -62,7 +68,7 @@ vulcanFlags:
   vulcanFixpoint: false
 trecFlags:
   groupName: "T-Rec Reducer Control"
-  enableTrec: false
+  enableTRec: false
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress_dump_lpr_fixpoint.txt"
@@ -72,74 +78,74 @@ profilingFlags:
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileDeltaDebugger: null
+  profileListMinimizer: null
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "AUTO"
-  cacheType: "CONTENT_SHA512"
+  queryCaching: "TRUE"
+  cacheType: "CONTENT_SHA_HASH_FORMAT"
   nodeActionSetCaching: true
   queryCacheRefreshThreshold: 0
   enableLightweightRefreshing: true
-  enablePassCache: false
+  enablePassCache: true
+  enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
+  fullyDeterministicMode: false
+  keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: true
   lprFixpoint: true
   llmClientPath: "llm_client_mock_to_test_workflow.py"
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
-The sanity check has been performed. The result is PassingSanityCheckResult
-The reducer execution plan is listed below.
---- !<sequence>
-reducers:
-- !<fixpoint>
-  body: !<atomic>
-    reducer: perses_node_priority_with_dfs_delta
-  condition: smaller
-- !<fixpoint>
-  body: !<sequence>
-    reducers:
-    - !<if>
-      condition: !<atomic>
-        reducer: llm_based_function_inlining_reducer
-      then: !<atomic>
-        reducer: perses_node_priority_with_dfs_delta
-    - !<if>
-      condition: !<atomic>
-        reducer: llm_based_loop_unrolling_reducer
-      then: !<atomic>
-        reducer: perses_node_priority_with_dfs_delta
-    - !<if>
-      condition: !<atomic>
-        reducer: llm_based_data_type_elimination_reducer
-      then: !<atomic>
-        reducer: perses_node_priority_with_dfs_delta
-    - !<if>
-      condition: !<atomic>
-        reducer: llm_based_data_type_simplification_reducer
-      then: !<atomic>
-        reducer: perses_node_priority_with_dfs_delta
-    - !<if>
-      condition: !<atomic>
-        reducer: llm_based_variable_elimination_reducer
-      then: !<atomic>
-        reducer: perses_node_priority_with_dfs_delta
-  condition: 10
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+The sanity check has been performed. The result is Passing
+The number of lexemes in PersesTokenFactory is 21
+(39/39)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority-dfs
+    }
+    fixpoint (10) {
+        if (llm_based_function_inlining_reducer) {
+            node_priority-dfs
+        }
+        if (llm_based_loop_unrolling_reducer) {
+            node_priority-dfs
+        }
+        if (llm_based_data_type_elimination_reducer) {
+            node_priority-dfs
+        }
+        if (llm_based_data_type_simplification_reducer) {
+            node_priority-dfs
+        }
+        if (llm_based_variable_elimination_reducer) {
+            node_priority-dfs
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            node_priority-dfs
+        }
+    }
 
 
-Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-
-=Fixpoint iteration 1. Reducer: perses_node_priority_with_dfs_delta
+(39/39)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+======Fixpoint iteration 1. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=1,slot_type=translationUnit}
@@ -262,15 +268,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@2
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:39/39=100.00%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=5}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@1
     --file: t.c--
     int main() {
       int a = 1;
@@ -288,6 +306,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
@@ -393,9 +413,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -407,6 +429,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 10
@@ -450,9 +474,25 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -470,9 +510,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -486,9 +527,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -504,9 +546,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -524,6 +567,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 13
@@ -652,9 +697,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__statement_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -672,6 +718,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 89
@@ -854,9 +902,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -876,6 +925,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 20
@@ -1082,9 +1133,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -1104,6 +1156,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 92
@@ -1240,9 +1294,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -1262,6 +1317,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 40
@@ -1353,9 +1410,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -1375,6 +1434,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 238
@@ -1445,9 +1506,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -1467,6 +1530,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 201
@@ -1537,9 +1602,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -1559,6 +1626,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 141
@@ -1716,9 +1785,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -1738,6 +1809,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 44
@@ -1762,28 +1835,6 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=46}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      for (int i = 0; i < 10; i++)
-        a = a + 1;
-      printf("%d"   );
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      for (int i = 0; i < 10; i++)
-        a = a + 1;
-      printf("%d"   );
-    }
 ------------------------------------------------------------
 
 
@@ -1852,9 +1903,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: t.c--
     #include <stdio.h>
     int main   {
@@ -1874,6 +1926,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 274
@@ -1922,9 +1976,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -1944,6 +1999,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 243
@@ -1992,9 +2049,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -2014,6 +2072,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 206
@@ -2062,9 +2122,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__relationalExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -2084,6 +2145,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 177
@@ -2132,9 +2195,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -2154,6 +2219,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 143
@@ -2224,9 +2291,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -2246,6 +2314,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 108
@@ -2294,9 +2364,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -2316,6 +2387,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 96
@@ -2364,9 +2437,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__expression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -2386,6 +2460,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 48
@@ -2854,9 +2930,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -2876,6 +2953,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 162
@@ -3338,9 +3417,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Testing the empty input. Global ratio:39/39=100.00%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: t.c--
     #include <stdio.h>
         main() {
@@ -3360,6 +3441,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority-dfs][DFS](39/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
+FixPt[1][node_priority-dfs][DFS](39/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/39=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 6
@@ -3692,13 +3775,13 @@ Failed to reduce node 1
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+0 entries are removed: 43 --> 43.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 55
+    size before clearance = 57
 ------------------------------------------------------------
 
 
@@ -3708,9 +3791,8 @@ token count change 39 -> 79
 ------------------------------------------------------------
 
 
-Rebuilding spar-tree: The spartree is rebuilt.
-
-=Fixpoint iteration 4. Reducer: perses_node_priority_with_dfs_delta
+(79/39)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 4. Reducer: node_priority-dfs======
 
 The spar-tree is the following.
 translationUnit {id=877,slot_type=translationUnit}
@@ -3925,9 +4007,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove whole except first
     --file: t.c--
     #include <stdio.h>
     --file: <formatted tokenized program in its original format>--
@@ -3935,15 +4016,26 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:79/39=202.56%
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=881}
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__translationUnit_3]dd@1
     --file: t.c--
     int main() {
       int a = 1;
@@ -3977,6 +4069,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 878
@@ -4012,9 +4106,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [regular node]compatible replacement
     --file: t.c--
     #include <stdio.h>
                ;
@@ -4024,129 +4117,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-               ;
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-               ;
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
     --file: t.c--
     #include <stdio.h>
                      ;
@@ -4156,9 +4128,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [regular node]compatible replacement
     --file: t.c--
     #include <stdio.h>
       int a = 1;
@@ -4226,9 +4197,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__compoundStatement_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4240,6 +4212,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 886
@@ -4275,9 +4249,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4291,42 +4264,29 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0-11]#12. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@6
     --file: t.c--
     #include <stdio.h>
     int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
     }
     --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
     }
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0-11]#12: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@6
     --file: t.c--
     #include <stdio.h>
     int main() {
       int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
       a = a + 1;
       a = a + 1;
       a = a + 1;
@@ -4342,22 +4302,18 @@ The current best program is the following
       a = a + 1;
       a = a + 1;
       a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
     }
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [6-11]#6: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: t.c--
     #include <stdio.h>
     int main() {
       int a = 1;
-      a = a + 1;
-      a = a + 1;
       a = a + 1;
       a = a + 1;
       a = a + 1;
@@ -4379,15 +4335,51 @@ The current best program is the following
       a = a + 1;
       a = a + 1;
       a = a + 1;
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [9-11]#3: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+      int a = 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+      int a = 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
       a = a + 1;
       a = a + 1;
     }
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [11]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4419,45 +4411,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [9-10]#2: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
-    --file: t.c--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4491,41 +4448,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [10]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
-    --file: t.c--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4559,14 +4484,14 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [9]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: t.c--
     #include <stdio.h>
     int main() {
       int a = 1;
-      a = a + 1;
       a = a + 1;
       a = a + 1;
       a = a + 1;
@@ -4587,51 +4512,14 @@ The current best program is the following
       a = a + 1;
       a = a + 1;
       a = a + 1;
-      a = a + 1;
       printf("%d", a);
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [6-8]#3: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
-    --file: t.c--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4665,39 +4553,14 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [8]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@6
-    --file: t.c--
-    #include <stdio.h>
-    int main() {
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main() {
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: t.c--
     #include <stdio.h>
     int main() {
       int a = 1;
+      a = a + 1;
       a = a + 1;
       a = a + 1;
       a = a + 1;
@@ -4718,14 +4581,15 @@ The current best program is the following
       a = a + 1;
       a = a + 1;
       a = a + 1;
+      a = a + 1;
       printf("%d", a);
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [6-7]#2: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4759,43 +4623,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [7]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
-    --file: t.c--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4829,9 +4659,68 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [6]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@6
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0-5]#6: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+      int a = 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+      int a = 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [3-5]#3: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
+
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4865,12 +4754,13 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [5]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@3
     --file: t.c--
     #include <stdio.h>
     int main() {
+      int a = 1;
       a = a + 1;
       a = a + 1;
       a = a + 1;
@@ -4884,6 +4774,7 @@ The current best program is the following
     --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main() {
+      int a = 1;
       a = a + 1;
       a = a + 1;
       a = a + 1;
@@ -4897,9 +4788,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [3-4]#2: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -4933,43 +4824,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [4]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@2
-    --file: t.c--
-    #include <stdio.h>
-    int main() {
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main() {
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d", a);
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -5003,9 +4860,150 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [3]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@3
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0-2]#3: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+      int a = 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+      int a = 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [2]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@2
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0-1]#2: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+      int a = 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+      int a = 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+------------------------------------------------------------
+
+
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [1]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+============Testing the following program: fail=============
+
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -5039,6 +5037,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0-11]#12. Local ratio: 12/12=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 889
@@ -5871,9 +5871,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -5909,6 +5910,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 905
@@ -6160,9 +6163,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -6198,6 +6202,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1372
@@ -6414,9 +6420,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -6452,6 +6459,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1328
@@ -6668,9 +6677,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -6706,6 +6716,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1284
@@ -6922,9 +6934,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -6960,6 +6973,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1240
@@ -7176,9 +7191,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -7214,6 +7230,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1196
@@ -7430,9 +7448,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -7468,6 +7487,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1152
@@ -7684,9 +7705,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -7722,6 +7744,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1108
@@ -7938,9 +7962,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -7976,6 +8001,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1064
@@ -8192,9 +8219,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -8230,6 +8258,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1020
@@ -8446,9 +8476,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -8484,6 +8515,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 976
@@ -8700,9 +8733,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__postfixExpression_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -8738,6 +8772,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 925
@@ -8869,9 +8905,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__declaration_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__declaration_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -8907,6 +8945,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1416
@@ -10059,9 +10099,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__postfixExpression_1]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__postfixExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -10097,6 +10139,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 929
@@ -10129,44 +10173,6 @@ The current best program is the following
 ==============Node edit action set cache hit.===============
 
     NodeDeletionAction{target_node=931}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d"   );
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main() {
-      int a = 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      a = a + 1;
-      printf("%d"   );
-    }
 ------------------------------------------------------------
 
 
@@ -10275,9 +10281,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__directDeclarator_7]dd@1
     --file: t.c--
     #include <stdio.h>
     int main   {
@@ -10313,6 +10320,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1452
@@ -10377,9 +10386,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:optional__initDeclarator_2]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -10415,6 +10425,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1421
@@ -10479,9 +10491,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -10517,6 +10530,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1388
@@ -10581,9 +10596,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -10619,6 +10635,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1376
@@ -10683,9 +10701,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -10721,6 +10740,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1344
@@ -10785,9 +10806,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -10823,6 +10845,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1332
@@ -10887,9 +10911,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -10925,6 +10950,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1300
@@ -10989,9 +11016,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11027,6 +11055,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1288
@@ -11091,9 +11121,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11129,6 +11160,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1256
@@ -11193,9 +11226,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11231,6 +11265,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1244
@@ -11295,9 +11331,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11333,6 +11370,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1212
@@ -11397,9 +11436,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11435,6 +11475,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1200
@@ -11499,9 +11541,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11537,6 +11580,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1168
@@ -11601,9 +11646,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11639,6 +11685,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1156
@@ -11703,9 +11751,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11741,6 +11790,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1124
@@ -11805,9 +11856,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11843,6 +11895,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1112
@@ -11907,9 +11961,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -11945,6 +12000,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1080
@@ -12009,9 +12066,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -12047,6 +12105,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1068
@@ -12111,9 +12171,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -12149,6 +12210,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1036
@@ -12213,9 +12276,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -12251,6 +12315,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 1024
@@ -12315,9 +12381,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__additiveExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -12353,6 +12420,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 992
@@ -12417,9 +12486,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__assignmentExpression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -12455,6 +12525,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 980
@@ -12519,9 +12591,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [kleene_star:kleene_star__expression_1]dd@1
     --file: t.c--
     #include <stdio.h>
     int main() {
@@ -12557,6 +12630,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 933
@@ -14941,9 +15016,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Testing the empty input. Global ratio:79/39=202.56%
 ============Testing the following program: fail=============
 
-// edit action set type: [kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
     --file: t.c--
     #include <stdio.h>
         main() {
@@ -14979,6 +15056,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority-dfs][DFS](79/39)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
+FixPt[4][node_priority-dfs][DFS](79/39)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:79/39=202.56%
 ===================Node reduction is done===================
 
 Failed to reduce node 882
@@ -16769,274 +16848,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-The history of the reducer invocation.
-[0]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 39
-  characterCount: 77
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[1]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[2]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 39
-  characterCount: 77
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[3]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_function_inlining_reducer"
-  description: "Invoke LLMs for function inlining."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[4]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 39
-  characterCount: 77
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 0
-fileContentChangedWrtPrevious: false
-
-[5]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_loop_unrolling_reducer"
-  description: "Invoke LLMs for loop unrolling."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[6]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: true
-
-[7]: ReducerCallEvent
----
-reducer:
-  shortName: "perses_node_priority_with_dfs_delta"
-  description: ""
-  deterministic: true
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_DECREASE"
-
-[8]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[9]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_data_type_elimination_reducer"
-  description: "Invoke LLMs for data type elimination."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[10]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[11]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_data_type_simplification_reducer"
-  description: "Invoke LLMs for data type simplification."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[12]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[13]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_variable_elimination_reducer"
-  description: "Invoke LLMs for variable elimination."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[14]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[15]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_function_inlining_reducer"
-  description: "Invoke LLMs for function inlining."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[16]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[17]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_loop_unrolling_reducer"
-  description: "Invoke LLMs for loop unrolling."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[18]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[19]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_data_type_elimination_reducer"
-  description: "Invoke LLMs for data type elimination."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[20]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[21]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_data_type_simplification_reducer"
-  description: "Invoke LLMs for data type simplification."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[22]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-[23]: ReducerCallEvent
----
-reducer:
-  shortName: "llm_based_variable_elimination_reducer"
-  description: "Invoke LLMs for variable elimination."
-  deterministic: false
-  reductionResultSizeTrend: "BEST_RESULT_SIZE_INCREASE"
-
-[24]: StatsSnapshotEvent
----
-stats:
-  tokenCount: 79
-  characterCount: 111
-  fileContents:
-  - fileName: "t.c"
-    contentDigest:
-      digest: {}
-      numOfStrings: 1
-numberOfNonDeletionIterations: 1
-fileContentChangedWrtPrevious: false
-
-
-=Fixpoint iteration 13. Reducer: spartree_root_replacement_reducer
+====Fixpoint iteration 13. Reducer: FineGritLatraReducer====
 
 The spar-tree is the following.
 translationUnit {id=877,slot_type=translationUnit}
@@ -17228,15 +17040,345 @@ translationUnit {id=877,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
+FixPt[13][FineGritLatraReducer](79/39)  For c, there are 46 transformations.
+FixPt[13][FineGritLatraReducer](79/39)  Reparsing the best spartree to faithfully reflect the syntactic structure.
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 0 --> 0.
+0 entries are removed: 136 --> 136.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 157
+    size before clearance = 159
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 79 -> 79
+------------------------------------------------------------
+
+
+FixPt[13][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](79/39)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[13][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](79/39)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[13][FineGritLatraReducer][DivideOperationSimplification](79/39)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[13][FineGritLatraReducer][MultiplyOperationSimplification](79/39)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[13][FineGritLatraReducer][MinusOperationSimplification](79/39)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[13][FineGritLatraReducer][PlusOperationSimplification](79/39)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[13][FineGritLatraReducer][LocalToGlobalTransformation](79/39)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[13][FineGritLatraReducer][UnionToStruct](79/39)  Found matches: 0 in transformation UnionToStruct
+FixPt[13][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](79/39)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[13][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](79/39)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[13][FineGritLatraReducer][FunctionInlining4Args](79/39)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[13][FineGritLatraReducer][FunctionInlining4ArgsNoType](79/39)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[13][FineGritLatraReducer][FunctionInliningLatraTransformation](79/39)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[13][FineGritLatraReducer][FunctionInlining3ArgsNoType](79/39)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[13][FineGritLatraReducer][FunctionInlining2Args](79/39)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[13][FineGritLatraReducer][FunctionInlining2ArgsNoType](79/39)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[13][FineGritLatraReducer][FunctionInlining1Arg](79/39)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[13][FineGritLatraReducer][FunctionInlining1ArgNoType](79/39)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[13][FineGritLatraReducer][FunctionInliningNoArg](79/39)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[13][FineGritLatraReducer][FunctionInliningNoArg](79/39)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[13][FineGritLatraReducer][LiftAssignmentExpr](79/39)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[13][FineGritLatraReducer][CopyPropagation](79/39)  Found matches: 1 in transformation CopyPropagation
+FixPt[13][FineGritLatraReducer][CallExprToValue](79/39)  Found matches: 0 in transformation CallExprToValue
+FixPt[13][FineGritLatraReducer][ReplaceCallExpr1Arg](79/39)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[13][FineGritLatraReducer][ReplaceCallExpr2Arg](79/39)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[13][FineGritLatraReducer][ReplaceCallExpr3Arg](79/39)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[13][FineGritLatraReducer][SimplifyCallExpr](79/39)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[13][FineGritLatraReducer][SimplifyIf](79/39)  Found matches: 0 in transformation SimplifyIf
+FixPt[13][FineGritLatraReducer][SimplifyIf2](79/39)  Found matches: 0 in transformation SimplifyIf2
+FixPt[13][FineGritLatraReducer][ReduceArrayDim3](79/39)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[13][FineGritLatraReducer][ReduceArrayDim2](79/39)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[13][FineGritLatraReducer][ReduceArrayDim](79/39)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[13][FineGritLatraReducer][MoveFuncDefToDecl](79/39)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[13][FineGritLatraReducer][MoveFuncDefToDecl2](79/39)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[13][FineGritLatraReducer][MoveFuncDefToDeclNoParam](79/39)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[13][FineGritLatraReducer][MoveFuncDefToDeclNoParam](79/39)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[13][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](79/39)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[13][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](79/39)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[13][FineGritLatraReducer][SimplifyComma](79/39)  Found matches: 0 in transformation SimplifyComma
+FixPt[13][FineGritLatraReducer][TypeDefTransform](79/39)  Found matches: 0 in transformation TypeDefTransform
+FixPt[13][FineGritLatraReducer][EmptyStructToInt](79/39)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[13][FineGritLatraReducer][RemoveAssignment](79/39)  Found matches: 1 in transformation RemoveAssignment
+FixPt[13][FineGritLatraReducer][RemoveAssignment](79/39)  Built a LatraGeneralActionSet subroot(id=2007,#3) in RemoveAssignment
+============Testing the following program: fail=============
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+    int main() {
+      int     1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+    --file: <formatted tokenized program in its original format>--
+    #include <stdio.h>
+    int main() {
+      int     1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      a = a + 1;
+      printf("%d", a);
+    }
+------------------------------------------------------------
+
+
+FixPt[13][FineGritLatraReducer][RemoveAddrTaken](79/39)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[13][FineGritLatraReducer][ReplaceArrayAccessWithIndex](79/39)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[13][FineGritLatraReducer][SimplifyUnionDecl](79/39)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[13][FineGritLatraReducer][SimplifyStructDecl](79/39)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[13][FineGritLatraReducer][ReplaceDefByDecl](79/39)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[13][FineGritLatraReducer][CombineLocalVarDecl](79/39)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[13][FineGritLatraReducer][UnifyFunctionDecl](79/39)  Found matches: 0 in transformation UnifyFunctionDecl
+(39/39)  The history of the reducer invocation.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                                    Reducer #Tokens #Chars #NonDeletions
+ 0                          node_priority-dfs       0      0             0
+ 1        llm_based_function_inlining_reducer       0      0             0
+ 2           llm_based_loop_unrolling_reducer      40     34             1
+ 3                          node_priority-dfs       0      0             1
+ 4    llm_based_data_type_elimination_reducer       0      0             1
+ 5 llm_based_data_type_simplification_reducer       0      0             1
+ 6     llm_based_variable_elimination_reducer       0      0             1
+ 7        llm_based_function_inlining_reducer       0      0             1
+ 8           llm_based_loop_unrolling_reducer       0      0             1
+ 9    llm_based_data_type_elimination_reducer       0      0             1
+10 llm_based_data_type_simplification_reducer       0      0             1
+11     llm_based_variable_elimination_reducer       0      0             1
+12                       FineGritLatraReducer       0      0             1
+
+----------------------------------- Summary ------------------------------------
+                                   Reducer Times #Tokens #Chars
+                         node_priority-dfs     2       0      0
+       llm_based_function_inlining_reducer     2       0      0
+          llm_based_loop_unrolling_reducer     2      40     34
+   llm_based_data_type_elimination_reducer     2       0      0
+llm_based_data_type_simplification_reducer     2       0      0
+    llm_based_variable_elimination_reducer     2       0      0
+                      FineGritLatraReducer     1       0      0
+------------------------------------- End --------------------------------------
+
+
+=Fixpoint iteration 14. Reducer: spartree_root_replacement_reducer
+
+The spar-tree is the following.
+translationUnit {id=1466,slot_type=translationUnit}
+|___(+) {id=1467,slot_type=kleene_plus__translationUnit_3}
+    |___Token:#include <stdio.h> {id=2053,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+    |___functionDefinition {id=1470,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |___(?) {id=1471,slot_type=optional__functionDefinition_2}
+        |   |___(+) {id=2048,slot_type=declarationSpecifiers}
+        |       |___Token:int {id=2052,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |___directDeclarator {id=2039,slot_type=[declarator,directDeclarator]}
+        |   |___Token:main {id=2047,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |___(*) {id=2041,slot_type=kleene_star__directDeclarator_7}
+        |       |___aux_rule__directDeclarator_15 {id=2043,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |           |___Token:( {id=2044,slot_type=LeftParen}
+        |           |___Token:) {id=2046,slot_type=RightParen}
+        |___compoundStatement {id=1473,slot_type=compoundStatement}
+            |___Token:{ {id=1474,slot_type=LeftBrace}
+            |___(?) {id=1475,slot_type=optional__compoundStatement_1}
+            |   |___(+) {id=1478,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+            |       |___aux_rule__declaration_3 {id=2003,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+            |       |   |___(+) {id=2004,slot_type=declarationSpecifiers}
+            |       |   |   |___Token:int {id=2038,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |       |   |___(?) {id=2005,slot_type=optional__declaration_2}
+            |       |   |   |___initDeclarator {id=2008,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |   |       |___Token:a {id=2034,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |   |       |___(?) {id=2010,slot_type=optional__initDeclarator_2}
+            |       |   |           |___aux_rule__initDeclarator_1 {id=2011,slot_type=aux_rule__initDeclarator_1}
+            |       |   |               |___Token:= {id=2012,slot_type=Assign}
+            |       |   |               |___Token:1 {id=2031,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=2006,slot_type=Semi}
+            |       |___expressionStatement {id=1960,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1961,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1964,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1965,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1994,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=2001,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1997,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1975,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1993,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1977,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1978,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1987,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1986,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1962,slot_type=Semi}
+            |       |___expressionStatement {id=1916,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1917,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1920,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1921,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1950,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1957,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1953,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1931,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1949,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1933,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1934,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1943,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1942,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1918,slot_type=Semi}
+            |       |___expressionStatement {id=1872,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1873,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1876,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1877,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1906,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1913,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1909,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1887,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1905,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1889,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1890,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1899,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1898,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1874,slot_type=Semi}
+            |       |___expressionStatement {id=1828,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1829,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1832,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1833,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1862,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1869,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1865,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1843,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1861,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1845,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1846,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1855,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1854,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1830,slot_type=Semi}
+            |       |___expressionStatement {id=1784,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1785,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1788,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1789,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1818,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1825,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1821,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1799,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1817,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1801,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1802,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1811,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1810,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1786,slot_type=Semi}
+            |       |___expressionStatement {id=1740,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1741,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1744,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1745,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1774,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1781,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1777,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1755,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1773,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1757,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1758,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1767,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1766,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1742,slot_type=Semi}
+            |       |___expressionStatement {id=1696,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1697,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1700,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1701,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1730,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1737,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1733,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1711,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1729,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1713,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1714,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1723,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1722,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1698,slot_type=Semi}
+            |       |___expressionStatement {id=1652,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1653,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1656,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1657,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1686,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1693,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1689,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1667,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1685,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1669,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1670,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1679,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1678,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1654,slot_type=Semi}
+            |       |___expressionStatement {id=1608,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1609,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1612,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1613,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1642,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1649,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1645,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1623,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1641,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1625,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1626,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1635,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1634,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1610,slot_type=Semi}
+            |       |___expressionStatement {id=1564,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |       |   |___(?) {id=1565,slot_type=optional__postfixExpression_1}
+            |       |   |   |___assignmentExpression {id=1568,slot_type=[expression,assignmentExpression]}
+            |       |   |       |___(*) {id=1569,slot_type=kleene_star__assignmentExpression_1}
+            |       |   |       |   |___aux_rule__assignmentExpression_2 {id=1598,slot_type=aux_rule__assignmentExpression_2}
+            |       |   |       |       |___Token:a {id=1605,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |       |       |___Token:= {id=1601,slot_type=[assignmentOperator,Assign]}
+            |       |   |       |___additiveExpression {id=1579,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+            |       |   |           |___Token:a {id=1597,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |       |   |           |___(*) {id=1581,slot_type=kleene_star__additiveExpression_1}
+            |       |   |               |___aux_rule__additiveExpression_2 {id=1582,slot_type=aux_rule__additiveExpression_2}
+            |       |   |                   |___Token:+ {id=1591,slot_type=[altnt_block__additiveExpression_3,Plus]}
+            |       |   |                   |___Token:1 {id=1590,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |       |   |___Token:; {id=1566,slot_type=Semi}
+            |       |___expressionStatement {id=1493,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+            |           |___(?) {id=1494,slot_type=optional__postfixExpression_1}
+            |           |   |___postfixExpression {id=1512,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+            |           |       |___Token:printf {id=1561,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+            |           |       |___(*) {id=1514,slot_type=kleene_star__postfixExpression_2}
+            |           |           |___aux_rule__postfixExpression_11 {id=1516,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+            |           |               |___Token:( {id=1517,slot_type=LeftParen}
+            |           |               |___(?) {id=1518,slot_type=optional__postfixExpression_1}
+            |           |               |   |___expression {id=1520,slot_type=expression}
+            |           |               |       |___(+) {id=1559,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+            |           |               |       |   |___Token:"%d" {id=1560,slot_type=StringLiteral}
+            |           |               |       |___(*) {id=1522,slot_type=kleene_star__expression_1}
+            |           |               |           |___aux_rule__expression_2 {id=1523,slot_type=aux_rule__expression_2}
+            |           |               |               |___Token:, {id=1524,slot_type=Comma}
+            |           |               |               |___Token:a {id=1542,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+            |           |               |___Token:) {id=1519,slot_type=RightParen}
+            |           |___Token:; {id=1495,slot_type=Semi}
+            |___Token:} {id=1476,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+94 entries are removed: 137 --> 43.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
 ------------------------------------------------------------
 
 
@@ -17247,8 +17389,8 @@ token count change 79 -> 39
 
 
 #test success = 1
-#test failure = 212
-#test result cache hits = 0
+#test failure = 137
+#test result cache hits = 68
 #test execution cancelled = 0
 #node edit action set cache hits = 76
 #external test execution cache hits = 0

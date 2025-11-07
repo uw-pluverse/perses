@@ -22,12 +22,17 @@ import java.io.PrintStream
 
 class PersesGrammarOptionsAst(
   private val options: ImmutableList<Option>,
-) :
-  AbstractPersesAst() {
+) : AbstractPersesAst() {
+  class Option(
+    val name: String,
+    val value: String,
+  )
 
-  class Option(val name: String, val value: String)
-
-  override fun toSourceCode(stream: PrintStream, indent: Indent, multiLineMode: Boolean) {
+  override fun toSourceCode(
+    stream: PrintStream,
+    indent: Indent,
+    multiLineMode: Boolean,
+  ) {
     if (options.isEmpty()) {
       return
     }
@@ -45,9 +50,7 @@ class PersesGrammarOptionsAst(
     get() = 0
 
   @Deprecated("")
-  override fun getChild(index: Int): AbstractPersesAst {
-    throw UnsupportedOperationException()
-  }
+  override fun getChild(index: Int): AbstractPersesAst = throw UnsupportedOperationException()
 
   override val tag: AstTag?
     get() = null

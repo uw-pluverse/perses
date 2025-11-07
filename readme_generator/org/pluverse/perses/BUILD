@@ -9,8 +9,7 @@ kt_jvm_library(
     name = "SupportedLanguageDumpMain_lib",
     srcs = ["SupportedLanguageDumpMain.kt"],
     deps = [
-        "//src/org/perses:perses_lib",
-        "//src/org/perses/util/cmd",
+        "//src/org/perses:abstract_reduction_main",
     ],
 )
 

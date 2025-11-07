@@ -72,20 +72,22 @@ class ProfilingFlagGroup : AbstractCommandLineFlagGroup(groupName = "Profiling")
   var actionSetProfiler: Path? = null
 
   @Parameter(
-    names = ["--profile-delta-debugger"],
-    description = "The file to save the reduction process of the delta debugger.",
+    names = ["--profile-list-minimizer"],
+    description = "The file to save the reduction process of the list minimizer.",
     order = 55,
   )
-  var profileDeltaDebugger: Path? = null
+  var profileListMinimizer: Path? = null
 
   override fun validate() {
-    val flags = listOf(
-      ::profileQueryCacheMemory,
-      ::profileQueryCacheTime,
-      ::profileQueryCacheTimeCSV,
-    )
-    val countOfNonNulls = flags
-      .count { it.get() != null }
+    val flags =
+      listOf(
+        ::profileQueryCacheMemory,
+        ::profileQueryCacheTime,
+        ::profileQueryCacheTimeCSV,
+      )
+    val countOfNonNulls =
+      flags
+        .count { it.get() != null }
     check(countOfNonNulls <= 1) {
       "Only at most one flag can be enabled. $flags"
     }

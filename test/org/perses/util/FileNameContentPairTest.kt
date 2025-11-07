@@ -32,7 +32,6 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class FileNameContentPairTest {
-
   val tempDir = Files.createTempDirectory(javaClass.simpleName)
 
   @After

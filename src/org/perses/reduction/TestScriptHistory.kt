@@ -19,61 +19,85 @@ package org.perses.reduction
 import com.google.common.hash.HashCode
 import org.apache.commons.csv.CSVFormat
 import org.perses.util.Util.lazyAssert
-import org.perses.util.shell.ExitCode
+import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Path
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.io.path.bufferedReader
 import kotlin.io.path.bufferedWriter
 
-class TestScriptHistory {
+class TestScriptHistory(
+  private val shaAlgorithm: EnumShaAlgorithm,
+) {
+  private val history = ConcurrentHashMap<HashCode, PropertyTestResult>()
 
-  private val history = ConcurrentHashMap<HashCode, Result>()
+  fun getExecutionHistoryFor(key: HashCode): PropertyTestResult? = history[key]
 
-  fun getExecutionHistoryFor(key: HashCode): Result? = history[key]
-
-  fun cacheExecutionHistory(key: HashCode, result: Result) {
+  fun cacheExecutionHistory(
+    key: HashCode,
+    result: PropertyTestResult,
+  ) {
     lazyAssert { !history.containsKey(key) }
     history[key] = result
   }
 
-  fun asReadOnlyMap(): Map<HashCode, Result> = history
+  fun asReadOnlyMap(): Map<HashCode, PropertyTestResult> = history
 
   fun saveToCSV(file: Path) {
     file.bufferedWriter().use { writer ->
       CSVFormat.DEFAULT.print(writer).apply {
-        printRecord(NAME_COLUMN_HASH_CODE, NAME_COLUMN_EXIT_CODE, NAME_COLUMN_ELLAPSED_MILLIES)
+        printRecord(shaAlgorithm.name, NAME_COLUMN_EXIT_CODE, NAME_COLUMN_ELLAPSED_MILLIES)
         history.entries
           .asSequence()
           .map { it.key.toString() to it.value }
           .sortedBy { it.first }
           .forEach { entry ->
-            printRecord(entry.first, entry.second.exitCode.intValue, entry.second.ellapsedMillies)
+            printRecord(entry.first, entry.second.exitCode.intValue, entry.second.elapsedMillis)
           }
       }
     }
   }
-  data class Result(val exitCode: ExitCode, val ellapsedMillies: Int)
-  companion object {
 
-    const val NAME_COLUMN_HASH_CODE = "HashCode"
+  companion object {
     const val NAME_COLUMN_EXIT_CODE = "ExitCode"
     const val NAME_COLUMN_ELLAPSED_MILLIES = "EllapsedMillies"
 
-    fun loadFromCSV(file: Path): TestScriptHistory {
-      val history = TestScriptHistory()
+    fun loadFromCSV(
+      shaAlgorithm: EnumShaAlgorithm,
+      file: Path,
+    ): TestScriptHistory {
+      val history = TestScriptHistory(shaAlgorithm)
       file.bufferedReader().use { reader ->
-        CSVFormat.Builder.create(CSVFormat.DEFAULT).apply {
-          setIgnoreEmptyLines(true)
-          setIgnoreSurroundingSpaces(true)
-        }.build().parse(reader)
-          .drop(1) // Drop the header
-          .fold(history.history) { acc, record ->
-            val hashCode = record[0]
-            val result = Result(ExitCode(record[1].toInt()), record[2].toInt())
-            acc.apply {
-              put(HashCode.fromString(hashCode), result)
-            }
+        val csvFormat =
+          CSVFormat.Builder
+            .create(CSVFormat.DEFAULT)
+            .setHeader()
+            .setSkipHeaderRecord(true)
+            .setIgnoreEmptyLines(true)
+            .setIgnoreSurroundingSpaces(true)
+            .build()
+
+        csvFormat.parse(reader).use { csvParser ->
+          val actualHeader = csvParser.headerNames
+          if (actualHeader == null || actualHeader.isEmpty()) {
+            return history
           }
+          val hashAlgorithmName = actualHeader[0]
+          check(hashAlgorithmName == shaAlgorithm.name) {
+            """Inconsistent hash algorithm. 
+            |The one in the csv file $file is $hashAlgorithmName
+            |The expected one is ${shaAlgorithm.name}
+            """.trimMargin()
+          }
+          for (record in csvParser) {
+            val hashCode = record[0]
+            val result =
+              PropertyTestResult.of(
+                exitCode = record[1].toInt(),
+                elapsedMillis = record[2].toInt(),
+              )
+            history.history.put(HashCode.fromString(hashCode), result)
+          }
+        }
       }
       return history
     }

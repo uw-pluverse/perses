@@ -23,7 +23,7 @@ abstract class AbstractReducer<
   Program,
   K : AbstractDataKind,
   IOManager : AbstractReductionIOManager<Program, K, IOManager>,
-  >(
+>(
   val nameAndDesc: AbstractReducerNameAndDesc,
   protected val ioManager: IOManager,
   protected val executorService: TestScriptExecutorService,

@@ -20,39 +20,51 @@ import com.google.common.collect.ImmutableList
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
 import org.perses.spartree.AbstractSparTreeEdit
-import org.perses.util.Util
+import org.perses.util.hashing.ShaHashCode
 
 abstract class AbstractNonDeletionBasedReducer(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
 ) : AbstractTokenReducer(
-  reducerAnnotation,
-  reducerContext,
-) {
+    reducerAnnotation,
+    reducerContext,
+  ) {
+  protected val mutationHistory =
+    reducerContext.computePiggybackPayloadIfAbsent(
+      PiggybackPayloadKey(this::class.java, "mutated_program_history"),
+    ) { MutatedProgramHistory() } as MutatedProgramHistory
 
-  protected val mutationHistory = reducerContext.computePiggybackPayloadIfAbsent(
-    PiggybackPayloadKey(this::class.java, "mutated_program_history"),
-  ) { MutatedProgramHistory() } as MutatedProgramHistory
-
-  protected class MutatedProgramHistory {
-    private val history = HashSet<Util.SHA512HashCode>()
+  protected inner class MutatedProgramHistory {
+    private val history = HashSet<ShaHashCode>()
 
     fun add(program: TokenizedProgram): Boolean {
+      // TODO(cnsun): need to use the OutputManager-based hashing.
       val sourceCode = PrinterRegistry.printToStringInSingleLineFormat(program)
-      val hashcode = Util.SHA512HashCode.createFromString(sourceCode)
+      val hashcode = reducerContext.configuration.shaHashAlgorithm.createFromString(sourceCode)
       return history.add(hashcode)
     }
   }
 
-  protected fun testAndCacheUnseenResultedProgram(
-    edit: AbstractSparTreeEdit<*>,
+  protected fun ignoreCachedEditsThenFindBestWrtProperty(
+    // TODO(cnsun): need to see whether we need to accept a single edit or a list of edits.
+    edits: List<AbstractSparTreeEdit<*>>,
+    fixpointReductionState: FixpointReductionState,
   ): AbstractSparTreeEdit<*>? {
-    if (!mutationHistory.add(edit.program)) {
-      return null
-    }
-    return testAllTreeEditsAndReturnTheBest(
-      listOf(edit),
-    )?.edit
+    val filtered =
+      edits.filter { edit ->
+        if (mutationHistory.add(edit.program)) {
+          true
+        } else {
+          reducerContext.listenerManager.onAdHocMessageEvent(
+            fixpointReductionState.createAdHocMessageEvent {
+              "An edit (description=${edit.actionSet.actionsDescription}) is skipped " +
+                "in ${this::class.simpleName} because it was visited before."
+            },
+          )
+          false
+        }
+      }
+    return testAllTreeEditsAndReturnTheBest(filtered)?.edit
   }
 
   protected data class PiggybackPayloadKey(
@@ -60,4 +72,17 @@ abstract class AbstractNonDeletionBasedReducer(
     val payloadName: String,
     val extraData: ImmutableList<Any> = ImmutableList.of(),
   )
+
+  abstract class NonDeletionBasedReducerAnnotation(
+    shortName: String,
+    description: String,
+    reductionResultSizeTrend: ReductionResultSizeTrend,
+  ) : ReducerAnnotation(
+      shortName = shortName,
+      description = description,
+      // Given the same input, the algorithm might yield different results,
+      // because this alg also depends on the cache in the reduction context.
+      deterministic = false,
+      reductionResultSizeTrend = reductionResultSizeTrend,
+    )
 }

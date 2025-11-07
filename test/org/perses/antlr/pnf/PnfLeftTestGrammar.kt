@@ -24,10 +24,12 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.pnf.RuleTransitionGraph.Companion.createForLeftmostTransition
 import java.util.stream.Collectors
 
+@Suppress("ktlint:standard:property-naming")
 open class PnfLeftTestGrammar {
   @JvmField
-  protected val grammar = GrammarTestingUtility.loadGrammarFromString(
-    """
+  protected val grammar =
+    GrammarTestingUtility.loadGrammarFromString(
+      """
       grammar pnf_test;
 
       a
@@ -48,8 +50,8 @@ open class PnfLeftTestGrammar {
       d
           : 'd'
           ;
-    """.trimIndent(),
-  )
+      """.trimIndent(),
+    )
 
   protected val graph = createForLeftmostTransition(grammar)
 
@@ -75,24 +77,33 @@ open class PnfLeftTestGrammar {
   protected val edge_cd: AbstractPersesRuleElement
 
   init {
-    val nodes = graph.graph.vertexSet().stream()
-      .sorted(Comparator.comparingInt(RuleNameHandle::id))
-      .collect(Collectors.toList())
+    val nodes =
+      graph.graph
+        .vertexSet()
+        .stream()
+        .sorted(Comparator.comparingInt(RuleNameHandle::id))
+        .collect(Collectors.toList())
     assertThat(nodes).hasSize(4)
     a = nodes[0]
     b = nodes[1]
     c = nodes[2]
     d = nodes.get(3)
 
-    val edgesOfA = graph.graph.outgoingEdgesOf(a).stream()
-      .sorted(Comparator.comparing(AbstractPersesAst::sourceCode))
-      .collect(Collectors.toList())
+    val edgesOfA =
+      graph.graph
+        .outgoingEdgesOf(a)
+        .stream()
+        .sorted(Comparator.comparing(AbstractPersesAst::sourceCode))
+        .collect(Collectors.toList())
     assertThat(edgesOfA).hasSize(1)
     edge_a = edgesOfA.single()
 
-    val edges = graph.graph.outgoingEdgesOf(b).stream()
-      .sorted(Comparator.comparing(AbstractPersesAst::sourceCode))
-      .collect(Collectors.toList())
+    val edges =
+      graph.graph
+        .outgoingEdgesOf(b)
+        .stream()
+        .sorted(Comparator.comparing(AbstractPersesAst::sourceCode))
+        .collect(Collectors.toList())
     assertThat(edges).hasSize(2)
     edge_ad = edges.get(0)!!
     edge_cd = edges.get(1)!!

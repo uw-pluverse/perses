@@ -27,19 +27,17 @@ import org.perses.util.toImmutableList
 class SerializableLanguageKind internal constructor(
   data: LanguageKindData,
 ) : LanguageKind(
-  data.name,
-  data.extensions,
-  data.defaultCodeFormatControl,
-  data.origCodeFormatControl,
-  data.allowedCodeFormatControl,
-  data.defaultFormatterCommands.asSequence()
-    .map { IShellCommandOnPathCreator { ShellCommandOnPath(it.command, it.defaultFlags) } }
-    .toImmutableList(),
-) {
-
-  fun toYamlString(): String {
-    return LanguageKindData.from(this).toYamlString()
-  }
+    data.name,
+    data.extensions,
+    data.defaultCodeFormatControl,
+    data.origCodeFormatControl,
+    data.allowedCodeFormatControl,
+    data.defaultFormatterCommands
+      .asSequence()
+      .map { IShellCommandOnPathCreator { ShellCommandOnPath(it.command, it.defaultFlags) } }
+      .toImmutableList(),
+  ) {
+  fun toYamlString(): String = LanguageKindData.from(this).toYamlString()
 
   data class ShellCommandData(
     val command: String,
@@ -54,36 +52,32 @@ class SerializableLanguageKind internal constructor(
     val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
     val defaultFormatterCommands: ImmutableList<ShellCommandData> = ImmutableList.of(),
   ) {
-
-    fun toYamlString(): String {
-      return Serialization.toYamlString(this)
-    }
+    fun toYamlString(): String = Serialization.toYamlString(this)
 
     fun toLanguageKind(): SerializableLanguageKind = SerializableLanguageKind(this)
 
     companion object {
-      fun from(language: LanguageKind): LanguageKindData {
-        return LanguageKindData(
+      fun from(language: LanguageKind): LanguageKindData =
+        LanguageKindData(
           name = language.name,
           extensions = language.extensions,
           defaultCodeFormatControl = language.defaultCodeFormatControl,
           origCodeFormatControl = language.origCodeFormatControl,
           allowedCodeFormatControl = language.allowedCodeFormatControl,
-          defaultFormatterCommands = language.defaultFormatterCommandCreators
-            .mapNotNull { it.tryCreate() }
-            .map { ShellCommandData(it.originalCommand, it.defaultFlags) }
-            .toImmutableList(),
+          defaultFormatterCommands =
+            language.defaultFormatterCommandCreators
+              .mapNotNull { it.tryCreate() }
+              .map { ShellCommandData(it.originalCommand, it.defaultFlags) }
+              .toImmutableList(),
         )
-      }
     }
   }
 
   companion object {
     @JvmStatic
-    fun fromYamlString(yaml: String): SerializableLanguageKind {
-      return SerializableLanguageKind(
+    fun fromYamlString(yaml: String): SerializableLanguageKind =
+      SerializableLanguageKind(
         Serialization.fromYamlString(yaml, object : TypeReference<LanguageKindData>() {}),
       )
-    }
   }
 }

@@ -17,24 +17,35 @@
 package org.perses.spartree
 
 import com.google.common.annotations.VisibleForTesting
+import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.ImmutableList
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import org.perses.antlr.GrammarHierarchy
-import org.perses.program.PersesTokenFactory.PersesToken
+import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.program.TokenizedProgramFactory
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy
+import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
+import java.lang.ref.WeakReference
 
 /** A spar-tree, the primary data structure for the Perses program reduction.  */
 class SparTree internal constructor(
-  realRoot: AbstractSparTreeNode,
+  realRoot: AbstractSparTreeNode?,
   val sparTreeNodeFactory: SparTreeNodeFactory,
   specifiedSentinelRoot: SparTreeSentinelRootNode? = null,
 ) : AbstractUnmodifiableSparTree() {
-
   init {
-    require(realRoot !is SparTreeSentinelRootNode) { realRoot::class }
+    require(realRoot == null || !realRoot.isPermanentlyDeleted) {
+      """The realRoot cannot be marked as deleted. 
+        |realRoot = ${realRoot!!.printTreeStructure()}
+        |
+      """.trimMargin()
+    }
+    require(realRoot == null || realRoot !is SparTreeSentinelRootNode) { realRoot!!::class }
     require(specifiedSentinelRoot == null || specifiedSentinelRoot.childCount == 0) {
       "Sentinel root must have no child."
     }
@@ -42,10 +53,12 @@ class SparTree internal constructor(
 
   private val sentinelRoot =
     (specifiedSentinelRoot ?: sparTreeNodeFactory.createSentinelRootNode()).also {
-      it.addChild(
-        realRoot,
-        AbstractNodePayload.SinglePayload(expectedAntlrRuleType = realRoot.antlrRule),
-      )
+      if (realRoot != null) {
+        it.addChild(
+          realRoot,
+          AbstractNodePayload.SinglePayload(expectedAntlrRuleType = realRoot.antlrRule),
+        )
+      }
     }
 
   val treeId: Int = ++globalTreeIdGenerator
@@ -62,9 +75,22 @@ class SparTree internal constructor(
   var dirty = false
     private set
 
+  override fun hasRealRoot(): Boolean {
+    check(sentinelRoot.childCount.let { it == 0 || it == 1 }) {
+      "Invalid child count for sentinelRoot. ${sentinelRoot.childCount}"
+    }
+    return sentinelRoot.childCount > 0
+  }
+
   override val realRoot: AbstractSparTreeNode
     get() {
-      check(sentinelRoot.childCount == 1)
+      check(hasRealRoot()) {
+        """This tree is empty and does not have a root.
+          |
+          |The sentinel root: ${sentinelRoot.printTreeStructure()}
+          |
+        """.trimMargin()
+      }
       return sentinelRoot.getChild(0)
     }
 
@@ -78,61 +104,102 @@ class SparTree internal constructor(
   }
 
   @PublishedApi
-  internal val dummyTokenHead = LexerRuleSparTreeNode(
-    Int.MIN_VALUE,
-    PersesToken.INVALID_TOKEN,
-    antlrRule = null,
-  )
+  internal val dummyTokenHead =
+    LexerRuleSparTreeNode(
+      Int.MIN_VALUE,
+      PersesTokenFactory.InvalidToken,
+      antlrRule = null,
+    )
 
   @PublishedApi
-  internal val dummyTokenTail = LexerRuleSparTreeNode(
-    Int.MIN_VALUE,
-    PersesToken.INVALID_TOKEN,
-    antlrRule = null,
-  )
+  internal val dummyTokenTail =
+    LexerRuleSparTreeNode(
+      Int.MIN_VALUE,
+      PersesTokenFactory.InvalidToken,
+      antlrRule = null,
+    )
   private var program: TokenizedProgram
   private val editListeners = ArrayList<AbstractSparTreeEditListener>()
 
-  init {
-    sentinelRoot.fixLinkIntegrity()
-    dummyTokenHead.next = sentinelRoot.beginToken
-    sentinelRoot.beginToken?.prev = dummyTokenHead
-    dummyTokenTail.prev = sentinelRoot.endToken
-    sentinelRoot.endToken?.next = dummyTokenTail
-
-    program = computeTokenizedProgram()
-  }
-
-  fun isDummyNode(node: LexerRuleSparTreeNode): Boolean {
-    return node === dummyTokenHead || node === dummyTokenTail
-  }
+  fun isDummyNode(node: LexerRuleSparTreeNode): Boolean =
+    node === dummyTokenHead || node === dummyTokenTail
 
   fun hasTheSameEditListeners(listeners: Iterable<AbstractSparTreeEditListener>): Boolean {
-    val copy = ArrayList<AbstractSparTreeEditListener>().apply {
-      addAll(listeners)
-    }
+    val copy =
+      ArrayList<AbstractSparTreeEditListener>().apply {
+        addAll(listeners)
+      }
     editListeners.forEach {
       copy.removeIf { c -> c === it }
     }
     return copy.isEmpty()
   }
 
+  private class Id2NodeMap(
+    var lastRoot: WeakReference<AbstractSparTreeNode>,
+    var treeVersion: Int,
+  ) {
+    val map: Int2ObjectMap<AbstractSparTreeNode> = Int2ObjectOpenHashMap()
+  }
+
+  private val id2NodeMap by lazy {
+    // Note that we need to use the "this.realRoot" to refer to the field, but not the argument.
+    Id2NodeMap(
+      lastRoot = WeakReference(this.realRoot),
+      treeVersion = version,
+    ).also {
+      val map = it.map
+      this.realRoot.postOrderVisit { node ->
+        check(!map.containsKey(node.nodeId)) {
+          "Duplicate node ids: ${map[node.nodeId]}, $node"
+        }
+        map.put(node.nodeId, node)
+      }
+    }
+  }
+
+  // TODO(cnsun): needs tests
+  @Synchronized
+  fun getNodeId2NodeMap(): Int2ObjectMap<AbstractSparTreeNode> {
+    val map = id2NodeMap.map
+    if (version == id2NodeMap.treeVersion) {
+      return map
+    }
+    // TODO(cnsun): code duplication here.
+    if (id2NodeMap.lastRoot.get() == realRoot) {
+      // The same root, means the tree has not been completely changed.
+      map.clear()
+      realRoot.postOrderVisit { node ->
+        check(!map.containsKey(node.nodeId)) {
+          "Duplicate node ids: ${map[node.nodeId]}, $node"
+        }
+        map.put(node.nodeId, node)
+      }
+    } else {
+      // The tree has been completely changed, so need to rebuild the map
+      val map = id2NodeMap.map
+      map.clear()
+      realRoot.postOrderVisit { node ->
+        check(!map.containsKey(node.nodeId)) {
+          "Duplicate node ids: ${map[node.nodeId]}, $node"
+        }
+        map.put(node.nodeId, node)
+      }
+    }
+    return map
+  }
+
   /**
    * Create an edit of this spar-tree. Any modification to the edit is not materialized on this
    * tree.
    */
-  fun createNodeDeletionEdit(
-    actionSet: NodeDeletionActionSet,
-  ): NodeDeletionTreeEdit {
+  fun createNodeDeletionEdit(actionSet: NodeDeletionActionSet): NodeDeletionTreeEdit {
     lazyAssert { !actionSet.isEmpty }
     return AbstractSparTreeEdit.createDeletionSparTreeEdit(this, actionSet)
   }
 
-  fun createNodeReplacementEdit(
-    actionSet: NodeReplacementActionSet,
-  ): DescendantHoistingTreeEdit {
-    return AbstractSparTreeEdit.createReplacementSparTreeEdit(this, actionSet)
-  }
+  fun createNodeReplacementEdit(actionSet: NodeReplacementActionSet): DescendantHoistingTreeEdit =
+    AbstractSparTreeEdit.createReplacementSparTreeEdit(this, actionSet)
 
   fun createRootReplacementEdit(
     newRoot: AbstractSparTreeNode,
@@ -150,24 +217,22 @@ class SparTree internal constructor(
 
   fun createAnyNodeReplacementEdit(
     actionSet: NodeReplacementActionSet,
-  ): AnyNodeReplacementTreeEdit {
-    return AbstractSparTreeEdit.createAnyNodeReplacementTreeEdit(this, actionSet)
-  }
+  ): AnyNodeReplacementTreeEdit =
+    AbstractSparTreeEdit.createAnyNodeReplacementTreeEdit(this, actionSet)
 
-  fun createLatraGeneralEdit(
-    actionSet: LatraGeneralActionSet,
-  ): LatraGeneralTreeEdit {
-    return AbstractSparTreeEdit.createLatraGeneralTreeEdit(this, actionSet)
-  }
+  fun createLatraGeneralEdit(actionSet: LatraGeneralActionSet): LatraGeneralTreeEdit =
+    AbstractSparTreeEdit.createLatraGeneralTreeEdit(this, actionSet)
 
   @Synchronized
   fun applyEdit(treeEdit: AbstractSparTreeEdit<*>) {
     val programSizeBefore = program.tokenCount
     treeEdit.applyToTree()
-    val event = AbstractSparTreeEditListener.SparTreeEditEvent(
-      programSizeBefore,
-      treeEdit,
-    )
+    updateLeafTokenCount()
+    val event =
+      AbstractSparTreeEditListener.SparTreeEditEvent(
+        programSizeBefore,
+        treeEdit,
+      )
     program = event.program
     lazyAssert({ program.tokens == computeTokenizedProgram().tokens }) {
       """|passed-in program: ${program.tokens}
@@ -183,9 +248,7 @@ class SparTree internal constructor(
     }
   }
 
-  fun registerSparTreeEditListeners(
-    listeners: List<AbstractSparTreeEditListener>,
-  ) {
+  fun registerSparTreeEditListeners(listeners: List<AbstractSparTreeEditListener>) {
     listeners.forEach { registerSparTreeEditListener(it) }
   }
 
@@ -194,9 +257,7 @@ class SparTree internal constructor(
     registerSparTreeEditListeners(other.editListeners)
   }
 
-  fun registerSparTreeEditListener(
-    listener: AbstractSparTreeEditListener,
-  ) {
+  fun registerSparTreeEditListener(listener: AbstractSparTreeEditListener) {
     require(!editListeners.contains(listener))
     editListeners.add(listener)
   }
@@ -226,9 +287,8 @@ class SparTree internal constructor(
    * This method is expensive, because each time it scans all the leaf nodes
    * until the i-th one is found.
    */
-  fun getLatestNthLeafNodeCostly(index: Int): LexerRuleSparTreeNode {
-    return leafNodeSequence().elementAt(index)
-  }
+  fun getLatestNthLeafNodeCostly(index: Int): LexerRuleSparTreeNode =
+    leafNodeSequence().elementAt(index)
 
   // TODO: test
   val remainingLexerRuleNodes: ImmutableList<LexerRuleSparTreeNode>
@@ -242,9 +302,7 @@ class SparTree internal constructor(
    * This API should be only used in testing, and should be replaced with [ ][org.perses.TestUtility.getNodeWithTokens]
    */
   @VisibleForTesting
-  fun getNodeByTreeScanForId(
-    id: Int,
-  ): AbstractSparTreeNode? {
+  fun getNodeByTreeScanForId(id: Int): AbstractSparTreeNode? {
     val result = ArrayList<AbstractSparTreeNode>(1)
     realRoot.preOrderVisit {
       if (it.nodeId == id) {
@@ -258,11 +316,11 @@ class SparTree internal constructor(
     return if (result.isEmpty()) null else result.single()
   }
 
-  fun getTokenNodeForText(text: String): ImmutableList<LexerRuleSparTreeNode> {
-    return leafNodeSequence().filter {
-      it.token.text == text
-    }.toImmutableList()
-  }
+  fun getTokenNodeForText(text: String): ImmutableList<LexerRuleSparTreeNode> =
+    leafNodeSequence()
+      .filter {
+        it.token.lexemeText == text
+      }.toImmutableList()
 
   /** The returned program might be stale if this tree is modified later.  */
   override val programSnapshot: TokenizedProgram
@@ -286,25 +344,27 @@ class SparTree internal constructor(
     return TokenizedProgram(customizer.result, tokenizedProgramFactory)
   }
 
-  fun updateLeafTokenCount() {
-    realRoot.updateLeafTokenCount()
-  }
+  fun updateLeafTokenCount(): Int =
+    if (hasRealRoot()) {
+      realRoot.updateLeafTokenCount()
+    } else {
+      0
+    }
 
   fun printTreeStructureToStdout() {
     println(printTreeStructure())
   }
 
-  override fun printTreeStructure(): String {
-    return realRoot.printTreeStructure()
-  }
+  override fun printTreeStructure(): String = realRoot.printTreeStructure()
 
   fun deepCopy(
     nodeIdCopyStrategy: NodeIdCopyStrategy,
   ): DeepCopyResult<SparTree, AbstractSparTreeNode> {
     val realRootNodeCopy = realRoot.recursiveDeepCopy(nodeIdCopyStrategy)
-    val sentinelRootCopy = SparTreeSentinelRootNode(
-      nodeId = sentinelRoot.nodeId,
-    )
+    val sentinelRootCopy =
+      SparTreeSentinelRootNode(
+        nodeId = sentinelRoot.nodeId,
+      )
     return realRootNodeCopy.transform {
       SparTree(
         realRoot = it,
@@ -314,27 +374,29 @@ class SparTree internal constructor(
     }
   }
 
-  private fun computeTokenizedProgram(): TokenizedProgram {
-    return TokenizedProgram(
-      leafNodeSequence().map { it.token }.toImmutableList(),
-      tokenizedProgramFactory,
+  private fun computeTokenizedProgram(): TokenizedProgram =
+    tokenizedProgramFactory.createFromLeaves(
+      leafNodeSequence().transformToImmutableList { it.token },
     )
-  }
 
   fun validateTreeIntegrity(): Boolean {
-    val leafNodes = ImmutableList.builder<LexerRuleSparTreeNode>().let { builder ->
-      realRoot.postOrderVisit {
-        if (it is LexerRuleSparTreeNode) {
-          builder.add(it)
-        }
-      }
-      builder.build()
+    if (!hasRealRoot()) {
+      return true
     }
+    val leafNodes =
+      ImmutableList.builder<LexerRuleSparTreeNode>().let { builder ->
+        realRoot.postOrderVisit {
+          if (it is LexerRuleSparTreeNode) {
+            builder.add(it)
+          }
+        }
+        builder.build()
+      }
     val leafNodesFromLinkedList = leafNodeSequence().toImmutableList()
     lazyAssert({ leafNodes == leafNodesFromLinkedList }) {
       """Different leaves detected.
-       |leaf nodes via root: ${leafNodes.map { it.token.text }}
-       |leaf nodes via link: ${leafNodesFromLinkedList.map { it.token.text }}
+       |leaf nodes via root: ${leafNodes.map { it.token.lexemeText }}
+       |leaf nodes via link: ${leafNodesFromLinkedList.map { it.token.lexemeText }}
        |
        |node hash via root: ${leafNodes.map { System.identityHashCode(it) }}
        |node hash via link: ${leafNodesFromLinkedList.map { System.identityHashCode(it) }}
@@ -343,12 +405,33 @@ class SparTree internal constructor(
     return leafNodes == leafNodesFromLinkedList
   }
 
+  fun lazyAssertTreeNodeIdsAreUnique() {
+    if (Util.ASSERTION_ENABLED) {
+      val nodeIds = ArrayListMultimap.create<Int, AbstractSparTreeNode>()
+      realRoot.postOrderVisit { node ->
+        nodeIds.put(node.nodeId, node)
+      }
+      val nodesWithDuplicateNodeIds = nodeIds.asMap().filter { it.value.size > 1 }
+      if (nodesWithDuplicateNodeIds.isNotEmpty()) {
+        error(
+          buildString {
+            appendLine("The following nodes have duplicate ids")
+            nodesWithDuplicateNodeIds.forEach { (nodeId, nodes) ->
+              appendLine("node id: $nodeId")
+              nodes.forEach { node ->
+                appendLine("    ${node.printTreeStructure()}")
+              }
+            }
+          },
+        )
+      }
+    }
+  }
+
   companion object {
     private var globalTreeIdGenerator = 0
 
-    internal fun updateTokenIntervalUpToRoot(
-      startNode: AbstractSparTreeNode,
-    ): Boolean {
+    internal fun updateTokenIntervalUpToRoot(startNode: AbstractSparTreeNode): Boolean {
       var nodeInfo: AbstractSparTreeNode? = startNode
       var globalChanged = false
       while (nodeInfo != null && nodeInfo.isParserRuleNode()) {
@@ -384,5 +467,24 @@ class SparTree internal constructor(
       prevLeftInclusive.next = rightExclusive
       rightExclusive.prev = prevLeftInclusive
     }
+  }
+
+  fun fixLinkIntegrityAndUpdateProgram() {
+    fixLinkIntegrity()
+    program = computeTokenizedProgram()
+  }
+
+  private fun fixLinkIntegrity() {
+    sentinelRoot.fixLinkIntegrity()
+    dummyTokenHead.next = sentinelRoot.beginToken
+    sentinelRoot.beginToken?.prev = dummyTokenHead
+    dummyTokenTail.prev = sentinelRoot.endToken
+    sentinelRoot.endToken?.next = dummyTokenTail
+  }
+
+  init {
+    updateLeafTokenCount()
+    fixLinkIntegrity()
+    program = computeTokenizedProgram()
   }
 }

@@ -35,9 +35,7 @@ interface ICoverageCollector {
     action: ICompilationAction,
     file: File,
     threadId: Long,
-  ): ActionResult {
-    return action.compile(file)
-  }
+  ): ActionResult = action.compile(file)
 
   @JsonIgnoreProperties(ignoreUnknown = true)
   data class CoverageReport(
@@ -48,12 +46,8 @@ interface ICoverageCollector {
     val aflMapDensity: Double,
     val aflHitCount: Int,
   ) {
-    fun getBranchCoverage(): Double {
-      return branch_covered.toDouble() / branch_total.toDouble()
-    }
+    fun getBranchCoverage(): Double = branch_covered.toDouble() / branch_total.toDouble()
 
-    fun getLineCoverage(): Double {
-      return line_covered.toDouble() / line_total.toDouble()
-    }
+    fun getLineCoverage(): Double = line_covered.toDouble() / line_total.toDouble()
   }
 }

@@ -18,8 +18,9 @@ package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
 
-data class Partition<T>(private val elements: ImmutableList<T>) : List<T> by elements {
-
+data class Partition<T : Any>(
+  private val elements: ImmutableList<T>,
+) : List<T> by elements {
   init {
     require(elements.size > 0) { "A partition cannot be empty." }
   }
@@ -40,9 +41,7 @@ data class Partition<T>(private val elements: ImmutableList<T>) : List<T> by ele
     )
   }
 
-  fun weightedSplit(
-    weightOfElements: (T) -> Int,
-  ): ImmutableList<Partition<T>> {
+  fun weightedSplit(weightOfElements: (T) -> Int): ImmutableList<Partition<T>> {
     val elements = elements
     val size = elements.size
     check(size > 0)
@@ -73,10 +72,13 @@ data class Partition<T>(private val elements: ImmutableList<T>) : List<T> by ele
   }
 
   /** A builder to build a Partition.  */
-  class Builder<T : Any>(capacity: Int) {
-    private var builder: ImmutableList.Builder<T> = ImmutableList.builderWithExpectedSize<T>(
-      capacity,
-    )
+  class Builder<T : Any>(
+    capacity: Int,
+  ) {
+    private var builder: ImmutableList.Builder<T> =
+      ImmutableList.builderWithExpectedSize<T>(
+        capacity,
+      )
     var size: Int = 0
       private set
 
@@ -86,8 +88,6 @@ data class Partition<T>(private val elements: ImmutableList<T>) : List<T> by ele
     }
 
     /** This method builds a partition, and the current builder becomes invalid.  */
-    fun build(): Partition<T> {
-      return Partition(builder.build())
-    }
+    fun build(): Partition<T> = Partition(builder.build())
   }
 }

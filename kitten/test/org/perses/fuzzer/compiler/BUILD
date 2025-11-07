@@ -6,7 +6,6 @@ kt_jvm_test(
     name = "CrashSignatureTest",
     srcs = ["CrashSignatureTest.kt"],
     deps = [
-        "//:flogger",
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
@@ -19,7 +18,6 @@ kt_jvm_library(
         "CrashDetectorHelper.kt",
     ],
     deps = [
-        "//:flogger",
         "//:guava",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
     ],

@@ -21,12 +21,14 @@ import com.google.common.collect.ImmutableList
 import java.lang.RuntimeException
 import java.util.Random
 
-class DistributionTable<T>(val entries: ImmutableList<Entry<T>>) {
-
-  val totalWeight = entries
-    .asSequence()
-    .map { it.weight }
-    .sum()
+class DistributionTable<T>(
+  val entries: ImmutableList<Entry<T>>,
+) {
+  val totalWeight =
+    entries
+      .asSequence()
+      .map { it.weight }
+      .sum()
 
   fun sample(random: Random): T {
     val probability = random.nextInt(totalWeight) + 1

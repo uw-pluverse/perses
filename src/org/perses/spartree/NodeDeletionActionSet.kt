@@ -23,9 +23,11 @@ class NodeDeletionActionSet private constructor(
   actions: ImmutableList<NodeDeletionAction>,
   actionsDescription: String,
 ) : AbstractActionSet<NodeDeletionAction>(actions, actionsDescription, canBeSorted = true) {
-
-  class Builder(private val actionsDescription: String) {
+  class Builder(
+    private val actionsDescription: String,
+  ) {
     private val nodesToDelete = LinkedHashSet<AbstractSparTreeNode>()
+
     fun deleteNode(node: AbstractSparTreeNode): Builder {
       check(nodesToDelete.add(node))
       return this
@@ -36,18 +38,17 @@ class NodeDeletionActionSet private constructor(
       return this
     }
 
-    fun build(): NodeDeletionActionSet {
-      return NodeDeletionActionSet(
-        actions = nodesToDelete.asSequence()
-          .sortedBy { it.nodeId }
-          .transformToImmutableList { NodeDeletionAction(it) },
+    fun build(): NodeDeletionActionSet =
+      NodeDeletionActionSet(
+        actions =
+          nodesToDelete
+            .asSequence()
+            .sortedBy { it.nodeId }
+            .transformToImmutableList { NodeDeletionAction(it) },
         actionsDescription = actionsDescription,
       )
-    }
 
-    fun size(): Int {
-      return nodesToDelete.size
-    }
+    fun size(): Int = nodesToDelete.size
   }
 
   companion object {
@@ -55,18 +56,15 @@ class NodeDeletionActionSet private constructor(
     fun createByDeleteSingleNode(
       node: AbstractSparTreeNode,
       actionsDescription: String,
-    ): NodeDeletionActionSet {
-      return NodeDeletionActionSet(
+    ): NodeDeletionActionSet =
+      NodeDeletionActionSet(
         ImmutableList.of(NodeDeletionAction(node)),
         actionsDescription,
       )
-    }
 
     fun createByDeletingNodes(
       nodes: Iterable<AbstractSparTreeNode>,
       actionsDescription: String,
-    ): NodeDeletionActionSet {
-      return Builder(actionsDescription).deleteNodes(nodes).build()
-    }
+    ): NodeDeletionActionSet = Builder(actionsDescription).deleteNodes(nodes).build()
   }
 }

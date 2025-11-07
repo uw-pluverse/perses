@@ -26,7 +26,6 @@ import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class ShellOutputLinesTest {
-
   val list: ShellOutputLines
 
   init {

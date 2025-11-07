@@ -44,20 +44,23 @@ class LexerParserCombinerTest {
       | start: BREAK NIL_LIT;
       """.trimMargin()
 
-    val combined = removeWhitespaces(
-      LexerParserCombiner.combineLexerAndParser(lexerDef, parserDef, "Toy"),
-    )
+    val combined =
+      removeWhitespaces(
+        LexerParserCombiner.combineLexerAndParser(lexerDef, parserDef, "Toy"),
+      )
 
-    val expected = removeWhitespaces(
-      """// Combined by org.perses.antlr.util.LexerParserCombiner
-      // DO NOT MODIFY.
-      grammar Toy;
-      BREAK : 'break' ;
-      NIL_LIT : 'nil' ;
-      fragment DECIMALS : [0-9]+;
-      start : BREAK NIL_LIT ;
-      """.trimIndent(),
-    )
+    val expected =
+      removeWhitespaces(
+        """
+        // Combined by org.perses.antlr.util.LexerParserCombiner
+        // DO NOT MODIFY.
+        grammar Toy;
+        BREAK : 'break' ;
+        NIL_LIT : 'nil' ;
+        fragment DECIMALS : [0-9]+;
+        start : BREAK NIL_LIT ;
+        """.trimIndent(),
+      )
     Truth.assertThat(combined).isEqualTo(expected)
   }
 

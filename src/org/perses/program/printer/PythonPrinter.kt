@@ -22,14 +22,12 @@ import org.perses.program.TokenizedProgram
 class PythonPrinter private constructor(
   val keepBlankLines: Boolean,
   val tokenPositionProvider: AbstractTokenPositionProvider,
-) :
-  AbstractTokenizedProgramPrinter() {
-
+) : AbstractTokenizedProgramPrinter() {
   override fun print(
     program: TokenizedProgram,
     tokenPlacementListener: AbstractTokenPlacementListener?,
-  ): AbstractLazySourceCode {
-    return object : AbstractLazySourceCode() {
+  ): AbstractLazySourceCode =
+    object : AbstractLazySourceCode() {
       override fun computeStringBuilder() =
         PythonFormatPrintingVisitor(
           program,
@@ -39,7 +37,6 @@ class PythonPrinter private constructor(
           tokenPlacementListener = tokenPlacementListener,
         ).visit().result
     }
-  }
 
   override fun extraEquals(other: Any): Boolean {
     if (other !is PythonPrinter) {
@@ -48,13 +45,12 @@ class PythonPrinter private constructor(
     return keepBlankLines == other.keepBlankLines
   }
 
-  override fun extraHashCode(): Int {
-    return keepBlankLines.hashCode()
-  }
+  override fun extraHashCode(): Int = keepBlankLines.hashCode()
 
   companion object {
     fun getOrigFormat(tokenPositionProvider: AbstractTokenPositionProvider) =
       PythonPrinter(keepBlankLines = true, tokenPositionProvider)
+
     fun getCompactOrigFormat(tokenPositionProvider: AbstractTokenPositionProvider) =
       PythonPrinter(keepBlankLines = false, tokenPositionProvider)
   }

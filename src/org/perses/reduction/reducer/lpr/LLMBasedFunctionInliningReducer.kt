@@ -23,27 +23,27 @@ import org.perses.reduction.ReducerContext
 class LLMBasedFunctionInliningReducer(
   reducerContext: ReducerContext,
 ) : AbstractLLMBasedReducer(META, reducerContext) {
-
-  override val primaryQuestion: String = """
+  override val primaryQuestion: String =
+    """
     |Given the following program, identify all functions (other than the main function).
     |Please write the identified functions into a list.
     |If no function is identified, just give an empty list.
-  """.trimMargin()
+    """.trimMargin()
 
-  override val followupQuestion: String = """
+  override val followupQuestion: String =
+    """
     |Given the following program and the specified function, optimize it out via function inlining.
-  """.trimMargin()
+    """.trimMargin()
 
   object META : AbstractLLMReducerAnnotation(
     shortName = NAME,
     description = "Invoke LLMs for function inlining.",
-    deterministic = false,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
-      return ImmutableList.of(LLMBasedFunctionInliningReducer(reducerContext))
-    }
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      ImmutableList.of(LLMBasedFunctionInliningReducer(reducerContext))
   }
+
   companion object {
     const val NAME = "llm_based_function_inlining_reducer"
   }

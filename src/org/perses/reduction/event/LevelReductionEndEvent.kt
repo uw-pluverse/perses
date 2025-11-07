@@ -21,12 +21,8 @@ class LevelReductionEndEvent internal constructor(
   currentTimeMillis: Long,
   programSize: Int,
   val level: Int,
-) :
-  AbstractEndEvent<LevelReductionStartEvent>(startEvent, currentTimeMillis, programSize) {
-
+) : AbstractEndEvent<LevelReductionStartEvent>(startEvent, currentTimeMillis, programSize) {
   val iteration = startEvent.iteration
 
-  override fun initialProgramSize(): Int {
-    return startEvent.initialProgramSize()
-  }
+  override fun initialProgramSize(): Int = startEvent.initialProgramSize()
 }

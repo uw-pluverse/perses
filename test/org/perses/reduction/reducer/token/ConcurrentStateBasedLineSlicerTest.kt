@@ -20,25 +20,23 @@ import com.google.common.truth.Truth
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.AbstractReducerFunctionalTest
+import org.perses.reduction.ReducerFunctionalTestUtility
 
 @RunWith(JUnit4::class)
-class ConcurrentStateBasedLineSlicerTest : AbstractReducerFunctionalTest() {
-
+class ConcurrentStateBasedLineSlicerTest {
   @Test
   fun testDelta1GrepBased() {
-    test(
+    ReducerFunctionalTestUtility(
       reductionFolder = "test/org/perses/benchmark_toys/delta_1",
       testScript = "grep_based_r.sh",
       sourceFile = "t.c",
-      algorithmType = ConcurrentStateBasedLineSlicer.CompositeReducerAnnotation,
+      reducerAnnotation = ConcurrentStateBasedLineSlicer.CompositeReducerAnnotation,
       cmdCustomizer = {},
+    ).use {
       // It is not possible to get only the string literal, because our token slicer
       // checks syntactical validity before each property test.
-      expected = """
-  main{("world\n");}
-""".trim(),
-    )
+      it.runReducerAndTest(expected = """main{("world\n");}""".trim())
+    }
   }
 
   @Test

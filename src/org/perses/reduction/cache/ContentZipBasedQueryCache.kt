@@ -19,44 +19,47 @@ package org.perses.reduction.cache
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.cache.ContentZipBasedQueryCache.ContentZipEncoder
 import org.perses.reduction.cache.ContentZipBasedQueryCache.ContentZipEncoding
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.util.Util
+import java.nio.charset.StandardCharsets
 
 class ContentZipBasedQueryCache(
   tokenizedProgram: TokenizedProgram,
   profiler: AbstractQueryCacheProfiler,
   configuration: QueryCacheConfiguration,
 ) : AbstractRealQueryCache<ContentZipEncoding, ContentZipEncoder>(
-  tokenizedProgram,
-  profiler,
-  configuration,
-) {
-
+    tokenizedProgram,
+    profiler,
+    configuration,
+  ) {
   override fun createEncoder(
     baseProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
-  ): ContentZipEncoder {
-    return ContentZipEncoder(baseProgram, profiler)
-  }
+  ): ContentZipEncoder = ContentZipEncoder(baseProgram, profiler)
 
   class ContentZipEncoder(
     tokenizedProgram: TokenizedProgram,
     profiler: AbstractQueryCacheProfiler,
   ) : AbstractTokenizedProgramEncoder<ContentZipEncoding>(
-    tokenizedProgram,
-    profiler,
-    supportsRccReEncoding = false,
-  ) {
-    override fun encode(program: TokenizedProgram): ContentZipEncoding {
-      val rawContent = program.tokens.asSequence()
-        .map { it.text }
-        .joinToString("\n")
-      val zip: ByteArray = Util.zipCompress(rawContent)
+      tokenizedProgram,
+      profiler,
+      supportsRccReEncoding = false,
+    ) {
+    override fun encode(
+      program: TokenizedProgram,
+      outputManager: AbstractOutputManager,
+    ): ContentZipEncoding {
+      val rawContent =
+        program.tokens
+          .asSequence()
+          .map { it.lexemeText }
+          .joinToString("\n")
+      val zip: ByteArray = Util.compressStringToZipByteArray(rawContent)
       return ContentZipEncoding(zip, program.tokenCount)
     }
 
-    override fun reEncode(previousEncoding: ContentZipEncoding): ContentZipEncoding? {
+    override fun reEncode(previousEncoding: ContentZipEncoding): ContentZipEncoding? =
       throw UnsupportedOperationException()
-    }
 
     override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {}
   }
@@ -69,8 +72,7 @@ class ContentZipBasedQueryCache(
       return zip.contentEquals(other.zip) // kotlin function for Arrays.equal()
     }
 
-    fun decompressProgram(): String {
-      return String(Util.zipDecompress(zip), Charsets.UTF_8)
-    }
+    fun decompressProgram(): String =
+      String(Util.decompressZipByteArray(zip), StandardCharsets.UTF_8)
   }
 }

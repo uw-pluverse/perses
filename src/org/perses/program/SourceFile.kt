@@ -27,6 +27,5 @@ class SourceFile(
   file: Path,
   languageKind: LanguageKind,
 ) : AbstractReductionFile<LanguageKind, SourceFile>(languageKind, file) {
-
   val textualFileContent by fileWithContent::textualFileContent
 }

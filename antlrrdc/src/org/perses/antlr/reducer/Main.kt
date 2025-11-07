@@ -19,13 +19,17 @@ package org.perses.antlr.reducer
 import org.perses.reduction.GlobalContext
 import org.perses.util.cmd.AbstractMain
 import org.perses.util.cmd.CommandLineProcessor
+import org.perses.util.hashing.EnumShaAlgorithm
 
-class Main(cmd: CommandOptions) : AbstractMain<CommandOptions>(cmd) {
-
+class Main(
+  cmd: CommandOptions,
+) : AbstractMain<CommandOptions>(cmd) {
   public override fun internalRun() {
     GlobalContext(
+      enableGlobalCache = false,
       globalCacheFile = null,
       pathToSaveUpdatedGlobalCache = null,
+      shaAlgorithm = EnumShaAlgorithm.SHA512,
     ).use { context ->
       GrammarReductionDriver.create(context, cmd).use { driver -> driver.reduce() }
     }
@@ -34,11 +38,12 @@ class Main(cmd: CommandOptions) : AbstractMain<CommandOptions>(cmd) {
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val processor = CommandLineProcessor(
-        cmdCreator = { CommandOptions() },
-        programName = Main::class.qualifiedName!!,
-        args = args,
-      )
+      val processor =
+        CommandLineProcessor(
+          cmdCreator = { CommandOptions() },
+          programName = Main::class.qualifiedName!!,
+          args = args,
+        )
       if (processor.process() == CommandLineProcessor.HelpRequestProcessingDecision.EXIT) {
         return
       }
