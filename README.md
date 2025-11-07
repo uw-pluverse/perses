@@ -315,7 +315,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 2. Pushing the Limit of 1-Minimality of Language-Agnostic Program Reduction (OOPSLA 2023, [pdf](./doc/publication/2023_vulcan_oopsla.pdf))
+#### 2. Pushing the Limit of 1-Minimality of Language-Agnostic Program Reduction (OOPSLA 2023, [pdf](./doc/publication/2023_vulcan_oopsla.pdf))
 
 ```
 @article{perses-vulcan,
@@ -330,7 +330,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 3. PPR: Pairwise Program Reduction (ESEC/FSE 2023, [pdf](./doc/publication/2023_ppr_fse.pdf), [doc](./ppr/README.md))
+#### 3. PPR: Pairwise Program Reduction (ESEC/FSE 2023, [pdf](./doc/publication/2023_ppr_fse.pdf), [doc](./ppr/README.md))
 
 ```
 @inproceedings{perses-ppr,
@@ -342,7 +342,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 4. On the Caching Schemes to Speed Up Program Reduction (TOSEM, [pdf](./doc/publication/2023_caching_tosem.pdf))
+#### 4. On the Caching Schemes to Speed Up Program Reduction (TOSEM, [pdf](./doc/publication/2023_caching_tosem.pdf))
 
 ```
 @article{perses-caching,
@@ -357,7 +357,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 5. LPR: Large language models-aided program reduction (ISSTA 2024, [pdf](./doc/publication/2024_lpr_issta.pdf))
+#### 5. LPR: Large language models-aided program reduction (ISSTA 2024, [pdf](./doc/publication/2024_lpr_issta.pdf))
 
 ```
 @inproceedings{perses-lpr,
@@ -369,7 +369,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 6. T-Rec: Fine-Grained Language-Agnostic Program Reduction Guided by Lexical Syntax (TOSEM, [pdf](./doc/publication/2024_trec_tosem.pdf))
+#### 6. T-Rec: Fine-Grained Language-Agnostic Program Reduction Guided by Lexical Syntax (TOSEM, [pdf](./doc/publication/2024_trec_tosem.pdf))
 
 ```
 @article{perses-trec,
@@ -381,7 +381,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 7. WDD: Weighted Delta Debugging (ICSE, [pdf](./doc/publication/2025_wdd_icse.pdf))
+#### 7. WDD: Weighted Delta Debugging (ICSE, [pdf](./doc/publication/2025_wdd_icse.pdf))
 
 ```
 @article{perses-wdd,
@@ -394,7 +394,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 8. Toward a Better Understanding of Probabilistic Delta Debugging (ICSE, [pdf](./doc/publication/2025_cdd_icse.pdf))
+#### 8. Toward a Better Understanding of Probabilistic Delta Debugging (ICSE, [pdf](./doc/publication/2025_cdd_icse.pdf))
 
 ```
 @article{perses-cdd,
@@ -407,7 +407,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 9. Boosting Program Reduction with the Missing Piece of Syntax-Guided Transformations (OOPSLA, [pdf](./doc/publication/2025_sfc_oopsla.pdf))
+#### 9. Boosting Program Reduction with the Missing Piece of Syntax-Guided Transformations (OOPSLA, [pdf](./doc/publication/2025_sfc_oopsla.pdf))
 
 ```
 @article{perses-sfc,
@@ -420,7 +420,7 @@ This repository contains the implementations of the techniques proposed in the f
 }
 ```
 
-##### 10. Latra: A Template-Based Language-Agnostic Transformation Framework for Effective Program Reduction  (ASE, [pdf](./doc/publication/2025_latra_ase.pdf))
+#### 10. Latra: A Template-Based Language-Agnostic Transformation Framework for Effective Program Reduction  (ASE, [pdf](./doc/publication/2025_latra_ase.pdf))
 
 ```
 @article{perses-latra,
