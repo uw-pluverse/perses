@@ -17,8 +17,8 @@
 package org.perses.spartree
 
 import com.google.common.base.MoreObjects
-import com.google.common.collect.ComparisonChain
 import org.perses.util.Util
+import kotlin.comparisons.compareBy
 
 class NodeReplacementAction(
   targetNode: AbstractSparTreeNode,
@@ -36,12 +36,9 @@ class NodeReplacementAction(
 
   override fun internalCompareTo(o: AbstractTreeEditAction): Int {
     check(o is NodeReplacementAction) { "$o. ${o::class}" }
-    // TODO, refactor this with kotlin's comparator.
-    return ComparisonChain
-      .start()
-      .compare(targetNode.nodeId, o.targetNode.nodeId)
-      .compare(replacingNode.nodeId, o.replacingNode.nodeId)
-      .result()
+    return compareBy<NodeReplacementAction> { it.targetNode.nodeId }
+      .thenBy { it.replacingNode.nodeId }
+      .compare(this, o)
   }
 
   override val description: String

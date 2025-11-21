@@ -19,7 +19,7 @@ package org.perses.reduction.reducer.latra.language
 import com.google.common.collect.ImmutableList
 import org.antlr.v4.runtime.CommonToken
 import org.perses.grammar.AbstractParserFacade
-import org.perses.program.PersesTokenFactory
+import org.perses.program.TokenPosition
 import org.perses.reduction.reducer.latra.language.AbstractLatraPattern.Companion.findAllHolesIn
 import org.perses.reduction.reducer.latra.language.AbstractPatternElement.ConcreteToken
 import org.perses.reduction.reducer.latra.language.AbstractPatternElement.Hole
@@ -92,8 +92,8 @@ class PatternElementParser(
     }
   }
 
-  private fun getPositionAndUpdate(consumedString: String): PersesTokenFactory.TokenPosition {
-    val current = PersesTokenFactory.TokenPosition(currentLineNo, currentCharPositionInLine)
+  private fun getPositionAndUpdate(consumedString: String): TokenPosition {
+    val current = TokenPosition(currentLineNo, currentCharPositionInLine)
     consumedString.forEach { char ->
       if (char == '\n') {
         ++currentLineNo

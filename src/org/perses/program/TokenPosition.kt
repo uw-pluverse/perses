@@ -14,22 +14,15 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.grammar.dyck
+package org.perses.program
 
-import com.google.common.collect.ImmutableSet
-import org.perses.program.EnumFormatControl
-import org.perses.program.LanguageKind
-
-object LanguageBraceParenthesisDyck : LanguageKind(
-  name = "dyck-brace-parenthesis",
-  extensions = ImmutableSet.of("dyck_brace_parenthesis"),
-  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
-  origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  defaultFormatterCommandCreators = createPotentialCodeFormatterList(),
-  allowedCodeFormatControl =
-    ImmutableSet.of(
-      EnumFormatControl.ORIG_FORMAT,
-      EnumFormatControl.COMPACT_ORIG_FORMAT,
-    ),
-  hidden = true,
-)
+data class TokenPosition(
+  val line: Int,
+  val charPositionInLine: Int,
+) {
+  // TODO: need to enable these assertions.
+//    init {
+//      require(line >= 0) { line }
+//      require(charPositionInLine >= 0) { charPositionInLine }
+//    }
+}

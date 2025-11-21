@@ -27,11 +27,11 @@ object IntervalArrayExpander {
       override fun hasNext() = false
 
       override fun nextInt(): Int {
-        TODO("Not yet implemented")
+        error("Not yet implemented")
       }
 
       override fun remove() {
-        TODO("Not supported")
+        error("Not supported")
       }
     }
 
@@ -82,7 +82,7 @@ object IntervalArrayExpander {
 
       @Deprecated("Do not call.", ReplaceWith("Never call this."))
       override fun remove() {
-        TODO("Not supported")
+        error("Not supported")
       }
     }
   }

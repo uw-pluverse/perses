@@ -59,6 +59,7 @@ kt_jvm_library(
     srcs = [
         "AbstractLazySourceCode.kt",
         "PersesTokenFactory.kt",
+        "TokenPosition.kt",
         "TokenizedProgram.kt",
         "TokenizedProgramFactory.kt",
     ],

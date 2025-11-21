@@ -14,22 +14,15 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.grammar.dyck
+package org.perses.reduction.reducer.latra
 
-import com.google.common.collect.ImmutableSet
-import org.perses.program.EnumFormatControl
-import org.perses.program.LanguageKind
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
-object LanguageBraceParenthesisDyck : LanguageKind(
-  name = "dyck-brace-parenthesis",
-  extensions = ImmutableSet.of("dyck_brace_parenthesis"),
-  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
-  origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  defaultFormatterCommandCreators = createPotentialCodeFormatterList(),
-  allowedCodeFormatControl =
-    ImmutableSet.of(
-      EnumFormatControl.ORIG_FORMAT,
-      EnumFormatControl.COMPACT_ORIG_FORMAT,
-    ),
-  hidden = true,
-)
+@RunWith(JUnit4::class)
+class LatraArgumentsTest {
+  @Test
+  fun test() {
+  }
+}

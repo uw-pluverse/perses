@@ -16,8 +16,6 @@ Currently, Perses supports reduction for the following programming languages:
 
 + c: `*.c`
 + cpp: `*.cc`, `*.cpp`, `*.cxx`
-+ dyck-brace-parenthesis: `*.dyck_brace_parenthesis`
-+ dyck-brace: `*.dyck_brace`
 + glsl: `*.glsl`, `*.comp`, `*.frag`, `*.vert`
 + go: `*.go`
 + jackson-yaml: `*.jackson`, `*.yaml`, `*.yml`

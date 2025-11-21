@@ -25,6 +25,7 @@ import org.perses.reduction.reducer.TreeTransformations.findCompatibleDescendant
 import org.perses.reduction.reducer.TreeTransformations.findCompatibleKleeneDescendantsForKleeneQuantifiedNode
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.AbstractSparTreeNode.Companion.canBeEpsilon
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.NodeReplacementAction

@@ -108,7 +108,7 @@ object QueryCacheFactory {
         )
       }
       else -> {
-        TODO("Unhandled $cacheType")
+        error("Unhandled $cacheType")
       }
     }
 }

@@ -54,6 +54,7 @@ class SupportedLanguageDumpMain(
       AbstractMain
         .createBuiltinParserFacadeFactory()
         .languageSequence()
+        .filter { it.hidden.not() }
         .map { languageToString(it) }
         .sorted()
         .toImmutableList()

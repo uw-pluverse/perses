@@ -19,7 +19,7 @@ package org.perses.reduction.reducer.latra.language
 import com.google.common.base.MoreObjects
 import org.antlr.v4.runtime.CommonToken
 import org.antlr.v4.runtime.Token
-import org.perses.program.PersesTokenFactory
+import org.perses.program.TokenPosition
 
 sealed class AbstractPatternElement {
   abstract val originalSourceCode: String
@@ -71,7 +71,7 @@ sealed class AbstractPatternElement {
   data class Hole(
     val holeName: HoleName,
     val greedyKleenePlusMatching: Boolean,
-    val tokenPosition: PersesTokenFactory.TokenPosition,
+    val tokenPosition: TokenPosition,
   ) : AbstractPatternElement() {
     override val originalSourceCode: String by lazy {
       printHoleDefinition(holeName, greedyKleenePlusMatching)
@@ -114,7 +114,7 @@ sealed class AbstractPatternElement {
       fun create(
         holeName: String,
         greedyKleenePlusMatching: Boolean,
-        tokenPosition: PersesTokenFactory.TokenPosition,
+        tokenPosition: TokenPosition,
       ) = Hole(HoleName(holeName), greedyKleenePlusMatching, tokenPosition)
 
       fun printHoleDefinition(
@@ -126,7 +126,7 @@ sealed class AbstractPatternElement {
 
   data class Trivia(
     override val originalSourceCode: String,
-    val tokenPosition: PersesTokenFactory.TokenPosition,
+    val tokenPosition: TokenPosition,
   ) : AbstractPatternElement() {
     init {
       require(originalSourceCode.isNotEmpty())

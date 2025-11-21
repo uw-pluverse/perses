@@ -32,8 +32,8 @@ import org.perses.grammar.rust.PnfRustLexer
 import org.perses.grammar.smtlibv2.LanguageSmtLibV2
 import org.perses.grammar.smtlibv2.PnfSMTLIBv2Lexer
 import org.perses.program.EnumFormatControl
-import org.perses.program.PersesTokenFactory
 import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.TokenPosition
 import org.perses.program.TokenizedProgram
 import org.perses.util.transformToImmutableList
 import java.nio.charset.StandardCharsets
@@ -313,7 +313,7 @@ class TokenizedProgramPrinterTest {
           ): Int = 2
         },
       )
-    val map = HashMap<String, PersesTokenFactory.TokenPosition>()
+    val map = HashMap<String, TokenPosition>()
     val listener =
       object : AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener() {
         override fun onTokenPlacement(
@@ -322,7 +322,7 @@ class TokenizedProgramPrinterTest {
           charPositionInLine: Int,
         ) {
           assertThat(map.containsKey(token.lexemeText)).isFalse()
-          map[token.lexemeText] = PersesTokenFactory.TokenPosition(line, charPositionInLine)
+          map[token.lexemeText] = TokenPosition(line, charPositionInLine)
         }
       }
     val printedSourceCode =

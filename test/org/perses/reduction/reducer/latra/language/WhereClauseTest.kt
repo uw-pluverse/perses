@@ -22,7 +22,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.perses.TestUtility
 import org.perses.grammar.c.OrigCParserFacade
-import org.perses.program.PersesTokenFactory
+import org.perses.program.TokenPosition
 import org.perses.spartree.AbstractSparTreeNode
 
 class WhereClauseTest {
@@ -35,7 +35,7 @@ class WhereClauseTest {
         holeName,
         greedyKleenePlusMatching = false,
         tokenPosition =
-          PersesTokenFactory.TokenPosition(
+          TokenPosition(
             line = 1,
             charPositionInLine = 1,
           ),

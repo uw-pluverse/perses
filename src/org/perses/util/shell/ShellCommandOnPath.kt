@@ -146,7 +146,6 @@ data class ShellCommandOnPath(
           it.endsWith(cmdName)
         } else {
           val fullPath = it.resolve(cmdName)
-          // TODO: better way to test whether a file is executable.
           Files.isRegularFile(fullPath) && Files.isExecutable(fullPath)
         }
       }

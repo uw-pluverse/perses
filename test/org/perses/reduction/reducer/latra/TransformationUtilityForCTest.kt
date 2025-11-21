@@ -26,7 +26,7 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.antlr.ParseTreeUtil
 import org.perses.grammar.c.CParserFacade
-import org.perses.program.PersesTokenFactory
+import org.perses.program.TokenPosition
 import org.perses.program.TokenizedProgramFactory
 import org.perses.reduction.reducer.latra.TransformationUtility.PatternMatchingResult
 import org.perses.reduction.reducer.latra.language.AbstractLatraPattern
@@ -76,7 +76,7 @@ class TransformationUtilityForCTest {
 
   private val tokens = tree.realRoot.leafNodeSequence().toList()
 
-  val position = PersesTokenFactory.TokenPosition(line = 1, charPositionInLine = 2)
+  val position = TokenPosition(line = 1, charPositionInLine = 2)
 
   @Test
   fun testCreateStringFromNodes() {

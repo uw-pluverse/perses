@@ -91,18 +91,6 @@ class PersesTokenFactory {
       stopIndex = token.stopIndex,
     )
 
-  // TODO(cnsun): refactor this into a separate class.
-  data class TokenPosition(
-    val line: Int,
-    val charPositionInLine: Int,
-  ) {
-    // TODO: need to enable these assertions.
-//    init {
-//      require(line >= 0) { line }
-//      require(charPositionInLine >= 0) { charPositionInLine }
-//    }
-  }
-
   sealed class AbstractPersesToken {
     abstract val persesLexemeId: Int
 

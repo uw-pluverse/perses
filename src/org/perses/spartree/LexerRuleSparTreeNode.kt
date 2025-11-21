@@ -66,11 +66,11 @@ class LexerRuleSparTreeNode internal constructor(
 
   override var beginToken: LexerRuleSparTreeNode?
     get() = this
-    set(_) = TODO()
+    set(_) = error("Cannot change this")
 
   override var endToken: LexerRuleSparTreeNode?
     get() = this
-    set(_) = TODO()
+    set(_) = error("Cannot change this")
 
   override fun toString(): String =
     MoreObjects

@@ -44,6 +44,7 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.toTokenType
 import org.perses.grammar.AbstractParserFacade
 import org.perses.program.PersesTokenFactory
+import org.perses.program.TokenPosition
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
 import org.perses.util.Util.lazyAssert
 import org.perses.util.toImmutableList
@@ -104,7 +105,7 @@ class MinimalSparTreeGenerator(
           } else {
             val tokenWithUpdatedLineNumber =
               preGeneratedLeaf.token.asAntlrToken().copyWithNewPosition(
-                PersesTokenFactory.TokenPosition(
+                TokenPosition(
                   lineNumber,
                   preGeneratedLeaf.token
                     .asAntlrToken()

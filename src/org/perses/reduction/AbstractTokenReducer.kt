@@ -19,7 +19,6 @@ package org.perses.reduction
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import com.google.common.hash.HashCode
-import org.perses.antlr.RuleType
 import org.perses.listminimizer.AbstractListMinimizerListener
 import org.perses.listminimizer.Candidate
 import org.perses.listminimizer.EnumListMinimizerType
@@ -45,7 +44,6 @@ import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.NodeDeletionTreeEdit
-import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
 import org.perses.util.AbstractFileContent
@@ -308,50 +306,6 @@ abstract class AbstractTokenReducer protected constructor(
       ),
     )
     return builder.build()
-  }
-
-  // TODO(cnsun): might consider moving this method to AbstractSparTreeNode
-  protected fun canBeEpsilon(nodeForTest: AbstractSparTreeNode): Boolean {
-    require(nodeForTest.isParserRuleNode() || nodeForTest.isTokenNode())
-    var node: AbstractSparTreeNode? = nodeForTest
-    while (node != null) {
-      check(node.antlrRule != null) { node!! }
-      if (node.antlrRule!!.canRuleBeEpsilon()) {
-        // If the rule of the current node can be epsilon.
-        return true
-      }
-      val parent = node.parent
-      if (parent == null || parent.isSentinelRoot()) {
-        // The root node.
-        return false
-      }
-      val payload = node.payload!!
-      val antlrRuleForTheChild = payload.expectedAntlrRuleType!!
-      if (antlrRuleForTheChild.canRuleBeEpsilon()) {
-        // If the EXPECTED rule of the current node can be epsilon.
-        return true
-      }
-      val childCount = parent.childCount
-      return if (childCount == 1) {
-        // Only the current node, then check whether the parent node rule can be epsilon.
-        node = parent
-        continue
-      } else if (childCount > 1) {
-        check(parent is ParserRuleSparTreeNode)
-        when (parent.ruleType) {
-          RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
-          RuleType.OPTIONAL ->
-            error(
-              "Optional should have a single child. " + node.printTreeStructure(),
-            )
-
-          else -> false
-        }
-      } else {
-        error("Unreachable. " + node.printTreeStructure())
-      }
-    }
-    return false
   }
 
   private fun createNodeDeletionActionSetInverse(

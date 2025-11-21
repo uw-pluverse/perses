@@ -27,6 +27,7 @@ reduction_golden_test(
     log_file = LOG_FILE,
     other_flags = {
         "--hide-timestamps": "true",
+        "--fully-deterministic-mode": "true",
     },
     progress_dump_file = "reduction_progress.txt",
     reduction_algorithm = "node_priority-dfs",

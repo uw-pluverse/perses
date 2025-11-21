@@ -86,11 +86,11 @@ sealed class AbstractSparTreeNode(
   fun isNonRootParserRuleNode() = isParserRuleNode() && !isRootNode()
 
   open fun asParserRule(): ParserRuleSparTreeNode {
-    TODO("The current class is ${this::class}. $this")
+    error("The current class is ${this::class}. $this")
   }
 
   open fun asLexerRule(): LexerRuleSparTreeNode {
-    TODO("The current class is ${this::class}. $this")
+    error("The current class is ${this::class}. $this")
   }
 
   /**
@@ -294,6 +294,54 @@ sealed class AbstractSparTreeNode(
 
       builder.append("}")
       return builder.toString()
+    }
+
+    // TODO(cnsun): needs tests.
+    fun canBeEpsilon(nodeForTest: AbstractSparTreeNode): Boolean {
+      require(nodeForTest.isParserRuleNode() || nodeForTest.isTokenNode())
+      var node: AbstractSparTreeNode? = nodeForTest
+      while (node != null) {
+        val antlrRule = node.antlrRule
+        check(antlrRule != null) {
+          "No antlrRule found for node $node"
+        }
+        if (antlrRule.canRuleBeEpsilon()) {
+          // If the rule of the current node can be epsilon.
+          return true
+        }
+        val parent = node.parent
+        if (parent == null || parent.isSentinelRoot()) {
+          // The root node.
+          return false
+        }
+        val payload = node.payload!!
+        val antlrRuleForTheChild = payload.expectedAntlrRuleType!!
+        if (antlrRuleForTheChild.canRuleBeEpsilon()) {
+          // If the EXPECTED rule of the current node can be epsilon.
+          return true
+        }
+        val childCount = parent.childCount
+        return if (childCount == 1) {
+          // Only the current node, then check whether the parent node rule can be epsilon.
+          node = parent
+          continue
+        } else if (childCount > 1) {
+          check(parent is ParserRuleSparTreeNode) {
+            "The parent is expected to be a parser rule node"
+          }
+          when (parent.ruleType) {
+            RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
+            RuleType.OPTIONAL ->
+              error(
+                "Optional should have a single child. " + node.printTreeStructure(),
+              )
+            else -> false
+          }
+        } else {
+          error("Unreachable. " + node.printTreeStructure())
+        }
+      }
+      return false
     }
   }
 }

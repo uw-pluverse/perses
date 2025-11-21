@@ -96,7 +96,7 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
+  fullyDeterministicMode: true
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -1015,91 +1015,6 @@ The current best program is the following
     --file: <formatted tokenized program in its original format>--
     int printf(const char*, ...);
     int main (                      ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int printf(const char*, ...);
-    int main (int                   ) {
-     printf("world\n");
-    }
-    --file: <formatted tokenized program in its original format>--
-    int printf(const char*, ...);
-    int main (int                   ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int printf(const char*, ...);
-    int main (    argc              ) {
-     printf("world\n");
-    }
-    --file: <formatted tokenized program in its original format>--
-    int printf(const char*, ...);
-    int main (    argc              ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int printf(const char*, ...);
-    int main (          char        ) {
-     printf("world\n");
-    }
-    --file: <formatted tokenized program in its original format>--
-    int printf(const char*, ...);
-    int main (          char        ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int printf(const char*, ...);
-    int main (int argc              ) {
-     printf("world\n");
-    }
-    --file: <formatted tokenized program in its original format>--
-    int printf(const char*, ...);
-    int main (int argc              ) {
-     printf("world\n");
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: t.c--
-    int printf(const char*, ...);
-    int main (          char *argv[]) {
-     printf("world\n");
-    }
-    --file: <formatted tokenized program in its original format>--
-    int printf(const char*, ...);
-    int main (          char *argv[]) {
      printf("world\n");
     }
 ------------------------------------------------------------
@@ -4011,6 +3926,6 @@ FineGritLatraReducer     1       0      0
 #test success = 4
 #test failure = 41
 #test result cache hits = 36
-#test execution cancelled = 5
+#test execution cancelled = 0
 #node edit action set cache hits = 27
 #external test execution cache hits = 0

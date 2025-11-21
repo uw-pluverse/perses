@@ -31,4 +31,5 @@ object LanguageBraceDyck : LanguageKind(
       EnumFormatControl.ORIG_FORMAT,
       EnumFormatControl.COMPACT_ORIG_FORMAT,
     ),
+  hidden = true,
 )

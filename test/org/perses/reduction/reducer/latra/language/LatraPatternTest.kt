@@ -24,7 +24,7 @@ import org.junit.runners.JUnit4
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.smtlibv2.SmtLibV2ParserFacade
 import org.perses.grammar.wasm.WebAssemblyParserFacade
-import org.perses.program.PersesTokenFactory
+import org.perses.program.TokenPosition
 import org.perses.reduction.reducer.latra.language.AbstractPatternElement.ConcreteToken
 import org.perses.reduction.reducer.latra.language.AbstractPatternElement.Hole
 import org.perses.reduction.reducer.latra.language.AbstractPatternElement.Trivia
@@ -46,7 +46,7 @@ class LatraPatternTest {
         Hole.create(
           holeName = it.holeName.name,
           greedyKleenePlusMatching = true,
-          tokenPosition = PersesTokenFactory.TokenPosition(line = 1, charPositionInLine = 1),
+          tokenPosition = TokenPosition(line = 1, charPositionInLine = 1),
         )
       }
     assertThat(transformed.originalSourceCode).isEqualTo("a :[name+] b")
@@ -126,7 +126,7 @@ class LatraPatternTest {
       assertThat(it.originalSourceCode).isEqualTo("a")
     }
 
-    val position = PersesTokenFactory.TokenPosition(line = 1, charPositionInLine = 1)
+    val position = TokenPosition(line = 1, charPositionInLine = 1)
 
     Hole.create(holeName = "a", greedyKleenePlusMatching = false, position).let {
       assertThat(it.originalSourceCode).isEqualTo(":[a]")

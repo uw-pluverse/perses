@@ -31,6 +31,7 @@ abstract class LanguageKind(
   val allowedCodeFormatControl: ImmutableSet<EnumFormatControl>,
   val defaultFormatterCommandCreators: ImmutableList<IShellCommandOnPathCreator> =
     ImmutableList.of(),
+  val hidden: Boolean = false,
 ) : AbstractDataKind(name, extensions) {
   init {
     check(defaultCodeFormatControl in allowedCodeFormatControl) {

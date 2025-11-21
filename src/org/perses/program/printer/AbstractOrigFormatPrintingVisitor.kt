@@ -136,7 +136,6 @@ abstract class AbstractOrigFormatPrintingVisitor(
       }
       tokenPlacementListener?.onTokenPlacement(
         token,
-        // TODO(cnsun): Can we use builder to track the line number and charposition?
         builder.currentLineNo,
         builder.charPositionInLine,
       )

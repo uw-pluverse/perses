@@ -1,6 +1,18 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 kt_jvm_test(
+    name = "LatraArgumentsTest",
+    srcs = [
+        "LatraArgumentsTest.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/reduction/reducer/latra:latra_transformation_internface",
+    ],
+)
+
+kt_jvm_test(
     name = "WatTransformationListTest",
     srcs = ["WatTransformationListTest.kt"],
     deps = [
