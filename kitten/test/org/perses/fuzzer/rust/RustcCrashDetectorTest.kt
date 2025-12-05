@@ -19,7 +19,6 @@ package org.perses.fuzzer.rust
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -30,11 +29,11 @@ import org.perses.fuzzer.config.ProgramUnderTest
 import org.perses.fuzzer.config.SeedFolder
 import org.perses.fuzzer.config.TestingConfiguration
 import org.perses.grammar.SingleParserFacadeFactory
+import org.perses.util.Util
 import org.perses.util.shell.CmdOutput
 import org.perses.util.shell.ExitCode
 import org.perses.util.shell.ShellOutputLines
 import java.io.File
-import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.io.path.readLines
 
@@ -42,22 +41,16 @@ import kotlin.io.path.readLines
 class RustcCrashDetectorTest {
   private val detector = RustcCrashDetector()
   private val parserFacadeFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
-  private var workingDir: File? = null
+  private var workingDir = Util.createTempDirForObject(this).toFile()
 
   private val packagePath =
     "kitten/test/" +
       this::class.java.`package`.name
         .replace('.', '/') + "/"
 
-  @Before
-  fun setup() {
-    workingDir = Files.createTempDirectory(javaClass.simpleName).toFile()
-  }
-
   @After
   fun teardown() {
-    workingDir!!.deleteRecursively()
-    workingDir = null
+    workingDir.deleteRecursively()
   }
 
   @Test

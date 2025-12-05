@@ -20,8 +20,6 @@ import org.perses.antlr.toTokenType
 import org.perses.grammar.python3.Python3Lexer
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
-import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
-import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
 import org.perses.util.FastStringBuilder
 import org.perses.util.Util.lazyAssert
 

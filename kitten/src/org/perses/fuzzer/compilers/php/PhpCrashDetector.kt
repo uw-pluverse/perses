@@ -35,8 +35,7 @@ class PhpCrashDetector : AbstractCompilerCrashDetector() {
       .asSequence()
       .filter { it.isNotBlank() }
       .map {
-        it.trim()
-        it.substring(
+        it.trim().substring(
           it.indexOf("PHP"),
         )
       }.toList()

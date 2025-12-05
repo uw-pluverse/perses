@@ -11,6 +11,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: true
 versionFlags:
   groupName: "Version"
   version: false
@@ -96,7 +97,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: true
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"

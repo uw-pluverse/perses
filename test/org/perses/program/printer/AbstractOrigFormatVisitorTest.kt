@@ -40,7 +40,7 @@ class AbstractOrigFormatVisitorTest {
   val visitor =
     object : AbstractOrigFormatVisitor(
       program,
-      AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider.DefaultProvider,
+      AbstractTokenPositionProvider.DefaultProvider,
       tokenPlacementListener = null,
     ) {
       override fun isControlToken(token: PersesTokenFactory.AbstractPersesToken): Boolean = false

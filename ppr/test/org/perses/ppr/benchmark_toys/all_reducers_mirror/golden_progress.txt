@@ -11,6 +11,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -97,7 +98,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -416,6 +416,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -502,7 +503,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -813,6 +813,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -901,7 +902,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -967,6 +967,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -1055,7 +1056,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -1121,6 +1121,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -1207,7 +1208,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -4265,6 +4265,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -4351,7 +4352,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -6861,6 +6861,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -6947,7 +6948,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -7098,6 +7098,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -7184,7 +7185,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -7335,6 +7335,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -7423,7 +7424,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -7489,6 +7489,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -7577,7 +7578,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -7643,6 +7643,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -7729,7 +7730,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"
@@ -10239,6 +10239,7 @@ verbosityFlags:
   verbosity: "INFO"
   listVerbosity: false
   hideTimestamps: false
+  fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
@@ -10325,7 +10326,6 @@ experimentFlags:
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
-  fullyDeterministicMode: false
   keepReductionHistory: false
 lprFlags:
   groupName: "LPR Reducer Control"

@@ -3,6 +3,9 @@ load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 kt_jvm_test(
     name = "TokenizedProgramPrinterTest",
     srcs = ["TokenizedProgramPrinterTest.kt"],
+    associates = [
+        "//src/org/perses/program/printer",
+    ],
     data = [
         "//test_data/delta_1",
         "//test_data/java_helloworld",
@@ -12,7 +15,6 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses/program",
-        "//src/org/perses/program/printer",
         "//test/org/perses:test_util",
     ],
 )

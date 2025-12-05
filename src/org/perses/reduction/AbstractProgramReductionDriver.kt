@@ -1007,7 +1007,7 @@ abstract class AbstractProgramReductionDriver(
             defaultProgramFormat,
             vulcanEnabled = cmd.vulcanFlags.enableVulcan,
           ),
-        fullyDeterministicMode = cmd.experimentFlags.fullyDeterministicMode,
+        fullyDeterministicMode = cmd.verbosityFlags.fullyDeterministicMode,
         numOfReductionThreads = cmd.reductionControlFlags.getNumOfThreads(),
         parserFacade = parserFacade,
         persesNodeReducerConfig =

@@ -34,7 +34,7 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class XCovCoverageCollectorTest {
-  private val tempDir = Util.createTempDirFor(this)
+  private val tempDir = Util.createTempDirForObject(this)
   private val srcDir = Util.ensureDirExists(tempDir.resolve("src"))
   private val binaryFile =
     srcDir.resolve("t.out").also {

@@ -29,7 +29,7 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class LargeLanguageModelTest {
-  val tempDir = Util.createTempDirFor(this)
+  val tempDir = Util.createTempDirForObject(this)
 
   @OptIn(ExperimentalPathApi::class)
   @After

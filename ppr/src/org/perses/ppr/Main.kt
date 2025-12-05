@@ -54,7 +54,10 @@ class Main(
     )
 
   override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager =
-    AsyncReductionListenerManager(listeners = ImmutableList.of())
+    AsyncReductionListenerManager(
+      listeners = ImmutableList.of(),
+      synchronousMode = false,
+    )
 
   override fun createReductionInputs(
     parserFacadeFactory: AbstractParserFacadeFactory,

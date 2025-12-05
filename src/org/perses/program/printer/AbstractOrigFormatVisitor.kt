@@ -18,8 +18,6 @@ package org.perses.program.printer
 
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
-import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener
-import org.perses.program.printer.AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider
 import org.perses.util.FastStringBuilder
 
 abstract class AbstractOrigFormatVisitor(

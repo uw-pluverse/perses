@@ -55,18 +55,6 @@ class ExperimentFlagGroup : AbstractCommandLineFlagGroup(groupName = "Experiment
 
   @JvmField
   @Parameter(
-    names = ["--fully-deterministic-mode"],
-    description =
-      "make sure the reduction process is fully deterministic for testing purpose " +
-        "at the cost of affected performance",
-    hidden = true,
-    order = 400,
-    arity = 1,
-  )
-  var fullyDeterministicMode = false
-
-  @JvmField
-  @Parameter(
     names = ["--keep-reduction-history"],
     description = "keep all the reduction folders generated during reduction",
     hidden = false,

@@ -43,6 +43,18 @@ class VerbosityFlagGroup : AbstractCommandLineFlagGroup(groupName = "Verbosity")
   )
   var hideTimestamps = false
 
+  @JvmField
+  @Parameter(
+    names = ["--fully-deterministic-mode"],
+    description =
+      "make sure the reduction process is fully deterministic for testing purpose " +
+        "at the cost of affected performance",
+    hidden = true,
+    order = 40,
+    arity = 1,
+  )
+  var fullyDeterministicMode = false
+
   override fun validate() {
     val allowedLoggingLevels = DefaultLoggingConfigurations.ALLOWED_LOGGING_LEVELS
 

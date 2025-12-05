@@ -67,6 +67,9 @@ object PersesListenerManagerCreator {
           ),
         )
       }
-    return AsyncReductionListenerManager(listeners = builder.build())
+    return AsyncReductionListenerManager(
+      listeners = builder.build(),
+      synchronousMode = cmd.verbosityFlags.fullyDeterministicMode,
+    )
   }
 }

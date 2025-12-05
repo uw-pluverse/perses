@@ -25,8 +25,8 @@ import org.perses.util.FastStringBuilder
 abstract class AbstractOrigFormatPrintingVisitor(
   program: TokenizedProgram,
   private val keepBlankLines: Boolean,
-  tokenPositionProvider: AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider,
-  tokenPlacementListener: AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener?,
+  tokenPositionProvider: AbstractTokenPositionProvider,
+  tokenPlacementListener: AbstractTokenPlacementListener?,
 ) : AbstractOrigFormatVisitor(
     program,
     tokenPositionProvider,

@@ -101,7 +101,7 @@ class UtilTest {
   @OptIn(ExperimentalPathApi::class)
   @Test
   fun testCreateTempDir() {
-    val dir = Util.createTempDirFor(this)
+    val dir = Util.createTempDirForObject(this)
     try {
       assertThat(dir.name).startsWith(this::class.java.canonicalName)
     } finally {

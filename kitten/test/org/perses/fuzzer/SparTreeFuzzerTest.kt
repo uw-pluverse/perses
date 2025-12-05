@@ -47,7 +47,7 @@ import kotlin.io.path.writeText
 @Suppress("DEPRECATION")
 @RunWith(JUnit4::class)
 class SparTreeFuzzerTest {
-  private val tempDir = Util.createTempDirFor(this::class.java.simpleName)
+  private val tempDir = Util.createTempDirForObject(this)
 
   private val factory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
   private val c = factory.getParserFacadeListForOrNull(LanguageC)!!.defaultParserFacade.create()

@@ -781,7 +781,8 @@ object Util {
     }
   }
 
-  fun createTempDirFor(any: Any): Path = Files.createTempDirectory(any::class.java.canonicalName)
+  fun createTempDirForObject(ownerObject: Any): Path =
+    Files.createTempDirectory(ownerObject::class.java.canonicalName)
 
   /**
    * TODO(cnsun): needs tests.

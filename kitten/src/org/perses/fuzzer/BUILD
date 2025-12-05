@@ -38,6 +38,7 @@ kt_jvm_library(
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//antlropt/src/org/perses/antlr/ast",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
+        "//kitten/src/org/perses/fuzzer/compilers/php",
         "//kitten/src/org/perses/fuzzer/compilers/rust",
         "//kitten/src/org/perses/fuzzer/coveragecollector:coverage_collector",
         "//kitten/src/org/perses/fuzzer/languagemodel:language_model_type",

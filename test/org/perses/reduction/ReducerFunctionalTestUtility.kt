@@ -37,7 +37,7 @@ class ReducerFunctionalTestUtility(
   val reducerAnnotation: ReducerAnnotation,
   cmdCustomizer: (CommandOptions) -> Unit = {},
 ) : Closeable {
-  val tempDir = AutoDeletableFolder(Util.createTempDirFor(this))
+  val tempDir = AutoDeletableFolder(Util.createTempDirForObject(this))
 
   val outputDir = tempDir.file.resolve("perses_output_dir")
   val cmd =

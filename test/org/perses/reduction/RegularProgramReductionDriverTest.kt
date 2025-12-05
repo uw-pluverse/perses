@@ -63,7 +63,11 @@ class RegularProgramReductionDriverTest {
       this.writeText("${Shells.SHEBANG_BASH}\n")
     }
   private val facadeFactory = builderWithBuiltinLanguages().build()
-  private val listenerManager = AsyncReductionListenerManager(listeners = ImmutableList.of())
+  private val listenerManager =
+    AsyncReductionListenerManager(
+      listeners = ImmutableList.of(),
+      synchronousMode = true,
+    )
   private val globalContext =
     GlobalContext(
       enableGlobalCache = false,

@@ -16,74 +16,10 @@
  */
 package org.perses.program.printer
 
-import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.AbstractLazySourceCode
-import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 
 abstract class AbstractTokenizedProgramPrinter {
-  abstract class AbstractTokenPositionProvider {
-    abstract fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int
-
-    abstract fun getCharPositionInLine(
-      token: PersesTokenFactory.AbstractPersesToken,
-      currentCursorPositionInLine: Int,
-      previousToken: PersesTokenFactory.AbstractPersesToken?,
-    ): Int
-
-    companion object DefaultProvider : AbstractTokenPositionProvider() {
-      override fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int =
-        token.asAntlrToken().position.line
-
-      override fun getCharPositionInLine(
-        token: PersesTokenFactory.AbstractPersesToken,
-        currentCursorPositionInLine: Int,
-        previousToken: PersesTokenFactory.AbstractPersesToken?,
-      ): Int = token.asAntlrToken().position.charPositionInLine
-    }
-  }
-
-  class DeducedPositionProvider(
-    val lexerAtnWrapper: LexerAtnWrapper,
-  ) : AbstractTokenPositionProvider() {
-    override fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int =
-      token.asAntlrToken().position.line
-
-    override fun getCharPositionInLine(
-      token: PersesTokenFactory.AbstractPersesToken,
-      currentCursorPositionInLine: Int,
-      previousToken: PersesTokenFactory.AbstractPersesToken?,
-    ): Int {
-      return if (previousToken == null) {
-        if (token.isPlainText()) {
-          return currentCursorPositionInLine
-        } else {
-          token.asAntlrToken().position.charPositionInLine
-        }
-      } else {
-        if (previousToken.isPlainText()) {
-          currentCursorPositionInLine
-        } else if (lexerAtnWrapper.canBeConcatWithoutSpace(
-            previousToken.tokenType,
-            token.tokenType,
-          )
-        ) {
-          currentCursorPositionInLine
-        } else {
-          currentCursorPositionInLine + 1
-        }
-      }
-    }
-  }
-
-  abstract class AbstractTokenPlacementListener {
-    abstract fun onTokenPlacement(
-      token: PersesTokenFactory.AbstractPersesToken,
-      line: Int,
-      charPositionInLine: Int,
-    )
-  }
-
   abstract fun print(
     program: TokenizedProgram,
     tokenPlacementListener: AbstractTokenPlacementListener? = null,

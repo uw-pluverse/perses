@@ -52,6 +52,7 @@ class CommandOptionTest {
       "--verbosity" to "ERROR",
       "--version" to "false",
       "--hide-timestamps" to "false",
+      "--fully-deterministic-mode" to "false",
     )
   }
 

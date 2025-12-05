@@ -50,6 +50,7 @@ import kotlin.Exception
 
 class AsyncReductionListenerManager(
   private val listeners: ImmutableList<AbstractReductionListener>,
+  private val synchronousMode: Boolean,
 ) : Closeable {
   private val executorService = DaemonThreadPool.createSingleThreadPool()
 
@@ -58,17 +59,23 @@ class AsyncReductionListenerManager(
     listeners.forEach { it.close() }
   }
 
-  private fun submitEvent(action: (AbstractReductionListener) -> Unit): ListenableFuture<*> =
-    executorService.submit {
-      for (listener in listeners) {
-        try {
-          action(listener)
-        } catch (e: Exception) {
-          e.printStackTrace()
-          onCriticalException(e)
+  private fun submitEvent(action: (AbstractReductionListener) -> Unit): ListenableFuture<*> {
+    val future =
+      executorService.submit {
+        for (listener in listeners) {
+          try {
+            action(listener)
+          } catch (e: Exception) {
+            e.printStackTrace()
+            onCriticalException(e)
+          }
         }
       }
+    if (synchronousMode) {
+      future.get()
     }
+    return future
+  }
 
   fun notifyNumOfLexemesInPersesTokenFactory(numOfLexemes: Int) {
     submitEvent { listener -> listener.notifyNumOfLexemesInPersesTokenFactory(numOfLexemes) }

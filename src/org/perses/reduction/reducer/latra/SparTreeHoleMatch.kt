@@ -81,7 +81,15 @@ data class SparTreeHoleMatch(
       } else {
         ""
       }
-    return "subroot(id=${subtreeRoot.nodeId},#${subtreeRoot.leafTokenCount}$shortHash)"
+    val tokenCount =
+      kotlin.runCatching { subtreeRoot.leafTokenCount.toString() }.getOrElse {
+        if (subtreeRoot.isPermanentlyDeleted) {
+          "(deleted permanently)"
+        } else {
+          it.toString()
+        }
+      }
+    return "subroot(id=${subtreeRoot.nodeId},#$tokenCount$shortHash)"
   }
 
   fun isStillValid(): Boolean =

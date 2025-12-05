@@ -36,6 +36,7 @@ import org.perses.program.TokenizedProgram
 import org.perses.program.TokenizedProgramFactory
 import org.perses.spartree.SparTreeBuilder
 import org.perses.spartree.SparTreeNodeFactory
+import org.perses.util.Util
 import org.perses.util.shell.Shells
 import java.io.File
 import java.io.IOException
@@ -43,10 +44,7 @@ import java.io.UncheckedIOException
 
 @RunWith(JUnit4::class)
 class FuzzerDriverTest {
-  private val workingDirectory =
-    java.nio.file.Files
-      .createTempDirectory(javaClass.simpleName)
-      .toFile()
+  private val workingDirectory = Util.createTempDirForObject(this).toFile()
 
   @After
   fun teardown() {

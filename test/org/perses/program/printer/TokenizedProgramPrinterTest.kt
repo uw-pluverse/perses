@@ -297,7 +297,7 @@ class TokenizedProgramPrinterTest {
     var printer =
       PrinterRegistry.getPrinter(
         EnumFormatControl.ORIG_FORMAT,
-        object : AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider() {
+        object : AbstractTokenPositionProvider() {
           override fun getLine(token: AbstractPersesToken): Int =
             when (token.lexemeText) {
               "int" -> 2
@@ -315,7 +315,7 @@ class TokenizedProgramPrinterTest {
       )
     val map = HashMap<String, TokenPosition>()
     val listener =
-      object : AbstractTokenizedProgramPrinter.AbstractTokenPlacementListener() {
+      object : AbstractTokenPlacementListener() {
         override fun onTokenPlacement(
           token: AbstractPersesToken,
           line: Int,
@@ -344,7 +344,7 @@ class TokenizedProgramPrinterTest {
     printer =
       PrinterRegistry.getPrinter(
         EnumFormatControl.ORIG_FORMAT,
-        object : AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider() {
+        object : AbstractTokenPositionProvider() {
           override fun getLine(token: AbstractPersesToken): Int = map[token.lexemeText]!!.line
 
           override fun getCharPositionInLine(
@@ -370,7 +370,7 @@ class TokenizedProgramPrinterTest {
       PrinterRegistry
         .getPrinter(
           EnumFormatControl.ORIG_FORMAT,
-          object : AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider() {
+          object : AbstractTokenPositionProvider() {
             override fun getLine(token: AbstractPersesToken): Int =
               when (token.lexemeText) {
                 "int" -> 1

@@ -37,7 +37,12 @@ kt_jvm_library(
 
 kt_jvm_library(
     name = "abstract_tokenized_program_printer",
-    srcs = ["AbstractTokenizedProgramPrinter.kt"],
+    srcs = [
+        "AbstractTokenPlacementListener.kt",
+        "AbstractTokenPositionProvider.kt",
+        "AbstractTokenizedProgramPrinter.kt",
+        "DeducedPositionProvider.kt",
+    ],
     deps = [
         "//:antlr_runtime",
         "//src/org/perses/antlr/atn:lexer_wrapper",

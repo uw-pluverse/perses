@@ -29,19 +29,19 @@ object PrinterRegistry {
     if (lexerAtnWrapper != null) {
       getPrinter(
         format,
-        AbstractTokenizedProgramPrinter.DeducedPositionProvider(lexerAtnWrapper),
+        DeducedPositionProvider(lexerAtnWrapper),
       )
     } else {
       getPrinter(
         format,
-        AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider.DefaultProvider,
+        AbstractTokenPositionProvider.DefaultProvider,
       )
     }
 
   @VisibleForTesting
-  fun getPrinter(
+  internal fun getPrinter(
     format: EnumFormatControl,
-    tokenPositionProvider: AbstractTokenizedProgramPrinter.AbstractTokenPositionProvider,
+    tokenPositionProvider: AbstractTokenPositionProvider,
   ): AbstractTokenizedProgramPrinter =
     when (format) {
       EnumFormatControl.SINGLE_TOKEN_PER_LINE -> SingleTokenPerLinePrinter
