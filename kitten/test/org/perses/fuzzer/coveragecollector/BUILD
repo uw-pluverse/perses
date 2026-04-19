@@ -22,5 +22,6 @@ kt_jvm_test(
     deps = [
         "//:truth",
         "//kitten/src/org/perses/fuzzer/coveragecollector:coverage_collector",
+        "//src/org/perses/grammar/c:language_kind",
     ],
 )

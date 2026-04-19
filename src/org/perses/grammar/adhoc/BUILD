@@ -54,6 +54,7 @@ kt_jvm_library(
         "//antlropt/src/org/perses/antlr/pnf:pnf_normalizer",
         "//src/org/perses:perses_contants",
         "//src/org/perses/antlr:antlr_compiler",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/util/hashing",
     ],
 )

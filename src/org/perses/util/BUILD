@@ -129,7 +129,7 @@ kt_jvm_library(
         "FileNameContentPair.kt",
     ],
     deps = [
-        ":util",
+        ":file_content",
     ],
 )
 

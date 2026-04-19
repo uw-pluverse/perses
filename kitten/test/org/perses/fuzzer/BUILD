@@ -116,7 +116,6 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer:command_options",
-        "//src/org/perses/grammar:parser_facade_interface",
     ],
 )
 
@@ -125,7 +124,6 @@ kt_jvm_library(
     srcs = ["FakeCompilationAction.kt"],
     deps = [
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
-        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/rust:language_kind",
     ],
 )

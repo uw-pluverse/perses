@@ -8,7 +8,6 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses/reduction/reducer/latra:latra_transformation_internface",
     ],
 )
 
@@ -43,7 +42,6 @@ kt_jvm_library(
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction/reducer/latra:latra_transformation_internface",
         "//src/org/perses/spartree",
-        "//test/org/perses:test_util",
     ],
 )
 
@@ -148,13 +146,13 @@ kt_jvm_test(
         "//src/org/perses/antlr:util",
         "//src/org/perses/grammar/c:orig_c_grammar",
         "//src/org/perses/grammar/c:orig_parser_facade",
+        "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/grammar/c:pnf_c_grammar",
         "//src/org/perses/grammar/smtlibv2:orig_parser_facade",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction/reducer/latra:latra_transformation_internface",
         "//src/org/perses/spartree",
-        "//test/org/perses:test_util",
     ],
 )
 
@@ -229,11 +227,11 @@ kt_jvm_test(
         "//src/org/perses/grammar/c:orig_c_grammar",
         "//src/org/perses/grammar/c:orig_parser_facade",
         "//src/org/perses/grammar/c:pnf_c_grammar",
+        "//src/org/perses/grammar/rust:parser_facade",
         "//src/org/perses/grammar/smtlibv2:orig_parser_facade",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction/reducer/latra:latra_transformation_internface",
         "//src/org/perses/spartree",
-        "//test/org/perses:test_util",
     ],
 )

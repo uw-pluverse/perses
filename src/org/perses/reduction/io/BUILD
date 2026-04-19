@@ -53,7 +53,6 @@ kt_jvm_library(
     ],
     deps = [
         ":reduction_folder",
-        ":reduction_inputs",
         "//src/org/perses/util:file_name_content_pair",
         "//src/org/perses/util/hashing",
     ],
