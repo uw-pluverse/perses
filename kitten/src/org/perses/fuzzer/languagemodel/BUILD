@@ -17,7 +17,6 @@ kt_jvm_library(
         "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/spartree",
         "//src/org/perses/spartree:tree_node_filter_result",
-        "//src/org/perses/util:Serialization",
     ],
 )
 

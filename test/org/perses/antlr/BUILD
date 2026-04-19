@@ -31,7 +31,6 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/util:antlr_tool_wrapper",
-        "//src/org/perses/util",
     ],
 )
 
@@ -113,7 +112,8 @@ kt_jvm_test(
     srcs = ["RuleReachabilityGraphTest.kt"],
     deps = [
         "//:truth",
-        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/antlr/atn/nfa",
+        "//src/org/perses/spartree",
     ],
 )
 

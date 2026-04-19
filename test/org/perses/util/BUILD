@@ -116,7 +116,6 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses/util",
         "//src/org/perses/util:file_name_content_pair",
     ],
 )

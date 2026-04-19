@@ -18,7 +18,6 @@ kt_jvm_library(
         "//:antlr_tool",
         "//:guava",
         "//src/org/perses/grammar:antlr_exception_strategy",
-        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/util",
     ],
 )

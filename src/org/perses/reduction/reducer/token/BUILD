@@ -42,7 +42,6 @@ kt_jvm_library(
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction:test_script_executor_service",
         "//src/org/perses/reduction/cache:program_encoding_interface",
-        "//src/org/perses/reduction/cache:query_cache",
         "//src/org/perses/spartree",
     ],
 )

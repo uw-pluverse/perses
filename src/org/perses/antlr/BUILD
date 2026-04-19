@@ -62,6 +62,8 @@ kt_jvm_library(
         ":abstract_grammar_stub",
         "//:guava",
         "//antlropt/src/org/perses/antlr/ast",
+        "//src/org/perses/antlr/atn/nfa",
+        "//src/org/perses/spartree",
         "//src/org/perses/util",
         "//src/org/perses/util/java",
     ],

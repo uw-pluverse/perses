@@ -15,7 +15,6 @@ kt_jvm_library(
     deps = [
         "//:antlr_tool",
         "//:guava",
-        "//src/org/perses/util",
         "//src/org/perses/util:auto_deltable_folder",
         "//src/org/perses/util:file_name_content_pair",
     ],

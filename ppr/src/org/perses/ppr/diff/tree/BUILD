@@ -60,7 +60,6 @@ kt_jvm_library(
     deps = [
         ":reduction_inputs",
         "//src/org/perses/reduction:abstract_reducer",
-        "//src/org/perses/reduction/io:reduction_inputs",
     ],
 )
 

@@ -21,6 +21,7 @@ kt_jvm_library(
         "//src/org/perses/antlr/atn/tdtree",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reducer_context_interface",
+        "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
         "//src/org/perses/spartree",
         "//src/org/perses/spartree:minimal_spartree_generator",
         "//src/org/perses/util",
