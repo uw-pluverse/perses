@@ -27,6 +27,8 @@ fi
 # Note that `bazelisk build` builds more targets than `bazelisk test`
 bazelisk build ${ALL_BAZEL_BUILD_TARGETS_STRING} || exit 1
 
+"${SCRIPT_DIR}/run_spotbugs_on_perses_deploy_jar.sh" || exit 1
+
 "$@"
 
 echo "============================================"
