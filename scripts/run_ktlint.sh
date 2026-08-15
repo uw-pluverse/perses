@@ -7,15 +7,19 @@ set -o errexit
 readonly SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 source "${SCRIPT_DIR}/constants.sh" || exit 1
 
+cd "${WORKSPACE_ROOT}"
+
 bazelisk build "//:ktlint_deploy.jar"
 
-KT_LINT_DIRS=""
-for bazel_dir in "${ABS_BAZEL_DIRS[@]}"; do
-  KT_LINT_DIRS="${KT_LINT_DIRS} ${bazel_dir}/**/*.kt"
+KT_LINT_FILES=()
+for bazel_dir in "${BAZEL_DIRS[@]}"; do
+  while IFS= read -r -d '' kt_file; do
+    KT_LINT_FILES+=("${kt_file}")
+  done < <(find "${bazel_dir}" -name '*.kt' -print0)
 done
 # DON'T use 'bazelisk run //:ktlint_deploy.jar' due to its working directory
 #     is not the root of the workspace.
-bazelisk run //:ktlint -- --format ${KT_LINT_DIRS} || exit 1
+bazelisk run //:ktlint -- --format "${KT_LINT_FILES[@]}" || exit 1
 
 echo "ktlint is done."
 
