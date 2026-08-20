@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,18 +20,27 @@ import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
-import org.perses.reduction.io.AbstractOutputManager
+import org.perses.reduction.io.AbstractOriginalReductionInputs
 import org.perses.reduction.io.AbstractOutputManagerFactory
+import org.perses.util.hashing.EnumShaAlgorithm
 
 abstract class AbstractTokenOutputManagerFactory(
+  override val originalReductionInputs: AbstractOriginalReductionInputs,
   val defaultCodeFormatControl: EnumFormatControl,
   val lexerAtnWrapper: LexerAtnWrapper,
-) : AbstractOutputManagerFactory<TokenizedProgram>() {
+  shaAlgorithm: EnumShaAlgorithm,
+) : AbstractOutputManagerFactory<TokenizedProgram>(originalReductionInputs, shaAlgorithm) {
   protected val defaultProgramPrinter =
     PrinterRegistry.getPrinter(defaultCodeFormatControl, lexerAtnWrapper)
 
-  abstract fun createManagerFor(
-    program: TokenizedProgram,
-    format: EnumFormatControl,
-  ): AbstractOutputManager
+  /**
+   * Returns an immutable sibling factory identical to this one but printing in [codeFormat], or
+   * null if this factory does not offer format siblings.
+   *
+   * This is the decoupling seam for adaptive code-format selection: a code format is carried by the
+   * *factory*, not the IO manager, so "switch format" = use a different (sibling) factory while
+   * reusing the same IO manager (file management). Nothing is mutated; each factory stays immutable.
+   */
+  open fun cloneWithCodeFormat(codeFormat: EnumFormatControl): AbstractTokenOutputManagerFactory? =
+    null
 }

@@ -1,3 +1,6 @@
+load("@rules_python//python:defs.bzl", "py_test")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
 genrule(
     name = "generate_sanity_failure_log",
     srcs = [

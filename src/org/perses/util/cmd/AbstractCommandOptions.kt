@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,6 +28,66 @@ import java.lang.StringBuilder
 import java.util.IdentityHashMap
 
 abstract class AbstractCommandOptions {
+  protected val allFlags = mutableListOf<AbstractCommandLineFlagGroup>()
+
+  @JvmField
+  val helpFlags = registerFlags(HelpFlagGroup())
+
+  @JvmField
+  val verbosityFlags = registerFlags(VerbosityFlagGroup())
+
+  @JvmField
+  val versionFlags = registerFlags(VersionFlagGroup())
+
+  fun validate() {
+    allFlags.forEach { it.validate() }
+    validateExtra()
+  }
+
+  fun copyParameterValuesFrom(other: AbstractCommandOptions) {
+    allFlags.forEach { toGroup ->
+      val fromGroup =
+        other.allFlags.singleOrNull {
+          it.groupName == toGroup.groupName
+        } ?: return@forEach
+      toGroup.copyParameterValuesFrom(fromGroup)
+    }
+  }
+
+  protected open fun validateExtra() = Unit
+
+  protected fun <T : AbstractCommandLineFlagGroup> registerFlags(flags: T): T {
+    check(flags !in allFlags) { "The flag is already registered: $flags" }
+    check(
+      allFlags.none { existing ->
+        existing.groupName == flags.groupName
+      },
+    ) {
+      "Duplicate group name ${flags.groupName}"
+    }
+    allFlags.add(flags)
+    return flags
+  }
+
+  fun parseArguments(
+    programName: String,
+    args: Array<String>,
+  ): CmdUsagePrinter {
+    val builder = JCommander.newBuilder().programName(programName)
+    builder.addObject(this)
+    builder.addObject(allFlags)
+    val commander = builder.build()
+    try {
+      commander.parse(*args)
+    } catch (e: Throwable) {
+      logger.ktSevere {
+        "Fail to parse the flags ${args.toList()}"
+      }
+      throw e
+    }
+    return CmdUsagePrinter(commander)
+  }
+
   inner class CmdUsagePrinter(
     private val jCommander: JCommander,
   ) {
@@ -76,6 +136,9 @@ abstract class AbstractCommandOptions {
           ownerFlags.add(flag)
         } else {
           check(flagGroup is AbstractCommandLineFlagGroup) { "Flag group: ${flagGroup::class}" }
+          if (flagGroup.hidden) {
+            return@forEach
+          }
           val groupFlagList =
             identityMap.computeIfAbsent(flagGroup) {
               mutableListOf()
@@ -112,49 +175,6 @@ abstract class AbstractCommandOptions {
         super.appendAllParametersDetails(out, indentCount, indent, flags)
       }
     }
-  }
-
-  private val allFlags = mutableListOf<AbstractCommandLineFlagGroup>()
-
-  @JvmField
-  val helpFlags = registerFlags(HelpFlagGroup())
-
-  @JvmField
-  val verbosityFlags = registerFlags(VerbosityFlagGroup())
-
-  @JvmField
-  val versionFlags = registerFlags(VersionFlagGroup())
-
-  fun validate() {
-    allFlags.forEach { it.validate() }
-    validateExtra()
-  }
-
-  protected open fun validateExtra() = Unit
-
-  protected fun <T : AbstractCommandLineFlagGroup> registerFlags(flags: T): T {
-    check(flags !in allFlags)
-    allFlags.add(flags)
-    return flags
-  }
-
-  fun parseArguments(
-    programName: String,
-    args: Array<String>,
-  ): CmdUsagePrinter {
-    val builder = JCommander.newBuilder().programName(programName)
-    builder.addObject(this)
-    builder.addObject(allFlags)
-    val commander = builder.build()
-    try {
-      commander.parse(*args)
-    } catch (e: Throwable) {
-      logger.ktSevere {
-        "Fail to parse the flags ${args.toList()}"
-      }
-      throw e
-    }
-    return CmdUsagePrinter(commander)
   }
 
   companion object {

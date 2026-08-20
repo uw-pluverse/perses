@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 sanity_test(
     name = "sanity_test",
@@ -12,8 +12,12 @@ reduction_golden_test(
     enable_query_caching = True,
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_t.c",
+    other_flags = {
+        "--enable-literal-replacement-for-list-minimizer": "true",
+        "--enable-literal-replacement-for-regular-rule-node": "true",
+    },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "t.c",
     test_script = "r.sh",
 )
@@ -29,7 +33,7 @@ reduction_golden_test(
         "--stop-at-first-compatible-child-for-regular-rule-node": "false",
     },
     progress_dump_file = "reduction_progress_aggressive.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "t.c",
     test_script = "r.sh",
 )

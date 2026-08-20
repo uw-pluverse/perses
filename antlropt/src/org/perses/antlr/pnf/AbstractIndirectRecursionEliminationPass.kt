@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -85,7 +85,10 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
     toInline: AbstractPersesRuleElement,
   ): AbstractPersesRuleElement =
     when (def.tag) {
-      AstTag.RULE_REF -> toInline
+      AstTag.RULE_REF -> {
+        toInline
+      }
+
       AstTag.SEQUENCE -> {
         val seq = def as PersesSequenceAst
         check(seq.childCount > 1)
@@ -103,7 +106,10 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
           PersesSequenceAst(children)
         }
       }
-      else -> throw RuntimeException("Unhandled tag " + def.tag)
+
+      else -> {
+        throw RuntimeException("Unhandled tag " + def.tag)
+      }
     }
 
   protected abstract fun inlineRuleRefIntoSequence(
@@ -121,7 +127,10 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
       seekingFirst: Boolean,
     ): RuleNameHandle? =
       when (def.tag) {
-        AstTag.RULE_REF -> (def as PersesRuleReferenceAst).ruleNameHandle
+        AstTag.RULE_REF -> {
+          (def as PersesRuleReferenceAst).ruleNameHandle
+        }
+
         AstTag.SEQUENCE -> {
           val seq = def as PersesSequenceAst
           if (seekingFirst) {
@@ -130,7 +139,10 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
             getFirstOrLastRuleRef(seq.lastChild, seekingFirst)
           }
         }
-        else -> null
+
+        else -> {
+          null
+        }
       }
   }
 }

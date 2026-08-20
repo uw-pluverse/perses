@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -30,6 +30,9 @@ class TimeSpan(
     require(startTimeMillis >= 0)
     require(endTimeMillis > 0)
   }
+
+  val endTimeInSeconds: Long
+    get() = endTimeMillis / 1000
 
   val elapsedTimeInMillis: Long
     get() = endTimeMillis - startTimeMillis

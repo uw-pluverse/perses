@@ -1,6 +1,6 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 load(
-    "//test/org/perses:test.bzl",
+    "//test:test.bzl",
     "cross_folder_golden_test",
 )
 
@@ -9,6 +9,7 @@ kt_jvm_test(
     srcs = ["PersesNodeReducerFunctionalTest.kt"],
     data = [
         "dummy-creduce.sh",
+        "dummy-creduce-fail.sh",
         "//test_data/creduce_example",
     ],
     deps = [
@@ -58,6 +59,34 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "DyckNodeReducerTest",
+    srcs = ["DyckNodeReducerTest.kt"],
+    test_class = "org.perses.reduction.reducer.DyckNodeReducerTest",
+    deps = [
+        "//:truth",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar/c:language_kind",
+        "//src/org/perses/grammar/dyck:parser_facade",
+        "//src/org/perses/reduction/reducer:node_based_reducer",
+    ],
+)
+
+kt_jvm_test(
+    name = "PristineDyckNodeReducerTest",
+    srcs = ["PristineDyckNodeReducerTest.kt"],
+    test_class = "org.perses.reduction.reducer.PristineDyckNodeReducerTest",
+    deps = [
+        "//:truth",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar/c:language_kind",
+        "//src/org/perses/grammar/dyck:parser_facade",
+        "//src/org/perses/reduction/reducer:node_based_reducer",
+    ],
+)
+
+kt_jvm_test(
     name = "PersesNodeReducerTest",
     srcs = ["PersesNodeReducerTest.kt"],
     test_class = "org.perses.reduction.reducer.PersesNodeReducerTest",
@@ -73,58 +102,17 @@ kt_jvm_test(
     ],
 )
 
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_fast_linear_scan_caching",
-    golden_file = "golden_progress_dump_t_with_fast_linear_scan_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_fast_linear_scan_cache_process",
-)
-
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_fast_linear_scan_without_compression_caching",
-    golden_file = "golden_progress_dump_t_with_fast_linear_scan_without_compression_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_fast_linear_scan_without_compression_cache_process",
-)
-
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_lexeme_id_caching",
-    golden_file = "golden_progress_dump_t_with_lexeme_id_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_lexeme_id_cache_process",
-)
-
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_content_string_based_caching",
-    golden_file = "golden_progress_dump_t_with_content_string_based_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_content_string_based_cache_process",
-)
-
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_content_sha512_based_caching",
-    golden_file = "golden_progress_dump_t_with_content_sha512_based_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_content_sha512_based_cache_process",
-)
-
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_rcc_mem_caching",
-    golden_file = "golden_progress_dump_t_with_rcc_mem_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_rcc_mem_lit_cache_process",
-)
-
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_content_zip_based_caching",
-    golden_file = "golden_progress_dump_t_with_content_zip_based_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_content_zip_based_cache_process",
-)
-
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_content_lexeme_list_caching",
-    golden_file = "golden_progress_dump_t_with_content_lexeme_list_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_content_lexeme_list_cache_process",
-)
-
-cross_folder_golden_test(
-    name = "golden_test_delta_1_with_config_based_caching",
-    golden_file = "golden_progress_dump_t_with_config_based_cache_process.txt",
-    test_file_in_other_folders = "//test_data/delta_1:progress_dump_t_with_config_based_cache_process",
+kt_jvm_test(
+    name = "MimirStrategyFinerDagAsListTest",
+    srcs = ["MimirStrategyFinerDagAsListTest.kt"],
+    deps = [
+        "//:guava",
+        "//:jgrapht",
+        "//:truth",
+        "//src/org/perses/reduction/reducer:node_based_reducer",
+        "//src/org/perses/reduction/semantics",
+        "//src/org/perses/spartree",
+    ],
 )
 
 cross_folder_golden_test(

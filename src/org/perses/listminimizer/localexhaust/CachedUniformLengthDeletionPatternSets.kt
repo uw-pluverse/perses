@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,8 +19,10 @@ package org.perses.listminimizer.localexhaust
 import org.perses.util.transformToImmutableList
 
 object CachedUniformLengthDeletionPatternSets {
+  const val MAX_PATTERN_LENGTH = 6
+
   private val cachedPatternSets =
-    (0..6)
+    (0..MAX_PATTERN_LENGTH)
       .transformToImmutableList {
         UniformLengthDeletionPatternSet(patternLength = it)
       }

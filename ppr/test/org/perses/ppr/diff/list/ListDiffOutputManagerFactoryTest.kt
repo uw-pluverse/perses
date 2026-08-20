@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.ppr.diff.PPRDiffUtils
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
@@ -64,8 +65,8 @@ class ListDiffOutputManagerFactoryTest {
     )
 
   // initialize a reduction folder
-  val reductionInputs =
-    ListDiffReductionInputs(
+  val originalReductionInputs =
+    DiffOriginalReductionInputs(
       testScript,
       origSeedFile,
       origVariantFile,
@@ -102,7 +103,7 @@ class ListDiffOutputManagerFactoryTest {
     val originalDiff = listAlignmentWithReplace.onlyInserts.toImmutableList()
     val parserFacade = TestUtility.getFacade(LanguageC)
     val inputs =
-      ListDiffReductionInputs(
+      DiffOriginalReductionInputs(
         testScript,
         seedFile = origSeedFile,
         variantFile = origVariantFile,
@@ -110,7 +111,7 @@ class ListDiffOutputManagerFactoryTest {
       )
     val outputManagerFactory =
       ListDiffOutputManagerFactory(
-        reductionInputs = inputs,
+        originalReductionInputs = inputs,
         seedProgram = seedProgram,
         originalListAlignment = listAlignmentWithReplace,
         originalDiff = originalDiff,
@@ -124,7 +125,7 @@ class ListDiffOutputManagerFactoryTest {
     val folder = Files.createDirectories(tempDir.resolve("reduction-folder"))
     val reductionFolder =
       ReductionFolder(
-        reductionInputs = reductionInputs,
+        originalReductionInputs = originalReductionInputs,
         folder = folder,
       )
 

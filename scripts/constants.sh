@@ -4,7 +4,7 @@ set -o nounset
 set -o pipefail
 set -o errexit
 
-readonly WORKSPACE_ROOT=$(bazel info | grep "workspace:" | awk '{ print $2 }')
+readonly WORKSPACE_ROOT=$(bazelisk info workspace)
 if [[ ! -e "${WORKSPACE_ROOT}/MODULE.bazel" ]]; then
   echo "ERROR: The computed workspace root ${WORKSPACE_ROOT} does not have a WORKSPACE file."
   exit 1
@@ -13,14 +13,19 @@ fi
 cd "${WORKSPACE_ROOT}"
 
 BAZEL_DIRS=(
+  "astra"
   "antlropt"
   "copyright"
   "kitten/src"
   "kitten/test"
+  "latra/src"
+  "latra/test"
+  "lpr"
   "ppr"
   "readme_generator"
   "src"
   "test"
+  "test_data"
   "version"
 )
 
@@ -28,12 +33,11 @@ readonly SUBMODULE_BAZEL_DIRS=(
   "antlrrdc"
   "arabica"
   "benchmark_wasm"
-  "buildopt"
-  "global_cache/src"
-  "global_cache/test"
-  "latra"
+  "braid"
   "fision/src"
   "fision/test"
+  "global_cache/src"
+  "global_cache/test"
   "pigen/ast"
   "pigen/chaoty"
 )

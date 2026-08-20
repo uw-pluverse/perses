@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,11 +24,16 @@ class PnfCParserFacade :
     language = LanguageC,
     antlrGrammar =
       createCombinedAntlrGrammar(
-        startRuleName = "translationUnit",
+        // compilationUnit, not translationUnit: only compilationUnit anchors the parse to EOF
+        // (`translationUnit? EOF`), so trailing input the grammar cannot consume -- e.g. a
+        // preprocessing directive after the last declaration -- is a parse error instead of being
+        // silently ignored. translationUnit alone accepts any valid prefix and drops the rest.
+        startRuleName = "compilationUnit",
         antlrGrammarFileName = "PnfC.g4",
         PnfCParserFacade::class.java,
       ),
     identifierTokenTypes = ImmutableIntArray.of(PnfCLexer.Identifier),
+    includeAutoDetectedIdentifierTokenTypes = false,
     lexerClass = PnfCLexer::class.java,
     parserClass = PnfCParser::class.java,
   )

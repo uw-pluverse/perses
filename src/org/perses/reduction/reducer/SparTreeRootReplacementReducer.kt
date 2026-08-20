@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
@@ -26,18 +26,20 @@ import org.perses.spartree.AbstractSparTreeNode
 class SparTreeRootReplacementReducer(
   reducerContext: ReducerContext,
   private val newRootNode: AbstractSparTreeNode,
-) : AbstractTokenReducer(META, reducerContext) {
+  private val canonicalTokenCount: Int?,
+) : AbstractSparTreeReducer(META, reducerContext) {
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+    val tree = fixpointReductionState.inputRepresentation.tree
     val edit =
       tree.createRootReplacementEdit(
         newRoot = newRootNode,
-        actionsDescription =
+        contextDescription =
           "The current best file is not the minimal one. " +
             "Replace the best file " +
             "with the minimal program we have generated during the reduction process.",
+        transformationName = "RootReplacement",
       )
-    tree.applyEdit(edit)
+    tree.applyEdit(edit, canonicalTokenCount = canonicalTokenCount)
   }
 
   object META : ReducerAnnotation(
@@ -46,7 +48,7 @@ class SparTreeRootReplacementReducer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> {
       error("Cannot call $NAME with its annotation.")
     }
   }

@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 19
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_for_TREc_node_priority_hello.yaml"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "hello.yaml"
+  inputFiles:
+  - "hello.yaml"
   deps: []
-  sourceFile: "hello.yaml"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_for_TREc_node_priority-dfs_hello.yaml"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "_reduction_golden_test_for_TREc_by_default_progress.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: true
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,64 +130,76 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.jackson.JacksonParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 18
 (19/19)  The reducer execution plan is listed below.
     fixpoint (smaller) {
-        node_priority-dfs
+        node_priority
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            node_priority-dfs
+            fixpoint (smaller) {
+                node_priority
+            }
         }
     }
 
 
 (19/19)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-======Fixpoint iteration 1. Reducer: node_priority-dfs======
+========Fixpoint iteration 1. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.jackson.JacksonParserFacade
 The spar-tree is the following.
-start {id=1,slot_type=start}
-|___object {id=3,slot_type=[value,object]}
-    |___Token:{ {id=4,slot_type=START_OBJECT}
-    |___(*) {id=5,slot_type=kleene_star__object_2}
-    |   |___aux_rule__object_1 {id=7,slot_type=aux_rule__object_1}
-    |   |   |___Token:name {id=40,slot_type=FIELD_NAME}
-    |   |   |___Token:Alice {id=42,slot_type=[value,VALUE_STRING]}
-    |   |___aux_rule__object_1 {id=8,slot_type=aux_rule__object_1}
-    |   |   |___Token:age {id=37,slot_type=FIELD_NAME}
-    |   |   |___Token:30 {id=39,slot_type=[value,VALUE_NUMBER_INT]}
-    |   |___aux_rule__object_1 {id=9,slot_type=aux_rule__object_1}
-    |   |   |___Token:isStudent {id=34,slot_type=FIELD_NAME}
-    |   |   |___Token:false {id=36,slot_type=[value,VALUE_FALSE]}
-    |   |___aux_rule__object_1 {id=10,slot_type=aux_rule__object_1}
-    |   |   |___Token:hobbies {id=22,slot_type=FIELD_NAME}
-    |   |   |___array {id=24,slot_type=[value,array]}
-    |   |       |___Token:[ {id=25,slot_type=START_ARRAY}
-    |   |       |___(*) {id=26,slot_type=kleene_star__array_1}
-    |   |       |   |___Token:reading {id=33,slot_type=[value,VALUE_STRING]}
-    |   |       |   |___Token:hiking {id=32,slot_type=[value,VALUE_STRING]}
-    |   |       |   |___Token:coding {id=31,slot_type=[value,VALUE_STRING]}
-    |   |       |___Token:] {id=27,slot_type=END_ARRAY}
-    |   |___aux_rule__object_1 {id=11,slot_type=aux_rule__object_1}
-    |       |___Token:address {id=12,slot_type=FIELD_NAME}
-    |       |___object {id=14,slot_type=[value,object]}
-    |           |___Token:{ {id=15,slot_type=START_OBJECT}
-    |           |___(*) {id=16,slot_type=kleene_star__object_2}
-    |           |   |___aux_rule__object_1 {id=18,slot_type=aux_rule__object_1}
-    |           |       |___Token:zip {id=19,slot_type=FIELD_NAME}
-    |           |       |___Token:12345 {id=21,slot_type=[value,VALUE_STRING]}
-    |           |___Token:} {id=17,slot_type=END_OBJECT}
-    |___Token:} {id=6,slot_type=END_OBJECT}
+start{id=1,slot_type=start}
+|___object{id=3,slot_type=[value,object]}
+    |___Token:{{id=4,slot_type=START_OBJECT}
+    |___(*){id=5,slot_type=kleene_star__object_2}
+    |   |___aux_rule__object_1{id=7,slot_type=aux_rule__object_1}
+    |   |   |___Token:name{id=40,slot_type=FIELD_NAME}
+    |   |   |___Token:Alice{id=42,slot_type=[value,VALUE_STRING]}
+    |   |___aux_rule__object_1{id=8,slot_type=aux_rule__object_1}
+    |   |   |___Token:age{id=37,slot_type=FIELD_NAME}
+    |   |   |___Token:30{id=39,slot_type=[value,VALUE_NUMBER_INT]}
+    |   |___aux_rule__object_1{id=9,slot_type=aux_rule__object_1}
+    |   |   |___Token:isStudent{id=34,slot_type=FIELD_NAME}
+    |   |   |___Token:false{id=36,slot_type=[value,VALUE_FALSE]}
+    |   |___aux_rule__object_1{id=10,slot_type=aux_rule__object_1}
+    |   |   |___Token:hobbies{id=22,slot_type=FIELD_NAME}
+    |   |   |___array{id=24,slot_type=[value,array]}
+    |   |       |___Token:[{id=25,slot_type=START_ARRAY}
+    |   |       |___(*){id=26,slot_type=kleene_star__array_1}
+    |   |       |   |___Token:reading{id=33,slot_type=[value,VALUE_STRING]}
+    |   |       |   |___Token:hiking{id=32,slot_type=[value,VALUE_STRING]}
+    |   |       |   |___Token:coding{id=31,slot_type=[value,VALUE_STRING]}
+    |   |       |___Token:]{id=27,slot_type=END_ARRAY}
+    |   |___aux_rule__object_1{id=11,slot_type=aux_rule__object_1}
+    |       |___Token:address{id=12,slot_type=FIELD_NAME}
+    |       |___object{id=14,slot_type=[value,object]}
+    |           |___Token:{{id=15,slot_type=START_OBJECT}
+    |           |___(*){id=16,slot_type=kleene_star__object_2}
+    |           |   |___aux_rule__object_1{id=18,slot_type=aux_rule__object_1}
+    |           |       |___Token:zip{id=19,slot_type=FIELD_NAME}
+    |           |       |___Token:12345{id=21,slot_type=[value,VALUE_STRING]}
+    |           |___Token:}{id=17,slot_type=END_OBJECT}
+    |___Token:}{id=6,slot_type=END_OBJECT}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority](19/19)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](19/19)  Retrieved semantics provider null
 ==================Reducing node 3, size=19==================
 
 The current best program is the following
@@ -184,43 +218,51 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.yaml--
-    --- "Alice"
-    --file: <formatted tokenized program in its original format>--
-    --- "Alice"
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (0): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.yaml--
     --- 30
-    --file: <formatted tokenized program in its original format>--
-    --- 30
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (1): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: hello.yaml--
+    --- "Alice"
+------------------------------------------------------------
+
+
+==========Testing the following program (2): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.yaml--
     --- false
-    --file: <formatted tokenized program in its original format>--
-    --- false
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (3): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: hello.yaml--
+    --- "hiking"
+------------------------------------------------------------
+
+
+==========Testing the following program (4): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: hello.yaml--
+    --- "coding"
+------------------------------------------------------------
+
+
+==========Testing the following program (5): pass===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.yaml--
     --- "reading"
-    --file: <formatted tokenized program in its original format>--
-    --- "reading"
 ------------------------------------------------------------
 
 
@@ -228,10 +270,6 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.yaml--
-    --- "hiking"
-    --file: <formatted tokenized program in its original format>--
-    --- "hiking"
 ------------------------------------------------------------
 
 
@@ -239,46 +277,12 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.yaml--
-    --- "coding"
-    --file: <formatted tokenized program in its original format>--
-    --- "coding"
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.yaml--
-    ---
-    zip: "12345"
-    --file: <formatted tokenized program in its original format>--
-    ---
-    zip: "12345"
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.yaml--
-    ---
-    - "reading"
-    - "hiking"
-    - "coding"
-    --file: <formatted tokenized program in its original format>--
-    ---
-    - "reading"
-    - "hiking"
-    - "coding"
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-3 entries are removed: 3 --> 0.
+0 entries are removed: 5 --> 5.
 ------------------------------------------------------------
 
 
@@ -291,6 +295,7 @@ It took less than 1 second to cancel the task.
 ================The best program is updated.================
 
 token count change 19 -> 1
+Edit: HoistEdit:[replace_3_with_33]
 ------------------------------------------------------------
 
 
@@ -316,14 +321,17 @@ Failed to reduce node 33
 
 
 (1/19)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 2. Reducer: node_priority-dfs======
+========Fixpoint iteration 2. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.jackson.JacksonParserFacade
 The spar-tree is the following.
-start {id=44,slot_type=start}
-|___Token:reading {id=46,slot_type=[value,VALUE_STRING]}
+start{id=44,slot_type=start}
+|___Token:reading{id=46,slot_type=[value,VALUE_STRING]}
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority](1/19)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](1/19)  Retrieved semantics provider null
 ==================Reducing node 46, size=1==================
 
 The current best program is the following
@@ -339,33 +347,36 @@ Failed to reduce node 46
 ------------------------------------------------------------
 
 
+(1/19)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.jackson.JacksonParserFacade
 The spar-tree is the following.
-start {id=44,slot_type=start}
-|___Token:reading {id=46,slot_type=[value,VALUE_STRING]}
+start{id=44,slot_type=start}
+|___Token:reading{id=46,slot_type=[value,VALUE_STRING]}
 ------------------------------------------------------------
 
 
 FixPt[3][FineGritLatraReducer](1/19)  Latra does not support LanguageJackson{name=jackson-yaml, extensions=[jackson, yaml, yml], defaultCodeFormatControl=YAML_FORMAT} langauge yet.
-(1/19)  The history of the reducer invocation.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0    node_priority-dfs     -18    -68             0
- 1    node_priority-dfs       0      0             0
- 2 FineGritLatraReducer       0      0             0
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      1             0     -18            -68       6   time-hidden
+ 1        node_priority      0             0       0              0       0   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-   node_priority-dfs     2     -18    -68
-FineGritLatraReducer     1       0      0
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      1             0     -18            -68       6   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+           Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Replacement      1             0     -18            -68
 ------------------------------------- End --------------------------------------
-
-
 #test success = 1
-#test failure = 3
+#test failure = 5
 #test result cache hits = 0
-#test execution cancelled = 4
+#test execution cancelled = 2
 #node edit action set cache hits = 0
 #external test execution cache hits = 0

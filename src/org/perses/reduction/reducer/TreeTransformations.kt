@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,8 +17,8 @@
 package org.perses.reduction.reducer
 
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.TreeNodeFilterResult
+import org.perses.spartree.TreeNodeFilterResult.CONTINUE
 import org.perses.util.Util.lazyAssert
 
 /** Various tree transformations.  */
@@ -29,39 +29,34 @@ object TreeTransformations {
    * @return all possible replacements.
    */
   @JvmStatic
-  fun findCompatibleDescendants(
+  inline fun findCompatibleDescendants(
     currentNode: AbstractSparTreeNode,
     stopAtFirstCompatible: Boolean,
     maxBfsDepth: Int,
+    crossinline subtreeEarlyStopCriterion: (
+      AbstractSparTreeNode,
+    ) -> TreeNodeFilterResult = { CONTINUE },
   ): Sequence<AbstractSparTreeNode> {
     lazyAssert({ maxBfsDepth > 0 }) { "The max BFS depth must be positive: $maxBfsDepth" }
     val antlrRuleForTheChild = currentNode.payload!!.expectedAntlrRuleType
     lazyAssert({ antlrRuleForTheChild != null }) { currentNode.printTreeStructure() }
     val expectedSuperRuleType = antlrRuleForTheChild!!
 
-    return sequence {
-      currentNode.boundedBFSChildren { node, currentDepth ->
-        if (currentDepth > maxBfsDepth) {
-          return@boundedBFSChildren TreeNodeFilterResult.STOP
+    return currentNode.boundedBreadthFirstSearchToSelectNodes(
+      selectionPredicate = { node ->
+        val nodeRule = node.antlrRule
+        if (nodeRule == null) {
+          false
+        } else if (expectedSuperRuleType.isEqualToOrSuperOf(nodeRule)) {
+          true
+        } else {
+          false
         }
-        val nodeRule =
-          node.antlrRule
-            ?: return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
-        val matched = expectedSuperRuleType.isEqualToOrSuperOf(nodeRule)
-        if (matched) {
-          yield(node)
-          return@boundedBFSChildren if (stopAtFirstCompatible) {
-            TreeNodeFilterResult.STOP
-          } else {
-            TreeNodeFilterResult.CONTINUE
-          }
-        }
-        if (currentDepth == maxBfsDepth) {
-          return@boundedBFSChildren TreeNodeFilterResult.STOP
-        }
-        return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
-      }
-    }
+      },
+      stopAtFirstSelectionPerPath = stopAtFirstCompatible,
+      maxBfsDepth = maxBfsDepth,
+      subtreeEarlyStopCriterion = subtreeEarlyStopCriterion,
+    )
   }
 
   /**
@@ -71,11 +66,12 @@ object TreeTransformations {
    * @return all possible replacements
    */
   @JvmStatic
-  fun findCompatibleKleeneDescendantsForKleeneQuantifiedNode(
+  inline fun findCompatibleKleeneDescendantsForKleeneQuantifiedNode(
     kleeneQuantifiedCurrentNode: AbstractSparTreeNode,
     maxBfsDepth: Int,
+    crossinline subtreeEarlyStopCriterion: (AbstractSparTreeNode) -> TreeNodeFilterResult,
   ): Sequence<AbstractSparTreeNode> {
-    lazyAssert({ maxBfsDepth > 0 }) { "The max BFS depth must be positive: $maxBfsDepth" }
+    check(maxBfsDepth > 0) { "The max BFS depth must be positive: $maxBfsDepth" }
     val parent =
       kleeneQuantifiedCurrentNode.parent
         ?: error(
@@ -84,7 +80,7 @@ object TreeTransformations {
     if (!parent.isKleeneStarRuleNode && !parent.isKleenePlusRuleNode) {
       return emptySequence()
     }
-    lazyAssert({ parent.isKleeneStarRuleNode || parent.isKleenePlusRuleNode }) {
+    check(parent.isKleeneStarRuleNode || parent.isKleenePlusRuleNode) {
       "The current node must be Kleene-qualified. " +
         kleeneQuantifiedCurrentNode.printTreeStructure()
     }
@@ -93,28 +89,20 @@ object TreeTransformations {
         .payload!!
         .expectedAntlrRuleType!!
 
-    return kleeneQuantifiedCurrentNode.boundedBreadthFirstSearchForFirstQualifiedNodes(
-      nodePredicate = { node: AbstractSparTreeNode ->
+    return kleeneQuantifiedCurrentNode.boundedBreadthFirstSearchToSelectNodes(
+      selectionPredicate = { node: AbstractSparTreeNode ->
         if (!node.isKleeneStarRuleNode && !node.isKleenePlusRuleNode) {
-          return@boundedBreadthFirstSearchForFirstQualifiedNodes false
+          return@boundedBreadthFirstSearchToSelectNodes false
         }
         if (node.childCount == 0) {
-          return@boundedBreadthFirstSearchForFirstQualifiedNodes false
+          return@boundedBreadthFirstSearchToSelectNodes false
         }
         val childRule = node.asParserRule().getKleeneElementRuleTypeOrThrow()
         kleeneElementRule.isEqualToOrSuperOf(childRule)
       },
+      stopAtFirstSelectionPerPath = true,
       maxBfsDepth = maxBfsDepth,
+      subtreeEarlyStopCriterion = subtreeEarlyStopCriterion,
     )
-  }
-
-  @JvmStatic
-  fun createNodeDeletionActionSetFor(
-    partition: Iterable<AbstractSparTreeNode>,
-    actionsDescription: String,
-  ): NodeDeletionActionSet {
-    val actionSet = NodeDeletionActionSet.Builder(actionsDescription)
-    partition.forEach { actionSet.deleteNode(it) }
-    return actionSet.build()
   }
 }

@@ -1,0 +1,2197 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 56
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_topformflat_with_pristine_ddmin_golden_test_topformflat_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "topformflat"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "PRISTINE_DDMIN"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "topformflat_pristine_ddmin_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(56/56)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        topformflat
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                topformflat
+            }
+        }
+    }
+
+
+========Fixpoint iteration 1. Reducer: topformflat@0========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=1,slot_type=start}
+|___(*){id=2,slot_type=kleene_star__start_1}
+    |___Token:int{id=3,slot_type=TOKEN}
+    |___Token:printf{id=4,slot_type=TOKEN}
+    |___Token:({id=5,slot_type=TOKEN}
+    |___Token:const{id=6,slot_type=TOKEN}
+    |___Token:char{id=7,slot_type=TOKEN}
+    |___Token:*{id=8,slot_type=TOKEN}
+    |___Token:,{id=9,slot_type=TOKEN}
+    |___Token:...{id=10,slot_type=TOKEN}
+    |___Token:){id=11,slot_type=TOKEN}
+    |___Token:;{id=12,slot_type=TOKEN}
+    |___Token:int{id=13,slot_type=TOKEN}
+    |___Token:main{id=14,slot_type=TOKEN}
+    |___Token:({id=15,slot_type=TOKEN}
+    |___Token:int{id=16,slot_type=TOKEN}
+    |___Token:argc{id=17,slot_type=TOKEN}
+    |___Token:,{id=18,slot_type=TOKEN}
+    |___Token:char{id=19,slot_type=TOKEN}
+    |___Token:*{id=20,slot_type=TOKEN}
+    |___Token:argv{id=21,slot_type=TOKEN}
+    |___Token:[{id=22,slot_type=TOKEN}
+    |___Token:]{id=23,slot_type=TOKEN}
+    |___Token:){id=24,slot_type=TOKEN}
+    |___Token:{{id=25,slot_type=TOKEN}
+    |___Token:int{id=26,slot_type=TOKEN}
+    |___Token:a{id=27,slot_type=TOKEN}
+    |___Token:={id=28,slot_type=TOKEN}
+    |___Token:1{id=29,slot_type=TOKEN}
+    |___Token:;{id=30,slot_type=TOKEN}
+    |___Token:int{id=31,slot_type=TOKEN}
+    |___Token:b{id=32,slot_type=TOKEN}
+    |___Token:={id=33,slot_type=TOKEN}
+    |___Token:a{id=34,slot_type=TOKEN}
+    |___Token:+{id=35,slot_type=TOKEN}
+    |___Token:1{id=36,slot_type=TOKEN}
+    |___Token:;{id=37,slot_type=TOKEN}
+    |___Token:printf{id=38,slot_type=TOKEN}
+    |___Token:({id=39,slot_type=TOKEN}
+    |___Token:"%d\n"{id=40,slot_type=TOKEN}
+    |___Token:,{id=41,slot_type=TOKEN}
+    |___Token:b{id=42,slot_type=TOKEN}
+    |___Token:){id=43,slot_type=TOKEN}
+    |___Token:;{id=44,slot_type=TOKEN}
+    |___Token:printf{id=45,slot_type=TOKEN}
+    |___Token:({id=46,slot_type=TOKEN}
+    |___Token:"hello\n"{id=47,slot_type=TOKEN}
+    |___Token:){id=48,slot_type=TOKEN}
+    |___Token:;{id=49,slot_type=TOKEN}
+    |___Token:printf{id=50,slot_type=TOKEN}
+    |___Token:({id=51,slot_type=TOKEN}
+    |___Token:"world\n"{id=52,slot_type=TOKEN}
+    |___Token:){id=53,slot_type=TOKEN}
+    |___Token:;{id=54,slot_type=TOKEN}
+    |___Token:return{id=55,slot_type=TOKEN}
+    |___Token:0{id=56,slot_type=TOKEN}
+    |___Token:;{id=57,slot_type=TOKEN}
+    |___Token:}{id=58,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Minimizer PristineDeltaDebugger starts. Input=[0-1]#2. Global ratio:56/56=100.00%
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=56,#parts=2#total-parts=2
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Number of partitions: n=2 Global ratio:56/56=100.00%
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Partition count: 2. [[0]#1, [1]#1] Global ratio:56/56=100.00%
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Reducing partitions:  Partition count: 2. [[0]#1, [1]#1] Global ratio:56/56=100.00%
+==========Testing the following program (1): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=46,#parts=1#total-parts=2
+    --file: t.c--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (2): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=10,#parts=1#total-parts=2
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Reducing complements: Partition count: 2. [[0]#1, [1]#1] Global ratio:56/56=100.00%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 3,4,5,6,7,8,9,10,11,12]
+    context: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=10,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Try deleting [0]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58]
+    context: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=46,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+FixPt[1][topformflat@0][PRISTINE_DDMIN](56/56)  Minimizer PristineDeltaDebugger ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+(56/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 2. Reducer: topformflat@1========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=1,slot_type=start}
+|___(*){id=2,slot_type=kleene_star__start_1}
+    |___Token:int{id=3,slot_type=TOKEN}
+    |___Token:printf{id=4,slot_type=TOKEN}
+    |___Token:({id=5,slot_type=TOKEN}
+    |___Token:const{id=6,slot_type=TOKEN}
+    |___Token:char{id=7,slot_type=TOKEN}
+    |___Token:*{id=8,slot_type=TOKEN}
+    |___Token:,{id=9,slot_type=TOKEN}
+    |___Token:...{id=10,slot_type=TOKEN}
+    |___Token:){id=11,slot_type=TOKEN}
+    |___Token:;{id=12,slot_type=TOKEN}
+    |___Token:int{id=13,slot_type=TOKEN}
+    |___Token:main{id=14,slot_type=TOKEN}
+    |___Token:({id=15,slot_type=TOKEN}
+    |___Token:int{id=16,slot_type=TOKEN}
+    |___Token:argc{id=17,slot_type=TOKEN}
+    |___Token:,{id=18,slot_type=TOKEN}
+    |___Token:char{id=19,slot_type=TOKEN}
+    |___Token:*{id=20,slot_type=TOKEN}
+    |___Token:argv{id=21,slot_type=TOKEN}
+    |___Token:[{id=22,slot_type=TOKEN}
+    |___Token:]{id=23,slot_type=TOKEN}
+    |___Token:){id=24,slot_type=TOKEN}
+    |___Token:{{id=25,slot_type=TOKEN}
+    |___Token:int{id=26,slot_type=TOKEN}
+    |___Token:a{id=27,slot_type=TOKEN}
+    |___Token:={id=28,slot_type=TOKEN}
+    |___Token:1{id=29,slot_type=TOKEN}
+    |___Token:;{id=30,slot_type=TOKEN}
+    |___Token:int{id=31,slot_type=TOKEN}
+    |___Token:b{id=32,slot_type=TOKEN}
+    |___Token:={id=33,slot_type=TOKEN}
+    |___Token:a{id=34,slot_type=TOKEN}
+    |___Token:+{id=35,slot_type=TOKEN}
+    |___Token:1{id=36,slot_type=TOKEN}
+    |___Token:;{id=37,slot_type=TOKEN}
+    |___Token:printf{id=38,slot_type=TOKEN}
+    |___Token:({id=39,slot_type=TOKEN}
+    |___Token:"%d\n"{id=40,slot_type=TOKEN}
+    |___Token:,{id=41,slot_type=TOKEN}
+    |___Token:b{id=42,slot_type=TOKEN}
+    |___Token:){id=43,slot_type=TOKEN}
+    |___Token:;{id=44,slot_type=TOKEN}
+    |___Token:printf{id=45,slot_type=TOKEN}
+    |___Token:({id=46,slot_type=TOKEN}
+    |___Token:"hello\n"{id=47,slot_type=TOKEN}
+    |___Token:){id=48,slot_type=TOKEN}
+    |___Token:;{id=49,slot_type=TOKEN}
+    |___Token:printf{id=50,slot_type=TOKEN}
+    |___Token:({id=51,slot_type=TOKEN}
+    |___Token:"world\n"{id=52,slot_type=TOKEN}
+    |___Token:){id=53,slot_type=TOKEN}
+    |___Token:;{id=54,slot_type=TOKEN}
+    |___Token:return{id=55,slot_type=TOKEN}
+    |___Token:0{id=56,slot_type=TOKEN}
+    |___Token:;{id=57,slot_type=TOKEN}
+    |___Token:}{id=58,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Minimizer PristineDeltaDebugger starts. Input=[0-8]#9. Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=56,#parts=9#total-parts=9
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [0-8]#9: Skipped. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Number of partitions: n=2 Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Partition count: 2. [[0-4]#5, [5-8]#4] Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Reducing partitions:  Partition count: 2. [[0-4]#5, [5-8]#4] Global ratio:56/56=100.00%
+==========Testing the following program (3): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=14,#parts=4#total-parts=9
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [5-8]#4: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (4): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=42,#parts=5#total-parts=9
+    --file: t.c--
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [0-4]#5: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Reducing complements: Partition count: 2. [[0-4]#5, [5-8]#4] Global ratio:56/56=100.00%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=42,#parts=5#total-parts=9
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [0-4]#5: Skipped. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 45,46,47,48,49,50,51,52,53,54,55,56,57,58]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=14,#parts=4#total-parts=9
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [5-8]#4: Skipped. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Number of partitions: n=4 Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Partition count: 4. [[0-2]#3, [3-4]#2, [5-6]#2, [7-8]#2] Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Reducing partitions:  Partition count: 4. [[0-2]#3, [3-4]#2, [5-6]#2, [7-8]#2] Global ratio:56/56=100.00%
+==========Testing the following program (5): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=28,#parts=6#total-parts=9
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [3-8]#6: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (6): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=42,#parts=7#total-parts=9
+    --file: t.c--
+              int b = a + 1;
+     printf("%d\n", b);
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [0-2,5-8]#7: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (7): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=46,#parts=7#total-parts=9
+    --file: t.c--
+     printf("hello\n");
+     printf("world\n");
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [0-4,7-8]#7: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (8): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=52,#parts=7#total-parts=9
+    --file: t.c--
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [0-6]#7: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Reducing complements: Partition count: 4. [[0-2]#3, [3-4]#2, [5-6]#2, [7-8]#2] Global ratio:56/56=100.00%
+==========Testing the following program (9): fail===========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=28,#parts=3#total-parts=9
+    --file: t.c--
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [0-2]#3: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (10): pass==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=14,#parts=2#total-parts=9
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](56/56)  Try deleting [3-4]#2: Interesting. Local ratio: 9/9=100.00%. Global ratio:56/56=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 10 --> 9.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 11
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 56 -> 42
+Edit: [delete: 31,32,33,34,35,36,37,38,39,40,41,42,43,44]
+------------------------------------------------------------
+
+
+==========Testing the following program (11): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=10,#parts=2#total-parts=7
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [5-6]#2: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+==========Testing the following program (12): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=4,#parts=2#total-parts=7
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+     printf("hello\n");
+     printf("world\n");
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [7-8]#2: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Number of partitions: n=6 Global ratio:42/56=75.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Partition count: 6. [[0-1]#2, [2]#1, [5]#1, [6]#1, [7]#1, [8]#1] Global ratio:42/56=75.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Reducing partitions:  Partition count: 6. [[0-1]#2, [2]#1, [5]#1, [6]#1, [7]#1, [8]#1] Global ratio:42/56=75.00%
+==========Testing the following program (13): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=19,#parts=5#total-parts=7
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [2,5-8]#5: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+==========Testing the following program (14): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=37,#parts=6#total-parts=7
+    --file: t.c--
+         int a = 1;
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [0-1,5-8]#6: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+==========Testing the following program (15): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=37,#parts=6#total-parts=7
+    --file: t.c--
+     printf("hello\n");
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [0-2,6-8]#6: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+==========Testing the following program (16): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=37,#parts=6#total-parts=7
+    --file: t.c--
+     printf("world\n");
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [0-2,5,7-8]#6: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+==========Testing the following program (17): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=39,#parts=6#total-parts=7
+    --file: t.c--
+        return 0;
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [0-2,5-6,8]#6: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+==========Testing the following program (18): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=41,#parts=6#total-parts=7
+    --file: t.c--
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [0-2,5-7]#6: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Reducing complements: Partition count: 6. [[0-1]#2, [2]#1, [5]#1, [6]#1, [7]#1, [8]#1] Global ratio:42/56=75.00%
+==========Testing the following program (19): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=23,#parts=2#total-parts=7
+    --file: t.c--
+         int a = 1;
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+==========Testing the following program (20): pass==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=5,#parts=1#total-parts=7
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](42/56)  Try deleting [2]#1: Interesting. Local ratio: 7/9=77.78%. Global ratio:42/56=75.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 18 --> 18.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 10
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 42 -> 37
+Edit: [delete: 26,27,28,29,30]
+------------------------------------------------------------
+
+
+==========Testing the following program (21): pass==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=5,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](37/56)  Try deleting [5]#1: Interesting. Local ratio: 6/9=66.67%. Global ratio:37/56=66.07%
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 18 --> 16.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 37 -> 32
+Edit: [delete: 45,46,47,48,49]
+------------------------------------------------------------
+
+
+==========Testing the following program (22): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=5,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](32/56)  Try deleting [6]#1: Uninteresting. Local ratio: 5/9=55.56%. Global ratio:32/56=57.14%
+==========Testing the following program (23): pass==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=3,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](32/56)  Try deleting [7]#1: Interesting. Local ratio: 5/9=55.56%. Global ratio:32/56=57.14%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 17 --> 17.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 32 -> 29
+Edit: [delete: 55,56,57]
+------------------------------------------------------------
+
+
+==========Testing the following program (24): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=1,#parts=1#total-parts=4
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [8]#1: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Number of partitions: n=4 Global ratio:29/56=51.79%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Partition count: 4. [[0]#1, [1]#1, [6]#1, [8]#1] Global ratio:29/56=51.79%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 4. [[0]#1, [1]#1, [6]#1, [8]#1] Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [1,6,8]#3: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+==========Testing the following program (25): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=16,#parts=3#total-parts=4
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0,6,8]#3: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+     printf("world\n");
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0-1,8]#3: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0-1,6]#3: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 4. [[0]#1, [1]#1, [6]#1, [8]#1] Global ratio:29/56=51.79%
+==========Testing the following program (26): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=10,#parts=1#total-parts=4
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+==========Testing the following program (27): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=13,#parts=1#total-parts=4
+    --file: t.c--
+    int printf(const char*, ...);
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+==========Testing the following program (28): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=5,#parts=1#total-parts=4
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [6]#1: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_58]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=1,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [8]#1: Skipped. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+FixPt[2][topformflat@1][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-1,6,8]#4. Local ratio: 4/9=44.44%. Global ratio:29/56=51.79%
+(29/56)  Rebuilding spar-tree: The spartree is rebuilt.
+========Fixpoint iteration 3. Reducer: topformflat@2========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=60,slot_type=start}
+|___(*){id=61,slot_type=kleene_star__start_1}
+    |___Token:int{id=62,slot_type=TOKEN}
+    |___Token:printf{id=63,slot_type=TOKEN}
+    |___Token:({id=64,slot_type=TOKEN}
+    |___Token:const{id=65,slot_type=TOKEN}
+    |___Token:char{id=66,slot_type=TOKEN}
+    |___Token:*{id=67,slot_type=TOKEN}
+    |___Token:,{id=68,slot_type=TOKEN}
+    |___Token:...{id=69,slot_type=TOKEN}
+    |___Token:){id=70,slot_type=TOKEN}
+    |___Token:;{id=71,slot_type=TOKEN}
+    |___Token:int{id=72,slot_type=TOKEN}
+    |___Token:main{id=73,slot_type=TOKEN}
+    |___Token:({id=74,slot_type=TOKEN}
+    |___Token:int{id=75,slot_type=TOKEN}
+    |___Token:argc{id=76,slot_type=TOKEN}
+    |___Token:,{id=77,slot_type=TOKEN}
+    |___Token:char{id=78,slot_type=TOKEN}
+    |___Token:*{id=79,slot_type=TOKEN}
+    |___Token:argv{id=80,slot_type=TOKEN}
+    |___Token:[{id=81,slot_type=TOKEN}
+    |___Token:]{id=82,slot_type=TOKEN}
+    |___Token:){id=83,slot_type=TOKEN}
+    |___Token:{{id=84,slot_type=TOKEN}
+    |___Token:printf{id=85,slot_type=TOKEN}
+    |___Token:({id=86,slot_type=TOKEN}
+    |___Token:"world\n"{id=87,slot_type=TOKEN}
+    |___Token:){id=88,slot_type=TOKEN}
+    |___Token:;{id=89,slot_type=TOKEN}
+    |___Token:}{id=90,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Number of partitions: n=2 Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==========Testing the following program (29): fail==========
+
+// edit action set type: PRISTINE_DDMIN in topformflat@2(TopFormFlatReducer)[topformflat@2]dd@#nodes=23,#parts=2#total-parts=4
+    --file: t.c--
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@2(TopFormFlatReducer)[topformflat@2]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@2(TopFormFlatReducer)[topformflat@2]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Number of partitions: n=4 Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [1-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [0,2-3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+     printf("world\n");
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [0-1,3]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    }
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [0-2]#3: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+------------------------------------------------------------
+
+
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[3][topformflat@2][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+(29/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 4. Reducer: topformflat@3========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=60,slot_type=start}
+|___(*){id=61,slot_type=kleene_star__start_1}
+    |___Token:int{id=62,slot_type=TOKEN}
+    |___Token:printf{id=63,slot_type=TOKEN}
+    |___Token:({id=64,slot_type=TOKEN}
+    |___Token:const{id=65,slot_type=TOKEN}
+    |___Token:char{id=66,slot_type=TOKEN}
+    |___Token:*{id=67,slot_type=TOKEN}
+    |___Token:,{id=68,slot_type=TOKEN}
+    |___Token:...{id=69,slot_type=TOKEN}
+    |___Token:){id=70,slot_type=TOKEN}
+    |___Token:;{id=71,slot_type=TOKEN}
+    |___Token:int{id=72,slot_type=TOKEN}
+    |___Token:main{id=73,slot_type=TOKEN}
+    |___Token:({id=74,slot_type=TOKEN}
+    |___Token:int{id=75,slot_type=TOKEN}
+    |___Token:argc{id=76,slot_type=TOKEN}
+    |___Token:,{id=77,slot_type=TOKEN}
+    |___Token:char{id=78,slot_type=TOKEN}
+    |___Token:*{id=79,slot_type=TOKEN}
+    |___Token:argv{id=80,slot_type=TOKEN}
+    |___Token:[{id=81,slot_type=TOKEN}
+    |___Token:]{id=82,slot_type=TOKEN}
+    |___Token:){id=83,slot_type=TOKEN}
+    |___Token:{{id=84,slot_type=TOKEN}
+    |___Token:printf{id=85,slot_type=TOKEN}
+    |___Token:({id=86,slot_type=TOKEN}
+    |___Token:"world\n"{id=87,slot_type=TOKEN}
+    |___Token:){id=88,slot_type=TOKEN}
+    |___Token:;{id=89,slot_type=TOKEN}
+    |___Token:}{id=90,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=29,#parts=4#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Number of partitions: n=2 Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Number of partitions: n=4 Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=19,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [1-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=16,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [0,2-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,90]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=24,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [0-1,3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=28,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [0-2]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=10,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=13,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=5,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [2]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_90]
+    context: PRISTINE_DDMIN in topformflat@3(TopFormFlatReducer)[topformflat@3]dd@#nodes=1,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Try deleting [3]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[4][topformflat@3][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+(29/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 5. Reducer: topformflat@4========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=60,slot_type=start}
+|___(*){id=61,slot_type=kleene_star__start_1}
+    |___Token:int{id=62,slot_type=TOKEN}
+    |___Token:printf{id=63,slot_type=TOKEN}
+    |___Token:({id=64,slot_type=TOKEN}
+    |___Token:const{id=65,slot_type=TOKEN}
+    |___Token:char{id=66,slot_type=TOKEN}
+    |___Token:*{id=67,slot_type=TOKEN}
+    |___Token:,{id=68,slot_type=TOKEN}
+    |___Token:...{id=69,slot_type=TOKEN}
+    |___Token:){id=70,slot_type=TOKEN}
+    |___Token:;{id=71,slot_type=TOKEN}
+    |___Token:int{id=72,slot_type=TOKEN}
+    |___Token:main{id=73,slot_type=TOKEN}
+    |___Token:({id=74,slot_type=TOKEN}
+    |___Token:int{id=75,slot_type=TOKEN}
+    |___Token:argc{id=76,slot_type=TOKEN}
+    |___Token:,{id=77,slot_type=TOKEN}
+    |___Token:char{id=78,slot_type=TOKEN}
+    |___Token:*{id=79,slot_type=TOKEN}
+    |___Token:argv{id=80,slot_type=TOKEN}
+    |___Token:[{id=81,slot_type=TOKEN}
+    |___Token:]{id=82,slot_type=TOKEN}
+    |___Token:){id=83,slot_type=TOKEN}
+    |___Token:{{id=84,slot_type=TOKEN}
+    |___Token:printf{id=85,slot_type=TOKEN}
+    |___Token:({id=86,slot_type=TOKEN}
+    |___Token:"world\n"{id=87,slot_type=TOKEN}
+    |___Token:){id=88,slot_type=TOKEN}
+    |___Token:;{id=89,slot_type=TOKEN}
+    |___Token:}{id=90,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=29,#parts=4#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Number of partitions: n=2 Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Number of partitions: n=4 Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=19,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [1-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=16,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [0,2-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,90]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=24,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [0-1,3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=28,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [0-2]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=10,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=13,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=5,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [2]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_90]
+    context: PRISTINE_DDMIN in topformflat@4(TopFormFlatReducer)[topformflat@4]dd@#nodes=1,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Try deleting [3]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[5][topformflat@4][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+(29/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 6. Reducer: topformflat@6========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=60,slot_type=start}
+|___(*){id=61,slot_type=kleene_star__start_1}
+    |___Token:int{id=62,slot_type=TOKEN}
+    |___Token:printf{id=63,slot_type=TOKEN}
+    |___Token:({id=64,slot_type=TOKEN}
+    |___Token:const{id=65,slot_type=TOKEN}
+    |___Token:char{id=66,slot_type=TOKEN}
+    |___Token:*{id=67,slot_type=TOKEN}
+    |___Token:,{id=68,slot_type=TOKEN}
+    |___Token:...{id=69,slot_type=TOKEN}
+    |___Token:){id=70,slot_type=TOKEN}
+    |___Token:;{id=71,slot_type=TOKEN}
+    |___Token:int{id=72,slot_type=TOKEN}
+    |___Token:main{id=73,slot_type=TOKEN}
+    |___Token:({id=74,slot_type=TOKEN}
+    |___Token:int{id=75,slot_type=TOKEN}
+    |___Token:argc{id=76,slot_type=TOKEN}
+    |___Token:,{id=77,slot_type=TOKEN}
+    |___Token:char{id=78,slot_type=TOKEN}
+    |___Token:*{id=79,slot_type=TOKEN}
+    |___Token:argv{id=80,slot_type=TOKEN}
+    |___Token:[{id=81,slot_type=TOKEN}
+    |___Token:]{id=82,slot_type=TOKEN}
+    |___Token:){id=83,slot_type=TOKEN}
+    |___Token:{{id=84,slot_type=TOKEN}
+    |___Token:printf{id=85,slot_type=TOKEN}
+    |___Token:({id=86,slot_type=TOKEN}
+    |___Token:"world\n"{id=87,slot_type=TOKEN}
+    |___Token:){id=88,slot_type=TOKEN}
+    |___Token:;{id=89,slot_type=TOKEN}
+    |___Token:}{id=90,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=29,#parts=4#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Number of partitions: n=2 Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Number of partitions: n=4 Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=19,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [1-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=16,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [0,2-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,90]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=24,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [0-1,3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=28,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [0-2]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=10,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=13,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=5,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [2]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_90]
+    context: PRISTINE_DDMIN in topformflat@6(TopFormFlatReducer)[topformflat@6]dd@#nodes=1,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Try deleting [3]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[6][topformflat@6][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+(29/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 7. Reducer: topformflat@8========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=60,slot_type=start}
+|___(*){id=61,slot_type=kleene_star__start_1}
+    |___Token:int{id=62,slot_type=TOKEN}
+    |___Token:printf{id=63,slot_type=TOKEN}
+    |___Token:({id=64,slot_type=TOKEN}
+    |___Token:const{id=65,slot_type=TOKEN}
+    |___Token:char{id=66,slot_type=TOKEN}
+    |___Token:*{id=67,slot_type=TOKEN}
+    |___Token:,{id=68,slot_type=TOKEN}
+    |___Token:...{id=69,slot_type=TOKEN}
+    |___Token:){id=70,slot_type=TOKEN}
+    |___Token:;{id=71,slot_type=TOKEN}
+    |___Token:int{id=72,slot_type=TOKEN}
+    |___Token:main{id=73,slot_type=TOKEN}
+    |___Token:({id=74,slot_type=TOKEN}
+    |___Token:int{id=75,slot_type=TOKEN}
+    |___Token:argc{id=76,slot_type=TOKEN}
+    |___Token:,{id=77,slot_type=TOKEN}
+    |___Token:char{id=78,slot_type=TOKEN}
+    |___Token:*{id=79,slot_type=TOKEN}
+    |___Token:argv{id=80,slot_type=TOKEN}
+    |___Token:[{id=81,slot_type=TOKEN}
+    |___Token:]{id=82,slot_type=TOKEN}
+    |___Token:){id=83,slot_type=TOKEN}
+    |___Token:{{id=84,slot_type=TOKEN}
+    |___Token:printf{id=85,slot_type=TOKEN}
+    |___Token:({id=86,slot_type=TOKEN}
+    |___Token:"world\n"{id=87,slot_type=TOKEN}
+    |___Token:){id=88,slot_type=TOKEN}
+    |___Token:;{id=89,slot_type=TOKEN}
+    |___Token:}{id=90,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=29,#parts=4#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Number of partitions: n=2 Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Number of partitions: n=4 Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=19,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [1-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=16,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [0,2-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,90]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=24,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [0-1,3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=28,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [0-2]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=10,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=13,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=5,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [2]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_90]
+    context: PRISTINE_DDMIN in topformflat@8(TopFormFlatReducer)[topformflat@8]dd@#nodes=1,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Try deleting [3]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[7][topformflat@8][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+(29/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=======Fixpoint iteration 8. Reducer: topformflat@10========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=60,slot_type=start}
+|___(*){id=61,slot_type=kleene_star__start_1}
+    |___Token:int{id=62,slot_type=TOKEN}
+    |___Token:printf{id=63,slot_type=TOKEN}
+    |___Token:({id=64,slot_type=TOKEN}
+    |___Token:const{id=65,slot_type=TOKEN}
+    |___Token:char{id=66,slot_type=TOKEN}
+    |___Token:*{id=67,slot_type=TOKEN}
+    |___Token:,{id=68,slot_type=TOKEN}
+    |___Token:...{id=69,slot_type=TOKEN}
+    |___Token:){id=70,slot_type=TOKEN}
+    |___Token:;{id=71,slot_type=TOKEN}
+    |___Token:int{id=72,slot_type=TOKEN}
+    |___Token:main{id=73,slot_type=TOKEN}
+    |___Token:({id=74,slot_type=TOKEN}
+    |___Token:int{id=75,slot_type=TOKEN}
+    |___Token:argc{id=76,slot_type=TOKEN}
+    |___Token:,{id=77,slot_type=TOKEN}
+    |___Token:char{id=78,slot_type=TOKEN}
+    |___Token:*{id=79,slot_type=TOKEN}
+    |___Token:argv{id=80,slot_type=TOKEN}
+    |___Token:[{id=81,slot_type=TOKEN}
+    |___Token:]{id=82,slot_type=TOKEN}
+    |___Token:){id=83,slot_type=TOKEN}
+    |___Token:{{id=84,slot_type=TOKEN}
+    |___Token:printf{id=85,slot_type=TOKEN}
+    |___Token:({id=86,slot_type=TOKEN}
+    |___Token:"world\n"{id=87,slot_type=TOKEN}
+    |___Token:){id=88,slot_type=TOKEN}
+    |___Token:;{id=89,slot_type=TOKEN}
+    |___Token:}{id=90,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=29,#parts=4#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Number of partitions: n=2 Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Number of partitions: n=4 Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=19,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [1-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=16,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [0,2-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,90]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=24,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [0-1,3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=28,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [0-2]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=10,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=13,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=5,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [2]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_90]
+    context: PRISTINE_DDMIN in topformflat@10(TopFormFlatReducer)[topformflat@10]dd@#nodes=1,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Try deleting [3]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[8][topformflat@10][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+(29/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 9. Reducer: topformflat@0========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=60,slot_type=start}
+|___(*){id=61,slot_type=kleene_star__start_1}
+    |___Token:int{id=62,slot_type=TOKEN}
+    |___Token:printf{id=63,slot_type=TOKEN}
+    |___Token:({id=64,slot_type=TOKEN}
+    |___Token:const{id=65,slot_type=TOKEN}
+    |___Token:char{id=66,slot_type=TOKEN}
+    |___Token:*{id=67,slot_type=TOKEN}
+    |___Token:,{id=68,slot_type=TOKEN}
+    |___Token:...{id=69,slot_type=TOKEN}
+    |___Token:){id=70,slot_type=TOKEN}
+    |___Token:;{id=71,slot_type=TOKEN}
+    |___Token:int{id=72,slot_type=TOKEN}
+    |___Token:main{id=73,slot_type=TOKEN}
+    |___Token:({id=74,slot_type=TOKEN}
+    |___Token:int{id=75,slot_type=TOKEN}
+    |___Token:argc{id=76,slot_type=TOKEN}
+    |___Token:,{id=77,slot_type=TOKEN}
+    |___Token:char{id=78,slot_type=TOKEN}
+    |___Token:*{id=79,slot_type=TOKEN}
+    |___Token:argv{id=80,slot_type=TOKEN}
+    |___Token:[{id=81,slot_type=TOKEN}
+    |___Token:]{id=82,slot_type=TOKEN}
+    |___Token:){id=83,slot_type=TOKEN}
+    |___Token:{{id=84,slot_type=TOKEN}
+    |___Token:printf{id=85,slot_type=TOKEN}
+    |___Token:({id=86,slot_type=TOKEN}
+    |___Token:"world\n"{id=87,slot_type=TOKEN}
+    |___Token:){id=88,slot_type=TOKEN}
+    |___Token:;{id=89,slot_type=TOKEN}
+    |___Token:}{id=90,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger starts. Input=[0-1]#2. Global ratio:29/56=51.79%
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=29,#parts=2#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 2/2=100.00%. Global ratio:29/56=51.79%
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Number of partitions: n=2 Global ratio:29/56=51.79%
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Partition count: 2. [[0]#1, [1]#1] Global ratio:29/56=51.79%
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 2. [[0]#1, [1]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=19,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71]
+    context: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=10,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:29/56=51.79%
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 2. [[0]#1, [1]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71]
+    context: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=10,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@0(TopFormFlatReducer)[topformflat@0]dd@#nodes=19,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:29/56=51.79%
+FixPt[9][topformflat@0][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:29/56=51.79%
+(29/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=======Fixpoint iteration 10. Reducer: topformflat@1========
+
+Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+The spar-tree is the following.
+start{id=60,slot_type=start}
+|___(*){id=61,slot_type=kleene_star__start_1}
+    |___Token:int{id=62,slot_type=TOKEN}
+    |___Token:printf{id=63,slot_type=TOKEN}
+    |___Token:({id=64,slot_type=TOKEN}
+    |___Token:const{id=65,slot_type=TOKEN}
+    |___Token:char{id=66,slot_type=TOKEN}
+    |___Token:*{id=67,slot_type=TOKEN}
+    |___Token:,{id=68,slot_type=TOKEN}
+    |___Token:...{id=69,slot_type=TOKEN}
+    |___Token:){id=70,slot_type=TOKEN}
+    |___Token:;{id=71,slot_type=TOKEN}
+    |___Token:int{id=72,slot_type=TOKEN}
+    |___Token:main{id=73,slot_type=TOKEN}
+    |___Token:({id=74,slot_type=TOKEN}
+    |___Token:int{id=75,slot_type=TOKEN}
+    |___Token:argc{id=76,slot_type=TOKEN}
+    |___Token:,{id=77,slot_type=TOKEN}
+    |___Token:char{id=78,slot_type=TOKEN}
+    |___Token:*{id=79,slot_type=TOKEN}
+    |___Token:argv{id=80,slot_type=TOKEN}
+    |___Token:[{id=81,slot_type=TOKEN}
+    |___Token:]{id=82,slot_type=TOKEN}
+    |___Token:){id=83,slot_type=TOKEN}
+    |___Token:{{id=84,slot_type=TOKEN}
+    |___Token:printf{id=85,slot_type=TOKEN}
+    |___Token:({id=86,slot_type=TOKEN}
+    |___Token:"world\n"{id=87,slot_type=TOKEN}
+    |___Token:){id=88,slot_type=TOKEN}
+    |___Token:;{id=89,slot_type=TOKEN}
+    |___Token:}{id=90,slot_type=TOKEN}
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger starts. Input=[0-3]#4. Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Testing the empty input. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=29,#parts=4#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Number of partitions: n=2 Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 2. [[0-1]#2, [2-3]#2] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=23,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0-1]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=6,#parts=2#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [2-3]#2: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Number of partitions: n=4 Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Reducing partitions:  Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=19,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [1-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,85,86,87,88,89,90]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=16,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0,2-3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,90]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=24,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0-1,3]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=28,#parts=3#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0-2]#3: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Reducing complements: Partition count: 4. [[0]#1, [1]#1, [2]#1, [3]#1] Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 62,63,64,65,66,67,68,69,70,71]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=10,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [0]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 72,73,74,75,76,77,78,79,80,81,82,83,84]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=13,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [1]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 85,86,87,88,89]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=5,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [2]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_90]
+    context: PRISTINE_DDMIN in topformflat@1(TopFormFlatReducer)[topformflat@1]dd@#nodes=1,#parts=1#total-parts=4
+------------------------------------------------------------
+
+
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Try deleting [3]#1: Skipped. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+FixPt[10][topformflat@1][PRISTINE_DDMIN](29/56)  Minimizer PristineDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:29/56=51.79%
+(56/56)  [Pass Caching]: The reducer topformflat@2 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer topformflat@3 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer topformflat@4 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer topformflat@6 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer topformflat@8 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer topformflat@10 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+====Fixpoint iteration 11. Reducer: FineGritLatraReducer====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=124,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=125,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=166,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___(?){id=126,slot_type=optional__declaration_2}
+        |   |   |___directDeclarator{id=131,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+        |   |       |___Token:printf{id=162,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |       |___(*){id=133,slot_type=kleene_star__directDeclarator_7}
+        |   |           |___aux_rule__directDeclarator_15{id=135,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |               |___Token:({id=136,slot_type=LeftParen}
+        |   |               |___parameterTypeList{id=139,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+        |   |               |   |___parameterDeclaration{id=145,slot_type=[parameterList,parameterDeclaration]}
+        |   |               |   |   |___(+){id=146,slot_type=declarationSpecifiers}
+        |   |               |   |   |   |___Token:const{id=161,slot_type=[declarationSpecifier,typeQualifier,Const]}
+        |   |               |   |   |   |___Token:char{id=159,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+        |   |               |   |   |___(?){id=148,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+        |   |               |   |       |___(+){id=151,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
+        |   |               |   |           |___Token:*{id=154,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+        |   |               |   |___(?){id=141,slot_type=optional__parameterTypeList_2}
+        |   |               |       |___aux_rule__parameterTypeList_1{id=142,slot_type=aux_rule__parameterTypeList_1}
+        |   |               |           |___Token:,{id=143,slot_type=Comma}
+        |   |               |           |___Token:...{id=144,slot_type=Ellipsis}
+        |   |               |___Token:){id=138,slot_type=RightParen}
+        |   |___Token:;{id=127,slot_type=Semi}
+        |___functionDefinition{id=7,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=8,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=118,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=122,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=67,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=117,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=69,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=71,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=72,slot_type=LeftParen}
+            |           |___parameterList{id=76,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+            |           |   |___(+){id=106,slot_type=[parameterDeclaration,declarationSpecifiers]}
+            |           |   |   |___Token:int{id=116,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |           |   |   |___Token:argc{id=113,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |           |   |___(*){id=78,slot_type=kleene_star__parameterList_1}
+            |           |       |___aux_rule__parameterList_2{id=79,slot_type=aux_rule__parameterList_2}
+            |           |           |___Token:,{id=80,slot_type=Comma}
+            |           |           |___parameterDeclaration{id=81,slot_type=parameterDeclaration}
+            |           |               |___(+){id=82,slot_type=declarationSpecifiers}
+            |           |               |   |___Token:char{id=105,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+            |           |               |___declarator{id=84,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+            |           |                   |___(?){id=85,slot_type=optional__declarator_1}
+            |           |                   |   |___(+){id=98,slot_type=[pointer,kleene_plus__pointer_8]}
+            |           |                   |       |___Token:*{id=101,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+            |           |                   |___directDeclarator{id=86,slot_type=directDeclarator}
+            |           |                       |___Token:argv{id=96,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |           |                       |___(*){id=88,slot_type=kleene_star__directDeclarator_7}
+            |           |                           |___aux_rule__directDeclarator_14{id=90,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
+            |           |                               |___Token:[{id=91,slot_type=LeftBracket}
+            |           |                               |___Token:]{id=93,slot_type=RightBracket}
+            |           |___Token:){id=74,slot_type=RightParen}
+            |___compoundStatement{id=10,slot_type=compoundStatement}
+                |___Token:{{id=11,slot_type=LeftBrace}
+                |___(?){id=12,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=19,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |           |___(?){id=20,slot_type=optional__postfixExpression_1}
+                |           |   |___postfixExpression{id=38,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |___Token:printf{id=66,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |___(*){id=40,slot_type=kleene_star__postfixExpression_2}
+                |           |           |___aux_rule__postfixExpression_11{id=42,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |           |               |___Token:({id=43,slot_type=LeftParen}
+                |           |               |___(?){id=44,slot_type=optional__postfixExpression_1}
+                |           |               |   |___(+){id=64,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |           |               |       |___Token:"world\n"{id=65,slot_type=StringLiteral}
+                |           |               |___Token:){id=45,slot_type=RightParen}
+                |           |___Token:;{id=21,slot_type=Semi}
+                |___Token:}{id=13,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[11][FineGritLatraReducer](29/56)  For c, there are 46 transformations.
+FixPt[11][FineGritLatraReducer](29/56)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 23 --> 23.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 29 -> 29
+Edit: AnyNodeReplace:[replace_1_with_168]
+------------------------------------------------------------
+
+
+FixPt[11][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](29/56)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[11][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](29/56)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[11][FineGritLatraReducer][DivideOperationSimplification](29/56)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[11][FineGritLatraReducer][MultiplyOperationSimplification](29/56)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[11][FineGritLatraReducer][MinusOperationSimplification](29/56)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[11][FineGritLatraReducer][PlusOperationSimplification](29/56)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[11][FineGritLatraReducer][LocalToGlobalTransformation](29/56)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[11][FineGritLatraReducer][UnionToStruct](29/56)  Found matches: 0 in transformation UnionToStruct
+FixPt[11][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](29/56)  Found matches: 1 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[11][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](29/56)  Built a LatraGeneralActionSet subroot(id=172,#10) in VoidReturnFunctionDeclLatraTransformation
+==========Testing the following program (30): fail==========
+
+// edit action set type: Latra Transformation VoidReturnFunctionDeclLatraTransformation created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+     void  printf   ( const char*, ...   );
+    int main (int argc, char *argv[]) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[11][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](29/56)  Found matches: 1 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[11][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](29/56)  Built a LatraGeneralActionSet subroot(id=173,#19) in VoidReturnFunctionDefLatraTransformation
+==========Testing the following program (31): fail==========
+
+// edit action set type: Latra Transformation VoidReturnFunctionDefLatraTransformation created by FullFunctionalLatraRewriterBuilder
+    --file: t.c--
+    int printf(const char*, ...);
+             void  main     ( int argc, char *argv[] ) { 
+     printf("world\n"); 
+             }
+------------------------------------------------------------
+
+
+FixPt[11][FineGritLatraReducer][FunctionInlining4Args](29/56)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[11][FineGritLatraReducer][FunctionInlining4ArgsNoType](29/56)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[11][FineGritLatraReducer][FunctionInliningLatraTransformation](29/56)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[11][FineGritLatraReducer][FunctionInlining3ArgsNoType](29/56)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[11][FineGritLatraReducer][FunctionInlining2Args](29/56)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[11][FineGritLatraReducer][FunctionInlining2ArgsNoType](29/56)  Found matches: 1 in transformation FunctionInlining2ArgsNoType
+FixPt[11][FineGritLatraReducer][FunctionInlining2ArgsNoType](29/56)  Exception: There must be at least one match for this transformation FunctionInlining2ArgsNoType
+FixPt[11][FineGritLatraReducer][FunctionInlining1Arg](29/56)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[11][FineGritLatraReducer][FunctionInlining1ArgNoType](29/56)  Found matches: 1 in transformation FunctionInlining1ArgNoType
+FixPt[11][FineGritLatraReducer][FunctionInlining1ArgNoType](29/56)  Exception: There must be at least one match for this transformation FunctionInlining1ArgNoType
+FixPt[11][FineGritLatraReducer][FunctionInliningNoArg](29/56)  Found matches: 0 in transformation FunctionInliningNoArg
+FixPt[11][FineGritLatraReducer][LiftAssignmentExpr](29/56)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[11][FineGritLatraReducer][CopyPropagation](29/56)  Found matches: 0 in transformation CopyPropagation
+FixPt[11][FineGritLatraReducer][CallExprToValue](29/56)  Found matches: 1 in transformation CallExprToValue
+FixPt[11][FineGritLatraReducer][ReplaceCallExpr1Arg](29/56)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[11][FineGritLatraReducer][ReplaceCallExpr2Arg](29/56)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[11][FineGritLatraReducer][ReplaceCallExpr3Arg](29/56)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[11][FineGritLatraReducer][SimplifyCallExpr](29/56)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[11][FineGritLatraReducer][SimplifyIf](29/56)  Found matches: 0 in transformation SimplifyIf
+FixPt[11][FineGritLatraReducer][SimplifyIf2](29/56)  Found matches: 0 in transformation SimplifyIf2
+FixPt[11][FineGritLatraReducer][ReduceArrayDim3](29/56)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[11][FineGritLatraReducer][ReduceArrayDim2](29/56)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[11][FineGritLatraReducer][ReduceArrayDim](29/56)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[11][FineGritLatraReducer][MoveFuncDefToDecl](29/56)  Found matches: 1 in transformation MoveFuncDefToDecl
+FixPt[11][FineGritLatraReducer][MoveFuncDefToDecl](29/56)  Exception: There must be at least one match for this transformation MoveFuncDefToDecl
+FixPt[11][FineGritLatraReducer][MoveFuncDefToDecl2](29/56)  Found matches: 1 in transformation MoveFuncDefToDecl2
+FixPt[11][FineGritLatraReducer][MoveFuncDefToDecl2](29/56)  Exception: There must be at least one match for this transformation MoveFuncDefToDecl2
+FixPt[11][FineGritLatraReducer][MoveFuncDefToDeclNoParam](29/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
+FixPt[11][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](29/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
+FixPt[11][FineGritLatraReducer][SimplifyComma](29/56)  Found matches: 0 in transformation SimplifyComma
+FixPt[11][FineGritLatraReducer][TypeDefTransform](29/56)  Found matches: 0 in transformation TypeDefTransform
+FixPt[11][FineGritLatraReducer][EmptyStructToInt](29/56)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[11][FineGritLatraReducer][RemoveAssignment](29/56)  Found matches: 0 in transformation RemoveAssignment
+FixPt[11][FineGritLatraReducer][RemoveAddrTaken](29/56)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[11][FineGritLatraReducer][ReplaceArrayAccessWithIndex](29/56)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[11][FineGritLatraReducer][SimplifyUnionDecl](29/56)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[11][FineGritLatraReducer][SimplifyStructDecl](29/56)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[11][FineGritLatraReducer][ReplaceDefByDecl](29/56)  Found matches: 1 in transformation ReplaceDefByDecl
+FixPt[11][FineGritLatraReducer][ReplaceDefByDecl](29/56)  Built a LatraGeneralActionSet subroot(id=173,#19) in ReplaceDefByDecl
+==========Testing the following program (32): fail==========
+
+// edit action set type: Latra Transformation ReplaceDefByDecl created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    int printf(const char*, ...);
+    int  main 
+                    ( 
+              int argc, char *argv[] 
+                                   )  ;
+------------------------------------------------------------
+
+
+FixPt[11][FineGritLatraReducer][CombineLocalVarDecl](29/56)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[11][FineGritLatraReducer][UnifyFunctionDecl](29/56)  Found matches: 0 in transformation UnifyFunctionDecl
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        topformflat@0      0             0       0              0       3   time-hidden
+ 1        topformflat@1      4             0     -27            -59      26   time-hidden
+ 2        topformflat@2      0             0       0              0       1   time-hidden
+ 3        topformflat@3      0             0       0              0       0   time-hidden
+ 4        topformflat@4      0             0       0              0       0   time-hidden
+ 5        topformflat@6      0             0       0              0       0   time-hidden
+ 6        topformflat@8      0             0       0              0       0   time-hidden
+ 7       topformflat@10      0             0       0              0       0   time-hidden
+ 8        topformflat@0      0             0       0              0       0   time-hidden
+ 9        topformflat@1      0             0       0              0       0   time-hidden
+10 FineGritLatraReducer      1             1       0              0       3   time-hidden
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       topformflat@1     2      4             0     -27            -59      26   time-hidden
+FineGritLatraReducer     1      1             1       0              0       3   time-hidden
+       topformflat@0     2      0             0       0              0       3   time-hidden
+      topformflat@10     1      0             0       0              0       0   time-hidden
+       topformflat@2     1      0             0       0              0       1   time-hidden
+       topformflat@3     1      0             0       0              0       0   time-hidden
+       topformflat@4     1      0             0       0              0       0   time-hidden
+       topformflat@6     1      0             0       0              0       0   time-hidden
+       topformflat@8     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+              Transformation Worked #NonDeletions #Tokens #NonBlankChars
+      topformflat@1.Deletion      4             0     -27            -59
+FineGritLatraReducer.Reparse      1             1       0              0
+------------------------------------- End --------------------------------------
+#test success = 4
+#test failure = 29
+#test result cache hits = 13
+#test execution cancelled = 0
+#node edit action set cache hits = 91
+#external test execution cache hits = 0

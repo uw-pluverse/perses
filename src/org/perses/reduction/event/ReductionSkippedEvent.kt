@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,16 +16,18 @@
  */
 package org.perses.reduction.event
 
+import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.spartree.AbstractUnmodifiableSparTree
 
 class ReductionSkippedEvent(
   val currentFixpointIteration: FixpointIterationStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
+  perFileSizeMetrics: PerFileSizeMetrics,
   val tree: AbstractUnmodifiableSparTree,
   val message: String,
-) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
-  override fun initialProgramSize(): Int = currentFixpointIteration.initialProgramSize()
+) : AbstractReductionEventWithProgramSize(currentTimeMillis, perFileSizeMetrics) {
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    currentFixpointIteration.initialPerFileSizeMetrics()
 
   override val prefixLabelFromRootToHere: String
     get() = currentFixpointIteration.prefixLabelFromRootToHere

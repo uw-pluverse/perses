@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
@@ -26,7 +26,7 @@ reduction_golden_test(
         "--code-format": "PYTHON3_FORMAT",
     },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "hello.py",
     test_script = "r.sh",
 )

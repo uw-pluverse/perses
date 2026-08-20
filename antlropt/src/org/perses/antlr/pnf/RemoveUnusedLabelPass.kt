@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -41,11 +41,18 @@ class RemoveUnusedLabelPass : AbstractPnfPass() {
           .asSequence()
           .map { alternative ->
             when (val decision = RemoveRuleElementLabelEdit().apply(alternative)) {
-              is TransformDecision.Keep -> alternative // Do nothing
+              is TransformDecision.Keep -> {
+                alternative
+              }
+
+              // Do nothing
               is TransformDecision.Replace -> {
                 decision.newValue
               }
-              else -> error(decision)
+
+              else -> {
+                error(decision)
+              }
             }
           }.toList()
       altBlock.clear()

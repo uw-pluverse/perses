@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,6 +15,8 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.listminimizer
+
+import com.google.common.base.MoreObjects
 
 class WeightedProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
@@ -47,18 +49,6 @@ class WeightedProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
       { it.index },
     )
 
-  override fun updatePayload(toBeDeleted: List<ElementWrapper<T>>) {
-    var product = 1.0
-    for (element in toBeDeleted) {
-      product *= (1.0 - getProbability(element))
-    }
-    for (element in toBeDeleted) {
-      val payload = element.elementPayload as WProbDDElementPayload
-      val newProbability = getProbability(element) / (1 - product)
-      element.elementPayload = payload.duplicateWithNewProbability(newProbability)
-    }
-  }
-
   override fun findNextTest(copyBest: List<ElementWrapper<T>>): MutableList<ElementWrapper<T>> {
     val toBeDeleted = mutableListOf<ElementWrapper<T>>()
     val finalToBeDeleted = mutableListOf<ElementWrapper<T>>()
@@ -83,7 +73,7 @@ class WeightedProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
   private fun getWeight(element: ElementWrapper<T>): Int =
     (element.elementPayload as WProbDDElementPayload).weight
 
-  open class WProbDDElementPayload(
+  class WProbDDElementPayload(
     probability: Double,
     val weight: Int,
   ) : ProbabilityPayload(probability) {
@@ -92,5 +82,12 @@ class WeightedProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
         probability = newProbability,
         weight = weight,
       )
+
+    override fun toString(): String =
+      MoreObjects
+        .toStringHelper(this::class.java.simpleName)
+        .add("prob", probability)
+        .add("weight", weight)
+        .toString()
   }
 }

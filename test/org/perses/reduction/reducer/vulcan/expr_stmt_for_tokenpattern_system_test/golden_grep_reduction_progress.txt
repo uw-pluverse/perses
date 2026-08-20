@@ -1,0 +1,493 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 37
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_grep_reduction_golden_test_token_pattern_reducer_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "grep_r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "token_pattern_reducer"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: false
+  enableReductionOnRegularNodes: false
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: false
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "grep_reduction_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: false
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(37/37)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        token_pattern_reducer
+    }
+
+
+(37/37)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 1. Reducer: token_pattern_reducer====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=187,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=188,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=245,slot_type=declarationSpecifiers}
+        |   |       |___Token:void{id=249,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |   |___directDeclarator{id=193,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:fun{id=244,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=195,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=197,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=198,slot_type=LeftParen}
+        |   |           |___parameterList{id=202,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |   |           |   |___(+){id=233,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |           |   |   |___Token:int{id=243,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |           |   |   |___Token:a{id=240,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |           |   |___(*){id=204,slot_type=kleene_star__parameterList_1}
+        |   |           |       |___aux_rule__parameterList_2{id=205,slot_type=aux_rule__parameterList_2}
+        |   |           |       |   |___Token:,{id=220,slot_type=Comma}
+        |   |           |       |   |___(+){id=222,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |           |       |       |___Token:int{id=232,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |           |       |       |___Token:b{id=229,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |           |       |___aux_rule__parameterList_2{id=206,slot_type=aux_rule__parameterList_2}
+        |   |           |           |___Token:,{id=207,slot_type=Comma}
+        |   |           |           |___(+){id=209,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |           |               |___Token:int{id=219,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |           |               |___Token:c{id=216,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |           |___Token:){id=200,slot_type=RightParen}
+        |   |___compoundStatement{id=190,slot_type=compoundStatement}
+        |       |___Token:{{id=191,slot_type=LeftBrace}
+        |       |___Token:}{id=192,slot_type=RightBrace}
+        |___functionDefinition{id=7,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=8,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=182,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=186,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=173,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=181,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=175,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=177,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=178,slot_type=LeftParen}
+            |           |___Token:){id=180,slot_type=RightParen}
+            |___compoundStatement{id=10,slot_type=compoundStatement}
+                |___Token:{{id=11,slot_type=LeftBrace}
+                |___(?){id=12,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=137,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=138,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=172,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=139,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=142,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:var{id=168,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=144,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=145,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=146,slot_type=Assign}
+                |       |   |               |___Token:99{id=165,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=140,slot_type=Semi}
+                |       |___expressionStatement{id=48,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=49,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=67,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:fun{id=135,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=69,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=71,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=72,slot_type=LeftParen}
+                |       |   |               |___(?){id=73,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=75,slot_type=expression}
+                |       |   |               |       |___Token:1{id=134,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |               |       |___(*){id=77,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=78,slot_type=aux_rule__expression_2}
+                |       |   |               |           |   |___Token:,{id=99,slot_type=Comma}
+                |       |   |               |           |   |___Token:var{id=117,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |           |___aux_rule__expression_2{id=79,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=80,slot_type=Comma}
+                |       |   |               |               |___Token:2{id=98,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |               |___Token:){id=74,slot_type=RightParen}
+                |       |   |___Token:;{id=50,slot_type=Semi}
+                |       |___jumpStatement{id=21,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=25,slot_type=Return}
+                |           |   |___(?){id=26,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:var{id=45,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=23,slot_type=Semi}
+                |___Token:}{id=13,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](37/37)  Minimizer LocalExhaustWindowedMinimizer starts. Input=[0-5]#6. Global ratio:37/37=100.00%
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](37/37)  Testing the empty input is disabled. Global ratio:37/37=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=4,#parts=4#total-parts=6
+    --file: t.c--
+    void fun(int a, int b, int c)
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](37/37)  Try deleting [2-5]#4: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:37/37=100.00%
+==========Testing the following program (1): fail===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=3,#parts=3#total-parts=6
+    --file: t.c--
+    void fun(int a, int b, int c) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](37/37)  Try deleting [3-5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:37/37=100.00%
+==========Testing the following program (2): fail===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=3,#parts=3#total-parts=6
+    --file: t.c--
+    void fun(int a, int b, int c)
+    int
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](37/37)  Try deleting [2,4-5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:37/37=100.00%
+==========Testing the following program (3): fail===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=3,#parts=3#total-parts=6
+    --file: t.c--
+    void fun(int a, int b, int c)
+        main()
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](37/37)  Try deleting [2-3,5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:37/37=100.00%
+==========Testing the following program (4): pass===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=3,#parts=3#total-parts=6
+    --file: t.c--
+    void fun(int a, int b, int c)
+               {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](37/37)  Try deleting [2-4]#3: Interesting. Local ratio: 6/6=100.00%. Global ratio:37/37=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 4 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 37 -> 31
+Edit: [delete: 8,173,190]
+------------------------------------------------------------
+
+
+==========Testing the following program (5): pass===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=2,#parts=2#total-parts=3
+    --file: t.c--
+               {
+      int var = 99;
+      fun(1, var, 2);
+      return var;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](31/37)  Try deleting [0-1]#2: Interesting. Local ratio: 3/6=50.00%. Global ratio:31/37=83.78%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 4 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 31 -> 19
+Edit: [delete: 188,193]
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](19/37)  Minimizer LocalExhaustWindowedMinimizer ends. Result=[5]#1. Local ratio: 1/6=16.67%. Global ratio:19/37=51.35%
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](19/37)  Minimizer LocalExhaustWindowedMinimizer starts. Input=[0-4]#5. Global ratio:19/37=51.35%
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](19/37)  Testing the empty input is disabled. Global ratio:19/37=51.35%
+==========Testing the following program (6): fail===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=4,#parts=4#total-parts=5
+    --file: t.c--
+               {
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](19/37)  Try deleting [1-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:19/37=51.35%
+==========Testing the following program (7): pass===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=3,#parts=3#total-parts=5
+    --file: t.c--
+               {
+      int var = 99;
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](19/37)  Try deleting [2-4]#3: Interesting. Local ratio: 5/5=100.00%. Global ratio:19/37=51.35%
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 5 --> 1.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 19 -> 6
+Edit: [delete: 13,21,48]
+------------------------------------------------------------
+
+
+==========Testing the following program (8): fail===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=2,#parts=2#total-parts=2
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](6/37)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/5=40.00%. Global ratio:6/37=16.22%
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](6/37)  Minimizer LocalExhaustWindowedMinimizer ends. Result=[0-1]#2. Local ratio: 2/5=40.00%. Global ratio:6/37=16.22%
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](6/37)  Minimizer LocalExhaustWindowedMinimizer starts. Input=[0-4]#5. Global ratio:6/37=16.22%
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](6/37)  Testing the empty input is disabled. Global ratio:6/37=16.22%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+               {
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](6/37)  Try deleting [1-4]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:6/37=16.22%
+==========Testing the following program (9): fail===========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=3,#parts=3#total-parts=5
+    --file: t.c--
+               {
+      int
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](6/37)  Try deleting [2-4]#3: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:6/37=16.22%
+==========Testing the following program (10): pass==========
+
+// edit action set type: LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION in token_pattern_reducer(LocalExhaustivePatternReducer)[token_pattern_reducer]dd@#nodes=3,#parts=3#total-parts=5
+    --file: t.c--
+               {
+          var
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](6/37)  Try deleting [1,3-4]#3: Interesting. Local ratio: 5/5=100.00%. Global ratio:6/37=16.22%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 3 --> 2.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 6 -> 2
+Edit: [delete: 140,144,172]
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](2/37)  Try deleting [0,2]#2: Uninteresting. Local ratio: 2/5=40.00%. Global ratio:2/37=5.41%
+FixPt[1][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](2/37)  Minimizer LocalExhaustWindowedMinimizer ends. Result=[0,2]#2. Local ratio: 2/5=40.00%. Global ratio:2/37=5.41%
+(2/37)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
+====Fixpoint iteration 2. Reducer: token_pattern_reducer====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___compoundStatement{id=10,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement]}
+            |___Token:{{id=11,slot_type=LeftBrace}
+            |___(?){id=12,slot_type=optional__compoundStatement_1}
+                |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                    |___(?){id=139,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3,optional__declaration_2]}
+                        |___Token:var{id=168,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+------------------------------------------------------------
+
+
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID               Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0 token_pattern_reducer      4             0     -35            -65      11   time-hidden
+ 1 token_pattern_reducer      0             0       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+              Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+token_pattern_reducer     2      4             0     -35            -65      11   time-hidden
+
+------------------------------- Transformations --------------------------------
+                Transformation Worked #NonDeletions #Tokens #NonBlankChars
+token_pattern_reducer.Deletion      4             0     -35            -65
+------------------------------------- End --------------------------------------
+#test success = 4
+#test failure = 7
+#test result cache hits = 2
+#test execution cancelled = 0
+#node edit action set cache hits = 0
+#external test execution cache hits = 0

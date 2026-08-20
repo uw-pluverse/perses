@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,14 +15,13 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.program.printer
-
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
-import org.perses.program.PersesTokenFactory
+import org.perses.program.AbstractPersesToken
 
 @RunWith(JUnit4::class)
 class AbstractOrigFormatVisitorTest {
@@ -43,12 +42,12 @@ class AbstractOrigFormatVisitorTest {
       AbstractTokenPositionProvider.DefaultProvider,
       tokenPlacementListener = null,
     ) {
-      override fun isControlToken(token: PersesTokenFactory.AbstractPersesToken): Boolean = false
+      override fun isControlToken(token: AbstractPersesToken): Boolean = false
 
-      override fun visitControlToken(token: PersesTokenFactory.AbstractPersesToken) {
+      override fun visitControlToken(token: AbstractPersesToken) {
       }
 
-      override fun visitLine(line: List<PersesTokenFactory.AbstractPersesToken>) {
+      override fun visitLine(line: List<AbstractPersesToken>) {
         result.append(line.joinToString(" ") { it.lexemeText })
       }
     }

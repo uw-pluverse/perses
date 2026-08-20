@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -100,7 +100,6 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
         val propertyTestResult = testComplement(complement) ?: continue
         if (propertyTestResult.result.isInteresting) {
           ++countOfDeletedPartitions
-          cache.deleteStaleConfigs(complement.size)
           updateBest(complement, propertyTestResult.payload)
           val partitions = currentPartitionList.partitions.toMutableList()
           partitions.remove(partition)
@@ -121,7 +120,6 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
         val complement = best.filter { it != element }.toImmutableList()
         val propertyTestResult = testComplement(complement) ?: continue
         if (propertyTestResult.result.isInteresting) {
-          cache.deleteStaleConfigs(complement.size)
           updateBest(complement, propertyTestResult.payload)
           restart = true
           break

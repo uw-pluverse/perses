@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -39,6 +39,7 @@ class SlangCrashDetector : AbstractCompilerCrashDetector() {
             origLine.contains("std::exception") -> {
             builder.add(origLine)
           }
+
           isLineLocation(origLine) -> {
             val matchResult = REGEXP_FILE.find(origLine) ?: return@forEach
             val fileNames = matchResult.groupValues
@@ -46,7 +47,10 @@ class SlangCrashDetector : AbstractCompilerCrashDetector() {
               builder.add(fileNames.last())
             }
           }
-          isFunctionLine(origLine) -> builder.add(origLine)
+
+          isFunctionLine(origLine) -> {
+            builder.add(origLine)
+          }
         }
       }
     return builder.build()

@@ -22,6 +22,7 @@ Currently, Perses supports reduction for the following programming languages:
 + java: `*.java`
 + javascript: `*.javascript`, `*.js`
 + line: `*.line`
++ makefile: `*.mk`
 + mysql: `*.mysql`
 + onetoken: `*.onetoken`
 + php: `*.php`
@@ -29,7 +30,7 @@ Currently, Perses supports reduction for the following programming languages:
 + ruby: `*.rb`
 + rust: `*.rs`
 + scala: `*.scala`, `*.sc`
-+ smtlibv2: `*.smt2`
++ smtlibv2: `*.smt2`, `*.sy`
 + solidity: `*.sol`
 + sqlite: `*.sqlite`
 + system_verilog: `*.v`, `*.sv`
@@ -46,7 +47,7 @@ There are three ways to obtain Perses.
   for example,
 
   ```bash
-  wget https://github.com/uw-pluverse/perses/releases/download/v2.5/perses_deploy.jar
+  wget https://github.com/uw-pluverse/perses/releases/download/v2.6/perses_deploy.jar
   java -jar perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
   ```
 
@@ -79,6 +80,69 @@ There are three ways to obtain Perses.
   supports C, Rust, Java and Go. Note that we can easily support any other languages,
   if the specific language can be parsed by an Antlr parser.
 
+#### Writing a Robust Test Script
+
+The test script is the oracle that drives the entire reduction: Perses copies the
+current candidate program into a fresh working directory, runs the script there,
+and keeps the candidate only if the script exits **0** (the property of interest
+still holds); otherwise the candidate is discarded. The script
+must be deterministic and self-contained — read the program from the working
+directory (not an absolute path), avoid side effects outside that directory (or
+use temp directories and then clean them up), and never block on interactive input.
+Reduced variants routinely provoke compiler crashes, infinite loops, and runaway memory,
+so the script must defend against a single candidate hanging the whole run.
+
+Guard every external tool with a wall-clock **`timeout`** (e.g.
+`timeout -s KILL 10 cc small.c`) so no single invocation can run forever. This
+alone is not enough, though: `timeout` signals only the process it launches, not
+that process's descendants. Compiler *drivers* such as `gcc` (which forks `cc1`)
+or `ccomp` spawn the real worker as a child, and when the driver is killed that
+worker is orphaned to `init`/`systemd` and can keep spinning at 100% CPU
+indefinitely — leaking one runaway per bad variant until the machine is starved
+(dead-but-unreaped descendants pile up as zombies). To close this gap, also set a
+per-process CPU cap with **`ulimit -t <seconds>`** near the top of the script:
+unlike `timeout`, `RLIMIT_CPU` is inherited by every descendant and enforced by the
+kernel regardless of reparenting, so orphaned runaways are reaped automatically.
+Pick the cap above the largest per-tool `timeout` (roughly 2×) so legitimate runs
+finish while runaways die, and optionally add `ulimit -v` to bound memory. One last
+caveat: if a timed-out tool's output feeds a pipe or `$(...)`, the shell can still
+block waiting for EOF because a leaked descendant keeps the pipe's write end open —
+redirect tool output to a file rather than a pipe when in doubt.
+
+```bash
+#!/bin/bash
+# CPU-time cap in seconds, inherited by every descendant: an orphaned compiler
+# that escaped `timeout` is still reaped by the kernel via RLIMIT_CPU.
+ulimit -t 20
+# Wall-clock guard on each tool; -s KILL force-kills a wedged process. Redirect to
+# a file (not a pipe) so a leaked descendant cannot stall the script on EOF.
+timeout -s KILL 10 clang -O2 -c small.c > log.txt 2>&1
+grep -q "internal compiler error" log.txt && exit 0   # property holds
+exit 1                                                 # property broken
+```
+
+#### Live Web Dashboard
+
+Perses can serve a live web dashboard that visualizes a reduction as it runs: the shrinking
+token count, the average reduction speed over time, per-reducer statistics, and the history
+of reducer invocations (the same statistics Perses prints at the end of a run, but updated in
+real time).
+
+Enable it with `--enable-web-ui true`. Perses prints a `http://127.0.0.1:<port>` URL to open in
+a browser. Use `--web-ui-port <port>` to pick the port (default `9000`; if it is already in use,
+an ephemeral port is chosen and the actual URL is printed).
+
+```bash
+java -jar perses_deploy.jar --enable-web-ui true \
+    --test-script <test-script.sh> --input-file <program file>
+```
+
+The dashboard binds to localhost only. To watch a reduction that is running on a remote machine,
+forward the port over SSH, e.g. `ssh -L 9000:127.0.0.1:9000 <remote-host>`, then open
+`http://127.0.0.1:9000` locally.
+
+![Perses live web dashboard](readme_generator/webui_screenshot.png)
+
 Check all available command line arguments
 
 ```bash
@@ -90,18 +154,24 @@ The following is the complete list of command line arguments.
 ```
 Usage: org.perses.Main [options]
 
+[Outputs]  Options:
+    --output-dir, -o
+      The output directory to save the reduced result.
+
 [Inputs]  Options:
   * --test-script, --test, -t
       The test script to specify the property the reducer needs to preserve.
   * --input-file, --input, -i
-      The input file to reduce
-    --deps
-      The dependency files required for running the property test
+      The input file(s) or directory(ies) to reduce. Repeat the flag to pass 
+      multiple, e.g. --input a.c --input b.c, or --input src_dir. A directory 
+      is expanded recursively to all regular files under it (the test script 
+      and any --deps files are excluded).
       Default: []
-
-[Outputs]  Options:
-    --output-dir, -o
-      The output directory to save the reduced result.
+    --deps
+      The dependency file(s) or directory(ies) required for running the 
+      property test. A directory is expanded recursively to all regular files 
+      under it.
+      Default: []
 
 [General Reduction Control]  Options:
     --global-fixpoint
@@ -109,7 +179,7 @@ Usage: org.perses.Main [options]
       Default: false
     --fixpoint
       iterative reduction till fixpoint, for the main reducer only
-      Default: false
+      Default: true
     --threads
       Number of reduction threads: a positive integer, or 'auto'.
       Default: auto
@@ -140,7 +210,12 @@ Usage: org.perses.Main [options]
 
 [Reduction Algorithm Control]  Options:
     --alg
-      reduction algorithm: use --list-algs to list all available algorithms
+      The main reduction algorithm: use --list-algs to list all available 
+      algorithms 
+    --cleanup-alg
+      The cleanup reduction algorithm, which is the non-first reduction 
+      algorithm used in the fixpoint iteration. Use --list-algs to list all 
+      available algorithms.
     --list-algs
       list all the reduction algorithms.
     --reparse-each-iteration
@@ -153,14 +228,12 @@ Usage: org.perses.Main [options]
       Enable tree slicer after syntax-guided reduction, and before token 
       slicer 
       Default: false
-    --enable-line-slicer
-      Enable line slicer after syntax-guided reduction, and before token 
-      slicer 
-      Default: false
-    --default-list-minimizer-for-kleene
-      The default list minimizer algorithm to reduce kleene nodes.
-      Default: DFS
-      Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION]
+    --line-slicer
+      whether to run the line slicer (after syntax-guided reduction, before 
+      the token slicer): auto (only for files that do not parse under their 
+      real grammar), on (every file), or off
+      Default: AUTO
+      Possible Values: [AUTO, ON, OFF]
     --min-slicing-window-size
       The minimum window size of the windowed slicer.
       Default: 1
@@ -182,6 +255,12 @@ Usage: org.perses.Main [options]
     --language-ext-jars
       A list of JAR files to support new languages
       Default: []
+
+[Classical Perses Reducer Control]  Options:
+    --default-list-minimizer-for-kleene
+      The default list minimizer algorithm to reduce kleene nodes.
+      Default: DFS
+      Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, WEIGHTED_DFS, WEIGHTED_BFS, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION, ONE_BY_ONE, ADAPTIVE_GAIN_DRIVEN]
 
 [Vulcan Reducer Control]  Options:
     --enable-vulcan
@@ -208,9 +287,8 @@ Usage: org.perses.Main [options]
 [Profiling]  Options:
     --progress-dump-file
       The file to record the reduction process. The dump file can be large..
-    --append-to-progress-dump-file
-      Whether to append the reduction progress to the progress dump file
-      Default: true
+    --actionset-effect-profile
+      The file to profile the effect of edit action sets.
     --stat-dump-file
       The file to save the statistics collected during reduction.
     --profile-query-cache-time
@@ -224,28 +302,70 @@ Usage: org.perses.Main [options]
       The file to save information of all the created edit action sets.
     --profile-list-minimizer
       The file to save the reduction process of the list minimizer.
+    --profile-program-size-trend
+      The file to save the the size of the program being reduced over time.
+    --profile-for-reduction-progress-differential-analysis
+      The file to save the reduction process for offline differential 
+      analysis. 
+    --enable-web-ui
+      Serve a live web dashboard of the reduction progress on localhost.
+      Default: false
+    --web-ui-port
+      Preferred port for --enable-web-ui. Falls back to an ephemeral port if 
+      taken. 
+      Default: 9000
 
 [Cache Control]  Options:
     --query-caching
       Enable query caching for test script executions.
-      Default: TRUE
-      Possible Values: [TRUE, FALSE, AUTO]
-    --query-cache-type
-      the algorithm of the query cache
-      Default: CONTENT_SHA_HASH_FORMAT
-      Possible Values: [AUTO, COMPACT_QUERY_CACHE, COMPACT_QUERY_CACHE_FORMAT_SENSITIVE, PERSES_FAST_LINEAR_SCAN_NO_COMPRESSION, PERSES_LEXEME_ID, CONFIG_BASED, ORIG_CONTENT_STRING_BASED, CONTENT_LEXEME_LIST_BASE, CONTENT_SHA_HASH, CONTENT_SHA_HASH_FORMAT, CONTENT_ZIP, RCC_MEM_LIT]
-    --enable-lightweight-refreshing
-      Whether to enable lightweight refreshing
       Default: true
     --default-sha-alg-type
       The SHA algorithm used in the reduction process
       Default: SHA256
       Possible Values: [SHA512, SHA256]
 
+[List Minimizer Microbenchmarking]  Options:
+    --list-minimizer-microbenchmarking-mode
+      RECORD captures each list minimization problem encountered. EVALUATE 
+      runs one minimizer against one recorded problem and reports its cost and 
+      result. Unset (the default) runs a normal reduction.
+      Possible Values: [RECORD, EVALUATE]
+    --list-minimizer-microbenchmark-output
+      RECORD: the directory to write recorded microbenchmarks to, one folder 
+      each. 
+    --min-list-size-to-record
+      RECORD: skip problems whose list is shorter than this. Lists of one or 
+      two elements leave a minimizer no room to differ, so they say nothing 
+      about which one to prefer.
+      Default: 6
+    --max-microbenchmarks-to-record
+      RECORD: stop recording after this many microbenchmarks. Unset means no 
+      bound. 
+    --evaluation-microbenchmark
+      EVALUATE: the microbenchmark.yaml of the recorded problem to evaluate.
+    --evaluation-minimizer
+      EVALUATE: the list minimizer to evaluate. Exactly one per invocation.
+      Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, WEIGHTED_DFS, WEIGHTED_BFS, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION, ONE_BY_ONE, ADAPTIVE_GAIN_DRIVEN]
+    --evaluation-output
+      EVALUATE: the directory to write the metrics CSVs to.
+
 [Experiment Control]  Options:
     --keep-reduction-history
       keep all the reduction folders generated during reduction
       Default: false
+    --enable-error-tolerant-grammar
+      when a file does not parse under its real grammar, first try an 
+      error-tolerant parse of that grammar (keeping its structure, with 
+      unparseable fragments as leaf tokens) before falling back to the 
+      Dyck/Line tolerant grammars
+      Default: true
+    --dyck-node-reducer
+      whether to run the Dyck node reducer as an extra pass that reparses each 
+      file under a Dyck grammar and deletes balanced delimiter groups the real 
+      grammar cannot place: auto (only for files that do not parse under their 
+      real grammar), on (every file), or off
+      Default: AUTO
+      Possible Values: [AUTO, ON, OFF]
 
 [LPR Reducer Control]  Options:
     --enable-lpr
@@ -256,7 +376,13 @@ Usage: org.perses.Main [options]
       the next transformation.
       Default: false
     --llm-client-script
-      The script to invoke LLM.
+      The executable script used to invoke the LLM during LPR. It receives a 
+      JSON request (via --input-file) and writes a JSON array of response 
+      strings (via --output-file). If omitted, LPR falls back to a bundled 
+      default client (lpr/scripts/llm_client.py): an OpenAI-compatible client 
+      that by default targets a local ollama server at 
+      http://localhost:11434/v1 with model codellama:13b. The fallback is 
+      reported in the reduction output when it is used.
 
 [Latra Reducer Control]  Options:
     --enable-latra
@@ -269,7 +395,7 @@ Usage: org.perses.Main [options]
     --latra-transformation-list-minimizer
       The list minimizer algorithm to reduce with the found transformations
       Default: WPROBDD
-      Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION]
+      Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, WEIGHTED_DFS, WEIGHTED_BFS, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION, ONE_BY_ONE, ADAPTIVE_GAIN_DRIVEN]
 
 [Verbosity]  Options:
     --verbosity
@@ -444,3 +570,9 @@ This repository contains the implementations of the techniques proposed in the f
   publisher = {},
 }
 ```
+### Acknowledgement
+
+This project has been/was partially supported by NSERC Discovery, a project under
+WHJIL Lab, and CFI-JELF Project #40736. 
+
+The codebase was optimized with an open source license from [JProfiler](https://www.ej-technologies.com/jprofiler).  

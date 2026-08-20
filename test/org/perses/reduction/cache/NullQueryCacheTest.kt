@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,6 +24,7 @@ import org.perses.TestUtility.createTokenizedProgramFromString
 import org.perses.grammar.c.LanguageC
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.io.CommonReductionIOManagerData
+import org.perses.util.ImmutableIntArray
 
 @RunWith(JUnit4::class)
 class NullQueryCacheTest : CommonReductionIOManagerData(NullQueryCacheTest::class.java) {
@@ -33,15 +34,16 @@ class NullQueryCacheTest : CommonReductionIOManagerData(NullQueryCacheTest::clas
   fun test() {
     assertThat(cache.cacheSize()).isEqualTo(0)
     val program = createTokenizedProgramFromString("int a;", LanguageC)
-    val cachedResult =
-      cache.getCachedResult(
-        program,
-        outputManager = outputManagerFactory.createManagerFor(program),
-      )
-    assertThat(cachedResult.isMiss()).isTrue()
-    cache.cacheProgramAndResult(cachedResult.asCacheMiss(), PropertyTestResult.INTERESTING_RESULT)
+    val outputManager = outputManagerFactory.createManagerFor(program)
+    val cachedResult = cache.lookUp(outputManager)
+    assertThat(cachedResult.isMiss).isTrue()
+    cache.recordUninteresting(
+      outputManager,
+      ImmutableIntArray.of(program.tokenCount),
+      PropertyTestResult.INTERESTING_RESULT,
+    )
     assertThat(cache.cacheSize()).isEqualTo(0)
-    cache.evictEntriesLargerThan(program)
+    cache.evictEntriesNotSmallerThan(ImmutableIntArray.of(program.tokenCount))
     assertThat(cache.cacheSize()).isEqualTo(0)
   }
 }

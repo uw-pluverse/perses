@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,6 +25,7 @@ import org.perses.grammar.c.LanguageC
 import org.perses.util.Util
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.absolute
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.readText
@@ -35,6 +36,7 @@ class SourceFileTest {
   val tempDir = Files.createTempDirectory(this::class.java.simpleName)
   val source = SourceFile(origFile, LanguageC)
 
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     tempDir.deleteRecursively()

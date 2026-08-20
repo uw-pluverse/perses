@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,54 +21,46 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.reduction.cache.PassLevelCache.PassLevelCacheResult
-import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
-import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
+import org.perses.reduction.reducer.PersesNodeReducerAnnotations
 import org.perses.util.hashing.EnumShaAlgorithm
 
 @RunWith(JUnit4::class)
 class PassLevelCacheTest {
   private val cache = PassLevelCache()
-  private val bfsReducer = PersesNodePrioritizedBfsReducer.META
-  private val dfsReducer = PersesNodePrioritizedDfsReducer.META
+  private val bfsReducer = PersesNodeReducerAnnotations.PrioritizedBfs
+  private val dfsReducer = PersesNodeReducerAnnotations.PrioritizedDfs
+
+  // Two distinct classes standing in for two parser-facade classes; the cache only compares them by
+  // identity, so the concrete types are irrelevant.
+  private val facadeA: Class<*> = String::class.java
+  private val facadeB: Class<*> = StringBuilder::class.java
+
+  private fun update(
+    reducer: org.perses.reduction.ReducerAnnotation,
+    facadeClass: Class<*>,
+    content: String,
+  ) = cache.update(reducer, facadeClass) {
+    EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf(content))
+  }
 
   @Test
   fun test() {
-    cache
-      .update(bfsReducer) {
-        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content"))
-      }.also {
-        assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
-      }
-    cache
-      .update(bfsReducer) {
-        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content"))
-      }.also {
-        assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
-      }
-    cache
-      .update(dfsReducer) {
-        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content"))
-      }.also {
-        assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
-      }
-    cache
-      .update(dfsReducer) {
-        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content"))
-      }.also {
-        assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
-      }
+    assertThat(update(bfsReducer, facadeA, "content")).isEqualTo(PassLevelCacheResult.NEW)
+    assertThat(update(bfsReducer, facadeA, "content")).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
+    assertThat(update(dfsReducer, facadeA, "content")).isEqualTo(PassLevelCacheResult.NEW)
+    assertThat(update(dfsReducer, facadeA, "content")).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
 
-    cache
-      .update(dfsReducer) {
-        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content b"))
-      }.also {
-        assertThat(it).isEqualTo(PassLevelCacheResult.NEW)
-      }
-    cache
-      .update(dfsReducer) {
-        EnumShaAlgorithm.SHA512.createFromListOfStrings(listOf("content b"))
-      }.also {
-        assertThat(it).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
-      }
+    assertThat(update(dfsReducer, facadeA, "content b")).isEqualTo(PassLevelCacheResult.NEW)
+    assertThat(update(dfsReducer, facadeA, "content b")).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
+  }
+
+  @Test
+  fun differentParserFacadesAreDistinctKeys() {
+    // Same reducer and content, different facade: must be a NEW key, not an already-done skip, since
+    // the reducer's result on that content depends on the grammar the tree was built under.
+    assertThat(update(dfsReducer, facadeA, "content")).isEqualTo(PassLevelCacheResult.NEW)
+    assertThat(update(dfsReducer, facadeB, "content")).isEqualTo(PassLevelCacheResult.NEW)
+    assertThat(update(dfsReducer, facadeA, "content")).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
+    assertThat(update(dfsReducer, facadeB, "content")).isEqualTo(PassLevelCacheResult.EXISTING_ALREADY)
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -39,7 +39,7 @@ class LocalExhaustivePatternReducerTest {
         granularity,
       )
     assertThat(nodeSequences.first().size).isAtLeast(granularity)
-    assertThat(nodeSequences.last().size).isEqualTo(tree.tokenCount)
+    assertThat(nodeSequences.last().size).isEqualTo(tree.programSnapshot.canonicalTokenCount)
     nodeSequences.zipWithNext { first, second ->
       assertThat(first.any { !it.isTokenNode() })
       assertThat(first.size).isLessThan(second.size)

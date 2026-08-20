@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.ppr.seed
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
@@ -25,6 +26,7 @@ import org.perses.TestUtility
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.ppr.diff.PPRDiffUtils
 import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
@@ -67,7 +69,8 @@ class SeedOutputManagerFactoryTest {
   val lexerAtnWrapper = LexerAtnWrapper.createLexerWrapperFromLexerClass(PnfCLexer::class.java)
 
   // initialize a reduction folder
-  val reductionInputs = SeedReductionInputs(testScript, origSeedFile, origVariantFile)
+  val originalReductionInputs =
+    DiffOriginalReductionInputs(testScript, origSeedFile, origVariantFile, ImmutableList.of())
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -97,23 +100,22 @@ class SeedOutputManagerFactoryTest {
       )
     val outputManagerFactory =
       SeedOutputManagerFactory(
-        reductionInputs = reductionInputs,
+        originalReductionInputs = originalReductionInputs,
         programFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
         listAlignment = alignment,
         lexerAtnWrapper = lexerAtnWrapper,
-        shaAlgorithmType = EnumShaAlgorithm.SHA256,
+        shaAlgorithm = EnumShaAlgorithm.SHA256,
       )
 
     val seedProgramReduced =
       TokenizedProgram(
         seedProgram.tokens.subList(1, seedProgram.tokens.size),
-        seedProgram.factory,
       )
 
     val folder = Files.createDirectories(tempDir.resolve("reduction-folder"))
     val reductionFolder =
       ReductionFolder(
-        reductionInputs = reductionInputs,
+        originalReductionInputs = originalReductionInputs,
         folder = folder,
       )
 

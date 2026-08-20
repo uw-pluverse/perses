@@ -45,6 +45,7 @@ antlr_codegen_combined(
 
 orig_parser_facade_library(
     name = "orig_parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.c",
     language_kind_full_name = "org.perses.grammar.c.LanguageC",
     output_jar_file_name = "orig_parser_facade.jar",

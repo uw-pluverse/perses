@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -46,10 +46,17 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
       check(oldDef.tag !== AstTag.ALTERNATIVE_BLOCK)
       val decision = edit.apply(oldDef)
       when (decision) {
-        is TransformDecision.Keep -> return@forEach
-        is TransformDecision.Replace ->
+        is TransformDecision.Keep -> {
+          return@forEach
+        }
+
+        is TransformDecision.Replace -> {
           toUpdate.add(RuleEditTriple(name, oldDef, decision.newValue))
-        else -> TODO(decision.toString())
+        }
+
+        else -> {
+          TODO(decision.toString())
+        }
       }.exhaustive
     }
     toUpdate.forEach { it.applyTo(mutable) }

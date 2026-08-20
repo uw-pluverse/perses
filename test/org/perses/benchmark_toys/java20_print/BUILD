@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 sanity_test(
     name = "sanity_test",
@@ -17,7 +17,7 @@ reduction_golden_test(
         "--lang": "java",
     },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "HelloJava20.java.txt",
     test_script = "r.sh",
 )

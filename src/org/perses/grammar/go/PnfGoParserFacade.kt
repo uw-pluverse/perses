@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -40,6 +40,7 @@ class PnfGoParserFacade :
     lexerClass = GoLexer::class.java,
     parserClass = PnfGoParser::class.java,
     identifierTokenTypes = ImmutableIntArray.of(GoLexer.IDENTIFIER),
+    includeAutoDetectedIdentifierTokenTypes = false,
   ) {
   fun parseWithOrigGoParser(file: Path): ParseTreeWithParser {
     Files
@@ -47,14 +48,14 @@ class PnfGoParserFacade :
       .use { reader -> return parseWithOrigGoParser(reader, file.toString()) }
   }
 
-  fun parseWithOrigGoParser(goProgram: String?): ParseTreeWithParser {
+  fun parseWithOrigGoParser(goProgram: String): ParseTreeWithParser {
     BufferedReader(
       StringReader(goProgram),
     ).use { reader -> return parseWithOrigGoParser(reader, "<in-memory>") }
   }
 
   fun parseWithOrigGoParser(
-    goProgram: String?,
+    goProgram: String,
     fileName: String,
   ): ParseTreeWithParser {
     BufferedReader(
@@ -68,7 +69,6 @@ class PnfGoParserFacade :
       fileName: String,
     ): ParseTreeWithParser =
       parseReader(
-        fileName,
         reader,
         { input: CharStream? -> GoLexer(input) },
         { input: CommonTokenStream? -> GoParser(input) },

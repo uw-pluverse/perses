@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,22 +17,55 @@
 package org.perses
 
 import com.google.common.collect.ImmutableList
+import org.perses.listener.ActionSetEffectProfiler
+import org.perses.listener.DifferentialAnalysisProfiler
+import org.perses.listener.ExceptionRecorder
 import org.perses.listener.LoggingListener
+import org.perses.listener.ProgramSizeTrendProfiler
 import org.perses.listener.ProgressMonitorForNodeReducer
+import org.perses.listener.ReducerStatisticsSummaryListener
 import org.perses.listener.StatisticsListener
 import org.perses.listener.TestScriptExecutionListener
 import org.perses.reduction.AbstractReductionListener
 import org.perses.reduction.AsyncReductionListenerManager
+import org.perses.ui.WebUiListener
 import org.perses.util.FileStreamPool
+import java.nio.file.Path
 import kotlin.io.path.name
 
 object PersesListenerManagerCreator {
   fun createAsyncReductionListenerManager(
-    cmd: CommandOptions,
+    cmd: PersesCommandOptions,
     fileStreamPool: FileStreamPool,
+    outputDirectory: Path,
   ): AsyncReductionListenerManager {
     val builder = ImmutableList.builder<AbstractReductionListener>()
     builder.add(LoggingListener(hideTimestamps = cmd.verbosityFlags.hideTimestamps))
+    // Rented here (not at the ProgressMonitorForNodeReducer site below) so the run-level statistics
+    // summary can be echoed into the same progress dump. ProgressMonitorForNodeReducer owns the
+    // rental and returns it on close; the summary listener only borrows the instance to write.
+    val progressDumpStream: FileStreamPool.ManagedPrintStream? =
+      cmd.profilingFlags.progressDumpFile?.let {
+        fileStreamPool.rentStream(
+          path = it,
+          description = ProgressMonitorForNodeReducer::class.toString(),
+        )
+      }
+    builder.add(
+      ReducerStatisticsSummaryListener(
+        dedicatedStream =
+          fileStreamPool.rentStream(
+            path = outputDirectory.resolve("perses_reducer_statistics.txt"),
+            description = ReducerStatisticsSummaryListener::class.toString(),
+          ),
+        additionalSinks =
+          buildList<(String) -> Unit> {
+            add { summary -> println(summary) }
+            progressDumpStream?.let { stream -> add { summary -> stream.println(summary) } }
+          },
+        hideTimestamps = cmd.verbosityFlags.hideTimestamps,
+      ),
+    )
     cmd.profilingFlags.statDumpFile?.let {
       builder.add(
         StatisticsListener(
@@ -43,14 +76,19 @@ object PersesListenerManagerCreator {
         ),
       )
     }
-    cmd.profilingFlags.progressDumpFile?.let {
+    progressDumpStream?.let {
+      builder.add(
+        ProgressMonitorForNodeReducer(it),
+      )
+    }
+    cmd.profilingFlags.actionsetEffectProfile?.let {
       val stream =
         fileStreamPool.rentStream(
           path = it,
-          description = ProgressMonitorForNodeReducer::class.toString(),
+          description = ActionSetEffectProfiler::class.toString(),
         )
       builder.add(
-        ProgressMonitorForNodeReducer(stream),
+        ActionSetEffectProfiler(stream),
       )
     }
     cmd.profilingFlags.statDumpFile
@@ -67,6 +105,35 @@ object PersesListenerManagerCreator {
           ),
         )
       }
+    cmd.profilingFlags.profileProgramSizeTrend.let { userSpecified ->
+      val finalPath: Path =
+        userSpecified ?: outputDirectory.resolve("perses_reduction_result_size_trend.csv")
+      builder.add(
+        ProgramSizeTrendProfiler(
+          stream =
+            fileStreamPool.rentStream(
+              path = finalPath,
+              description = ProgramSizeTrendProfiler::class.toString(),
+            ),
+        ),
+      )
+    }
+    cmd.profilingFlags.profileReductionProcessDifferentialAnalysis?.let { path ->
+      builder.add(
+        DifferentialAnalysisProfiler(
+          stream =
+            fileStreamPool.rentStream(
+              path = path,
+              description = DifferentialAnalysisProfiler::class.toString(),
+            ),
+          hideTimestamp = cmd.verbosityFlags.hideTimestamps,
+        ),
+      )
+    }
+    if (cmd.profilingFlags.enableWebUi) {
+      builder.add(WebUiListener.create(requestedPort = cmd.profilingFlags.webUiPort))
+    }
+    builder.add(ExceptionRecorder())
     return AsyncReductionListenerManager(
       listeners = builder.build(),
       synchronousMode = cmd.verbosityFlags.fullyDeterministicMode,

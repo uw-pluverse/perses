@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
@@ -16,7 +16,7 @@ reduction_golden_test(
     other_flags = {
         "--code-format": "YAML_FORMAT",
     },
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "hello.yaml",
     test_script = "r.sh",
 )
@@ -31,7 +31,7 @@ reduction_golden_test(
     other_flags = {
         "--code-format": "YAML_FORMAT",
     },
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "hello.yaml",
     test_script = "r.sh",
 )

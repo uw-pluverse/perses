@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,14 +16,13 @@
  */
 package org.perses.spartree
 
-import com.google.common.base.MoreObjects
 import org.perses.util.Util
 import kotlin.comparisons.compareBy
 
 class NodeReplacementAction(
   targetNode: AbstractSparTreeNode,
   val replacingNode: AbstractSparTreeNode,
-) : AbstractTreeEditAction(targetNode) {
+) : AbstractTargetedTreeEditAction(targetNode) {
   init {
     Util.lazyAssert {
       val errors = replacingNode.checkLeafLinkIntegrity()
@@ -41,22 +40,10 @@ class NodeReplacementAction(
       .compare(this, o)
   }
 
-  override val description: String
-    get() =
-      MoreObjects
-        .toStringHelper(this)
-        .add("target_node", targetNode.nodeId)
-        .add("replacement", replacingNode.nodeId)
-        .toString()
+  override val conciseDescription: String
+    get() = "replace_${targetNode.nodeId}_with_${replacingNode.nodeId}"
 
-  override fun toString(): String =
-    MoreObjects
-      .toStringHelper(this)
-      .add("target", targetNode)
-      .add("replacement", replacingNode)
-      .toString()
-
-  override fun specificEquals(other: AbstractTreeEditAction): Boolean {
+  override fun specificEquals(other: AbstractTargetedTreeEditAction): Boolean {
     if (other !is NodeReplacementAction) {
       return false
     }
@@ -69,6 +56,10 @@ class NodeReplacementAction(
     check(!targetNode.isPermanentlyDeleted)
     // only take independent replacingNode now.
     check(replacingNode.parent == null)
+    check(!replacingNode.isPermanentlyDeleted) {
+      "The replacing node ${replacingNode.nodeId} has been deleted." +
+        replacingNode.printTreeStructure()
+    }
     val parentNode = targetNode.parent!!
     val targetPayload = targetNode.payload!!
     val payload =
@@ -88,30 +79,27 @@ class NodeReplacementAction(
     )
 
     check(targetNode.parent == null)
-    targetNode.delete()
 
     // maintain leaf list
-    val targetNodePre =
+    val targetNodePrev =
       if (targetNode is LexerRuleSparTreeNode) {
         targetNode.prev
       } else {
         targetNode.beginToken?.prev
-      }
+      } ?: error("unexpected.")
     val targetNodeNext =
       if (targetNode is LexerRuleSparTreeNode) {
         targetNode.next
       } else {
         targetNode.endToken?.next
-      }
-    if (targetNodePre != null) {
-      targetNodePre.next = replacingNode.beginToken
-      replacingNode.beginToken?.prev = targetNodePre
-    }
+      } ?: error("unexpected.")
+    targetNodePrev.next = replacingNode.beginToken
+    replacingNode.beginToken?.prev = targetNodePrev
 
-    if (targetNodeNext != null) {
-      targetNodeNext.prev = replacingNode.endToken
-      replacingNode.endToken?.next = targetNodeNext
-    }
+    targetNodeNext.prev = replacingNode.endToken
+    replacingNode.endToken?.next = targetNodeNext
+
+    targetNode.delete()
     SparTree.updateTokenIntervalUpToRoot(parentNode)
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,11 +18,12 @@ package org.perses.program
 
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
+import org.antlr.v4.runtime.Token
+import org.perses.util.transformToImmutableList
 
 /** A program represented by a list of tokens.  */
 class TokenizedProgram(
-  val tokens: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
-  val factory: TokenizedProgramFactory,
+  val tokens: ImmutableList<out AbstractPersesToken>,
 ) {
   val tokenCount: Int
     get() = tokens.size
@@ -31,7 +32,27 @@ class TokenizedProgram(
     tokens.sumOf { it.lexemeText.length }
   }
 
+  val nonBlankCharacterCount: Int by lazy {
+    tokens.sumOf { token ->
+      token.lexemeText.count {
+        !Character.isWhitespace(it)
+      }
+    }
+  }
+
   override fun toString() = MoreObjects.toStringHelper(this).add("tokens", tokens).toString()
+
+  fun <PayloadType : Any> computeSize(
+    payload: PayloadType,
+    canonicalTokenCount: Int?,
+  ): ProgramSize<PayloadType> =
+    ProgramSize(
+      payload,
+      canonicalTokenCount = canonicalTokenCount,
+      surrogateTokenCount = tokenCount,
+      totalCharacterCount = totalCharacterCount,
+      nonBlankCharacterCount = nonBlankCharacterCount,
+    )
 
   // TODO(cnsun): needs to be tested.
   fun haveSameLexemeSequence(that: TokenizedProgram): Boolean {
@@ -49,5 +70,14 @@ class TokenizedProgram(
       }
     }
     return true
+  }
+
+  companion object {
+    fun createForFreshAntlrLexemes(tokens: List<Token>): TokenizedProgram =
+      TokenizedProgram(
+        tokens.transformToImmutableList {
+          PersesTokenFactory.createPersesToken(it, overridingPosition = null)
+        },
+      )
   }
 }

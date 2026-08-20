@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# No in-script `timeout` wall cap here, so set a conservative CPU ceiling:
+# ample for a legitimate run run, but bounded so a runaway process is
+# reaped by the kernel via RLIMIT_CPU instead of spinning indefinitely. Unlike
+# `timeout`, RLIMIT_CPU is inherited by descendants and survives reparenting.
+# The value below is in CPU seconds (ulimit -t sets RLIMIT_CPU).
+ulimit -t 300
+
 # seed
 rm -f out*.txt
 rm a.out &> /dev/null

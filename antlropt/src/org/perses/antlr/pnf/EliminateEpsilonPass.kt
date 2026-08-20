@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -71,12 +71,20 @@ class EliminateEpsilonPass : AbstractPnfPass() {
           val edit = InlineEpsilonRuleEdit(epsilonRuleName)
           val decision = edit.apply(it.value)
           when (decision) {
-            is TransformDecision.Keep -> Unit // do nothing.
-            is TransformDecision.Replace ->
+            is TransformDecision.Keep -> {
+              Unit
+            }
+
+            // do nothing.
+            is TransformDecision.Replace -> {
               edits.add(
                 RuleEditTriple(name = it.key, oldDef = it.value, newDef = decision.newValue),
               )
-            else -> TODO(decision.toString())
+            }
+
+            else -> {
+              TODO(decision.toString())
+            }
           }
         }
       }

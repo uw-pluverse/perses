@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,27 +17,34 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
+import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.line.LineParserFacade
 import org.perses.listminimizer.EnumListMinimizerType
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
+import org.perses.spartree.ContextDescription
 
 class LineBasedTokenSlicer(
   reducerContext: ReducerContext,
-) : AbstractTokenReducer(META, reducerContext) {
-  override fun computeListMinimizerType(): EnumListMinimizerType =
+) : AbstractSparTreeReducer(META, reducerContext) {
+  override fun getPreferredParserFacade(): AbstractParserFacade = LineParserFacade()
+
+  override fun computeDefaultListMinimizerType(): EnumListMinimizerType =
     EnumListMinimizerType.WINDOWED_SLICER
 
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
-    val lines =
-      LineBasedConcurrentTokenSlicer.computeLines(tree.remainingLexerRuleNodes)
-    val event = fixpointReductionState.fixpointIterationStartEvent
-    runListMinimizerOverListsOfNodes(
+    val tree = fixpointReductionState.inputRepresentation.tree
+    // The line parser facade lexes each line into a single token, so every remaining lexer node is
+    // a whole line and can be minimized directly.
+    runListMinimizerOverNodes(
+      needToTestEmpty = true,
       tree = tree,
+      input = tree.remainingLexerRuleNodes,
       fixpointReductionState = fixpointReductionState,
-      input = lines,
+      actionsDescriptionPostfix = ContextDescription.of("ReduceLines"),
+      specifiedMinimizerType = null,
     )
   }
 
@@ -47,7 +54,7 @@ class LineBasedTokenSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(LineBasedTokenSlicer(reducerContext))
   }
 

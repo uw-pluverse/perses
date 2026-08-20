@@ -1,3 +1,5 @@
+load("@rules_java//java:java_library.bzl", "java_library")
+
 def _antlr_codegen(
         name,
         parser_grammar_file,
@@ -50,7 +52,7 @@ def _antlr_codegen(
     )
     deps = deps or []
     additional_source_files = additional_source_files or []
-    native.java_library(
+    java_library(
         name = name,
         srcs = names_of_java_files_to_keep + additional_source_files,
         exports = deps,
@@ -115,7 +117,7 @@ def antlr_codegen_combined(
         java_pkg_name = java_pkg_name,
         parser_java_file_name = parser_java_file_name,
     )
-    native.java_library(
+    java_library(
         name = name,
         exports = [
             lexer_rule,

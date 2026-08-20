@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -35,6 +35,7 @@ import org.antlr.v4.runtime.atn.StarLoopEntryState
 import org.antlr.v4.runtime.atn.StarLoopbackState
 import org.antlr.v4.runtime.atn.Transition
 import org.antlr.v4.runtime.atn.WildcardTransition
+import org.antlr.v4.runtime.misc.IntervalSet
 import org.perses.antlr.ast.AbstractAstVisitor
 import org.perses.antlr.ast.AbstractPersesAst
 import org.perses.antlr.ast.AbstractPersesRuleElement
@@ -239,6 +240,15 @@ class ATNConstructorFromRegex {
     }
 
     override fun visit(ast: PersesAlternativeBlockAst) {
+      // Alternation is union, so alternatives that each match a single character
+      // (atom/range/set) are merged into ONE set transition over the union of
+      // their intervals. Otherwise overlapping char classes -- e.g. Scala's
+      // `Lower : 'a'..'z' | UnicodeClass_LL`, where the Unicode class also covers
+      // a-z -- produce two transitions accepting the same character, making the
+      // rule's NFA ambiguous: an n-char lexeme then has 2^n equivalent accepting
+      // paths and findATNPathForLexeme throws on its uniqueness check. The union
+      // is language-preserving and leaves the rule deterministic at this point.
+      // See LexerAtnWrapperTest's OverlappingChar test.
       val start =
         BasicBlockStartState().apply {
           stateNumber = nextStateId()
@@ -248,12 +258,49 @@ class ATNConstructorFromRegex {
           stateNumber = nextStateId()
         }
       start.endState = end
+      val mergedSet = IntervalSet()
       ast.foreachChildRuleElement {
         val childEnds = ast2AtnEnds[it]!!
-        start.addTransition(EpsilonTransition(childEnds.start))
-        childEnds.end.addTransition(EpsilonTransition(end))
+        val singleCharLabel = singleCharTransitionLabel(childEnds)
+        if (singleCharLabel == null) {
+          start.addTransition(EpsilonTransition(childEnds.start))
+          childEnds.end.addTransition(EpsilonTransition(end))
+        } else {
+          mergedSet.addAll(singleCharLabel)
+        }
+      }
+      if (!mergedSet.isNil) {
+        val mergedStart = createBasicState()
+        val mergedEnd = createBasicState()
+        mergedStart.addTransition(SetTransition(mergedEnd, mergedSet))
+        start.addTransition(EpsilonTransition(mergedStart))
+        mergedEnd.addTransition(EpsilonTransition(end))
       }
       ast2AtnEnds[ast] = AtnEnds(start, end)
+    }
+
+    /**
+     * The accepted character set if [ends] is a single-character atom (one
+     * atom/range/plain-set transition straight from start to end), else null.
+     * Exact-class matching excludes [NotSetTransition] (complement semantics) and
+     * [WildcardTransition], which are not safe to fold into a plain union.
+     */
+    private fun singleCharTransitionLabel(ends: AtnEnds): IntervalSet? {
+      val s = ends.start
+      val e = ends.end
+      if (s.numberOfTransitions != 1 || e.numberOfTransitions != 0) {
+        return null
+      }
+      val t = s.transition(0)
+      if (t.target !== e) {
+        return null
+      }
+      return when (t::class.java) {
+        AtomTransition::class.java -> IntervalSet.of((t as AtomTransition).label)
+        RangeTransition::class.java -> (t as RangeTransition).let { IntervalSet.of(it.from, it.to) }
+        SetTransition::class.java -> (t as SetTransition).set
+        else -> null
+      }
     }
 
     override fun visit(ast: PersesActionAst) {
@@ -314,10 +361,15 @@ class ATNConstructorFromRegex {
         // Note that we have to use the class equality,
         // as NotSetTransition is a subclass of SetTransition
         SetTransition::class.java -> SetTransition(t.target, (t as SetTransition).set)
+
         NotSetTransition::class.java -> NotSetTransition(t.target, (t as NotSetTransition).set)
+
         AtomTransition::class.java -> AtomTransition(t.target, (t as AtomTransition).label)
+
         WildcardTransition::class.java -> WildcardTransition(t.target)
+
         RangeTransition::class.java -> RangeTransition(t.target, (t as RangeTransition).from, t.to)
+
         else -> error("Unhandled transition $t of ${t::class}")
       }
   }

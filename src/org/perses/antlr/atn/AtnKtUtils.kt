@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -83,20 +83,25 @@ fun Transition.getAllowedAsciiChars(): ImmutableList<Char> =
     is AtomTransition -> {
       ImmutableList.of(this.label.toChar())
     }
+
     is NotSetTransition -> {
       intersectPrintableCharacters(
         this.label().complement(0, Char.MAX_VALUE.code),
       )
     }
+
     is SetTransition -> {
       intersectPrintableCharacters(this.label())
     }
+
     is WildcardTransition -> {
       PrintableCharacters.ALL_PRINTABLE_CHARS_LIST
     }
+
     is RangeTransition -> {
       intersectPrintableCharacters(this.label())
     }
+
     else -> {
       error("unhandled transition type: ${this::class.java}")
     }

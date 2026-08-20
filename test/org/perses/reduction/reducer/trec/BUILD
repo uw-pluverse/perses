@@ -35,3 +35,14 @@ kt_jvm_test(
         "//test/org/perses/reduction:reducer_functional_test_base",
     ],
 )
+
+kt_jvm_test(
+    name = "CanonicalIdPoolTest",
+    srcs = ["CanonicalIdPoolTest.kt"],
+    associates = [
+        "//src/org/perses/reduction/reducer/trec",
+    ],
+    deps = [
+        "//:truth",
+    ],
+)

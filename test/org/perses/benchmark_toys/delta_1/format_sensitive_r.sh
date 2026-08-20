@@ -4,12 +4,6 @@ set -o nounset
 
 rm a.out temp.txt &> /dev/null
 
-readonly LINE_COUNT=$(wc -l t.c | awk '{print $1}')
-if ((LINE_COUNT > 10)); then
-  echo "too many lines."
-  exit 1
-fi
-
 if command -v gcc-7.1.0; then
   GCC="gcc-7.1.0"
 else

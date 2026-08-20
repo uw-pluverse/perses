@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,19 +16,26 @@
  */
 package org.perses.listener
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.grammar.c.LanguageC
+import org.perses.program.ProgramSize
+import org.perses.program.ScriptFile
+import org.perses.program.SourceFile
 import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.event.TestScriptExecutorServiceStatisticsSnapshot
-import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
+import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
+import org.perses.reduction.io.PerFileSizeMetrics
+import org.perses.reduction.reducer.PersesNodeReducerAnnotations
 import org.perses.util.FileStreamPool
-import java.lang.ref.WeakReference
+import org.perses.util.Util
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -38,6 +45,29 @@ import kotlin.io.path.deleteIfExists
 
 @RunWith(JUnit4::class)
 class StatisticsListenerTest {
+  private val root = Util.createTempDirForObject(this)
+  private val originalReductionInputs =
+    DefaultLanguageOriginalReductionInputs(
+      testScript = ScriptFile(Files.writeString(root.resolve("r.sh"), "#!/bin/bash\ntrue\n")),
+      mutableFiles =
+        ImmutableList.of(SourceFile(Files.writeString(root.resolve("a.c"), "int a;"), LanguageC)),
+      immutableDependencyFiles = ImmutableList.of(),
+    )
+
+  private fun metrics(tokenCount: Int): PerFileSizeMetrics =
+    PerFileSizeMetrics(
+      originalReductionInputs,
+      ImmutableList.of(
+        ProgramSize(
+          payload = Unit,
+          canonicalTokenCount = tokenCount,
+          surrogateTokenCount = tokenCount,
+          totalCharacterCount = 0,
+          nonBlankCharacterCount = 0,
+        ),
+      ),
+    )
+
   private val resultFile: Path = Files.createTempFile("reduction-statistics", ".txt")
   private val streamPool = FileStreamPool()
   private val listener =
@@ -50,23 +80,23 @@ class StatisticsListenerTest {
     check(resultFile.deleteIfExists())
     listener.close()
     streamPool.close()
+    root.toFile().deleteRecursively()
   }
 
   @Test
   fun test() {
-    val reducer = PersesNodePrioritizedDfsReducer.META
+    val reducer = PersesNodeReducerAnnotations.PrioritizedDfs
     val startEvent =
       ReductionStartEvent(
         currentTimeMillis = 300,
-        tree = WeakReference(null),
-        programSize = 100,
+        perFileSizeMetrics = metrics(100),
         commandLineOptions = "<cmd>",
       )
     val firstIterationStart =
       FixpointIterationStartEvent(
         startEvent,
         300,
-        100,
+        metrics(100),
         1,
         reducer,
         treeStructureDumper = { "" },
@@ -82,7 +112,7 @@ class StatisticsListenerTest {
       FixpointIterationEndEvent(
         firstIterationStart,
         500,
-        50,
+        metrics(50),
         testScriptStatistics =
           TestScriptExecutorServiceStatisticsSnapshot(
             scriptExecutionNumber = firstTestExecutions,
@@ -94,7 +124,7 @@ class StatisticsListenerTest {
       FixpointIterationStartEvent(
         startEvent,
         500,
-        50,
+        metrics(50),
         2,
         reducer,
         treeStructureDumper = { "" },
@@ -110,7 +140,7 @@ class StatisticsListenerTest {
       FixpointIterationEndEvent(
         secondIterationStart,
         700,
-        25,
+        metrics(25),
         testScriptStatistics =
           TestScriptExecutorServiceStatisticsSnapshot(
             scriptExecutionNumber = secondTestExecutions + firstTestExecutions,
@@ -122,7 +152,7 @@ class StatisticsListenerTest {
       ReductionEndEvent(
         startEvent,
         currentTimeMillis = 1000,
-        programSize = 25,
+        perFileSizeMetrics = metrics(25),
         TestScriptExecutorServiceStatisticsSnapshot(
           scriptExecutionNumber = firstTestExecutions + secondTestExecutions,
           externalCacheHitNumber = 0,

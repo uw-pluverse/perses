@@ -1,6 +1,6 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 load("//:perses.bzl", "kt_binary_for_genrule")
-load("//test/org/perses:test.bzl", "golden_test")
+load("//test:test.bzl", "golden_test")
 
 package(
     default_visibility = [
@@ -31,6 +31,7 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//antlropt/src/org/perses/antlr/util:antlr_tool_wrapper",
+        "//src/org/perses/util",
     ],
 )
 
@@ -103,7 +104,9 @@ kt_binary_for_genrule(
         "//antlropt/src/org/perses/antlr/ast",
         "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/grammar/go:parser_facade",
+        "//src/org/perses/grammar/rust:parser_facade",
         "//src/org/perses/grammar/scala:parser_facade",
+        "//src/org/perses/grammar/wasm:parser_facade",
     ],
 )
 
@@ -112,8 +115,7 @@ kt_jvm_test(
     srcs = ["RuleReachabilityGraphTest.kt"],
     deps = [
         "//:truth",
-        "//src/org/perses/antlr/atn/nfa",
-        "//src/org/perses/spartree",
+        "//src/org/perses/grammar:parser_facade_interface",
     ],
 )
 
@@ -133,14 +135,18 @@ genrule(
         "pnfc_rule_hierarchy.txt",
         "pnfgo_rule_hierarchy.txt",
         "pnfscala_rule_hierarchy.txt",
+        "pnfwat_rule_hierarchy.txt",
         "pnfc_rule_graph.txt",
         "pnfgo_rule_graph.txt",
         "pnfscala_rule_graph.txt",
+        "pnfrust_rule_hierarchy.txt",
     ],
     cmd = "$(location :GrammarHierarchyDumpMain) " +
           " -c $(location pnfc_rule_hierarchy.txt)" +
           " -go $(location pnfgo_rule_hierarchy.txt)" +
           " -scala $(location pnfscala_rule_hierarchy.txt)" +
+          " -wat $(location pnfwat_rule_hierarchy.txt)" +
+          " -rust $(location pnfrust_rule_hierarchy.txt)" +
           " -graph-c $(location pnfc_rule_graph.txt)" +
           " -graph-go $(location pnfgo_rule_graph.txt)" +
           " -graph-scala $(location pnfscala_rule_graph.txt)",
@@ -151,6 +157,18 @@ golden_test(
     name = "golden_test_pnfc_rule_hierarchy",
     golden_file = "golden_pnfc_rule_hierarchy.txt",
     test_file = "pnfc_rule_hierarchy.txt",
+)
+
+golden_test(
+    name = "golden_test_pnfrust_rule_hierarchy",
+    golden_file = "golden_pnfrust_rule_hierarchy.txt",
+    test_file = "pnfrust_rule_hierarchy.txt",
+)
+
+golden_test(
+    name = "golden_test_pnfwat_rule_hierarchy",
+    golden_file = "golden_pnfwat_rule_hierarchy.txt",
+    test_file = "pnfwat_rule_hierarchy.txt",
 )
 
 golden_test(

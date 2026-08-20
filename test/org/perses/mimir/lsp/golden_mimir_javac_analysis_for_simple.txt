@@ -1,0 +1,11 @@
+DEF: foo@[18:14]: public void foo(int p) {
+
+DEF: p@[18:22]: public void foo(int p) {
+  USE: p@[19:12]: int x = p;
+
+DEF: x@[19:8]: int x = p;
+  USE: x@[20:12]: int y = x + 1;
+
+DEF: y@[20:8]: int y = x + 1;
+  USE: y@[21:23]: System.out.println(y);
+

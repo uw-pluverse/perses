@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,16 +27,6 @@ class SeedCmdOptions : AbstractPPRCommandOptions() {
   override fun createInputFlags() = SeedInputFlagGroup()
 
   val seedInputFlags = inputFlags as SeedInputFlagGroup
-
-  override fun validateExtra() {
-    super.validateExtra()
-    check(!trecFlags.enableTRec) {
-      "The token reducer is not compatible with PPR."
-    }
-    check(!latraFlags.enableLatra) {
-      "The latra reducer is not compatible with PPR."
-    }
-  }
 
   class SeedInputFlagGroup : InputFlagGroup() {
     @JvmField

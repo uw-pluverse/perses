@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -59,7 +59,11 @@ class PersesTerminalAst(
 
   fun getStringLiteralOrThrow(): String {
     check(isStringLiteral()) { text }
-    return text.substring(1, endIndex = text.length - 1)
+    return text.substring(1, endIndex = text.length - 1).let {
+      // In antlr, a string literal is '\'', and the content is the single quote, but we need
+      // to unescape the single quote.
+      it.replace("\\'", "'")
+    }
   }
 
   fun isEOF(): Boolean {

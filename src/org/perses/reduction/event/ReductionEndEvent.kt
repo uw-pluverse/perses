@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,14 +16,17 @@
  */
 package org.perses.reduction.event
 
+import org.perses.reduction.io.PerFileSizeMetrics
+
 class ReductionEndEvent internal constructor(
   val startEvent: ReductionStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
+  perFileSizeMetrics: PerFileSizeMetrics,
   val testScriptExecutorServiceStatistics: TestScriptExecutorServiceStatisticsSnapshot,
   val extraData: String? = null,
-) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSize) {
-  override fun initialProgramSize(): Int = startEvent.initialProgramSize()
+) : AbstractReductionEventWithProgramSize(currentTimeMillis, perFileSizeMetrics) {
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    startEvent.initialPerFileSizeMetrics()
 
   override val prefixLabelFromRootToHere: String
     get() = ""

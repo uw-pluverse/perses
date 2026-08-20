@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,7 +26,7 @@ abstract class AbstractNodeReplacementTreeEdit internal constructor(
   val onlyReplacementNode: AbstractSparTreeNode
     get() = actionSet.actions.single().replacingNode
 
-  override fun computeProgram(tree: SparTree): TokenizedProgram =
+  override fun internalComputeProgram(tree: SparTree): TokenizedProgram =
     tree.customizeProgram(TokenizedProgramConstructor(actionSet))
 
   private class TokenizedProgramConstructor(

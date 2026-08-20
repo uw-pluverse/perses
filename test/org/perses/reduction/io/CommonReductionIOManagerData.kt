@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,101 +16,43 @@
  */
 package org.perses.reduction.io
 
-import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableMap
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
+import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
-import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
-import org.perses.reduction.AbstractGlobalExecutionCache.NullCache
-import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.io.token.RegularOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
-import org.perses.util.Util
-import org.perses.util.hashing.EnumShaAlgorithm
-import org.perses.util.shell.Shells
-import java.nio.file.Files
-import java.nio.file.Path
-import kotlin.io.path.ExperimentalPathApi
-import kotlin.io.path.deleteRecursively
-import kotlin.io.path.writeText
 
+/**
+ * The single-file, token-reduction flavor of [AbstractReductionTestData]: one `t.c` source and a
+ * [TokenReductionIOManager]. Test classes extend it to inherit a ready-to-use IO manager, executor,
+ * inputs, and result folder.
+ */
 open class CommonReductionIOManagerData(
-  val testClass: Class<*>,
-) : AutoCloseable {
-  protected val shaAlgorithm = EnumShaAlgorithm.SHA512
-
-  val tempDir: Path = Files.createTempDirectory(testClass.simpleName + "_data")
-
-  @OptIn(ExperimentalPathApi::class)
-  override fun close() {
-    if (executorServiceDelegate.isInitialized()) {
-      executorService.close()
-    }
-    tempDir.deleteRecursively()
-  }
-
-  val script =
-    ScriptFile(
-      tempDir.resolve("r.sh").apply {
-        Files.createFile(this)
-        Util.setExecutable(this)
-        writeText(
-          """
-          ${Shells.SHEBANG_BASH}
-          test
-          """.trimIndent(),
-        )
-      },
-    )
-  val sourceFile =
-    SourceFile(
-      tempDir.resolve("t.c").apply {
-        Files.createFile(this)
-        this.writeText("int a;")
-      },
-      LanguageC,
-    )
-  val inputs =
-    RegularReductionInputs(
-      testScript = script,
-      mainFile = sourceFile,
-      dependencyFiles = ImmutableList.of(),
-    )
-  val outputDir: Path =
-    tempDir.resolve("output_dir").apply {
-      Files.createDirectory(this)
-    }
-  val workingDir: Path =
-    tempDir.resolve("working_dir").apply {
-      Files.createDirectory(this)
-    }
+  testClass: Class<*>,
+) : AbstractReductionTestData(
+    testClass,
+    scriptBody = "test",
+    sources = listOf(SourceSpec("t.c", "int a;", LanguageC)),
+  ) {
+  val sourceFile: SourceFile = mutableFile("t.c")
   val outputManagerFactory =
     RegularOutputManagerFactory(
       inputs,
       EnumFormatControl.ORIG_FORMAT,
       LexerAtnWrapper.createLexerWrapperFromLexerClass(PnfCLexer::class.java),
       shaAlgorithm = shaAlgorithm,
+      fileRepresentedByProgram = sourceFile,
+      // Single-file reduction has no siblings.
+      otherMutableFileContents = ImmutableMap.of<AbstractReductionFile<*, *>, String>(),
     )
-  val ioManager =
+  override val ioManager =
     TokenReductionIOManager(
       workingFolder = workingDir,
-      reductionInputs = inputs,
-      outputManagerFactory = outputManagerFactory,
-      outputDirectory = outputDir,
+      originalReductionInputs = inputs,
+      resultFolder = createPopulatedResultFolder(),
     )
-
-  // This field has to be lazy, because the constructor has side effects, and creates files
-  // in the workingFolder.
-  private val executorServiceDelegate =
-    lazy {
-      TestScriptExecutorService(
-        ioManager.lazilyInitializedReductionFolderManager,
-        specifiedNumOfThreads = 1,
-        scriptExecutionTimeoutInSeconds = 600L,
-        globalExecutionCache = NullCache(),
-      )
-    }
-  val executorService: TestScriptExecutorService by executorServiceDelegate
 }

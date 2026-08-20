@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -75,19 +75,20 @@ class RandomSparTreeGenerator(
       is PersesRangeAst,
       is PersesNotAst,
       is AbstractPersesTerminalAst,
-      -> {
-        val child = generateLexerRuleSparTreeNode(ruleBody)
-        node.addChild(child, AbstractNodePayload.SinglePayload(child.antlrRule))
-      }
+      -> addTerminalChildUnlessEof(node, ruleBody)
+
       is PersesAlternativeBlockAst -> {
         val alternative =
           chooseAlternative(ruleBody, depth)
         addChildrenAndUpdateQueue(node, alternative, queue, depth)
       }
+
       is PersesRuleElementOption, // Do nothing as this only affect parsing.
       is PersesEpsilonAst,
       is PersesActionAst,
-      -> {} // Too complicated to consider Actions
+      -> {}
+
+      // Too complicated to consider Actions
       is PersesLexerCommandAst -> {
         // if commands contains "skip", the generator should ignore it
         for (command in ruleBody.commands) {
@@ -97,20 +98,24 @@ class RandomSparTreeGenerator(
         }
         addChildrenAndUpdateQueue(node, ruleBody.body, queue, depth)
       }
+
       is AbstractPersesQuantifiedAst -> {
         val times = chooseTimesToRepeat(ruleBody, depth)
         for (i in 0 until times) {
           addChildrenAndUpdateQueue(node, ruleBody.body, queue, depth)
         }
       }
+
       is PersesRuleElementLabel -> {
         addChildrenAndUpdateQueue(node, ruleBody.getChild(0), queue, depth)
       }
+
       is PersesSequenceAst -> {
         ruleBody.foreachChildRuleElement {
           addChildrenAndUpdateQueue(node, it, queue, depth)
         }
       }
+
       is PersesRuleReferenceAst -> {
         val ruleNameHandle = ruleBody.ruleNameHandle
         val antlrRule =
@@ -121,6 +126,7 @@ class RandomSparTreeGenerator(
         node.addChild(generatedNode, AbstractNodePayload.SinglePayload(generatedNode.antlrRule))
         queue.add(generatedNode)
       }
+
       else -> {
         throw AssertionError("Cannot generate node with the given ruleBody.")
       }
@@ -157,6 +163,7 @@ class RandomSparTreeGenerator(
           random.nextInt(10)
         }
       }
+
       is PersesOptionalAst -> {
         if (ruleGenerationInfo.getMinDepth(ruleBody.body) > maxDepth) {
           0
@@ -164,7 +171,10 @@ class RandomSparTreeGenerator(
           random.nextInt(2)
         }
       }
-      else -> random.nextInt(9) + 1
+
+      else -> {
+        random.nextInt(9) + 1
+      }
     }
   }
 }

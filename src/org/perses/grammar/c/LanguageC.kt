@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.grammar.c
 
+import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
@@ -24,7 +25,7 @@ import org.perses.util.shell.CommonShellCommands
 object LanguageC : LanguageKind(
   name = "c",
   extensions = ImmutableSet.of("c"),
-  defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
   defaultFormatterCommandCreators =
     createPotentialCodeFormatterList(
@@ -36,4 +37,5 @@ object LanguageC : LanguageKind(
       EnumFormatControl.COMPACT_ORIG_FORMAT,
       EnumFormatControl.ORIG_FORMAT,
     ),
+  orderedImportantLiterals = ImmutableList.of(";", "return"),
 )

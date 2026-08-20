@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,9 +17,7 @@
 package org.perses.program
 
 import com.google.common.truth.Truth.assertThat
-import org.perses.antlr.ParseTreeUtil
 import org.perses.grammar.AbstractParserFacade
-import org.perses.program.TokenizedProgramFactory.Companion.createFactory
 import org.perses.program.printer.PrinterRegistry
 import org.perses.spartree.SparTreeBuilder
 import org.perses.spartree.SparTreeNodeFactory
@@ -34,24 +32,16 @@ class LanguageKindTestUtil {
     ) {
       val language = facade.language
       val parseTree = facade.parseFile(program)
-      val tokenizedProgramFactory =
-        createFactory(
-          ParseTreeUtil.getTokens(parseTree.tree),
-          language,
-        )
-      val sparTreeNodeFactory =
-        SparTreeNodeFactory(
-          facade.metaTokenInfoDb,
-          tokenizedProgramFactory,
-          facade.ruleHierarchy,
-        )
+      val sparTreeNodeFactory = SparTreeNodeFactory(facade)
       val sparTreeBuilder =
         SparTreeBuilder(
           sparTreeNodeFactory,
           parseTree,
+          simplifyTree = true,
+          canonicalTokenCountComputer = { null },
         )
       val sparTree = sparTreeBuilder.result
-      val tokenizedProgram = sparTree.programSnapshot
+      val tokenizedProgram = sparTree.programSnapshot.payload
 
       val allowedCodeFormatControl = language.allowedCodeFormatControl
       for (formatControl in allowedCodeFormatControl) {
@@ -68,9 +58,11 @@ class LanguageKindTestUtil {
             SparTreeBuilder(
               sparTree.sparTreeNodeFactory,
               reconstructedParseTree,
+              simplifyTree = true,
+              canonicalTokenCountComputer = { null },
             ).result
           val reconstructedTokens =
-            reconstructedSparTree.programSnapshot.tokens.map {
+            reconstructedSparTree.programSnapshot.payload.tokens.map {
               it.lexemeText
             }
           assertThat(reconstructedTokens).containsExactlyElementsIn(

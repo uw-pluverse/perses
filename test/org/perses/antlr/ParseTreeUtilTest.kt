@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -85,5 +85,7 @@ class ParseTreeUtilTest {
     assertThat(getSymbolicTokenTypeName(tokenNodeD, lexEngine.vocabulary)).isEqualTo("D")
 
     assertThat(getSymbolicTokenTypeName(tokenNodeA.symbol, lexEngine.vocabulary)).isEqualTo("A")
+
+    assertThat(AntlrGrammarUtil.countLeafTokens(tree)).isEqualTo(4)
   }
 }

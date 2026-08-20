@@ -18,6 +18,7 @@ kt_jvm_library(
         "//:antlr_tool",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//antlropt/src/org/perses/antlr/ast",
+        "//kitten/src/org/perses/fuzzer/config:testing_configuration",
         "//kitten/src/org/perses/fuzzer/languagemodel:language_model",
         "//src/org/perses/grammar:parser_facade_interface",
     ],

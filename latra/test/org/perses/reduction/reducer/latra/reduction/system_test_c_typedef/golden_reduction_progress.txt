@@ -1,0 +1,2336 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 98
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_latra_reduction_golden_test_typedef_FineGritLatraReducer_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "FineGritLatraReducer"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(98/98)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        FineGritLatraReducer
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                FineGritLatraReducer
+            }
+        }
+    }
+
+
+(98/98)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 1. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=706,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___functionDefinition{id=578,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=579,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=701,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=705,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=663,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:multiply{id=700,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=665,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=667,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=668,slot_type=LeftParen}
+        |   |           |___parameterList{id=672,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |   |           |   |___(+){id=689,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |           |   |   |___Token:int{id=699,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |           |   |   |___Token:a{id=696,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |           |   |___(*){id=674,slot_type=kleene_star__parameterList_1}
+        |   |           |       |___aux_rule__parameterList_2{id=675,slot_type=aux_rule__parameterList_2}
+        |   |           |           |___Token:,{id=676,slot_type=Comma}
+        |   |           |           |___(+){id=678,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |           |               |___Token:int{id=688,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |           |               |___Token:b{id=685,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |           |___Token:){id=670,slot_type=RightParen}
+        |   |___compoundStatement{id=581,slot_type=compoundStatement}
+        |       |___Token:{{id=582,slot_type=LeftBrace}
+        |       |___(?){id=583,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=586,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___aux_rule__declaration_3{id=617,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+        |       |       |   |___(+){id=618,slot_type=declarationSpecifiers}
+        |       |       |   |   |___Token:int{id=662,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |       |       |   |___(?){id=619,slot_type=optional__declaration_2}
+        |       |       |   |   |___initDeclarator{id=622,slot_type=[initDeclaratorList,initDeclarator]}
+        |       |       |   |       |___Token:result{id=658,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |       |       |   |       |___(?){id=624,slot_type=optional__initDeclarator_2}
+        |       |       |   |           |___aux_rule__initDeclarator_1{id=625,slot_type=aux_rule__initDeclarator_1}
+        |       |       |   |               |___Token:={id=626,slot_type=Assign}
+        |       |       |   |               |___multiplicativeExpression{id=639,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression]}
+        |       |       |   |                   |___Token:a{id=655,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+        |       |       |   |                   |___(*){id=641,slot_type=kleene_star__multiplicativeExpression_1}
+        |       |       |   |                       |___aux_rule__multiplicativeExpression_2{id=642,slot_type=aux_rule__multiplicativeExpression_2}
+        |       |       |   |                           |___Token:*{id=650,slot_type=[altnt_block__multiplicativeExpression_3,Star]}
+        |       |       |   |                           |___Token:b{id=649,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+        |       |       |   |___Token:;{id=620,slot_type=Semi}
+        |       |       |___jumpStatement{id=591,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=594,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=595,slot_type=Return}
+        |       |           |   |___(?){id=596,slot_type=optional__postfixExpression_1}
+        |       |           |       |___Token:result{id=615,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+        |       |           |___Token:;{id=593,slot_type=Semi}
+        |       |___Token:}{id=584,slot_type=RightBrace}
+        |___functionDefinition{id=8,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=9,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=573,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=577,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=564,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=572,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=566,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=568,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=569,slot_type=LeftParen}
+            |           |___Token:){id=571,slot_type=RightParen}
+            |___compoundStatement{id=11,slot_type=compoundStatement}
+                |___Token:{{id=12,slot_type=LeftBrace}
+                |___(?){id=13,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=16,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=550,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=551,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:typedef{id=563,slot_type=[declarationSpecifier,Typedef]}
+                |       |   |   |___Token:int{id=562,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |   |___Token:abc{id=559,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=552,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=512,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=513,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:abc{id=548,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___(?){id=514,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=517,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:b{id=543,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=519,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=520,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=521,slot_type=Assign}
+                |       |   |               |___Token:42{id=540,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=515,slot_type=Semi}
+                |       |___expressionStatement{id=442,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=443,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=461,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=510,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=463,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=465,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=466,slot_type=LeftParen}
+                |       |   |               |___(?){id=467,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=469,slot_type=expression}
+                |       |   |               |       |___(+){id=508,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |   |___Token:"answer is %d\n"{id=509,slot_type=StringLiteral}
+                |       |   |               |       |___(*){id=471,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=472,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=473,slot_type=Comma}
+                |       |   |               |               |___Token:b{id=491,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |___Token:){id=468,slot_type=RightParen}
+                |       |   |___Token:;{id=444,slot_type=Semi}
+                |       |___aux_rule__statement_6{id=283,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
+                |       |   |___Token:if{id=284,slot_type=If}
+                |       |   |___Token:({id=285,slot_type=LeftParen}
+                |       |   |___relationalExpression{id=417,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |       |   |   |___Token:b{id=439,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |___(*){id=419,slot_type=kleene_star__relationalExpression_1}
+                |       |   |       |___aux_rule__relationalExpression_2{id=420,slot_type=aux_rule__relationalExpression_2}
+                |       |   |           |___Token:>{id=431,slot_type=[altnt_block__relationalExpression_3,Greater]}
+                |       |   |           |___Token:15{id=430,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:){id=287,slot_type=RightParen}
+                |       |   |___compoundStatement{id=352,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
+                |       |   |   |___Token:{{id=353,slot_type=LeftBrace}
+                |       |   |   |___(?){id=354,slot_type=optional__compoundStatement_1}
+                |       |   |   |   |___(+){id=357,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |   |   |       |___expressionStatement{id=361,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |   |           |___(?){id=362,slot_type=optional__postfixExpression_1}
+                |       |   |   |           |   |___postfixExpression{id=380,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |   |           |       |___Token:printf{id=408,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |           |       |___(*){id=382,slot_type=kleene_star__postfixExpression_2}
+                |       |   |   |           |           |___aux_rule__postfixExpression_11{id=384,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |   |           |               |___Token:({id=385,slot_type=LeftParen}
+                |       |   |   |           |               |___(?){id=386,slot_type=optional__postfixExpression_1}
+                |       |   |   |           |               |   |___(+){id=406,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |   |           |               |       |___Token:"Large\n"{id=407,slot_type=StringLiteral}
+                |       |   |   |           |               |___Token:){id=387,slot_type=RightParen}
+                |       |   |   |           |___Token:;{id=363,slot_type=Semi}
+                |       |   |   |___Token:}{id=355,slot_type=RightBrace}
+                |       |   |___(?){id=289,slot_type=optional__selectionStatement_2}
+                |       |       |___aux_rule__selectionStatement_1{id=290,slot_type=aux_rule__selectionStatement_1}
+                |       |           |___Token:else{id=291,slot_type=Else}
+                |       |           |___compoundStatement{id=294,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
+                |       |               |___Token:{{id=295,slot_type=LeftBrace}
+                |       |               |___(?){id=296,slot_type=optional__compoundStatement_1}
+                |       |               |   |___(+){id=299,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |               |       |___expressionStatement{id=303,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |               |           |___(?){id=304,slot_type=optional__postfixExpression_1}
+                |       |               |           |   |___postfixExpression{id=322,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |               |           |       |___Token:printf{id=350,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |               |           |       |___(*){id=324,slot_type=kleene_star__postfixExpression_2}
+                |       |               |           |           |___aux_rule__postfixExpression_11{id=326,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |               |           |               |___Token:({id=327,slot_type=LeftParen}
+                |       |               |           |               |___(?){id=328,slot_type=optional__postfixExpression_1}
+                |       |               |           |               |   |___(+){id=348,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |               |           |               |       |___Token:"Small\n"{id=349,slot_type=StringLiteral}
+                |       |               |           |               |___Token:){id=329,slot_type=RightParen}
+                |       |               |           |___Token:;{id=305,slot_type=Semi}
+                |       |               |___Token:}{id=297,slot_type=RightBrace}
+                |       |___aux_rule__declaration_3{id=245,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=246,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=280,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=247,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=250,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=276,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=252,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=253,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=254,slot_type=Assign}
+                |       |   |               |___Token:10{id=273,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=248,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=208,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=209,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=243,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=210,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=213,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:c{id=239,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=215,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=216,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=217,slot_type=Assign}
+                |       |   |               |___Token:a{id=236,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |___Token:;{id=211,slot_type=Semi}
+                |       |___statement{id=24,slot_type=[aux_rule__blockItemList_2,statement]}
+                |           |___(*){id=25,slot_type=kleene_star__statement_1}
+                |           |   |___aux_rule__statement_2{id=105,slot_type=aux_rule__statement_2}
+                |           |       |___aux_rule__statement_8{id=108,slot_type=[altnt_block__statement_4,aux_rule__statement_8]}
+                |           |       |   |___Token:for{id=109,slot_type=For}
+                |           |       |   |___Token:({id=110,slot_type=LeftParen}
+                |           |       |   |___altnt_block__iterationStatement_7{id=111,slot_type=altnt_block__iterationStatement_7}
+                |           |       |       |___aux_rule__declaration_3{id=171,slot_type=[altnt_block__iterationStatement_8,declaration,aux_rule__declaration_3]}
+                |           |       |       |   |___(+){id=172,slot_type=declarationSpecifiers}
+                |           |       |       |   |   |___Token:int{id=206,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |           |       |       |   |___(?){id=173,slot_type=optional__declaration_2}
+                |           |       |       |   |   |___initDeclarator{id=176,slot_type=[initDeclaratorList,initDeclarator]}
+                |           |       |       |   |       |___Token:i{id=202,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |           |       |       |   |       |___(?){id=178,slot_type=optional__initDeclarator_2}
+                |           |       |       |   |           |___aux_rule__initDeclarator_1{id=179,slot_type=aux_rule__initDeclarator_1}
+                |           |       |       |   |               |___Token:={id=180,slot_type=Assign}
+                |           |       |       |   |               |___Token:0{id=199,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |       |       |   |___Token:;{id=174,slot_type=Semi}
+                |           |       |       |___(?){id=113,slot_type=optional__postfixExpression_1}
+                |           |       |       |   |___relationalExpression{id=147,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |           |       |       |       |___Token:i{id=169,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |       |       |       |___(*){id=149,slot_type=kleene_star__relationalExpression_1}
+                |           |       |       |           |___aux_rule__relationalExpression_2{id=150,slot_type=aux_rule__relationalExpression_2}
+                |           |       |       |               |___Token:<{id=161,slot_type=[altnt_block__relationalExpression_3,Less]}
+                |           |       |       |               |___Token:3{id=160,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |       |       |___Token:;{id=114,slot_type=Semi}
+                |           |       |       |___(?){id=115,slot_type=optional__postfixExpression_1}
+                |           |       |           |___postfixExpression{id=132,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |               |___Token:i{id=137,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |               |___(*){id=134,slot_type=kleene_star__postfixExpression_2}
+                |           |       |                   |___Token:++{id=136,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
+                |           |       |___Token:){id=107,slot_type=RightParen}
+                |           |___compoundStatement{id=27,slot_type=[aux_rule__statement_3,compoundStatement]}
+                |               |___Token:{{id=28,slot_type=LeftBrace}
+                |               |___(?){id=29,slot_type=optional__compoundStatement_1}
+                |               |   |___(+){id=32,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |               |       |___expressionStatement{id=36,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |               |           |___(?){id=37,slot_type=optional__postfixExpression_1}
+                |               |           |   |___postfixExpression{id=55,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |               |           |       |___Token:printf{id=104,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |               |           |       |___(*){id=57,slot_type=kleene_star__postfixExpression_2}
+                |               |           |           |___aux_rule__postfixExpression_11{id=59,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |               |           |               |___Token:({id=60,slot_type=LeftParen}
+                |               |           |               |___(?){id=61,slot_type=optional__postfixExpression_1}
+                |               |           |               |   |___expression{id=63,slot_type=expression}
+                |               |           |               |       |___(+){id=102,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |               |           |               |       |   |___Token:"Loop %d\n"{id=103,slot_type=StringLiteral}
+                |               |           |               |       |___(*){id=65,slot_type=kleene_star__expression_1}
+                |               |           |               |           |___aux_rule__expression_2{id=66,slot_type=aux_rule__expression_2}
+                |               |           |               |               |___Token:,{id=67,slot_type=Comma}
+                |               |           |               |               |___Token:i{id=85,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |               |           |               |___Token:){id=62,slot_type=RightParen}
+                |               |           |___Token:;{id=38,slot_type=Semi}
+                |               |___Token:}{id=30,slot_type=RightBrace}
+                |___Token:}{id=14,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer](98/98)  For c, there are 46 transformations.
+FixPt[1][FineGritLatraReducer](98/98)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 98 -> 98
+Edit: AnyNodeReplace:[replace_1_with_708]
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](98/98)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[1][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](98/98)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[1][FineGritLatraReducer][DivideOperationSimplification](98/98)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[1][FineGritLatraReducer][MultiplyOperationSimplification](98/98)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[1][FineGritLatraReducer][MinusOperationSimplification](98/98)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[1][FineGritLatraReducer][PlusOperationSimplification](98/98)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[1][FineGritLatraReducer][LocalToGlobalTransformation](98/98)  Found matches: 1 in transformation LocalToGlobalTransformation
+FixPt[1][FineGritLatraReducer][LocalToGlobalTransformation](98/98)  Built a LatraGeneralActionSet subroot(id=1295,#3) in LocalToGlobalTransformation
+==========Testing the following program (0): fail===========
+
+// edit action set type: Latra Transformation LocalToGlobalTransformation created by FullFunctionalLatraRewriterBuilder
+    --file: t.c--
+        return  result
+                    ;#include <stdio.h>
+    int multiply(int a, int b) {
+        int result = a * b;
+    }
+    int main() {
+        typedef int abc;
+        abc b = 42;
+        printf("answer is %d\n", b);
+        if (b > 15) {
+            printf("Large\n");
+        } else {
+            printf("Small\n");
+        }
+        int a = 10;
+        int c = a;
+        for (int i = 0; i < 3; i++) {
+            printf("Loop %d\n", i);
+        }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][UnionToStruct](98/98)  Found matches: 0 in transformation UnionToStruct
+FixPt[1][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](98/98)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[1][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](98/98)  Found matches: 1 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[1][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](98/98)  Built a LatraGeneralActionSet subroot(id=713,#21) in VoidReturnFunctionDefLatraTransformation
+==========Testing the following program (1): pass===========
+
+// edit action set type: Latra Transformation VoidReturnFunctionDefLatraTransformation created by FullFunctionalLatraRewriterBuilder
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+        typedef int abc;
+        abc b = 42;
+        printf("answer is %d\n", b);
+        if (b > 15) {
+            printf("Large\n");
+        } else {
+            printf("Small\n");
+        }
+        int a = 10;
+        int c = a;
+        for (int i = 0; i < 3; i++) {
+            printf("Loop %d\n", i);
+        }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](98/98)  Found a best edit. Updating the tree.
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 1 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 98 -> 104
+Edit: LatraEdit:[replace_708_with_708]
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][FunctionInlining4Args](104/98)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[1][FineGritLatraReducer][FunctionInlining4ArgsNoType](104/98)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[1][FineGritLatraReducer][FunctionInliningLatraTransformation](104/98)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[1][FineGritLatraReducer][FunctionInlining3ArgsNoType](104/98)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[1][FineGritLatraReducer][FunctionInlining2Args](104/98)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[1][FineGritLatraReducer][FunctionInlining2ArgsNoType](104/98)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[1][FineGritLatraReducer][FunctionInlining1Arg](104/98)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[1][FineGritLatraReducer][FunctionInlining1ArgNoType](104/98)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[1][FineGritLatraReducer][FunctionInliningNoArg](104/98)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[1][FineGritLatraReducer][FunctionInliningNoArg](104/98)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[1][FineGritLatraReducer][LiftAssignmentExpr](104/98)  Found matches: 1 in transformation LiftAssignmentExpr
+FixPt[1][FineGritLatraReducer][LiftAssignmentExpr](104/98)  Built a LatraGeneralActionSet subroot(id=730,#23) in LiftAssignmentExpr
+==========Testing the following program (2): pass===========
+
+// edit action set type: Latra Transformation LiftAssignmentExpr created by FullFunctionalLatraRewriterBuilder
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+        typedef int abc;
+        abc b = 42;
+        printf("answer is %d\n", b);
+        if (b > 15) {
+            printf("Large\n");
+        } else {
+            printf("Small\n");
+        }
+        int a = 10;
+        int c = a;
+             int i = 0
+           ;for ( ; 
+                        i < 3 
+                     ; 
+                               i++ 
+                               )  { 
+            printf("Loop %d\n", i); 
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][LiftAssignmentExpr](104/98)  Found a best edit. Updating the tree.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 104 -> 114
+Edit: LatraEdit:[replace_708_with_708]
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][CopyPropagation](114/98)  Found matches: 3 in transformation CopyPropagation
+FixPt[1][FineGritLatraReducer][CopyPropagation][WPROBDD](114/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[1][FineGritLatraReducer][CopyPropagation][WPROBDD](114/98)  Testing the empty input is disabled.
+FixPt[1][FineGritLatraReducer][CopyPropagation](114/98)  Try to apply transformations for matches [subroot(id=12222,#7), subroot(id=725,#5), subroot(id=728,#5)]
+FixPt[1][FineGritLatraReducer][CopyPropagation][WPROBDD](114/98)  Try deleting [0-2]#3: null edit. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][CopyPropagation](114/98)  Try to apply transformations for matches subroot(id=12222,#7)
+FixPt[1][FineGritLatraReducer][CopyPropagation][WPROBDD](114/98)  Try deleting [0]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][CopyPropagation](114/98)  Try to apply transformations for matches [subroot(id=725,#5), subroot(id=728,#5)]
+FixPt[1][FineGritLatraReducer][CopyPropagation][WPROBDD](114/98)  Try deleting [1-2]#2: null edit. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][CopyPropagation](114/98)  Try to apply transformations for matches subroot(id=725,#5)
+FixPt[1][FineGritLatraReducer][CopyPropagation][WPROBDD](114/98)  Try deleting [1]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][CopyPropagation](114/98)  Try to apply transformations for matches subroot(id=728,#5)
+FixPt[1][FineGritLatraReducer][CopyPropagation][WPROBDD](114/98)  Try deleting [2]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][CopyPropagation][WPROBDD](114/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][CallExprToValue](114/98)  Found matches: 0 in transformation CallExprToValue
+FixPt[1][FineGritLatraReducer][ReplaceCallExpr1Arg](114/98)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[1][FineGritLatraReducer][ReplaceCallExpr2Arg](114/98)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[1][FineGritLatraReducer][ReplaceCallExpr3Arg](114/98)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[1][FineGritLatraReducer][SimplifyCallExpr](114/98)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[1][FineGritLatraReducer][SimplifyIf](114/98)  Found matches: 0 in transformation SimplifyIf
+FixPt[1][FineGritLatraReducer][SimplifyIf2](114/98)  Found matches: 1 in transformation SimplifyIf2
+FixPt[1][FineGritLatraReducer][SimplifyIf2](114/98)  Built a LatraGeneralActionSet subroot(id=727,#21) in SimplifyIf2
+==========Testing the following program (3): pass===========
+
+// edit action set type: Latra Transformation SimplifyIf2 created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+        typedef int abc;
+        abc b = 42;
+        printf("answer is %d\n", b);
+     if  ( 
+            b > 15 
+                   )  { 
+            printf("Large\n"); 
+                                 }
+        int a = 10;
+        int c = a;
+             int i = 0
+           ;for ( ; 
+                        i < 3 
+                     ; 
+                               i++ 
+                               )  { 
+            printf("Loop %d\n", i); 
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][SimplifyIf2](114/98)  Found a best edit. Updating the tree.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 114 -> 112
+Edit: LatraEdit:[replace_727_with_19965]
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][ReduceArrayDim3](112/98)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[1][FineGritLatraReducer][ReduceArrayDim2](112/98)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[1][FineGritLatraReducer][ReduceArrayDim](112/98)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[1][FineGritLatraReducer][MoveFuncDefToDecl](112/98)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[1][FineGritLatraReducer][MoveFuncDefToDecl2](112/98)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[1][FineGritLatraReducer][MoveFuncDefToDeclNoParam](112/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[1][FineGritLatraReducer][MoveFuncDefToDeclNoParam](112/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[1][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](112/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[1][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](112/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[1][FineGritLatraReducer][SimplifyComma](112/98)  Found matches: 0 in transformation SimplifyComma
+FixPt[1][FineGritLatraReducer][TypeDefTransform](112/98)  Found matches: 1 in transformation TypeDefTransform
+FixPt[1][FineGritLatraReducer][TypeDefTransform](112/98)  Built a LatraGeneralActionSet subroot(id=724,#4) in TypeDefTransform
+==========Testing the following program (4): pass===========
+
+// edit action set type: Latra Transformation TypeDefTransform created by FullFunctionalLatraRewriterBuilder
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+                int
+            b = 42;
+        printf("answer is %d\n", b);
+     if  ( 
+            b > 15 
+                   )  { 
+            printf("Large\n"); 
+                                 }
+        int a = 10;
+        int c = a;
+             int i = 0
+           ;for ( ; 
+                        i < 3 
+                     ; 
+                               i++ 
+                               )  { 
+            printf("Loop %d\n", i); 
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][TypeDefTransform](112/98)  Found a best edit. Updating the tree.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 112 -> 108
+Edit: LatraEdit:[replace_708_with_708]
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][EmptyStructToInt](108/98)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Found matches: 3 in transformation RemoveAssignment
+FixPt[1][FineGritLatraReducer][RemoveAssignment][WPROBDD](108/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[1][FineGritLatraReducer][RemoveAssignment][WPROBDD](108/98)  Testing the empty input is disabled.
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Try to apply transformations for matches [subroot(id=1223,#3), subroot(id=956,#3), subroot(id=919,#3)]
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Built a LatraGeneralActionSet [subroot(id=1223,#3), subroot(id=956,#3), subroot(id=919,#3)] in RemoveAssignment
+==========Testing the following program (5): fail===========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+                int
+                42;
+        printf("answer is %d\n", b);
+     if  ( 
+            b > 15 
+                   )  { 
+            printf("Large\n"); 
+                                 }
+        int     10;
+        int     a;
+             int i = 0
+           ;for ( ; 
+                        i < 3 
+                     ; 
+                               i++ 
+                               )  { 
+            printf("Loop %d\n", i); 
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][RemoveAssignment][WPROBDD](108/98)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Try to apply transformations for matches [subroot(id=1223,#3), subroot(id=956,#3)]
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Built a LatraGeneralActionSet [subroot(id=1223,#3), subroot(id=956,#3)] in RemoveAssignment
+==========Testing the following program (6): fail===========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+                int
+                42;
+        printf("answer is %d\n", b);
+     if  ( 
+            b > 15 
+                   )  { 
+            printf("Large\n"); 
+                                 }
+        int     10;
+        int c = a;
+             int i = 0
+           ;for ( ; 
+                        i < 3 
+                     ; 
+                               i++ 
+                               )  { 
+            printf("Loop %d\n", i); 
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][RemoveAssignment][WPROBDD](108/98)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Try to apply transformations for matches subroot(id=919,#3)
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Built a LatraGeneralActionSet subroot(id=919,#3) in RemoveAssignment
+==========Testing the following program (7): fail===========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+                int
+            b = 42;
+        printf("answer is %d\n", b);
+     if  ( 
+            b > 15 
+                   )  { 
+            printf("Large\n"); 
+                                 }
+        int a = 10;
+        int     a;
+             int i = 0
+           ;for ( ; 
+                        i < 3 
+                     ; 
+                               i++ 
+                               )  { 
+            printf("Loop %d\n", i); 
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][RemoveAssignment][WPROBDD](108/98)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Try to apply transformations for matches subroot(id=1223,#3)
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Built a LatraGeneralActionSet subroot(id=1223,#3) in RemoveAssignment
+==========Testing the following program (8): fail===========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+                int
+                42;
+        printf("answer is %d\n", b);
+     if  ( 
+            b > 15 
+                   )  { 
+            printf("Large\n"); 
+                                 }
+        int a = 10;
+        int c = a;
+             int i = 0
+           ;for ( ; 
+                        i < 3 
+                     ; 
+                               i++ 
+                               )  { 
+            printf("Loop %d\n", i); 
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][RemoveAssignment][WPROBDD](108/98)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Try to apply transformations for matches subroot(id=956,#3)
+FixPt[1][FineGritLatraReducer][RemoveAssignment](108/98)  Built a LatraGeneralActionSet subroot(id=956,#3) in RemoveAssignment
+==========Testing the following program (9): fail===========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                          ( 
+                 int a, int b 
+                                             )  { 
+        int result = a * b; 
+            }
+    int main() {
+                int
+            b = 42;
+        printf("answer is %d\n", b);
+     if  ( 
+            b > 15 
+                   )  { 
+            printf("Large\n"); 
+                                 }
+        int     10;
+        int c = a;
+             int i = 0
+           ;for ( ; 
+                        i < 3 
+                     ; 
+                               i++ 
+                               )  { 
+            printf("Loop %d\n", i); 
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[1][FineGritLatraReducer][RemoveAssignment][WPROBDD](108/98)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][RemoveAssignment][WPROBDD](108/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[1][FineGritLatraReducer][RemoveAddrTaken](108/98)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[1][FineGritLatraReducer][ReplaceArrayAccessWithIndex](108/98)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[1][FineGritLatraReducer][SimplifyUnionDecl](108/98)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[1][FineGritLatraReducer][SimplifyStructDecl](108/98)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[1][FineGritLatraReducer][ReplaceDefByDecl](108/98)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[1][FineGritLatraReducer][CombineLocalVarDecl](108/98)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[1][FineGritLatraReducer][UnifyFunctionDecl](108/98)  Found matches: 0 in transformation UnifyFunctionDecl
+(84/98)  Rebuilding spar-tree: The spartree is rebuilt.
+====Fixpoint iteration 2. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=26203,slot_type=compilationUnit}
+|___(?){id=26204,slot_type=optional__compilationUnit_1}
+    |___(+){id=26206,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=26804,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___functionDefinition{id=26704,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=26705,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=26799,slot_type=declarationSpecifiers}
+        |   |       |___Token:void{id=26803,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |   |___directDeclarator{id=26761,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:multiply{id=26798,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=26763,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=26765,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=26766,slot_type=LeftParen}
+        |   |           |___parameterList{id=26770,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |   |           |   |___(+){id=26787,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |           |   |   |___Token:int{id=26797,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |           |   |   |___Token:a{id=26794,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |           |   |___(*){id=26772,slot_type=kleene_star__parameterList_1}
+        |   |           |       |___aux_rule__parameterList_2{id=26773,slot_type=aux_rule__parameterList_2}
+        |   |           |           |___Token:,{id=26774,slot_type=Comma}
+        |   |           |           |___(+){id=26776,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |           |               |___Token:int{id=26786,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |           |               |___Token:b{id=26783,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |           |___Token:){id=26768,slot_type=RightParen}
+        |   |___compoundStatement{id=26707,slot_type=compoundStatement}
+        |       |___Token:{{id=26708,slot_type=LeftBrace}
+        |       |___(?){id=26709,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=26712,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___aux_rule__declaration_3{id=26715,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+        |       |           |___(+){id=26716,slot_type=declarationSpecifiers}
+        |       |           |   |___Token:int{id=26760,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |       |           |___(?){id=26717,slot_type=optional__declaration_2}
+        |       |           |   |___initDeclarator{id=26720,slot_type=[initDeclaratorList,initDeclarator]}
+        |       |           |       |___Token:result{id=26756,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |       |           |       |___(?){id=26722,slot_type=optional__initDeclarator_2}
+        |       |           |           |___aux_rule__initDeclarator_1{id=26723,slot_type=aux_rule__initDeclarator_1}
+        |       |           |               |___Token:={id=26724,slot_type=Assign}
+        |       |           |               |___multiplicativeExpression{id=26737,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression]}
+        |       |           |                   |___Token:a{id=26753,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+        |       |           |                   |___(*){id=26739,slot_type=kleene_star__multiplicativeExpression_1}
+        |       |           |                       |___aux_rule__multiplicativeExpression_2{id=26740,slot_type=aux_rule__multiplicativeExpression_2}
+        |       |           |                           |___Token:*{id=26748,slot_type=[altnt_block__multiplicativeExpression_3,Star]}
+        |       |           |                           |___Token:b{id=26747,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+        |       |           |___Token:;{id=26718,slot_type=Semi}
+        |       |___Token:}{id=26710,slot_type=RightBrace}
+        |___functionDefinition{id=26210,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=26211,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=26699,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=26703,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=26690,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=26698,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=26692,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=26694,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=26695,slot_type=LeftParen}
+            |           |___Token:){id=26697,slot_type=RightParen}
+            |___compoundStatement{id=26213,slot_type=compoundStatement}
+                |___Token:{{id=26214,slot_type=LeftBrace}
+                |___(?){id=26215,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=26218,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=26654,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=26655,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=26689,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=26656,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=26659,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:b{id=26685,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=26661,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=26662,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=26663,slot_type=Assign}
+                |       |   |               |___Token:42{id=26682,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=26657,slot_type=Semi}
+                |       |___expressionStatement{id=26584,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=26585,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=26603,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=26652,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=26605,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=26607,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=26608,slot_type=LeftParen}
+                |       |   |               |___(?){id=26609,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=26611,slot_type=expression}
+                |       |   |               |       |___(+){id=26650,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |   |___Token:"answer is %d\n"{id=26651,slot_type=StringLiteral}
+                |       |   |               |       |___(*){id=26613,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=26614,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=26615,slot_type=Comma}
+                |       |   |               |               |___Token:b{id=26633,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |___Token:){id=26610,slot_type=RightParen}
+                |       |   |___Token:;{id=26586,slot_type=Semi}
+                |       |___aux_rule__statement_6{id=26487,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
+                |       |   |___Token:if{id=26488,slot_type=If}
+                |       |   |___Token:({id=26489,slot_type=LeftParen}
+                |       |   |___relationalExpression{id=26559,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |       |   |   |___Token:b{id=26581,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |___(*){id=26561,slot_type=kleene_star__relationalExpression_1}
+                |       |   |       |___aux_rule__relationalExpression_2{id=26562,slot_type=aux_rule__relationalExpression_2}
+                |       |   |           |___Token:>{id=26573,slot_type=[altnt_block__relationalExpression_3,Greater]}
+                |       |   |           |___Token:15{id=26572,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:){id=26491,slot_type=RightParen}
+                |       |   |___compoundStatement{id=26494,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
+                |       |       |___Token:{{id=26495,slot_type=LeftBrace}
+                |       |       |___(?){id=26496,slot_type=optional__compoundStatement_1}
+                |       |       |   |___(+){id=26499,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |       |       |___expressionStatement{id=26503,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |       |           |___(?){id=26504,slot_type=optional__postfixExpression_1}
+                |       |       |           |   |___postfixExpression{id=26522,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |       |           |       |___Token:printf{id=26550,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |       |           |       |___(*){id=26524,slot_type=kleene_star__postfixExpression_2}
+                |       |       |           |           |___aux_rule__postfixExpression_11{id=26526,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |       |           |               |___Token:({id=26527,slot_type=LeftParen}
+                |       |       |           |               |___(?){id=26528,slot_type=optional__postfixExpression_1}
+                |       |       |           |               |   |___(+){id=26548,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |       |           |               |       |___Token:"Large\n"{id=26549,slot_type=StringLiteral}
+                |       |       |           |               |___Token:){id=26529,slot_type=RightParen}
+                |       |       |           |___Token:;{id=26505,slot_type=Semi}
+                |       |       |___Token:}{id=26497,slot_type=RightBrace}
+                |       |___aux_rule__declaration_3{id=26449,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=26450,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=26484,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=26451,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=26454,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=26480,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=26456,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=26457,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=26458,slot_type=Assign}
+                |       |   |               |___Token:10{id=26477,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=26452,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=26412,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=26413,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=26447,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=26414,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=26417,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:c{id=26443,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=26419,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=26420,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=26421,slot_type=Assign}
+                |       |   |               |___Token:a{id=26440,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |___Token:;{id=26415,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=26375,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=26376,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=26410,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=26377,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=26380,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:i{id=26406,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=26382,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=26383,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=26384,slot_type=Assign}
+                |       |   |               |___Token:0{id=26403,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=26378,slot_type=Semi}
+                |       |___statement{id=26226,slot_type=[aux_rule__blockItemList_2,statement]}
+                |           |___(*){id=26227,slot_type=kleene_star__statement_1}
+                |           |   |___aux_rule__statement_2{id=26307,slot_type=aux_rule__statement_2}
+                |           |       |___aux_rule__statement_8{id=26310,slot_type=[altnt_block__statement_4,aux_rule__statement_8]}
+                |           |       |   |___Token:for{id=26311,slot_type=For}
+                |           |       |   |___Token:({id=26312,slot_type=LeftParen}
+                |           |       |   |___altnt_block__iterationStatement_7{id=26313,slot_type=altnt_block__iterationStatement_7}
+                |           |       |       |___Token:;{id=26373,slot_type=[altnt_block__iterationStatement_8,aux_rule__iterationStatement_9,Semi]}
+                |           |       |       |___(?){id=26315,slot_type=optional__postfixExpression_1}
+                |           |       |       |   |___relationalExpression{id=26349,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |           |       |       |       |___Token:i{id=26371,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |       |       |       |___(*){id=26351,slot_type=kleene_star__relationalExpression_1}
+                |           |       |       |           |___aux_rule__relationalExpression_2{id=26352,slot_type=aux_rule__relationalExpression_2}
+                |           |       |       |               |___Token:<{id=26363,slot_type=[altnt_block__relationalExpression_3,Less]}
+                |           |       |       |               |___Token:3{id=26362,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |       |       |___Token:;{id=26316,slot_type=Semi}
+                |           |       |       |___(?){id=26317,slot_type=optional__postfixExpression_1}
+                |           |       |           |___postfixExpression{id=26334,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |               |___Token:i{id=26339,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |               |___(*){id=26336,slot_type=kleene_star__postfixExpression_2}
+                |           |       |                   |___Token:++{id=26338,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
+                |           |       |___Token:){id=26309,slot_type=RightParen}
+                |           |___compoundStatement{id=26229,slot_type=[aux_rule__statement_3,compoundStatement]}
+                |               |___Token:{{id=26230,slot_type=LeftBrace}
+                |               |___(?){id=26231,slot_type=optional__compoundStatement_1}
+                |               |   |___(+){id=26234,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |               |       |___expressionStatement{id=26238,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |               |           |___(?){id=26239,slot_type=optional__postfixExpression_1}
+                |               |           |   |___postfixExpression{id=26257,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |               |           |       |___Token:printf{id=26306,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |               |           |       |___(*){id=26259,slot_type=kleene_star__postfixExpression_2}
+                |               |           |           |___aux_rule__postfixExpression_11{id=26261,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |               |           |               |___Token:({id=26262,slot_type=LeftParen}
+                |               |           |               |___(?){id=26263,slot_type=optional__postfixExpression_1}
+                |               |           |               |   |___expression{id=26265,slot_type=expression}
+                |               |           |               |       |___(+){id=26304,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |               |           |               |       |   |___Token:"Loop %d\n"{id=26305,slot_type=StringLiteral}
+                |               |           |               |       |___(*){id=26267,slot_type=kleene_star__expression_1}
+                |               |           |               |           |___aux_rule__expression_2{id=26268,slot_type=aux_rule__expression_2}
+                |               |           |               |               |___Token:,{id=26269,slot_type=Comma}
+                |               |           |               |               |___Token:i{id=26287,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |               |           |               |___Token:){id=26264,slot_type=RightParen}
+                |               |           |___Token:;{id=26240,slot_type=Semi}
+                |               |___Token:}{id=26232,slot_type=RightBrace}
+                |___Token:}{id=26216,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer](84/98)  For c, there are 46 transformations.
+FixPt[2][FineGritLatraReducer](84/98)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 84 -> 84
+Edit: AnyNodeReplace:[replace_26203_with_26806]
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](84/98)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[2][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](84/98)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[2][FineGritLatraReducer][DivideOperationSimplification](84/98)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[2][FineGritLatraReducer][MultiplyOperationSimplification](84/98)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[2][FineGritLatraReducer][MinusOperationSimplification](84/98)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[2][FineGritLatraReducer][PlusOperationSimplification](84/98)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[2][FineGritLatraReducer][LocalToGlobalTransformation](84/98)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[2][FineGritLatraReducer][UnionToStruct](84/98)  Found matches: 0 in transformation UnionToStruct
+FixPt[2][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](84/98)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[2][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](84/98)  Found matches: 1 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[2][FineGritLatraReducer][FunctionInlining4Args](84/98)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[2][FineGritLatraReducer][FunctionInlining4ArgsNoType](84/98)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInliningLatraTransformation](84/98)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[2][FineGritLatraReducer][FunctionInlining3ArgsNoType](84/98)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInlining2Args](84/98)  Found matches: 1 in transformation FunctionInlining2Args
+FixPt[2][FineGritLatraReducer][FunctionInlining2Args](84/98)  Exception: There must be at least one match for this transformation FunctionInlining2Args
+FixPt[2][FineGritLatraReducer][FunctionInlining2ArgsNoType](84/98)  Found matches: 1 in transformation FunctionInlining2ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInlining2ArgsNoType](84/98)  Exception: There must be at least one match for this transformation FunctionInlining2ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInlining1Arg](84/98)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[2][FineGritLatraReducer][FunctionInlining1ArgNoType](84/98)  Found matches: 1 in transformation FunctionInlining1ArgNoType
+FixPt[2][FineGritLatraReducer][FunctionInlining1ArgNoType](84/98)  Exception: There must be at least one match for this transformation FunctionInlining1ArgNoType
+FixPt[2][FineGritLatraReducer][FunctionInliningNoArg](84/98)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[2][FineGritLatraReducer][FunctionInliningNoArg](84/98)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[2][FineGritLatraReducer][LiftAssignmentExpr](84/98)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[2][FineGritLatraReducer][CopyPropagation](84/98)  Found matches: 5 in transformation CopyPropagation
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](84/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-4]#5.
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](84/98)  Testing the empty input is disabled.
+FixPt[2][FineGritLatraReducer][CopyPropagation](84/98)  Try to apply transformations for matches [subroot(id=27314,#7), subroot(id=26822,#5), subroot(id=26825,#5)]
+FixPt[2][FineGritLatraReducer][CopyPropagation](84/98)  Built a LatraGeneralActionSet [subroot(id=27314,#7), subroot(id=26822,#5), subroot(id=26825,#5)] in CopyPropagation
+==========Testing the following program (10): pass==========
+
+// edit action set type: Latra Transformation CopyPropagation created by FullFunctionalLatraRewriterBuilder
+    --file: t.c--
+    #include <stdio.h>
+             void
+        multiply
+                          (
+                 int a, int b
+                                             )  {
+        int  result 
+                  = 
+                     a * b
+                        ;
+            }
+    int main() {
+                int 
+            b 
+                  = 
+                42
+                        ;
+        printf("answer is %d\n", b);
+     if  (
+            b > 15
+                   )  {
+            printf("Large\n");
+                                 }
+        int  a 
+                  = 
+                10
+                        ;
+             int i = 0
+           ;for ( ;
+                        i < 3
+                     ;
+                               i++
+                               )  {
+            printf("Loop %d\n", i);
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](84/98)  Try deleting [0-2]#3: Interesting. Local ratio: 5/5=100.00%.
+===========TestScriptExecutionCacheEntryEviction============
+
+5 entries are removed: 5 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 84 -> 88
+Edit: LatraEdit:[replace_26806_with_26806]
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][CopyPropagation](88/98)  The match with subroot 26826 becomes invalid now.
+FixPt[2][FineGritLatraReducer][CopyPropagation](88/98)  Try to apply transformations for matches subroot(id=26827,#5)
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](88/98)  Try deleting [3-4]#2: null edit. Local ratio: 2/5=40.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](88/98)  The match with subroot 26826 becomes invalid now.
+FixPt[2][FineGritLatraReducer][CopyPropagation](88/98)  The matches in the candidate are invalid. 
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](88/98)  Try deleting [3]#1: all matches are invalid.. Local ratio: 2/5=40.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](88/98)  Try to apply transformations for matches subroot(id=26827,#5)
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](88/98)  Try deleting [4]#1: null edit. Local ratio: 2/5=40.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](88/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[3-4]#2. Local ratio: 2/5=40.00%.
+FixPt[2][FineGritLatraReducer][CallExprToValue](88/98)  Found matches: 1 in transformation CallExprToValue
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr1Arg](88/98)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr2Arg](88/98)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr3Arg](88/98)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[2][FineGritLatraReducer][SimplifyCallExpr](88/98)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[2][FineGritLatraReducer][SimplifyIf](88/98)  Found matches: 0 in transformation SimplifyIf
+FixPt[2][FineGritLatraReducer][SimplifyIf2](88/98)  Found matches: 0 in transformation SimplifyIf2
+FixPt[2][FineGritLatraReducer][ReduceArrayDim3](88/98)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[2][FineGritLatraReducer][ReduceArrayDim2](88/98)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[2][FineGritLatraReducer][ReduceArrayDim](88/98)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDecl](88/98)  Found matches: 1 in transformation MoveFuncDefToDecl
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDecl](88/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDecl
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDecl2](88/98)  Found matches: 1 in transformation MoveFuncDefToDecl2
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDecl2](88/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDecl2
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam](88/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam](88/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](88/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](88/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[2][FineGritLatraReducer][SimplifyComma](88/98)  Found matches: 0 in transformation SimplifyComma
+FixPt[2][FineGritLatraReducer][TypeDefTransform](88/98)  Found matches: 0 in transformation TypeDefTransform
+FixPt[2][FineGritLatraReducer][EmptyStructToInt](88/98)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[2][FineGritLatraReducer][RemoveAssignment](88/98)  Found matches: 1 in transformation RemoveAssignment
+FixPt[2][FineGritLatraReducer][RemoveAssignment](88/98)  Built a LatraGeneralActionSet subroot(id=26982,#3) in RemoveAssignment
+==========Testing the following program (11): fail==========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void
+        multiply
+                          (
+                 int a, int b
+                                             )  {
+        int  result 
+                  = 
+                     a * b
+                        ;
+            }
+    int main() {
+                int 
+            b 
+                  = 
+                42
+                        ;
+        printf("answer is %d\n", b);
+     if  (
+            b > 15
+                   )  {
+            printf("Large\n");
+                                 }
+        int  a 
+                  = 
+                10
+                        ;
+             int     0
+           ;for ( ;
+                        i < 3
+                     ;
+                               i++
+                               )  {
+            printf("Loop %d\n", i);
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][RemoveAddrTaken](88/98)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[2][FineGritLatraReducer][ReplaceArrayAccessWithIndex](88/98)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[2][FineGritLatraReducer][SimplifyUnionDecl](88/98)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[2][FineGritLatraReducer][SimplifyStructDecl](88/98)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[2][FineGritLatraReducer][ReplaceDefByDecl](88/98)  Found matches: 1 in transformation ReplaceDefByDecl
+FixPt[2][FineGritLatraReducer][ReplaceDefByDecl](88/98)  Built a LatraGeneralActionSet subroot(id=26811,#21) in ReplaceDefByDecl
+==========Testing the following program (12): pass==========
+
+// edit action set type: Latra Transformation ReplaceDefByDecl created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void 
+        multiply 
+                    ( 
+                 int a, int b 
+                                   )  ;
+    int main() {
+                int 
+            b 
+                  = 
+                42
+                        ;
+        printf("answer is %d\n", b);
+     if  (
+            b > 15
+                   )  {
+            printf("Large\n");
+                                 }
+        int  a 
+                  = 
+                10
+                        ;
+             int i = 0
+           ;for ( ;
+                        i < 3
+                     ;
+                               i++
+                               )  {
+            printf("Loop %d\n", i);
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][ReplaceDefByDecl](88/98)  Found a best edit. Updating the tree.
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 1 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 88 -> 82
+Edit: LatraEdit:[replace_26811_with_51004]
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][CombineLocalVarDecl](82/98)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[2][FineGritLatraReducer][UnifyFunctionDecl](82/98)  Found matches: 0 in transformation UnifyFunctionDecl
+FixPt[2][FineGritLatraReducer](82/98)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 82 -> 71
+Edit: AnyNodeReplace:[replace_26806_with_52014]
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](71/98)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[2][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](71/98)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[2][FineGritLatraReducer][DivideOperationSimplification](71/98)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[2][FineGritLatraReducer][MultiplyOperationSimplification](71/98)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[2][FineGritLatraReducer][MinusOperationSimplification](71/98)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[2][FineGritLatraReducer][PlusOperationSimplification](71/98)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[2][FineGritLatraReducer][LocalToGlobalTransformation](71/98)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[2][FineGritLatraReducer][UnionToStruct](71/98)  Found matches: 0 in transformation UnionToStruct
+FixPt[2][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](71/98)  Found matches: 1 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[2][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](71/98)  The proposed transformation for the match subroot(id=52019,#10) has the same non-blank token sequence as the target node.
+FixPt[2][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](71/98)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[2][FineGritLatraReducer][FunctionInlining4Args](71/98)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[2][FineGritLatraReducer][FunctionInlining4ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInliningLatraTransformation](71/98)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[2][FineGritLatraReducer][FunctionInlining3ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInlining2Args](71/98)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[2][FineGritLatraReducer][FunctionInlining2ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInlining1Arg](71/98)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[2][FineGritLatraReducer][FunctionInlining1ArgNoType](71/98)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[2][FineGritLatraReducer][FunctionInliningNoArg](71/98)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[2][FineGritLatraReducer][FunctionInliningNoArg](71/98)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[2][FineGritLatraReducer][LiftAssignmentExpr](71/98)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Found matches: 3 in transformation CopyPropagation
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Testing the empty input is disabled.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches [subroot(id=52030,#5), subroot(id=52033,#5), subroot(id=52034,#5)]
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0-2]#3: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches [subroot(id=52030,#5), subroot(id=52033,#5)]
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0-1]#2: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=52034,#5)
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [2]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=52030,#5)
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=52033,#5)
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [1]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CallExprToValue](71/98)  Found matches: 0 in transformation CallExprToValue
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr1Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr2Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr3Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[2][FineGritLatraReducer][SimplifyCallExpr](71/98)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[2][FineGritLatraReducer][SimplifyIf](71/98)  Found matches: 0 in transformation SimplifyIf
+FixPt[2][FineGritLatraReducer][SimplifyIf2](71/98)  Found matches: 0 in transformation SimplifyIf2
+FixPt[2][FineGritLatraReducer][ReduceArrayDim3](71/98)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[2][FineGritLatraReducer][ReduceArrayDim2](71/98)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[2][FineGritLatraReducer][ReduceArrayDim](71/98)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDecl](71/98)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDecl2](71/98)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam](71/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam](71/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](71/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](71/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[2][FineGritLatraReducer][SimplifyComma](71/98)  Found matches: 0 in transformation SimplifyComma
+FixPt[2][FineGritLatraReducer][TypeDefTransform](71/98)  Found matches: 0 in transformation TypeDefTransform
+FixPt[2][FineGritLatraReducer][EmptyStructToInt](71/98)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Found matches: 3 in transformation RemoveAssignment
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Testing the empty input is disabled.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches [subroot(id=52431,#3), subroot(id=52226,#3), subroot(id=52189,#3)]
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet [subroot(id=52431,#3), subroot(id=52226,#3), subroot(id=52189,#3)] in RemoveAssignment
+==========Testing the following program (13): fail==========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void
+        multiply
+                    (
+                 int a, int b
+                                   )  ;
+    int main() {
+                int
+                42
+                        ;
+        printf("answer is %d\n", b);
+     if  (
+            b > 15
+                   )  {
+            printf("Large\n");
+                                 }
+        int
+                10
+                        ;
+             int     0
+           ;for ( ;
+                        i < 3
+                     ;
+                               i++
+                               )  {
+            printf("Loop %d\n", i);
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches [subroot(id=52431,#3), subroot(id=52226,#3)]
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet [subroot(id=52431,#3), subroot(id=52226,#3)] in RemoveAssignment
+==========Testing the following program (14): fail==========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void
+        multiply
+                    (
+                 int a, int b
+                                   )  ;
+    int main() {
+                int
+                42
+                        ;
+        printf("answer is %d\n", b);
+     if  (
+            b > 15
+                   )  {
+            printf("Large\n");
+                                 }
+        int
+                10
+                        ;
+             int i = 0
+           ;for ( ;
+                        i < 3
+                     ;
+                               i++
+                               )  {
+            printf("Loop %d\n", i);
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=52189,#3)
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=52189,#3) in RemoveAssignment
+==========Testing the following program (15): fail==========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void
+        multiply
+                    (
+                 int a, int b
+                                   )  ;
+    int main() {
+                int
+            b
+                  =
+                42
+                        ;
+        printf("answer is %d\n", b);
+     if  (
+            b > 15
+                   )  {
+            printf("Large\n");
+                                 }
+        int  a
+                  =
+                10
+                        ;
+             int     0
+           ;for ( ;
+                        i < 3
+                     ;
+                               i++
+                               )  {
+            printf("Loop %d\n", i);
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=52431,#3)
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=52431,#3) in RemoveAssignment
+==========Testing the following program (16): fail==========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void
+        multiply
+                    (
+                 int a, int b
+                                   )  ;
+    int main() {
+                int
+                42
+                        ;
+        printf("answer is %d\n", b);
+     if  (
+            b > 15
+                   )  {
+            printf("Large\n");
+                                 }
+        int  a
+                  =
+                10
+                        ;
+             int i = 0
+           ;for ( ;
+                        i < 3
+                     ;
+                               i++
+                               )  {
+            printf("Loop %d\n", i);
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=52226,#3)
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=52226,#3) in RemoveAssignment
+==========Testing the following program (17): fail==========
+
+// edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+    #include <stdio.h>
+             void
+        multiply
+                    (
+                 int a, int b
+                                   )  ;
+    int main() {
+                int
+            b
+                  =
+                42
+                        ;
+        printf("answer is %d\n", b);
+     if  (
+            b > 15
+                   )  {
+            printf("Large\n");
+                                 }
+        int
+                10
+                        ;
+             int i = 0
+           ;for ( ;
+                        i < 3
+                     ;
+                               i++
+                               )  {
+            printf("Loop %d\n", i);
+                                            }
+      }
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAddrTaken](71/98)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[2][FineGritLatraReducer][ReplaceArrayAccessWithIndex](71/98)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[2][FineGritLatraReducer][SimplifyUnionDecl](71/98)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[2][FineGritLatraReducer][SimplifyStructDecl](71/98)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[2][FineGritLatraReducer][ReplaceDefByDecl](71/98)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[2][FineGritLatraReducer][CombineLocalVarDecl](71/98)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[2][FineGritLatraReducer][UnifyFunctionDecl](71/98)  Found matches: 0 in transformation UnifyFunctionDecl
+FixPt[2][FineGritLatraReducer](71/98)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 71 -> 71
+Edit: AnyNodeReplace:[replace_52014_with_76988]
+------------------------------------------------------------
+
+
+FixPt[2][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](71/98)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[2][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](71/98)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[2][FineGritLatraReducer][DivideOperationSimplification](71/98)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[2][FineGritLatraReducer][MultiplyOperationSimplification](71/98)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[2][FineGritLatraReducer][MinusOperationSimplification](71/98)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[2][FineGritLatraReducer][PlusOperationSimplification](71/98)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[2][FineGritLatraReducer][LocalToGlobalTransformation](71/98)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[2][FineGritLatraReducer][UnionToStruct](71/98)  Found matches: 0 in transformation UnionToStruct
+FixPt[2][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](71/98)  Found matches: 1 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[2][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](71/98)  The proposed transformation for the match subroot(id=76993,#10) has the same non-blank token sequence as the target node.
+FixPt[2][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](71/98)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[2][FineGritLatraReducer][FunctionInlining4Args](71/98)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[2][FineGritLatraReducer][FunctionInlining4ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInliningLatraTransformation](71/98)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[2][FineGritLatraReducer][FunctionInlining3ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInlining2Args](71/98)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[2][FineGritLatraReducer][FunctionInlining2ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[2][FineGritLatraReducer][FunctionInlining1Arg](71/98)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[2][FineGritLatraReducer][FunctionInlining1ArgNoType](71/98)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[2][FineGritLatraReducer][FunctionInliningNoArg](71/98)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[2][FineGritLatraReducer][FunctionInliningNoArg](71/98)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[2][FineGritLatraReducer][LiftAssignmentExpr](71/98)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Found matches: 3 in transformation CopyPropagation
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Testing the empty input is disabled.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches [subroot(id=77004,#5), subroot(id=77007,#5), subroot(id=77008,#5)]
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0-2]#3: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches [subroot(id=77004,#5), subroot(id=77007,#5)]
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0-1]#2: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=77008,#5)
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [2]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=77004,#5)
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=77007,#5)
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [1]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][CallExprToValue](71/98)  Found matches: 0 in transformation CallExprToValue
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr1Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr2Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[2][FineGritLatraReducer][ReplaceCallExpr3Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[2][FineGritLatraReducer][SimplifyCallExpr](71/98)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[2][FineGritLatraReducer][SimplifyIf](71/98)  Found matches: 0 in transformation SimplifyIf
+FixPt[2][FineGritLatraReducer][SimplifyIf2](71/98)  Found matches: 0 in transformation SimplifyIf2
+FixPt[2][FineGritLatraReducer][ReduceArrayDim3](71/98)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[2][FineGritLatraReducer][ReduceArrayDim2](71/98)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[2][FineGritLatraReducer][ReduceArrayDim](71/98)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDecl](71/98)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDecl2](71/98)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam](71/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam](71/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](71/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[2][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](71/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[2][FineGritLatraReducer][SimplifyComma](71/98)  Found matches: 0 in transformation SimplifyComma
+FixPt[2][FineGritLatraReducer][TypeDefTransform](71/98)  Found matches: 0 in transformation TypeDefTransform
+FixPt[2][FineGritLatraReducer][EmptyStructToInt](71/98)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Found matches: 3 in transformation RemoveAssignment
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Testing the empty input is disabled.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches [subroot(id=77405,#3), subroot(id=77200,#3), subroot(id=77163,#3)]
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet [subroot(id=77405,#3), subroot(id=77200,#3), subroot(id=77163,#3)] in RemoveAssignment
+FixPt[2][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches [subroot(id=77405,#3), subroot(id=77200,#3)]
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet [subroot(id=77405,#3), subroot(id=77200,#3)] in RemoveAssignment
+FixPt[2][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=77163,#3)
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=77163,#3) in RemoveAssignment
+FixPt[2][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=77405,#3)
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=77405,#3) in RemoveAssignment
+FixPt[2][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=77200,#3)
+FixPt[2][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=77200,#3) in RemoveAssignment
+FixPt[2][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[2][FineGritLatraReducer][RemoveAddrTaken](71/98)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[2][FineGritLatraReducer][ReplaceArrayAccessWithIndex](71/98)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[2][FineGritLatraReducer][SimplifyUnionDecl](71/98)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[2][FineGritLatraReducer][SimplifyStructDecl](71/98)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[2][FineGritLatraReducer][ReplaceDefByDecl](71/98)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[2][FineGritLatraReducer][CombineLocalVarDecl](71/98)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[2][FineGritLatraReducer][UnifyFunctionDecl](71/98)  Found matches: 0 in transformation UnifyFunctionDecl
+(71/98)  Rebuilding spar-tree: The spartree is rebuilt.
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=101962,slot_type=compilationUnit}
+|___(?){id=101963,slot_type=optional__compilationUnit_1}
+    |___(+){id=101965,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=102475,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___aux_rule__declaration_3{id=102426,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=102427,slot_type=declarationSpecifiers}
+        |   |   |___Token:void{id=102474,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |   |___(?){id=102428,slot_type=optional__declaration_2}
+        |   |   |___directDeclarator{id=102433,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+        |   |       |___Token:multiply{id=102470,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |       |___(*){id=102435,slot_type=kleene_star__directDeclarator_7}
+        |   |           |___aux_rule__directDeclarator_15{id=102437,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |               |___Token:({id=102438,slot_type=LeftParen}
+        |   |               |___parameterList{id=102442,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |   |               |   |___(+){id=102459,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |               |   |   |___Token:int{id=102469,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |               |   |   |___Token:a{id=102466,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |               |   |___(*){id=102444,slot_type=kleene_star__parameterList_1}
+        |   |               |       |___aux_rule__parameterList_2{id=102445,slot_type=aux_rule__parameterList_2}
+        |   |               |           |___Token:,{id=102446,slot_type=Comma}
+        |   |               |           |___(+){id=102448,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |               |               |___Token:int{id=102458,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |               |               |___Token:b{id=102455,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |               |___Token:){id=102440,slot_type=RightParen}
+        |   |___Token:;{id=102429,slot_type=Semi}
+        |___functionDefinition{id=101969,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=101970,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=102420,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=102424,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=102411,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=102419,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=102413,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=102415,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=102416,slot_type=LeftParen}
+            |           |___Token:){id=102418,slot_type=RightParen}
+            |___compoundStatement{id=101972,slot_type=compoundStatement}
+                |___Token:{{id=101973,slot_type=LeftBrace}
+                |___(?){id=101974,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=101977,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=102375,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=102376,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=102410,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=102377,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=102380,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:b{id=102406,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=102382,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=102383,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=102384,slot_type=Assign}
+                |       |   |               |___Token:42{id=102403,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=102378,slot_type=Semi}
+                |       |___expressionStatement{id=102305,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=102306,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=102324,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=102373,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=102326,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=102328,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=102329,slot_type=LeftParen}
+                |       |   |               |___(?){id=102330,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=102332,slot_type=expression}
+                |       |   |               |       |___(+){id=102371,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |   |___Token:"answer is %d\n"{id=102372,slot_type=StringLiteral}
+                |       |   |               |       |___(*){id=102334,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=102335,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=102336,slot_type=Comma}
+                |       |   |               |               |___Token:b{id=102354,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |___Token:){id=102331,slot_type=RightParen}
+                |       |   |___Token:;{id=102307,slot_type=Semi}
+                |       |___aux_rule__statement_6{id=102208,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
+                |       |   |___Token:if{id=102209,slot_type=If}
+                |       |   |___Token:({id=102210,slot_type=LeftParen}
+                |       |   |___relationalExpression{id=102280,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |       |   |   |___Token:b{id=102302,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |___(*){id=102282,slot_type=kleene_star__relationalExpression_1}
+                |       |   |       |___aux_rule__relationalExpression_2{id=102283,slot_type=aux_rule__relationalExpression_2}
+                |       |   |           |___Token:>{id=102294,slot_type=[altnt_block__relationalExpression_3,Greater]}
+                |       |   |           |___Token:15{id=102293,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:){id=102212,slot_type=RightParen}
+                |       |   |___compoundStatement{id=102215,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
+                |       |       |___Token:{{id=102216,slot_type=LeftBrace}
+                |       |       |___(?){id=102217,slot_type=optional__compoundStatement_1}
+                |       |       |   |___(+){id=102220,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |       |       |___expressionStatement{id=102224,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |       |           |___(?){id=102225,slot_type=optional__postfixExpression_1}
+                |       |       |           |   |___postfixExpression{id=102243,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |       |           |       |___Token:printf{id=102271,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |       |           |       |___(*){id=102245,slot_type=kleene_star__postfixExpression_2}
+                |       |       |           |           |___aux_rule__postfixExpression_11{id=102247,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |       |           |               |___Token:({id=102248,slot_type=LeftParen}
+                |       |       |           |               |___(?){id=102249,slot_type=optional__postfixExpression_1}
+                |       |       |           |               |   |___(+){id=102269,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |       |           |               |       |___Token:"Large\n"{id=102270,slot_type=StringLiteral}
+                |       |       |           |               |___Token:){id=102250,slot_type=RightParen}
+                |       |       |           |___Token:;{id=102226,slot_type=Semi}
+                |       |       |___Token:}{id=102218,slot_type=RightBrace}
+                |       |___aux_rule__declaration_3{id=102170,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=102171,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=102205,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=102172,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=102175,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=102201,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=102177,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=102178,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=102179,slot_type=Assign}
+                |       |   |               |___Token:10{id=102198,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=102173,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=102133,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=102134,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=102168,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=102135,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=102138,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:i{id=102164,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=102140,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=102141,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=102142,slot_type=Assign}
+                |       |   |               |___Token:0{id=102161,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=102136,slot_type=Semi}
+                |       |___statement{id=101984,slot_type=[aux_rule__blockItemList_2,statement]}
+                |           |___(*){id=101985,slot_type=kleene_star__statement_1}
+                |           |   |___aux_rule__statement_2{id=102065,slot_type=aux_rule__statement_2}
+                |           |       |___aux_rule__statement_8{id=102068,slot_type=[altnt_block__statement_4,aux_rule__statement_8]}
+                |           |       |   |___Token:for{id=102069,slot_type=For}
+                |           |       |   |___Token:({id=102070,slot_type=LeftParen}
+                |           |       |   |___altnt_block__iterationStatement_7{id=102071,slot_type=altnt_block__iterationStatement_7}
+                |           |       |       |___Token:;{id=102131,slot_type=[altnt_block__iterationStatement_8,aux_rule__iterationStatement_9,Semi]}
+                |           |       |       |___(?){id=102073,slot_type=optional__postfixExpression_1}
+                |           |       |       |   |___relationalExpression{id=102107,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |           |       |       |       |___Token:i{id=102129,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |       |       |       |___(*){id=102109,slot_type=kleene_star__relationalExpression_1}
+                |           |       |       |           |___aux_rule__relationalExpression_2{id=102110,slot_type=aux_rule__relationalExpression_2}
+                |           |       |       |               |___Token:<{id=102121,slot_type=[altnt_block__relationalExpression_3,Less]}
+                |           |       |       |               |___Token:3{id=102120,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |       |       |___Token:;{id=102074,slot_type=Semi}
+                |           |       |       |___(?){id=102075,slot_type=optional__postfixExpression_1}
+                |           |       |           |___postfixExpression{id=102092,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |               |___Token:i{id=102097,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |               |___(*){id=102094,slot_type=kleene_star__postfixExpression_2}
+                |           |       |                   |___Token:++{id=102096,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
+                |           |       |___Token:){id=102067,slot_type=RightParen}
+                |           |___compoundStatement{id=101987,slot_type=[aux_rule__statement_3,compoundStatement]}
+                |               |___Token:{{id=101988,slot_type=LeftBrace}
+                |               |___(?){id=101989,slot_type=optional__compoundStatement_1}
+                |               |   |___(+){id=101992,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |               |       |___expressionStatement{id=101996,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |               |           |___(?){id=101997,slot_type=optional__postfixExpression_1}
+                |               |           |   |___postfixExpression{id=102015,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |               |           |       |___Token:printf{id=102064,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |               |           |       |___(*){id=102017,slot_type=kleene_star__postfixExpression_2}
+                |               |           |           |___aux_rule__postfixExpression_11{id=102019,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |               |           |               |___Token:({id=102020,slot_type=LeftParen}
+                |               |           |               |___(?){id=102021,slot_type=optional__postfixExpression_1}
+                |               |           |               |   |___expression{id=102023,slot_type=expression}
+                |               |           |               |       |___(+){id=102062,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |               |           |               |       |   |___Token:"Loop %d\n"{id=102063,slot_type=StringLiteral}
+                |               |           |               |       |___(*){id=102025,slot_type=kleene_star__expression_1}
+                |               |           |               |           |___aux_rule__expression_2{id=102026,slot_type=aux_rule__expression_2}
+                |               |           |               |               |___Token:,{id=102027,slot_type=Comma}
+                |               |           |               |               |___Token:i{id=102045,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |               |           |               |___Token:){id=102022,slot_type=RightParen}
+                |               |           |___Token:;{id=101998,slot_type=Semi}
+                |               |___Token:}{id=101990,slot_type=RightBrace}
+                |___Token:}{id=101975,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer](71/98)  For c, there are 46 transformations.
+FixPt[3][FineGritLatraReducer](71/98)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 71 -> 71
+Edit: AnyNodeReplace:[replace_101962_with_102477]
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](71/98)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[3][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](71/98)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[3][FineGritLatraReducer][DivideOperationSimplification](71/98)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[3][FineGritLatraReducer][MultiplyOperationSimplification](71/98)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[3][FineGritLatraReducer][MinusOperationSimplification](71/98)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[3][FineGritLatraReducer][PlusOperationSimplification](71/98)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation](71/98)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[3][FineGritLatraReducer][UnionToStruct](71/98)  Found matches: 0 in transformation UnionToStruct
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](71/98)  Found matches: 1 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](71/98)  The proposed transformation for the match subroot(id=102482,#10) has the same non-blank token sequence as the target node.
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](71/98)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[3][FineGritLatraReducer][FunctionInlining4Args](71/98)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[3][FineGritLatraReducer][FunctionInlining4ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInliningLatraTransformation](71/98)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[3][FineGritLatraReducer][FunctionInlining3ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInlining2Args](71/98)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[3][FineGritLatraReducer][FunctionInlining2ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInlining1Arg](71/98)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[3][FineGritLatraReducer][FunctionInlining1ArgNoType](71/98)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[3][FineGritLatraReducer][FunctionInliningNoArg](71/98)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[3][FineGritLatraReducer][FunctionInliningNoArg](71/98)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[3][FineGritLatraReducer][LiftAssignmentExpr](71/98)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[3][FineGritLatraReducer][CopyPropagation](71/98)  Found matches: 3 in transformation CopyPropagation
+FixPt[3][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[3][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Testing the empty input is disabled.
+FixPt[3][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches [subroot(id=102493,#5), subroot(id=102496,#5), subroot(id=102497,#5)]
+FixPt[3][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0-2]#3: null edit. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches [subroot(id=102493,#5), subroot(id=102496,#5)]
+FixPt[3][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0-1]#2: null edit. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=102497,#5)
+FixPt[3][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [2]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=102493,#5)
+FixPt[3][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=102496,#5)
+FixPt[3][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [1]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][CallExprToValue](71/98)  Found matches: 0 in transformation CallExprToValue
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr1Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr2Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr3Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[3][FineGritLatraReducer][SimplifyCallExpr](71/98)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[3][FineGritLatraReducer][SimplifyIf](71/98)  Found matches: 0 in transformation SimplifyIf
+FixPt[3][FineGritLatraReducer][SimplifyIf2](71/98)  Found matches: 0 in transformation SimplifyIf2
+FixPt[3][FineGritLatraReducer][ReduceArrayDim3](71/98)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[3][FineGritLatraReducer][ReduceArrayDim2](71/98)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[3][FineGritLatraReducer][ReduceArrayDim](71/98)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl](71/98)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl2](71/98)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam](71/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam](71/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](71/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](71/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[3][FineGritLatraReducer][SimplifyComma](71/98)  Found matches: 0 in transformation SimplifyComma
+FixPt[3][FineGritLatraReducer][TypeDefTransform](71/98)  Found matches: 0 in transformation TypeDefTransform
+FixPt[3][FineGritLatraReducer][EmptyStructToInt](71/98)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Found matches: 3 in transformation RemoveAssignment
+FixPt[3][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[3][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Testing the empty input is disabled.
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches [subroot(id=102894,#3), subroot(id=102689,#3), subroot(id=102652,#3)]
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet [subroot(id=102894,#3), subroot(id=102689,#3), subroot(id=102652,#3)] in RemoveAssignment
+FixPt[3][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[3][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches [subroot(id=102894,#3), subroot(id=102689,#3)]
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet [subroot(id=102894,#3), subroot(id=102689,#3)] in RemoveAssignment
+FixPt[3][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[3][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=102652,#3)
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=102652,#3) in RemoveAssignment
+FixPt[3][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[3][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=102894,#3)
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=102894,#3) in RemoveAssignment
+FixPt[3][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[3][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=102689,#3)
+FixPt[3][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=102689,#3) in RemoveAssignment
+FixPt[3][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[3][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[3][FineGritLatraReducer][RemoveAddrTaken](71/98)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[3][FineGritLatraReducer][ReplaceArrayAccessWithIndex](71/98)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[3][FineGritLatraReducer][SimplifyUnionDecl](71/98)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[3][FineGritLatraReducer][SimplifyStructDecl](71/98)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[3][FineGritLatraReducer][ReplaceDefByDecl](71/98)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[3][FineGritLatraReducer][CombineLocalVarDecl](71/98)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[3][FineGritLatraReducer][UnifyFunctionDecl](71/98)  Found matches: 0 in transformation UnifyFunctionDecl
+(71/98)  Rebuilding spar-tree: The spartree is rebuilt.
+====Fixpoint iteration 4. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=127451,slot_type=compilationUnit}
+|___(?){id=127452,slot_type=optional__compilationUnit_1}
+    |___(+){id=127454,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=127964,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___aux_rule__declaration_3{id=127915,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=127916,slot_type=declarationSpecifiers}
+        |   |   |___Token:void{id=127963,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |   |___(?){id=127917,slot_type=optional__declaration_2}
+        |   |   |___directDeclarator{id=127922,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+        |   |       |___Token:multiply{id=127959,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |       |___(*){id=127924,slot_type=kleene_star__directDeclarator_7}
+        |   |           |___aux_rule__directDeclarator_15{id=127926,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |               |___Token:({id=127927,slot_type=LeftParen}
+        |   |               |___parameterList{id=127931,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |   |               |   |___(+){id=127948,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |               |   |   |___Token:int{id=127958,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |               |   |   |___Token:a{id=127955,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |               |   |___(*){id=127933,slot_type=kleene_star__parameterList_1}
+        |   |               |       |___aux_rule__parameterList_2{id=127934,slot_type=aux_rule__parameterList_2}
+        |   |               |           |___Token:,{id=127935,slot_type=Comma}
+        |   |               |           |___(+){id=127937,slot_type=[parameterDeclaration,declarationSpecifiers]}
+        |   |               |               |___Token:int{id=127947,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |               |               |___Token:b{id=127944,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |               |___Token:){id=127929,slot_type=RightParen}
+        |   |___Token:;{id=127918,slot_type=Semi}
+        |___functionDefinition{id=127458,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=127459,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=127909,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=127913,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=127900,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=127908,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=127902,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=127904,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=127905,slot_type=LeftParen}
+            |           |___Token:){id=127907,slot_type=RightParen}
+            |___compoundStatement{id=127461,slot_type=compoundStatement}
+                |___Token:{{id=127462,slot_type=LeftBrace}
+                |___(?){id=127463,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=127466,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=127864,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=127865,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=127899,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=127866,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=127869,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:b{id=127895,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=127871,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=127872,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=127873,slot_type=Assign}
+                |       |   |               |___Token:42{id=127892,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=127867,slot_type=Semi}
+                |       |___expressionStatement{id=127794,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=127795,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=127813,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=127862,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=127815,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=127817,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=127818,slot_type=LeftParen}
+                |       |   |               |___(?){id=127819,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=127821,slot_type=expression}
+                |       |   |               |       |___(+){id=127860,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |   |___Token:"answer is %d\n"{id=127861,slot_type=StringLiteral}
+                |       |   |               |       |___(*){id=127823,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=127824,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=127825,slot_type=Comma}
+                |       |   |               |               |___Token:b{id=127843,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |___Token:){id=127820,slot_type=RightParen}
+                |       |   |___Token:;{id=127796,slot_type=Semi}
+                |       |___aux_rule__statement_6{id=127697,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
+                |       |   |___Token:if{id=127698,slot_type=If}
+                |       |   |___Token:({id=127699,slot_type=LeftParen}
+                |       |   |___relationalExpression{id=127769,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |       |   |   |___Token:b{id=127791,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |___(*){id=127771,slot_type=kleene_star__relationalExpression_1}
+                |       |   |       |___aux_rule__relationalExpression_2{id=127772,slot_type=aux_rule__relationalExpression_2}
+                |       |   |           |___Token:>{id=127783,slot_type=[altnt_block__relationalExpression_3,Greater]}
+                |       |   |           |___Token:15{id=127782,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:){id=127701,slot_type=RightParen}
+                |       |   |___compoundStatement{id=127704,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
+                |       |       |___Token:{{id=127705,slot_type=LeftBrace}
+                |       |       |___(?){id=127706,slot_type=optional__compoundStatement_1}
+                |       |       |   |___(+){id=127709,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |       |       |___expressionStatement{id=127713,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |       |           |___(?){id=127714,slot_type=optional__postfixExpression_1}
+                |       |       |           |   |___postfixExpression{id=127732,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |       |           |       |___Token:printf{id=127760,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |       |           |       |___(*){id=127734,slot_type=kleene_star__postfixExpression_2}
+                |       |       |           |           |___aux_rule__postfixExpression_11{id=127736,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |       |           |               |___Token:({id=127737,slot_type=LeftParen}
+                |       |       |           |               |___(?){id=127738,slot_type=optional__postfixExpression_1}
+                |       |       |           |               |   |___(+){id=127758,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |       |           |               |       |___Token:"Large\n"{id=127759,slot_type=StringLiteral}
+                |       |       |           |               |___Token:){id=127739,slot_type=RightParen}
+                |       |       |           |___Token:;{id=127715,slot_type=Semi}
+                |       |       |___Token:}{id=127707,slot_type=RightBrace}
+                |       |___aux_rule__declaration_3{id=127659,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=127660,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=127694,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=127661,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=127664,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=127690,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=127666,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=127667,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=127668,slot_type=Assign}
+                |       |   |               |___Token:10{id=127687,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=127662,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=127622,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=127623,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=127657,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=127624,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=127627,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:i{id=127653,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=127629,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=127630,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=127631,slot_type=Assign}
+                |       |   |               |___Token:0{id=127650,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=127625,slot_type=Semi}
+                |       |___statement{id=127473,slot_type=[aux_rule__blockItemList_2,statement]}
+                |           |___(*){id=127474,slot_type=kleene_star__statement_1}
+                |           |   |___aux_rule__statement_2{id=127554,slot_type=aux_rule__statement_2}
+                |           |       |___aux_rule__statement_8{id=127557,slot_type=[altnt_block__statement_4,aux_rule__statement_8]}
+                |           |       |   |___Token:for{id=127558,slot_type=For}
+                |           |       |   |___Token:({id=127559,slot_type=LeftParen}
+                |           |       |   |___altnt_block__iterationStatement_7{id=127560,slot_type=altnt_block__iterationStatement_7}
+                |           |       |       |___Token:;{id=127620,slot_type=[altnt_block__iterationStatement_8,aux_rule__iterationStatement_9,Semi]}
+                |           |       |       |___(?){id=127562,slot_type=optional__postfixExpression_1}
+                |           |       |       |   |___relationalExpression{id=127596,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |           |       |       |       |___Token:i{id=127618,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |       |       |       |___(*){id=127598,slot_type=kleene_star__relationalExpression_1}
+                |           |       |       |           |___aux_rule__relationalExpression_2{id=127599,slot_type=aux_rule__relationalExpression_2}
+                |           |       |       |               |___Token:<{id=127610,slot_type=[altnt_block__relationalExpression_3,Less]}
+                |           |       |       |               |___Token:3{id=127609,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |       |       |___Token:;{id=127563,slot_type=Semi}
+                |           |       |       |___(?){id=127564,slot_type=optional__postfixExpression_1}
+                |           |       |           |___postfixExpression{id=127581,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |               |___Token:i{id=127586,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |               |___(*){id=127583,slot_type=kleene_star__postfixExpression_2}
+                |           |       |                   |___Token:++{id=127585,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
+                |           |       |___Token:){id=127556,slot_type=RightParen}
+                |           |___compoundStatement{id=127476,slot_type=[aux_rule__statement_3,compoundStatement]}
+                |               |___Token:{{id=127477,slot_type=LeftBrace}
+                |               |___(?){id=127478,slot_type=optional__compoundStatement_1}
+                |               |   |___(+){id=127481,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |               |       |___expressionStatement{id=127485,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |               |           |___(?){id=127486,slot_type=optional__postfixExpression_1}
+                |               |           |   |___postfixExpression{id=127504,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |               |           |       |___Token:printf{id=127553,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |               |           |       |___(*){id=127506,slot_type=kleene_star__postfixExpression_2}
+                |               |           |           |___aux_rule__postfixExpression_11{id=127508,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |               |           |               |___Token:({id=127509,slot_type=LeftParen}
+                |               |           |               |___(?){id=127510,slot_type=optional__postfixExpression_1}
+                |               |           |               |   |___expression{id=127512,slot_type=expression}
+                |               |           |               |       |___(+){id=127551,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |               |           |               |       |   |___Token:"Loop %d\n"{id=127552,slot_type=StringLiteral}
+                |               |           |               |       |___(*){id=127514,slot_type=kleene_star__expression_1}
+                |               |           |               |           |___aux_rule__expression_2{id=127515,slot_type=aux_rule__expression_2}
+                |               |           |               |               |___Token:,{id=127516,slot_type=Comma}
+                |               |           |               |               |___Token:i{id=127534,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |               |           |               |___Token:){id=127511,slot_type=RightParen}
+                |               |           |___Token:;{id=127487,slot_type=Semi}
+                |               |___Token:}{id=127479,slot_type=RightBrace}
+                |___Token:}{id=127464,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[4][FineGritLatraReducer](71/98)  For c, there are 46 transformations.
+FixPt[4][FineGritLatraReducer](71/98)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 71 -> 71
+Edit: AnyNodeReplace:[replace_127451_with_127966]
+------------------------------------------------------------
+
+
+FixPt[4][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](71/98)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[4][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](71/98)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[4][FineGritLatraReducer][DivideOperationSimplification](71/98)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[4][FineGritLatraReducer][MultiplyOperationSimplification](71/98)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[4][FineGritLatraReducer][MinusOperationSimplification](71/98)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[4][FineGritLatraReducer][PlusOperationSimplification](71/98)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[4][FineGritLatraReducer][LocalToGlobalTransformation](71/98)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[4][FineGritLatraReducer][UnionToStruct](71/98)  Found matches: 0 in transformation UnionToStruct
+FixPt[4][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](71/98)  Found matches: 1 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[4][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](71/98)  The proposed transformation for the match subroot(id=127971,#10) has the same non-blank token sequence as the target node.
+FixPt[4][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](71/98)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[4][FineGritLatraReducer][FunctionInlining4Args](71/98)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[4][FineGritLatraReducer][FunctionInlining4ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[4][FineGritLatraReducer][FunctionInliningLatraTransformation](71/98)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[4][FineGritLatraReducer][FunctionInlining3ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[4][FineGritLatraReducer][FunctionInlining2Args](71/98)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[4][FineGritLatraReducer][FunctionInlining2ArgsNoType](71/98)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[4][FineGritLatraReducer][FunctionInlining1Arg](71/98)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[4][FineGritLatraReducer][FunctionInlining1ArgNoType](71/98)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[4][FineGritLatraReducer][FunctionInliningNoArg](71/98)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[4][FineGritLatraReducer][FunctionInliningNoArg](71/98)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[4][FineGritLatraReducer][LiftAssignmentExpr](71/98)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[4][FineGritLatraReducer][CopyPropagation](71/98)  Found matches: 3 in transformation CopyPropagation
+FixPt[4][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[4][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Testing the empty input is disabled.
+FixPt[4][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches [subroot(id=127982,#5), subroot(id=127985,#5), subroot(id=127986,#5)]
+FixPt[4][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0-2]#3: null edit. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches [subroot(id=127982,#5), subroot(id=127985,#5)]
+FixPt[4][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0-1]#2: null edit. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=127986,#5)
+FixPt[4][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [2]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=127982,#5)
+FixPt[4][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [0]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][CopyPropagation](71/98)  Try to apply transformations for matches subroot(id=127985,#5)
+FixPt[4][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Try deleting [1]#1: null edit. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][CopyPropagation][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][CallExprToValue](71/98)  Found matches: 0 in transformation CallExprToValue
+FixPt[4][FineGritLatraReducer][ReplaceCallExpr1Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[4][FineGritLatraReducer][ReplaceCallExpr2Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[4][FineGritLatraReducer][ReplaceCallExpr3Arg](71/98)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[4][FineGritLatraReducer][SimplifyCallExpr](71/98)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[4][FineGritLatraReducer][SimplifyIf](71/98)  Found matches: 0 in transformation SimplifyIf
+FixPt[4][FineGritLatraReducer][SimplifyIf2](71/98)  Found matches: 0 in transformation SimplifyIf2
+FixPt[4][FineGritLatraReducer][ReduceArrayDim3](71/98)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[4][FineGritLatraReducer][ReduceArrayDim2](71/98)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[4][FineGritLatraReducer][ReduceArrayDim](71/98)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDecl](71/98)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDecl2](71/98)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDeclNoParam](71/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDeclNoParam](71/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](71/98)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](71/98)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[4][FineGritLatraReducer][SimplifyComma](71/98)  Found matches: 0 in transformation SimplifyComma
+FixPt[4][FineGritLatraReducer][TypeDefTransform](71/98)  Found matches: 0 in transformation TypeDefTransform
+FixPt[4][FineGritLatraReducer][EmptyStructToInt](71/98)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Found matches: 3 in transformation RemoveAssignment
+FixPt[4][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-2]#3.
+FixPt[4][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Testing the empty input is disabled.
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches [subroot(id=128383,#3), subroot(id=128178,#3), subroot(id=128141,#3)]
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet [subroot(id=128383,#3), subroot(id=128178,#3), subroot(id=128141,#3)] in RemoveAssignment
+FixPt[4][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[4][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches [subroot(id=128383,#3), subroot(id=128178,#3)]
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet [subroot(id=128383,#3), subroot(id=128178,#3)] in RemoveAssignment
+FixPt[4][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[4][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=128141,#3)
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=128141,#3) in RemoveAssignment
+FixPt[4][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[4][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=128383,#3)
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=128383,#3) in RemoveAssignment
+FixPt[4][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[4][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Try to apply transformations for matches subroot(id=128178,#3)
+FixPt[4][FineGritLatraReducer][RemoveAssignment](71/98)  Built a LatraGeneralActionSet subroot(id=128178,#3) in RemoveAssignment
+FixPt[4][FineGritLatraReducer](71/98)  An edit (description=Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern) is skipped in DefaultLatraReducer because it was visited before.
+FixPt[4][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][RemoveAssignment][WPROBDD](71/98)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%.
+FixPt[4][FineGritLatraReducer][RemoveAddrTaken](71/98)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[4][FineGritLatraReducer][ReplaceArrayAccessWithIndex](71/98)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[4][FineGritLatraReducer][SimplifyUnionDecl](71/98)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[4][FineGritLatraReducer][SimplifyStructDecl](71/98)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[4][FineGritLatraReducer][ReplaceDefByDecl](71/98)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[4][FineGritLatraReducer][CombineLocalVarDecl](71/98)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[4][FineGritLatraReducer][UnifyFunctionDecl](71/98)  Found matches: 0 in transformation UnifyFunctionDecl
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0 FineGritLatraReducer      5             3      10            -49      10   time-hidden
+ 1 FineGritLatraReducer      5             3     -13            -22       8   time-hidden
+ 2 FineGritLatraReducer      1             1       0              0       0   time-hidden
+ 3 FineGritLatraReducer      1             1       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+FineGritLatraReducer     4     12             8      -3            -71      18   time-hidden
+
+------------------------------- Transformations --------------------------------
+                                               Transformation Worked #NonDeletions #Tokens #NonBlankChars
+                                 FineGritLatraReducer.Reparse      6             5     -11              0
+                        FineGritLatraReducer.ReplaceDefByDecl      1             0      -6            -15
+                        FineGritLatraReducer.TypeDefTransform      1             0      -4            -14
+                             FineGritLatraReducer.SimplifyIf2      1             0      -2            -24
+                         FineGritLatraReducer.CopyPropagation      1             1       4             -7
+FineGritLatraReducer.VoidReturnFunctionDefLatraTransformation      1             1       6            -12
+                      FineGritLatraReducer.LiftAssignmentExpr      1             1      10              1
+------------------------------------- End --------------------------------------
+#test success = 6
+#test failure = 12
+#test result cache hits = 0
+#test execution cancelled = 0
+#node edit action set cache hits = 0
+#external test execution cache hits = 0

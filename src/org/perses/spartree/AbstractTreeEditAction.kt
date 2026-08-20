@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,10 +16,10 @@
  */
 package org.perses.spartree
 
+import com.google.common.base.MoreObjects
+
 /** The base class for editing a tree.  */
-sealed class AbstractTreeEditAction(
-  val targetNode: AbstractSparTreeNode,
-) : Comparable<AbstractTreeEditAction> {
+sealed class AbstractTreeEditAction : Comparable<AbstractTreeEditAction> {
   override fun compareTo(other: AbstractTreeEditAction): Int {
     val classCmp =
       compareBy<AbstractTreeEditAction> {
@@ -35,9 +35,30 @@ sealed class AbstractTreeEditAction(
 
   protected abstract fun internalCompareTo(o: AbstractTreeEditAction): Int
 
-  abstract val description: String
+  abstract val conciseDescription: String
 
-  override fun toString(): String = description
+  final override fun toString(): String =
+    MoreObjects.toStringHelper(this).addValue(conciseDescription).toString()
+
+  abstract override fun equals(other: Any?): Boolean
+
+  abstract override fun hashCode(): Int
+
+  abstract fun apply()
+}
+
+abstract class AbstractTargetedTreeEditAction(
+  val targetNode: AbstractSparTreeNode,
+) : AbstractTreeEditAction() {
+  private var used = false
+
+  override fun apply() {
+    check(!used)
+    used = true
+    internalApply()
+  }
+
+  abstract fun internalApply()
 
   override fun equals(other: Any?): Boolean {
     if (other == null) {
@@ -49,7 +70,7 @@ sealed class AbstractTreeEditAction(
     if (javaClass != other.javaClass) {
       return false
     }
-    val otherAction = other as AbstractTreeEditAction
+    val otherAction = other as AbstractTargetedTreeEditAction
     return if (targetNode !== otherAction.targetNode) {
       false
     } else {
@@ -57,20 +78,10 @@ sealed class AbstractTreeEditAction(
     }
   }
 
-  protected abstract fun specificEquals(other: AbstractTreeEditAction): Boolean
+  protected abstract fun specificEquals(other: AbstractTargetedTreeEditAction): Boolean
 
   override fun hashCode(): Int =
     31 * specificHashCode() + targetNode.nodeId + javaClass.hashCode() * 31 * 31
 
   protected abstract fun specificHashCode(): Int
-
-  private var used = false
-
-  fun apply() {
-    check(!used)
-    used = true
-    internalApply()
-  }
-
-  abstract fun internalApply()
 }

@@ -1,5 +1,5 @@
 load("//:perses.bzl", "reduce")
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "sanity_test")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 

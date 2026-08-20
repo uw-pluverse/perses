@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,19 +16,26 @@
  */
 package org.perses.reduction.event
 
+import org.perses.program.ProgramSize
+import org.perses.reduction.io.PerFileSizeMetrics
+import org.perses.spartree.AbstractSparTreeEdit
+
 class BestProgramUpdateEvent(
   val currentFixpointIteration: FixpointIterationStartEvent,
   currentTimeMillis: Long,
-  val programSizeBefore: Int,
-  programSizeAfter: Int,
-) : AbstractReductionEventWithProgramSize(currentTimeMillis, programSizeAfter) {
+  perFileSizeMetrics: PerFileSizeMetrics,
+  val programSizeBefore: ProgramSize<*>,
+  val programSizeAfter: ProgramSize<*>,
+  val appliedEdit: AbstractSparTreeEdit<*>,
+) : AbstractReductionEventWithProgramSize(currentTimeMillis, perFileSizeMetrics) {
   init {
     // FIXME(cnsun): this also needs to check the num of chars of tokens in the case of ==.
     //   FIXME(cnsun): fix this assertion
     //   check(programSizeBefore >= programSizeAfter)
   }
 
-  override fun initialProgramSize() = currentFixpointIteration.initialProgramSize()
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    currentFixpointIteration.initialPerFileSizeMetrics()
 
   override val prefixLabelFromRootToHere: String
     get() = currentFixpointIteration.prefixLabelFromRootToHere

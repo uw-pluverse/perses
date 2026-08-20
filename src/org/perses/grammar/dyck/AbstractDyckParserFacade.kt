@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,28 +19,35 @@ package org.perses.grammar.dyck
 import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.Lexer
-import org.perses.grammar.AbstractParserFacade
+import org.antlr.v4.runtime.Parser
+import org.perses.grammar.AbstractLexerAdaptingParserFacade
 import org.perses.program.LanguageKind
 
+// The Dyck lexer emits PnfLineAwareDyckParser-typed tokens, so every parser plugged in here
+// (line-aware or pristine) must share that token numbering. Both grammars draw their vocabulary from
+// the shared DyckTokens lexer grammar to satisfy this; PristineDyckParserFacadeTest guards the invariant.
 abstract class AbstractDyckParserFacade(
   language: LanguageKind,
-  dyckLexerClass: Class<out Lexer>,
-  protected val underlyingLexerClass: Class<out Lexer>,
-) : AbstractParserFacade(
+  private val configurationSelector: DyckLexer.ConfigurationSelector,
+  // The tolerant-grammar fallback ladder derives the next, more-general Dyck rung from a Dyck facade
+  // while keeping the same underlying lexer (see TolerantFallbackParserFacades).
+  underlyingLexerClass: Class<out Lexer>,
+  pnfParserGrammarFileName: String,
+  pnfParserClass: Class<out Parser>,
+) : AbstractLexerAdaptingParserFacade(
     language = language,
     antlrGrammar =
       createSeparateAntlrParserGrammarOnly(
         startRuleName = "start",
-        antlrParserGrammarFileName = "PnfDyckParser.g4",
+        antlrParserGrammarFileName = pnfParserGrammarFileName,
         classUnderSamePkg = AbstractDyckParserFacade::class.java,
       ),
     identifierTokenTypes = ImmutableIntArray.of(),
-    lexerClass = dyckLexerClass,
-    parserClass = PnfDyckParser::class.java,
+    includeAutoDetectedIdentifierTokenTypes = false,
+    lexerClass = DyckLexer::class.java,
+    parserClass = pnfParserClass,
+    underlyingLexerClass = underlyingLexerClass,
   ) {
-  override fun createLexer(inputStream: CharStream): Lexer {
-    val underlyingLexer =
-      getCharStreamConstructorFromLexer(underlyingLexerClass).newInstance(inputStream)
-    return lexerClass.getDeclaredConstructor(Lexer::class.java).newInstance(underlyingLexer)
-  }
+  override fun createLexer(inputStream: CharStream): Lexer =
+    DyckLexer(createUnderlyingLexer(inputStream), configurationSelector)
 }

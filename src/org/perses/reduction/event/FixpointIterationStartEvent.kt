@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,8 +17,11 @@
 package org.perses.reduction.event
 
 import com.google.common.collect.ImmutableList
+import org.perses.program.ProgramSize
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.AbstractReducerNameAndDesc
+import org.perses.reduction.io.PerFileSizeMetrics
+import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.AbstractUnmodifiableSparTree
 import org.perses.util.FileNameContentPair
@@ -26,12 +29,16 @@ import org.perses.util.FileNameContentPair
 class FixpointIterationStartEvent internal constructor(
   val reductionStartEvent: ReductionStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
+  perFileSizeMetrics: PerFileSizeMetrics,
   val iteration: Int,
   val reducerClass: AbstractReducerNameAndDesc,
   private val treeStructureDumper: () -> String,
   val testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
-) : AbstractStartEvent(currentTimeMillis, programSize) {
+  /** Optional per-iteration context for progress reporting, e.g. the parser facade this iteration's
+   * driver is using. The whole-reduction [reductionStartEvent] cannot carry it (one reduction spans
+   * many files/facades); a fixpoint iteration belongs to a single driver, so the facade is known here. */
+  val extraData: String? = null,
+) : AbstractStartEvent(currentTimeMillis, perFileSizeMetrics) {
   /**
    * The tree dump might be outdated, because the spartree
    * here might have been modified by certain reducer, and the tree
@@ -49,7 +56,7 @@ class FixpointIterationStartEvent internal constructor(
 
   fun createEndEvent(
     currentTimeMillis: Long,
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
   ): FixpointIterationEndEvent {
     check(!ended)
@@ -57,39 +64,43 @@ class FixpointIterationStartEvent internal constructor(
     return FixpointIterationEndEvent(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       testScriptStatistics = testScriptStatistics,
     )
   }
 
   fun createAdHocMessageEvent(
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     messageComputer: () -> Any,
     newPrefixLabelFromRootToHere: String? = null,
   ): AdHocMessageEvent =
     reductionStartEvent.createAdHocMessageEvent(
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       prefixLabelFromRootToHere = newPrefixLabelFromRootToHere ?: prefixLabelFromRootToHere,
       messageComputer = messageComputer,
     )
 
   fun createBestProgramUpdatedEvent(
     currentTimeMillis: Long,
-    programSizeBefore: Int,
-    programSizeAfter: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
+    programSizeBefore: ProgramSize<*>,
+    programSizeAfter: ProgramSize<*>,
+    appliedEdit: AbstractSparTreeEdit<*>,
   ): BestProgramUpdateEvent {
     check(!ended)
     return BestProgramUpdateEvent(
       currentFixpointIteration = this,
       currentTimeMillis = currentTimeMillis,
+      perFileSizeMetrics = perFileSizeMetrics,
       programSizeBefore = programSizeBefore,
       programSizeAfter = programSizeAfter,
+      appliedEdit = appliedEdit,
     )
   }
 
   fun createLevelReductionStartEvent(
     currentTimeMillis: Long,
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     level: Int,
     nodeCountOnLevel: Int,
   ): LevelReductionStartEvent {
@@ -98,7 +109,7 @@ class FixpointIterationStartEvent internal constructor(
     return LevelReductionStartEvent(
       currentFixpointIteration = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       level = level,
       nodeCountOnLevel = nodeCountOnLevel,
     )
@@ -106,7 +117,8 @@ class FixpointIterationStartEvent internal constructor(
 
   fun createNodeReductionStartEvent(
     currentTimeMillis: Long,
-    program: TokenizedProgram,
+    perFileSizeMetrics: PerFileSizeMetrics,
+    program: ProgramSize<TokenizedProgram>,
     node: AbstractSparTreeNode,
     outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
   ): NodeReductionStartEvent {
@@ -114,6 +126,7 @@ class FixpointIterationStartEvent internal constructor(
     return NodeReductionStartEvent(
       currentFixpointIteration = this,
       currentTimeMillis = currentTimeMillis,
+      perFileSizeMetrics = perFileSizeMetrics,
       program = program,
       node = node,
       outputCreator,
@@ -122,7 +135,7 @@ class FixpointIterationStartEvent internal constructor(
 
   fun createReductionSkippedEvent(
     currentTimeMillis: Long,
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     tree: AbstractUnmodifiableSparTree,
     message: String,
   ): ReductionSkippedEvent {
@@ -130,24 +143,25 @@ class FixpointIterationStartEvent internal constructor(
     return ReductionSkippedEvent(
       currentFixpointIteration = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       tree = tree,
       message = message,
     )
   }
 
-  override fun initialProgramSize(): Int = reductionStartEvent.initialProgramSize()
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    reductionStartEvent.initialPerFileSizeMetrics()
 
   fun createTokenSlicingStartEvent(
     currentTimeMillis: Long,
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     tokenSlicingGranularity: Int,
   ): TokenSlicingStartEvent {
     check(!ended)
     return TokenSlicingStartEvent(
       fixpointIterationStartEvent = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       tokenSliceGranularity = tokenSlicingGranularity,
     )
   }

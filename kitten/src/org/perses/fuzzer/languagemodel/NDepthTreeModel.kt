@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -74,7 +74,7 @@ class NDepthTreeModel(
     changeStatusOfGuidance()
     val encodingResult = FeatureOfSparTree()
     tree.realRoot.preOrderVisit {
-      if (!it.isTokenNode() && it.updateLeafTokenCount() != 0) {
+      if (!it.isTokenNode() && it.leafTokenCount != 0) {
         val rule = it.antlrRule!!.ruleDef
         if (rule.body is AbstractPersesQuantifiedAst || rule.body is PersesAlternativeBlockAst) {
           val ruleOfRoot = rule.ruleNameHandle

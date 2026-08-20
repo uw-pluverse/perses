@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,10 +16,12 @@
  */
 package org.perses.reduction
 
-import org.perses.spartree.NodeDeletionTreeEdit
+import org.perses.reduction.io.AbstractOutputManager
+import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.SparTree
 
 class SparTreeListMinimizerPayload(
   val tree: SparTree,
-  val edit: NodeDeletionTreeEdit,
+  val edit: AbstractSparTreeEdit<*>,
+  val outputManager: AbstractOutputManager?,
 )

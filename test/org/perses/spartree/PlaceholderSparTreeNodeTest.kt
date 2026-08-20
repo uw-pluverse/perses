@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,19 +22,12 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.CParserFacade
-import org.perses.grammar.c.LanguageC
-import org.perses.program.TokenizedProgramFactory
 import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class PlaceholderSparTreeNodeTest {
   private val facade = CParserFacade()
-  private val nodeFactory =
-    SparTreeNodeFactory(
-      facade.metaTokenInfoDb,
-      TokenizedProgramFactory.createEmptyFactory(LanguageC),
-      facade.ruleHierarchy,
-    )
+  private val nodeFactory = SparTreeNodeFactory(facade)
   private val tree =
     TestUtility.createSparTreeFromString(
       sourceCode = "int a();",

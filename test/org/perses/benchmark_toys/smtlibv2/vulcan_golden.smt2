@@ -1,1 +1,1 @@
-(declare-fun hello_world ()not                             )
+(declare-fun hello_world (

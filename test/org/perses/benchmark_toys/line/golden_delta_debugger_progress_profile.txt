@@ -1,80 +1,95 @@
 Reduction starts: algorithm=PristineDeltaDebugger
+desc: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]
 The original input has 14 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'a', line=1, column=0}, LexerRuleSparTreeNode{id=3, parent=2}}
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(3,pos=1:0)
 --Element 1
-  index=1, payload=ElementWrapper{index=1, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'b', line=2, column=0}, LexerRuleSparTreeNode{id=4, parent=2}}
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(4,pos=2:0)
 --Element 2
-  index=2, payload=ElementWrapper{index=2, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'c', line=3, column=0}, LexerRuleSparTreeNode{id=5, parent=2}}
+  index=2, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(5,pos=3:0)
 --Element 3
-  index=3, payload=ElementWrapper{index=3, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'d', line=4, column=0}, LexerRuleSparTreeNode{id=6, parent=2}}
+  index=3, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(6,pos=4:0)
 --Element 4
-  index=4, payload=ElementWrapper{index=4, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'e', line=5, column=0}, LexerRuleSparTreeNode{id=7, parent=2}}
+  index=4, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(7,pos=5:0)
 --Element 5
-  index=5, payload=ElementWrapper{index=5, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'f', line=6, column=0}, LexerRuleSparTreeNode{id=8, parent=2}}
+  index=5, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(8,pos=6:0)
 --Element 6
-  index=6, payload=ElementWrapper{index=6, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'g', line=7, column=0}, LexerRuleSparTreeNode{id=9, parent=2}}
+  index=6, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(9,pos=7:0)
 --Element 7
-  index=7, payload=ElementWrapper{index=7, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'h', line=8, column=0}, LexerRuleSparTreeNode{id=10, parent=2}}
+  index=7, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(10,pos=8:0)
 --Element 8
-  index=8, payload=ElementWrapper{index=8, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'i', line=9, column=0}, LexerRuleSparTreeNode{id=11, parent=2}}
+  index=8, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(11,pos=9:0)
 --Element 9
-  index=9, payload=ElementWrapper{index=9, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'j', line=10, column=0}, LexerRuleSparTreeNode{id=12, parent=2}}
+  index=9, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(12,pos=10:0)
 --Element 10
-  index=10, payload=ElementWrapper{index=10, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'k', line=11, column=0}, LexerRuleSparTreeNode{id=13, parent=2}}
+  index=10, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(13,pos=11:0)
 --Element 11
-  index=11, payload=ElementWrapper{index=11, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'l', line=12, column=0}, LexerRuleSparTreeNode{id=14, parent=2}}
+  index=11, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(14,pos=12:0)
 --Element 12
-  index=12, payload=ElementWrapper{index=12, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'m', line=13, column=0}, LexerRuleSparTreeNode{id=15, parent=2}}
+  index=12, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(15,pos=13:0)
 --Element 13
-  index=13, payload=ElementWrapper{index=13, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'n', line=14, column=0}, LexerRuleSparTreeNode{id=16, parent=2}}
+  index=13, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(16,pos=14:0)
 Testing the empty input.
 Try deleting: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]: Uninteresting. Local rate: 14/14=100.00%
 Number of partitions: n=2
-Partition size: 2. [[0-6]#7, [7-13]#7]
-Reducing partitions: [[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13]]
+Partition count: 2. [[0-6]#7, [7-13]#7]
+Reducing partitions:  Partition count: 2. [[0-6]#7, [7-13]#7]
 Try deleting: [7, 8, 9, 10, 11, 12, 13]: Uninteresting. Local rate: 14/14=100.00%
 Try deleting: [0, 1, 2, 3, 4, 5, 6]: Uninteresting. Local rate: 14/14=100.00%
-Reducing complements: [[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13]]
+Reducing complements: Partition count: 2. [[0-6]#7, [7-13]#7]
 Try deleting: [0, 1, 2, 3, 4, 5, 6]: Skipped. Local rate: 14/14=100.00%
 Try deleting: [7, 8, 9, 10, 11, 12, 13]: Skipped. Local rate: 14/14=100.00%
 Number of partitions: n=4
-Partition size: 4. [[0-3]#4, [4-7]#4, [8-10]#3, [11-13]#3]
-Reducing partitions: [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10], [11, 12, 13]]
+Partition count: 4. [[0-3]#4, [4-7]#4, [8-10]#3, [11-13]#3]
+Reducing partitions:  Partition count: 4. [[0-3]#4, [4-7]#4, [8-10]#3, [11-13]#3]
 Try deleting: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]: Uninteresting. Local rate: 14/14=100.00%
 Try deleting: [0, 1, 2, 3, 8, 9, 10, 11, 12, 13]: Uninteresting. Local rate: 14/14=100.00%
 Try deleting: [0, 1, 2, 3, 4, 5, 6, 7, 11, 12, 13]: Uninteresting. Local rate: 14/14=100.00%
 Try deleting: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]: Uninteresting. Local rate: 14/14=100.00%
-Reducing complements: [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10], [11, 12, 13]]
+Reducing complements: Partition count: 4. [[0-3]#4, [4-7]#4, [8-10]#3, [11-13]#3]
 Try deleting: [0, 1, 2, 3]: Uninteresting. Local rate: 14/14=100.00%
 Try deleting: [4, 5, 6, 7]: Uninteresting. Local rate: 14/14=100.00%
 Try deleting: [8, 9, 10]: Interesting. Local rate: 14/14=100.00%
 New best is found: [0, 1, 2, 3, 4, 5, 6, 7, 11, 12, 13]
 Try deleting: [11, 12, 13]: Uninteresting. Local rate: 11/14=78.57%
 Number of partitions: n=6
-Partition size: 6. [[0-1]#2, [2-3]#2, [4-5]#2, [6-7]#2, [11-12]#2, [13]#1]
-Reducing partitions: [[0, 1], [2, 3], [4, 5], [6, 7], [11, 12], [13]]
+Partition count: 6. [[0-1]#2, [2-3]#2, [4-5]#2, [6-7]#2, [11-12]#2, [13]#1]
+Reducing partitions:  Partition count: 6. [[0-1]#2, [2-3]#2, [4-5]#2, [6-7]#2, [11-12]#2, [13]#1]
 Try deleting: [2, 3, 4, 5, 6, 7, 11, 12, 13]: Uninteresting. Local rate: 11/14=78.57%
 Try deleting: [0, 1, 4, 5, 6, 7, 11, 12, 13]: Uninteresting. Local rate: 11/14=78.57%
 Try deleting: [0, 1, 2, 3, 6, 7, 11, 12, 13]: Uninteresting. Local rate: 11/14=78.57%
 Try deleting: [0, 1, 2, 3, 4, 5, 11, 12, 13]: Uninteresting. Local rate: 11/14=78.57%
 Try deleting: [0, 1, 2, 3, 4, 5, 6, 7, 13]: Uninteresting. Local rate: 11/14=78.57%
 Try deleting: [0, 1, 2, 3, 4, 5, 6, 7, 11, 12]: Uninteresting. Local rate: 11/14=78.57%
-Reducing complements: [[0, 1], [2, 3], [4, 5], [6, 7], [11, 12], [13]]
+Reducing complements: Partition count: 6. [[0-1]#2, [2-3]#2, [4-5]#2, [6-7]#2, [11-12]#2, [13]#1]
 Try deleting: [0, 1]: Uninteresting. Local rate: 11/14=78.57%
 Try deleting: [2, 3]: Interesting. Local rate: 11/14=78.57%
 New best is found: [0, 1, 4, 5, 6, 7, 11, 12, 13]
@@ -85,14 +100,14 @@ Try deleting: [11, 12]: Interesting. Local rate: 7/14=50.00%
 New best is found: [0, 1, 6, 7, 13]
 Try deleting: [13]: Uninteresting. Local rate: 5/14=35.71%
 Number of partitions: n=5
-Partition size: 5. [[0]#1, [1]#1, [6]#1, [7]#1, [13]#1]
-Reducing partitions: [[0], [1], [6], [7], [13]]
+Partition count: 5. [[0]#1, [1]#1, [6]#1, [7]#1, [13]#1]
+Reducing partitions:  Partition count: 5. [[0]#1, [1]#1, [6]#1, [7]#1, [13]#1]
 Try deleting: [1, 6, 7, 13]: Uninteresting. Local rate: 5/14=35.71%
 Try deleting: [0, 6, 7, 13]: Uninteresting. Local rate: 5/14=35.71%
 Try deleting: [0, 1, 7, 13]: Uninteresting. Local rate: 5/14=35.71%
 Try deleting: [0, 1, 6, 13]: Uninteresting. Local rate: 5/14=35.71%
 Try deleting: [0, 1, 6, 7]: Uninteresting. Local rate: 5/14=35.71%
-Reducing complements: [[0], [1], [6], [7], [13]]
+Reducing complements: Partition count: 5. [[0]#1, [1]#1, [6]#1, [7]#1, [13]#1]
 Try deleting: [0]: Uninteresting. Local rate: 5/14=35.71%
 Try deleting: [1]: Interesting. Local rate: 5/14=35.71%
 New best is found: [0, 6, 7, 13]
@@ -101,45 +116,49 @@ Try deleting: [7]: Interesting. Local rate: 4/14=28.57%
 New best is found: [0, 6, 13]
 Try deleting: [13]: Uninteresting. Local rate: 3/14=21.43%
 Number of partitions: n=3
-Partition size: 3. [[0]#1, [6]#1, [13]#1]
-Reducing partitions: [[0], [6], [13]]
+Partition count: 3. [[0]#1, [6]#1, [13]#1]
+Reducing partitions:  Partition count: 3. [[0]#1, [6]#1, [13]#1]
 Try deleting: [6, 13]: Uninteresting. Local rate: 3/14=21.43%
 Try deleting: [0, 13]: Uninteresting. Local rate: 3/14=21.43%
 Try deleting: [0, 6]: Uninteresting. Local rate: 3/14=21.43%
-Reducing complements: [[0], [6], [13]]
+Reducing complements: Partition count: 3. [[0]#1, [6]#1, [13]#1]
 Try deleting: [0]: Uninteresting. Local rate: 3/14=21.43%
 Try deleting: [6]: Uninteresting. Local rate: 3/14=21.43%
 Try deleting: [13]: Skipped. Local rate: 3/14=21.43%
 Reduction PristineDeltaDebugger ends. Result=[0,6,13]
 
 Reduction starts: algorithm=PristineDeltaDebugger
+desc: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]
 The original input has 3 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'a', line=1, column=0}, LexerRuleSparTreeNode{id=20, parent=19}}
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(20,pos=1:0)
 --Element 1
-  index=1, payload=ElementWrapper{index=1, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'g', line=2, column=0}, LexerRuleSparTreeNode{id=21, parent=19}}
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(21,pos=2:0)
 --Element 2
-  index=2, payload=ElementWrapper{index=2, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.AbstractListMinimizer.Companion.NoPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'n', line=3, column=0}, LexerRuleSparTreeNode{id=22, parent=19}}
+  index=2, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(22,pos=3:0)
 Testing the empty input.
 Try deleting: [0, 1, 2]: Uninteresting. Local rate: 3/3=100.00%
 Number of partitions: n=2
-Partition size: 2. [[0-1]#2, [2]#1]
-Reducing partitions: [[0, 1], [2]]
+Partition count: 2. [[0-1]#2, [2]#1]
+Reducing partitions:  Partition count: 2. [[0-1]#2, [2]#1]
 Try deleting: [2]: Uninteresting. Local rate: 3/3=100.00%
 Try deleting: [0, 1]: Uninteresting. Local rate: 3/3=100.00%
-Reducing complements: [[0, 1], [2]]
+Reducing complements: Partition count: 2. [[0-1]#2, [2]#1]
 Try deleting: [0, 1]: Skipped. Local rate: 3/3=100.00%
 Try deleting: [2]: Skipped. Local rate: 3/3=100.00%
 Number of partitions: n=3
-Partition size: 3. [[0]#1, [1]#1, [2]#1]
-Reducing partitions: [[0], [1], [2]]
+Partition count: 3. [[0]#1, [1]#1, [2]#1]
+Reducing partitions:  Partition count: 3. [[0]#1, [1]#1, [2]#1]
 Try deleting: [1, 2]: Uninteresting. Local rate: 3/3=100.00%
 Try deleting: [0, 2]: Uninteresting. Local rate: 3/3=100.00%
 Try deleting: [0, 1]: Skipped. Local rate: 3/3=100.00%
-Reducing complements: [[0], [1], [2]]
+Reducing complements: Partition count: 3. [[0]#1, [1]#1, [2]#1]
 Try deleting: [0]: Uninteresting. Local rate: 3/3=100.00%
 Try deleting: [1]: Uninteresting. Local rate: 3/3=100.00%
 Try deleting: [2]: Skipped. Local rate: 3/3=100.00%

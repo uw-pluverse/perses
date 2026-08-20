@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList
 import org.perses.antlr.TokenType
 import org.perses.antlr.atn.tdtree.TDTree
 import org.perses.antlr.toTokenType
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
@@ -33,13 +33,13 @@ import java.lang.RuntimeException
 
 class TokenCanonicalizer(
   reducerContext: ReducerContext,
-) : AbstractTokenReducer(META, reducerContext) {
-  private val atnWrapper = reducerContext.configuration.parserFacade.lexerAtnWrapper
+) : AbstractSparTreeReducer(META, reducerContext) {
+  private val atnWrapper = reducerContext.configuration.canonicalParserFacade.lexerAtnWrapper
 
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
-    val candidateCanonicalIds = mutableListOf<String>()
-    for (i in 0 until tree.tokenCount) {
+    val tree = fixpointReductionState.inputRepresentation.tree
+    val canonicalIdPoolManager = CanonicalIdPoolManager()
+    for (i in 0 until tree.programSnapshot.surrogateTokenCount) {
       var latestLeaf = tree.getLatestNthLeafNodeCostly(i)
       val tokenType = latestLeaf.token.asAntlrToken().tokenType
       if (!atnWrapper.hasInformationForToken(tokenType)) {
@@ -47,8 +47,10 @@ class TokenCanonicalizer(
         continue
       }
       // Replacement-Based Canonicalization
-      if (tokenType in reducerContext.configuration.parserFacade.identifierTokenTypes) {
-        canonicalizeIdentifier(tree, latestLeaf, candidateCanonicalIds)
+      val identifierTokenTypes =
+        reducerContext.configuration.canonicalParserFacade.fusedIdentifierTokenTypes
+      if (tokenType in identifierTokenTypes) {
+        canonicalizeIdentifier(tree, latestLeaf, canonicalIdPoolManager)
         continue
       }
 
@@ -67,14 +69,12 @@ class TokenCanonicalizer(
   private fun canonicalizeIdentifier(
     tree: SparTree,
     leaf: LexerRuleSparTreeNode,
-    candidateCanonicalIds: MutableList<String>,
+    canonicalIdPoolManager: CanonicalIdPoolManager,
   ): LexerRuleSparTreeNode {
     val lexeme = leaf.token.lexemeText
-    // candidateCanonicalIds contains all used canonicalized IDs so far
-    // here adding a new candidate canonical ID because this identifier token may need to be unique
-    candidateCanonicalIds.add(convertIndexToId(candidateCanonicalIds.size))
+    val pool = canonicalIdPoolManager.getPoolFor(lexeme)
     val edits =
-      candidateCanonicalIds.flatMap { uniqueId ->
+      pool.candidates().flatMap { uniqueId ->
         if (uniqueId == lexeme) {
           return@flatMap listOf()
         }
@@ -83,17 +83,10 @@ class TokenCanonicalizer(
           TokenEditUtility.createEditToReplaceAllLexerNodesHavingSameLexeme(tree, lexeme, uniqueId),
         )
       }
-    val testResult =
-      testAllTreeEditsAndReturnTheBest(edits) ?: run {
-        candidateCanonicalIds.removeLast()
-        return leaf
-      }
+    val testResult = testAllTreeEditsAndReturnTheBest(edits) ?: return leaf
     val newLeaf = getUpdatedLeafAfterEdit(leaf, testResult.edit)
-    tree.applyEdit(testResult.edit)
-    // only keep the added new candidate canonical ID when it is actually used
-    if (newLeaf.token.lexemeText != candidateCanonicalIds.last()) {
-      candidateCanonicalIds.removeLast()
-    }
+    applyEditToTree(testResult)
+    pool.commit(newLeaf.token.lexemeText)
     return newLeaf
   }
 
@@ -126,7 +119,7 @@ class TokenCanonicalizer(
       val edits = editBuilder.build()
       val testResult = testAllTreeEditsAndReturnTheBest(edits) ?: return lexerRuleNode
       val newLeaf = getUpdatedLeafAfterEdit(lexerRuleNode, testResult.edit)
-      tree.applyEdit(testResult.edit)
+      applyEditToTree(testResult)
       return newLeaf
     } catch (e: Exception) {
       throw RuntimeException(
@@ -169,7 +162,7 @@ class TokenCanonicalizer(
             )
           }.toList()
       val testResult = testAllTreeEditsAndReturnTheBest(edits) ?: return currLeaf
-      tree.applyEdit(testResult.edit)
+      applyEditToTree(testResult)
       currLeaf = getUpdatedLeafAfterEdit(currLeaf, testResult.edit)
     }
   }
@@ -182,7 +175,7 @@ class TokenCanonicalizer(
       return firstTry
     }
     val computedTokenType =
-      reducerContext.configuration.parserFacade
+      reducerContext.configuration.canonicalParserFacade
         .transformLiteralIntoSingleToken(
           lexeme,
         )
@@ -216,18 +209,70 @@ class TokenCanonicalizer(
             )
           }.toList()
       val testResult = testAllTreeEditsAndReturnTheBest(edits) ?: return
-      tree.applyEdit(testResult.edit)
+      applyEditToTree(testResult)
       currLeaf = getUpdatedLeafAfterEdit(currLeaf, testResult.edit)
     }
+  }
+
+  /**
+   * Keeps the case of an identifier's first letter when canonicalizing it. In
+   * Java this matters: type names start with an uppercase letter while variables
+   * start with a lowercase one, so an identifier such as `Foo` is renamed to `A`
+   * rather than `a`. Uppercase and lowercase identifiers draw from separate
+   * [CanonicalIdPool]s.
+   */
+  internal class CanonicalIdPoolManager {
+    private val lowerCase = CanonicalIdPool(baseChar = 'a')
+    private val upperCase = CanonicalIdPool(baseChar = 'A')
+
+    fun getPoolFor(lexeme: String): CanonicalIdPool =
+      if (lexeme.isNotEmpty() && lexeme.first().isUpperCase()) upperCase else lowerCase
+  }
+
+  /**
+   * A pool of canonical identifier names of a single case. The names already
+   * assigned to identifiers are remembered so that later identifiers can be
+   * merged onto them; [candidates] additionally offers one fresh, never-used
+   * name, and [commit] records that name as assigned only when it actually wins.
+   */
+  internal class CanonicalIdPool(
+    private val baseChar: Char,
+  ) {
+    private val assignedIds = mutableListOf<String>()
+
+    /** The already-assigned names plus one fresh, never-used candidate. */
+    fun candidates(): List<String> = assignedIds + freshId()
+
+    /** Records [chosenId] as assigned when it is the fresh name from [candidates]. */
+    fun commit(chosenId: String) {
+      if (chosenId == freshId()) {
+        assignedIds.add(chosenId)
+      } else {
+        // A non-fresh winner must be a name already in the pool (a merge); the
+        // reducer only ever picks from candidates(), so anything else is a bug.
+        check(chosenId in assignedIds) { "Unexpected canonical id: $chosenId" }
+      }
+    }
+
+    private fun freshId(): String = convertIndexToId(assignedIds.size, baseChar)
   }
 
   object META : ReducerAnnotation(
     shortName = NAME,
     description = "",
     deterministic = true,
-    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_REMAIN,
+    // Canonicalization edits token TEXT, and that can grow the best result. Deleting a fragment of a
+    // structured multi-character token can make it re-lex into MORE tokens -- e.g. dropping the ')' of
+    // a Makefile `$(VAR)` leaves `$(VAR`, which re-lexes as two tokens -- raising the canonical token
+    // count; renaming an identifier to a canonical-pool id can also raise the character count. So this
+    // is INCREASE, not REMAIN. The scheduler treats the two identically except that the
+    // token-count-non-increase assertion exempts INCREASE -- correct here, as the increase is a
+    // legitimate consequence of canonicalization, not a reducer bug. (Languages with strict tests,
+    // e.g. C, rarely hit it because such an edit fails the interestingness test before it is committed;
+    // a loose test, e.g. a Makefile grep, commits it, which is what first exposed the misclassification.)
+    reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(TokenCanonicalizer(reducerContext))
   }
 
@@ -237,15 +282,21 @@ class TokenCanonicalizer(
     const val NAME = "token_canonicalizer"
 
     // Given an index i, the function returns the i-th
-    // identifier in [a, b, ..., z, aa, ab, ..., zz, ...]
-    internal fun convertIndexToId(index: Int): String {
+    // identifier in [a, b, ..., z, aa, ab, ..., zz, ...]. When [baseChar] is 'A'
+    // the uppercase sequence [A, B, ..., Z, AA, AB, ..., ZZ, ...] is produced
+    // instead, so the canonical name can match the case of the original
+    // identifier's first letter.
+    internal fun convertIndexToId(
+      index: Int,
+      baseChar: Char,
+    ): String {
       val builder = StringBuilder()
       var quotient = index
       var digit: Int
       do {
         digit = quotient % 26
         quotient /= 26
-        builder.append('a' + digit)
+        builder.append(baseChar + digit)
       } while (quotient > 0)
       return builder.reverse().toString()
     }

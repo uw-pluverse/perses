@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -30,8 +30,7 @@ import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet
 import org.antlr.v4.runtime.Token
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
-import org.perses.program.PersesTokenFactory.PersesAntlrToken
+import org.perses.program.AbstractPersesToken
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.util.ListAlignment
@@ -159,7 +158,7 @@ object PPRDiffUtils {
 
   fun sparTreeNode2Diff(
     node: AbstractSparTreeNode,
-    tokenDiffSet: ImmutableSet<PersesAntlrToken>,
+    tokenDiffSet: ImmutableSet<AbstractPersesToken.AntlrToken>,
     node2DiffMap: MutableMap<AbstractSparTreeNode, Boolean>,
   ) {
     node.postOrderVisit(
@@ -187,7 +186,7 @@ object PPRDiffUtils {
   // w.r.t. both tree-based diff algorithm and list-based diff algorithm (line-diff)
   fun computeRealDiffNodes(
     nodesFromTreeDiffAlgo: ImmutableList<AbstractSparTreeNode>,
-    tokenDiffSet: ImmutableSet<PersesAntlrToken>,
+    tokenDiffSet: ImmutableSet<AbstractPersesToken.AntlrToken>,
   ): ImmutableList<AbstractSparTreeNode> {
     val realDiffNodes = ImmutableList.builder<AbstractSparTreeNode>()
     val node2DiffMap = mutableMapOf<AbstractSparTreeNode, Boolean>()
@@ -210,9 +209,9 @@ object PPRDiffUtils {
 
   // Compute line-diff, and return the tokens in line-diff
   fun computeTokenDiffSetByLine(
-    seedTokens: ImmutableList<PersesAntlrToken>,
-    variantTokens: ImmutableList<PersesAntlrToken>,
-  ): ImmutableSet<PersesAntlrToken> {
+    seedTokens: ImmutableList<AbstractPersesToken.AntlrToken>,
+    variantTokens: ImmutableList<AbstractPersesToken.AntlrToken>,
+  ): ImmutableSet<AbstractPersesToken.AntlrToken> {
     val seedLines =
       Util.mergeContinuousElementsIntoRegions(seedTokens) { a, b ->
         a.position.line == b.position.line
@@ -228,7 +227,7 @@ object PPRDiffUtils {
         variantLines,
         EQUALIZER_LINE,
       )
-    val tokenDiffSet = ImmutableSet.builder<PersesAntlrToken>()
+    val tokenDiffSet = ImmutableSet.builder<AbstractPersesToken.AntlrToken>()
 
     val insertedLines = lineListAlignment.onlyInserts
     for (editsList in insertedLines) {
@@ -314,8 +313,10 @@ object PPRDiffUtils {
     // compute tokens from line diff
     val tokenDiffSetByLine =
       computeTokenDiffSetByLine(
-        seedSparTree.programSnapshot.tokens.transformToImmutableList { it.asAntlrToken() },
-        variantSparTree.programSnapshot.tokens.transformToImmutableList { it.asAntlrToken() },
+        seedSparTree.programSnapshot.payload.tokens
+          .transformToImmutableList { it.asAntlrToken() },
+        variantSparTree.programSnapshot.payload.tokens
+          .transformToImmutableList { it.asAntlrToken() },
       )
 
     // further filter nodes by line difference

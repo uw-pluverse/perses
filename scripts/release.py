@@ -38,7 +38,7 @@ def create_tag() -> str:
 
 def _build_binary(binary_name:str, build_path:str) -> None:
     print("----- Building %s binary..." % binary_name)
-    build_command = ['bazel', 'build', build_path]
+    build_command = ['bazelisk', 'build', build_path]
 
     subprocess.check_call(
         build_command,

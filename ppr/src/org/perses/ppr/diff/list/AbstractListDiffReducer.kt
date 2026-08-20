@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,54 +18,30 @@ package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
-import org.perses.antlr.util.AntlrToolWrapper
-import org.perses.program.LanguageKind
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
-import org.perses.reduction.AbstractReducer
+import org.perses.program.AbstractPersesToken
 import org.perses.reduction.AbstractReducerNameAndDesc
+import org.perses.reduction.AbstractWholeProgramReducer
 import org.perses.reduction.TestScriptExecutorService
+import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.util.AbstractEditOperation
 
 abstract class AbstractListDiffReducer(
   nameAndDesc: AbstractReducerNameAndDesc,
   ioManager: ListDiffReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
-) : AbstractReducer<
+  outputManagerFactory:
+    AbstractOutputManagerFactory<ImmutableList<AbstractEditOperation<AbstractPersesToken>>>,
+) : AbstractWholeProgramReducer<
     ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
-    LanguageKind,
     ListDiffReductionIOManager,
+    ListDiffReductionState,
   >(
     nameAndDesc,
     ioManager,
     testScriptExecutorService,
+    outputManagerFactory,
   ) {
-  abstract fun reduce(state: ListDiffReductionState)
-
-  // TODO(cnsun): check to eliminate this.
-  fun testProgram(program: ImmutableList<AbstractEditOperation<AbstractPersesToken>>): Boolean {
-    try {
-      return executorService
-        .testProgramAsync(
-          TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
-          TestScriptExecutorService.IDENTITY_POST_CHECK,
-          ioManager.createOutputManager(program),
-          payload = "dummy payload",
-        ).getWithTimeoutWarnings()
-        .isInteresting
-    } catch (e: Throwable) {
-      var exception: Throwable? = e
-      while (exception != null && exception !is AntlrToolWrapper.AntlrException) {
-        exception = exception.cause
-      }
-      if (exception is AntlrToolWrapper.AntlrException) {
-        return false
-      } else {
-        throw e
-      }
-    }
-  }
-
   companion object {
-    val logger = FluentLogger.forEnclosingClass()
+    val logger: FluentLogger = FluentLogger.forEnclosingClass()
   }
 }

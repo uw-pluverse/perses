@@ -10,9 +10,10 @@ kt_jvm_library(
     srcs = glob(["*.kt"]),
     deps = [
         "//src/org/perses/reduction:reducer_name_and_desc",
-        "//src/org/perses/reduction:reduction_driver_interface",
+        "//src/org/perses/reduction:sanity_check",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction/io:output_manager_interface",
+        "//src/org/perses/reduction/io:reduction_inputs",
         "//src/org/perses/spartree",
     ],
 )

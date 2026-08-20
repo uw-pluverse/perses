@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,7 +22,7 @@ import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.reducer.io.GrammarOutputManagerFactory
 import org.perses.antlr.reducer.io.GrammarReductionIOManager
-import org.perses.antlr.reducer.io.SeparateGrammarReductionInput
+import org.perses.antlr.reducer.io.SeparateGrammarOriginalReductionInput
 import org.perses.antlr.reducer.pass.AbstractAntlrReducer
 import org.perses.antlr.reducer.pass.ActionsReducer
 import org.perses.antlr.reducer.pass.ArgumentsReducer
@@ -30,51 +30,60 @@ import org.perses.antlr.reducer.pass.LocalsReducer
 import org.perses.antlr.reducer.pass.ReturnsReducer
 import org.perses.antlr.reducer.pass.RuleElementLabelReducer
 import org.perses.antlr.reducer.setup.Setup
-import org.perses.program.LanguageKind
 import org.perses.program.SourceFile
 import org.perses.reduction.AbstractReductionDriver
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.ListenableReductionState
+import org.perses.reduction.SanityCheckFailedException
+import org.perses.reduction.TestScriptExecutorService
+import org.perses.reduction.io.AbstractOutputManagerFactory
+import org.perses.reduction.io.ReductionFolder
+import org.perses.reduction.io.ReductionFolderManager
 import org.perses.util.Util
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.ktInfo
+import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
 
 class GrammarReductionDriver private constructor(
   globalContext: GlobalContext,
   ioManager: GrammarReductionIOManager,
-  numberOfThreads: Int,
+  // The renderer (carries the code format) this driver owns, rather than the IO manager: it renders
+  // the original input for the initial sanity check, hands it to the reducers, and renders each
+  // accepted best grammar before saving. The grammar stack does not adapt the format, so this is fixed.
+  private val outputManagerFactory: AbstractOutputManagerFactory<PersesGrammar>,
+  executorService: TestScriptExecutorService,
   val enableActionReducer: Boolean,
   val enableLocalsReducer: Boolean,
   val enableReturnsReducer: Boolean,
   val enableArgumentsReducer: Boolean,
   val enableLabelReducer: Boolean,
-) : AbstractReductionDriver<PersesGrammar, LanguageKind, GrammarReductionIOManager>(
+) : AbstractReductionDriver<PersesGrammar, GrammarReductionIOManager>(
     globalContext = globalContext,
     ioManager = ioManager,
-    specifiedNumOfThreads = numberOfThreads,
-    scriptExecutionTimeoutInSeconds = 300L,
-    keepWaitingAfterScriptTimeout = true,
+    executorService = executorService,
     hideTimestampsInLog = false,
   ) {
+  init {
+    // This driver is standalone (not orchestrated by AbstractMain, which would own the shared
+    // executor), so it owns the executor it was built with and closes it when the driver closes.
+    registerToClose(executorService)
+  }
+
   private val originalProgram =
     PersesAstBuilder.loadGrammarFromString(
-      ioManager.getConcreteReductionInputs().parserFile.textualFileContent,
+      ioManager.concreteReductionInputs.parserFile.textualFileContent,
     )
-
-  override fun getInitialProgram(): PersesGrammar = originalProgram
 
   override fun reduce() {
     printStartTime()
 
-    ioManager.backupAllMutableFiles()
+    sanityCheckOrThrow()
 
-    sanityCheckOrThrow(originalProgram)
     val reductionState =
-      ListenableReductionState(originalProgram) {
-        ioManager.updateBestResult(it)
-      }
+      ListenableReductionState(initialEntity = originalProgram, listenerOnUpdate = {
+        ioManager.saveBestProgram(outputManagerFactory.createManagerFor(it))
+      })
     // Force to write the best file.
     reductionState.updateBestProgram(reductionState.bestEntity)
 
@@ -102,104 +111,141 @@ class GrammarReductionDriver private constructor(
     }
   }
 
+  // The ANTLR grammar reducer does not run behind AbstractMain's Layer-1 pipeline, so it performs
+  // its own initial sanity check: render the original input and verify it passes the test script.
+  private fun sanityCheckOrThrow() {
+    val result =
+      executorService
+        .testProgramAsyncWithoutPayload(
+          preCheck = TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
+          postCheck = TestScriptExecutorService.IDENTITY_POST_CHECK,
+          outputManagerFactory.createOutputManagerForOriginalInput(),
+        ).getWithTimeoutWarnings()
+    if (result.isNotInteresting) {
+      throw SanityCheckFailedException(
+        "The initial sanity check failed: the original input does not pass the test script.",
+      )
+    }
+  }
+
   private fun createReducers(): ImmutableList<AbstractAntlrReducer> {
     val builder =
       ImmutableList
         .builder<AbstractAntlrReducer>()
         .apply {
           if (enableActionReducer) {
-            add(ActionsReducer(ioManager, executorService))
+            add(ActionsReducer(ioManager, executorService, outputManagerFactory))
           }
           if (enableLocalsReducer) {
-            add(LocalsReducer(ioManager, executorService))
+            add(LocalsReducer(ioManager, executorService, outputManagerFactory))
           }
           if (enableReturnsReducer) {
-            add(ReturnsReducer(ioManager, executorService))
+            add(ReturnsReducer(ioManager, executorService, outputManagerFactory))
           }
           if (enableArgumentsReducer) {
-            add(ArgumentsReducer(ioManager, executorService))
+            add(ArgumentsReducer(ioManager, executorService, outputManagerFactory))
           }
           if (enableLabelReducer) {
-            add(RuleElementLabelReducer(ioManager, executorService))
+            add(RuleElementLabelReducer(ioManager, executorService, outputManagerFactory))
           }
         }
     return builder.build()
   }
 
   companion object {
+    fun createOriginalReductionInputs(setup: Setup): SeparateGrammarOriginalReductionInput =
+      SeparateGrammarOriginalReductionInput(
+        testScript = setup.testScript,
+        parserFile = SourceFile(setup.parserFile, LanguageAntlr),
+        lexerFile = SourceFile(setup.lexerFile, LanguageAntlr),
+      )
+
     fun createIOManager(
       setup: Setup,
+      originalReductionInputs: SeparateGrammarOriginalReductionInput,
       outputDir: Path,
+    ): GrammarReductionIOManager =
+      GrammarReductionIOManager(
+        workingDir = setup.workingDir,
+        originalReductionInputs = originalReductionInputs,
+        resultFolder = ReductionFolder(originalReductionInputs, outputDir),
+      )
+
+    fun createOutputManagerFactory(
+      setup: Setup,
+      originalReductionInputs: SeparateGrammarOriginalReductionInput,
       testPrograms: ImmutableList<Path>,
       shaAlgorithm: EnumShaAlgorithm,
-    ): GrammarReductionIOManager {
-      val parserFile =
-        SourceFile(
-          setup.parserFile,
-          LanguageAntlr,
-        )
-      val lexerFile = setup.lexerFile
-
-      val reductionInputs =
-        SeparateGrammarReductionInput(
-          testScript = setup.testScript,
-          parserFile = parserFile,
-          lexerFile = SourceFile(lexerFile, LanguageAntlr),
-        )
-      return GrammarReductionIOManager(
-        workingDir = setup.workingDir,
-        reductionInputs = reductionInputs,
-        outputManagerFactory =
-          GrammarOutputManagerFactory(
-            reductionInputs,
-            startRuleName = setup.startRuleName,
-            jarFileName =
-              setup.jarFile.path.fileName
-                .toString(),
-            testPrograms = testPrograms,
-            shaAlgorithmType = shaAlgorithm,
-          ),
-        outputDirectory = outputDir,
+    ): GrammarOutputManagerFactory =
+      GrammarOutputManagerFactory(
+        originalReductionInputs,
+        startRuleName = setup.startRuleName,
+        jarFileName =
+          setup.jarFile.path.fileName
+            .toString(),
+        testPrograms = testPrograms,
+        shaAlgorithm = shaAlgorithm,
       )
-    }
 
     @JvmStatic
     fun create(
       globalContext: GlobalContext,
-      options: CommandOptions,
+      cmd: CommandOptions,
+      workingDirectory: Path,
     ): GrammarReductionDriver {
-      val parentWorkingDir = Paths.get(".").toAbsolutePath()
-
       val setup =
         Setup(
-          parentWorkingDir,
-          parserGrammarPath = options.compulsoryFlags.parserGrammarPath!!,
-          lexerGrammarPath = options.compulsoryFlags.lexerGrammarPath!!,
-          startRuleName = options.compulsoryFlags.startRuleName,
+          workingDirectory,
+          parserGrammarPath = cmd.compulsoryFlags.parserGrammarPath!!,
+          lexerGrammarPath = cmd.compulsoryFlags.lexerGrammarPath!!,
+          startRuleName = cmd.compulsoryFlags.startRuleName,
           testPrograms =
             Util.globWithFileNameExts(
-              options.compulsoryFlags.corpus!!,
-              ext = options.compulsoryFlags.fileExtName,
+              cmd.compulsoryFlags.corpus!!,
+              ext = cmd.compulsoryFlags.fileExtName,
             ),
         )
-      val outputDir = options.resultOutputFlags.outputDir!!
-      val ioManager =
-        createIOManager(
+      val outputDir =
+        cmd.resultOutputFlags.outputDir!!.apply {
+          Util.ensureDirExists(this)
+        }
+      val originalReductionInputs = createOriginalReductionInputs(setup)
+      // The grammar reducer also writes reduced content into the result folder without backing up the
+      // inputs, so the output directory must not coincide with the grammar files.
+      originalReductionInputs.checkOutputDirectoryIsNotInPlace(outputDir)
+      val ioManager = createIOManager(setup, originalReductionInputs, outputDir)
+      val outputManagerFactory =
+        createOutputManagerFactory(
           setup,
-          outputDir,
+          originalReductionInputs,
           setup.parseableTestPrograms,
           shaAlgorithm = EnumShaAlgorithm.SHA512,
+        )
+      // The driver owns this executor and closes it (see the driver's init); the temp root holds the
+      // per-test working folders.
+      val executorService =
+        TestScriptExecutorService(
+          reductionFolderManager =
+            ReductionFolderManager(
+              originalReductionInputs,
+              Files.createTempDirectory(workingDirectory, "PersesTempRoot_"),
+            ),
+          specifiedNumOfThreads = cmd.reductionControlFlags.getNumOfThreads(),
+          scriptExecutionTimeoutInSeconds = 300L,
+          scriptExecutionKeepTryingAfterTimeout = true,
+          globalExecutionCache = globalContext.globalExecutionCache,
         )
 
       return GrammarReductionDriver(
         globalContext,
         ioManager,
-        options.reductionControlFlags.getNumOfThreads(),
-        enableActionReducer = options.reductionControlFlags.enableActionRemover,
-        enableArgumentsReducer = options.reductionControlFlags.enableArgumentsRemover,
-        enableLabelReducer = options.reductionControlFlags.enableLabelRemover,
-        enableLocalsReducer = options.reductionControlFlags.enableLocalsRemover,
-        enableReturnsReducer = options.reductionControlFlags.enableReturnsRemover,
+        outputManagerFactory,
+        executorService,
+        enableActionReducer = cmd.reductionControlFlags.enableActionRemover,
+        enableArgumentsReducer = cmd.reductionControlFlags.enableArgumentsRemover,
+        enableLabelReducer = cmd.reductionControlFlags.enableLabelRemover,
+        enableLocalsReducer = cmd.reductionControlFlags.enableLocalsRemover,
+        enableReturnsReducer = cmd.reductionControlFlags.enableReturnsRemover,
       )
     }
 

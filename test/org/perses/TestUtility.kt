@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,9 +22,9 @@ import org.antlr.v4.runtime.CommonToken
 import org.antlr.v4.runtime.Token
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.TerminalNode
-import org.perses.antlr.ParseTreeUtil
 import org.perses.antlr.ParseTreeWithParser
 import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.ParseErrorHandling
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.adhoc.AdhocGrammarInstaller
 import org.perses.grammar.adhoc.CommandOptions
@@ -46,12 +46,11 @@ import org.perses.grammar.smtlibv2.SmtLibV2ParserFacade
 import org.perses.program.LanguageKind
 import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
-import org.perses.program.TokenizedProgramFactory
-import org.perses.program.TokenizedProgramFactory.Companion.createFactory
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeBuilder
 import org.perses.spartree.SparTreeNodeFactory
+import org.perses.spartree.SparTreeParserUtility
 import org.perses.util.toImmutableList
 import java.io.IOException
 import java.io.UncheckedIOException
@@ -372,13 +371,13 @@ object TestUtility {
     languageKind: LanguageKind,
   ): ParseTreeWithParser {
     val facade = getFacade(languageKind)
-    return facade.parseString(sourceCode)
+    return facade.parseString(sourceCode, errorMode = ParseErrorHandling.STRICT)
   }
 
   @JvmStatic
   fun createTokenizedProgramFromFile(filepath: String): TokenizedProgram {
     val file = Paths.get(filepath)
-    return createSparTreeFromFile(file).programSnapshot
+    return createSparTreeFromFile(file).programSnapshot.payload
   }
 
   fun createTokenizedProgramFromString(
@@ -392,7 +391,7 @@ object TestUtility {
       languageKind,
       simplifyTree,
       sparTreeNodeFactory,
-    ).programSnapshot
+    ).programSnapshot.payload
 
   @JvmStatic
   fun createSparTreeFromFile(file: String): SparTree = createSparTreeFromFile(Paths.get(file))
@@ -412,52 +411,26 @@ object TestUtility {
     facade: AbstractParserFacade,
     simplifyTree: Boolean,
     sparTreeNodeFactory: SparTreeNodeFactory? = null,
-  ): SparTree {
-    val languageKind = facade.language
-    val parseTreeWithParser = facade.parseString(sourceCode)
-    val realSparTreeNodeFactory =
-      if (sparTreeNodeFactory == null) {
-        val factory =
-          createFactory(
-            ParseTreeUtil.getTokens(parseTreeWithParser.tree),
-            languageKind,
-          )
-        SparTreeNodeFactory(
-          facade.metaTokenInfoDb,
-          factory,
-          facade.ruleHierarchy,
-        )
-      } else {
-        sparTreeNodeFactory
-      }
-    return SparTreeBuilder(
-      realSparTreeNodeFactory,
-      parseTreeWithParser,
+  ): SparTree =
+    SparTreeParserUtility.buildSparTree(
+      sourceCode = sourceCode,
+      parserFacade = facade,
+      specifiedSparTreeNodeFactory = sparTreeNodeFactory,
       simplifyTree = simplifyTree,
-    ).result
-  }
+      canonicalTokenCountComputer = { null },
+      errorMode = ParseErrorHandling.STRICT,
+    )
 
   @JvmStatic
   fun createSparTreeFromFile(file: Path): SparTree {
-    val (parseTree) = parseFile(file)
-    val factory =
-      createFactory(
-        ParseTreeUtil.getTokens(parseTree),
-        parserFacadeFactory.computeLanguageKindWithFileName(file)!!,
-      )
-    return createSparTreeFromFile(file, factory)
-  }
-
-  fun createSparTreeFromFile(
-    file: Path,
-    tokenizedProgramFactory: TokenizedProgramFactory,
-  ): SparTree {
     val sourceFile = SourceFile(file, parserFacadeFactory.computeLanguageKindWithFileName(file)!!)
     val facade = getFacade(sourceFile.dataKind)
     val parseTree = facade.parseFile(file)
     return SparTreeBuilder(
-      SparTreeNodeFactory(facade.metaTokenInfoDb, tokenizedProgramFactory, facade.ruleHierarchy),
+      SparTreeNodeFactory(facade),
       parseTree,
+      simplifyTree = true,
+      canonicalTokenCountComputer = { null },
     ).result
   }
 

@@ -10,7 +10,7 @@ readonly MAIN_TARGET="//antlrrdc/src/org/perses/antlr/reducer:main"
 
 bazelisk build "${MAIN_TARGET}"
 
-readonly WORKSPACE_ROOT="$(bazel info | grep "workspace: " | awk '{print $2}')"
+readonly WORKSPACE_ROOT="$(bazelisk info | grep "workspace: " | awk '{print $2}')"
 
 [[ -f "${WORKSPACE_ROOT}/WORKSPACE" ]] || exit 1
 

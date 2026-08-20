@@ -1,0 +1,24 @@
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
+
+sanity_test(
+    name = "sanity_test",
+    source_files = ["t.c"],
+    test_script = "r.sh",
+)
+
+reduction_golden_test(
+    name = "reduction_golden_test",
+    enable_edit_caching = True,
+    enable_query_caching = True,
+    golden_progress_file = "golden_reduction_progress.txt",
+    golden_reduced_file = "golden_reduced_t.c",
+    log_file = "reduction_golden_test.log",
+    other_flags = {
+        "--enable-literal-replacement-for-list-minimizer": "true",
+        "--enable-literal-replacement-for-regular-rule-node": "true",
+    },
+    progress_dump_file = "reduction_progress.txt",
+    reduction_algorithm = "node_priority",
+    source_file = "t.c",
+    test_script = "r.sh",
+)

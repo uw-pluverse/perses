@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,13 +21,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.antlr.ParseTreeUtil
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.OrigCParserFacade
 import org.perses.program.EnumFormatControl
-import org.perses.program.TokenizedProgramFactory
 import org.perses.program.printer.PrinterRegistry
 import org.perses.util.SimpleStack
 import java.io.File
@@ -89,7 +87,7 @@ class SparTreeBuilderTest {
           EnumFormatControl.COMPACT_ORIG_FORMAT,
           facade.lexerAtnWrapper,
         ).print(
-          tree.programSnapshot,
+          tree.programSnapshot.payload,
         ).sourceCode
     assertThat(sourceCode.trim()).isEqualTo(printedProgram.trim())
   }
@@ -101,22 +99,13 @@ class SparTreeBuilderTest {
     val facade = CParserFacade()
 
     val parseTreeWithParser = TestUtility.parseString(source, LanguageC)
-    val factory =
-      TokenizedProgramFactory.createFactory(
-        ParseTreeUtil.getTokens(parseTreeWithParser.tree),
-        LanguageC,
-      )
-    val sparTreeNodeFactory =
-      SparTreeNodeFactory(
-        facade.metaTokenInfoDb,
-        factory,
-        facade.ruleHierarchy,
-      )
+    val sparTreeNodeFactory = SparTreeNodeFactory(facade)
     val builder =
       SparTreeBuilder(
         sparTreeNodeFactory,
         parseTreeWithParser,
         simplifyTree = false,
+        canonicalTokenCountComputer = { null },
       )
     val sparTree = builder.result
     treeComparison(builder, parseTreeWithParser.tree, sparTree.realRoot)

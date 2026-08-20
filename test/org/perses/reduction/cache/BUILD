@@ -2,7 +2,6 @@ load(
     "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
     "kt_jvm_test",
 )
-load("//:perses.bzl", "kt_binary_for_genrule")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
@@ -29,26 +28,6 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
-    name = "EnumQueryCachingControlTest",
-    srcs = ["EnumQueryCachingControlTest.kt"],
-    deps = [
-        "//:truth",
-        "//src/org/perses/reduction/cache:enum_query_caching_control",
-    ],
-)
-
-kt_jvm_test(
-    name = "CompactProgramEncodingTest",
-    srcs = ["CompactProgramEncodingTest.kt"],
-    deps = [
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/reduction/cache:query_cache",
-        "//test/org/perses:test_util",
-    ],
-)
-
-kt_jvm_test(
     name = "NullQueryCacheTest",
     srcs = ["NullQueryCacheTest.kt"],
     deps = [
@@ -57,119 +36,6 @@ kt_jvm_test(
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/reduction/cache:null_query_cache",
-        "//test/org/perses:test_util",
-        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
-    ],
-)
-
-kt_binary_for_genrule(
-    name = "CompactQueryCacheBenchmark",
-    srcs = ["CompactQueryCacheBenchmark.kt"],
-    data = [
-        "clang-22704.c",
-    ],
-    jvm_flags = [
-        "-da",
-    ],
-    main_class = "org.perses.reduction.cache.CompactQueryCacheBenchmark",
-    deps = [
-        "//:guava",
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar/c:parser_facade",
-        "//src/org/perses/program",
-        "//src/org/perses/reduction:property_test_result",
-        "//src/org/perses/reduction:test_script",
-        "//src/org/perses/reduction/cache:linear_scan_cache",
-        "//src/org/perses/reduction/cache:query_cache",
-        "//src/org/perses/reduction/cache:query_cache_configuration",
-        "//src/org/perses/reduction/cache:query_cache_interface",
-        "//src/org/perses/util:percentage",
-        "//test/org/perses:test_util",
-        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
-    ],
-)
-
-kt_jvm_test(
-    name = "ContentShaHashBasedQueryCacheTest",
-    srcs = [
-        "ContentShaHashBasedQueryCacheTest.kt",
-    ],
-    associates = [
-        "//src/org/perses/reduction/cache:sha_hash_cache",
-    ],
-    deps = [
-        "//:antlr_runtime",
-        "//:guava",
-        "//:truth",
-        "//test/org/perses:test_util",
-    ],
-)
-
-kt_jvm_test(
-    name = "LinearScanEncoderTest",
-    srcs = [
-        "LinearScanEncoderTest.kt",
-    ],
-    associates = [
-        "//src/org/perses/reduction/cache:linear_scan_cache",
-    ],
-    deps = [
-        "//:antlr_runtime",
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar/c:parser_facade",
-        "//test/org/perses:test_util",
-        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
-    ],
-)
-
-kt_jvm_test(
-    name = "RccFormatSensitiveEncoderTest",
-    srcs = [
-        "RccFormatSensitiveEncoderTest.kt",
-    ],
-    associates = [
-        "//src/org/perses/reduction/cache:linear_scan_cache",
-    ],
-    deps = [
-        "//:antlr_runtime",
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar/c:parser_facade",
-        "//test/org/perses:test_util",
-        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
-    ],
-)
-
-kt_jvm_test(
-    name = "RccTokenizedProgramEncoderTest",
-    srcs = ["RccTokenizedProgramEncoderTest.kt"],
-    data = [
-        "clang-22704.c",
-        "//test_data/delta_1",
-        "//test_data/java_helloworld",
-        "//test_data/parentheses",
-    ],
-    test_class = "org.perses.reduction.cache.RccTokenizedProgramEncoderTest",
-    deps = [
-        "//:antlr_runtime",
-        "//:fastutil",
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar:parser_facade_interface",
-        "//src/org/perses/grammar/c:language_kind",
-        "//src/org/perses/grammar/c:parser_facade",
-        "//src/org/perses/program",
-        "//src/org/perses/program:language_kind",
-        "//src/org/perses/program/printer",
-        "//src/org/perses/reduction:test_script",
-        "//src/org/perses/reduction:test_script_executor_service",
-        "//src/org/perses/reduction/cache:linear_scan_cache",
-        "//src/org/perses/reduction/cache:query_cache",
-        "//src/org/perses/spartree",
         "//test/org/perses:test_util",
         "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
@@ -184,41 +50,5 @@ kt_jvm_test(
         "//src/org/perses/reduction/cache:interval_expander",
         "//src/org/perses/util",
         "//test/org/perses:test_util",
-    ],
-)
-
-kt_jvm_test(
-    name = "QueryCacheMemoryProfilerTest",
-    srcs = ["QueryCacheMemoryProfilerTest.kt"],
-    jvm_flags = ["-javaagent:$(location //third_party/memory_measurer:object_explorer)"],
-    deps = [
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar/c:parser_facade",
-        "//src/org/perses/reduction/cache:content_based_cache",
-        "//src/org/perses/reduction/cache:linear_scan_cache",
-        "//src/org/perses/reduction/cache:query_cache_profiler",
-        "//src/org/perses/reduction/cache:sha_hash_cache",
-        "//src/org/perses/util",
-        "//src/org/perses/util/hashing",
-        "//test/org/perses:test_util",
-        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
-        "//third_party/memory_measurer:object_explorer",
-    ],
-)
-
-kt_jvm_test(
-    name = "ConfigBasedTestScriptExecutionCacheTest",
-    srcs = ["ConfigBasedTestScriptExecutionCacheTest.kt"],
-    deps = [
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/grammar:facade_factory",
-        "//src/org/perses/grammar/c:parser_facade",
-        "//src/org/perses/reduction/cache:query_cache",
-        "//src/org/perses/util",
-        "//test/org/perses:test_util",
-        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,18 +17,24 @@
 package org.perses.reduction.event
 
 import com.google.common.collect.ImmutableList
+import org.perses.antlr.RuleType
+import org.perses.program.ProgramSize
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.util.FileNameContentPair
+import org.perses.util.transformToImmutableList
 
 class NodeReductionStartEvent internal constructor(
   val currentFixpointIteration: FixpointIterationStartEvent,
   currentTimeMillis: Long,
-  val program: TokenizedProgram,
+  perFileSizeMetrics: PerFileSizeMetrics,
+  val program: ProgramSize<TokenizedProgram>,
   private val node: AbstractSparTreeNode,
   outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
-) : AbstractStartEvent(currentTimeMillis, programSize = program.tokenCount) {
-  val textualProgram = LazyProgramOutputer(program, outputCreator)
+) : AbstractStartEvent(currentTimeMillis, perFileSizeMetrics) {
+  val textualProgram = LazyProgramOutputer(program.payload, outputCreator)
 
   val iteration = currentFixpointIteration.iteration
 
@@ -42,7 +48,13 @@ class NodeReductionStartEvent internal constructor(
     NodeInfo(
       nodeId = node.nodeId,
       antlrRuleName = node.ruleName,
-      childCount = node.childCount,
+      ruleType =
+        if (node is ParserRuleSparTreeNode) {
+          node.ruleType
+        } else {
+          null
+        },
+      childNodeIds = node.immutableChildView.transformToImmutableList { it.nodeId },
       tokenCount = node.leafTokenCount,
     )
 
@@ -50,7 +62,7 @@ class NodeReductionStartEvent internal constructor(
 
   fun createEndEvent(
     currentTimeMillis: Long,
-    program: TokenizedProgram,
+    perFileSizeMetrics: PerFileSizeMetrics,
     remainingQueueSize: Int,
   ): NodeReductionEndEvent {
     check(!ended) {
@@ -61,25 +73,30 @@ class NodeReductionStartEvent internal constructor(
     return NodeReductionEndEvent(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
-      program = program,
+      perFileSizeMetrics = perFileSizeMetrics,
       node = node,
       remainingQueueSize = remainingQueueSize,
     )
   }
 
-  override fun initialProgramSize(): Int = currentFixpointIteration.initialProgramSize()
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    currentFixpointIteration.initialPerFileSizeMetrics()
 
   data class NodeInfo(
     val nodeId: Int,
     val antlrRuleName: String?,
-    val childCount: Int,
+    val ruleType: RuleType?,
+    val childNodeIds: ImmutableList<Int>,
     val tokenCount: Int,
   ) {
+    val childCount: Int get() = childNodeIds.size
+
     override fun toString(): String =
       buildString {
         append("Node(")
         append(nodeId).append(',')
         append("antlr=").append(antlrRuleName ?: "<n.a.>").append(',')
+        append("rule_type=").append(ruleType?.name ?: "<n.a.>").append(',')
         append("#children=").append(childCount).append(',')
         append("#tokens=").append(tokenCount)
         append(')')

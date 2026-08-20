@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = [
     "//visibility:public",
@@ -34,8 +35,8 @@ kt_jvm_library(
         ":cmd_options",
         ":customized_tree_node_reducer",
         ":output_manager",
-        ":reduction_inputs",
         "//ppr/src/org/perses/ppr/diff:ppr_diff_utils",
+        "//ppr/src/org/perses/ppr/diff:reduction_inputs",
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction/io:reduction_inputs",
     ],
@@ -48,7 +49,7 @@ kt_jvm_library(
     ],
     deps = [
         "//ppr/src/org/perses/ppr:AbstractPPRCommandOptions",
-        "//src/org/perses:command_options",
+        "//src/org/perses:perses_command_options",
     ],
 )
 
@@ -58,18 +59,9 @@ kt_jvm_library(
         "TreeDiffOutputManagerFactory.kt",
     ],
     deps = [
-        ":reduction_inputs",
+        "//ppr/src/org/perses/ppr/diff:reduction_inputs",
         "//src/org/perses/reduction:abstract_reducer",
-    ],
-)
-
-kt_jvm_library(
-    name = "reduction_inputs",
-    srcs = [
-        "TreeDiffReductionInputs.kt",
-    ],
-    deps = [
-        "//src/org/perses/reduction/io:reduction_inputs_interface",
+        "//src/org/perses/reduction/io:reduction_inputs",
     ],
 )
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -43,6 +43,7 @@ class PnfScalaParserFacade :
         PnfScalaLexer.BoundVarid,
         PnfScalaLexer.Varid,
       ),
+    includeAutoDetectedIdentifierTokenTypes = false,
     lexerClass = PnfScalaLexer::class.java,
     parserClass = PnfScalaParser::class.java,
   ) {
@@ -77,7 +78,6 @@ class PnfScalaParserFacade :
       fileName: String,
     ): ParseTreeWithParser =
       parseReader(
-        fileName,
         reader,
         { charStream: CharStream? -> ScalaLexer(charStream) },
         { commonTokenStream: CommonTokenStream? -> ScalaParser(commonTokenStream) },

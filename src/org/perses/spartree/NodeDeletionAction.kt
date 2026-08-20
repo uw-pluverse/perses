@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,20 +16,19 @@
  */
 package org.perses.spartree
 
-import com.google.common.base.MoreObjects
-
 class NodeDeletionAction(
   targetNode: AbstractSparTreeNode,
-) : AbstractTreeEditAction(targetNode) {
+) : AbstractTargetedTreeEditAction(targetNode) {
   override fun internalCompareTo(o: AbstractTreeEditAction): Int {
     require(o is NodeDeletionAction)
     return targetNode.nodeId.compareTo(o.targetNode.nodeId)
   }
 
-  override val description: String
-    get() = MoreObjects.toStringHelper(this).add("target_node", targetNode.nodeId).toString()
+  override val conciseDescription: String
+    get() = "delete_${targetNode.nodeId}"
 
-  override fun specificEquals(other: AbstractTreeEditAction): Boolean = other.javaClass == javaClass
+  override fun specificEquals(other: AbstractTargetedTreeEditAction): Boolean =
+    other.javaClass == javaClass
 
   override fun specificHashCode(): Int = 0
 
@@ -38,9 +37,24 @@ class NodeDeletionAction(
     if (targetNode.isPermanentlyDeleted) {
       return
     }
-    targetNode.delete()
-    SparTree.fixLeafLinkByDeleting(targetNode.beginToken!!, targetNode.endToken!!.next!!)
     val parentNode = targetNode.parent
+    if (targetNode.leafNodeSequence().none()) {
+      // the target node contains no children, then just simply remove this node
+      check(targetNode.beginToken == null) { targetNode.printTreeStructure() }
+      check(targetNode.endToken == null) { targetNode.printTreeStructure() }
+    } else {
+      val deletionRegionLeftInclusive =
+        targetNode.beginToken
+          ?: error("No begin token for the node " + targetNode.printTreeStructure())
+      val deletionRegionRightExclusive =
+        targetNode.endToken?.next
+          ?: error("No end token for the node " + targetNode.printTreeStructure())
+      SparTree.fixLeafLinkByDeleting(
+        deletionRegionLeftInclusive = deletionRegionLeftInclusive,
+        deletionRegionRightExclusive = deletionRegionRightExclusive,
+      )
+    }
+    targetNode.delete()
     if (parentNode != null) {
       parentNode.cleanDeletedImmediateChildren()
       SparTree.updateTokenIntervalUpToRoot(parentNode)

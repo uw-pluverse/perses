@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,19 +16,59 @@
  */
 package org.perses.ppr
 
-import org.perses.CommandOptions
+import org.perses.PersesCommandOptions
+import org.perses.cmd.LatraFlagGroup
+import org.perses.cmd.MimirFlagGroup
+import org.perses.cmd.PersesFlagGroup
+import org.perses.cmd.TRecFlagGroup
 
-abstract class AbstractPPRCommandOptions : CommandOptions() {
+abstract class AbstractPPRCommandOptions : PersesCommandOptions() {
+  override val latraFlags: LatraFlagGroup
+    get() {
+      val flags = super.latraFlags
+      flags.enableLatra = false
+      return flags
+    }
+
+  override val trecFlags: TRecFlagGroup
+    get() {
+      val flags = super.trecFlags
+      flags.enableTRec = false
+      return flags
+    }
+
+  override val persesFlags: PersesFlagGroup
+    get() {
+      val flags = super.persesFlags
+      flags.enableLiteralReplacementForRegularRuleNode = false
+      flags.enableLiteralReplacementForListMinimizer = false
+      return flags
+    }
+
+  override val mimirFlags: MimirFlagGroup
+    get() {
+      val flags = super.mimirFlags
+      return flags
+    }
+
   override fun validateExtra() {
     super.validateExtra()
-    // TODO(cnsun): this is adhoc. Need a better way to disable TRec
-    trecFlags.enableTRec = false
+    val inputFiles = inputFlags.computeInputFiles()
+    check(inputFiles.size == 1) {
+      "PPR supports exactly one input file, but ${inputFiles.size} " +
+        "were given: $inputFiles."
+    }
     check(!trecFlags.enableTRec) {
       "The token reducer is not compatible with PPR."
     }
-    latraFlags.enableLatra = false
     check(!latraFlags.enableLatra) {
       "The latra reducer is not compatible with PPR."
+    }
+    check(!persesFlags.enableLiteralReplacementForRegularRuleNode) {
+      "The literal replacement is not compatible with PPR."
+    }
+    check(!persesFlags.enableLiteralReplacementForListMinimizer) {
+      "The literal replacement is not compatible with PPR."
     }
   }
 }

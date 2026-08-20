@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.perses.util.shell.ExitCode
 
 /** The result of a test, including runtime information, i.e., time, exit code.  */
@@ -23,9 +24,11 @@ data class PropertyTestResult(
   val exitCode: ExitCode,
   val elapsedMillis: Int,
 ) {
+  @get:JsonIgnore
   val isInteresting: Boolean
     get() = exitCode.isZero()
 
+  @get:JsonIgnore
   val isNotInteresting: Boolean
     get() = !isInteresting
 

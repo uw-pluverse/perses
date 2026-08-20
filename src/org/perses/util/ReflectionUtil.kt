@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,8 @@
 package org.perses.util
 
 import java.lang.reflect.Modifier
+import kotlin.reflect.KProperty0
+import kotlin.reflect.jvm.isAccessible
 
 object ReflectionUtil {
   @Suppress("UNCHECKED_CAST")
@@ -31,5 +33,20 @@ object ReflectionUtil {
   ): Boolean {
     val field = klass.fields.find { it.name == fieldName }
     return field != null && Modifier.isStatic(field.modifiers)
+  }
+
+  @JvmStatic
+  fun isInitialized(property: KProperty0<*>): Boolean {
+    val originalState = property.isAccessible
+    property.isAccessible = true
+    val delegate = property.getDelegate()
+    val result =
+      if (delegate is Lazy<*>) {
+        delegate.isInitialized()
+      } else {
+        true
+      }
+    property.isAccessible = originalState
+    return result
   }
 }

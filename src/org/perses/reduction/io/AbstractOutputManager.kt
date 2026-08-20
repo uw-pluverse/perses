@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,65 +20,56 @@ import com.google.common.collect.ImmutableList
 import org.perses.program.AbstractReductionFile
 import org.perses.util.AbstractFileContent
 import org.perses.util.FileNameContentPair
+import org.perses.util.FileNameContentPairList
 import org.perses.util.Util
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.hashing.ShaHashCode
+import org.perses.util.toImmutableList
 
 abstract class AbstractOutputManager(
-  private val reductionInputs: AbstractReductionInputs<*, *>,
+  private val originalReductionInputs: AbstractOriginalReductionInputs,
   private val shaAlgorithm: EnumShaAlgorithm,
 ) {
   val shaHashCode: ShaHashCode by lazy {
     AbstractFileContent.createFromListOfFileContents(
       shaHash = shaAlgorithm,
-      fileContents = fileContentList.map { it.content },
+      fileContents = fileContentList.pairs.map { it.content },
     )
   }
 
-  val fileContentList: ImmutableList<FileNameContentPair<AbstractReductionFile<*, *>>> by lazy {
-    val list = internalComputeFileContentList()
-    check(list.size == reductionInputs.mutableFiles.size) {
-      """
-        | list = $list
-        | 
-        | mutableFiles = ${reductionInputs.mutableFiles}
-      """.trimMargin()
+  /**
+   * The mutable files this manager renders, in order. Defaults to the whole fixed mutable-file set;
+   * a manager whose program describes only a *subset* -- e.g. the cross-file manager after an empty
+   * file has been dropped from the set -- overrides this to render just those files. The value must
+   * be a distinct subset of [AbstractOriginalReductionInputs.mutableFiles], which [fileContentList] checks.
+   */
+  protected open val filesToRender: ImmutableList<out AbstractReductionFile<*, *>>
+    get() = originalReductionInputs.mutableFiles
+
+  // A list (not a map): its size is usually 1.
+  val fileContentList: FileNameContentPairList<AbstractReductionFile<*, *>> by lazy {
+    val files = filesToRender
+    check(files.size == files.distinct().size) {
+      "Files to render must be distinct: $files"
     }
-    list.zip(reductionInputs.mutableFiles).forEach { (first, second) ->
-      val firstReductionFile = first.fileName
-      check(firstReductionFile === second) {
-        firstReductionFile.toString() + second.toString()
+    files.forEach { file ->
+      check(originalReductionInputs.mutableFiles.any { it === file }) {
+        "Not a mutable file of this reduction: $file. mutableFiles = ${originalReductionInputs.mutableFiles}"
       }
     }
-    list
-  }
-
-  fun tryToGetMainFileContentOrThrow(): FileNameContentPair<AbstractReductionFile<*, *>> {
-    check(reductionInputs is AbstractSingleFileReductionInputs<*, *, *>) {
-      "The reduction inputs have to have a single main file."
-    }
-    return fileContentList.single { it.fileName === reductionInputs.mainFile }
-  }
-
-  /**
-   * Note that we use a list instead of a map, because the list size is usually 1 element long.
-   */
-  private fun internalComputeFileContentList():
-    ImmutableList<FileNameContentPair<AbstractReductionFile<*, *>>> {
-    val files = reductionInputs.mutableFiles
-    val builder =
-      ImmutableList.builderWithExpectedSize<FileNameContentPair<AbstractReductionFile<*, *>>>(
-        files.size,
-      )
-    files.forEach {
-      builder.add(
-        FileNameContentPair(
-          fileName = it,
-          AbstractFileContent.TextFileContent(text = internalComputeContentForFile(it)),
-        ),
-      )
-    }
-    return builder.build()
+    FileNameContentPairList(
+      pairs =
+        files
+          .map { file ->
+            FileNameContentPair(
+              fileName = file,
+              AbstractFileContent.TextFileContent(text = internalComputeContentForFile(file)),
+            )
+          }.toImmutableList(),
+      fileNameExtractor = { fileName ->
+        fileName.baseName
+      },
+    )
   }
 
   protected abstract fun internalComputeContentForFile(
@@ -86,7 +77,7 @@ abstract class AbstractOutputManager(
   ): String
 
   fun write(folder: ReductionFolder) {
-    fileContentList.forEach { (fileName, content) ->
+    fileContentList.pairs.forEach { (fileName, content) ->
       val destinationFile = folder.computeAbsPathForOrigFile(fileName)
       Util.ensureDirExists(destinationFile.parent)
       content.writeToFile(destinationFile)
@@ -95,4 +86,22 @@ abstract class AbstractOutputManager(
   }
 
   protected open fun writeMore(folder: ReductionFolder) {}
+
+  companion object {
+    /**
+     * An output manager that emits every mutable file's original on-disk content. Writing it to a
+     * folder materializes the original inputs there (the canonical way to populate a result folder
+     * before a reduction starts). This is the default behavior of
+     * [AbstractOutputManagerFactory.createOutputManagerForOriginalInput].
+     */
+    fun createForOriginalInput(
+      originalReductionInputs: AbstractOriginalReductionInputs,
+      shaAlgorithm: EnumShaAlgorithm,
+    ): AbstractOutputManager =
+      object : AbstractOutputManager(originalReductionInputs, shaAlgorithm) {
+        override fun internalComputeContentForFile(
+          origReductionFile: AbstractReductionFile<*, *>,
+        ): String = origReductionFile.fileWithContent.textualFileContent
+      }
+  }
 }

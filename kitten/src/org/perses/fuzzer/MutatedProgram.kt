@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,7 @@ package org.perses.fuzzer
 
 import com.google.common.collect.ImmutableList
 import com.google.common.primitives.ImmutableIntArray
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.AbstractPersesToken
 import org.perses.spartree.AbstractSparTreeNode
 import java.io.File
 import java.nio.charset.StandardCharsets
@@ -151,12 +151,14 @@ class MutatedProgram private constructor(
               currentLineNumber = addTokenText(builder, currentLineNumber, token)
             }
           }
+
           token == childEnd -> {
             isRecursivePart = true
             currentLineNumber = addTokenText(builder, currentLineNumber, token)
             lineNumberBeforeRepeat = currentLineNumber
             recursiveList.clear()
           }
+
           token == recursionEnd -> {
             isRecursivePart = false
             recursiveList.add(token)
@@ -174,6 +176,7 @@ class MutatedProgram private constructor(
               }
             }
           }
+
           else -> {
             currentLineNumber = addTokenText(builder, currentLineNumber, token)
           }

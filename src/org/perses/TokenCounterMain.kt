@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,6 @@ package org.perses
 
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.converters.PathConverter
-import org.antlr.v4.runtime.Token
 import org.perses.TokenCounterMain.CommandOptions
 import org.perses.cmd.LanguageControlFlagGroup
 import org.perses.grammar.AbstractParserFacadeFactory
@@ -73,14 +72,9 @@ class TokenCounterMain(
         .getParserFacadeListForOrNull(sourceFile.dataKind)!!
         .defaultParserFacade
         .create()
-    val tokens = parserFacade.tokenizeFile(sourceFile.file)
-    var count = 0
-    for (token in tokens) {
-      if (token.channel == Token.DEFAULT_CHANNEL) {
-        ++count
-      }
-    }
-    return count
+    // countTokensInString tolerates lexer errors, so an unparseable program -- the population the
+    // tolerant reducers exist to reduce -- still has a count.
+    return parserFacade.countTokensInString(sourceFile.textualFileContent)
   }
 
   class CommandOptions : AbstractCommandOptions() {

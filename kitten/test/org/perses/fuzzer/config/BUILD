@@ -1,6 +1,6 @@
-package(default_visibility = ["//test:__subpackages__"])
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+package(default_visibility = ["//test:__subpackages__"])
 
 kt_jvm_test(
     name = "TestingConfigurationTest",
@@ -10,6 +10,7 @@ kt_jvm_test(
         "//:truth",
         "//kitten/src/org/perses/fuzzer/compilers/c",
         "//kitten/src/org/perses/fuzzer/config:testing_configuration",
+        "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/program:language_kind",
     ],
 )

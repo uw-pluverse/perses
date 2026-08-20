@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,4 +24,21 @@ object PersesDiffUtil {
     other: List<T>,
     equalizer: (T, T) -> Boolean,
   ) = DiffUtils.diff(main, other, equalizer)
+
+  /**
+   * Renders the line-level changes from [originalLines] to [revisedLines] as a unified diff (the same
+   * `--- / +++ / @@ / -/+` format `diff -u` produces), with [contextSize] lines of unchanged context
+   * around each hunk. [originalLabel] and [revisedLabel] become the `---`/`+++` header names. Returns
+   * an empty list when the two inputs are identical.
+   */
+  fun unifiedDiff(
+    originalLabel: String,
+    revisedLabel: String,
+    originalLines: List<String>,
+    revisedLines: List<String>,
+    contextSize: Int,
+  ): List<String> {
+    val patch = DiffUtils.diff(originalLines, revisedLines)
+    return DiffUtils.generateUnifiedDiff(originalLabel, revisedLabel, originalLines, patch, contextSize)
+  }
 }

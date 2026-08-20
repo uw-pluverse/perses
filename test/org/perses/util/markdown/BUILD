@@ -1,5 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
-load("//test/org/perses:test.bzl", "golden_test")
+load("//test:test.bzl", "golden_test")
 
 kt_jvm_test(
     name = "MarkdownToHTMLConverterTest",

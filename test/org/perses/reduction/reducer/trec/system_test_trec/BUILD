@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test")
+load("//test:test.bzl", "reduction_golden_test")
 
 reduction_golden_test(
     name = "trec_reduction_golden_test",

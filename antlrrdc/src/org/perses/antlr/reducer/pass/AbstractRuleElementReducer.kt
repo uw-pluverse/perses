@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,16 +25,19 @@ import org.perses.antlr.reducer.io.GrammarReductionIOManager
 import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.ListenableReductionState
 import org.perses.reduction.TestScriptExecutorService
+import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.util.ktInfo
 
 abstract class AbstractRuleElementReducer(
   nameAndDesc: AbstractReducerNameAndDesc,
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
+  outputManagerFactory: AbstractOutputManagerFactory<PersesGrammar>,
 ) : AbstractAntlrReducer(
     nameAndDesc,
     ioManager,
     testScriptExecutorService,
+    outputManagerFactory,
   ) {
   final override fun reduce(state: ListenableReductionState<PersesGrammar>) {
     val program = state.bestEntity

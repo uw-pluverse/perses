@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -30,6 +30,7 @@ class YamlParserFacadeStubTemplate(
   val languageKindYamlString: String,
   parserFacadeClassSimpleName: String,
   tokenNamesOfIdentifiers: List<String>,
+  includeAutoDetectedIdentifierTokenTypes: Boolean,
 ) : AbstractParserFacadeStubTemplate(
     packageName,
     parserClassSimpleName,
@@ -40,6 +41,7 @@ class YamlParserFacadeStubTemplate(
     lexerFile,
     parserFacadeClassSimpleName,
     tokenNamesOfIdentifiers,
+    includeAutoDetectedIdentifierTokenTypes,
   ) {
   override fun createLanguageKind(): String =
     """

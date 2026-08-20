@@ -1,3 +1,5 @@
+load("@rules_java//java:java_import.bzl", "java_import")
+
 def orig_parser_facade_library(
         name,
         output_jar_file_name,
@@ -6,6 +8,7 @@ def orig_parser_facade_library(
         parser_file_name,
         start_rule_name,
         token_names_of_identifiers,
+        include_auto_detected_identifier_token_types,
         language_kind_full_name = None,
         language_kind_yaml_file = None,
         deps = None,
@@ -19,6 +22,7 @@ def orig_parser_facade_library(
         start_rule_name,
         token_names_of_identifiers,
         enable_pnf_normalization = False,
+        include_auto_detected_identifier_token_types = include_auto_detected_identifier_token_types,
         language_kind_full_name = language_kind_full_name,
         language_kind_yaml_file = language_kind_yaml_file,
         deps = deps,
@@ -33,6 +37,7 @@ def pnf_parser_facade_library(
         parser_file_name,
         start_rule_name,
         token_names_of_identifiers,
+        include_auto_detected_identifier_token_types,
         language_kind_full_name = None,
         language_kind_yaml_file = None,
         deps = None,
@@ -46,6 +51,7 @@ def pnf_parser_facade_library(
         start_rule_name,
         token_names_of_identifiers,
         enable_pnf_normalization = True,
+        include_auto_detected_identifier_token_types = include_auto_detected_identifier_token_types,
         language_kind_full_name = language_kind_full_name,
         language_kind_yaml_file = language_kind_yaml_file,
         deps = deps,
@@ -61,6 +67,7 @@ def _parser_facade_library(
         start_rule_name,
         token_names_of_identifiers,
         enable_pnf_normalization,
+        include_auto_detected_identifier_token_types,
         language_kind_full_name = None,
         language_kind_yaml_file = None,
         deps = None,
@@ -82,6 +89,8 @@ def _parser_facade_library(
         start_rule_name,
         "--enable-pnf-normalization",
         "true" if enable_pnf_normalization else "false",
+        "--include-auto-detected-identifier-token-types",
+        "true" if include_auto_detected_identifier_token_types else "false",
         "> $(location %s) 2>&1" % adhoc_logfile,
     ]
     if token_names_of_identifiers:
@@ -120,7 +129,7 @@ def _parser_facade_library(
         cmd = " ".join(args),
     )
     deps = deps or []
-    native.java_import(
+    java_import(
         name = name,
         jars = [
             output_jar_file_name,

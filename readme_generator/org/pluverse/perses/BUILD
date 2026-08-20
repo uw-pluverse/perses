@@ -1,9 +1,10 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
+load("//:perses.bzl", "kt_binary_for_genrule")
+
 package(
     default_visibility = ["//visibility:public"],
 )
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
-load("//:perses.bzl", "kt_binary_for_genrule")
 
 kt_jvm_library(
     name = "SupportedLanguageDumpMain_lib",

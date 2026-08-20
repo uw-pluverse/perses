@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -35,6 +35,7 @@ class ReductionControlFlagGroup :
   )
   var globalFixpoint = false
 
+  // This flag needs to be true, as the main reducer is always faster than other reducers.
   @JvmField
   @Parameter(
     names = ["--fixpoint"],
@@ -42,7 +43,7 @@ class ReductionControlFlagGroup :
     arity = 1,
     order = 30,
   )
-  var fixpointForMainReducer = false
+  var fixpointForMainReducer = true
 
   @Parameter(
     names = ["--threads"],

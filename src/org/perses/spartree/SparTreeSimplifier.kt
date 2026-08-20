@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -95,15 +95,29 @@ object SparTreeSimplifier {
   private fun isSESENode(node: AbstractSparTreeNode): Boolean {
     check(!node.isPermanentlyDeleted)
     return when {
-      node.isQuantifierNode -> false // Accept meta-node
-      node.childCount > 1 -> false // a fork node, the end of an SESE path
+      node.isQuantifierNode -> {
+        false
+      }
+
+      // Accept meta-node
+      node.childCount > 1 -> {
+        false
+      }
+
+      // a fork node, the end of an SESE path
       node.childCount == 0 -> {
         // A token node, the end of an SESE path.
         check(node.isTokenNode()) { node }
         false
       }
-      node.childCount == 1 -> true
-      else -> error("not reachable")
+
+      node.childCount == 1 -> {
+        true
+      }
+
+      else -> {
+        error("not reachable")
+      }
     }
   }
 

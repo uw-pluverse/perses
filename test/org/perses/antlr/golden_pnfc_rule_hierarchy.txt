@@ -77,6 +77,9 @@ entries {
   ruleName: "IncludeDirective"
 }
 entries {
+  ruleName: "PreprocessingDirective"
+}
+entries {
   ruleName: "Auto"
   immediateStringLiterals: "auto"
   transitiveStringLiterals: "auto"
@@ -681,21 +684,6 @@ entries {
 }
 entries {
   ruleName: "SChar"
-}
-entries {
-  ruleName: "ComplexDefine"
-}
-entries {
-  ruleName: "AsmBlock"
-}
-entries {
-  ruleName: "LineAfterPreprocessing"
-}
-entries {
-  ruleName: "LineDirective"
-}
-entries {
-  ruleName: "PragmaDirective"
 }
 entries {
   ruleName: "Whitespace"

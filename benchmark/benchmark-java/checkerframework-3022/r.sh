@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# No in-script `timeout` wall cap here, so set a conservative CPU ceiling:
+# ample for a legitimate run run, but bounded so a runaway process is
+# reaped by the kernel via RLIMIT_CPU instead of spinning indefinitely. Unlike
+# `timeout`, RLIMIT_CPU is inherited by descendants and survives reparenting.
+# The value below is in CPU seconds (ulimit -t sets RLIMIT_CPU).
+ulimit -t 300
+[ -e output.txt ] && rm output.txt
+if [ -z "${CHECKER_3_0_1}" ]; then echo "Error: CHECKER_3_0_1 is not set."; exit 1; fi
+if [ -z "${JDK8_DIR}" ]; then echo "Error: JDK8_DIR is not set."; exit 1; fi
+export PATH="${JDK8_DIR}/bin:${PATH}"
+"${JDK8_DIR}/bin/java" -jar "${CHECKER_3_0_1}/checker.jar" -J-da -processor nullness -AprintErrorStack \
+  $(find . -name "*.java") > output.txt 2>&1
+grep -E 'Multimaps\.java:[0-9]+: error: \[argument.type.incompatible\] incompatible types in argument' output.txt && echo "Found pattern." && exit 0
+echo "Did not find pattern." && exit 1

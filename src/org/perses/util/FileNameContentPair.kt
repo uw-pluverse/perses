@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,26 @@
  */
 package org.perses.util
 
+import com.google.common.collect.ImmutableList
+
 data class FileNameContentPair<NameType>(
   val fileName: NameType,
   val content: AbstractFileContent,
 )
+
+class FileNameContentPairList<NameType>(
+  val pairs: ImmutableList<FileNameContentPair<NameType>>,
+  val fileNameExtractor: (NameType) -> String,
+) {
+  val textualContent: String by lazy {
+    pairs
+      .flatMap {
+        val fileName = fileNameExtractor(it.fileName)
+        sequenceOf("--file: $fileName--", it.content)
+      }.joinToString(separator = "\n")
+      .trim()
+  }
+
+  val size: Int
+    get() = pairs.size
+}

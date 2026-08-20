@@ -1,0 +1,483 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 8
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_node_priority_hello.xml"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "hello.xml"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: true
+  enableLiteralReplacementForListMinimizer: true
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "_reduction_golden_test_by_default_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: false
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=false, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(8/8)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(8/8)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 1. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.xml.PnfXMLParserFacade
+The spar-tree is the following.
+document{id=1,slot_type=document}
+|___element{id=2,slot_type=element}
+    |___Token:<{id=3,slot_type=OPEN}
+    |___Token:title{id=4,slot_type=Name}
+    |___aux_rule__element_5{id=7,slot_type=[altnt_block__element_3,altnt_block__element_4,aux_rule__element_5]}
+        |___Token:>{id=8,slot_type=CLOSE}
+        |___(?){id=14,slot_type=[content,optional__content_1]}
+        |   |___Token:Computer Systems: A Programmer's Perspective{id=16,slot_type=[chardata,TEXT]}
+        |___Token:<{id=10,slot_type=OPEN}
+        |___Token:/{id=11,slot_type=SLASH}
+        |___Token:title{id=12,slot_type=Name}
+        |___Token:>{id=13,slot_type=CLOSE}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority](8/8)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](8/8)  Retrieved semantics provider null
+==================Reducing node 2, size=8===================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title>Computer Systems: A Programmer's Perspective</title>
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=8===================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title>Computer Systems: A Programmer's Perspective</title>
+------------------------------------------------------------
+
+
+==========Testing the following program (0): pass===========
+
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__element_3->/>
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 8 -> 4
+Edit: LatraEdit:[replace_7_with_18]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 7 from 8 to 4
+------------------------------------------------------------
+
+
+==================Reducing node 18, size=4==================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=4===================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 3, size=4===================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 3
+------------------------------------------------------------
+
+
+(4/8)  Rebuilding spar-tree: The spartree is rebuilt.
+========Fixpoint iteration 2. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.xml.PnfXMLParserFacade
+The spar-tree is the following.
+document{id=19,slot_type=document}
+|___element{id=20,slot_type=element}
+|   |___Token:<{id=24,slot_type=OPEN}
+|   |___Token:title{id=25,slot_type=Name}
+|   |___Token:/>{id=28,slot_type=[altnt_block__element_3,altnt_block__element_4,SLASH_CLOSE]}
+|___(*){id=21,slot_type=kleene_star__document_2}
+    |___Token:\n{id=23,slot_type=[misc,SEA_WS]}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority](4/8)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](4/8)  Retrieved semantics provider null
+==================Reducing node 20, size=4==================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+==================Reducing node 28, size=4==================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 28
+------------------------------------------------------------
+
+
+==================Reducing node 25, size=4==================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 25
+------------------------------------------------------------
+
+
+==================Reducing node 24, size=4==================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 24
+------------------------------------------------------------
+
+
+==================Reducing node 21, size=4==================
+
+The current best program is the following
+
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](4/8)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/8=50.00%
+FixPt[2][node_priority][DFS](4/8)  Testing the empty input. Global ratio:4/8=50.00%
+==========Testing the following program (1): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__document_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: hello.xml--
+    <title/>
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](4/8)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:4/8=50.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 4 -> 4
+Edit: [delete_23]
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](4/8)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:4/8=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+(4/8)  Rebuilding spar-tree: The spartree is rebuilt.
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.xml.PnfXMLParserFacade
+The spar-tree is the following.
+document{id=30,slot_type=document}
+|___element{id=31,slot_type=element}
+|   |___Token:<{id=35,slot_type=OPEN}
+|   |___Token:title{id=36,slot_type=Name}
+|   |___Token:/>{id=39,slot_type=[altnt_block__element_3,altnt_block__element_4,SLASH_CLOSE]}
+|___(*){id=32,slot_type=kleene_star__document_2}
+    |___Token:\n{id=34,slot_type=[misc,SEA_WS]}
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer](4/8)  Latra does not support LanguageXML{name=xml, extensions=[xml], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+(4/8)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 4. Reducer: spartree_root_replacement_reducer
+
+Parser Facade: class org.perses.grammar.xml.PnfXMLParserFacade
+The spar-tree is the following.
+document{id=30,slot_type=document}
+|___element{id=31,slot_type=element}
+|   |___Token:<{id=35,slot_type=OPEN}
+|   |___Token:title{id=36,slot_type=Name}
+|   |___Token:/>{id=39,slot_type=[altnt_block__element_3,altnt_block__element_4,SLASH_CLOSE]}
+|___(*){id=32,slot_type=kleene_star__document_2}
+    |___Token:\n{id=34,slot_type=[misc,SEA_WS]}
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 4 -> 4
+Edit: AnyNodeReplace:[replace_30_with_1]
+------------------------------------------------------------
+
+
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0                     node_priority      1             0      -4            -47       1   time-hidden
+ 1                     node_priority      1             1       0              0       1   time-hidden
+ 2              FineGritLatraReducer      0             0       0              0       0   time-hidden
+ 3 spartree_root_replacement_reducer      1             1       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+                          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+                    node_priority     2      2             1      -4            -47       2   time-hidden
+             FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+spartree_root_replacement_reducer     1      1             1       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+                                   Transformation Worked #NonDeletions #Tokens #NonBlankChars
+                 node_priority.LiteralReplacement      1             0      -4            -47
+                           node_priority.Deletion      1             1       0              0
+spartree_root_replacement_reducer.RootReplacement      1             1       0              0
+------------------------------------- End --------------------------------------
+#test success = 2
+#test failure = 0
+#test result cache hits = 0
+#test execution cancelled = 0
+#node edit action set cache hits = 0
+#external test execution cache hits = 0

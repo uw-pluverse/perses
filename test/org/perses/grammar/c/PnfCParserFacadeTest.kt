@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,6 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.AntlrGrammarUtil
+import org.perses.grammar.ParseErrorHandling
 import org.perses.program.LanguageKindTestUtil
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -50,7 +51,7 @@ class PnfCParserFacadeTest {
         return 0;
       }
       """.trimIndent()
-    val tree = facade.parseString(content).tree
+    val tree = facade.parseString(content, errorMode = ParseErrorHandling.STRICT).tree
     val tokenizedProgram = AntlrGrammarUtil.convertParseTreeToProgram(tree, facade.language).tokens
     assertThat(tokenizedProgram).isNotEmpty()
     assertThat(tokenizedProgram.first().lexemeText).isEqualTo("#include <stdio.h>")
@@ -88,7 +89,7 @@ class PnfCParserFacadeTest {
         """.trimIndent(),
       )
     contentList.forEach { content ->
-      val tree = facade.parseString(content).tree
+      val tree = facade.parseString(content, errorMode = ParseErrorHandling.STRICT).tree
       val program = AntlrGrammarUtil.convertParseTreeToProgram(tree, facade.language).tokens
       assertThat(program.last().lexemeText).isEqualTo("}")
     }
@@ -100,6 +101,7 @@ class PnfCParserFacadeTest {
       """
       extern __attribute__ ((access (read_only, 1))) int (puts) (const char*);
       """,
+      errorMode = ParseErrorHandling.STRICT,
     )
 
     facade.parseString(
@@ -108,33 +110,49 @@ class PnfCParserFacadeTest {
       (__attribute__((__leaf__)) malloc)
       (size_t __size) __attribute__(( __malloc__ ));
       """.trimMargin(),
+      errorMode = ParseErrorHandling.STRICT,
     )
 
-    facade.parseString("int (__attribute__((common)) a );")
+    facade.parseString("int (__attribute__((common)) a );", errorMode = ParseErrorHandling.STRICT)
 
     facade.parseString(
       """
       table * __attribute__((__pure__))
       lookup_zone(parser_control const *pc, char const *name);
       """,
+      errorMode = ParseErrorHandling.STRICT,
     )
 
-    facade.parseString("char *__attribute__((aligned(8))) *f;")
-    facade.parseString("void (__attribute__((noreturn)) ****f) (void);")
+    facade.parseString(
+      "char *__attribute__((aligned(8))) *f;",
+      errorMode = ParseErrorHandling.STRICT,
+    )
+    facade.parseString(
+      "void (__attribute__((noreturn)) ****f) (void);",
+      errorMode = ParseErrorHandling.STRICT,
+    )
     facade.parseString(
       """
       static table const *__attribute__((__pure__))
       lookup_zone(parser_control const *pc, char const *name);
     """,
+      errorMode = ParseErrorHandling.STRICT,
     )
-    facade.parseString("typedef int more_aligned_int __attribute__ ((aligned (8)));")
-    facade.parseString("int f() { return ((int __attribute__((__pure__)))0); }")
+    facade.parseString(
+      "typedef int more_aligned_int __attribute__ ((aligned (8)));",
+      errorMode = ParseErrorHandling.STRICT,
+    )
+    facade.parseString(
+      "int f() { return ((int __attribute__((__pure__)))0); }",
+      errorMode = ParseErrorHandling.STRICT,
+    )
     facade.parseString(
       """
       int f() { 
         return ((unsigned long long __attribute__((__pure__)))0);
       }
       """,
+      errorMode = ParseErrorHandling.STRICT,
     )
   }
 

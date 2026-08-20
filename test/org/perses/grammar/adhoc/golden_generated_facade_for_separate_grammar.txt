@@ -21,6 +21,7 @@ public final class FakeParserFacade
         "fake_lexer_file.g4", 
         FakeParserFacade.class),
         com.google.common.primitives.ImmutableIntArray.of(FakeLexer.Identifier),
+        false,
         CLASS_LEXER,
         CLASS_PARSER);
   }

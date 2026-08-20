@@ -19,12 +19,15 @@ kt_jvm_library(
     name = "interfaces",
     srcs = [
         "AbstractConfigCache.kt",
+        "AbstractCursorDrivenMinimizer.kt",
         "AbstractDefaultListMinimizer.kt",
         "AbstractListMinimizer.kt",
         "AbstractListMinimizerListener.kt",
         "AbstractProbabilisticDeltaDebugger.kt",
+        "AbstractSearchSpaceNode.kt",
         "AbstractWindowedSlicer.kt",
         "CompoundListMinimizerListener.kt",
+        "DeletionCandidateCursor.kt",
         "ElementWrapper.kt",
         "IPropertyTester.kt",
         "ListMinimizerArguments.kt",
@@ -32,11 +35,16 @@ kt_jvm_library(
         "ListMinimizerProgressListener.kt",
         "NullListMinimizerListener.kt",
         "PartitionList.kt",
+        "RccConfigCache.kt",
+        "SpeculativeGreedyDriver.kt",
     ],
     deps = [
         ":Partition",
+        "//:fastutil",
         "//:guava",
         "//src/org/perses/reduction:property_test_result",
+        "//src/org/perses/reduction/cache:int_array_compressor",
+        "//src/org/perses/spartree:tree_node",
         "//src/org/perses/util",
     ],
 )
@@ -44,12 +52,14 @@ kt_jvm_library(
 kt_jvm_library(
     name = "listminimizer",
     srcs = [
-        "ConcurrentWindowedSlicer.kt",
+        "AdaptiveGainDrivenListMinimizer.kt",
         "CounterBasedDeltaDebugger.kt",
+        "OneByOneMinimizer.kt",
         "PristineDeltaDebugger.kt",
         "PristineProbabilisticDeltaDebugger.kt",
         "WeightedDeltaDebugger.kt",
         "WeightedProbabilisticDeltaDebugger.kt",
+        "WindowedSliceCursor.kt",
         "WindowedSlicer.kt",
     ],
     exports = [

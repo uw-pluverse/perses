@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,12 +17,28 @@
 package org.perses.program
 
 data class TokenPosition(
+  // Consistent with Antlr's convention, the line starts with 1
   val line: Int,
+  // Consistent with Antlr's convention, the char position starts with 0.
   val charPositionInLine: Int,
-) {
+) : Comparable<TokenPosition> {
   // TODO: need to enable these assertions.
 //    init {
 //      require(line >= 0) { line }
 //      require(charPositionInLine >= 0) { charPositionInLine }
 //    }
+
+  fun toConcisePosition(): String = "$line:$charPositionInLine"
+
+  override fun compareTo(other: TokenPosition): Int =
+    if (line != other.line) {
+      line - other.line
+    } else {
+      charPositionInLine - other.charPositionInLine
+    }
+
+  companion object {
+    val FIRST_LINE_NUMBER = 1
+    val FIRST_CHAR_POSITION_IN_LINE = 0
+  }
 }

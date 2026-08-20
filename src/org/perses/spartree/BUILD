@@ -14,6 +14,31 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "ContextDescription",
+    srcs = [
+        "ContextDescription.kt",
+    ],
+    deps = [
+        "//:guava",
+    ],
+)
+
+kt_jvm_library(
+    name = "tree_node",
+    srcs = [
+        "AbstractTreeNode.kt",
+        "DeepCopyResult.kt",
+        "ErrorMessage.kt",
+    ],
+    deps = [
+        ":tree_node_filter_result",
+        "//:guava",
+        "//src/org/perses/util",
+        "//src/org/perses/util:simple_stack_and_queue",
+    ],
+)
+
+kt_jvm_library(
     name = "spartree",
     srcs = [
         "AbstractActionSet.kt",
@@ -26,18 +51,17 @@ kt_jvm_library(
         "AbstractSparTreeNode.kt",
         "AbstractTokenizedProgramCustomizer.kt",
         "AbstractTreeEditAction.kt",
-        "AbstractTreeNode.kt",
         "AbstractUnmodifiableSparTree.kt",
         "AnyNodeReplacementTreeEdit.kt",
-        "DeepCopyResult.kt",
         "DescendantHoistingTreeEdit.kt",
-        "ErrorMessage.kt",
+        "EmptySparTreeEdit.kt",
         "GroupingSparTreeNode.kt",
         "ISparTreeAntlrTreeMapping.kt",
         "LatraGeneralActionSet.kt",
         "LatraGeneralTreeEdit.kt",
         "LexerRuleSparTreeNode.kt",
         "NodeActionSetCache.kt",
+        "NodeActionSetCacheResult.kt",
         "NodeDeletionAction.kt",
         "NodeDeletionActionSet.kt",
         "NodeDeletionTreeEdit.kt",
@@ -53,12 +77,15 @@ kt_jvm_library(
         "SparTreeSimplifier.kt",
     ],
     deps = [
+        ":ContextDescription",
+        ":tree_node",
         ":tree_node_filter_result",
         "//:antlr_runtime",
         "//:guava",
         "//src/org/perses/antlr",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/antlr:util",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/program",
         "//src/org/perses/util",
     ],
@@ -75,6 +102,18 @@ kt_jvm_library(
         "//:antlr_tool",
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//antlropt/src/org/perses/antlr/ast",
+        "//src/org/perses/grammar:parser_facade_interface",
+    ],
+)
+
+kt_jvm_library(
+    name = "spar_tree_parser_utility",
+    srcs = [
+        "SparTreeParserUtility.kt",
+    ],
+    deps = [
+        ":spartree",
+        "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:parser_facade_interface",
     ],
 )

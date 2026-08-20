@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,6 +17,7 @@
 package org.perses.util
 
 import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.StreamReadConstraints
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializerProvider
@@ -26,6 +27,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.datatype.guava.GuavaModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.google.common.collect.ImmutableList
+import org.yaml.snakeyaml.LoaderOptions
 import java.nio.file.Path
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
@@ -39,7 +41,7 @@ object Serialization {
     yamlFactoryCustomizer: (YAMLFactory) -> Unit = {},
     objectMapperCustomizer: (ObjectMapper) -> Unit = {},
   ): String {
-    val yamlFactory = YAMLFactory()
+    val yamlFactory = createYamlFactory()
     yamlFactoryCustomizer.invoke(yamlFactory)
     val mapper = ObjectMapper(yamlFactory)
     mapper.registerKotlinModule()
@@ -80,7 +82,7 @@ object Serialization {
     yaml: String,
     typeReference: TypeReference<T>,
   ): T {
-    val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
+    val mapper = ObjectMapper(createYamlFactory()).registerKotlinModule()
     mapper.findAndRegisterModules()
     return mapper.readValue(yaml, typeReference)
   }
@@ -132,5 +134,20 @@ object Serialization {
     val mapper = ObjectMapper().registerKotlinModule()
     val jsonString = mapper.writeValueAsString(value)
     return mapper.readValue(jsonString, klass)
+  }
+
+  private fun createYamlFactory(): YAMLFactory {
+    val loaderOptions = LoaderOptions()
+    loaderOptions.codePointLimit = 100_000_000
+
+    return YAMLFactory
+      .builder()
+      .loaderOptions(loaderOptions)
+      .streamReadConstraints(
+        StreamReadConstraints
+          .builder()
+          .maxStringLength(100_000_000)
+          .build(),
+      ).build()
   }
 }

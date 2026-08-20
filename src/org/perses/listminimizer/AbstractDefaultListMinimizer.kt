@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,14 +23,7 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
   arguments: ListMinimizerArguments<T, PropertyPayload>,
   enableCache: Boolean = false,
   enableCacheRefresh: Boolean = false,
-) : AbstractListMinimizer<T, PropertyPayload>(arguments) {
-  protected val cache: AbstractConfigCache<T> =
-    if (enableCache) {
-      ConfigCache(enableCacheRefresh)
-    } else {
-      NullConfigCache()
-    }
-
+) : AbstractListMinimizer<T, PropertyPayload>(arguments, enableCache, enableCacheRefresh) {
   override fun reduceNonEmptyInput() {
     var numOfPartitions =
       arguments.partitionComplementControl
@@ -80,34 +73,23 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
   }
 
   protected fun logPartitionList(partitionList: PartitionList<ElementWrapper<T>>) {
-    arguments.log {
-      buildString {
-        val partitions = partitionList.partitions
-        val size = partitions.size
-        append("Partition size: $size. ")
-        append(
-          partitions.map { AbstractListMinimizerListener.convertElementListToCompactString(it) },
-        )
-      }
-    }
+    arguments.log { toCompactString(partitionList) }
   }
 
-  protected fun reducePartitions(partitionList: PartitionList<ElementWrapper<T>>): Boolean {
-    arguments.log {
-      "Reducing partitions: ${
-        partitionList.partitions.map {
-          it.map { it.index }.toString()
-        }
-      }"
+  private fun toCompactString(partitionList: PartitionList<ElementWrapper<T>>): String =
+    buildString {
+      val partitions = partitionList.partitions
+      append("Partition count: ${partitions.size}. ")
+      append(
+        partitions.map { AbstractListMinimizerListener.convertElementListToCompactString(it) },
+      )
     }
+
+  protected fun reducePartitions(partitionList: PartitionList<ElementWrapper<T>>): Boolean {
+    arguments.log { "Reducing partitions:  ${toCompactString(partitionList)}" }
     for (partition in partitionList.partitions) {
       val elements = partition.asImmutableList()
       lazyAssert { elements.isNotEmpty() }
-      val config = ConfigurationBasedOnElementSystemIdentity(elements)
-      if (cache.contains(config)) {
-        continue
-      }
-      cache.add(config)
       val propertyTestResult =
         testProperty(
           Candidate.SublistFromOriginal(original = best, candidate_ = elements),
@@ -117,12 +99,11 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
       }
 
       // TODO: this needs test.
-      if (propertyTestResult !is LMPropertyTestResult.Completed<T, PropertyPayload>) {
+      if (propertyTestResult !is ListMinimizerPropertyTestResult.Completed<T, PropertyPayload>) {
         continue
       }
       if (propertyTestResult.result.isInteresting) {
-        cache.deleteStaleConfigs(elements.size)
-        updateBest(partition.asImmutableList(), propertyTestResult.payload)
+        updateBest(elements, propertyTestResult.payload)
         return true
       }
     }
@@ -144,17 +125,12 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
 
   protected fun testComplement(
     complement: ImmutableList<ElementWrapper<T>>,
-  ): LMPropertyTestResult.Completed<T, PropertyPayload>? {
-    val config = ConfigurationBasedOnElementSystemIdentity(complement)
-    if (cache.contains(config)) {
-      return null
-    }
-    cache.add(config)
+  ): ListMinimizerPropertyTestResult.Completed<T, PropertyPayload>? {
     val propertyTestResult =
       testProperty(
         Candidate.SublistFromOriginal(original = best, candidate_ = complement),
       )
-    if (propertyTestResult !is LMPropertyTestResult.Completed<T, PropertyPayload>) {
+    if (propertyTestResult !is ListMinimizerPropertyTestResult.Completed<T, PropertyPayload>) {
       return null
     }
     return propertyTestResult
@@ -162,11 +138,7 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
 
   private fun reduceComplements(originalPartitionList: PartitionList<ElementWrapper<T>>): Int {
     arguments.log {
-      "Reducing complements: ${
-        originalPartitionList.partitions.map {
-          it.map { it.index }.toString()
-        }
-      }"
+      "Reducing complements: ${toCompactString(originalPartitionList)}"
     }
     var currentPartitionList = originalPartitionList
     var countOfDeletedPartitions = 0
@@ -175,7 +147,6 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
       val propertyTestResult = testComplement(complement) ?: continue
       if (propertyTestResult.result.isInteresting) {
         ++countOfDeletedPartitions
-        cache.deleteStaleConfigs(complement.size)
         updateBest(complement, propertyTestResult.payload)
         currentPartitionList = currentPartitionList.duplicateByRemovePartition(partition)
         continue@complementLoop

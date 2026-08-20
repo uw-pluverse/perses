@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -155,13 +155,24 @@ class MutableGrammar(
     val copy = MutableGrammar()
     ruleNameAltPairSequence().forEach { (ruleName, oldDef) ->
       when (val decision = transformer.invoke(ruleName, oldDef)) {
-        is TransformDecision.Keep -> copy.getAltBlock(ruleName).addIfNotEquivalent(oldDef)
-        is TransformDecision.Delete -> Unit // do nothing.
-        is TransformDecision.Replace ->
+        is TransformDecision.Keep -> {
+          copy.getAltBlock(ruleName).addIfNotEquivalent(oldDef)
+        }
+
+        is TransformDecision.Delete -> {
+          Unit
+        }
+
+        // do nothing.
+        is TransformDecision.Replace -> {
           copy
             .getAltBlock(ruleName)
             .addIfNotEquivalent(decision.newValue)
-        else -> error("Unhandled case $decision")
+        }
+
+        else -> {
+          error("Unhandled case $decision")
+        }
       }
     }
     return copy

@@ -1,0 +1,11 @@
+elapsed_seconds,current_program_size,action_description
+,56,<START>
+,53,"DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=6"
+,48,"DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=5"
+,29,"DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=3,#parts=3#total-parts=4"
+,21,[regular_node]can be epsilon
+,21,<Fixpoint Iteration End>
+,21,<Fixpoint Iteration End>
+,21,Reparsing the best spartree to faithfully reflect the syntactic structure.
+,21,<Fixpoint Iteration End>
+,21,<END>

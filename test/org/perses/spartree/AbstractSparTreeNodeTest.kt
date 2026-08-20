@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,19 +23,13 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
-import org.perses.program.TokenizedProgramFactory
 import org.perses.util.MutableInt
 import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
 class AbstractSparTreeNodeTest {
   val facade = TestUtility.getFacade(LanguageC)
-  val nodeFactory =
-    SparTreeNodeFactory(
-      facade.metaTokenInfoDb,
-      TokenizedProgramFactory.createEmptyFactory(LanguageC),
-      facade.ruleHierarchy,
-    )
+  val nodeFactory = SparTreeNodeFactory(facade)
 
   @Test
   fun testChildSequence() {
@@ -58,7 +52,6 @@ class AbstractSparTreeNodeTest {
   @Test
   fun testUpdateLeafTokenCountSingleStatement() {
     val tree = TestUtility.createSparTreeFromString("int a;", LanguageC)
-    tree.updateLeafTokenCount()
     assertThat(tree.realRoot.leafTokenCount).isEqualTo(3)
     val tokens = tree.getTokenNodeForText("int")
     assertThat(tokens).hasSize(1)
@@ -67,21 +60,14 @@ class AbstractSparTreeNodeTest {
       tree.createNodeDeletionEdit(
         NodeDeletionActionSet.createByDeleteSingleNode(tokens.first(), "dummy"),
       )
-    tree.applyEdit(edit)
-    assertThat(tree.realRoot.leafTokenCount).isEqualTo(2)
-    tree.updateLeafTokenCount()
-    assertThat(tree.realRoot.leafTokenCount).isEqualTo(2)
-    tree.updateLeafTokenCount()
-    assertThat(tree.realRoot.leafTokenCount).isEqualTo(2)
-    tree.updateLeafTokenCount()
-    tree.updateLeafTokenCount()
+    tree.applyEdit(edit, canonicalTokenCount = null)
     assertThat(tree.realRoot.leafTokenCount).isEqualTo(2)
   }
 
   @Test
   fun testEmptyLeafNodeSequence() {
     val node = nodeFactory.createParserRuleSparTreeNode("statement")
-    node.updateLeafTokenCount()
+    node.buildTokenIntervalInfoRecursive()
     node.leafNodeSequence().toImmutableList().let {
       assertThat(it).isEmpty()
     }
@@ -91,7 +77,11 @@ class AbstractSparTreeNodeTest {
   @Test
   fun testNonEmptyLeafNodeSequence() {
     val token = facade.transformLiteralIntoSingleToken(";")
-    val tokenNode = nodeFactory.createLexerRuleSparTreeNodeForAntlrToken(token)
+    val tokenNode =
+      nodeFactory.createLexerRuleSparTreeNodeForAntlrToken(
+        token,
+        overridingPosition = null,
+      )
     val ruleNode = nodeFactory.createParserRuleSparTreeNode("expressionStatement")
     ruleNode.addChild(
       tokenNode,
@@ -113,7 +103,6 @@ class AbstractSparTreeNodeTest {
   @Test
   fun testUpdateLeafTokenCountTwoStatements() {
     val tree = TestUtility.createSparTreeFromString("int a; int b=0;", LanguageC)
-    tree.updateLeafTokenCount()
     assertThat(tree.realRoot.leafTokenCount).isEqualTo(8)
 
     assertThat(tree.realRoot.childCount).isEqualTo(1)
@@ -133,19 +122,15 @@ class AbstractSparTreeNodeTest {
           "dummy",
         ),
       ).let {
-        tree.applyEdit(it)
+        tree.applyEdit(it, canonicalTokenCount = null)
       }
-    assertThat(tree.realRoot.leafTokenCount).isEqualTo(7)
-    tree.realRoot.updateLeafTokenCount()
     assertThat(tree.realRoot.leafTokenCount).isEqualTo(7)
   }
 
   @Test
   fun testIsDeleted() {
     val tree = TestUtility.createSparTreeFromString("int a; int b=0;", LanguageC)
-    tree.updateLeafTokenCount()
     tree.realRoot.delete()
-    assertThat(kotlin.runCatching { tree.updateLeafTokenCount() }.exceptionOrNull()).isNotNull()
     assertThat(kotlin.runCatching { tree.realRoot.leafTokenCount }.exceptionOrNull()).isNotNull()
     assertThat(tree.realRoot.isPermanentlyDeleted).isTrue()
     assertThat(tree.realRoot.childCount).isEqualTo(0)

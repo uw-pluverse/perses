@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,15 +17,18 @@
 package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
+import org.perses.grammar.ParseErrorHandling
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
 import org.perses.spartree.AbstractSparTreeEdit
+import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.SparTreeParserUtility
 import org.perses.util.hashing.ShaHashCode
 
 abstract class AbstractNonDeletionBasedReducer(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
-) : AbstractTokenReducer(
+) : AbstractSparTreeReducer(
     reducerAnnotation,
     reducerContext,
   ) {
@@ -49,7 +52,7 @@ abstract class AbstractNonDeletionBasedReducer(
     // TODO(cnsun): need to see whether we need to accept a single edit or a list of edits.
     edits: List<AbstractSparTreeEdit<*>>,
     fixpointReductionState: FixpointReductionState,
-  ): AbstractSparTreeEdit<*>? {
+  ): TreeEditWithItsResult? {
     val filtered =
       edits.filter { edit ->
         if (mutationHistory.add(edit.program)) {
@@ -57,15 +60,30 @@ abstract class AbstractNonDeletionBasedReducer(
         } else {
           reducerContext.listenerManager.onAdHocMessageEvent(
             fixpointReductionState.createAdHocMessageEvent {
-              "An edit (description=${edit.actionSet.actionsDescription}) is skipped " +
+              "An edit (description=${edit.actionSet.contextDescription}) is skipped " +
                 "in ${this::class.simpleName} because it was visited before."
             },
           )
           false
         }
       }
-    return testAllTreeEditsAndReturnTheBest(filtered)?.edit
+    return testAllTreeEditsAndReturnTheBest(filtered)
   }
+
+  /**
+   * Builds a detached spar-tree node by parsing [sourceCode] with the canonical parser facade --
+   * e.g. to turn a transformed source string into a root-replacement edit.
+   */
+  protected fun createSparTreeNodeFromString(sourceCode: String): AbstractSparTreeNode =
+    SparTreeParserUtility
+      .buildSparTree(
+        sourceCode = sourceCode,
+        parserFacade = reducerContext.configuration.canonicalParserFacade,
+        specifiedSparTreeNodeFactory = reducerContext.sparTreeNodeFactory,
+        simplifyTree = false,
+        canonicalTokenCountComputer = { null },
+        errorMode = ParseErrorHandling.STRICT,
+      ).detachRootFromTree()
 
   protected data class PiggybackPayloadKey(
     val owningClass: Class<*>,

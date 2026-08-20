@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 14
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_node_priority_small.line"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "small.line"
+  inputFiles:
+  - "small.line"
   deps: []
-  sourceFile: "small.line"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_node_priority-dfs_small.line"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "PRISTINE_DDMIN"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "PRISTINE_DDMIN"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
-  profileListMinimizer: "delta_debugger_progress_profile.txt"
+  profileListMinimizer: "_reduction_golden_test_list_minimizer_profile.txt"
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: true
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,48 +130,60 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.line.LineParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 15
 (14/14)  The reducer execution plan is listed below.
     fixpoint (smaller) {
-        node_priority-dfs
+        node_priority
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            node_priority-dfs
+            fixpoint (smaller) {
+                node_priority
+            }
         }
     }
 
 
 (14/14)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-======Fixpoint iteration 1. Reducer: node_priority-dfs======
+========Fixpoint iteration 1. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
-lines {id=1,slot_type=lines}
-|___(*) {id=2,slot_type=kleene_star__lines_1}
-    |___Token:a {id=3,slot_type=LINE}
-    |___Token:b {id=4,slot_type=LINE}
-    |___Token:c {id=5,slot_type=LINE}
-    |___Token:d {id=6,slot_type=LINE}
-    |___Token:e {id=7,slot_type=LINE}
-    |___Token:f {id=8,slot_type=LINE}
-    |___Token:g {id=9,slot_type=LINE}
-    |___Token:h {id=10,slot_type=LINE}
-    |___Token:i {id=11,slot_type=LINE}
-    |___Token:j {id=12,slot_type=LINE}
-    |___Token:k {id=13,slot_type=LINE}
-    |___Token:l {id=14,slot_type=LINE}
-    |___Token:m {id=15,slot_type=LINE}
-    |___Token:n {id=16,slot_type=LINE}
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:a{id=3,slot_type=LINE}
+    |___Token:b{id=4,slot_type=LINE}
+    |___Token:c{id=5,slot_type=LINE}
+    |___Token:d{id=6,slot_type=LINE}
+    |___Token:e{id=7,slot_type=LINE}
+    |___Token:f{id=8,slot_type=LINE}
+    |___Token:g{id=9,slot_type=LINE}
+    |___Token:h{id=10,slot_type=LINE}
+    |___Token:i{id=11,slot_type=LINE}
+    |___Token:j{id=12,slot_type=LINE}
+    |___Token:k{id=13,slot_type=LINE}
+    |___Token:l{id=14,slot_type=LINE}
+    |___Token:m{id=15,slot_type=LINE}
+    |___Token:n{id=16,slot_type=LINE}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority](14/14)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](14/14)  Retrieved semantics provider null
 ==================Reducing node 2, size=14==================
 
 The current best program is the following
@@ -172,32 +206,23 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Minimizer PristineDeltaDebugger starts. Input=[0-13]#14. Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Testing the empty input. Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Minimizer PristineDeltaDebugger starts. Input=[0-13]#14. Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Testing the empty input. Global ratio:14/14=100.00%
+==========Testing the following program (0): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@14
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=14,#parts=14#total-parts=14
     --file: small.line--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [0-13]#14: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Number of partitions: n=2 Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Partition size: 2. [[0-6]#7, [7-13]#7] Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Reducing partitions: [[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13]] Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [0-13]#14: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Number of partitions: n=2 Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Partition count: 2. [[0-6]#7, [7-13]#7] Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Reducing partitions:  Partition count: 2. [[0-6]#7, [7-13]#7] Global ratio:14/14=100.00%
+==========Testing the following program (1): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@7
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=7,#parts=7#total-parts=14
     --file: small.line--
-    a
-    b
-    c
-    d
-    e
-    f
-    g
-    --file: <formatted tokenized program in its original format>--
     a
     b
     c
@@ -208,19 +233,11 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Reducing partitions: [[0, 1,
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [7-13]#7: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [7-13]#7: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+==========Testing the following program (2): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@7
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=7,#parts=7#total-parts=14
     --file: small.line--
-    h
-    i
-    j
-    k
-    l
-    m
-    n
-    --file: <formatted tokenized program in its original format>--
     h
     i
     j
@@ -231,63 +248,43 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [7-13]#7: Unint
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [0-6]#7: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Reducing complements: [[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13]] Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [0-6]#7: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Reducing complements: Partition count: 2. [[0-6]#7, [7-13]#7] Global ratio:14/14=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=3}
-    NodeDeletionAction{target_node=4}
-    NodeDeletionAction{target_node=5}
-    NodeDeletionAction{target_node=6}
-    NodeDeletionAction{target_node=7}
-    NodeDeletionAction{target_node=8}
-    NodeDeletionAction{target_node=9}
+    structure: [delete: 3,4,5,6,7,8,9]
+    context: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=7,#parts=7#total-parts=14
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [0-6]#7: Skipped. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [0-6]#7: Skipped. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=10}
-    NodeDeletionAction{target_node=11}
-    NodeDeletionAction{target_node=12}
-    NodeDeletionAction{target_node=13}
-    NodeDeletionAction{target_node=14}
-    NodeDeletionAction{target_node=15}
-    NodeDeletionAction{target_node=16}
+    structure: [delete: 10,11,12,13,14,15,16]
+    context: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=7,#parts=7#total-parts=14
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [7-13]#7: Skipped. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Number of partitions: n=4 Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Partition size: 4. [[0-3]#4, [4-7]#4, [8-10]#3, [11-13]#3] Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Reducing partitions: [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10], [11, 12, 13]] Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [7-13]#7: Skipped. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Number of partitions: n=4 Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Partition count: 4. [[0-3]#4, [4-7]#4, [8-10]#3, [11-13]#3] Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Reducing partitions:  Partition count: 4. [[0-3]#4, [4-7]#4, [8-10]#3, [11-13]#3] Global ratio:14/14=100.00%
+==========Testing the following program (3): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@10
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=10,#parts=10#total-parts=14
     --file: small.line--
     a
     b
     c
     d
-    --file: <formatted tokenized program in its original format>--
-    a
-    b
-    c
-    d
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [4-13]#10: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [4-13]#10: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+==========Testing the following program (4): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@10
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=10,#parts=10#total-parts=14
     --file: small.line--
-    e
-    f
-    g
-    h
-    --file: <formatted tokenized program in its original format>--
     e
     f
     g
@@ -295,53 +292,34 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [4-13]#10: Unin
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [0-3,8-13]#10: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [0-3,8-13]#10: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+==========Testing the following program (5): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@11
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=11,#parts=11#total-parts=14
     --file: small.line--
-    i
-    j
-    k
-    --file: <formatted tokenized program in its original format>--
     i
     j
     k
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [0-7,11-13]#11: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [0-7,11-13]#11: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+==========Testing the following program (6): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@11
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=11,#parts=11#total-parts=14
     --file: small.line--
-    l
-    m
-    n
-    --file: <formatted tokenized program in its original format>--
     l
     m
     n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [0-10]#11: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Reducing complements: [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10], [11, 12, 13]] Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [0-10]#11: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Reducing complements: Partition count: 4. [[0-3]#4, [4-7]#4, [8-10]#3, [11-13]#3] Global ratio:14/14=100.00%
+==========Testing the following program (7): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@4
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=4,#parts=4#total-parts=14
     --file: small.line--
-    e
-    f
-    g
-    h
-    i
-    j
-    k
-    l
-    m
-    n
-    --file: <formatted tokenized program in its original format>--
     e
     f
     g
@@ -355,22 +333,11 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Reducing complements: [[0, 1
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [0-3]#4: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [0-3]#4: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+==========Testing the following program (8): fail===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@4
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=4,#parts=4#total-parts=14
     --file: small.line--
-    a
-    b
-    c
-    d
-    i
-    j
-    k
-    l
-    m
-    n
-    --file: <formatted tokenized program in its original format>--
     a
     b
     c
@@ -384,23 +351,11 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [0-3]#4: Uninte
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [4-7]#4: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
-============Testing the following program: pass=============
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [4-7]#4: Uninteresting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+==========Testing the following program (9): pass===========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@3
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=3,#parts=3#total-parts=14
     --file: small.line--
-    a
-    b
-    c
-    d
-    e
-    f
-    g
-    h
-    l
-    m
-    n
-    --file: <formatted tokenized program in its original format>--
     a
     b
     c
@@ -415,7 +370,7 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [4-7]#4: Uninte
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [8-10]#3: Interesting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](14/14)  Try deleting [8-10]#3: Interesting. Local ratio: 14/14=100.00%. Global ratio:14/14=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 9 --> 9.
@@ -431,12 +386,13 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](14/14)  Try deleting [8-10]#3: Inter
 ================The best program is updated.================
 
 token count change 14 -> 11
+Edit: [delete: 11,12,13]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (10): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@3
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=3,#parts=3#total-parts=11
     --file: small.line--
     a
     b
@@ -446,113 +402,77 @@ token count change 14 -> 11
     f
     g
     h
-    --file: <formatted tokenized program in its original format>--
-    a
-    b
-    c
-    d
-    e
-    f
-    g
-    h
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [11-13]#3: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Number of partitions: n=6 Global ratio:11/14=78.57%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Partition size: 6. [[0-1]#2, [2-3]#2, [4-5]#2, [6-7]#2, [11-12]#2, [13]#1] Global ratio:11/14=78.57%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Reducing partitions: [[0, 1], [2, 3], [4, 5], [6, 7], [11, 12], [13]] Global ratio:11/14=78.57%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [11-13]#3: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Number of partitions: n=6 Global ratio:11/14=78.57%
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Partition count: 6. [[0-1]#2, [2-3]#2, [4-5]#2, [6-7]#2, [11-12]#2, [13]#1] Global ratio:11/14=78.57%
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Reducing partitions:  Partition count: 6. [[0-1]#2, [2-3]#2, [4-5]#2, [6-7]#2, [11-12]#2, [13]#1] Global ratio:11/14=78.57%
+==========Testing the following program (11): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@9
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=9,#parts=9#total-parts=11
     --file: small.line--
-    a
-    b
-    --file: <formatted tokenized program in its original format>--
     a
     b
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [2-7,11-13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [2-7,11-13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+==========Testing the following program (12): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@9
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=9,#parts=9#total-parts=11
     --file: small.line--
-    c
-    d
-    --file: <formatted tokenized program in its original format>--
     c
     d
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [0-1,4-7,11-13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [0-1,4-7,11-13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+==========Testing the following program (13): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@9
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=9,#parts=9#total-parts=11
     --file: small.line--
-    e
-    f
-    --file: <formatted tokenized program in its original format>--
     e
     f
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [0-3,6-7,11-13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [0-3,6-7,11-13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+==========Testing the following program (14): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@9
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=9,#parts=9#total-parts=11
     --file: small.line--
-    g
-    h
-    --file: <formatted tokenized program in its original format>--
     g
     h
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [0-5,11-13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [0-5,11-13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+==========Testing the following program (15): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@9
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=9,#parts=9#total-parts=11
     --file: small.line--
-    l
-    m
-    --file: <formatted tokenized program in its original format>--
     l
     m
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [0-7,13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [0-7,13]#9: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+==========Testing the following program (16): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@10
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=10,#parts=10#total-parts=11
     --file: small.line--
-    n
-    --file: <formatted tokenized program in its original format>--
     n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [0-7,11-12]#10: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Reducing complements: [[0, 1], [2, 3], [4, 5], [6, 7], [11, 12], [13]] Global ratio:11/14=78.57%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [0-7,11-12]#10: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Reducing complements: Partition count: 6. [[0-1]#2, [2-3]#2, [4-5]#2, [6-7]#2, [11-12]#2, [13]#1] Global ratio:11/14=78.57%
+==========Testing the following program (17): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@2
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=2,#parts=2#total-parts=11
     --file: small.line--
-    c
-    d
-    e
-    f
-    g
-    h
-    l
-    m
-    n
-    --file: <formatted tokenized program in its original format>--
     c
     d
     e
@@ -565,21 +485,11 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Reducing complements: [[0, 1
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [0-1]#2: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
-============Testing the following program: pass=============
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [0-1]#2: Uninteresting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+==========Testing the following program (18): pass==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@2
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=2,#parts=2#total-parts=11
     --file: small.line--
-    a
-    b
-    e
-    f
-    g
-    h
-    l
-    m
-    n
-    --file: <formatted tokenized program in its original format>--
     a
     b
     e
@@ -592,7 +502,7 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [0-1]#2: Uninte
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [2-3]#2: Interesting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
+FixPt[1][node_priority][PRISTINE_DDMIN](11/14)  Try deleting [2-3]#2: Interesting. Local ratio: 11/14=78.57%. Global ratio:11/14=78.57%
 ===========TestScriptExecutionCacheEntryEviction============
 
 3 entries are removed: 17 --> 14.
@@ -608,12 +518,13 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](11/14)  Try deleting [2-3]#2: Intere
 ================The best program is updated.================
 
 token count change 11 -> 9
+Edit: [delete: 5,6]
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (19): pass==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@2
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=2,#parts=2#total-parts=9
     --file: small.line--
     a
     b
@@ -622,18 +533,10 @@ token count change 11 -> 9
     l
     m
     n
-    --file: <formatted tokenized program in its original format>--
-    a
-    b
-    g
-    h
-    l
-    m
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](9/14)  Try deleting [4-5]#2: Interesting. Local ratio: 9/14=64.29%. Global ratio:9/14=64.29%
+FixPt[1][node_priority][PRISTINE_DDMIN](9/14)  Try deleting [4-5]#2: Interesting. Local ratio: 9/14=64.29%. Global ratio:9/14=64.29%
 ===========TestScriptExecutionCacheEntryEviction============
 
 3 entries are removed: 14 --> 11.
@@ -649,47 +552,36 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](9/14)  Try deleting [4-5]#2: Interes
 ================The best program is updated.================
 
 token count change 9 -> 7
+Edit: [delete: 7,8]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (20): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@2
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=2,#parts=2#total-parts=7
     --file: small.line--
     a
     b
     l
     m
     n
-    --file: <formatted tokenized program in its original format>--
-    a
-    b
-    l
-    m
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](7/14)  Try deleting [6-7]#2: Uninteresting. Local ratio: 7/14=50.00%. Global ratio:7/14=50.00%
-============Testing the following program: pass=============
+FixPt[1][node_priority][PRISTINE_DDMIN](7/14)  Try deleting [6-7]#2: Uninteresting. Local ratio: 7/14=50.00%. Global ratio:7/14=50.00%
+==========Testing the following program (21): pass==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@2
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=2,#parts=2#total-parts=7
     --file: small.line--
     a
     b
     g
     h
     n
-    --file: <formatted tokenized program in its original format>--
-    a
-    b
-    g
-    h
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](7/14)  Try deleting [11-12]#2: Interesting. Local ratio: 7/14=50.00%. Global ratio:7/14=50.00%
+FixPt[1][node_priority][PRISTINE_DDMIN](7/14)  Try deleting [11-12]#2: Interesting. Local ratio: 7/14=50.00%. Global ratio:7/14=50.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 1 entries are removed: 12 --> 11.
@@ -705,118 +597,94 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](7/14)  Try deleting [11-12]#2: Inter
 ================The best program is updated.================
 
 token count change 7 -> 5
+Edit: [delete: 14,15]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (22): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@1
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=5
     --file: small.line--
     a
     b
     g
     h
-    --file: <formatted tokenized program in its original format>--
-    a
-    b
-    g
-    h
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [13]#1: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Number of partitions: n=5 Global ratio:5/14=35.71%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Partition size: 5. [[0]#1, [1]#1, [6]#1, [7]#1, [13]#1] Global ratio:5/14=35.71%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Reducing partitions: [[0], [1], [6], [7], [13]] Global ratio:5/14=35.71%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Try deleting [13]#1: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Number of partitions: n=5 Global ratio:5/14=35.71%
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Partition count: 5. [[0]#1, [1]#1, [6]#1, [7]#1, [13]#1] Global ratio:5/14=35.71%
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Reducing partitions:  Partition count: 5. [[0]#1, [1]#1, [6]#1, [7]#1, [13]#1] Global ratio:5/14=35.71%
+==========Testing the following program (23): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@4
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=4,#parts=4#total-parts=5
     --file: small.line--
-    a
-    --file: <formatted tokenized program in its original format>--
     a
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [1,6-7,13]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Try deleting [1,6-7,13]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
+==========Testing the following program (24): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@4
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=4,#parts=4#total-parts=5
     --file: small.line--
-    b
-    --file: <formatted tokenized program in its original format>--
     b
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [0,6-7,13]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Try deleting [0,6-7,13]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
+==========Testing the following program (25): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@4
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=4,#parts=4#total-parts=5
     --file: small.line--
-    g
-    --file: <formatted tokenized program in its original format>--
     g
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [0-1,7,13]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Try deleting [0-1,7,13]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
+==========Testing the following program (26): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@4
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=4,#parts=4#total-parts=5
     --file: small.line--
-    h
-    --file: <formatted tokenized program in its original format>--
     h
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [0-1,6,13]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Try deleting [0-1,6,13]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     n
-    --file: <formatted tokenized program in its original format>--
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [0-1,6-7]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Reducing complements: [[0], [1], [6], [7], [13]] Global ratio:5/14=35.71%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Try deleting [0-1,6-7]#4: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Reducing complements: Partition count: 5. [[0]#1, [1]#1, [6]#1, [7]#1, [13]#1] Global ratio:5/14=35.71%
+==========Testing the following program (27): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@1
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=5
     --file: small.line--
     b
     g
     h
     n
-    --file: <formatted tokenized program in its original format>--
-    b
-    g
-    h
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [0]#1: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
-============Testing the following program: pass=============
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Try deleting [0]#1: Uninteresting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
+==========Testing the following program (28): pass==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@1
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=5
     --file: small.line--
     a
     g
     h
     n
-    --file: <formatted tokenized program in its original format>--
-    a
-    g
-    h
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [1]#1: Interesting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
+FixPt[1][node_priority][PRISTINE_DDMIN](5/14)  Try deleting [1]#1: Interesting. Local ratio: 5/14=35.71%. Global ratio:5/14=35.71%
 ===========TestScriptExecutionCacheEntryEviction============
 
 4 entries are removed: 17 --> 13.
@@ -832,39 +700,32 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](5/14)  Try deleting [1]#1: Interesti
 ================The best program is updated.================
 
 token count change 5 -> 4
+Edit: [delete_4]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (29): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@1
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=4
     --file: small.line--
     a
     h
     n
-    --file: <formatted tokenized program in its original format>--
-    a
-    h
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](4/14)  Try deleting [6]#1: Uninteresting. Local ratio: 4/14=28.57%. Global ratio:4/14=28.57%
-============Testing the following program: pass=============
+FixPt[1][node_priority][PRISTINE_DDMIN](4/14)  Try deleting [6]#1: Uninteresting. Local ratio: 4/14=28.57%. Global ratio:4/14=28.57%
+==========Testing the following program (30): pass==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@1
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=4
     --file: small.line--
     a
     g
     n
-    --file: <formatted tokenized program in its original format>--
-    a
-    g
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](4/14)  Try deleting [7]#1: Interesting. Local ratio: 4/14=28.57%. Global ratio:4/14=28.57%
+FixPt[1][node_priority][PRISTINE_DDMIN](4/14)  Try deleting [7]#1: Interesting. Local ratio: 4/14=28.57%. Global ratio:4/14=28.57%
 ===========TestScriptExecutionCacheEntryEviction============
 
 3 entries are removed: 14 --> 11.
@@ -880,90 +741,77 @@ FixPt[1][node_priority-dfs][PRISTINE_DDMIN](4/14)  Try deleting [7]#1: Interesti
 ================The best program is updated.================
 
 token count change 4 -> 3
+Edit: [delete_10]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (31): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@1
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: small.line--
     a
     g
-    --file: <formatted tokenized program in its original format>--
-    a
-    g
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [13]#1: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Number of partitions: n=3 Global ratio:3/14=21.43%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Partition size: 3. [[0]#1, [6]#1, [13]#1] Global ratio:3/14=21.43%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Reducing partitions: [[0], [6], [13]] Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [13]#1: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Number of partitions: n=3 Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Partition count: 3. [[0]#1, [6]#1, [13]#1] Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Reducing partitions:  Partition count: 3. [[0]#1, [6]#1, [13]#1] Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     a
-    --file: <formatted tokenized program in its original format>--
-    a
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [6,13]#2: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [6,13]#2: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     g
-    --file: <formatted tokenized program in its original format>--
-    g
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0,13]#2: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0,13]#2: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     n
-    --file: <formatted tokenized program in its original format>--
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0,6]#2: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Reducing complements: [[0], [6], [13]] Global ratio:3/14=21.43%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0,6]#2: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Reducing complements: Partition count: 3. [[0]#1, [6]#1, [13]#1] Global ratio:3/14=21.43%
+==========Testing the following program (32): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@1
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: small.line--
     g
     n
-    --file: <formatted tokenized program in its original format>--
-    g
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0]#1: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
-============Testing the following program: fail=============
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0]#1: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
+==========Testing the following program (33): fail==========
 
-// edit action set type: PRISTINE_DDMIN in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__lines_1]dd@1
+// edit action set type: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: small.line--
     a
     n
-    --file: <formatted tokenized program in its original format>--
-    a
-    n
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [6]#1: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [6]#1: Uninteresting. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=16}
+    structure: [delete_16]
+    context: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=3
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [13]#1: Skipped. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
-FixPt[1][node_priority-dfs][PRISTINE_DDMIN](3/14)  Minimizer PristineDeltaDebugger ends. Result=[0,6,13]#3. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [13]#1: Skipped. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
+FixPt[1][node_priority][PRISTINE_DDMIN](3/14)  Minimizer PristineDeltaDebugger ends. Result=[0,6,13]#3. Local ratio: 3/14=21.43%. Global ratio:3/14=21.43%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 2 from 14 to 3
@@ -1022,17 +870,20 @@ Failed to reduce node 3
 
 
 (3/14)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 2. Reducer: node_priority-dfs======
+========Fixpoint iteration 2. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
-lines {id=18,slot_type=lines}
-|___(*) {id=19,slot_type=kleene_star__lines_1}
-    |___Token:a {id=20,slot_type=LINE}
-    |___Token:g {id=21,slot_type=LINE}
-    |___Token:n {id=22,slot_type=LINE}
+lines{id=18,slot_type=lines}
+|___(*){id=19,slot_type=kleene_star__lines_1}
+    |___Token:a{id=20,slot_type=LINE}
+    |___Token:g{id=21,slot_type=LINE}
+    |___Token:n{id=22,slot_type=LINE}
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority](3/14)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](3/14)  Retrieved semantics provider null
 ==================Reducing node 19, size=3==================
 
 The current best program is the following
@@ -1044,121 +895,107 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Minimizer PristineDeltaDebugger starts. Input=[0-2]#3. Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Testing the empty input. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Minimizer PristineDeltaDebugger starts. Input=[0-2]#3. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Testing the empty input. Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Number of partitions: n=2 Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Partition size: 2. [[0-1]#2, [2]#1] Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Reducing partitions: [[0, 1], [2]] Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Number of partitions: n=2 Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Partition count: 2. [[0-1]#2, [2]#1] Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Reducing partitions:  Partition count: 2. [[0-1]#2, [2]#1] Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     a
     g
-    --file: <formatted tokenized program in its original format>--
-    a
-    g
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     n
-    --file: <formatted tokenized program in its original format>--
-    n
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Reducing complements: [[0, 1], [2]] Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Reducing complements: Partition count: 2. [[0-1]#2, [2]#1] Global ratio:3/14=21.43%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=20}
-    NodeDeletionAction{target_node=21}
+    structure: [delete: 20,21]
+    context: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=2,#parts=2#total-parts=3
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0-1]#2: Skipped. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0-1]#2: Skipped. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=22}
+    structure: [delete_22]
+    context: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=3
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [2]#1: Skipped. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Number of partitions: n=3 Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Partition size: 3. [[0]#1, [1]#1, [2]#1] Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Reducing partitions: [[0], [1], [2]] Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [2]#1: Skipped. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Number of partitions: n=3 Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Partition count: 3. [[0]#1, [1]#1, [2]#1] Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Reducing partitions:  Partition count: 3. [[0]#1, [1]#1, [2]#1] Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     a
-    --file: <formatted tokenized program in its original format>--
-    a
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [1-2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [1-2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     g
-    --file: <formatted tokenized program in its original format>--
-    g
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=20}
-    NodeDeletionAction{target_node=21}
+    structure: [delete: 20,21]
+    context: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=2,#parts=2#total-parts=3
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0-1]#2: Skipped. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Reducing complements: [[0], [1], [2]] Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0-1]#2: Skipped. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Reducing complements: Partition count: 3. [[0]#1, [1]#1, [2]#1] Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     g
     n
-    --file: <formatted tokenized program in its original format>--
-    g
-    n
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.line--
     a
     n
-    --file: <formatted tokenized program in its original format>--
-    a
-    n
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=22}
+    structure: [delete_22]
+    context: PRISTINE_DDMIN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__lines_1]dd@#nodes=1,#parts=1#total-parts=3
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Try deleting [2]#1: Skipped. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
-FixPt[2][node_priority-dfs][PRISTINE_DDMIN](3/14)  Minimizer PristineDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Try deleting [2]#1: Skipped. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
+FixPt[2][node_priority][PRISTINE_DDMIN](3/14)  Minimizer PristineDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:3/14=21.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 19
@@ -1216,33 +1053,36 @@ Failed to reduce node 20
 ------------------------------------------------------------
 
 
+(3/14)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
-lines {id=18,slot_type=lines}
-|___(*) {id=19,slot_type=kleene_star__lines_1}
-    |___Token:a {id=20,slot_type=LINE}
-    |___Token:g {id=21,slot_type=LINE}
-    |___Token:n {id=22,slot_type=LINE}
+lines{id=18,slot_type=lines}
+|___(*){id=19,slot_type=kleene_star__lines_1}
+    |___Token:a{id=20,slot_type=LINE}
+    |___Token:g{id=21,slot_type=LINE}
+    |___Token:n{id=22,slot_type=LINE}
 ------------------------------------------------------------
 
 
 FixPt[3][FineGritLatraReducer](3/14)  Latra does not support LanguageLine{name=line, extensions=[line], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
-(3/14)  The history of the reducer invocation.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0    node_priority-dfs     -11    -11             0
- 1    node_priority-dfs       0      0             0
- 2 FineGritLatraReducer       0      0             0
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      6             0     -11            -11      34   time-hidden
+ 1        node_priority      0             0       0              0       0   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-   node_priority-dfs     2     -11    -11
-FineGritLatraReducer     1       0      0
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      6             0     -11            -11      34   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+        Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Deletion      6             0     -11            -11
 ------------------------------------- End --------------------------------------
-
-
 #test success = 6
 #test failure = 28
 #test result cache hits = 11

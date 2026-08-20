@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -34,13 +34,13 @@ class Python3ParserFacade :
         Python3ParserFacade::class.java,
       ),
     identifierTokenTypes = ImmutableIntArray.of(Python3Lexer.NAME),
+    includeAutoDetectedIdentifierTokenTypes = false,
     lexerClass = Python3Lexer::class.java,
     parserClass = PnfPython3Parser::class.java,
   ) {
   fun parseWithOrigParser(program: String?): ParseTreeWithParser {
     StringReader(program).use { reader ->
       return parseReader(
-        "<dummy-file>",
         reader,
         { charStream: CharStream? -> Python3Lexer(charStream) },
         { commonTokenStream: CommonTokenStream? -> PnfPython3Parser(commonTokenStream) },

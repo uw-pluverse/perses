@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -184,10 +184,17 @@ class PersesAstBuilder(
         .map { convertTokenSpecifications(it) }
         .toList()
     return when (tokenSpecifications.size) {
-      0 -> PersesTokenSpecificationAst.EMPTY
-      1 -> tokenSpecifications.single()
-      else ->
+      0 -> {
+        PersesTokenSpecificationAst.EMPTY
+      }
+
+      1 -> {
+        tokenSpecifications.single()
+      }
+
+      else -> {
         throw RuntimeException("Multiple token specifications are found: $tokenSpecifications")
+      }
     }
   }
 
@@ -450,7 +457,10 @@ class PersesAstBuilder(
             .map { lexerAltAction.getChild(it) as GrammarAST }
             .map {
               when (it.text) {
-                "skip", "popMode", "more" -> AbstractLexerCommand.create(it.text)
+                "skip", "popMode", "more" -> {
+                  AbstractLexerCommand.create(it.text)
+                }
+
                 "LEXER_ACTION_CALL" -> {
                   val lexerCommandName = it.getChild(0).text
                   check(
@@ -462,7 +472,10 @@ class PersesAstBuilder(
                   val commandArg = it.getChild(1).text
                   AbstractLexerCommand.create(lexerCommandName, commandArg)
                 }
-                else -> TODO()
+
+                else -> {
+                  TODO()
+                }
               }
             }.toImmutableList()
         return PersesLexerRuleAst(ruleNameHandle, PersesLexerCommandAst(commands, body))

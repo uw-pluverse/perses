@@ -3,6 +3,7 @@ load(
     "kt_jvm_binary",
     "kt_jvm_library",
 )
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
 package(default_visibility = [
     "//visibility:public",
@@ -64,10 +65,13 @@ kt_jvm_library(
         "Util.kt",
     ],
     exports = [
+        ":AtomicSequenceGenerator",
         ":file_content",
     ],
     deps = [
+        ":AtomicSequenceGenerator",
         "//:guava",
+        "//:kotlin_stdib",
     ],
 )
 
@@ -75,6 +79,16 @@ kt_jvm_library(
     name = "simple_stack_and_queue",
     srcs = [
         "SimpleStackAndQueue.kt",
+    ],
+    deps = [
+        "//:guava",
+    ],
+)
+
+kt_jvm_library(
+    name = "immutable_list_builder_ext",
+    srcs = [
+        "ImmutableListBuilderExt.kt",
     ],
     deps = [
         "//:guava",
@@ -129,13 +143,18 @@ kt_jvm_library(
         "FileNameContentPair.kt",
     ],
     deps = [
-        ":file_content",
+        ":util",
     ],
 )
 
 kt_jvm_library(
     name = "mutable_int",
     srcs = ["MutableInt.kt"],
+)
+
+kt_jvm_library(
+    name = "immutable_int_array",
+    srcs = ["ImmutableIntArray.kt"],
 )
 
 kt_jvm_library(
@@ -169,6 +188,7 @@ kt_jvm_library(
     ],
     deps = [
         ":timeutil",
+        "//src/org/perses:perses_constants",
         "//src/org/perses/util",
     ],
 )
@@ -194,6 +214,12 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "AtomicSequenceGenerator",
+    srcs = ["AtomicSequenceGenerator.kt"],
+    deps = ["//:guava"],
+)
+
+kt_jvm_library(
     name = "Interval",
     srcs = ["Interval.kt"],
 )
@@ -212,7 +238,7 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "auto_deltable_folder",
+    name = "auto_deletable_folder",
     srcs = ["AutoDeletableFolder.kt"],
     deps = [
     ],

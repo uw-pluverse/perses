@@ -41,3 +41,12 @@ perses_result*
 t.c.*.orig
 
 perses_deploy.jar
+creduce
+
+# Read-only reference checkouts of upstream reducers (c-vise, creduce) kept for study only.
+/reference/
+/specimin
+
+# Packed snap artifacts produced by `snap/local/build-snap.sh`.
+*.snap
+paper_drafts

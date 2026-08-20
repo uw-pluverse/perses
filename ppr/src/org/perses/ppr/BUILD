@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = [
     "//visibility:public",
@@ -18,7 +19,7 @@ kt_jvm_library(
         ":AbstractPPRCommandOptions.kt",
     ],
     deps = [
-        "//src/org/perses:command_options",
+        "//src/org/perses:perses_command_options",
     ],
 )
 
@@ -30,6 +31,7 @@ kt_jvm_library(
     deps = [
         ":cmd_options",
         ":reduction_driver",
+        "//ppr/src/org/perses/ppr/diff:reduction_inputs",
         "//src/org/perses:HelperForPersesMain",
     ],
 )
@@ -37,11 +39,15 @@ kt_jvm_library(
 kt_jvm_library(
     name = "cmd_options",
     srcs = [
-        "CmdOptions.kt",
+        "FlagGenerator.kt",
+        "PPRMainCommandOptions.kt",
     ],
     deps = [
         "//ppr/src/org/perses/ppr:AbstractPPRCommandOptions",
-        "//src/org/perses:command_options",
+        "//ppr/src/org/perses/ppr/diff/list:cmd_options",
+        "//ppr/src/org/perses/ppr/diff/tree:cmd_options",
+        "//ppr/src/org/perses/ppr/seed:cmd_options",
+        "//src/org/perses:perses_command_options",
     ],
 )
 

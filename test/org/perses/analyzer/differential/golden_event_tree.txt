@@ -1,0 +1,24 @@
+Events
+  Iteration 1 [1 nodes] [-100 tokens] [#edits=1=1-I/0-U] [5s=10-15]
+    <html><font color='#008000'><b>[#1] Node 1:[-100 tokens]: <unknown_rule> [Time: 10->15s] [Edits: 1]</b></font></html>
+      Rule: DeleteFunction
+      Children Before: 3#[2, 3, 4]
+      Children After: 2#[2, 4]
+      Children Deleted: 1#[3]
+        Child 3
+      EditsTested:[1] [min=50ms,max=50ms,average=50ms,total=0.05s] [1 interesting]
+        <html><font color='#008000'><b>[#1] [-2 tokens] [Time: 12s] ✅ Function -> Empty</b></font></html>
+          Context: Delete function f1
+          Time: 50 ms
+          Deleted Code: void f1() {}
+  Iteration 2 [1 nodes] [-0 tokens] [#edits=1=0-I/1-U] [5s=20-25]
+    [#2] Node 5: KLEENE_STAR [Time: 20->25s] [Edits: 1]
+      Rule: DeleteVariable
+      Children Before: 2#[6, 7]
+      Children After: 2#[6, 7]
+      Children Deleted: 0#[]
+      EditsTested:[1] [min=30ms,max=30ms,average=30ms,total=0.03s] [0 interesting]
+        [#2] [-0 tokens] [Time: 22s] Variable -> Empty
+          Context: Delete variable x
+          Time: 30 ms
+          Deleted Code: int x = 0;

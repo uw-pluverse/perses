@@ -29,7 +29,7 @@ EOF
 
 {
   pushd $BUILD_WORKSPACE_DIRECTORY 1> /dev/null
-  bazel query 'kind(maven_jar, //external:all)' --output=build | grep artifact | awk '{print $3}' | sort | sed 's/^/        /;' 2> /dev/null
+  bazelisk query 'kind(maven_jar, //external:all)' --output=build | grep artifact | awk '{print $3}' | sort | sed 's/^/        /;' 2> /dev/null
   popd 1> /dev/null
 }
 
@@ -50,8 +50,8 @@ echo ""
 
 {
   pushd $BUILD_WORKSPACE_DIRECTORY 1> /dev/null
-  declare -a artifact_list=($(bazel query 'kind(maven_jar, //external:all)' --output=build | grep artifact | awk '{print $3}' | sed 's/"//g; s/,//g' 2> /dev/null))
-  declare -a repo_name_list=($(bazel query 'kind(maven_jar, //external:all)' --output=build | grep name | awk '{print $3}' | sed 's/"//g; s/,//g' 2> /dev/null))
+  declare -a artifact_list=($(bazelisk query 'kind(maven_jar, //external:all)' --output=build | grep artifact | awk '{print $3}' | sed 's/"//g; s/,//g' 2> /dev/null))
+  declare -a repo_name_list=($(bazelisk query 'kind(maven_jar, //external:all)' --output=build | grep name | awk '{print $3}' | sed 's/"//g; s/,//g' 2> /dev/null))
 
   for i in "${!artifact_list[@]}"; do
     target=$(echo "${artifact_list[$i]}" | sed "s/-/_/g; s/\./_/g;" | cut -d":" -f1,2 | sed "s/:/_/g;")

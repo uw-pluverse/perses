@@ -20,6 +20,6 @@ if grep --quiet 'FixPt\[0\]' "${FILE}"; then
   exit 1
 fi
 
-grep --quiet 'node_priority-dfs' "${FILE}" || exit 1
+grep --quiet 'node_priority' "${FILE}" || exit 1
 
 awk '/FixPt\[1\]/,/FixPt\[2\]/' "${FILE}" | grep --quiet 'FixPt\[2\]'

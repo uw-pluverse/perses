@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.reduction.ReducerFunctionalTestUtility
 
-/** Functional test for [HDDReducer]  */
+/** Functional test for [HDDReducerAnnotations]  */
 @RunWith(JUnit4::class)
 class HddReducerFunctionalTest {
   val expectedForDelta1 =
@@ -39,7 +39,7 @@ class HddReducerFunctionalTest {
   fun testReduceDelta1_hdd() {
     ReducerFunctionalTestUtility.runCTestSubject(
       reductionFolder = "test_data/delta_1",
-      reducerAnnotation = HDDReducer.META,
+      reducerAnnotation = HDDReducerAnnotations.Hdd,
       cmdCustomizer = {},
       expected = expectedForDelta1,
     )
@@ -55,25 +55,16 @@ class HddReducerFunctionalTest {
     )
   }
 
-  private val expectedForJavaHelloWorld =
-    """
-        |class t {
-        |  static int counter() {
-        |    return 100;
-        |  }
-        |  public static void main(String[] args) {
-        |    for(int i = 0; i < counter(); ++i) {
-        |      System.out.println("hello world");
-        |    }
-        |  }
-        |}
-    """.trimMargin()
+  // The interestingness test now only requires the marker string to remain
+  // (see test_data/java_helloworld/r.sh), so HDD reduces the program down to
+  // that string literal.
+  private val expectedForJavaHelloWorld = "\"hello world\""
 
   @Test
   fun testJavaFunctionalTest_hdd() {
     ReducerFunctionalTestUtility.runJavaTestSubject(
       reductionFolder = "test_data/java_helloworld",
-      reducerAnnotation = HDDReducer.META,
+      reducerAnnotation = HDDReducerAnnotations.Hdd,
       cmdCustomizer = {},
       expected = expectedForJavaHelloWorld,
     )

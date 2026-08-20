@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,66 +17,42 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
-import org.perses.reduction.EditTestPayload
+import org.perses.listminimizer.EnumListMinimizerType
+import org.perses.listminimizer.WindowedSlicerSpecificArguments
+import org.perses.reduction.AbstractSparTreeReducer
+import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.TestScriptExecResult
-import org.perses.reduction.TreeEditWithItsResult
-import org.perses.spartree.LexerRuleSparTreeNode
-import org.perses.spartree.NodeDeletionActionSet
-import org.perses.spartree.SparTree
-import org.perses.util.Util
+import org.perses.spartree.ContextDescription
 import org.perses.util.toImmutableList
-import org.perses.util.transformToImmutableList
 
+/**
+ * Slices the tokens with a fixed sliding-window size (the annotation's granularity). It delegates to
+ * the windowed slicer in the list-minimizer framework, which runs concurrently when more than one
+ * thread is available; the [CompositeReducerAnnotation] runs one such reducer per granularity.
+ */
 class ConcurrentTokenSlicer(
   reducerContext: ReducerContext,
-  reducerAnnotation: ConcurrentTokenSlicerAnnotation,
-) : AbstractConcurrentTokenSlicer(
-    reducerAnnotation,
-    reducerContext,
-  ) {
-  override fun createSequenceOfIndependentSlicingTasks(
-    tokenSlicingGranularity: Int,
-    tree: SparTree,
-  ): Sequence<ListOfIndependentSlicingTasks> {
-    val tokens = tree.remainingLexerRuleNodes
-    return sequenceOf(
-      ListOfIndependentSlicingTasks(
-        Util
-          .slideReverseIfSlideable(
-            tokens,
-            slidingWindowSize = tokenSlicingGranularity,
-          ).transformToImmutableList { sublist ->
-            TokenSlicingTask(tokens, sublist.interval, tree)
-          },
-      ),
+  private val slicerAnnotation: ConcurrentTokenSlicerAnnotation,
+) : AbstractSparTreeReducer(slicerAnnotation, reducerContext) {
+  override fun computeDefaultListMinimizerType(): EnumListMinimizerType =
+    EnumListMinimizerType.WINDOWED_SLICER
+
+  override fun computeWindowedSlicerArguments(): WindowedSlicerSpecificArguments =
+    WindowedSlicerSpecificArguments(
+      minSlidingWindowSize = slicerAnnotation.windowSize,
+      maxSlidingWindowSize = slicerAnnotation.windowSize,
     )
-  }
 
-  inner class TokenSlicingTask(
-    val tokens: ImmutableList<LexerRuleSparTreeNode>,
-    val interval: Util.NonEmptyInternal,
-    tree: SparTree,
-  ) : AbstractSlicingTask(
-      tree,
-      reducerContext,
-      this@ConcurrentTokenSlicer.executorService::testProgramAsync,
-    ) {
-    override fun tryAsyncRunPreconditionCheck(): Boolean =
-      !tokens[interval.exclusiveEnd - 1].isPermanentlyDeleted
-
-    override fun createNodeDeletionActionSet(): NodeDeletionActionSet =
-      NodeDeletionActionSet.createByDeletingNodes(
-        tokens.subList(interval.inclusiveStart, interval.exclusiveEnd),
-        "token slicer@${interval.size()}",
-      )
-
-    override fun analyzeResultAndGetBest(
-      futureResult: TestScriptExecResult<EditTestPayload>,
-    ): TreeEditWithItsResult? =
-      this@ConcurrentTokenSlicer.analyzeOneTestFutureAndGetBest(futureResult)
+  override fun internalReduce(fixpointReductionState: FixpointReductionState) {
+    val tree = fixpointReductionState.inputRepresentation.tree
+    runListMinimizerOverNodes(
+      needToTestEmpty = false,
+      tree = tree,
+      input = tree.remainingLexerRuleNodes,
+      fixpointReductionState = fixpointReductionState,
+      actionsDescriptionPostfix = ContextDescription.of(NAME_PREFIX),
+    )
   }
 
   object CompositeReducerAnnotation : ReducerAnnotation(
@@ -85,7 +61,7 @@ class ConcurrentTokenSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       REDUCER_ANNOTATIONS
         .asSequence()
         .flatMap { it.create(reducerContext) }
@@ -114,7 +90,7 @@ class ConcurrentTokenSlicer(
       granularity,
       description = "concurrent token slicer",
     ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(ConcurrentTokenSlicer(reducerContext, this))
   }
 }

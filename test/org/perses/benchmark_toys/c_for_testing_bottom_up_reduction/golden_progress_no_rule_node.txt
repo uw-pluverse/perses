@@ -1,0 +1,3948 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 88
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_no_reducing_regular_rule_node_mimir_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "mimir"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: false
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "_reduction_golden_test_no_reducing_regular_rule_node_by_default_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "LAYER_BY_LAYER_TOP_DOWN"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(88/88)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        mimir
+    }
+
+
+(88/88)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+============Fixpoint iteration 1. Reducer: mimir============
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=516,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___functionDefinition{id=465,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=466,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=511,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=515,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=502,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:f1{id=510,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=504,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=506,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=507,slot_type=LeftParen}
+        |   |           |___Token:){id=509,slot_type=RightParen}
+        |   |___compoundStatement{id=468,slot_type=compoundStatement}
+        |       |___Token:{{id=469,slot_type=LeftBrace}
+        |       |___(?){id=470,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=473,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___jumpStatement{id=477,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=480,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=481,slot_type=Return}
+        |       |           |   |___(?){id=482,slot_type=optional__postfixExpression_1}
+        |       |           |       |___Token:0{id=501,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |       |           |___Token:;{id=479,slot_type=Semi}
+        |       |___Token:}{id=471,slot_type=RightBrace}
+        |___aux_rule__declaration_3{id=348,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=349,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=464,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___(?){id=350,slot_type=optional__declaration_2}
+        |   |   |___initDeclarator{id=353,slot_type=[initDeclaratorList,initDeclarator]}
+        |   |       |___Token:g1{id=460,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |   |       |___(?){id=355,slot_type=optional__initDeclarator_2}
+        |   |           |___aux_rule__initDeclarator_1{id=356,slot_type=aux_rule__initDeclarator_1}
+        |   |               |___Token:={id=357,slot_type=Assign}
+        |   |               |___additiveExpression{id=369,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+        |   |                   |___Token:0{id=457,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |                   |___(*){id=371,slot_type=kleene_star__additiveExpression_1}
+        |   |                       |___aux_rule__additiveExpression_2{id=372,slot_type=aux_rule__additiveExpression_2}
+        |   |                       |   |___Token:+{id=451,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |   |                       |   |___Token:1{id=450,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |                       |___aux_rule__additiveExpression_2{id=373,slot_type=aux_rule__additiveExpression_2}
+        |   |                       |   |___Token:+{id=442,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |   |                       |   |___Token:2{id=441,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |                       |___aux_rule__additiveExpression_2{id=374,slot_type=aux_rule__additiveExpression_2}
+        |   |                       |   |___Token:+{id=433,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |   |                       |   |___Token:3{id=432,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |                       |___aux_rule__additiveExpression_2{id=375,slot_type=aux_rule__additiveExpression_2}
+        |   |                       |   |___Token:+{id=424,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |   |                       |   |___Token:4{id=423,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |                       |___aux_rule__additiveExpression_2{id=376,slot_type=aux_rule__additiveExpression_2}
+        |   |                       |   |___Token:+{id=415,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |   |                       |   |___Token:6{id=414,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |                       |___aux_rule__additiveExpression_2{id=377,slot_type=aux_rule__additiveExpression_2}
+        |   |                       |   |___Token:+{id=406,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |   |                       |   |___Token:8{id=405,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |                       |___aux_rule__additiveExpression_2{id=378,slot_type=aux_rule__additiveExpression_2}
+        |   |                       |   |___Token:+{id=397,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |   |                       |   |___Token:9{id=396,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |                       |___aux_rule__additiveExpression_2{id=379,slot_type=aux_rule__additiveExpression_2}
+        |   |                           |___Token:+{id=388,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |   |                           |___Token:10{id=387,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |___Token:;{id=351,slot_type=Semi}
+        |___functionDefinition{id=285,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=286,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=342,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=346,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=333,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:f2{id=341,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=335,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=337,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=338,slot_type=LeftParen}
+        |   |           |___Token:){id=340,slot_type=RightParen}
+        |   |___compoundStatement{id=288,slot_type=compoundStatement}
+        |       |___Token:{{id=289,slot_type=LeftBrace}
+        |       |___(?){id=290,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=293,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___jumpStatement{id=297,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=300,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=301,slot_type=Return}
+        |       |           |   |___(?){id=302,slot_type=optional__postfixExpression_1}
+        |       |           |       |___additiveExpression{id=314,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+        |       |           |           |___Token:g1{id=332,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+        |       |           |           |___(*){id=316,slot_type=kleene_star__additiveExpression_1}
+        |       |           |               |___aux_rule__additiveExpression_2{id=317,slot_type=aux_rule__additiveExpression_2}
+        |       |           |                   |___Token:+{id=326,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |       |           |                   |___Token:1{id=325,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |       |           |___Token:;{id=299,slot_type=Semi}
+        |       |___Token:}{id=291,slot_type=RightBrace}
+        |___functionDefinition{id=218,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=219,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=280,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=284,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=271,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:f3{id=279,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=273,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=275,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=276,slot_type=LeftParen}
+        |   |           |___Token:){id=278,slot_type=RightParen}
+        |   |___compoundStatement{id=221,slot_type=compoundStatement}
+        |       |___Token:{{id=222,slot_type=LeftBrace}
+        |       |___(?){id=223,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=226,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___jumpStatement{id=230,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=233,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=234,slot_type=Return}
+        |       |           |   |___(?){id=235,slot_type=optional__postfixExpression_1}
+        |       |           |       |___additiveExpression{id=247,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+        |       |           |           |___postfixExpression{id=263,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+        |       |           |           |   |___Token:f2{id=270,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+        |       |           |           |   |___(*){id=265,slot_type=kleene_star__postfixExpression_2}
+        |       |           |           |       |___aux_rule__postfixExpression_11{id=267,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+        |       |           |           |           |___Token:({id=268,slot_type=LeftParen}
+        |       |           |           |           |___Token:){id=269,slot_type=RightParen}
+        |       |           |           |___(*){id=249,slot_type=kleene_star__additiveExpression_1}
+        |       |           |               |___aux_rule__additiveExpression_2{id=250,slot_type=aux_rule__additiveExpression_2}
+        |       |           |                   |___Token:+{id=259,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |       |           |                   |___Token:g1{id=258,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+        |       |           |___Token:;{id=232,slot_type=Semi}
+        |       |___Token:}{id=224,slot_type=RightBrace}
+        |___functionDefinition{id=151,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=152,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=213,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=217,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=204,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:f4{id=212,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=206,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=208,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=209,slot_type=LeftParen}
+        |   |           |___Token:){id=211,slot_type=RightParen}
+        |   |___compoundStatement{id=154,slot_type=compoundStatement}
+        |       |___Token:{{id=155,slot_type=LeftBrace}
+        |       |___(?){id=156,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=159,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___jumpStatement{id=163,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=166,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=167,slot_type=Return}
+        |       |           |   |___(?){id=168,slot_type=optional__postfixExpression_1}
+        |       |           |       |___additiveExpression{id=180,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+        |       |           |           |___postfixExpression{id=196,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+        |       |           |           |   |___Token:f1{id=203,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+        |       |           |           |   |___(*){id=198,slot_type=kleene_star__postfixExpression_2}
+        |       |           |           |       |___aux_rule__postfixExpression_11{id=200,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+        |       |           |           |           |___Token:({id=201,slot_type=LeftParen}
+        |       |           |           |           |___Token:){id=202,slot_type=RightParen}
+        |       |           |           |___(*){id=182,slot_type=kleene_star__additiveExpression_1}
+        |       |           |               |___aux_rule__additiveExpression_2{id=183,slot_type=aux_rule__additiveExpression_2}
+        |       |           |                   |___Token:+{id=192,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |       |           |                   |___Token:g1{id=191,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+        |       |           |___Token:;{id=165,slot_type=Semi}
+        |       |___Token:}{id=157,slot_type=RightBrace}
+        |___functionDefinition{id=12,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=13,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=146,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=150,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=137,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=145,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=139,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=141,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=142,slot_type=LeftParen}
+            |           |___Token:){id=144,slot_type=RightParen}
+            |___compoundStatement{id=15,slot_type=compoundStatement}
+                |___Token:{{id=16,slot_type=LeftBrace}
+                |___(?){id=17,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=20,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=68,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=69,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=87,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=136,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=89,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=91,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=92,slot_type=LeftParen}
+                |       |   |               |___(?){id=93,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=95,slot_type=expression}
+                |       |   |               |       |___(+){id=134,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |   |___Token:"hello %d\n"{id=135,slot_type=StringLiteral}
+                |       |   |               |       |___(*){id=97,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=98,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=99,slot_type=Comma}
+                |       |   |               |               |___Token:g1{id=117,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |___Token:){id=94,slot_type=RightParen}
+                |       |   |___Token:;{id=70,slot_type=Semi}
+                |       |___jumpStatement{id=25,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=28,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=29,slot_type=Return}
+                |           |   |___(?){id=30,slot_type=optional__postfixExpression_1}
+                |           |       |___additiveExpression{id=42,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+                |           |           |___postfixExpression{id=58,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |           |   |___Token:f4{id=65,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |           |   |___(*){id=60,slot_type=kleene_star__postfixExpression_2}
+                |           |           |       |___aux_rule__postfixExpression_11{id=62,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |           |           |           |___Token:({id=63,slot_type=LeftParen}
+                |           |           |           |___Token:){id=64,slot_type=RightParen}
+                |           |           |___(*){id=44,slot_type=kleene_star__additiveExpression_1}
+                |           |               |___aux_rule__additiveExpression_2{id=45,slot_type=aux_rule__additiveExpression_2}
+                |           |                   |___Token:+{id=54,slot_type=[altnt_block__additiveExpression_3,Plus]}
+                |           |                   |___Token:g1{id=53,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=27,slot_type=Semi}
+                |___Token:}{id=18,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[1][mimir](88/88)  Starting to retrieve the semantics provider
+FixPt[1][mimir](88/88)  Retrieved semantics provider MimirSemanticsProvider{semanticTokenTypeMap=14, defs=6, deUseGraphVertices=14, defUseGraphEdges=8}
+==================Reducing node 2, size=88==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f2() {
+      return g1 + 1;
+    }
+    int f3() {
+      return f2() + g1;
+    }
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](88/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:88/88=100.00%
+FixPt[1][mimir][ONE_BY_ONE](88/88)  Testing the empty input. Global ratio:88/88=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compilationUnit_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](88/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:88/88=100.00%
+FixPt[1][mimir][ONE_BY_ONE](88/88)  There is only one element in the input, and the empty input has been tested. Global ratio:88/88=100.00%
+FixPt[1][mimir][ONE_BY_ONE](88/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:88/88=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=88==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f2() {
+      return g1 + 1;
+    }
+    int f3() {
+      return f2() + g1;
+    }
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (1): fail===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove all except first
+    --file: t.c--
+    #include <stdio.h>
+------------------------------------------------------------
+
+
+==========Testing the following program (2): fail===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3:Layer-Top-0:OverlappingCluster0]
+    --file: t.c--
+    #include <stdio.h>
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f2() {
+      return g1 + 1;
+    }
+    int f3() {
+      return f2() + g1;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (3): fail===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3:Layer-Top-0:OverlappingCluster1]
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](88/88)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:88/88=100.00%
+FixPt[1][mimir][ONE_BY_ONE](88/88)  Testing the empty input is disabled. Global ratio:88/88=100.00%
+==========Testing the following program (4): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:Layer-Top-1]dd@#nodes=2,#parts=1#total-parts=2
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f2() {
+      return g1 + 1;
+    }
+    int f3() {
+      return f2() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](88/88)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:88/88=100.00%
+==========Testing the following program (5): pass===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:Layer-Top-1]dd@#nodes=2,#parts=1#total-parts=2
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](88/88)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:88/88=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 6
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 88 -> 64
+Edit: [delete: 218,285]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Minimizer OneByOneMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:64/88=72.73%
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:64/88=72.73%
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Testing the empty input. Global ratio:64/88=72.73%
+==========Testing the following program (6): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:LayerBottom]dd@#nodes=2,#parts=2#total-parts=2
+    --file: t.c--
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:64/88=72.73%
+==========Testing the following program (7): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:64/88=72.73%
+==========Testing the following program (8): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:64/88=72.73%
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Minimizer OneByOneMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:64/88=72.73%
+===================Node reduction is done===================
+
+Succeeded to reduce node 4 from 88 to 64
+------------------------------------------------------------
+
+
+=================Reducing node 348, size=64=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 348
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=64==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 350, size=64=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 350
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=64=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 355, size=64=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1 = 0 + 1 + 2 + 3 + 4 + 6 + 8 + 9 + 10;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:64/88=72.73%
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Testing the empty input. Global ratio:64/88=72.73%
+==========Testing the following program (9): pass===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__initDeclarator_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](64/88)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:64/88=72.73%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 8 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 64 -> 46
+Edit: [delete_356]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](46/88)  Minimizer OneByOneMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:46/88=52.27%
+===================Node reduction is done===================
+
+Succeeded to reduce node 355 from 64 to 46
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=46==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=46==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](46/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:46/88=52.27%
+FixPt[1][mimir][ONE_BY_ONE](46/88)  Testing the empty input. Global ratio:46/88=52.27%
+==========Testing the following program (10): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compoundStatement_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](46/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:46/88=52.27%
+FixPt[1][mimir][ONE_BY_ONE](46/88)  There is only one element in the input, and the empty input has been tested. Global ratio:46/88=52.27%
+FixPt[1][mimir][ONE_BY_ONE](46/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:46/88=52.27%
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=46==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+      return f4() + g1;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_20]
+    context: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (11): pass==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove all except first
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 8 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 46 -> 39
+Edit: [delete_25]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](39/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:39/88=44.32%
+FixPt[1][mimir][ONE_BY_ONE](39/88)  Testing the empty input is disabled. Global ratio:39/88=44.32%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](39/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:39/88=44.32%
+FixPt[1][mimir][ONE_BY_ONE](39/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:39/88=44.32%
+===================Node reduction is done===================
+
+Succeeded to reduce node 20 from 46 to 39
+------------------------------------------------------------
+
+
+=================Reducing node 151, size=39=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 151
+------------------------------------------------------------
+
+
+=================Reducing node 465, size=39=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 465
+------------------------------------------------------------
+
+
+=================Reducing node 154, size=39=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 154
+------------------------------------------------------------
+
+
+=================Reducing node 156, size=39=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+      return f1() + g1;
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](39/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:39/88=44.32%
+FixPt[1][mimir][ONE_BY_ONE](39/88)  Testing the empty input. Global ratio:39/88=44.32%
+==========Testing the following program (12): pass==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compoundStatement_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](39/88)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:39/88=44.32%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 7 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 39 -> 32
+Edit: [delete_159]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Minimizer OneByOneMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:32/88=36.36%
+===================Node reduction is done===================
+
+Succeeded to reduce node 156 from 39 to 32
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=32==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 69, size=32==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:32/88=36.36%
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Testing the empty input. Global ratio:32/88=36.36%
+==========Testing the following program (13): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+                              ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:32/88=36.36%
+FixPt[1][mimir][ONE_BY_ONE](32/88)  There is only one element in the input, and the empty input has been tested. Global ratio:32/88=36.36%
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:32/88=36.36%
+===================Node reduction is done===================
+
+Failed to reduce node 69
+------------------------------------------------------------
+
+
+=================Reducing node 87, size=32==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 87
+------------------------------------------------------------
+
+
+=================Reducing node 468, size=32=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 468
+------------------------------------------------------------
+
+
+=================Reducing node 89, size=32==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:32/88=36.36%
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Testing the empty input. Global ratio:32/88=36.36%
+==========Testing the following program (14): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__postfixExpression_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf                  ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:32/88=36.36%
+FixPt[1][mimir][ONE_BY_ONE](32/88)  There is only one element in the input, and the empty input has been tested. Global ratio:32/88=36.36%
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:32/88=36.36%
+===================Node reduction is done===================
+
+Failed to reduce node 89
+------------------------------------------------------------
+
+
+=================Reducing node 91, size=32==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 91
+------------------------------------------------------------
+
+
+=================Reducing node 502, size=32=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 502
+------------------------------------------------------------
+
+
+=================Reducing node 470, size=32=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:32/88=36.36%
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Testing the empty input. Global ratio:32/88=36.36%
+==========Testing the following program (15): pass==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compoundStatement_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](32/88)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:32/88=36.36%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 8 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 32 -> 29
+Edit: [delete_473]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:29/88=32.95%
+===================Node reduction is done===================
+
+Succeeded to reduce node 470 from 32 to 29
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 137, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 137
+------------------------------------------------------------
+
+
+=================Reducing node 93, size=29==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Testing the empty input. Global ratio:29/88=32.95%
+==========Testing the following program (16): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf(                );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  There is only one element in the input, and the empty input has been tested. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+===================Node reduction is done===================
+
+Failed to reduce node 93
+------------------------------------------------------------
+
+
+=================Reducing node 95, size=29==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 95
+------------------------------------------------------------
+
+
+=================Reducing node 504, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Testing the empty input. Global ratio:29/88=32.95%
+==========Testing the following program (17): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__directDeclarator_7:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1   {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  There is only one element in the input, and the empty input has been tested. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+===================Node reduction is done===================
+
+Failed to reduce node 504
+------------------------------------------------------------
+
+
+=================Reducing node 506, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 506
+------------------------------------------------------------
+
+
+=================Reducing node 206, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Testing the empty input. Global ratio:29/88=32.95%
+==========Testing the following program (18): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__directDeclarator_7:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4   {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  There is only one element in the input, and the empty input has been tested. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+===================Node reduction is done===================
+
+Failed to reduce node 206
+------------------------------------------------------------
+
+
+=================Reducing node 208, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 208
+------------------------------------------------------------
+
+
+=================Reducing node 139, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Testing the empty input. Global ratio:29/88=32.95%
+==========Testing the following program (19): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__directDeclarator_7:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main    {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  There is only one element in the input, and the empty input has been tested. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+===================Node reduction is done===================
+
+Failed to reduce node 139
+------------------------------------------------------------
+
+
+=================Reducing node 141, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 141
+------------------------------------------------------------
+
+
+=================Reducing node 97, size=29==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n", g1);
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:29/88=32.95%
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Testing the empty input. Global ratio:29/88=32.95%
+==========Testing the following program (20): pass==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__expression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/88)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:29/88=32.95%
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 11 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 29 -> 27
+Edit: [delete_98]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Succeeded to reduce node 97 from 29 to 27
+------------------------------------------------------------
+
+
+=================Reducing node 516, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 516
+------------------------------------------------------------
+
+
+=================Reducing node 510, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 510
+------------------------------------------------------------
+
+
+=================Reducing node 509, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 509
+------------------------------------------------------------
+
+
+=================Reducing node 507, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 507
+------------------------------------------------------------
+
+
+=================Reducing node 471, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 471
+------------------------------------------------------------
+
+
+=================Reducing node 469, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 469
+------------------------------------------------------------
+
+
+=================Reducing node 466, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input. Global ratio:27/88=30.68%
+==========Testing the following program (21): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__functionDefinition_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+        f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  There is only one element in the input, and the empty input has been tested. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Failed to reduce node 466
+------------------------------------------------------------
+
+
+=================Reducing node 511, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_511]
+    context: [kleene_plus:declarationSpecifiers]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input is disabled. Global ratio:27/88=30.68%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+        f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Failed to reduce node 511
+------------------------------------------------------------
+
+
+=================Reducing node 515, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 515
+------------------------------------------------------------
+
+
+=================Reducing node 460, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 460
+------------------------------------------------------------
+
+
+=================Reducing node 351, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 351
+------------------------------------------------------------
+
+
+=================Reducing node 349, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input is disabled. Global ratio:27/88=30.68%
+==========Testing the following program (22): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:declarationSpecifiers:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+        g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Failed to reduce node 349
+------------------------------------------------------------
+
+
+=================Reducing node 464, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 464
+------------------------------------------------------------
+
+
+=================Reducing node 212, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 212
+------------------------------------------------------------
+
+
+=================Reducing node 211, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 211
+------------------------------------------------------------
+
+
+=================Reducing node 209, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 209
+------------------------------------------------------------
+
+
+=================Reducing node 157, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 157
+------------------------------------------------------------
+
+
+=================Reducing node 155, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 155
+------------------------------------------------------------
+
+
+=================Reducing node 152, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input. Global ratio:27/88=30.68%
+==========Testing the following program (23): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__functionDefinition_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+        f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  There is only one element in the input, and the empty input has been tested. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Failed to reduce node 152
+------------------------------------------------------------
+
+
+=================Reducing node 213, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_213]
+    context: [kleene_plus:declarationSpecifiers]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input is disabled. Global ratio:27/88=30.68%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+        f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Failed to reduce node 213
+------------------------------------------------------------
+
+
+=================Reducing node 217, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 217
+------------------------------------------------------------
+
+
+=================Reducing node 145, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 145
+------------------------------------------------------------
+
+
+=================Reducing node 144, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 144
+------------------------------------------------------------
+
+
+=================Reducing node 142, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 142
+------------------------------------------------------------
+
+
+=================Reducing node 136, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 136
+------------------------------------------------------------
+
+
+=================Reducing node 134, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input is disabled. Global ratio:27/88=30.68%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf(                );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Failed to reduce node 134
+------------------------------------------------------------
+
+
+=================Reducing node 135, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 135
+------------------------------------------------------------
+
+
+=================Reducing node 94, size=27==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 94
+------------------------------------------------------------
+
+
+=================Reducing node 92, size=27==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 92
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=27==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 18, size=27==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=27==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=27==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input. Global ratio:27/88=30.68%
+==========Testing the following program (24): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__functionDefinition_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+        main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  There is only one element in the input, and the empty input has been tested. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 146, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_146]
+    context: [kleene_plus:declarationSpecifiers]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input is disabled. Global ratio:27/88=30.68%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+        main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===================Node reduction is done===================
+
+Failed to reduce node 146
+------------------------------------------------------------
+
+
+=================Reducing node 150, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 150
+------------------------------------------------------------
+
+
+FixPt[1][mimir](27/88)  After the main reduction process: 3 nodes [212, 460, 510] have 0 out-degree; 0 nodes have reduced out-degree. 1 nodes unchanged.
+=================Reducing node 510, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 510
+------------------------------------------------------------
+
+
+=================Reducing node 460, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 460
+------------------------------------------------------------
+
+
+=================Reducing node 212, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 212
+------------------------------------------------------------
+
+
+=================Reducing node 502, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 502
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 465, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 465
+------------------------------------------------------------
+
+
+=================Reducing node 350, size=27=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int g1                                     ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:27/88=30.68%
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Testing the empty input. Global ratio:27/88=30.68%
+==========Testing the following program (25): pass==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__declaration_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int                                        ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](27/88)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:27/88=30.68%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 11 --> 11.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 9
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 27 -> 26
+Edit: [delete_353]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](26/88)  Minimizer OneByOneMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:26/88=29.55%
+===================Node reduction is done===================
+
+Succeeded to reduce node 350 from 27 to 26
+------------------------------------------------------------
+
+
+=================Reducing node 151, size=26=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int                                        ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 151
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=26==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int                                        ;
+    int f4() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](26/88)  Minimizer OneByOneMinimizer starts. Input=[0-4]#5. Global ratio:26/88=29.55%
+FixPt[1][mimir][ONE_BY_ONE](26/88)  Testing the empty input is disabled. Global ratio:26/88=29.55%
+==========Testing the following program (26): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int                                        ;
+    int f4() {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](26/88)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:26/88=29.55%
+==========Testing the following program (27): pass==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int                                        ;
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](26/88)  Try deleting [3]#1: Interesting. Local ratio: 5/5=100.00%. Global ratio:26/88=29.55%
+===========TestScriptExecutionCacheEntryEviction============
+
+8 entries are removed: 12 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 26 -> 20
+Edit: [delete_151]
+------------------------------------------------------------
+
+
+==========Testing the following program (28): pass==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=4
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+    }
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](20/88)  Try deleting [2]#1: Interesting. Local ratio: 4/5=80.00%. Global ratio:20/88=22.73%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 4 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 20 -> 18
+Edit: [delete_348]
+------------------------------------------------------------
+
+
+==========Testing the following program (29): pass==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=3
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](18/88)  Try deleting [1]#1: Interesting. Local ratio: 3/5=60.00%. Global ratio:18/88=20.45%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 4 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 18 -> 12
+Edit: [delete_465]
+------------------------------------------------------------
+
+
+==========Testing the following program (30): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 2/5=40.00%. Global ratio:12/88=13.64%
+FixPt[1][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0,4]#2. Local ratio: 2/5=40.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Succeeded to reduce node 4 from 26 to 12
+------------------------------------------------------------
+
+
+==================Reducing node 2, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[1][mimir][ONE_BY_ONE](12/88)  Testing the empty input. Global ratio:12/88=13.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[1][mimir][ONE_BY_ONE](12/88)  There is only one element in the input, and the empty input has been tested. Global ratio:12/88=13.64%
+FixPt[1][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+FixPt[1][mimir](12/88)  After the main reduction process: 0 nodes have 0 out-degree; 0 nodes have reduced out-degree. 1 nodes unchanged.
+(12/88)  Rebuilding spar-tree: The spartree is rebuilt.
+============Fixpoint iteration 2. Reducer: mimir============
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=518,slot_type=compilationUnit}
+|___(?){id=519,slot_type=optional__compilationUnit_1}
+    |___(+){id=521,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=598,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___functionDefinition{id=524,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=525,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=593,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=597,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=584,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=592,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=586,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=588,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=589,slot_type=LeftParen}
+            |           |___Token:){id=591,slot_type=RightParen}
+            |___compoundStatement{id=527,slot_type=compoundStatement}
+                |___Token:{{id=528,slot_type=LeftBrace}
+                |___(?){id=529,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=532,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=536,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |           |___(?){id=537,slot_type=optional__postfixExpression_1}
+                |           |   |___postfixExpression{id=555,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |___Token:printf{id=583,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |___(*){id=557,slot_type=kleene_star__postfixExpression_2}
+                |           |           |___aux_rule__postfixExpression_11{id=559,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |           |               |___Token:({id=560,slot_type=LeftParen}
+                |           |               |___(?){id=561,slot_type=optional__postfixExpression_1}
+                |           |               |   |___(+){id=581,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |           |               |       |___Token:"hello %d\n"{id=582,slot_type=StringLiteral}
+                |           |               |___Token:){id=562,slot_type=RightParen}
+                |           |___Token:;{id=538,slot_type=Semi}
+                |___Token:}{id=530,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[2][mimir](12/88)  Starting to retrieve the semantics provider
+FixPt[2][mimir](12/88)  Retrieved semantics provider MimirSemanticsProvider{semanticTokenTypeMap=1, defs=1, deUseGraphVertices=1, defUseGraphEdges=0}
+=================Reducing node 519, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input. Global ratio:12/88=13.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  There is only one element in the input, and the empty input has been tested. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 519
+------------------------------------------------------------
+
+
+=================Reducing node 521, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_521]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input is disabled. Global ratio:12/88=13.64%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_524]
+    context: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:12/88=13.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 521
+------------------------------------------------------------
+
+
+=================Reducing node 524, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 524
+------------------------------------------------------------
+
+
+=================Reducing node 527, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 527
+------------------------------------------------------------
+
+
+=================Reducing node 529, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input. Global ratio:12/88=13.64%
+==========Testing the following program (31): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compoundStatement_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  There is only one element in the input, and the empty input has been tested. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 529
+------------------------------------------------------------
+
+
+=================Reducing node 532, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_532]
+    context: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input is disabled. Global ratio:12/88=13.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 532
+------------------------------------------------------------
+
+
+=================Reducing node 536, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 536
+------------------------------------------------------------
+
+
+=================Reducing node 537, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input. Global ratio:12/88=13.64%
+==========Testing the following program (32): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+                              ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  There is only one element in the input, and the empty input has been tested. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 537
+------------------------------------------------------------
+
+
+=================Reducing node 555, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 555
+------------------------------------------------------------
+
+
+=================Reducing node 584, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 584
+------------------------------------------------------------
+
+
+=================Reducing node 557, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input. Global ratio:12/88=13.64%
+==========Testing the following program (33): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__postfixExpression_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf                  ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  There is only one element in the input, and the empty input has been tested. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 557
+------------------------------------------------------------
+
+
+=================Reducing node 559, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 559
+------------------------------------------------------------
+
+
+=================Reducing node 586, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input. Global ratio:12/88=13.64%
+==========Testing the following program (34): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__directDeclarator_7:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int main    {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  There is only one element in the input, and the empty input has been tested. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 586
+------------------------------------------------------------
+
+
+=================Reducing node 588, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 588
+------------------------------------------------------------
+
+
+=================Reducing node 598, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 598
+------------------------------------------------------------
+
+
+=================Reducing node 592, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 592
+------------------------------------------------------------
+
+
+=================Reducing node 591, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 591
+------------------------------------------------------------
+
+
+=================Reducing node 589, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 589
+------------------------------------------------------------
+
+
+=================Reducing node 583, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 583
+------------------------------------------------------------
+
+
+=================Reducing node 562, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 562
+------------------------------------------------------------
+
+
+=================Reducing node 561, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input. Global ratio:12/88=13.64%
+==========Testing the following program (35): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf(                );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  There is only one element in the input, and the empty input has been tested. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 561
+------------------------------------------------------------
+
+
+=================Reducing node 581, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_581]
+    context: [kleene_plus:kleene_plus__primaryExpression_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input is disabled. Global ratio:12/88=13.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf(                );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 581
+------------------------------------------------------------
+
+
+=================Reducing node 582, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 582
+------------------------------------------------------------
+
+
+=================Reducing node 560, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 560
+------------------------------------------------------------
+
+
+=================Reducing node 538, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 538
+------------------------------------------------------------
+
+
+=================Reducing node 530, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 530
+------------------------------------------------------------
+
+
+=================Reducing node 528, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 528
+------------------------------------------------------------
+
+
+=================Reducing node 525, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input. Global ratio:12/88=13.64%
+==========Testing the following program (36): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__functionDefinition_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+        main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  There is only one element in the input, and the empty input has been tested. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 525
+------------------------------------------------------------
+
+
+=================Reducing node 593, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_593]
+    context: [kleene_plus:declarationSpecifiers]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Testing the empty input is disabled. Global ratio:12/88=13.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+        main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+FixPt[2][mimir][ONE_BY_ONE](12/88)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/88=13.64%
+===================Node reduction is done===================
+
+Failed to reduce node 593
+------------------------------------------------------------
+
+
+=================Reducing node 597, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main () {
+      printf("hello %d\n"    );
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 597
+------------------------------------------------------------
+
+
+FixPt[2][mimir](12/88)  After the main reduction process: 0 nodes have 0 out-degree; 0 nodes have reduced out-degree. 1 nodes unchanged.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0   mimir     10             0     -76           -125      31   time-hidden
+ 1   mimir      0             0       0              0       6   time-hidden
+
+----------------------------------- Summary ------------------------------------
+Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+  mimir     2     10             0     -76           -125      37   time-hidden
+
+------------------------------- Transformations --------------------------------
+Transformation Worked #NonDeletions #Tokens #NonBlankChars
+mimir.Deletion     10             0     -76           -125
+------------------------------------- End --------------------------------------
+#test success = 10
+#test failure = 27
+#test result cache hits = 14
+#test execution cancelled = 0
+#node edit action set cache hits = 10
+#external test execution cache hits = 0

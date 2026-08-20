@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 filegroup(
     name = "gcc71626",

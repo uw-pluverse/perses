@@ -1,5 +1,5 @@
-load("//benchmark:benchmark.bzl", "sanity_test")
 load("//ppr/test/org/perses/ppr:ppr_reduction.bzl", "ppr_reduction_golden_test")
+load("//test:test.bzl", "sanity_test")
 
 PERSES_LIST_DIFF_REDUCER_BIN = "//ppr/src/org/perses/ppr/diff/list:main"
 
@@ -26,7 +26,7 @@ ppr_reduction_golden_test(
     },
     perses_bin = PERSES_LIST_DIFF_REDUCER_BIN,
     progress_dump_file = "reduction_progress_ddmin.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     seed_file = "seed.c",
     test_script = "r.sh",
     thread_count = 1,
@@ -47,7 +47,7 @@ ppr_reduction_golden_test(
     },
     perses_bin = PERSES_LIST_DIFF_REDUCER_BIN,
     progress_dump_file = "reduction_progress_slicer.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     seed_file = "seed.c",
     test_script = "r.sh",
     thread_count = 1,

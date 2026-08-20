@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,6 +19,8 @@ package org.perses.reduction
 import org.perses.grammar.AbstractParserFacade
 import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.program.printer.PrinterRegistry
+import org.perses.reduction.reducer.EnumMimirReductionAlgorithm
+import org.perses.reduction.semantics.ISemanticsProviderCreator
 import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import java.nio.file.Path
@@ -28,22 +30,26 @@ import java.nio.file.Path
  */
 class ReductionConfiguration(
   val globalFixpoint: Boolean,
+  val mainReducerAnnotation: AbstractReducerNameAndDesc,
+  val cleanupReducerAnnotation: AbstractReducerNameAndDesc?,
   val fixpointReductionForMainReducer: Boolean,
   val enableDeprecatedQueryCaching: Boolean,
   val fullyDeterministicMode: Boolean,
   val numOfReductionThreads: Int,
-  val parserFacade: AbstractParserFacade,
-  val persesNodeReducerConfig: PersesNodeReducerConfiguration,
+  val canonicalParserFacade: AbstractParserFacade,
+  val persesConfig: PersesConfig,
   val listMinimizerConfig: ListMinimizerConfig,
   val vulcanConfig: VulcanConfig,
   val lprConfig: LPRConfig,
   val latraConfig: LatraConfig,
+  val levelBasedReducerConfig: LevelBasedReducerConfig,
+  val mimirConfig: MimirConfig,
   val shaHashAlgorithm: EnumShaAlgorithm,
 ) {
   val originalFormatPrinter =
     PrinterRegistry.getPrinter(
-      format = parserFacade.language.origCodeFormatControl,
-      lexerAtnWrapper = parserFacade.lexerAtnWrapper,
+      format = canonicalParserFacade.language.origCodeFormatControl,
+      lexerAtnWrapper = canonicalParserFacade.lexerAtnWrapper,
     )
 
   init {
@@ -52,20 +58,28 @@ class ReductionConfiguration(
     }
   }
 
-  class PersesNodeReducerConfiguration(
+  // Need to generate hashcode and equals.
+  data class PersesConfig(
+    val enableTopDownReduction: Boolean,
+    val enableReducingRegularRuleNode: Boolean,
+    val enableReducingKleeneOptionalNode: Boolean,
     val maxEditCountForRegularRuleNode: Int,
     val maxBfsDepthForRegularRuleNode: Int,
     val stopAtFirstCompatibleChildren: Boolean,
+    val enableLiteralReplacementForListMinimizer: Boolean,
+    val enableLiteralReplacementForRegularRuleNode: Boolean,
+    val listMinimizerTypeForKleene: EnumListMinimizerType,
+    val anticipatedFinalTokenCount: Int,
   ) {
     init {
       require(maxEditCountForRegularRuleNode > 0)
       require(maxBfsDepthForRegularRuleNode > 0)
+      require(anticipatedFinalTokenCount >= 0) { "Anticipated token count must be at least 0" }
     }
   }
 
-  class ListMinimizerConfig(
-    val defaultListMinimizerTypeForKleene: EnumListMinimizerType,
-    val defaultListMinimizerTypeForHdd: EnumListMinimizerType,
+  // Need to generate hashcode and equals.
+  data class ListMinimizerConfig(
     val minSlidingWindowSize: Int,
     val maxSlidingWindowSize: Int,
   ) {
@@ -77,10 +91,38 @@ class ReductionConfiguration(
     }
   }
 
-  class LatraConfig(
+  // Need to generate hashcode and equals.
+  data class LevelBasedReducerConfig(
+    val defaultListMinimizerType: EnumListMinimizerType,
+  )
+
+  // Need to generate hashcode and equals.
+  data class LatraConfig(
     val listMinimizerForTransformations: EnumListMinimizerType,
   )
 
+  // Need to generate hashcode and equals.
+  class MimirConfig(
+    val semanticsProviderCreator: ISemanticsProviderCreator?,
+    val nodeCountThresholdToUseOneByOne: Int,
+    val enableBottomUpReductionAfterMainReductionLoop: Boolean,
+    val bottomUpReductionMaxDepth: Int,
+    val mimirReductionAlgorithm: EnumMimirReductionAlgorithm,
+    val enableMimirForRegularRuleNodes: Boolean,
+    /*
+     * Delete a definition node, with all its concrete uses.
+     * By doing this, we can guarantee we do not introduce use-without-def errors.
+     */
+    val deleteDefWithAllItsConcreteUses: Boolean,
+  ) {
+    init {
+      require(nodeCountThresholdToUseOneByOne >= 0) {
+        "The nodeCount threshold must be greater than or equal to 0"
+      }
+    }
+  }
+
+  // Need to generate hashcode and equals.
   class VulcanConfig(
     val nonDeletionIterationLimit: Int,
     val windowSizeForLocalExhaustivePatternReduction: Int,
@@ -96,6 +138,7 @@ class ReductionConfiguration(
     }
   }
 
+  // Need to generate hashcode and equals.
   class LPRConfig(
     val llmClientPath: Path?,
     val lprFixpoint: Boolean,

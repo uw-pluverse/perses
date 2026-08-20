@@ -31,3 +31,11 @@ gcc-*/*
 !gcc-*/r.sh
 !gcc-*/golden_*
 !gcc-*/orig.c
+clangd_*
+clangd-linux*
+# Checker Framework dists fetched on demand by install_checkers.sh
+benchmark-java/lib/checkerframework-*/
+
+# Gradle build artifacts from the NullAway benchmarks
+benchmark-java/*/build/
+benchmark-java/*/.gradle/

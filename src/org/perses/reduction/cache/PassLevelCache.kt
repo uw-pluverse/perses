@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,6 +28,10 @@ class PassLevelCache {
   @PublishedApi
   internal data class PassLevelCacheKey(
     val reducer: ReducerAnnotation,
+    // The class of the parser facade the tree was built under. A reducer's result on identical content
+    // depends on which grammar parsed it (real / tolerant-real / Dyck / Line), so the same
+    // (reducer, content) under a different facade must not be treated as already-done and skipped.
+    val parserFacadeClass: Class<*>,
     val contentsOfFiles: ShaHashCode,
   ) {
     init {
@@ -41,10 +45,11 @@ class PassLevelCache {
   // Might need to get rid of the stale keys if the memory consumption is a problem.
   inline fun update(
     reducer: ReducerAnnotation,
+    parserFacadeClass: Class<*>,
     contentsOfFilesProvider: () -> ShaHashCode,
   ): PassLevelCacheResult {
     val hashcodeOfAllInputs = contentsOfFilesProvider()
-    val passLevelCacheKey = PassLevelCacheKey(reducer, hashcodeOfAllInputs)
+    val passLevelCacheKey = PassLevelCacheKey(reducer, parserFacadeClass, hashcodeOfAllInputs)
     synchronized(cache) {
       return if (cache.add(passLevelCacheKey)) {
         PassLevelCacheResult.NEW

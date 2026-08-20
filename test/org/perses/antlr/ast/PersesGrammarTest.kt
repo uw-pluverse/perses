@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -288,7 +288,7 @@ class PersesGrammarTest {
       if (text.isEmpty()) {
         return
       }
-      if (text.startsWith("//") || text.startsWith("/*") && text.endsWith("*/")) {
+      if (text.startsWith("//") || (text.startsWith("/*") && text.endsWith("*/"))) {
         return
       }
       if (text == "(" || text == ")") {

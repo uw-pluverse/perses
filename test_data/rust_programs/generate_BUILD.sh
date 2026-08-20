@@ -78,4 +78,4 @@ $(cat "${INVALID_FILE_LIST}")
 )
 EOF
 
-bazel run //:buildifier
+bazelisk run //:buildifier

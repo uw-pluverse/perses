@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -46,7 +46,7 @@ class TokenSlicerTest {
   fun testExtractLexerRuleNodes() {
     val textTokens = tokens!!.asSequence().map { it.token }.toList()
     assertThat(textTokens)
-      .containsExactlyElementsIn(sparTree!!.programSnapshot.tokens)
+      .containsExactlyElementsIn(sparTree!!.programSnapshot.payload.tokens)
       .inOrder()
   }
 
@@ -122,13 +122,10 @@ class TokenSlicerTest {
       reductionFolder = "test_data/scala_helloworld",
       reducerAnnotation = TokenSlicer.META,
       cmdCustomizer = {},
-      expected =
-        """
-      |object Hello {
-      | def main(args: Array[String]) =
-      |   println("Hello, world")
-      |}
-        """.trimMargin(),
+      // The interestingness test now only requires the marker string to remain
+      // (see test_data/scala_helloworld/r.sh), so the token slicer reduces the
+      // program down to that string literal.
+      expected = "\"Hello, world\"",
     )
   }
 }

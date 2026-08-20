@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 
 kt_jvm_test(
     name = "ConcurrentTokenSlicerFunctionalTest",
@@ -16,21 +17,6 @@ kt_jvm_test(
         "//src/org/perses/spartree",
         "//src/org/perses/util",
         "//test/org/perses/reduction:reducer_functional_test_base",
-    ],
-)
-
-kt_jvm_test(
-    name = "ConcurrentTokenSlicerTaskDescTest",
-    srcs = ["ConcurrentTokenSlicerTaskDescTest.kt"],
-    deps = [
-        "//:antlr_tool",
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/program",
-        "//src/org/perses/reduction:abstract_reducer",
-        "//src/org/perses/reduction/reducer/token:token_slicer",
-        "//src/org/perses/spartree",
-        "//src/org/perses/util",
     ],
 )
 

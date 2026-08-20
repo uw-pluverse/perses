@@ -1,5 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
-load("//test/org/perses:test.bzl", "golden_test")
+load("//test:test.bzl", "golden_test", "reduction_golden_test", "sanity_test")
 
 sanity_test(
     name = "sanity_test",
@@ -14,7 +13,7 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_Hello.java.txt",
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "Hello.java",
     test_script = "r.sh",
 )
@@ -35,7 +34,7 @@ reduction_golden_test(
         "--path-to-save-updated-global-cache": "$(location updated_global_cache.csv)",
     },
     progress_dump_file = "reduction_progress_with_vulcan_and_auto_query_caching.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "Hello.java",
     test_script = "r.sh",
     deps = [

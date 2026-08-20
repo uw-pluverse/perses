@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,17 +18,12 @@ package org.perses.ppr
 
 import com.google.common.flogger.FluentLogger
 import org.antlr.v4.runtime.Token
-import org.perses.CommandOptions
 import org.perses.TokenCounterMain
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.ppr.diff.PPRDiffUtils
-import org.perses.ppr.diff.list.ListDiffCmdOptions
 import org.perses.ppr.diff.list.ListDiffMain
-import org.perses.ppr.diff.tree.TreeDiffCmdOptions
 import org.perses.ppr.diff.tree.TreeDiffMain
-import org.perses.ppr.seed.SeedCmdOptions
 import org.perses.ppr.seed.SeedMain
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
@@ -39,14 +34,9 @@ import java.nio.file.Path
 
 class PPRMetaReductionDriver private constructor(
   val globalContext: GlobalContext,
-  val cmd: CmdOptions,
+  val cmd: PPRMainCommandOptions,
   val parserFacadeFactory: AbstractParserFacadeFactory,
 ) : IReductionDriver {
-  override val cachedSanityCheckResult: IReductionDriver.SanityCheckResult by lazy {
-    // TODO(max): need to run sanity check
-    IReductionDriver.SanityCheckResult.Passing
-  }
-
   override fun reduce() {
     // create a working folder
     val workingDir = cmd.resultOutputFlags.outputDir
@@ -56,7 +46,11 @@ class PPRMetaReductionDriver private constructor(
     Util.ensureDirExists(workingDir)
 
     // compute new path in the working folder, and copy inputs to the path
-    val seedPath = Util.copyFileToDirectory(cmd.overallInputFlags.getSourceFile(), workingDir)
+    val seedPath =
+      Util.copyFileToDirectory(
+        cmd.overallInputFlags.computeInputFiles().single(),
+        workingDir,
+      )
     val variantPath = Util.copyFileToDirectory(cmd.overallInputFlags.variantFile!!, workingDir)
     val testPath = Util.copyFileToDirectory(cmd.overallInputFlags.getTestScript(), workingDir)
     val filesToBeKept = Util.listFilesInFolder(workingDir)
@@ -173,116 +167,6 @@ class PPRMetaReductionDriver private constructor(
 
   override fun close() {}
 
-  class FlagGenerator(
-    private val originalCmd: CmdOptions,
-    private val testPath: Path,
-    val workingDir: Path,
-  ) {
-    private fun updateAlgorithmControlFlags(cmd: CommandOptions) {
-      cmd.algorithmControlFlags.rebuildParseTreeEachIteration = false
-      cmd.algorithmControlFlags.defaultListMinimizerTypeForKleene =
-        EnumListMinimizerType.PERSES_VARIANT_OF_PRISTINE
-      cmd.algorithmControlFlags.reductionAlgorithm =
-        originalCmd.algorithmControlFlags.reductionAlgorithm
-    }
-
-    private fun updateLanguageControlFlags(cmd: CommandOptions) {
-      cmd.languageControlFlags.languageName = originalCmd.languageControlFlags.languageName
-    }
-
-    private fun updateReductionControlFlags(cmd: CommandOptions) {
-      cmd.reductionControlFlags.fixpointForMainReducer = false
-      cmd.reductionControlFlags.setNumOfThreads(
-        originalCmd.reductionControlFlags.getNumOfThreads(),
-      )
-      if (originalCmd.reductionControlFlags.codeFormat != null) {
-        cmd.reductionControlFlags.codeFormat = originalCmd.reductionControlFlags.codeFormat
-      }
-    }
-
-    private fun updateProfilingFlags(cmd: CommandOptions) {
-      if (originalCmd.profilingFlags.progressDumpFile != null) {
-        cmd.profilingFlags.progressDumpFile = originalCmd.profilingFlags.progressDumpFile
-      }
-      cmd.profilingFlags.appendToProgressDumpFile =
-        originalCmd.profilingFlags.appendToProgressDumpFile
-    }
-
-    private fun updateOutputRefiningFlags(cmd: CommandOptions) {
-      cmd.outputRefiningFlags.callFormatter = originalCmd.outputRefiningFlags.callFormatter
-    }
-
-    fun generateListDiffCmdOptions(
-      seedPath: Path,
-      variantPath: Path,
-      enableListDiff: Boolean,
-    ): ListDiffCmdOptions {
-      val listDiffCmdOptions = ListDiffCmdOptions()
-      // TRec is not compatible with PPR.
-      listDiffCmdOptions.trecFlags.enableTRec = false
-      listDiffCmdOptions.latraFlags.enableLatra = false
-      listDiffCmdOptions.inputFlags.inputFile = seedPath
-      listDiffCmdOptions.listDiffInputFlags.variantFile = variantPath.toString()
-      listDiffCmdOptions.inputFlags.testScript = testPath
-      listDiffCmdOptions.resultOutputFlags.outputDir = workingDir
-
-      listDiffCmdOptions.listDiffInputFlags.enableDiffSlicer = enableListDiff
-      listDiffCmdOptions.listDiffInputFlags.enableDiffDdmin = enableListDiff
-
-      updateLanguageControlFlags(listDiffCmdOptions)
-      updateAlgorithmControlFlags(listDiffCmdOptions)
-      updateReductionControlFlags(listDiffCmdOptions)
-      updateProfilingFlags(listDiffCmdOptions)
-      updateOutputRefiningFlags(listDiffCmdOptions)
-
-      return listDiffCmdOptions
-    }
-
-    fun generateTreeDiffCmdOptions(
-      seedPath: Path,
-      variantPath: Path,
-    ): TreeDiffCmdOptions {
-      val treeDiffCmdOptions = TreeDiffCmdOptions()
-      // TRec is not compatible with PPR.
-      treeDiffCmdOptions.trecFlags.enableTRec = false
-      treeDiffCmdOptions.latraFlags.enableLatra = false
-      treeDiffCmdOptions.inputFlags.inputFile = seedPath
-      treeDiffCmdOptions.treeDiffInputFlags.variantFile = variantPath
-      treeDiffCmdOptions.inputFlags.testScript = testPath
-      treeDiffCmdOptions.resultOutputFlags.outputDir = workingDir
-
-      updateLanguageControlFlags(treeDiffCmdOptions)
-      updateAlgorithmControlFlags(treeDiffCmdOptions)
-      updateReductionControlFlags(treeDiffCmdOptions)
-      updateProfilingFlags(treeDiffCmdOptions)
-      updateOutputRefiningFlags(treeDiffCmdOptions)
-
-      return treeDiffCmdOptions
-    }
-
-    fun generateSeedCmdOptions(
-      seedPath: Path,
-      variantPath: Path,
-    ): SeedCmdOptions {
-      val seedCmdOptions = SeedCmdOptions()
-      // TRec is not compatible with PPR.
-      seedCmdOptions.trecFlags.enableTRec = false
-      seedCmdOptions.latraFlags.enableLatra = false
-      seedCmdOptions.inputFlags.inputFile = seedPath
-      seedCmdOptions.seedInputFlags.variantFile = variantPath
-      seedCmdOptions.inputFlags.testScript = testPath
-      seedCmdOptions.resultOutputFlags.outputDir = workingDir
-
-      updateLanguageControlFlags(seedCmdOptions)
-      updateAlgorithmControlFlags(seedCmdOptions)
-      updateReductionControlFlags(seedCmdOptions)
-      updateProfilingFlags(seedCmdOptions)
-      updateOutputRefiningFlags(seedCmdOptions)
-
-      return seedCmdOptions
-    }
-  }
-
   data class IterationRecord(
     val iteration: Int,
     val seedSizeAfterIteration: Int,
@@ -333,7 +217,7 @@ class PPRMetaReductionDriver private constructor(
     @JvmStatic
     fun create(
       globalContext: GlobalContext,
-      cmd: CmdOptions,
+      cmd: PPRMainCommandOptions,
       parserFacadeFactory: AbstractParserFacadeFactory,
     ): PPRMetaReductionDriver = PPRMetaReductionDriver(globalContext, cmd, parserFacadeFactory)
   }

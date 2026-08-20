@@ -4,10 +4,32 @@ load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 kt_jvm_library(
     name = "dummy_class_with_resources",
     srcs = ["DummyClassWithResource.kt"],
-    resource_strip_prefix = "test",
+    # Use the full package path for stripping to ensure the filename remains intact.
+    # In Bazel 9/rules_kotlin 2.1, using just "test" causes "test_data.txt" to be
+    # incorrectly stripped to "_data.txt" at the root of the JAR.
+    resource_strip_prefix = "test/org/perses/util",
     resources = ["test_data.txt"],
     deps = [
         "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "ImmutableListBuilderExtTest",
+    srcs = ["ImmutableListBuilderExtTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/util:immutable_list_builder_ext",
+    ],
+)
+
+kt_jvm_test(
+    name = "ImmutableIntArrayTest",
+    srcs = ["ImmutableIntArrayTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/util:immutable_int_array",
     ],
 )
 
@@ -62,6 +84,7 @@ kt_jvm_test(
     deps = [
         ":dummy_class_with_resources",
         "//:guava",
+        "//:kotlin_stdib",
         "//:truth",
         "//src/org/perses/util/hashing",
     ],
@@ -116,6 +139,7 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
+        "//src/org/perses/util",
         "//src/org/perses/util:file_name_content_pair",
     ],
 )
@@ -208,7 +232,7 @@ kt_jvm_test(
     srcs = ["AutoDeletableFolderTest.kt"],
     deps = [
         "//:truth",
-        "//src/org/perses/util:auto_deltable_folder",
+        "//src/org/perses/util:auto_deletable_folder",
     ],
 )
 
@@ -256,6 +280,34 @@ kt_jvm_test(
     srcs = ["DefaultLoggingConfigurationsTest.kt"],
     deps = [
         "//:flogger",
+        "//:truth",
+        "//src/org/perses/util:default_logging_configurations",
+    ],
+)
+
+kt_jvm_test(
+    name = "TableForTextPrintingTest",
+    srcs = ["TableForTextPrintingTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "AtomicSequenceGeneratorTest",
+    srcs = ["AtomicSequenceGeneratorTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/util",
+        "//src/org/perses/util:AtomicSequenceGenerator",
+    ],
+)
+
+kt_jvm_test(
+    name = "RelativeTimeFormatterTest",
+    srcs = ["RelativeTimeFormatterTest.kt"],
+    deps = [
         "//:truth",
         "//src/org/perses/util:default_logging_configurations",
     ],

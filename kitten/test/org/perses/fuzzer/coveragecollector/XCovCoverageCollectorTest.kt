@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -57,7 +57,7 @@ class XCovCoverageCollectorTest {
         """.trimIndent(),
       )
 
-      Shells.singleton
+      Shells.defaultSingleton
         .run(
           cmd = "gcc -fprofile-arcs -ftest-coverage -o ${binaryFile.name} ${this.name}",
           workingDirectory = srcDir,
@@ -66,7 +66,7 @@ class XCovCoverageCollectorTest {
         ).let { cmdOutput ->
           check(cmdOutput.exitCode.isZero()) {}
         }
-      Shells.singleton
+      Shells.defaultSingleton
         .run(
           cmd = "./${binaryFile.name}",
           workingDirectory = srcDir,

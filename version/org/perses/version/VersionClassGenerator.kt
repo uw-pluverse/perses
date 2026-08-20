@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,7 +27,7 @@ import kotlin.io.path.writeText
 
 object VersionClassGenerator {
   private const val MAJOR_VERSION = "2"
-  private const val MINOR_VERSION = "5"
+  private const val MINOR_VERSION = "6"
 
   @JvmStatic
   fun generate(args: Array<String>) {

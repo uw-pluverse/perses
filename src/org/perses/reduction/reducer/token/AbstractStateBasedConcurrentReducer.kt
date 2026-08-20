@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,21 +19,22 @@ package org.perses.reduction.reducer.token
 import com.google.common.collect.ImmutableList
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
+import org.perses.reduction.EditTestPayload
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScriptExecResult
-import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.EmptyResult
-import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.ProceedResult
+import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Proceed
+import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Skip
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
-import org.perses.reduction.cache.AbstractCacheRetrievalResult.CacheMiss
-import org.perses.spartree.AbstractSparTreeEdit
+import org.perses.spartree.NodeActionSetCacheResult
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
 import org.perses.util.Util.lazyAssert
+import org.perses.util.shell.ExitCode
 
 abstract class AbstractStateBasedConcurrentReducer<
   ConcurrentState : IConcurrentState<ConcurrentState>,
@@ -41,7 +42,7 @@ abstract class AbstractStateBasedConcurrentReducer<
 >(
   meta: ReducerAnnotation,
   reducerContext: ReducerContext,
-) : AbstractTokenReducer(meta, reducerContext) {
+) : AbstractSparTreeReducer(meta, reducerContext) {
   abstract val parseCheckNeeded: Boolean
 
   private var state: ConcurrentState? = null
@@ -53,7 +54,7 @@ abstract class AbstractStateBasedConcurrentReducer<
     LinkedHashSet<TestScriptExecResult<ConcurrentStateEditTestPayload<ConcurrentState>>>(numWorkers)
 
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+    val tree = fixpointReductionState.inputRepresentation.tree
     state = createInitialState(tree)
 
     // schedule concurrent transformation+test tasks until:
@@ -155,7 +156,7 @@ abstract class AbstractStateBasedConcurrentReducer<
     statePayload: ConcurrentStateEditTestPayload<ConcurrentState>?,
   ) {
     check(statePayload != null) { "unexpected. null payload cannot apply edit" }
-    tree.applyEdit(statePayload.edit)
+    applyEditToTree(statePayload.editTestPayload.edit, statePayload.editTestPayload.outputManager)
   }
 
   private fun notifyListenerOnTestScriptExecution(
@@ -165,9 +166,9 @@ abstract class AbstractStateBasedConcurrentReducer<
     statePayload?.let {
       reducerContext.listenerManager.onTestScriptExecution(
         testResult,
-        it.program.program,
-        it.edit,
-        outputCreator = ::computeFileContentListForProgram,
+        it.editTestPayload.edit.program,
+        it.editTestPayload.edit,
+        outputManager = it.editTestPayload.outputManager,
       )
     }
   }
@@ -177,7 +178,12 @@ abstract class AbstractStateBasedConcurrentReducer<
     statePayload: ConcurrentStateEditTestPayload<ConcurrentState>?,
   ) {
     if (statePayload != null) {
-      reducerContext.queryCache.cacheProgramAndResult(statePayload.program, testResult)
+      val editTestPayload = statePayload.editTestPayload
+      reducerContext.queryCache.recordUninteresting(
+        editTestPayload.outputManager,
+        reducerContext.perFileNonBlankCharacterCountsForCandidate(editTestPayload.edit.program),
+        testResult,
+      )
     }
   }
 
@@ -204,26 +210,31 @@ abstract class AbstractStateBasedConcurrentReducer<
     val actionSet = computeNodeActionSet(state, inputSequence)
     val listenerManager = reducerContext.listenerManager
     // edit cache
-    if (reducerContext.nodeActionSetCache.isCachedOrCacheIt(actionSet)) {
+    if (tree.isNodeActionSetCachedOrCacheIt(actionSet) == NodeActionSetCacheResult.HIT) {
       listenerManager.onNodeEditActionSetCacheHit(actionSet)
-      return@Creator EmptyResult<ConcurrentStateEditTestPayload<ConcurrentState>>()
+      return@Creator Skip<ConcurrentStateEditTestPayload<ConcurrentState>>()
     }
     // transform
     val treeEdit = tree.createNodeDeletionEdit(actionSet)
     val testProgram = treeEdit.program
-    val outputManager = ioManager.createOutputManager(testProgram)
-    val cachedResult = reducerContext.queryCache.getCachedResult(testProgram, outputManager)
-    return@Creator if (cachedResult.isHit()) {
+    val outputManager = reducerContext.createOutputManager(testProgram)
+    val cachedResult =
+      reducerContext.queryCache.lookUp(outputManager)
+    return@Creator if (cachedResult.isHit) {
       listenerManager.onTestResultCacheHit(
         testProgram,
         treeEdit,
-        outputCreator = ::computeFileContentListForProgram,
+        outputManager = outputManager,
       )
-      // TODO(cnsun): need to pass a StopResult here which can carry the payload.
-      EmptyResult()
+      // TODO(cnsun): let Skip carry the payload so the cache-hit result is not dropped here.
+      Skip()
     } else {
-      val payload = ConcurrentStateEditTestPayload(state, treeEdit, cachedResult.asCacheMiss())
-      ProceedResult(
+      val payload =
+        ConcurrentStateEditTestPayload(
+          state,
+          EditTestPayload(treeEdit, outputManager),
+        )
+      Proceed(
         outputManager,
         payload,
       )
@@ -235,29 +246,32 @@ abstract class AbstractStateBasedConcurrentReducer<
     payload: ConcurrentStateEditTestPayload<ConcurrentState>,
   ) -> PropertyTestResult =
     { existing, payload ->
-      if (existing.isNotInteresting || isProgramParsable(payload.program.program)) {
+      if (existing.isNotInteresting || isProgramParsable(payload.editTestPayload.edit.program)) {
         existing
       } else {
         PropertyTestResult(
-          exitCode = AbstractSlicingTask.INVALID_SYNTAX_EXIT_CODE,
+          exitCode = INVALID_SYNTAX_EXIT_CODE,
           elapsedMillis = -1,
         )
       }
     }
 
   private fun isProgramParsable(testProgram: TokenizedProgram) =
-    reducerContext.configuration.parserFacade.isSourceCodeParsable(
+    reducerContext.configuration.canonicalParserFacade.isSourceCodeParsable(
       PrinterRegistry
-        .getPrinter(ioManager.getDefaultProgramFormat())
+        .getPrinter(reducerContext.getDefaultProgramFormat())
         .print(testProgram)
         .sourceCode,
     )
 
-  data class ConcurrentStateEditTestPayload<state : IConcurrentState<state>>(
-    val concurrentState: state,
-    val edit: AbstractSparTreeEdit<*>,
-    val program: CacheMiss,
+  data class ConcurrentStateEditTestPayload<State : IConcurrentState<State>>(
+    val concurrentState: State,
+    val editTestPayload: EditTestPayload,
   )
+
+  companion object {
+    val INVALID_SYNTAX_EXIT_CODE = ExitCode(99)
+  }
 }
 
 interface IConcurrentState<T> {

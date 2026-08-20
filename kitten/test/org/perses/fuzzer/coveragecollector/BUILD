@@ -1,6 +1,6 @@
-package(default_visibility = ["//test:__subpackages__"])
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
 
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+package(default_visibility = ["//test:__subpackages__"])
 
 kt_jvm_test(
     name = "XCovCoverageCollectorTest",
@@ -22,6 +22,5 @@ kt_jvm_test(
     deps = [
         "//:truth",
         "//kitten/src/org/perses/fuzzer/coveragecollector:coverage_collector",
-        "//src/org/perses/grammar/c:language_kind",
     ],
 )

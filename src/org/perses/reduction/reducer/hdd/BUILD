@@ -9,8 +9,8 @@ package(default_visibility = [
 kt_jvm_library(
     name = "level_based_reducers",
     srcs = [
-        "AbstractLevelBasedReducer.kt",
-        "HDDReducer.kt",
+        "HDDReducerAnnotations.kt",
+        "LevelBasedReducer.kt",
         "PristineHDDReducer.kt",
     ],
     deps = [
@@ -23,6 +23,8 @@ kt_jvm_library(
         "//src/org/perses/reduction:test_script_executor_service",
         "//src/org/perses/reduction:tree_edit_with_its_program",
         "//src/org/perses/reduction/event",
+        "//src/org/perses/reduction/reducer:enum_mimir_reduction_algorithm",
+        "//src/org/perses/reduction/reducer:mimir_strategies",
         "//src/org/perses/spartree",
     ],
 )

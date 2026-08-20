@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -63,12 +63,20 @@ class RuleRefRenamingEdit(
       val ruleEditTriples = ArrayList<RuleEditTriple>()
       defMap.ruleNameAltPairSequence().forEach { (ruleName, alt) ->
         when (val decision = edit.apply(alt)) {
-          is TransformDecision.Keep -> Unit // Do nothing
-          is TransformDecision.Replace ->
+          is TransformDecision.Keep -> {
+            Unit
+          }
+
+          // Do nothing
+          is TransformDecision.Replace -> {
             ruleEditTriples.add(
               RuleEditTriple(ruleName, alt, decision.newValue),
             )
-          else -> TODO(decision.toString())
+          }
+
+          else -> {
+            TODO(decision.toString())
+          }
         }
       }
       ruleEditTriples.forEach { it.applyTo(defMap) }

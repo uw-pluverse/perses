@@ -10,6 +10,7 @@ package(default_visibility = [
 
 pnf_parser_facade_library(
     name = "parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.xml",
     language_kind_full_name = "org.perses.grammar.xml.LanguageXML",
     lexer_file_name = "XMLLexer.g4",

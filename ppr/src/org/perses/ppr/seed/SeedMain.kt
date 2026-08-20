@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,43 +16,52 @@
  */
 package org.perses.ppr.seed
 
+import com.google.common.collect.ImmutableList
 import org.perses.AbstractMain
 import org.perses.HelperForPersesMain
 import org.perses.PersesListenerManagerCreator
 import org.perses.grammar.AbstractParserFacadeFactory
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
+import org.perses.reduction.event.ReductionStartEvent
 import org.perses.util.Util
 import org.perses.util.cmd.CommandLineProcessor
+import java.nio.file.Path
 
 class SeedMain(
   cmd: SeedCmdOptions,
   globalContext: GlobalContext,
-) : AbstractMain<SeedCmdOptions, SeedReductionDriver, SeedReductionInputs>(
+) : AbstractMain<SeedCmdOptions, SeedReductionDriver, DiffOriginalReductionInputs>(
     cmd,
     globalContext,
   ) {
-  override fun createSequenceOfReductionDriverCreators(
-    reductionInputs: SeedReductionInputs,
-  ): Sequence<ReductionDriverCreator<SeedReductionDriver>> {
-    val parserFacadeCreatorList = computePlausibleParserFacades()
-    return parserFacadeCreatorList
-      .sequenceOfCreators()
-      .map { creator ->
-        val parserFacade = creator.create()
-        ReductionDriverCreator(
-          creator = {
-            SeedReductionDriver.create(
-              globalContext,
-              cmd,
-              parserFacade,
-              reductionInputs,
-              listenerManager,
-            )
-          },
-          descriptor = { "${parserFacade::class}" },
+  // ppr reduces the seed in place in the test-script directory; see AbstractMain.allowsInPlaceReduction.
+  override val allowsInPlaceReduction: Boolean = true
+
+  override fun createReductionDriver(
+    originalReductionInputs: DiffOriginalReductionInputs,
+    reductionStartEvent: ReductionStartEvent,
+  ): SeedReductionDriver {
+    val parserFacade =
+      computePlausibleParserFacades(originalReductionInputs.initiallyDeterminedMainDataKind)
+        .resolveParserFacadeByProbing(
+          originalReductionInputs.seedFile.textualFileContent,
+          originalReductionInputs.seedFile.file.fileName
+            .toString(),
         )
-      }
+    return SeedReductionDriver.create(
+      globalContext = globalContext,
+      cmd = cmd,
+      workingDirectory = workingDirectory,
+      resultFolder = resultFolder,
+      parserFacade = parserFacade,
+      originalReductionInputs = originalReductionInputs,
+      listenerManager = listenerManager,
+      queryCache = queryCacheManager.cache,
+      reductionStartEvent = reductionStartEvent,
+      executorService = testScriptExecutorService,
+    )
   }
 
   override fun computeLanguageAndParserConfiguration(
@@ -63,20 +72,24 @@ class SeedMain(
       cmd.languageControlFlags,
     )
 
+  override fun computeWorkingDirectory(): Path = originalReductionInputs.seedFile.parentFile
+
   override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager =
     PersesListenerManagerCreator.createAsyncReductionListenerManager(
-      cmd,
+      cmd = cmd,
       globalContext.fileStreamPool,
+      outputDirectory = outputDirectory,
     )
 
-  override fun createReductionInputs(
+  override fun createOriginalReductionInputs(
     parserFacadeFactory: AbstractParserFacadeFactory,
-  ): SeedReductionInputs {
+  ): DiffOriginalReductionInputs {
     val inputFlags = cmd.seedInputFlags
-    return SeedReductionInputs.create(
-      seedPath = inputFlags.inputFile!!,
+    return DiffOriginalReductionInputs.create(
+      seedPath = inputFlags.computeInputFiles().single(),
       variantPath = inputFlags.variantFile!!,
       testScriptPath = inputFlags.testScript!!,
+      immutableDependencyFiles = ImmutableList.of(),
       languageKindComputer = { sourceFileAbsPath ->
         computeLanguageForFile(sourceFileAbsPath)
       },

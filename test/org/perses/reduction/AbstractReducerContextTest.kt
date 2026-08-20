@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,7 +21,7 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.program.LanguageKind
+import org.perses.program.AbstractReductionFile
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.io.CommonReductionIOManagerData
 import org.perses.reduction.io.token.TokenReductionIOManager
@@ -39,20 +39,22 @@ class AbstractReducerContextTest :
   class DummyReducerContext(
     ioManager: TokenReductionIOManager,
     executorService: TestScriptExecutorService,
+    fileUnderReduction: AbstractReductionFile<*, *>,
   ) : AbstractReducerContext<
       TokenizedProgram,
-      LanguageKind,
       TokenReductionIOManager,
       DummyReducerContext,
     >(
       ioManager,
       executorService,
+      fileUnderReduction,
     )
 
   val dummy =
     DummyReducerContext(
       ioManager,
       executorService,
+      inputs.mutableFiles.single(),
     )
 
   @Test

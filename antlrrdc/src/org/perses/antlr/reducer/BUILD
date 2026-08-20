@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = [
     "//visibility:public",
@@ -40,6 +41,8 @@ kt_jvm_library(
         "//antlrrdc/src/org/perses/antlr/reducer/setup",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:reduction_driver_interface",
+        "//src/org/perses/reduction:sanity_check",
+        "//src/org/perses/reduction:test_script_executor_service",
     ],
 )
 

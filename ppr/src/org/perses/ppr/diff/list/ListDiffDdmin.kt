@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,14 +18,15 @@ package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
 import org.perses.listminimizer.IPropertyTester
-import org.perses.listminimizer.LMPropertyTestResult
+import org.perses.listminimizer.ListMinimizerPropertyTestResult
 import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.OnBestUpdateHandler
 import org.perses.listminimizer.PristineDeltaDebugger
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.AbstractPersesToken
 import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
+import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.util.AbstractEditOperation
 import org.perses.util.ktInfo
 import org.perses.util.transformToImmutableList
@@ -33,6 +34,8 @@ import org.perses.util.transformToImmutableList
 class ListDiffDdmin(
   ioManager: ListDiffReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
+  outputManagerFactory:
+    AbstractOutputManagerFactory<ImmutableList<AbstractEditOperation<AbstractPersesToken>>>,
 ) : AbstractListDiffReducer(
     nameAndDesc =
       object : AbstractReducerNameAndDesc(
@@ -41,6 +44,7 @@ class ListDiffDdmin(
       ) {},
     ioManager = ioManager,
     testScriptExecutorService = testScriptExecutorService,
+    outputManagerFactory = outputManagerFactory,
   ) {
   override fun reduce(state: ListDiffReductionState) {
     logger.ktInfo { "Start ${this::class}" }
@@ -65,15 +69,16 @@ class ListDiffDdmin(
           executorService.testProgramAsync(
             TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
             IDENTITY_POST_CHECK,
-            ioManager.createOutputManager(configuration.getCandidateOrFail()),
+            outputManagerFactory.createManagerFor(configuration.getCandidateOrFail()),
             payload = "dummy payload",
           )
-        LMPropertyTestResult.Completed(testTask.getWithTimeoutWarnings(), Any())
+        ListMinimizerPropertyTestResult.Completed(testTask.getWithTimeoutWarnings(), Any())
       }
     return PristineDeltaDebugger(
       ListMinimizerArguments(
         needToTestEmpty = true,
         input = state.bestDiff,
+        isElementDeletedElsewhere = { false },
         propertyTest,
         onBestUpdateHandler,
         descriptionPrefix = this::class.simpleName.toString(),

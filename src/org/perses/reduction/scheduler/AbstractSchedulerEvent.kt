@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,10 +17,13 @@
 package org.perses.reduction.scheduler
 
 import com.google.common.base.MoreObjects
+import org.perses.PersesConstants
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.StatsOfFilesBeingReduced
 
 sealed class AbstractSchedulerEvent {
+  val persesUniverseTime = PersesConstants.elapsedTimeSpan()
+
   final override fun hashCode(): Int = super.hashCode()
 
   final override fun equals(other: Any?): Boolean = super.equals(other)

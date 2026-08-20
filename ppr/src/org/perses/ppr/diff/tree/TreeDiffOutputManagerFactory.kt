@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,47 +17,92 @@
 package org.perses.ppr.diff.tree
 
 import org.perses.antlr.atn.LexerAtnWrapper
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter
-import org.perses.program.printer.PrinterRegistry
-import org.perses.reduction.SparTreeWithParsability
+import org.perses.reduction.InputRepresentation
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.token.AbstractTokenOutputManagerFactory
 import org.perses.util.hashing.EnumShaAlgorithm
 
+/**
+ * Writes the seed and variant files for the twin tree-diff reduction.
+ *
+ * Unlike a regular reduction -- which holds a single tree and pulls every sibling file's content
+ * from the supplied content provider (the on-disk result folder) -- ppr keeps both [seedInputRepresentation]
+ * and [variantInputRepresentation] live in memory for the whole twin reduction. Each tree is the authoritative
+ * source for its own file, so this factory renders both files directly from the trees and ignores
+ * the supplied content provider. The seed pass and the variant pass each mutate their own tree
+ * while keeping the other tree as fixed context.
+ */
 class TreeDiffOutputManagerFactory(
-  private val reductionInputs: TreeDiffReductionInputs,
+  override val originalReductionInputs: DiffOriginalReductionInputs,
   programFormatControl: EnumFormatControl,
-  val variantSparTree: SparTreeWithParsability,
+  val seedInputRepresentation: InputRepresentation,
+  val variantInputRepresentation: InputRepresentation,
+  // The mutable file this factory's programs represent. The twin reduction uses one factory per
+  // role: one bound to the seed file, one to the variant file.
+  private val fileRepresentedByProgram: AbstractReductionFile<*, *>,
   lexerAtnWrapper: LexerAtnWrapper,
-  private val shaAlgorithm: EnumShaAlgorithm,
-) : AbstractTokenOutputManagerFactory(programFormatControl, lexerAtnWrapper) {
-  override fun createManagerFor(
-    program: TokenizedProgram,
-    format: EnumFormatControl,
-  ): AbstractOutputManager =
-    OutputManager(program, PrinterRegistry.getPrinter(format, lexerAtnWrapper))
-
+  shaAlgorithm: EnumShaAlgorithm,
+) : AbstractTokenOutputManagerFactory(
+    originalReductionInputs,
+    programFormatControl,
+    lexerAtnWrapper,
+    shaAlgorithm,
+  ) {
   override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager =
     OutputManager(program, defaultProgramPrinter)
+
+  // A sibling factory in a different code format: same collaborators (incl. the same represented
+  // file), new printer. Enables adaptive code-format selection (see AbstractProgramReductionDriver)
+  // for the tree-diff reduction.
+  override fun cloneWithCodeFormat(
+    codeFormat: EnumFormatControl,
+  ): AbstractTokenOutputManagerFactory =
+    TreeDiffOutputManagerFactory(
+      originalReductionInputs,
+      codeFormat,
+      seedInputRepresentation,
+      variantInputRepresentation,
+      fileRepresentedByProgram,
+      lexerAtnWrapper,
+      shaAlgorithm,
+    )
 
   inner class OutputManager(
     private val program: TokenizedProgram,
     private val printer: AbstractTokenizedProgramPrinter,
-  ) : AbstractOutputManager(reductionInputs, shaAlgorithm) {
+  ) : AbstractOutputManager(originalReductionInputs, shaAlgorithm) {
+    // The file being reduced is rendered from the live [program]; the other mutable file is rendered
+    // from its spar tree's current snapshot. Because the seed pass runs before the variant pass, the
+    // seed tree is already reduced by the time the variant pass keeps it as fixed context.
+    //
+    // Note that both ppr reducers modify seedInputRepresentation and variantInputRepresentation at the same time,
+    // but the seed file or the variant file has not been updated yet. So we cannot
+    // rely on the otherMutableFileContents for file content. Instead, we need to compute
+    // the content from a spartree.
     override fun internalComputeContentForFile(
       origReductionFile: AbstractReductionFile<*, *>,
     ): String =
       when (origReductionFile) {
-        reductionInputs.seedFile -> {
+        fileRepresentedByProgram -> {
           printer.print(program).sourceCode
         }
-        reductionInputs.variantFile -> {
-          printer.print(variantSparTree.programSnapshot).sourceCode
+
+        originalReductionInputs.seedFile -> {
+          printer.print(seedInputRepresentation.tree.programSnapshot.payload).sourceCode
         }
-        else -> error("unhandled file $origReductionFile")
+
+        originalReductionInputs.variantFile -> {
+          printer.print(variantInputRepresentation.tree.programSnapshot.payload).sourceCode
+        }
+
+        else -> {
+          error("unhandled file $origReductionFile")
+        }
       }
   }
 }

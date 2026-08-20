@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,28 +22,35 @@ import org.perses.util.transformToImmutableList
 
 abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
   protected val arguments: ListMinimizerArguments<T, PropertyPayload>,
+  enableCache: Boolean = false,
+  enableCacheRefresh: Boolean = false,
 ) {
   init {
     arguments.input.let { input ->
-      input
-        .fold(
-          Sets.newIdentityHashSet<T>(),
-        ) { acc, element ->
-          acc.add(element)
-          acc
-        }.let {
-          require(it.size == input.size) {
-            "The elements in input have to be distinct objects. $input"
-          }
-        }
+      require(Sets.newIdentityHashSet<T>().apply { addAll(input) }.size == input.size) {
+        "The elements in input have to be distinct objects. $input"
+      }
     }
   }
 
   protected lateinit var best: ImmutableList<ElementWrapper<T>>
     private set
 
+  protected fun convertBestAsRawElements(): ImmutableList<T> =
+    best.transformToImmutableList {
+      it.element
+    }
+
   val originalWrappedInput: ImmutableList<ElementWrapper<T>> by lazy {
     createWrappedElementList(arguments.input)
+  }
+
+  protected val cache: AbstractConfigCache<T> by lazy {
+    if (enableCache) {
+      RccConfigCache(originalWrappedInput)
+    } else {
+      NullConfigCache()
+    }
   }
 
   private fun createWrappedElementList(
@@ -62,17 +69,42 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
     newBest: ImmutableList<ElementWrapper<T>>,
     payload: PropertyPayload,
   ) {
-    best = newBest
+    val elementsDeletedElsewhere =
+      newBest.any {
+        arguments.isElementDeletedElsewhere(it.element)
+      }
+    best =
+      if (elementsDeletedElsewhere) {
+        // TODO(cnsun): write tests for the following code.
+        val builder = ImmutableList.builder<ElementWrapper<T>>()
+        for (elementWrapper in newBest) {
+          if (arguments.isElementDeletedElsewhere(elementWrapper.element)) {
+            elementWrapper.markAsDeleted()
+          } else {
+            builder.add(elementWrapper)
+          }
+        }
+        builder.build()
+      } else {
+        newBest
+      }
     arguments.onBestUpdate(newBest, payload)
+    cache.refreshAndUpdateBest(best)
   }
 
   protected fun testProperty(
     configuration: Candidate<T>,
-  ): LMPropertyTestResult<T, PropertyPayload> =
-    arguments.testProperty(
+  ): ListMinimizerPropertyTestResult<T, PropertyPayload> {
+    val cacheKey = configuration.candidateWrappers
+    if (cache.contains(cacheKey)) {
+      return ListMinimizerPropertyTestResult.Skipped("Cached")
+    }
+    cache.add(cacheKey)
+    return arguments.testProperty(
       configuration,
       sizeOfCurrentMinimizationResult = best.size,
     )
+  }
 
   fun reduce(): ImmutableList<out T> {
     if (originalWrappedInput.isEmpty()) {
@@ -92,16 +124,24 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
         testProperty(
           Candidate.SublistFromOriginal(original = best, candidate_ = empty),
         ).let {
-          if (it is LMPropertyTestResult.Completed && it.result.isInteresting) {
+          if (it is ListMinimizerPropertyTestResult.Completed && it.result.isInteresting) {
             updateBest(empty, it.payload)
-            return best.transformToImmutableList { it.element }
+            return convertBestAsRawElements()
           }
+        }
+        if (best.size == 1) {
+          arguments.log {
+            "There is only one element in the input, and the empty input has been tested."
+          }
+          return convertBestAsRawElements()
         }
       } else {
         arguments.log { "Testing the empty input is disabled." }
       }
-      reduceNonEmptyInput()
-      return best.transformToImmutableList { it.element }
+      if (best.isNotEmpty()) {
+        reduceNonEmptyInput()
+      }
+      return convertBestAsRawElements()
     } finally {
       arguments.endReduction(
         minimizationResult = best,
@@ -113,6 +153,8 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
   protected abstract fun reduceNonEmptyInput()
 
   companion object {
-    object NoPayload
+    object NoPayload {
+      override fun toString(): String = this::class.simpleName!!
+    }
   }
 }

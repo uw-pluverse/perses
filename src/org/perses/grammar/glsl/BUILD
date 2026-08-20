@@ -30,6 +30,7 @@ outline_implicit_token_defs(
 
 orig_parser_facade_library(
     name = "orig_parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.glsl",
     language_kind_full_name = "org.perses.grammar.glsl.LanguageGlsl",
     output_jar_file_name = "orig_parser_facade.jar",
@@ -44,6 +45,7 @@ orig_parser_facade_library(
 
 pnf_parser_facade_library(
     name = "parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.glsl",
     language_kind_full_name = "org.perses.grammar.glsl.LanguageGlsl",
     output_jar_file_name = "pnf_parser_facade.jar",

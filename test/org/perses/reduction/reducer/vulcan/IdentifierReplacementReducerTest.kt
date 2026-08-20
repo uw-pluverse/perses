@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -42,7 +42,7 @@ class IdentifierReplacementReducerTest {
   internal val candidates =
     IdentifierReplacementReducer.Candidates.compute(
       tokens.asSequence(),
-      { it.tokenType in parserFacade.identifierTokenTypes },
+      { it.tokenType in parserFacade.fusedIdentifierTokenTypes },
     )
 
   @Test

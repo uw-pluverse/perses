@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,8 +16,10 @@
  */
 package org.perses.listminimizer
 
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.pow
 import kotlin.random.Random
 
 class CounterBasedDeltaDebugger<T : Any, PropertyPayload>(
@@ -63,12 +65,12 @@ class CounterBasedDeltaDebugger<T : Any, PropertyPayload>(
     var size = 1
 
     while (size <= best.size) {
-      val gain = size * Math.pow(1 - currentProbability, size.toDouble())
+      val gain = size * (1 - currentProbability).pow(size.toDouble())
 
       if (gain > maxGain + epsilon) {
         maxGain = gain
         maxSize = size
-      } else if (Math.abs(gain - maxGain) <= epsilon) {
+      } else if (abs(gain - maxGain) <= epsilon) {
         // If the gain is equal, prefer the larger size
         maxSize = size
       } else {
@@ -105,10 +107,10 @@ class CounterBasedDeltaDebugger<T : Any, PropertyPayload>(
 
   override fun createInitialPayload(): CounterPayload = CounterPayload(counter = 0)
 
-  open class CounterPayload(
+  data class CounterPayload(
     val counter: Int,
   ) {
-    open fun duplicateWithNewCounter(newCounter: Int) =
+    fun duplicateWithNewCounter(newCounter: Int) =
       CounterPayload(
         counter = newCounter,
       )

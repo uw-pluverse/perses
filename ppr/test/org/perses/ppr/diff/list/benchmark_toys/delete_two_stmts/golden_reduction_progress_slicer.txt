@@ -1,6 +1,7 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
-The initial program size is 0
+The initial program size is 54
 The command line options are:
 ---
 helpFlags:
@@ -10,23 +11,23 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_list_diff_reduction_golden_test_slicer_delete_two_stmts_node_priority_seed.c_variant.c"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "seed.c"
+  inputFiles:
+  - "seed.c"
   deps: []
   variantFile: "variant.c"
   enableDiffSlicer: true
   enableDiffDdmin: false
-  sourceFile: "seed.c"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_list_diff_reduction_golden_test_slicer_delete_two_stmts_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -43,19 +44,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -64,6 +62,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -76,31 +86,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress_slicer.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: false
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -111,30 +133,47 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 listDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "seed.c"
+  inputFiles:
+  - "seed.c"
   deps: []
   variantFile: "variant.c"
   enableDiffSlicer: true
   enableDiffDdmin: false
-  sourceFile: "seed.c"
-
-Current diff:
 
 ------------------------------------------------------------
 
 
 =======Fixpoint iteration 1. Reducer: ListDiffSlicer========
 
+Current diff:
+
 The spar-tree is the following.
 Current diff:
 ------------------------------------------------------------
 
 
-Current diff:
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID        Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0 ListDiffSlicer      0             0       0              0       0   time-hidden
 
+----------------------------------- Summary ------------------------------------
+       Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ListDiffSlicer     1      0             0       0              0       0   time-hidden
+------------------------------------- End --------------------------------------
 #test success = 0
 #test failure = 0
 #test result cache hits = 0

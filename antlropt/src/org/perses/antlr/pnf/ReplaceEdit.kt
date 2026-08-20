@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -60,9 +60,11 @@ open class ReplaceEdit(
       children.size -> {
         super.internalApplyWithNewChildren(element, children, isRoot)
       }
+
       1 -> {
         nonEpsilonChildren.single()
       }
+
       else -> {
         (element as PersesSequenceAst).createWithNewChildren(nonEpsilonChildren)
       }

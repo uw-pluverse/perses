@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,30 +20,27 @@ import com.google.common.collect.ImmutableList
 import org.perses.AbstractMain
 import org.perses.HelperForPersesMain
 import org.perses.grammar.AbstractParserFacadeFactory
-import org.perses.ppr.seed.SeedReductionInputs
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
+import org.perses.reduction.event.ReductionStartEvent
 import org.perses.util.Util
 import org.perses.util.cmd.CommandLineProcessor
+import java.nio.file.Path
 
 class Main(
-  cmd: CmdOptions,
+  cmd: PPRMainCommandOptions,
   globalContext: GlobalContext,
-) : AbstractMain<CmdOptions, PPRMetaReductionDriver, SeedReductionInputs>(
+) : AbstractMain<PPRMainCommandOptions, PPRMetaReductionDriver, DiffOriginalReductionInputs>(
     cmd,
     globalContext,
   ) {
-  override fun createSequenceOfReductionDriverCreators(
-    reductionInputs: SeedReductionInputs,
-  ): Sequence<ReductionDriverCreator<PPRMetaReductionDriver>> =
-    sequenceOf(
-      ReductionDriverCreator(
-        creator = {
-          PPRMetaReductionDriver.create(globalContext, cmd, parserFacadeFactory)
-        },
-        descriptor = { "" },
-      ),
-    )
+  override fun createReductionDriver(
+    originalReductionInputs: DiffOriginalReductionInputs,
+    // Unused: the PPR meta-driver runs sub-mains (TreeDiff/ListDiff/Seed), each of which creates and
+    // fires its own reduction lifecycle event in its own internalRun.
+    reductionStartEvent: ReductionStartEvent,
+  ): PPRMetaReductionDriver = PPRMetaReductionDriver.create(globalContext, cmd, parserFacadeFactory)
 
   override fun computeLanguageAndParserConfiguration(
     parserFacadeFactory: AbstractParserFacadeFactory,
@@ -53,20 +50,23 @@ class Main(
       cmd.languageControlFlags,
     )
 
+  override fun computeWorkingDirectory(): Path = originalReductionInputs.seedFile.parentFile
+
   override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager =
     AsyncReductionListenerManager(
       listeners = ImmutableList.of(),
       synchronousMode = false,
     )
 
-  override fun createReductionInputs(
+  override fun createOriginalReductionInputs(
     parserFacadeFactory: AbstractParserFacadeFactory,
-  ): SeedReductionInputs {
+  ): DiffOriginalReductionInputs {
     val inputFlags = cmd.overallInputFlags
-    return SeedReductionInputs.create(
-      seedPath = inputFlags.inputFile!!,
+    return DiffOriginalReductionInputs.create(
+      seedPath = inputFlags.computeInputFiles().single(),
       variantPath = inputFlags.variantFile!!,
       testScriptPath = inputFlags.testScript!!,
+      immutableDependencyFiles = ImmutableList.of(),
       languageKindComputer = { sourceFileAbsPath ->
         computeLanguageForFile(sourceFileAbsPath)
       },
@@ -77,8 +77,8 @@ class Main(
     @JvmStatic
     fun main(args: Array<String>) {
       val processor =
-        CommandLineProcessor<CmdOptions>(
-          cmdCreator = { CmdOptions() },
+        CommandLineProcessor<PPRMainCommandOptions>(
+          cmdCreator = { PPRMainCommandOptions() },
           programName = Main::class.qualifiedName!!,
           args = args,
         )
@@ -86,10 +86,6 @@ class Main(
         return
       }
       val cmd = processor.cmd
-      // The token reducer is not compatible with PPR, so we need to disable TRec.
-      cmd.trecFlags.enableTRec = false
-      // TODO(cnsun): need to have a systematic way to disable flags and copy flags for PPR.
-      cmd.latraFlags.enableLatra = false
       Util.useResources(
         {
           GlobalContext(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,37 +19,57 @@ package org.perses.ppr.diff.tree
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.cmd.OutputFlagGroup
 import org.perses.cmd.ReductionControlFlagGroup
 import org.perses.grammar.AbstractParserFacade
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.ppr.diff.PPRDiffUtils
+import org.perses.program.AbstractReductionFile
 import org.perses.reduction.AbstractProgramReductionDriver
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
+import org.perses.reduction.InputRepresentation
+import org.perses.reduction.LanguageProfile
 import org.perses.reduction.ReducerAnnotation
+import org.perses.reduction.ReducerFactory
 import org.perses.reduction.ReductionConfiguration
-import org.perses.reduction.SparTreeWithParsability
+import org.perses.reduction.TestScriptExecutorService
+import org.perses.reduction.cache.AbstractQueryCache
+import org.perses.reduction.event.ReductionStartEvent
+import org.perses.reduction.io.ReductionFolder
+import org.perses.reduction.io.token.AbstractTokenOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.ktInfo
+import java.nio.file.Path
 
 class TreeDiffReductionDriver private constructor(
   globalContext: GlobalContext,
   cmd: TreeDiffCmdOptions,
   ioManager: TokenReductionIOManager,
-  sparTreeToBeReduced: SparTreeWithParsability,
+  mainFile: AbstractReductionFile<*, *>,
+  override var inputRepresentation: InputRepresentation,
   private val treeDiff: ImmutableList<AbstractSparTreeNode>,
   configuration: ReductionConfiguration,
   listenerManager: AsyncReductionListenerManager,
+  queryCache: AbstractQueryCache,
+  outputManagerFactory: AbstractTokenOutputManagerFactory,
+  reductionStartEvent: ReductionStartEvent,
+  executorService: TestScriptExecutorService,
 ) : AbstractProgramReductionDriver(
-    globalContext,
-    cmd,
-    ioManager,
-    tree = sparTreeToBeReduced,
-    configuration,
-    listenerManager,
+    globalContext = globalContext,
+    cmd = cmd,
+    ioManager = ioManager,
+    mainFile = mainFile,
+    configuration = configuration,
+    listenerManager = listenerManager,
+    languageProfile = LanguageProfile.DEFAULT,
+    reducerFactory = ReducerFactory.DEFAULT,
+    queryCache = queryCache,
+    outputManagerFactory = outputManagerFactory,
+    reductionStartEvent = reductionStartEvent,
+    executorService = executorService,
   ) {
   override fun createMainReducerCreator(): ReducerAnnotation =
     CustomizedTreeNodesReducer.ExtendedReducerAnnotation(treeDiff)
@@ -58,15 +78,30 @@ class TreeDiffReductionDriver private constructor(
     val logger: FluentLogger = FluentLogger.forEnclosingClass()
 
     private fun createIOManager(
-      reductionInputs: TreeDiffReductionInputs,
+      workingDirectory: Path,
+      originalReductionInputs: DiffOriginalReductionInputs,
+      resultFolder: ReductionFolder,
+    ): TokenReductionIOManager =
+      TokenReductionIOManager(
+        workingDirectory,
+        originalReductionInputs,
+        // The result folder is already populated with the original inputs by the caller.
+        resultFolder = resultFolder,
+      )
+
+    // The twin reduction needs one renderer factory per role, each bound to its represented file: the
+    // seed pass renders the seed file from its program (and the variant file from the variant tree),
+    // and vice versa.
+    private fun createOutputManagerFactory(
+      originalReductionInputs: DiffOriginalReductionInputs,
       reductionControlFlags: ReductionControlFlagGroup,
-      outputFlags: OutputFlagGroup,
-      sparTreeToBeKept: SparTreeWithParsability,
+      seedInputRepresentation: InputRepresentation,
+      variantInputRepresentation: InputRepresentation,
       lexerAtnWrapper: LexerAtnWrapper,
       shaAlgorithm: EnumShaAlgorithm,
-    ): TokenReductionIOManager {
-      val workingDirectory = reductionInputs.rootDirectory
-      val languageKind = reductionInputs.initiallyDeterminedMainDataKind
+      mainFile: AbstractReductionFile<*, *>,
+    ): TreeDiffOutputManagerFactory {
+      val languageKind = originalReductionInputs.initiallyDeterminedMainDataKind
       val programFormatControl =
         reductionControlFlags.codeFormat.let { codeFormat ->
           if (codeFormat != null) {
@@ -78,18 +113,14 @@ class TreeDiffReductionDriver private constructor(
             languageKind.defaultCodeFormatControl
           }
         }
-      return TokenReductionIOManager(
-        workingDirectory,
-        reductionInputs,
-        outputManagerFactory =
-          TreeDiffOutputManagerFactory(
-            reductionInputs,
-            programFormatControl,
-            sparTreeToBeKept,
-            lexerAtnWrapper,
-            shaAlgorithm,
-          ),
-        outputDirectory = outputFlags.outputDir,
+      return TreeDiffOutputManagerFactory(
+        originalReductionInputs,
+        programFormatControl,
+        seedInputRepresentation,
+        variantInputRepresentation,
+        fileRepresentedByProgram = mainFile,
+        lexerAtnWrapper,
+        shaAlgorithm,
       )
     }
 
@@ -97,28 +128,41 @@ class TreeDiffReductionDriver private constructor(
     fun create(
       globalContext: GlobalContext,
       cmd: TreeDiffCmdOptions,
-      reductionInputs: TreeDiffReductionInputs,
+      workingDirectory: Path,
+      resultFolder: ReductionFolder,
+      originalReductionInputs: DiffOriginalReductionInputs,
       parserFacade: AbstractParserFacade,
       listenerManager: AsyncReductionListenerManager,
+      queryCache: AbstractQueryCache,
+      reductionStartEvent: ReductionStartEvent,
+      executorService: TestScriptExecutorService,
     ): TreeDiffReductionTwinDriver {
-      val seedSparTree =
-        createSparTree(
-          reductionInputs.seedFile,
+      val seedInputRepresentation =
+        createInputRepresentation(
+          originalReductionInputs.seedFile,
           parserFacade,
           hideTimeStampsInLog = cmd.verbosityFlags.hideTimestamps,
+          // TODO(cnsun): need to enable semantics for PPR.
+          semanticsProviderCreator = null,
+          enableNodeActionSetCache = cmd.cacheControlFlags.nodeActionSetCaching,
+          originalReductionInputs = originalReductionInputs,
         )
 
-      val variantSparTree =
-        createSparTree(
-          reductionInputs.variantFile,
+      val variantInputRepresentation =
+        createInputRepresentation(
+          originalReductionInputs.variantFile,
           parserFacade,
           hideTimeStampsInLog = cmd.verbosityFlags.hideTimestamps,
+          // TODO(cnsun): need to enable semantics for PPR.
+          semanticsProviderCreator = null,
+          enableNodeActionSetCache = cmd.cacheControlFlags.nodeActionSetCaching,
+          originalReductionInputs = originalReductionInputs,
         )
 
       val realDiffNodesOnBothTrees =
         PPRDiffUtils.computeRealDiffNodesOnBothTrees(
-          seedSparTree.getTreeRegardlessOfParsability(),
-          variantSparTree.getTreeRegardlessOfParsability(),
+          seedInputRepresentation.tree,
+          variantInputRepresentation.tree,
         )
       val realDiffNodesOnSeed =
         realDiffNodesOnBothTrees.diffNodesOnSeed.also { nodes ->
@@ -136,38 +180,47 @@ class TreeDiffReductionDriver private constructor(
       logger.ktInfo { "${realDiffNodesOnSeed.size} real diff nodes on seed." }
       logger.ktInfo { "${realDiffNodesOnVariant.size} real diff nodes on variant." }
 
-      val ioManagerForSeedReduction =
+      // The twin reduction needs one IO manager per role, each bound to its represented file: the
+      // seed pass renders the seed file from its program (and the variant file from the variant
+      // tree), and vice versa. They share the same result folder and query cache.
+      val seedIOManager =
         createIOManager(
-          reductionInputs,
-          cmd.reductionControlFlags,
-          cmd.resultOutputFlags,
-          variantSparTree,
-          parserFacade.lexerAtnWrapper,
-          cmd.cacheControlFlags.defaultShaAlgorithm,
+          workingDirectory = workingDirectory,
+          originalReductionInputs = originalReductionInputs,
+          resultFolder = resultFolder,
+        )
+      val variantIOManager =
+        createIOManager(
+          workingDirectory = workingDirectory,
+          originalReductionInputs = originalReductionInputs,
+          resultFolder = resultFolder,
+        )
+      val seedOutputManagerFactory =
+        createOutputManagerFactory(
+          originalReductionInputs = originalReductionInputs,
+          reductionControlFlags = cmd.reductionControlFlags,
+          seedInputRepresentation = seedInputRepresentation,
+          variantInputRepresentation = variantInputRepresentation,
+          lexerAtnWrapper = parserFacade.lexerAtnWrapper,
+          shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
+          mainFile = originalReductionInputs.seedFile,
+        )
+      val variantOutputManagerFactory =
+        createOutputManagerFactory(
+          originalReductionInputs = originalReductionInputs,
+          reductionControlFlags = cmd.reductionControlFlags,
+          seedInputRepresentation = seedInputRepresentation,
+          variantInputRepresentation = variantInputRepresentation,
+          lexerAtnWrapper = parserFacade.lexerAtnWrapper,
+          shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
+          mainFile = originalReductionInputs.variantFile,
         )
 
-      val ioManagerForVariantReduction =
-        createIOManager(
-          reductionInputs.copyBySwappingSeedAndVariant(),
-          cmd.reductionControlFlags,
-          cmd.resultOutputFlags,
-          seedSparTree,
-          parserFacade.lexerAtnWrapper,
-          cmd.cacheControlFlags.defaultShaAlgorithm,
-        )
-
-      val reductionConfigurationForSeed =
+      val reductionConfiguration =
         createConfiguration(
           cmd,
           parserFacade,
-          ioManagerForSeedReduction.getDefaultProgramFormat(),
-        )
-
-      val reductionConfigurationForVariant =
-        createConfiguration(
-          cmd,
-          parserFacade,
-          ioManagerForVariantReduction.getDefaultProgramFormat(),
+          seedOutputManagerFactory.defaultCodeFormatControl,
         )
 
       return TreeDiffReductionTwinDriver(
@@ -175,20 +228,30 @@ class TreeDiffReductionDriver private constructor(
           TreeDiffReductionDriver(
             globalContext = globalContext,
             cmd = cmd,
-            ioManager = ioManagerForSeedReduction,
-            sparTreeToBeReduced = seedSparTree,
+            ioManager = seedIOManager,
+            mainFile = originalReductionInputs.seedFile,
+            inputRepresentation = seedInputRepresentation,
             treeDiff = realDiffNodesOnSeed,
-            configuration = reductionConfigurationForSeed,
+            configuration = reductionConfiguration,
             listenerManager = listenerManager,
+            queryCache = queryCache,
+            outputManagerFactory = seedOutputManagerFactory,
+            reductionStartEvent = reductionStartEvent,
+            executorService = executorService,
           ),
           TreeDiffReductionDriver(
             globalContext = globalContext,
             cmd = cmd,
-            ioManager = ioManagerForVariantReduction,
-            sparTreeToBeReduced = variantSparTree,
+            ioManager = variantIOManager,
+            mainFile = originalReductionInputs.variantFile,
+            inputRepresentation = variantInputRepresentation,
             treeDiff = realDiffNodesOnVariant,
-            configuration = reductionConfigurationForVariant,
+            configuration = reductionConfiguration,
             listenerManager = listenerManager,
+            queryCache = queryCache,
+            outputManagerFactory = variantOutputManagerFactory,
+            reductionStartEvent = reductionStartEvent,
+            executorService = executorService,
           ),
         ),
       )
@@ -198,13 +261,6 @@ class TreeDiffReductionDriver private constructor(
   class TreeDiffReductionTwinDriver(
     private val treeDiffReductionDrivers: ImmutableList<TreeDiffReductionDriver>,
   ) : IReductionDriver {
-    override val cachedSanityCheckResult: IReductionDriver.SanityCheckResult by lazy {
-      treeDiffReductionDrivers
-        .map { it.cachedSanityCheckResult }
-        .firstOrNull { it is IReductionDriver.SanityCheckResult.Failing }
-        ?: IReductionDriver.SanityCheckResult.Passing
-    }
-
     override fun reduce() {
       treeDiffReductionDrivers.forEach { it.reduce() }
     }

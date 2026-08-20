@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,9 +16,6 @@
  */
 package org.perses.listener
 
-import com.google.common.base.Splitter
-import com.google.common.base.Strings
-import org.perses.reduction.AbstractReductionListener
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestResultCacheHitEvent
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent
@@ -33,13 +30,15 @@ import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TestScriptExecutionCacheEntryEvictionEvent
+import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.util.FileStreamPool
 
 /** Note that this listener will NOT close the stream. The client needs to close it manually.  */
 class ProgressMonitorForNodeReducer(
-  private val stream: FileStreamPool.ManagedPrintStream,
-) : AbstractReductionListener() {
-  private var beforeSize = 0
+  stream: FileStreamPool.ManagedPrintStream,
+) : AbstractProgressMonitor(stream) {
+  // Set at the start of each node reduction and read at its end.
+  private var beforeSize: PerFileSizeMetrics? = null
   private var testSuccessCount = 0
   private var testFailureCount = 0
   private var testResultCacheHitCount = 0
@@ -48,7 +47,9 @@ class ProgressMonitorForNodeReducer(
 
   override fun onReductionStart(event: ReductionStartEvent) {
     printBegin("Reduction starts.")
-    stream.println("The initial program size is ${event.initialProgramSize()}")
+    stream.println(
+      "The initial program size is ${event.initialPerFileSizeMetrics().totalCanonicalTokenCount}",
+    )
     stream.println("The command line options are:")
     stream.println(event.commandLineOptions)
     event.extraData?.let { stream.println(it) }
@@ -62,14 +63,12 @@ class ProgressMonitorForNodeReducer(
     )
   }
 
-  override fun notifyNumOfLexemesInPersesTokenFactory(numOfLexemes: Int) {
-    stream.print("The number of lexemes in PersesTokenFactory is $numOfLexemes\n")
-  }
-
   override fun onAdHocMessageEvent(event: AdHocMessageEvent) {
-    val origTokenCount = event.reductionStartEvent.programSize
-    val currentTokenCount = event.programSize
-    val prefix = "${event.prefixLabelFromRootToHere}($currentTokenCount/$origTokenCount) "
+    val origTokenCount = event.reductionStartEvent.perFileSizeMetrics
+    val currentTokenCount = event.perFileSizeMetrics
+    val prefix =
+      "${event.prefixLabelFromRootToHere}" +
+        "(${currentTokenCount.totalCanonicalTokenCount}/${origTokenCount.totalCanonicalTokenCount}) "
     stream.println("$prefix ${event.message}")
   }
 
@@ -77,6 +76,7 @@ class ProgressMonitorForNodeReducer(
     printBegin(
       "Fixpoint iteration ${event.iteration}. Reducer: ${event.reducerClass.shortName}",
     )
+    event.extraData?.let { stream.println(it) }
     stream.println("The spar-tree is the following.")
     stream.println(event.oudatedTreeDump.trim())
     printEnd()
@@ -95,20 +95,24 @@ class ProgressMonitorForNodeReducer(
     )
   }
 
-  override fun close() {
-    stream.close()
-  }
-
   override fun onTestScriptExecution(
     event: AbstractTestScriptExecutionEvent.TestScriptExecutionEvent,
   ) {
     val result = event.result
-    printBegin("Testing the following program: " + if (result.isInteresting) "pass" else "fail")
+    val totalTestCount = testSuccessCount + testFailureCount
+    printBegin(
+      "Testing the following program ($totalTestCount): " +
+        if (result.isInteresting) {
+          "pass"
+        } else {
+          "fail"
+        },
+    )
     stream.printf(
       "// edit action set type: %s\n",
-      event.edit.actionSet.actionsDescription,
+      event.edit.actionSet.contextDescription,
     )
-    printCode(event.textualProgram.textualContent)
+    printCode(event.fileNameContentPairList.textualContent)
     printEnd()
     if (result.isInteresting) {
       ++testSuccessCount
@@ -120,10 +124,8 @@ class ProgressMonitorForNodeReducer(
   override fun onNodeEditActionSetCacheHit(event: NodeEditActionSetCacheHitEvent) {
     printBegin("Node edit action set cache hit.")
     val query = event.query
-    val actions = query.actions
-    for (action in actions) {
-      stream.printf("    %s\n", action.description)
-    }
+    stream.printf("    structure: ${query.structureDescription}\n")
+    stream.printf("    context: ${query.contextDescription}\n")
     printEnd()
     ++nodeEditActionSetCacheHitCount
   }
@@ -136,7 +138,7 @@ class ProgressMonitorForNodeReducer(
 
   override fun onTestResultCacheHit(event: TestResultCacheHitEvent) {
     printBegin("Cache hit for the following uninteresting program:")
-    printCode(event.textualProgram.textualContent)
+    printCode(event.fileNameContentPairList.textualContent)
     printEnd()
     ++testResultCacheHitCount
   }
@@ -147,16 +149,21 @@ class ProgressMonitorForNodeReducer(
       "It took %s than 1 second to cancel the task.\n\n",
       if (event.millisToCancelTheTask <= 1000) "less" else "more",
     )
-    printCode(event.textualProgram.textualContent)
     printEnd()
     ++testExcecutionCancelled
   }
 
   override fun onNodeReductionStart(event: NodeReductionStartEvent) {
     val node = event.nodeInfo
-    val programSize = event.programSize
-    printBegin(String.format("Reducing node %d, size=%d", node.nodeId, programSize))
-    beforeSize = programSize
+    val perFileSizeMetrics = event.perFileSizeMetrics
+    printBegin(
+      String.format(
+        "Reducing node %d, size=%d",
+        node.nodeId,
+        perFileSizeMetrics.totalCanonicalTokenCount,
+      ),
+    )
+    beforeSize = perFileSizeMetrics
     stream.println("The current best program is the following\n")
     printCode(event.textualProgram.textualContent)
     printEnd()
@@ -164,20 +171,26 @@ class ProgressMonitorForNodeReducer(
 
   override fun onBestProgramUpdated(event: BestProgramUpdateEvent) {
     printBegin("The best program is updated.")
-    stream.println("token count change ${event.programSizeBefore} -> ${event.programSize}")
+    stream.println(
+      "token count change ${event.programSizeBefore.canonicalTokenCount} -> " +
+        "${event.programSizeAfter.canonicalTokenCount}",
+    )
+    val edit = event.appliedEdit
+    stream.println("Edit: ${edit.structureDescription}")
     printEnd()
   }
 
   override fun onNodeReductionEnd(event: NodeReductionEndEvent) {
     printBegin("Node reduction is done")
-    val programSize = event.programSize
+    val perFileSizeMetrics = event.perFileSizeMetrics
     val node = event.nodeInfo
-    if (beforeSize > programSize) {
+    val beforeTokenCount = beforeSize!!.totalCanonicalTokenCount
+    if (beforeTokenCount > perFileSizeMetrics.totalCanonicalTokenCount) {
       stream.printf(
         "Succeeded to reduce node %d from %d to %d\n",
         node.nodeId,
-        beforeSize,
-        programSize,
+        beforeTokenCount,
+        perFileSizeMetrics.totalCanonicalTokenCount,
       )
     } else {
       stream.printf("Failed to reduce node %d\n", node.nodeId)
@@ -215,36 +228,5 @@ class ProgressMonitorForNodeReducer(
       editCacheEnabled.toString(),
       queryCacheType,
     )
-  }
-
-  private fun printBegin(section: String) {
-    val length = PROGRAM_END_MARKER.length
-    val paddingLength = ((length - section.length) / 2).coerceAtLeast(1)
-    val padding = Strings.padEnd("", paddingLength, '=')
-    val builder = StringBuilder()
-    builder.append(padding)
-    builder.append(section)
-    while (builder.length < length) {
-      builder.append('=')
-    }
-    stream.println(builder.toString())
-    stream.println()
-  }
-
-  private fun printEnd() {
-    stream.println(PROGRAM_END_MARKER)
-    stream.println("\n")
-  }
-
-  private fun printCode(code: String) {
-    Splitter.on('\n').omitEmptyStrings().split(code).forEach {
-      if (it.isNotBlank()) {
-        stream.println("    $it")
-      }
-    }
-  }
-
-  companion object {
-    private val PROGRAM_END_MARKER = Strings.padEnd("", 60, '-')
   }
 }

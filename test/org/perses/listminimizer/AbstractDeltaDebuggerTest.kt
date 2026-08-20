@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -32,7 +32,7 @@ class AbstractDeltaDebuggerTest {
   companion object {
     val dummyPropertyTest =
       IPropertyTester<String, String> {
-        LMPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "dummy")
+        ListMinimizerPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "dummy")
       }
 
     val dummyHandler =
@@ -49,6 +49,7 @@ class AbstractDeltaDebuggerTest {
       ListMinimizerArguments(
         needToTestEmpty = true,
         input,
+        isElementDeletedElsewhere = { false },
         dummyPropertyTest,
         dummyHandler,
         descriptionPrefix = "",
@@ -209,22 +210,6 @@ class AbstractDeltaDebuggerTest {
   }
 
   @Test
-  fun testConfigurationEqual() {
-    ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a")).let {
-      assertThat(it).isEqualTo(it)
-    }
-    ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(String())).let { a ->
-      val b = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(String()))
-      assertThat(a).isNotEqualTo(b)
-    }
-    val element = String()
-    ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(element)).let { a ->
-      val b = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(element))
-      assertThat(a).isEqualTo(b)
-    }
-  }
-
-  @Test
   fun testElementWrapperDeletion() {
     val element =
       ElementWrapper(
@@ -235,6 +220,41 @@ class AbstractDeltaDebuggerTest {
     assertThat(element.deleted).isFalse()
     element.markAsDeleted()
     assertThat(element.deleted).isTrue()
-    assertThat(kotlin.runCatching { element.markAsDeleted() }.exceptionOrNull()).isNotNull()
+    assertThat(kotlin.runCatching { element.markAsDeleted() }.exceptionOrNull()).isNull()
+  }
+
+  @Test
+  fun testElementWrapperEqualityAndHashCode() {
+    val element1 =
+      ElementWrapper(
+        index = 1,
+        element = "a",
+        elementPayload = Any(),
+      )
+    val element2 =
+      ElementWrapper(
+        index = 1,
+        element = "a",
+        elementPayload = Any(),
+      )
+
+    // They have identical data but are distinct instances.
+    // ElementWrapper must use identity-based equality.
+    assertThat(element1).isNotEqualTo(element2)
+
+    val set = HashSet<ElementWrapper<String>>()
+    set.add(element1)
+
+    // HashSet should treat them as distinct elements
+    assertThat(set.contains(element1)).isTrue()
+    assertThat(set.contains(element2)).isFalse()
+
+    set.add(element2)
+    assertThat(set).hasSize(2)
+
+    // References to the same instance are identical
+    val element3 = element1
+    assertThat(element1).isEqualTo(element3)
+    assertThat(set.contains(element3)).isTrue()
   }
 }

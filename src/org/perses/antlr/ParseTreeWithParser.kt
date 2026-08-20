@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,11 +22,27 @@ import org.antlr.v4.runtime.Token
 import org.antlr.v4.runtime.tree.ParseTree
 import org.perses.util.toImmutableList
 
+/**
+ * One syntax error ANTLR reported while parsing. Populated only for an error-tolerant parse; a strict
+ * or clean parse leaves [ParseTreeWithParser.syntaxErrors] empty.
+ */
+data class SyntaxError(
+  val line: Int,
+  val column: Int,
+  val message: String,
+  val offendingSymbol: Any?,
+)
+
 data class ParseTreeWithParser(
   val tree: ParseTree,
   val parser: Parser,
   val lexer: Lexer,
+  // Empty for a strict/clean parse; non-empty only when the tree was recovered by tolerant parsing.
+  val syntaxErrors: List<SyntaxError> = emptyList(),
 ) {
+  val hasError: Boolean
+    get() = syntaxErrors.isNotEmpty()
+
   val lazyAllTokens by lazy {
     lexer.reset()
     lexer.allTokens

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,10 +16,10 @@
  */
 package org.perses.reduction
 
-import org.perses.reduction.cache.AbstractCacheRetrievalResult
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.spartree.AbstractSparTreeEdit
 
 data class EditTestPayload(
   val edit: AbstractSparTreeEdit<*>,
-  val program: AbstractCacheRetrievalResult.CacheMiss,
+  val outputManager: AbstractOutputManager,
 )

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -73,12 +73,13 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_boundedBreadthFirstSearchForFirstQualifiedNodes_max_depth_1() {
+  fun testBoundedBreadthFirstSearchForFirstQualifiedNodes_max_depth_1() {
     val result =
       root
-        .boundedBreadthFirstSearchForFirstQualifiedNodes(
-          { true },
-          1,
+        .boundedBreadthFirstSearchToSelectNodes(
+          selectionPredicate = { true },
+          stopAtFirstSelectionPerPath = true,
+          maxBfsDepth = 1,
         ).toList()
     assertThat(result)
       .containsExactly(
@@ -102,9 +103,10 @@ class AbstractTreeNodeTest {
   fun test_boundedBreadthFirstSearchForFirstQualifiedNodes_max_depth_2() {
     val result =
       root
-        .boundedBreadthFirstSearchForFirstQualifiedNodes(
-          { it !== l1N1Root && it !== l1N2Root && it !== l1N3Root },
-          2,
+        .boundedBreadthFirstSearchToSelectNodes(
+          selectionPredicate = { it !== l1N1Root && it !== l1N2Root && it !== l1N3Root },
+          stopAtFirstSelectionPerPath = true,
+          maxBfsDepth = 2,
         ).toList()
     assertThat(result)
       .containsExactly(
@@ -118,13 +120,13 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_nodeId() {
+  fun testNodeId() {
     assertThat(l1N1Root.nodeId).isEqualTo(1)
     assertThat(l3N11N9.nodeId).isEqualTo(11)
   }
 
   @Test
-  fun test_getChildCount() {
+  fun testGetChildCount() {
     assertThat(l1N1Root.childCount).isEqualTo(2)
     assertThat(l3N11N9.childCount).isEqualTo(0)
   }
@@ -137,7 +139,7 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_preOrderVisit() {
+  fun testPreOrderVisit() {
     val list = ArrayList<Node>()
     root.preOrderVisit { node ->
       list.add(node)
@@ -161,7 +163,7 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_postOrderVisit() {
+  fun testPostOrderVisit() {
     val list = ArrayList<Node>()
     root.postOrderVisit { node ->
       list.add(node)
@@ -205,14 +207,14 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_delete_root() {
+  fun testDeleteRoot() {
     assertThat(root.isPermanentlyDeleted).isFalse()
     root.delete()
     assertThat(root.isPermanentlyDeleted).isTrue()
   }
 
   @Test
-  fun test_delete_child() {
+  fun testDeleteChild() {
     root.forEachChild {
       assertThat(it.isPermanentlyDeleted).isFalse()
     }
@@ -228,12 +230,12 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_parent_of_root() {
+  fun testParentOfRoot() {
     assertThat(root.parent).isNull()
   }
 
   @Test
-  fun test_parent_of_node() {
+  fun testParentOfNode() {
     assertThat(l1N1Root.parent!!).isSameInstanceAs(root)
     assertThat(l1N1Root.payload!!).isEqualTo(root.nodeId.toString())
 
@@ -241,7 +243,7 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_find_lowest_ancestor() {
+  fun testFindLowestAncestor() {
     val immutableList1: ImmutableList<Node> = ImmutableList.of(l2N4N1, l2N5N1)
     assertThat(AbstractTreeNode.findLowestAncestor(immutableList1)).isSameInstanceAs(l1N1Root)
 
@@ -271,7 +273,7 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_find_lowest_ancestor_pair() {
+  fun testFindLowestAncestorPair() {
     assertThat(AbstractTreeNode.findLowestAncestorPair(l2N4N1, l2N4N1)).isSameInstanceAs(
       l2N4N1,
     )
@@ -281,7 +283,7 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_replace_child() {
+  fun testReplaceChild() {
     val newNode1 = Node(13)
     Node(15).apply { newNode1.addChild(this) }
     l1N1Root.replaceChild(l2N4N1, newNode1, l2N4N1.payload!!)
@@ -295,7 +297,7 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_remove_child() {
+  fun testRemoveChild() {
     l1N1Root.removeChild(l2N4N1)
     assertThat(l1N1Root.childCount).isEqualTo(1)
     assertThat(l1N1Root.getChild(0)).isSameInstanceAs(l2N5N1)
@@ -306,7 +308,7 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_addChildBeforeExistingChild() {
+  fun testAddChildBeforeExistingChild() {
     val newChild = Node(100)
     l2N9N3.addChildBeforeExistingChild(l3N11N9, newChild, l3N11N9.payload!!)
 
@@ -317,7 +319,7 @@ class AbstractTreeNodeTest {
   }
 
   @Test
-  fun test_addChildAfterExistingChild_existingTree() {
+  fun testAddChildAfterExistingChildExistingTree() {
     val newChild = Node(101)
     l1N2Root.addChildAfterExistingChild(l2N6N2, newChild, "payload")
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,7 +28,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 @RunWith(JUnit4::class)
 class RestrictedFutureTest {
-  private val service = DaemonThreadPool.createSingleThreadPool()
+  private val service = DaemonThreadPool.createSingleThreadPool(creatorObject = this)
 
   @After
   fun teardown() {
@@ -67,7 +67,10 @@ class RestrictedFutureTest {
     assertThat(future.isCancelled()).isFalse()
     assertThat(future.isDone()).isFalse()
 
-    val localService = DaemonThreadPool.createSingleThreadPool()
+    val localService =
+      DaemonThreadPool.createSingleThreadPool(
+        creatorObject = this,
+      )
     localService.submit {
       Thread.sleep(1000 * 10.toLong())
       future.cancelWithInterruption()

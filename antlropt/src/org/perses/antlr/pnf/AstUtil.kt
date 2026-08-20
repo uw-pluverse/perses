@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -38,7 +38,10 @@ object AstUtil {
       AstTag.RULE_REF,
       AstTag.TERMINAL,
       AstTag.UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE,
-      -> return true
+      -> {
+        return true
+      }
+
       else -> {}
     }
     if (e is AbstractPersesTerminalAst) {

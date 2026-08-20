@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 13
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_trec_reduction_golden_test_node_priority_t.c"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "t.c"
+  inputFiles:
+  - "t.c"
   deps: []
-  sourceFile: "t.c"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_trec_reduction_golden_test_node_priority-dfs_t.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress_dump_trec.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: true
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,71 +130,84 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 10
 (13/13)  The reducer execution plan is listed below.
     fixpoint (smaller) {
-        node_priority-dfs
+        node_priority
     }
     fixpoint (10) {
         if (token_canonicalizer) {
             fixpoint (smaller) {
-                node_priority-dfs
+                node_priority
             }
         }
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            node_priority-dfs
+            fixpoint (smaller) {
+                node_priority
+            }
         }
     }
 
 
 (13/13)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-======Fixpoint iteration 1. Reducer: node_priority-dfs======
+========Fixpoint iteration 1. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=1,slot_type=translationUnit}
-|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=5,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=80,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=84,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=71,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=79,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=73,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=75,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=76,slot_type=LeftParen}
-        |           |___Token:) {id=78,slot_type=RightParen}
-        |___compoundStatement {id=7,slot_type=compoundStatement}
-            |___Token:{ {id=8,slot_type=LeftBrace}
-            |___(?) {id=9,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=44,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=45,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=63,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:longFunctionName {id=70,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=65,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=67,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=68,slot_type=LeftParen}
-            |       |   |               |___Token:) {id=69,slot_type=RightParen}
-            |       |   |___Token:; {id=46,slot_type=Semi}
-            |       |___jumpStatement {id=17,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=20,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=21,slot_type=Return}
-            |           |   |___(?) {id=22,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0xff00ull {id=41,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=19,slot_type=Semi}
-            |___Token:} {id=10,slot_type=RightBrace}
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=6,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=7,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=82,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=86,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=73,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=81,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=75,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=77,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=78,slot_type=LeftParen}
+            |           |___Token:){id=80,slot_type=RightParen}
+            |___compoundStatement{id=9,slot_type=compoundStatement}
+                |___Token:{{id=10,slot_type=LeftBrace}
+                |___(?){id=11,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=46,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=47,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=65,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:longFunctionName{id=72,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=67,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=69,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=70,slot_type=LeftParen}
+                |       |   |               |___Token:){id=71,slot_type=RightParen}
+                |       |   |___Token:;{id=48,slot_type=Semi}
+                |       |___jumpStatement{id=19,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=22,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=23,slot_type=Return}
+                |           |   |___(?){id=24,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:0xff00ull{id=43,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=21,slot_type=Semi}
+                |___Token:}{id=12,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority](13/13)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](13/13)  Retrieved semantics provider null
 ==================Reducing node 2, size=13==================
 
 The current best program is the following
@@ -185,6 +220,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
@@ -203,33 +250,31 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==============Node edit action set cache hit.===============
 
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-                         ;
-    --file: <formatted tokenized program in its original format>--
-                         ;
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [regular node]compatible replacement
     --file: t.c--
-                       ;
-    --file: <formatted tokenized program in its original format>--
-                       ;
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 4
 ------------------------------------------------------------
 
 
-==================Reducing node 7, size=13==================
+==================Reducing node 6, size=13==================
 
 The current best program is the following
 
@@ -241,9 +286,32 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+==============Node edit action set cache hit.===============
+
+    structure: [delete_6]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (1): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                         ;
+------------------------------------------------------------
+
+
+==========Testing the following program (2): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                       ;
+------------------------------------------------------------
+
+
 ===================Node reduction is done===================
 
-Failed to reduce node 7
+Failed to reduce node 6
 ------------------------------------------------------------
 
 
@@ -259,29 +327,45 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__compoundStatement_1]dd@1
-    --file: t.c--
-    int main() {
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 9
 ------------------------------------------------------------
 
 
-=================Reducing node 12, size=13==================
+=================Reducing node 11, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+==========Testing the following program (3): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compoundStatement_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    int main() {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=13==================
 
 The current best program is the following
 
@@ -295,68 +379,59 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=12}
+    structure: [delete_14]
+    context: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (4): fail===========
 
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove all except first
     --file: t.c--
     int main() {
        longFunctionName();
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       longFunctionName();
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int main() {
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=17}
+    structure: [delete_19]
+    context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=2
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](13/13)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+==========Testing the following program (5): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=2
     --file: t.c--
     int main() {
        return 0xff00ull;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       return 0xff00ull;
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 12
+Failed to reduce node 14
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=13==================
+=================Reducing node 46, size=13==================
 
 The current best program is the following
 
@@ -370,11 +445,12 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=44}
+    structure: [delete_46]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (6): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: t.c--
@@ -382,168 +458,12 @@ The current best program is the following
                          ;
        return 0xff00ull;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-                         ;
-       return 0xff00ull;
-    }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 44
-------------------------------------------------------------
-
-
-=================Reducing node 71, size=13==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main   {
-       longFunctionName();
-       return 0xff00ull;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main   {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 71
-------------------------------------------------------------
-
-
-=================Reducing node 45, size=13==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main() {
-                         ;
-       return 0xff00ull;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-                         ;
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-===================Node reduction is done===================
-
-Failed to reduce node 45
-------------------------------------------------------------
-
-
-=================Reducing node 63, size=13==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=63}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main() {
-       longFunctionName  ;
-       return 0xff00ull;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       longFunctionName  ;
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 63
-------------------------------------------------------------
-
-
-=================Reducing node 17, size=13==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=17}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main() {
-       longFunctionName();
-                       ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       longFunctionName();
-                       ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 17
+Failed to reduce node 46
 ------------------------------------------------------------
 
 
@@ -559,16 +479,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
-=====Cache hit for the following uninteresting program:=====
+==========Testing the following program (7): fail===========
 
+// edit action set type: [regular node]compatible replacement
     --file: t.c--
-    int main   {
-       longFunctionName();
-       return 0xff00ull;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main   {
        longFunctionName();
        return 0xff00ull;
@@ -576,15 +490,13 @@ FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:1
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 73
 ------------------------------------------------------------
 
 
-=================Reducing node 75, size=13==================
+=================Reducing node 47, size=13==================
 
 The current best program is the following
 
@@ -596,15 +508,24 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=75}
+    --file: t.c--
+    int main() {
+                         ;
+       return 0xff00ull;
+    }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 75
+Failed to reduce node 47
 ------------------------------------------------------------
 
 
@@ -620,16 +541,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
-=====Cache hit for the following uninteresting program:=====
+==============Node edit action set cache hit.===============
 
+    structure: [delete_65]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (8): fail===========
+
+// edit action set type: [regular node]compatible replacement
     --file: t.c--
-    int main() {
-       longFunctionName  ;
-       return 0xff00ull;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
        longFunctionName  ;
        return 0xff00ull;
@@ -637,11 +559,103 @@ FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:1
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 65
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_19]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (9): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       longFunctionName();
+                       ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 19
+------------------------------------------------------------
+
+
+=================Reducing node 75, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main   {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 75
+------------------------------------------------------------
+
+
+=================Reducing node 77, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_77]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 77
 ------------------------------------------------------------
 
 
@@ -657,19 +671,28 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=67}
+    --file: t.c--
+    int main() {
+       longFunctionName  ;
+       return 0xff00ull;
+    }
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 67
 ------------------------------------------------------------
 
 
-=================Reducing node 20, size=13==================
+=================Reducing node 69, size=13==================
 
 The current best program is the following
 
@@ -681,7 +704,32 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==============Node edit action set cache hit.===============
+
+    structure: [delete_69]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 69
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (10): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: t.c--
@@ -689,21 +737,16 @@ The current best program is the following
        longFunctionName();
        return          ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       longFunctionName();
-       return          ;
-    }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 20
+Failed to reduce node 22
 ------------------------------------------------------------
 
 
-=================Reducing node 79, size=13==================
+=================Reducing node 81, size=13==================
 
 The current best program is the following
 
@@ -717,7 +760,25 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 79
+Failed to reduce node 81
+------------------------------------------------------------
+
+
+=================Reducing node 80, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 80
 ------------------------------------------------------------
 
 
@@ -739,7 +800,7 @@ Failed to reduce node 78
 ------------------------------------------------------------
 
 
-=================Reducing node 76, size=13==================
+=================Reducing node 72, size=13==================
 
 The current best program is the following
 
@@ -753,7 +814,25 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 76
+Failed to reduce node 72
+------------------------------------------------------------
+
+
+=================Reducing node 71, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 71
 ------------------------------------------------------------
 
 
@@ -775,7 +854,7 @@ Failed to reduce node 70
 ------------------------------------------------------------
 
 
-=================Reducing node 69, size=13==================
+=================Reducing node 48, size=13==================
 
 The current best program is the following
 
@@ -789,11 +868,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 69
+Failed to reduce node 48
 ------------------------------------------------------------
 
 
-=================Reducing node 68, size=13==================
+=================Reducing node 24, size=13==================
 
 The current best program is the following
 
@@ -805,44 +884,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
-
-Failed to reduce node 68
-------------------------------------------------------------
-
-
-=================Reducing node 46, size=13==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 46
-------------------------------------------------------------
-
-
-=================Reducing node 22, size=13==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
@@ -850,23 +893,19 @@ FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:1
        longFunctionName();
        return          ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       longFunctionName();
-       return          ;
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 22
+Failed to reduce node 24
 ------------------------------------------------------------
 
 
-=================Reducing node 41, size=13==================
+=================Reducing node 43, size=13==================
 
 The current best program is the following
 
@@ -880,7 +919,25 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 41
+Failed to reduce node 43
+------------------------------------------------------------
+
+
+=================Reducing node 23, size=13==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 23
 ------------------------------------------------------------
 
 
@@ -902,7 +959,7 @@ Failed to reduce node 21
 ------------------------------------------------------------
 
 
-=================Reducing node 19, size=13==================
+=================Reducing node 12, size=13==================
 
 The current best program is the following
 
@@ -916,7 +973,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 19
+Failed to reduce node 12
 ------------------------------------------------------------
 
 
@@ -938,7 +995,7 @@ Failed to reduce node 10
 ------------------------------------------------------------
 
 
-==================Reducing node 8, size=13==================
+==================Reducing node 7, size=13==================
 
 The current best program is the following
 
@@ -950,51 +1007,29 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+==========Testing the following program (11): fail==========
 
-Failed to reduce node 8
-------------------------------------------------------------
-
-
-==================Reducing node 5, size=13==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       longFunctionName();
-       return 0xff00ull;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
         main() {
        longFunctionName();
        return 0xff00ull;
     }
-    --file: <formatted tokenized program in its original format>--
-        main() {
-       longFunctionName();
-       return 0xff00ull;
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[1][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 5
+Failed to reduce node 7
 ------------------------------------------------------------
 
 
-=================Reducing node 80, size=13==================
+=================Reducing node 82, size=13==================
 
 The current best program is the following
 
@@ -1008,17 +1043,33 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=80}
+    structure: [delete_82]
+    context: [kleene_plus:declarationSpecifiers]can be epsilon
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+        main() {
+       longFunctionName();
+       return 0xff00ull;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[1][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 80
+Failed to reduce node 82
 ------------------------------------------------------------
 
 
-=================Reducing node 84, size=13==================
+=================Reducing node 86, size=13==================
 
 The current best program is the following
 
@@ -1032,49 +1083,52 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 84
+Failed to reduce node 86
 ------------------------------------------------------------
 
 
+(13/13)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 =====Fixpoint iteration 2. Reducer: token_canonicalizer=====
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=1,slot_type=translationUnit}
-|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=5,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=80,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=84,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=71,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=79,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=73,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=75,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=76,slot_type=LeftParen}
-        |           |___Token:) {id=78,slot_type=RightParen}
-        |___compoundStatement {id=7,slot_type=compoundStatement}
-            |___Token:{ {id=8,slot_type=LeftBrace}
-            |___(?) {id=9,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=44,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=45,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=63,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:longFunctionName {id=70,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=65,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=67,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=68,slot_type=LeftParen}
-            |       |   |               |___Token:) {id=69,slot_type=RightParen}
-            |       |   |___Token:; {id=46,slot_type=Semi}
-            |       |___jumpStatement {id=17,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=20,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=21,slot_type=Return}
-            |           |   |___(?) {id=22,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0xff00ull {id=41,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=19,slot_type=Semi}
-            |___Token:} {id=10,slot_type=RightBrace}
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=6,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=7,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=82,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=86,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=73,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=81,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=75,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=77,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=78,slot_type=LeftParen}
+            |           |___Token:){id=80,slot_type=RightParen}
+            |___compoundStatement{id=9,slot_type=compoundStatement}
+                |___Token:{{id=10,slot_type=LeftBrace}
+                |___(?){id=11,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=46,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=47,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=65,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:longFunctionName{id=72,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=67,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=69,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=70,slot_type=LeftParen}
+                |       |   |               |___Token:){id=71,slot_type=RightParen}
+                |       |   |___Token:;{id=48,slot_type=Semi}
+                |       |___jumpStatement{id=19,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=22,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=23,slot_type=Return}
+                |           |   |___(?){id=24,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:0xff00ull{id=43,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=21,slot_type=Semi}
+                |___Token:}{id=12,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (12): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: t.c--
@@ -1082,23 +1136,13 @@ translationUnit {id=1,slot_type=translationUnit}
        longFunctionName();
        return 0xff00ull;
     }
-    --file: <formatted tokenized program in its original format>--
-    int a   () {
-       longFunctionName();
-       return 0xff00ull;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (13): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: t.c--
-    int main() {
-       a               ();
-       return 0xff00ull;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
        a               ();
        return 0xff00ull;
@@ -1108,23 +1152,24 @@ translationUnit {id=1,slot_type=translationUnit}
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-1 entries are removed: 12 --> 11.
+6 entries are removed: 13 --> 7.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 16
+    size before clearance = 19
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
 token count change 13 -> 13
+Edit: AnyNodeReplace:[replace_72_with_90]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (14): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0'
     --file: t.c--
@@ -1132,15 +1177,10 @@ token count change 13 -> 13
        a               ();
        return 0        ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0        ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (15): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '1'
     --file: t.c--
@@ -1148,15 +1188,10 @@ token count change 13 -> 13
        a               ();
        return 1        ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 1        ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (16): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0xfull'
     --file: t.c--
@@ -1164,15 +1199,10 @@ token count change 13 -> 13
        a               ();
        return 0xfull   ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xfull   ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (17): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0xff00'
     --file: t.c--
@@ -1180,15 +1210,10 @@ token count change 13 -> 13
        a               ();
        return 0xff00   ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff00   ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (18): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0xf00ull'
     --file: t.c--
@@ -1196,11 +1221,6 @@ token count change 13 -> 13
        a               ();
        return 0xf00ull ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00ull ;
-    }
 ------------------------------------------------------------
 
 
@@ -1208,22 +1228,12 @@ token count change 13 -> 13
 
 It took less than 1 second to cancel the task.
 
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xff0ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xff0ull ;
-    }
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-4 entries are removed: 15 --> 11.
+1 entries are removed: 11 --> 10.
 ------------------------------------------------------------
 
 
@@ -1236,26 +1246,21 @@ It took less than 1 second to cancel the task.
 ================The best program is updated.================
 
 token count change 13 -> 13
+Edit: AnyNodeReplace:[replace_43_with_100]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0xfull'
     --file: t.c--
     int main() {
        a               ();
        return 0xfull   ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xfull   ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (19): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0xf00'
     --file: t.c--
@@ -1263,15 +1268,10 @@ token count change 13 -> 13
        a               ();
        return 0xf00    ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00    ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (20): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0x00ull'
     --file: t.c--
@@ -1279,15 +1279,10 @@ token count change 13 -> 13
        a               ();
        return 0x00ull  ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x00ull  ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (21): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0xf0ull'
     --file: t.c--
@@ -1295,15 +1290,10 @@ token count change 13 -> 13
        a               ();
        return 0xf0ull  ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf0ull  ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (22): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0Xf00ull'
     --file: t.c--
@@ -1311,15 +1301,10 @@ token count change 13 -> 13
        a               ();
        return 0Xf00ull ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0Xf00ull ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (23): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
     --file: t.c--
@@ -1327,23 +1312,13 @@ token count change 13 -> 13
        a               ();
        return 0x000ull ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x000ull ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (24): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0x100ull'
     --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
        a               ();
        return 0x100ull ;
@@ -1355,22 +1330,12 @@ token count change 13 -> 13
 
 It took less than 1 second to cancel the task.
 
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0xf00Ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0xf00Ull ;
-    }
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-6 entries are removed: 17 --> 11.
+2 entries are removed: 15 --> 13.
 ------------------------------------------------------------
 
 
@@ -1383,10 +1348,11 @@ It took less than 1 second to cancel the task.
 ================The best program is updated.================
 
 token count change 13 -> 13
+Edit: AnyNodeReplace:[replace_100_with_126]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (25): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0X100ull'
     --file: t.c--
@@ -1394,15 +1360,10 @@ token count change 13 -> 13
        a               ();
        return 0X100ull ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0X100ull ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (26): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0x000ull'
     --file: t.c--
@@ -1410,23 +1371,13 @@ token count change 13 -> 13
        a               ();
        return 0x000ull ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x000ull ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (27): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0x100Ull'
     --file: t.c--
-    int main() {
-       a               ();
-       return 0x100Ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
        a               ();
        return 0x100Ull ;
@@ -1435,62 +1386,48 @@ token count change 13 -> 13
 
 
 (13/13)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 3. Reducer: node_priority-dfs======
+========Fixpoint iteration 3. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=134,slot_type=translationUnit}
-|___(+) {id=135,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=137,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=138,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=213,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=217,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=204,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=212,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=206,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=208,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=209,slot_type=LeftParen}
-        |           |___Token:) {id=211,slot_type=RightParen}
-        |___compoundStatement {id=140,slot_type=compoundStatement}
-            |___Token:{ {id=141,slot_type=LeftBrace}
-            |___(?) {id=142,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=145,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=177,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=178,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=196,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:a {id=203,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=198,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=200,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=201,slot_type=LeftParen}
-            |       |   |               |___Token:) {id=202,slot_type=RightParen}
-            |       |   |___Token:; {id=179,slot_type=Semi}
-            |       |___jumpStatement {id=150,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=153,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=154,slot_type=Return}
-            |           |   |___(?) {id=155,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0x100ull {id=174,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=152,slot_type=Semi}
-            |___Token:} {id=143,slot_type=RightBrace}
+compilationUnit{id=136,slot_type=compilationUnit}
+|___(?){id=137,slot_type=optional__compilationUnit_1}
+    |___(+){id=139,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=141,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=142,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=217,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=221,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=208,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=216,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=210,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=212,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=213,slot_type=LeftParen}
+            |           |___Token:){id=215,slot_type=RightParen}
+            |___compoundStatement{id=144,slot_type=compoundStatement}
+                |___Token:{{id=145,slot_type=LeftBrace}
+                |___(?){id=146,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=149,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=181,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=182,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=200,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:a{id=207,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=202,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=204,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=205,slot_type=LeftParen}
+                |       |   |               |___Token:){id=206,slot_type=RightParen}
+                |       |   |___Token:;{id=183,slot_type=Semi}
+                |       |___jumpStatement{id=154,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=157,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=158,slot_type=Return}
+                |           |   |___(?){id=159,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:0x100ull{id=178,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=156,slot_type=Semi}
+                |___Token:}{id=147,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 135, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 135
-------------------------------------------------------------
-
-
+FixPt[3][node_priority](13/13)  Starting to retrieve the semantics provider
+FixPt[3][node_priority](13/13)  Retrieved semantics provider null
 =================Reducing node 137, size=13=================
 
 The current best program is the following
@@ -1503,31 +1440,24 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-                         ;
-    --file: <formatted tokenized program in its original format>--
-                         ;
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-                       ;
-    --file: <formatted tokenized program in its original format>--
-                       ;
-------------------------------------------------------------
-
-
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 137
 ------------------------------------------------------------
 
 
-=================Reducing node 140, size=13=================
+=================Reducing node 139, size=13=================
 
 The current best program is the following
 
@@ -1539,46 +1469,31 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+==============Node edit action set cache hit.===============
 
-Failed to reduce node 140
+    structure: [delete_139]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
 ------------------------------------------------------------
 
 
-=================Reducing node 142, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int main() {
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-    }
 ------------------------------------------------------------
 
 
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 142
+Failed to reduce node 139
 ------------------------------------------------------------
 
 
-=================Reducing node 145, size=13=================
+=================Reducing node 141, size=13=================
 
 The current best program is the following
 
@@ -1592,259 +1507,32 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=145}
+    structure: [delete_141]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove whole except first
-    --file: t.c--
-    int main() {
-       a               ();
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int main() {
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=150}
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:kleene_plus__blockItemList_3]dd@1
-    --file: t.c--
-    int main() {
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
-===================Node reduction is done===================
-
-Failed to reduce node 145
-------------------------------------------------------------
-
-
-=================Reducing node 177, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=177}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main() {
                          ;
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-                         ;
-       return 0x100ull ;
-    }
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
-
-Failed to reduce node 177
-------------------------------------------------------------
-
-
-=================Reducing node 204, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main   {
-       a               ();
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main   {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 204
-------------------------------------------------------------
-
-
-=================Reducing node 178, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int main() {
-                         ;
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-                         ;
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-===================Node reduction is done===================
-
-Failed to reduce node 178
-------------------------------------------------------------
-
-
-=================Reducing node 196, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=196}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main() {
-       a                 ;
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a                 ;
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 196
-------------------------------------------------------------
-
-
-=================Reducing node 150, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=150}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main() {
-       a               ();
                        ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-                       ;
-    }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 150
+Failed to reduce node 141
 ------------------------------------------------------------
 
 
-=================Reducing node 206, size=13=================
+=================Reducing node 144, size=13=================
 
 The current best program is the following
 
@@ -1856,28 +1544,142 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
-=====Cache hit for the following uninteresting program:=====
+===================Node reduction is done===================
+
+Failed to reduce node 144
+------------------------------------------------------------
+
+
+=================Reducing node 146, size=13=================
+
+The current best program is the following
 
     --file: t.c--
-    int main   {
-       a               ();
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main   {
+    int main() {
        a               ();
        return 0x100ull ;
     }
 ------------------------------------------------------------
 
 
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main() {
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 206
+Failed to reduce node 146
+------------------------------------------------------------
+
+
+=================Reducing node 149, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_149]
+    context: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (28): fail==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove all except first
+    --file: t.c--
+    int main() {
+       a               ();
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main() {
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_154]
+    context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+==========Testing the following program (29): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    int main() {
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:13/13=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 149
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_181]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (30): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+                         ;
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 181
 ------------------------------------------------------------
 
 
@@ -1893,9 +1695,14 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+==========Testing the following program (31): fail==========
 
-    NodeDeletionAction{target_node=208}
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main   {
+       a               ();
+       return 0x100ull ;
+    }
 ------------------------------------------------------------
 
 
@@ -1905,7 +1712,7 @@ Failed to reduce node 208
 ------------------------------------------------------------
 
 
-=================Reducing node 198, size=13=================
+=================Reducing node 182, size=13=================
 
 The current best program is the following
 
@@ -1917,28 +1724,24 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int main() {
-       a                 ;
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a                 ;
+                         ;
        return 0x100ull ;
     }
 ------------------------------------------------------------
 
 
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 198
+Failed to reduce node 182
 ------------------------------------------------------------
 
 
@@ -1956,228 +1759,25 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=200}
+    structure: [delete_200]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (32): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       a                 ;
+       return 0x100ull ;
+    }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
 Failed to reduce node 200
-------------------------------------------------------------
-
-
-=================Reducing node 153, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main() {
-       a               ();
-       return          ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return          ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 153
-------------------------------------------------------------
-
-
-=================Reducing node 212, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 212
-------------------------------------------------------------
-
-
-=================Reducing node 211, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 211
-------------------------------------------------------------
-
-
-=================Reducing node 209, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 209
-------------------------------------------------------------
-
-
-=================Reducing node 203, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 203
-------------------------------------------------------------
-
-
-=================Reducing node 202, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 202
-------------------------------------------------------------
-
-
-=================Reducing node 201, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 201
-------------------------------------------------------------
-
-
-=================Reducing node 179, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 179
-------------------------------------------------------------
-
-
-=================Reducing node 155, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return          ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return          ;
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-===================Node reduction is done===================
-
-Failed to reduce node 155
-------------------------------------------------------------
-
-
-=================Reducing node 174, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 174
 ------------------------------------------------------------
 
 
@@ -2193,13 +1793,176 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+==============Node edit action set cache hit.===============
+
+    structure: [delete_154]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (33): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       a               ();
+                       ;
+    }
+------------------------------------------------------------
+
+
 ===================Node reduction is done===================
 
 Failed to reduce node 154
 ------------------------------------------------------------
 
 
-=================Reducing node 152, size=13=================
+=================Reducing node 210, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main   {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 210
+------------------------------------------------------------
+
+
+=================Reducing node 212, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_212]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 212
+------------------------------------------------------------
+
+
+=================Reducing node 202, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main() {
+       a                 ;
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 202
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_204]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 157, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (34): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main() {
+       a               ();
+       return          ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 157
+------------------------------------------------------------
+
+
+=================Reducing node 216, size=13=================
 
 The current best program is the following
 
@@ -2213,11 +1976,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 152
+Failed to reduce node 216
 ------------------------------------------------------------
 
 
-=================Reducing node 143, size=13=================
+=================Reducing node 215, size=13=================
 
 The current best program is the following
 
@@ -2231,63 +1994,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 143
-------------------------------------------------------------
-
-
-=================Reducing node 141, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 141
-------------------------------------------------------------
-
-
-=================Reducing node 138, size=13=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDefinition_2]dd@1
-    --file: t.c--
-        main() {
-       a               ();
-       return 0x100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
-        main() {
-       a               ();
-       return 0x100ull ;
-    }
-------------------------------------------------------------
-
-
-FixPt[3][node_priority-dfs][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-FixPt[3][node_priority-dfs][DFS](13/13)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
-===================Node reduction is done===================
-
-Failed to reduce node 138
+Failed to reduce node 215
 ------------------------------------------------------------
 
 
@@ -2303,15 +2010,238 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
+===================Node reduction is done===================
 
-    NodeDeletionAction{target_node=213}
+Failed to reduce node 213
+------------------------------------------------------------
+
+
+=================Reducing node 207, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 213
+Failed to reduce node 207
+------------------------------------------------------------
+
+
+=================Reducing node 206, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 206
+------------------------------------------------------------
+
+
+=================Reducing node 205, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 205
+------------------------------------------------------------
+
+
+=================Reducing node 183, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 183
+------------------------------------------------------------
+
+
+=================Reducing node 159, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return          ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 159
+------------------------------------------------------------
+
+
+=================Reducing node 178, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 178
+------------------------------------------------------------
+
+
+=================Reducing node 158, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 158
+------------------------------------------------------------
+
+
+=================Reducing node 156, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 156
+------------------------------------------------------------
+
+
+=================Reducing node 147, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 147
+------------------------------------------------------------
+
+
+=================Reducing node 145, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 145
+------------------------------------------------------------
+
+
+=================Reducing node 142, size=13=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+==========Testing the following program (35): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+        main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 142
 ------------------------------------------------------------
 
 
@@ -2327,51 +2257,94 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+==============Node edit action set cache hit.===============
+
+    structure: [delete_217]
+    context: [kleene_plus:declarationSpecifiers]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Testing the empty input. Global ratio:13/13=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+        main() {
+       a               ();
+       return 0x100ull ;
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/13)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  There is only one element in the input, and the empty input has been tested. Global ratio:13/13=100.00%
+FixPt[3][node_priority][DFS](13/13)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/13=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 217
 ------------------------------------------------------------
 
 
-=====Fixpoint iteration 4. Reducer: token_canonicalizer=====
+=================Reducing node 221, size=13=================
 
-The spar-tree is the following.
-translationUnit {id=134,slot_type=translationUnit}
-|___(+) {id=135,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=137,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=138,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=213,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=217,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=204,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=212,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=206,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=208,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=209,slot_type=LeftParen}
-        |           |___Token:) {id=211,slot_type=RightParen}
-        |___compoundStatement {id=140,slot_type=compoundStatement}
-            |___Token:{ {id=141,slot_type=LeftBrace}
-            |___(?) {id=142,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=145,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=177,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=178,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=196,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:a {id=203,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=198,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=200,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=201,slot_type=LeftParen}
-            |       |   |               |___Token:) {id=202,slot_type=RightParen}
-            |       |   |___Token:; {id=179,slot_type=Semi}
-            |       |___jumpStatement {id=150,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=153,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=154,slot_type=Return}
-            |           |   |___(?) {id=155,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0x100ull {id=174,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=152,slot_type=Semi}
-            |___Token:} {id=143,slot_type=RightBrace}
+The current best program is the following
+
+    --file: t.c--
+    int main() {
+       a               ();
+       return 0x100ull ;
+    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+===================Node reduction is done===================
+
+Failed to reduce node 221
+------------------------------------------------------------
+
+
+(13/13)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=====Fixpoint iteration 4. Reducer: token_canonicalizer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=136,slot_type=compilationUnit}
+|___(?){id=137,slot_type=optional__compilationUnit_1}
+    |___(+){id=139,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=141,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=142,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=217,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=221,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=208,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=216,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=210,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=212,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=213,slot_type=LeftParen}
+            |           |___Token:){id=215,slot_type=RightParen}
+            |___compoundStatement{id=144,slot_type=compoundStatement}
+                |___Token:{{id=145,slot_type=LeftBrace}
+                |___(?){id=146,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=149,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=181,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=182,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=200,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:a{id=207,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=202,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=204,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=205,slot_type=LeftParen}
+                |       |   |               |___Token:){id=206,slot_type=RightParen}
+                |       |   |___Token:;{id=183,slot_type=Semi}
+                |       |___jumpStatement{id=154,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=157,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=158,slot_type=Return}
+                |           |   |___(?){id=159,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:0x100ull{id=178,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=156,slot_type=Semi}
+                |___Token:}{id=147,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+==========Testing the following program (36): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: t.c--
@@ -2379,23 +2352,12 @@ translationUnit {id=134,slot_type=translationUnit}
        a               ();
        return 0x100ull ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int a   () {
-       a               ();
-       return 0x100ull ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0'
     --file: t.c--
-    int main() {
-       a               ();
-       return 0        ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
        a               ();
        return 0        ;
@@ -2403,15 +2365,9 @@ translationUnit {id=134,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '1'
     --file: t.c--
-    int main() {
-       a               ();
-       return 1        ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
        a               ();
        return 1        ;
@@ -2419,23 +2375,17 @@ translationUnit {id=134,slot_type=translationUnit}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0x1ull'
     --file: t.c--
     int main() {
        a               ();
-       return 0x1ull   ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x1ull   ;
+       return 0x00ull  ;
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (37): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0x100'
     --file: t.c--
@@ -2443,31 +2393,21 @@ translationUnit {id=134,slot_type=translationUnit}
        a               ();
        return 0x100    ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x100    ;
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (38): fail==========
 
-// edit action set type: replace 1 lexer nodes with new lexeme '0x00ull'
+// edit action set type: replace 1 lexer nodes with new lexeme '0x1ull'
     --file: t.c--
     int main() {
        a               ();
-       return 0x00ull  ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x00ull  ;
+       return 0x1ull   ;
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (39): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '0x10ull'
     --file: t.c--
@@ -2475,22 +2415,12 @@ translationUnit {id=134,slot_type=translationUnit}
        a               ();
        return 0x10ull  ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x10ull  ;
-    }
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int main() {
-       a               ();
-       return 0X100ull ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
        a               ();
        return 0X100ull ;
@@ -2505,11 +2435,6 @@ translationUnit {id=134,slot_type=translationUnit}
        a               ();
        return 0x000ull ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x000ull ;
-    }
 ------------------------------------------------------------
 
 
@@ -2520,49 +2445,47 @@ translationUnit {id=134,slot_type=translationUnit}
        a               ();
        return 0x100Ull ;
     }
-    --file: <formatted tokenized program in its original format>--
-    int main() {
-       a               ();
-       return 0x100Ull ;
-    }
 ------------------------------------------------------------
 
 
+(13/13)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 5. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=134,slot_type=translationUnit}
-|___(+) {id=135,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=137,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=138,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=213,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=217,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=204,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=212,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=206,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=208,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=209,slot_type=LeftParen}
-        |           |___Token:) {id=211,slot_type=RightParen}
-        |___compoundStatement {id=140,slot_type=compoundStatement}
-            |___Token:{ {id=141,slot_type=LeftBrace}
-            |___(?) {id=142,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=145,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___expressionStatement {id=177,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=178,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=196,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:a {id=203,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=198,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=200,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=201,slot_type=LeftParen}
-            |       |   |               |___Token:) {id=202,slot_type=RightParen}
-            |       |   |___Token:; {id=179,slot_type=Semi}
-            |       |___jumpStatement {id=150,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=153,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=154,slot_type=Return}
-            |           |   |___(?) {id=155,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0x100ull {id=174,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=152,slot_type=Semi}
-            |___Token:} {id=143,slot_type=RightBrace}
+compilationUnit{id=136,slot_type=compilationUnit}
+|___(?){id=137,slot_type=optional__compilationUnit_1}
+    |___(+){id=139,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=141,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=142,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=217,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=221,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=208,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=216,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=210,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=212,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=213,slot_type=LeftParen}
+            |           |___Token:){id=215,slot_type=RightParen}
+            |___compoundStatement{id=144,slot_type=compoundStatement}
+                |___Token:{{id=145,slot_type=LeftBrace}
+                |___(?){id=146,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=149,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=181,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=182,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=200,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:a{id=207,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=202,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=204,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=205,slot_type=LeftParen}
+                |       |   |               |___Token:){id=206,slot_type=RightParen}
+                |       |   |___Token:;{id=183,slot_type=Semi}
+                |       |___jumpStatement{id=154,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=157,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=158,slot_type=Return}
+                |           |   |___(?){id=159,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:0x100ull{id=178,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=156,slot_type=Semi}
+                |___Token:}{id=147,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
@@ -2570,19 +2493,20 @@ FixPt[5][FineGritLatraReducer](13/13)  For c, there are 46 transformations.
 FixPt[5][FineGritLatraReducer](13/13)  Reparsing the best spartree to faithfully reflect the syntactic structure.
 ===========TestScriptExecutionCacheEntryEviction============
 
-10 entries are removed: 29 --> 19.
+3 entries are removed: 28 --> 25.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 16
+    size before clearance = 19
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
 token count change 13 -> 13
+Edit: AnyNodeReplace:[replace_136_with_247]
 ------------------------------------------------------------
 
 
@@ -2593,16 +2517,11 @@ FixPt[5][FineGritLatraReducer][MultiplyOperationSimplification](13/13)  Found ma
 FixPt[5][FineGritLatraReducer][MinusOperationSimplification](13/13)  Found matches: 0 in transformation MinusOperationSimplification
 FixPt[5][FineGritLatraReducer][PlusOperationSimplification](13/13)  Found matches: 0 in transformation PlusOperationSimplification
 FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](13/13)  Found matches: 1 in transformation LocalToGlobalTransformation
-FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](13/13)  Built a LatraGeneralActionSet subroot(id=256,#3) in LocalToGlobalTransformation
-============Testing the following program: fail=============
+FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](13/13)  Built a LatraGeneralActionSet subroot(id=262,#3) in LocalToGlobalTransformation
+==========Testing the following program (40): fail==========
 
 // edit action set type: Latra Transformation LocalToGlobalTransformation created by FullFunctionalLatraRewriterBuilder
     --file: t.c--
-       return  0x100ull
-                    ;int main() {
-       a               ();
-    }
-    --file: <formatted tokenized program in its original format>--
        return  0x100ull
                     ;int main() {
        a               ();
@@ -2653,27 +2572,29 @@ FixPt[5][FineGritLatraReducer][ReplaceDefByDecl](13/13)  Found matches: 0 in tra
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](13/13)  Found matches: 1 in transformation CombineLocalVarDecl
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](13/13)  Exception: There must be at least one match for this transformation CombineLocalVarDecl
 FixPt[5][FineGritLatraReducer][UnifyFunctionDecl](13/13)  Found matches: 0 in transformation UnifyFunctionDecl
-(13/13)  The history of the reducer invocation.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0    node_priority-dfs       0      0             0
- 1  token_canonicalizer       0    -16             1
- 2    node_priority-dfs       0      0             1
- 3  token_canonicalizer       0      0             1
- 4 FineGritLatraReducer       0      0             1
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      0             0       0              0      12   time-hidden
+ 1  token_canonicalizer      3             3       0            -16      16   time-hidden
+ 2        node_priority      0             0       0              0       8   time-hidden
+ 3  token_canonicalizer      0             0       0              0       4   time-hidden
+ 4 FineGritLatraReducer      1             1       0              0       1   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-   node_priority-dfs     2       0      0
- token_canonicalizer     2       0    -16
-FineGritLatraReducer     1       0      0
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+FineGritLatraReducer     1      1             1       0              0       1   time-hidden
+       node_priority     2      0             0       0              0      20   time-hidden
+ token_canonicalizer     2      3             3       0            -16      20   time-hidden
+
+------------------------------- Transformations --------------------------------
+                 Transformation Worked #NonDeletions #Tokens #NonBlankChars
+   FineGritLatraReducer.Reparse      1             1       0              0
+token_canonicalizer.Replacement      3             3       0            -16
 ------------------------------------- End --------------------------------------
-
-
 #test success = 3
-#test failure = 41
-#test result cache hits = 16
+#test failure = 38
+#test result cache hits = 25
 #test execution cancelled = 2
-#node edit action set cache hits = 16
+#node edit action set cache hits = 20
 #external test execution cache hits = 0

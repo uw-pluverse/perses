@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -60,7 +60,7 @@ data class RustcVersion private constructor(
       val versionString = versionFlag.substring(1)
       val cmd = "${rustc.normalizedCommand} $versionFlag --version --verbose"
       val cmdOutput =
-        Shells.singleton.run(
+        Shells.defaultSingleton.run(
           cmd,
           captureOutput = true,
           environment = Shells.CURRENT_ENV,
@@ -71,7 +71,13 @@ data class RustcVersion private constructor(
       check(
         cmdOutput.stderr.anyLineContains(versionString) ||
           cmdOutput.stdout.anyLineContains(versionString),
-      )
+      ) {
+        """
+          |cmd: $cmd
+          |
+          |output: $cmdOutput
+        """.trimMargin()
+      }
       return RustcVersion(rustc, versionString)
     }
 

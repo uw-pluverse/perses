@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,18 +22,12 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
-import org.perses.program.TokenizedProgramFactory
 
 @RunWith(JUnit4::class)
 class SparTreeNodeFactoryTest {
   val language = LanguageC
   val facade = TestUtility.getFacade(language)
-  val sparTreeNodeFactory =
-    SparTreeNodeFactory(
-      metaTokenInfoDb = facade.metaTokenInfoDb,
-      tokenizedProgramFactory = TokenizedProgramFactory.createEmptyFactory(language),
-      grammarHierarchy = facade.ruleHierarchy,
-    )
+  val sparTreeNodeFactory = SparTreeNodeFactory(facade)
 
   @Test
   fun testCreateGroupingSparTreeNodeForTokens() {

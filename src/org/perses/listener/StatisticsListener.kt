@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,6 +22,7 @@ import org.perses.reduction.AbstractReductionListener
 import org.perses.reduction.event.FixpointIterationEndEvent
 import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.ReductionEndEvent
+import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.util.FileStreamPool
 import org.perses.util.Util.lazyAssert
 
@@ -35,7 +36,7 @@ class StatisticsListener(
     val newStat =
       ReductionIterationStatistics(
         event.iteration.toString(),
-        event.programSize,
+        event.perFileSizeMetrics,
         event.currentTimeMillis,
       )
     iterations.add(newStat)
@@ -51,7 +52,7 @@ class StatisticsListener(
         event.startEvent.iteration
     }
     currentStat.endTimeMillis = event.currentTimeMillis
-    currentStat.afterProgramSize = event.programSize
+    currentStat.afterProgramSize = event.perFileSizeMetrics
     currentStat.countOfTestScriptExecutions = event.countOfTestScriptExecutions
   }
 
@@ -64,13 +65,13 @@ class StatisticsListener(
         fileStream,
         "program_size_before",
         iteration.iteration,
-        iteration.beforeProgramSize.toLong(),
+        iteration.beforeProgramSize.totalCanonicalTokenCount.toLong(),
       )
       writeProperty(
         fileStream,
         "program_size_after",
         iteration.iteration,
-        iteration.afterProgramSize.toLong(),
+        iteration.afterProgramSize!!.totalCanonicalTokenCount.toLong(),
       )
       writeProperty(
         fileStream,
@@ -99,7 +100,7 @@ class StatisticsListener(
         writer,
         iteration.iteration,
         iteration.beforeProgramSize,
-        iteration.afterProgramSize,
+        iteration.afterProgramSize!!,
         iteration.elapsedTimeMillis(),
         iteration.countOfTestScriptExecutions,
       )
@@ -110,7 +111,7 @@ class StatisticsListener(
         writer,
         "total",
         it.beforeProgramSize,
-        it.afterProgramSize,
+        it.afterProgramSize!!,
         it.elapsedTimeMillis(),
         it.countOfTestScriptExecutions,
       )
@@ -138,13 +139,13 @@ class StatisticsListener(
   @VisibleForTesting
   class ReductionIterationStatistics(
     val iteration: String,
-    val beforeProgramSize: Int,
+    val beforeProgramSize: PerFileSizeMetrics,
     val startTimeMillis: Long,
   ) {
     var endTimeMillis: Long = 0
-    var afterProgramSize = Int.MIN_VALUE
+    var afterProgramSize: PerFileSizeMetrics? = null
       set(value) {
-        lazyAssert({ field == Int.MIN_VALUE }) { "can only set once" }
+        lazyAssert({ field == null }) { "can only set once" }
         field = value
       }
     var countOfTestScriptExecutions = Int.MIN_VALUE
@@ -200,17 +201,17 @@ class StatisticsListener(
     private fun printRow(
       writer: FileStreamPool.ManagedPrintStream,
       iteration: String,
-      beforeSize: Int,
-      afterSize: Int,
+      beforeSize: PerFileSizeMetrics,
+      afterSize: PerFileSizeMetrics,
       timeMillis: Long,
       queries: Int,
     ) {
       writer.printf(
         COLUMN_FORMAT,
         iteration,
-        beforeSize.toString(),
-        afterSize.toString(),
-        (beforeSize - afterSize).toString(),
+        beforeSize.totalCanonicalTokenCount.toString(),
+        afterSize.totalCanonicalTokenCount.toString(),
+        (beforeSize.totalCanonicalTokenCount - afterSize.totalCanonicalTokenCount).toString(),
         timeMillis.toString(),
         queries.toString(),
       )

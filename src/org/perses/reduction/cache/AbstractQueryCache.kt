@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,24 +16,22 @@
  */
 package org.perses.reduction.cache
 
-import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.io.AbstractOutputManager
+import org.perses.util.ImmutableIntArray
 
 abstract class AbstractQueryCache {
-  abstract fun getCachedResult(
-    program: TokenizedProgram,
-    outputManager: AbstractOutputManager,
-  ): AbstractCacheRetrievalResult
+  abstract fun lookUp(outputManager: AbstractOutputManager): CacheLookupResult
 
-  abstract fun cacheProgramAndResult(
-    program: AbstractCacheRetrievalResult.CacheMiss,
+  abstract fun recordUninteresting(
+    outputManager: AbstractOutputManager,
+    perFileNonBlankCharacterCounts: ImmutableIntArray,
     result: PropertyTestResult,
   )
 
   abstract fun cacheSize(): Int
 
-  abstract fun evictEntriesLargerThan(best: TokenizedProgram)
+  abstract fun evictEntriesNotSmallerThan(perFileNonBlankCharacterCounts: ImmutableIntArray)
 
   abstract fun triggerHeartBeat()
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,20 @@
  */
 package org.perses.reduction.io
 
-abstract class AbstractOutputManagerFactory<Program> {
+import org.perses.util.hashing.EnumShaAlgorithm
+
+abstract class AbstractOutputManagerFactory<Program>(
+  open val originalReductionInputs: AbstractOriginalReductionInputs,
+  val shaAlgorithm: EnumShaAlgorithm,
+) {
+  /**
+   * Creates an output manager that renders the whole mutable-file set for [program]. Everything the
+   * factory needs beyond the program -- e.g. which file the program represents and where the other
+   * mutable files' content comes from, in the single-tree case -- is supplied to the factory at
+   * construction, so this method takes only the program.
+   */
   abstract fun createManagerFor(program: Program): AbstractOutputManager
+
+  open fun createOutputManagerForOriginalInput(): AbstractOutputManager =
+    AbstractOutputManager.createForOriginalInput(originalReductionInputs, shaAlgorithm)
 }

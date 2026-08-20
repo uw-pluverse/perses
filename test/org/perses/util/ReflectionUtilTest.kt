@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -50,5 +50,29 @@ class ReflectionUtilTest {
       assertThat(readStaticField<EnumClass>(it, "A")).isEqualTo(EnumClass.A)
       assertThat(readStaticField<EnumClass>(it, "B")).isEqualTo(EnumClass.B)
     }
+  }
+
+  @Test
+  fun testIsInitialized() {
+    class TestClass {
+      val nonLazyProp = "hello"
+      var initialized = false
+      val lazyProp by lazy {
+        initialized = true
+        "world"
+      }
+    }
+
+    val testObj = TestClass()
+
+    assertThat(ReflectionUtil.isInitialized(testObj::nonLazyProp)).isTrue()
+
+    val propRef = testObj::lazyProp
+    assertThat(ReflectionUtil.isInitialized(propRef)).isFalse()
+    assertThat(testObj.initialized).isFalse()
+
+    assertThat(testObj.lazyProp).isEqualTo("world")
+    assertThat(ReflectionUtil.isInitialized(propRef)).isTrue()
+    assertThat(testObj.initialized).isTrue()
   }
 }

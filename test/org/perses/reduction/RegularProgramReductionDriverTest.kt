@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,20 +17,22 @@
 package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableMap
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.CommandOptions
+import org.perses.PersesCommandOptions
+import org.perses.cmd.CacheControlFlagGroup
+import org.perses.cmd.ProfilingFlagGroup
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.c.LanguageC
-import org.perses.program.EnumFormatControl
+import org.perses.program.ProgramSize
 import org.perses.reduction.AbstractProgramReductionDriver.Companion.createConfiguration
-import org.perses.reduction.cache.EnumQueryCachingControl
-import org.perses.reduction.io.RegularReductionInputs
-import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
+import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
+import org.perses.reduction.reducer.PersesNodeReducerAnnotations
 import org.perses.reduction.scheduler.AbstractSchedulerEvent.ReducerCallEvent
 import org.perses.reduction.scheduler.AbstractSchedulerEvent.StatsSnapshotEvent
 import org.perses.reduction.scheduler.ReducerScheduler
@@ -39,23 +41,27 @@ import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.Shells
 import java.nio.file.Files
 import java.nio.file.Paths
-import kotlin.io.path.appendText
 import kotlin.io.path.createFile
-import kotlin.io.path.listDirectoryEntries
-import kotlin.io.path.name
-import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class RegularProgramReductionDriverTest {
-  private val workDir = Files.createTempDirectory("ReductionDriverTest_")
+  private val workDir = Util.createTempDirForObject(this)
+  private val outputDir =
+    workDir.resolve("default_test_output_dir").apply {
+      Util.ensureDirExists(this)
+    }
+  private val inputDir =
+    workDir.resolve("input_dir").apply {
+      Util.ensureDirExists(this)
+    }
   private val sourceFile =
-    workDir.resolve("t.c").apply {
+    inputDir.resolve("t.c").apply {
       this.createFile()
       check(Files.exists(this))
     }
   private val scriptFile =
-    workDir.resolve("r.sh").apply {
+    inputDir.resolve("r.sh").apply {
       this.createFile()
       check(Files.exists(this))
       Util.setExecutable(this)
@@ -76,8 +82,15 @@ class RegularProgramReductionDriverTest {
       shaAlgorithm = EnumShaAlgorithm.SHA512,
     )
 
+  // The query cache the per-file driver is given; this test owns it (the driver does not), so it is
+  // closed in teardown -- before globalContext, whose stream pool asserts every stream was returned.
+  // Caching uses default settings (the cache depends only on these flag groups, not the inputs).
+  private val queryCacheManager =
+    QueryCacheManager.create(ProfilingFlagGroup(), CacheControlFlagGroup(), globalContext)
+
   @After
   fun teardown() {
+    queryCacheManager.close()
     workDir.toFile().deleteRecursively()
     listenerManager.close()
     globalContext.close()
@@ -86,15 +99,17 @@ class RegularProgramReductionDriverTest {
   @Test
   fun testDoesNotThrowNpeWhenLanguageCannotBeDetected() {
     val cmd =
-      CommandOptions().apply {
-        inputFlags.inputFile = scriptFile
+      PersesCommandOptions().apply {
+        inputFlags.setInputFiles(listOf(scriptFile))
         inputFlags.testScript = scriptFile
       }
     val exception =
       assertThrows(IllegalStateException::class.java) {
-        RegularReductionInputs.create(
+        DefaultLanguageOriginalReductionInputs.create(
           testScriptPath = cmd.inputFlags.getTestScript(),
-          mainFilePath = cmd.inputFlags.getSourceFile(),
+          // This test deliberately reduces the test script itself (a file whose language cannot be
+          // detected). computeInputFiles would exclude the test script, so use the path directly.
+          sourceFilePaths = ImmutableList.of(scriptFile),
           dependencyFiles = ImmutableList.of(),
         ) {
           facadeFactory.computeLanguageKindOrThrow(it)
@@ -104,59 +119,11 @@ class RegularProgramReductionDriverTest {
       .startsWith("Failed to detect the language kind for")
   }
 
-  @Test
-  fun testBackupMainFile() {
-    val cmd =
-      CommandOptions().apply {
-        inputFlags.inputFile = sourceFile
-        inputFlags.testScript = scriptFile
-      }
-    sourceFile.writeText("a;")
-    scriptFile.appendText(
-      """
-      |grep "a" ${sourceFile.fileName}
-      |
-      """.trimMargin(),
-    )
+  private fun createConfigGivenCmd(cmd: PersesCommandOptions): ReductionConfiguration {
     val inputs =
-      RegularReductionInputs.create(
+      DefaultLanguageOriginalReductionInputs.create(
         testScriptPath = cmd.inputFlags.getTestScript(),
-        mainFilePath = cmd.inputFlags.getSourceFile(),
-        dependencyFiles = ImmutableList.of(),
-      ) {
-        facadeFactory.computeLanguageKindOrThrow(it)
-      }
-    val parserFacade =
-      facadeFactory
-        .getParserFacadeListForOrNull(
-          inputs.initiallyDeterminedMainDataKind,
-        )!!
-        .defaultParserFacade
-        .create()
-    val driver =
-      RegularProgramReductionDriver.create(
-        globalContext,
-        cmd,
-        inputs,
-        parserFacade,
-        codeFormatControl = inputs.initiallyDeterminedMainDataKind.defaultCodeFormatControl,
-        listenerManager = listenerManager,
-        shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
-      )
-    driver.reduce()
-    val backup =
-      sourceFile.parent.listDirectoryEntries().filter {
-        it.name.startsWith(sourceFile.name) && it.name.endsWith(".orig")
-      }
-    assertThat(backup.size).isEqualTo(1)
-    assertThat(backup[0].readText()).isEqualTo(sourceFile.readText())
-  }
-
-  private fun createConfigGivenCmd(cmd: CommandOptions): ReductionConfiguration {
-    val inputs =
-      RegularReductionInputs.create(
-        testScriptPath = cmd.inputFlags.getTestScript(),
-        mainFilePath = cmd.inputFlags.getSourceFile(),
+        sourceFilePaths = ImmutableList.of(cmd.inputFlags.computeInputFiles().single()),
         dependencyFiles = ImmutableList.of(),
       ) {
         facadeFactory.computeLanguageKindOrThrow(it)
@@ -168,15 +135,17 @@ class RegularProgramReductionDriverTest {
         .defaultParserFacade
         .create()
         .lexerAtnWrapper
-    val ioManager =
-      RegularProgramReductionDriver.createIOManager(
-        inputs,
-        cmd.resultOutputFlags,
+    val outputManagerFactory =
+      RegularProgramReductionDriver.createOutputManagerFactory(
+        originalReductionInputs = inputs,
         codeFormatControl =
           cmd.reductionControlFlags.codeFormat
             ?: inputs.initiallyDeterminedMainDataKind.defaultCodeFormatControl,
-        lexerAtnWrapper,
+        lexerAtnWrapper = lexerAtnWrapper,
         shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
+        mainFile = inputs.mutableFiles.single(),
+        // Single mutable file under reduction, so there are no siblings.
+        otherMutableFileContents = ImmutableMap.of(),
       )
     return createConfiguration(
       cmd,
@@ -184,7 +153,7 @@ class RegularProgramReductionDriverTest {
         .getParserFacadeListForOrNull(languageKind)!!
         .defaultParserFacade
         .create(),
-      ioManager.getDefaultProgramFormat(),
+      outputManagerFactory.defaultCodeFormatControl,
     )
   }
 
@@ -192,12 +161,12 @@ class RegularProgramReductionDriverTest {
   fun testEnableTestScriptExecutionCaching() {
     for (format in LanguageC.allowedCodeFormatControl) {
       val cmd =
-        CommandOptions().apply {
-          inputFlags.inputFile = sourceFile
+        PersesCommandOptions().apply {
+          inputFlags.setInputFiles(listOf(sourceFile))
           inputFlags.testScript = scriptFile
           reductionControlFlags.codeFormat = format
           cacheControlFlags.nodeActionSetCaching = true
-          cacheControlFlags.queryCaching = EnumQueryCachingControl.TRUE
+          cacheControlFlags.queryCaching = true
         }
       val config = createConfigGivenCmd(cmd)
       assertThat(config.enableDeprecatedQueryCaching).isTrue()
@@ -205,48 +174,30 @@ class RegularProgramReductionDriverTest {
 
     for (format in LanguageC.allowedCodeFormatControl) {
       val cmd =
-        CommandOptions().apply {
-          inputFlags.inputFile = sourceFile
+        PersesCommandOptions().apply {
+          inputFlags.setInputFiles(listOf(sourceFile))
           inputFlags.testScript = scriptFile
           reductionControlFlags.codeFormat = format
           cacheControlFlags.nodeActionSetCaching = true
-          cacheControlFlags.queryCaching = EnumQueryCachingControl.FALSE
+          cacheControlFlags.queryCaching = false
         }
       val config = createConfigGivenCmd(cmd)
       assertThat(config.enableDeprecatedQueryCaching).isFalse()
     }
-
-    CommandOptions()
-      .apply {
-        inputFlags.inputFile = sourceFile
-        inputFlags.testScript = scriptFile
-        reductionControlFlags.codeFormat = EnumFormatControl.SINGLE_TOKEN_PER_LINE
-        cacheControlFlags.nodeActionSetCaching = true
-        cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
-      }.let {
-        val config = createConfigGivenCmd(it)
-        assertThat(config.enableDeprecatedQueryCaching).isTrue()
-      }
-
-    CommandOptions()
-      .apply {
-        inputFlags.inputFile = sourceFile
-        inputFlags.testScript = scriptFile
-        reductionControlFlags.codeFormat = EnumFormatControl.COMPACT_ORIG_FORMAT
-        cacheControlFlags.nodeActionSetCaching = true
-        cacheControlFlags.queryCaching = EnumQueryCachingControl.AUTO
-      }.let {
-        val config = createConfigGivenCmd(it)
-        assertThat(config.enableDeprecatedQueryCaching).isFalse()
-      }
   }
 
   @Test
   fun testStatsSnapshotEventEqualityAndHashcode() {
     val stats =
       StatsOfFilesBeingReduced(
-        tokenCount = 1,
-        characterCount = 1,
+        size =
+          ProgramSize(
+            payload = Unit,
+            canonicalTokenCount = 1,
+            surrogateTokenCount = 1,
+            totalCharacterCount = 1,
+            nonBlankCharacterCount = 1,
+          ),
         fileContents = ImmutableList.of(),
       )
     val e1 =
@@ -266,7 +217,7 @@ class RegularProgramReductionDriverTest {
 
   @Test
   fun testReducerCallEventEquality() {
-    val reducer = PersesNodePrioritizedDfsReducer.META
+    val reducer = PersesNodeReducerAnnotations.PrioritizedDfs
     val e1 = ReducerCallEvent(reducer, exceptionStackTrace = null)
     val e2 = ReducerCallEvent(reducer, exceptionStackTrace = null)
     assertThat(e1).isNotEqualTo(e2)
@@ -276,11 +227,17 @@ class RegularProgramReductionDriverTest {
   fun testReducerSchedulerGetAllReducerEventsBetween() {
     val stats =
       StatsOfFilesBeingReduced(
-        tokenCount = 1,
-        characterCount = 1,
+        size =
+          ProgramSize(
+            payload = Unit,
+            canonicalTokenCount = 1,
+            surrogateTokenCount = 1,
+            totalCharacterCount = 1,
+            nonBlankCharacterCount = 1,
+          ),
         fileContents = ImmutableList.of(),
       )
-    val reducer = PersesNodePrioritizedDfsReducer.META
+    val reducer = PersesNodeReducerAnnotations.PrioritizedDfs
 
     val history = ReducerScheduler.SchedulerEventHistory()
     val s1 =
@@ -313,11 +270,11 @@ class RegularProgramReductionDriverTest {
     val r3 = ReducerCallEvent(reducer, exceptionStackTrace = null)
 
     history.addStatsEvent(s1)
-    history.addReducerCallEvent(r1, treeAfterReduction = null)
+    history.addReducerCallEvent(r1, programSizeAfterReduction = null)
     history.addStatsEvent(s2)
-    history.addReducerCallEvent(r2, treeAfterReduction = null)
+    history.addReducerCallEvent(r2, programSizeAfterReduction = null)
     history.addStatsEvent(s3)
-    history.addReducerCallEvent(r3, treeAfterReduction = null)
+    history.addReducerCallEvent(r3, programSizeAfterReduction = null)
     history.addStatsEvent(s4)
 
     assertThat(history.findAllReducerEventsBetween(s1, s4)).containsExactly(r1, r2, r3).inOrder()
@@ -333,7 +290,9 @@ class RegularProgramReductionDriverTest {
         deterministic = true,
         reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
       ) {
-        override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
+        override fun create(
+          reducerContext: ReducerContext,
+        ): ImmutableList<AbstractSparTreeReducer> {
           TODO("Not yet implemented")
         }
       }
@@ -341,8 +300,14 @@ class RegularProgramReductionDriverTest {
     history.addStatsEvent(
       StatsSnapshotEvent(
         StatsOfFilesBeingReduced(
-          tokenCount = 1,
-          characterCount = 1,
+          size =
+            ProgramSize(
+              payload = Unit,
+              canonicalTokenCount = 1,
+              surrogateTokenCount = 1,
+              totalCharacterCount = 1,
+              nonBlankCharacterCount = 1,
+            ),
           fileContents = ImmutableList.of(),
         ),
         numberOfNonDeletionIterations = 0,
@@ -351,15 +316,21 @@ class RegularProgramReductionDriverTest {
     )
     history.addReducerCallEvent(
       ReducerCallEvent(reducer, exceptionStackTrace = null),
-      treeAfterReduction = null,
+      programSizeAfterReduction = null,
     )
     val exception =
       assertThrows(Exception::class.java) {
         history.addStatsEvent(
           StatsSnapshotEvent(
             StatsOfFilesBeingReduced(
-              tokenCount = 100,
-              characterCount = 100,
+              size =
+                ProgramSize(
+                  payload = Unit,
+                  canonicalTokenCount = 100,
+                  surrogateTokenCount = 100,
+                  totalCharacterCount = 100,
+                  nonBlankCharacterCount = 100,
+                ),
               fileContents = ImmutableList.of(),
             ),
             numberOfNonDeletionIterations = 0,
@@ -372,8 +343,8 @@ class RegularProgramReductionDriverTest {
 
   @Test
   fun testCreateConfigurationForNonExistingFiles() {
-    val cmd = CommandOptions()
-    cmd.inputFlags.inputFile = Paths.get("t.c")
+    val cmd = PersesCommandOptions()
+    cmd.inputFlags.setInputFiles(listOf(Paths.get("t.c")))
     cmd.inputFlags.testScript = Paths.get("r.sh")
     try {
       createConfigGivenCmd(cmd)

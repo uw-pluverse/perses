@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -32,12 +32,15 @@ class RustcCrashDetector : AbstractCompilerCrashDetector() {
           line.contains("Segmentation fault") -> {
           rawSignatures.add(line)
         }
+
         line.contains(KEYWORD_SEGMENTATION_FAULT) -> {
           rawSignatures.add(KEYWORD_SEGMENTATION_FAULT)
         }
+
         line.contains(KEYWORD_FATAL_RUNTIME_ERROR) -> {
           rawSignatures.add(line)
         }
+
         line.contains(KEYWORD_INTERNAL_COMPILER_ERROR) -> {
           val startIndex =
             line.indexOf(KEYWORD_INTERNAL_COMPILER_ERROR).also { check(it >= 0) } +
@@ -49,6 +52,7 @@ class RustcCrashDetector : AbstractCompilerCrashDetector() {
             rawSignatures.add(line.substring(0, nextColon))
           }
         }
+
         LEFT_RIGHT_ASSERTION_FAILURE_PATTERN.matches(line) -> {
           rawSignatures.add(line)
           if (i + 2 < length &&
@@ -59,6 +63,7 @@ class RustcCrashDetector : AbstractCompilerCrashDetector() {
             extractSignatureFromLeftOrRight(nonBlankLines[++i], rawSignatures)
           }
         }
+
         line.matches(GENERAL_PANIC_PATTERN) -> {
           val indexOf = line.indexOf(',')
           if (indexOf < 0) {

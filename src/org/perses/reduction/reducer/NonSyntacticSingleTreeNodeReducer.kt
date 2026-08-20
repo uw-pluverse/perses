@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,11 +17,13 @@
 package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
+import org.perses.reduction.semantics.ISemanticsProvider
 import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.ContextDescription
 import org.perses.spartree.SparTree
 import org.perses.util.toImmutableList
 
@@ -31,17 +33,19 @@ class NonSyntacticSingleTreeNodeReducer(
     reducerAnnotation = META,
     reducerContext = reducerContext,
     reductionQueueStrategy = IReductionQueueStrategy.FOR_REGULAR_QUEUE,
-    requiresParsableTree = false,
   ) {
   override fun reduceOneNode(
     tree: SparTree,
     node: AbstractSparTreeNode,
+    semanticsProvider: ISemanticsProvider?,
     fixpointReductionState: FixpointReductionState,
   ): ImmutableList<AbstractSparTreeNode> {
     runListMinimizerOverNodes(
+      needToTestEmpty = true,
       tree = tree,
       fixpointReductionState = fixpointReductionState,
       input = node.immutableChildView.toImmutableList(),
+      actionsDescriptionPostfix = ContextDescription.of("ReduceEachChildNodeSeparately"),
     )
     node.cleanDeletedImmediateChildren()
     return node.immutableChildView.asReversed().toImmutableList()
@@ -53,7 +57,7 @@ class NonSyntacticSingleTreeNodeReducer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(NonSyntacticSingleTreeNodeReducer(reducerContext))
   }
 

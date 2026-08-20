@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,10 +15,9 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.program.printer
-
 import org.perses.antlr.toTokenType
 import org.perses.grammar.python3.Python3Lexer
-import org.perses.program.PersesTokenFactory
+import org.perses.program.AbstractPersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.util.FastStringBuilder
 import org.perses.util.Util.lazyAssert
@@ -42,7 +41,7 @@ class PythonFormatPrintingVisitor(
   private var indentLevel = 0
 
   override fun printNonEmptyLine(
-    line: List<PersesTokenFactory.AbstractPersesToken>,
+    line: List<AbstractPersesToken>,
     builder: FastStringBuilder,
   ) {
     lazyAssert { line.isNotEmpty() }
@@ -71,16 +70,17 @@ class PythonFormatPrintingVisitor(
     }
   }
 
-  override fun isControlToken(token: PersesTokenFactory.AbstractPersesToken): Boolean =
+  override fun isControlToken(token: AbstractPersesToken): Boolean =
     when (token.tokenType) {
       Python3Lexer.NEWLINE.toTokenType(),
       Python3Lexer.INDENT.toTokenType(),
       Python3Lexer.DEDENT.toTokenType(),
       -> true
+
       else -> false
     }
 
-  override fun visitControlToken(token: PersesTokenFactory.AbstractPersesToken) {
+  override fun visitControlToken(token: AbstractPersesToken) {
     when (token.tokenType) {
       Python3Lexer.INDENT.toTokenType() -> ++indentLevel
       Python3Lexer.DEDENT.toTokenType() -> --indentLevel

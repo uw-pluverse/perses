@@ -1,0 +1,490 @@
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(4,#tokens=56,last-pos=10:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__translationUnit_3]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(362,#tokens=10,last-pos=1:28)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(7,#tokens=46,last-pos=10:0)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
+Try deleting: [0, 1]: Skipped. Local rate: 2/2=100.00%
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0,1]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__compoundStatement_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(15,#tokens=32,last-pos=9:12)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]
+The original input has 6 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(269,#tokens=5,last-pos=4:14)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(221,#tokens=7,last-pos=5:23)
+--Element 2
+  index=2, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(151,#tokens=7,last-pos=6:18)
+--Element 3
+  index=3, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(101,#tokens=5,last-pos=7:18)
+--Element 4
+  index=4, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(51,#tokens=5,last-pos=8:18)
+--Element 5
+  index=5, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(24,#tokens=3,last-pos=9:12)
+Testing the empty input.
+Try deleting: [0, 1, 2, 3, 4, 5]: Uninteresting. Local rate: 6/6=100.00%
+Try deleting: [5]: Interesting. Local rate: 6/6=100.00%
+New best is found: [0, 1, 2, 3, 4]
+Try deleting: [4]: Uninteresting. Local rate: 5/6=83.33%
+Try deleting: [4]: Skipped. Local rate: 5/6=83.33%
+Try deleting: [3]: Interesting. Local rate: 5/6=83.33%
+New best is found: [0, 1, 2, 4]
+Try deleting: [4]: Uninteresting. Local rate: 4/6=66.67%
+Try deleting: [0]: Uninteresting. Local rate: 4/6=66.67%
+Try deleting: [2]: Interesting. Local rate: 4/6=66.67%
+New best is found: [0, 1, 4]
+Try deleting: [1]: Interesting. Local rate: 3/6=50.00%
+New best is found: [0, 4]
+Try deleting: [0]: Interesting. Local rate: 2/6=33.33%
+New best is found: [4]
+Try deleting: [4]: Uninteresting. Local rate: 1/6=16.67%
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[4]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(309,#tokens=10,last-pos=3:32)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__declaration_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(369,#tokens=8,last-pos=1:27)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(373,#tokens=7,last-pos=1:27)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(70,#tokens=4,last-pos=8:17)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__postfixExpression_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(74,#tokens=3,last-pos=8:17)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(399,pos=1:11)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(397,pos=1:17)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0, 1]: Skipped. Local rate: 2/2=100.00%
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0,1]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__parameterTypeList_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(380,#tokens=2,last-pos=1:24)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__typeName_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(389,#tokens=1,last-pos=1:21)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__pointer_8]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(392,pos=1:21)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(404,pos=1:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(96,#tokens=1,last-pos=8:8)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__primaryExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(97,pos=8:8)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(356,#tokens=1,last-pos=3:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(360,pos=3:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(409,#tokens=21,last-pos=4:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__translationUnit_3]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(487,#tokens=10,last-pos=1:28)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(412,#tokens=11,last-pos=4:0)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
+Try deleting: [0, 1]: Skipped. Local rate: 2/2=100.00%
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0,1]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__declaration_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(494,#tokens=8,last-pos=1:27)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(498,#tokens=7,last-pos=1:27)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__compoundStatement_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(420,#tokens=5,last-pos=3:18)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(424,#tokens=5,last-pos=3:18)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(443,#tokens=4,last-pos=3:17)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__postfixExpression_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(447,#tokens=3,last-pos=3:17)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(524,pos=1:11)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(522,pos=1:17)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0, 1]: Skipped. Local rate: 2/2=100.00%
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0,1]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__parameterTypeList_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(505,#tokens=2,last-pos=1:24)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(476,#tokens=2,last-pos=2:32)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__typeName_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(514,#tokens=1,last-pos=1:21)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__pointer_8]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(517,pos=1:21)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(529,pos=1:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(469,#tokens=1,last-pos=3:8)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__primaryExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(470,pos=3:8)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(481,#tokens=1,last-pos=2:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=AdaptiveGainDrivenListMinimizer
+desc: ADAPTIVE_GAIN_DRIVEN in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(485,pos=2:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction AdaptiveGainDrivenListMinimizer ends. Result=[0]
+

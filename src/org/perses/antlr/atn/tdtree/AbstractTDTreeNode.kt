@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -75,6 +75,6 @@ sealed class AbstractTDTreeNode(
   override fun toString(): String = MoreObjects.toStringHelper(this).add("id", nodeId).toString()
 
   companion object {
-    private val EMPTY_PAYLOAD = Object()
+    private val EMPTY_PAYLOAD = Any()
   }
 }

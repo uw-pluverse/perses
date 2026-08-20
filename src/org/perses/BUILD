@@ -1,28 +1,40 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = [
     "//visibility:public",
 ])
 
 kt_jvm_library(
-    name = "perses_contants",
+    name = "perses_constants",
     srcs = ["PersesConstants.kt"],
     deps = [
         "//src/org/perses/util",
+        "//src/org/perses/util:timeutil",
     ],
 )
 
 kt_jvm_library(
-    name = "command_options",
-    srcs = ["CommandOptions.kt"],
+    name = "abstract_perses_command_options",
+    srcs = [
+        "AbstractPersesCommandOptions.kt",
+    ],
     deps = [
+        "//src/org/perses/cmd:reduction_flags",
+        "//src/org/perses/util/cmd",
+    ],
+)
+
+kt_jvm_library(
+    name = "perses_command_options",
+    srcs = ["PersesCommandOptions.kt"],
+    deps = [
+        ":abstract_perses_command_options",
         "//:flogger",
         "//:guava",
         "//:jcommander",
         "//src/org/perses/cmd:reduction_flags",
         "//src/org/perses/program:enum_format_control",
-        "//src/org/perses/reduction/cache:enum_query_caching_control",
-        "//src/org/perses/reduction/cache:test_execution_cache_type",
         "//src/org/perses/util:percentage",
         "//src/org/perses/util/cmd",
         "//src/org/perses/util/shell",
@@ -33,7 +45,12 @@ kt_jvm_library(
     name = "abstract_reduction_main",
     srcs = ["AbstractMain.kt"],
     deps = [
+        ":abstract_perses_command_options",
+        ":perses_command_options",
+        "//src/org/perses/cmd:reduction_flags",
         "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar:tolerant_fallback_facades",
         "//src/org/perses/grammar/cpp:language_kind",
         "//src/org/perses/grammar/cpp:parser_facade",
         "//src/org/perses/grammar/glsl:language_kind",
@@ -52,9 +69,12 @@ kt_jvm_library(
         "//src/org/perses/grammar/sysverilog:parser_facade",
         "//src/org/perses/grammar/xml:language_kind",
         "//src/org/perses/grammar/xml:parser_facade",
+        "//src/org/perses/listminimizer/microbenchmark:list_minimization_microbenchmark",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction:global_context",
+        "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction:reduction_driver_interface",
+        "//src/org/perses/reduction:sanity_check",
     ],
 )
 
@@ -76,9 +96,10 @@ kt_jvm_library(
         "PersesListenerManagerCreator.kt",
     ],
     deps = [
-        "//src/org/perses:command_options",
+        "//src/org/perses:perses_command_options",
         "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/listener:listeners",
+        "//src/org/perses/ui",
         "//src/org/perses/util",
     ],
 )
@@ -89,10 +110,11 @@ kt_jvm_library(
     deps = [
         ":HelperForPersesMain",
         ":abstract_reduction_main",
-        ":command_options",
-        ":perses_contants",
+        ":perses_command_options",
+        ":perses_constants",
         ":perses_listener_manager_creator",
         "//:antlr_tool",
+        "//:flogger",
         "//:guava",
         "//:jcommander",
         "//src/org/perses/grammar:facade_factory",
@@ -122,8 +144,13 @@ kt_jvm_library(
         "//src/org/perses/reduction:reducer_factory",
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction:reduction_driver_interface",
+        "//src/org/perses/reduction/crossfile:crossfile_io_manager",
+        "//src/org/perses/reduction/crossfile:crossfile_output_manager",
+        "//src/org/perses/reduction/crossfile:crossfile_reduction_driver",
+        "//src/org/perses/reduction/crossfile:crossfile_transformation",
         "//src/org/perses/reduction/reducer/trec",
         "//src/org/perses/reduction/reducer/vulcan",
+        "//src/org/perses/util",
         "//src/org/perses/util:default_logging_configurations",
         "//src/org/perses/util/cmd",
         "//version/org/perses/version",
@@ -183,6 +210,29 @@ kt_jvm_library(
         "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/adhoc:adhoc_parser_facade_factory_util",
         "//src/org/perses/program",
+        "//src/org/perses/program:language_kind",
+        "//src/org/perses/util/cmd",
+    ],
+)
+
+java_binary(
+    name = "parseability",
+    jvm_flags = ["-ea"],
+    main_class = "org.perses.ParseabilityMain",
+    runtime_deps = [
+        ":parseability_lib",
+    ],
+)
+
+kt_jvm_library(
+    name = "parseability_lib",
+    srcs = ["ParseabilityMain.kt"],
+    deps = [
+        "//:jcommander",
+        "//src/org/perses/cmd:LanguageControlFlagGroup",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar/adhoc:adhoc_parser_facade_factory_util",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/util/cmd",
     ],

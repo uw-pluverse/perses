@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,10 +25,22 @@ class ReductionAlgorithmControlFlagGroup :
   @JvmField
   @Parameter(
     names = ["--alg"],
-    description = "reduction algorithm: use --list-algs to list all available algorithms",
+    description = "The main reduction algorithm: use --list-algs to list all available algorithms",
     order = 0,
   )
-  var reductionAlgorithm: String? = null
+  var mainReductionAlgorithm: String? = null
+
+  // TODO(cnsun): we need to allow to use a different reduction algorithm for the cleanup.
+  @JvmField
+  @Parameter(
+    names = ["--cleanup-alg"],
+    description =
+      "The cleanup reduction algorithm, " +
+        "which is the non-first reduction algorithm used in the fixpoint iteration. " +
+        "Use --list-algs to list all available algorithms.",
+    order = 5,
+  )
+  var cleanupReductionAlgorithm: String? = null
 
   @JvmField
   @Parameter(
@@ -64,20 +76,14 @@ class ReductionAlgorithmControlFlagGroup :
   var enableTreeSlicer = false
 
   @Parameter(
-    names = ["--enable-line-slicer"],
-    description = "Enable line slicer after syntax-guided reduction, and before token slicer",
+    names = ["--line-slicer"],
+    description =
+      "whether to run the line slicer (after syntax-guided reduction, before the token slicer): " +
+        "auto (only for files that do not parse under their real grammar), on (every file), or off",
     arity = 1,
     order = 50,
   )
-  var enableLineSlicer = false
-
-  @Parameter(
-    names = ["--default-list-minimizer-for-kleene"],
-    description = "The default list minimizer algorithm to reduce kleene nodes.",
-    arity = 1,
-    order = 60,
-  )
-  var defaultListMinimizerTypeForKleene = EnumListMinimizerType.DFS
+  var lineSlicer: EnumPassMode = EnumPassMode.AUTO
 
   @Parameter(
     names = ["--default-list-minimizer-for-hdd"],
@@ -103,36 +109,6 @@ class ReductionAlgorithmControlFlagGroup :
     order = 80,
   )
   var maxSlicingWindowSize = 14
-
-  @JvmField
-  @Parameter(
-    names = ["--max-edit-count-for-regular-rule-node"],
-    description = "The max count of edit candidates for reducing a regular rule node.",
-    arity = 1,
-    hidden = true,
-    order = 90,
-  )
-  var maxEditCountForRegularRuleNode = 100
-
-  @JvmField
-  @Parameter(
-    names = ["--max-bfs-depth-for-regular-rule-node"],
-    description = "The max count of edit candidates for reducing a regular rule node.",
-    arity = 1,
-    hidden = true,
-    order = 100,
-  )
-  var maxBfsDepthForRegularRuleNode = 5
-
-  @JvmField
-  @Parameter(
-    names = ["--stop-at-first-compatible-child-for-regular-rule-node"],
-    description = "The max count of edit candidates for reducing a regular rule node.",
-    arity = 1,
-    hidden = true,
-    order = 110,
-  )
-  var stopAtFirstCompatibleChildForRegularRuleNode = false
 
   override fun validate() {
     require(minSlicingWindowSize > 0) { "minSlicingWindowSize must be greater than 0" }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,25 +16,24 @@
  */
 package org.perses.reduction
 
-import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult
-import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.EmptyResult
-import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.ProceedResult
-import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.StopResult
+import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult
+import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Proceed
+import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Skip
 import org.perses.reduction.io.ReductionFolder
 import java.io.Closeable
 import java.util.concurrent.CancellationException
 
 class TestScriptExecResult<Payload : Any>(
   val workingDirectory: ReductionFolder,
-  val outputManagerCreatorFuture: RestrictedFuture<AbstractOutputManagerCreatorResult<Payload>>,
+  val outputManagerCreatorFuture: RestrictedFuture<OutputManagerCreatorResult<Payload>>,
   val testScriptExecFuture: RestrictedFuture<PropertyTestResult?>,
 ) : Closeable {
   private val outputManagerCreatorResult by lazy {
     try {
       outputManagerCreatorFuture.getWithTimeoutWarnings()
-        ?: EmptyResult()
+        ?: Skip()
     } catch (e: CancellationException) {
-      EmptyResult()
+      Skip()
     }
   }
 
@@ -55,9 +54,8 @@ class TestScriptExecResult<Payload : Any>(
   val payload: Payload?
     get() =
       when (val t = outputManagerCreatorResult) {
-        is EmptyResult -> null
-        is ProceedResult -> t.payload
-        is StopResult -> t.payload
+        is Skip -> null
+        is Proceed -> t.payload
       }
 
   fun cancelWithInterruption() {

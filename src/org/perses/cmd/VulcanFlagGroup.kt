@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -58,8 +58,9 @@ class VulcanFlagGroup : AbstractCommandLineFlagGroup(groupName = "Vulcan Reducer
     check(nonDeletionIterationLimit > 0) {
       "--non-deletion-iteration-limit must be non-negative."
     }
-    check(windowSize > 1) {
-      "--window-size must be larger than 1."
+    check(windowSize in 3..6) {
+      "--window-size must be in [3, 6]: larger than 2 for the pattern enumeration and no " +
+        "larger than the largest precomputed pattern set."
     }
   }
 }

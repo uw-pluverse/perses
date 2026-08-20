@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,9 +15,9 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.spartree
-
 import org.perses.program.TokenizedProgram
 import org.perses.util.Util.lazyAssert
+import org.perses.util.toImmutableList
 
 class NodeDeletionTreeEdit internal constructor(
   tree: SparTree,
@@ -33,7 +33,19 @@ class NodeDeletionTreeEdit internal constructor(
     }
   }
 
-  override fun computeProgram(tree: SparTree): TokenizedProgram =
+  override fun computeDeletedTokens(): AbstractDeletedTokens.DeletedTokens =
+    AbstractDeletedTokens.DeletedTokens(
+      actionSet.actions
+        .flatMap {
+          it.targetNode.leafNodeSequence().map { it.token.asAntlrToken() }
+        }.sortedBy { it.position }
+        .toImmutableList(),
+    )
+
+  override val structureDescriptionPrefix: String
+    get() = ""
+
+  override fun internalComputeProgram(tree: SparTree): TokenizedProgram =
     tree.customizeProgram(TokenizedProgramConstructor(actionSet))
 
   private class TokenizedProgramConstructor(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,13 +21,9 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.PropertyTestResult.Companion.INTERESTING_RESULT
-import org.perses.reduction.PropertyTestResult.Companion.NON_INTERESTING_RESULT
 
 @RunWith(JUnit4::class)
-class WeightedProbabilisticDeltaDebuggerTest {
-  private val input = ImmutableList.of(1, 2, 3, 5, 10)
-
+class WeightedProbabilisticDeltaDebuggerTest : AbstractWeightedMinimizerTest() {
   @Test
   fun testEmpty() {
     testWProbDD(property = listOf(), expected = listOf())
@@ -50,39 +46,17 @@ class WeightedProbabilisticDeltaDebuggerTest {
   private fun testWProbDD(
     property: List<Int>,
     expected: List<Int>,
-  ): ImmutableList<String> {
-    val testHistory = mutableListOf<String>()
-    val delHistory = mutableListOf<String>()
-
-    val propertyTest =
-      IPropertyTester<Int, String> { configuration ->
-        val candidate = configuration.getCandidateOrFail()
-        val deleted = configuration.deletedElements
-        testHistory.add(candidate.joinToString(""))
-        delHistory.add(deleted.joinToString(""))
-        if (candidate.containsAll(property)) {
-          LMPropertyTestResult.Completed(INTERESTING_RESULT, "")
-        } else {
-          LMPropertyTestResult.Completed(NON_INTERESTING_RESULT, "")
-        }
-      }
-
-    val debugger =
+  ): ImmutableList<String> =
+    runMinimizerTest(
+      input = input,
+      property = property,
+      expected = expected,
+      weightProvider = { it },
+    ) { args ->
       WeightedProbabilisticDeltaDebugger(
-        ListMinimizerArguments(
-          needToTestEmpty = true,
-          input = input,
-          propertyTester = propertyTest,
-          onBestUpdateHandler = { _, _ -> },
-          descriptionPrefix = "prefix",
-          weightProvider = { it },
-        ),
+        args,
         terminationThreshold = 1.0,
         initialProbability = 0.25,
       )
-
-    val result = debugger.reduce()
-    assertThat(result).isEqualTo(expected)
-    return ImmutableList.copyOf(testHistory)
-  }
+    }
 }

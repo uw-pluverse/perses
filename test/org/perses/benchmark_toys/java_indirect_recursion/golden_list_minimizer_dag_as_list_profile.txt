@@ -1,0 +1,804 @@
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__compilationUnit_3:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(5,#tokens=106,last-pos=37:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__classBody_1:NoDepsAmongNodes]
+The original input has 4 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(416,#tokens=17,last-pos=20:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(283,#tokens=27,last-pos=25:2)
+--Element 2
+  index=2, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(106,#tokens=36,last-pos=31:2)
+--Element 3
+  index=3, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(17,#tokens=21,last-pos=36:2)
+Testing the empty input.
+Try deleting: [0, 1, 2, 3]: Uninteresting. Local rate: 4/4=100.00%
+Try deleting: [3]: Uninteresting. Local rate: 4/4=100.00%
+Try deleting: [2]: Uninteresting. Local rate: 4/4=100.00%
+Try deleting: [1]: Uninteresting. Local rate: 4/4=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 4/4=100.00%
+Reduction OneByOneMinimizer ends. Result=[0,1,2,3]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(114,#tokens=26,last-pos=30:24)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 3 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(252,#tokens=4,last-pos=28:16)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(209,#tokens=9,last-pos=29:31)
+--Element 2
+  index=2, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(119,#tokens=13,last-pos=30:24)
+Testing the empty input is disabled.
+Try deleting: [2]: Interesting. Local rate: 3/3=100.00%
+New best is found: [0, 1]
+Try deleting: [1]: Uninteresting. Local rate: 2/3=66.67%
+Try deleting: [0]: Interesting. Local rate: 2/3=66.67%
+New best is found: [1]
+Reduction OneByOneMinimizer ends. Result=[1]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(291,#tokens=17,last-pos=24:24)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(385,#tokens=4,last-pos=23:16)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(295,#tokens=13,last-pos=24:24)
+Testing the empty input is disabled.
+Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
+Try deleting: [0]: Interesting. Local rate: 2/2=100.00%
+New best is found: [1]
+Reduction OneByOneMinimizer ends. Result=[1]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(424,#tokens=9,last-pos=19:36)
+Testing the empty input.
+Try deleting: [0]: Interesting. Local rate: 1/1=100.00%
+New best is found: []
+Reduction OneByOneMinimizer ends. Result=[]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(25,#tokens=9,last-pos=35:9)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(66,#tokens=4,last-pos=34:16)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(30,#tokens=5,last-pos=35:9)
+Testing the empty input is disabled.
+Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
+Try deleting: [0]: Interesting. Local rate: 2/2=100.00%
+New best is found: [1]
+Reduction OneByOneMinimizer ends. Result=[1]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(86,#tokens=4,last-pos=33:35)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(323,#tokens=3,last-pos=24:22)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(478,pos=18:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(477,pos=18:9)
+Testing the empty input.
+Try deleting: [0, 1]: Interesting. Local rate: 2/2=100.00%
+New best is found: []
+Reduction OneByOneMinimizer ends. Result=[]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(405,#tokens=2,last-pos=22:28)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(415,pos=22:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(414,pos=22:9)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0]: Interesting. Local rate: 2/2=100.00%
+New best is found: [1]
+Reduction OneByOneMinimizer ends. Result=[1]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(272,#tokens=2,last-pos=27:28)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__typeName_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(246,#tokens=2,last-pos=29:10)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(282,pos=27:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(281,pos=27:9)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0]: Interesting. Local rate: 2/2=100.00%
+New best is found: [1]
+Reduction OneByOneMinimizer ends. Result=[1]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__dims_5:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(94,#tokens=2,last-pos=33:33)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(105,pos=33:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(104,pos=33:9)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
+Reduction OneByOneMinimizer ends. Result=[0,1]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(243,pos=29:23)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(61,pos=35:7)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__normalClassDeclaration_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(480,pos=17:0)
+Testing the empty input.
+Try deleting: [0]: Interesting. Local rate: 1/1=100.00%
+New best is found: []
+Reduction OneByOneMinimizer ends. Result=[]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__compilationUnit_3:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(486,#tokens=59,last-pos=13:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__classBody_1:NoDepsAmongNodes]
+The original input has 4 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(705,#tokens=6,last-pos=3:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(643,#tokens=14,last-pos=6:2)
+--Element 2
+  index=2, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(572,#tokens=18,last-pos=9:2)
+--Element 3
+  index=3, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(497,#tokens=17,last-pos=12:2)
+Testing the empty input.
+Try deleting: [0, 1, 2, 3]: Uninteresting. Local rate: 4/4=100.00%
+Try deleting: [3]: Uninteresting. Local rate: 4/4=100.00%
+Try deleting: [2]: Uninteresting. Local rate: 4/4=100.00%
+Try deleting: [1]: Uninteresting. Local rate: 4/4=100.00%
+Try deleting: [0]: Interesting. Local rate: 4/4=100.00%
+New best is found: [1, 2, 3]
+Reduction OneByOneMinimizer ends. Result=[1,2,3]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(580,#tokens=9,last-pos=8:31)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(584,#tokens=9,last-pos=8:31)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(651,#tokens=5,last-pos=5:24)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(655,#tokens=5,last-pos=5:24)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(505,#tokens=5,last-pos=11:9)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(509,#tokens=5,last-pos=11:9)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(552,#tokens=4,last-pos=10:35)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(696,#tokens=2,last-pos=4:28)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(634,#tokens=2,last-pos=7:28)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__typeName_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(621,#tokens=2,last-pos=8:10)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__dims_5:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(560,#tokens=2,last-pos=10:33)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(571,pos=10:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(570,pos=10:9)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
+Reduction OneByOneMinimizer ends. Result=[0,1]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(684,pos=5:18)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(704,pos=4:9)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(618,pos=8:23)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(642,pos=7:9)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(540,pos=11:7)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__compilationUnit_3:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(722,#tokens=53,last-pos=11:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__classBody_1:NoDepsAmongNodes]
+The original input has 3 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(878,#tokens=14,last-pos=4:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(807,#tokens=18,last-pos=7:2)
+--Element 2
+  index=2, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(732,#tokens=17,last-pos=10:2)
+Testing the empty input.
+Try deleting: [0, 1, 2]: Uninteresting. Local rate: 3/3=100.00%
+Try deleting: [2]: Uninteresting. Local rate: 3/3=100.00%
+Try deleting: [1]: Uninteresting. Local rate: 3/3=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 3/3=100.00%
+Reduction OneByOneMinimizer ends. Result=[0,1,2]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(815,#tokens=9,last-pos=6:31)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(819,#tokens=9,last-pos=6:31)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(886,#tokens=5,last-pos=3:24)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(890,#tokens=5,last-pos=3:24)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__block_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(740,#tokens=5,last-pos=9:9)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:blockStatements:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(744,#tokens=5,last-pos=9:9)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(787,#tokens=4,last-pos=8:35)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(931,#tokens=2,last-pos=2:28)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__methodDeclarator_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(869,#tokens=2,last-pos=5:28)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__typeName_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(856,#tokens=2,last-pos=6:10)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__dims_5:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=parser(795,#tokens=2,last-pos=8:33)
+Testing the empty input is disabled.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 2 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(806,pos=8:2)
+--Element 1
+  index=1, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(805,pos=8:9)
+Testing the empty input.
+Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [1]: Uninteresting. Local rate: 2/2=100.00%
+Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
+Reduction OneByOneMinimizer ends. Result=[0,1]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(919,pos=3:18)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(939,pos=2:9)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(853,pos=6:23)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__methodDeclaration_1:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(877,pos=5:9)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+
+Reduction starts: algorithm=OneByOneMinimizer
+desc: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__explicitConstructorInvocation_2:NoDepsAmongNodes]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=NoPayload
+  class=NodeContainerForListMinimizer
+  element=lexer(775,pos=9:7)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction OneByOneMinimizer ends. Result=[0]
+

@@ -16,6 +16,7 @@ pnf_convert(
 
 pnf_parser_facade_library(
     name = "parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.ruby",
     language_kind_full_name = "org.perses.grammar.ruby.LanguageRuby",
     lexer_file_name = "RubyLexer.g4",

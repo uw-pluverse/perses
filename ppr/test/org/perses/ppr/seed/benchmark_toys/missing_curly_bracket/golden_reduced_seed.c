@@ -1,12 +1,4 @@
 #include <stdio.h>
-int
-main
-(
-)
-{
-printf
-(
-"world"
-)
-;
+int main(){
+  printf("world");
 }

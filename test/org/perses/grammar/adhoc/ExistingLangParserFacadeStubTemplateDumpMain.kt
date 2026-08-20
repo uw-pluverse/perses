@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -43,6 +43,7 @@ object ExistingLangParserFacadeStubTemplateDumpMain {
       existingLanguageFullClassName = "org.fake.package.LanguageFake",
       parserFacadeClassSimpleName = "FakeParserFacade",
       tokenNamesOfIdentifiers = listOf("Identifier"),
+      includeAutoDetectedIdentifierTokenTypes = false,
     ).writeTo(output)
     System.err.println("Written the template to $output")
   }

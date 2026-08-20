@@ -1,0 +1,3590 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 58
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_with_adaptive_code_format_node_priority_T.java.txt"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "T.java.txt"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "SINGLE_TOKEN_PER_LINE"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: "java"
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress_with_adaptive_code_format.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(58/58)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(58/58)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+(58/58)  The code format SINGLE_TOKEN_PER_LINE does not pass the property test for the program before reducer 'node_priority'. Switching to COMPACT_ORIG_FORMAT (an allowed format of LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=COMPACT_ORIG_FORMAT}) under which the program is interesting, for the rest of the reduction.
+========Fixpoint iteration 1. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(*){id=2,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___(*){id=6,slot_type=kleene_star__normalClassDeclaration_1}
+        |   |___Token:public{id=270,slot_type=[classModifier,PUBLIC]}
+        |___Token:class{id=7,slot_type=CLASS}
+        |___Token:T{id=8,slot_type=Identifier}
+        |___classBody{id=9,slot_type=classBody}
+            |___Token:{{id=10,slot_type=LBRACE}
+            |___(*){id=11,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=220,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |   |   |___(*){id=221,slot_type=kleene_star__methodDeclaration_1}
+            |   |   |   |___Token:private{id=268,slot_type=[methodModifier,PRIVATE]}
+            |   |   |   |___Token:static{id=267,slot_type=[methodModifier,STATIC]}
+            |   |   |___methodHeader{id=222,slot_type=methodHeader}
+            |   |   |   |___Token:int{id=264,slot_type=[result,unannType,altnt_block__primitiveType_3,INT]}
+            |   |   |   |___methodDeclarator{id=258,slot_type=methodDeclarator}
+            |   |   |       |___Token:counter{id=259,slot_type=Identifier}
+            |   |   |       |___Token:({id=260,slot_type=LPAREN}
+            |   |   |       |___Token:){id=261,slot_type=RPAREN}
+            |   |   |___block{id=224,slot_type=[methodBody,block]}
+            |   |       |___Token:{{id=225,slot_type=LBRACE}
+            |   |       |___(?){id=226,slot_type=optional__block_1}
+            |   |       |   |___(+){id=228,slot_type=blockStatements}
+            |   |       |       |___returnStatement{id=232,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,returnStatement]}
+            |   |       |           |___Token:return{id=233,slot_type=RETURN}
+            |   |       |           |___(?){id=234,slot_type=optional__returnStatement_1}
+            |   |       |           |   |___Token:100{id=256,slot_type=[expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |   |       |           |___Token:;{id=235,slot_type=SEMI}
+            |   |       |___Token:}{id=227,slot_type=RBRACE}
+            |   |___methodDeclaration{id=15,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*){id=16,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public{id=219,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static{id=218,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader{id=17,slot_type=methodHeader}
+            |       |   |___Token:void{id=215,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator{id=192,slot_type=methodDeclarator}
+            |       |       |___Token:main{id=193,slot_type=Identifier}
+            |       |       |___Token:({id=194,slot_type=LPAREN}
+            |       |       |___(?){id=195,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter{id=200,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType{id=204,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String{id=214,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+){id=207,slot_type=[dims,kleene_plus__dims_5]}
+            |       |       |       |       |___aux_rule__dims_3{id=208,slot_type=aux_rule__dims_3}
+            |       |       |       |           |___Token:[{id=209,slot_type=LBRACK}
+            |       |       |       |           |___Token:]{id=210,slot_type=RBRACK}
+            |       |       |       |___Token:args{id=203,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:){id=196,slot_type=RPAREN}
+            |       |___block{id=19,slot_type=[methodBody,block]}
+            |           |___Token:{{id=20,slot_type=LBRACE}
+            |           |___(?){id=21,slot_type=optional__block_1}
+            |           |   |___(+){id=23,slot_type=blockStatements}
+            |           |       |___basicForStatement{id=26,slot_type=[blockStatement,statement,basicForStatement]}
+            |           |           |___Token:for{id=27,slot_type=FOR}
+            |           |           |___Token:({id=28,slot_type=LPAREN}
+            |           |           |___(?){id=29,slot_type=optional__basicForStatement_1}
+            |           |           |   |___localVariableDeclaration{id=158,slot_type=[forInit,localVariableDeclaration]}
+            |           |           |       |___Token:int{id=190,slot_type=[unannType,altnt_block__primitiveType_3,INT]}
+            |           |           |       |___variableDeclarator{id=161,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |           |           |___Token:i{id=188,slot_type=[variableDeclaratorId,Identifier]}
+            |           |           |           |___(?){id=163,slot_type=optional__variableDeclarator_2}
+            |           |           |               |___aux_rule__variableDeclarator_1{id=164,slot_type=aux_rule__variableDeclarator_1}
+            |           |           |                   |___Token:={id=165,slot_type=ASSIGN}
+            |           |           |                   |___Token:0{id=187,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |___Token:;{id=30,slot_type=SEMI}
+            |           |           |___(?){id=31,slot_type=optional__returnStatement_1}
+            |           |           |   |___relationalExpression{id=123,slot_type=[expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+            |           |           |       |___Token:i{id=156,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |           |       |___(*){id=125,slot_type=kleene_star__relationalExpression_1}
+            |           |           |           |___aux_rule__relationalExpression_5{id=127,slot_type=[aux_rule__relationalExpression_2,aux_rule__relationalExpression_5]}
+            |           |           |               |___Token:<{id=147,slot_type=[altnt_block__relationalExpression_3,LT]}
+            |           |           |               |___methodInvocation_lfno_primary{id=139,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,methodInvocation_lfno_primary]}
+            |           |           |                   |___aux_rule__methodInvocation_lfno_primary_15{id=142,slot_type=[altnt_block__methodInvocation_lfno_primary_10,aux_rule__methodInvocation_lfno_primary_15]}
+            |           |           |                   |   |___Token:counter{id=146,slot_type=[altnt_block__methodInvocation_lfno_primary_12,methodName,Identifier]}
+            |           |           |                   |   |___Token:({id=144,slot_type=LPAREN}
+            |           |           |                   |___Token:){id=141,slot_type=RPAREN}
+            |           |           |___Token:;{id=32,slot_type=SEMI}
+            |           |           |___(?){id=33,slot_type=optional__basicForStatement_3}
+            |           |           |   |___preIncrementExpression{id=106,slot_type=[forUpdate,statementExpressionList,statementExpression,preIncrementExpression]}
+            |           |           |       |___Token:++{id=107,slot_type=INC}
+            |           |           |       |___Token:i{id=114,slot_type=[unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |           |___Token:){id=34,slot_type=RPAREN}
+            |           |           |___block{id=37,slot_type=[statement,statementWithoutTrailingSubstatement,block]}
+            |           |               |___Token:{{id=38,slot_type=LBRACE}
+            |           |               |___(?){id=39,slot_type=optional__block_1}
+            |           |               |   |___(+){id=41,slot_type=blockStatements}
+            |           |               |       |___expressionStatement{id=45,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |               |           |___methodInvocation{id=48,slot_type=[statementExpression,methodInvocation]}
+            |           |               |           |   |___aux_rule__methodInvocation_18{id=51,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |               |           |   |   |___typeName{id=52,slot_type=typeName}
+            |           |               |           |   |   |   |___(?){id=97,slot_type=optional__typeName_2}
+            |           |               |           |   |   |   |   |___aux_rule__typeName_1{id=99,slot_type=aux_rule__typeName_1}
+            |           |               |           |   |   |   |       |___Token:System{id=102,slot_type=[packageName,Identifier]}
+            |           |               |           |   |   |   |       |___Token:.{id=101,slot_type=DOT}
+            |           |               |           |   |   |   |___Token:out{id=98,slot_type=Identifier}
+            |           |               |           |   |   |___Token:.{id=53,slot_type=DOT}
+            |           |               |           |   |   |___altnt_block__methodInvocation_13{id=54,slot_type=altnt_block__methodInvocation_13}
+            |           |               |           |   |       |___Token:println{id=55,slot_type=Identifier}
+            |           |               |           |   |       |___Token:({id=56,slot_type=LPAREN}
+            |           |               |           |   |       |___(?){id=57,slot_type=optional__explicitConstructorInvocation_2}
+            |           |               |           |   |           |___shiftExpression{id=68,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+            |           |               |           |   |               |___Token:1{id=96,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |               |           |   |               |___(*){id=70,slot_type=kleene_star__shiftExpression_1}
+            |           |               |           |   |                   |___aux_rule__shiftExpression_2{id=71,slot_type=aux_rule__shiftExpression_2}
+            |           |               |           |   |                       |___aux_rule__shiftExpression_5{id=84,slot_type=[altnt_block__shiftExpression_4,aux_rule__shiftExpression_5]}
+            |           |               |           |   |                       |   |___Token:<{id=85,slot_type=LT}
+            |           |               |           |   |                       |   |___Token:<{id=86,slot_type=LT}
+            |           |               |           |   |                       |___Token:2{id=83,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |               |           |   |___Token:){id=50,slot_type=RPAREN}
+            |           |               |           |___Token:;{id=47,slot_type=SEMI}
+            |           |               |___Token:}{id=40,slot_type=RBRACE}
+            |           |___Token:}{id=22,slot_type=RBRACE}
+            |___Token:}{id=12,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority](58/58)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](58/58)  Retrieved semantics provider null
+==================Reducing node 2, size=58==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](58/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:58/58=100.00%
+FixPt[1][node_priority][DFS](58/58)  Testing the empty input. Global ratio:58/58=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__compilationUnit_3]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](58/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:58/58=100.00%
+FixPt[1][node_priority][DFS](58/58)  There is only one element in the input, and the empty input has been tested. Global ratio:58/58=100.00%
+FixPt[1][node_priority][DFS](58/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:58/58=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=58==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_5]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=58==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=58==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](58/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:58/58=100.00%
+FixPt[1][node_priority][DFS](58/58)  Testing the empty input. Global ratio:58/58=100.00%
+==========Testing the following program (1): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__classBody_1]dd@#nodes=2,#parts=2#total-parts=2
+    --file: T.java.txt--
+    public class T {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](58/58)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:58/58=100.00%
+==========Testing the following program (2): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__classBody_1]dd@#nodes=1,#parts=1#total-parts=2
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](58/58)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:58/58=100.00%
+==========Testing the following program (3): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__classBody_1]dd@#nodes=1,#parts=1#total-parts=2
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](58/58)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:58/58=100.00%
+FixPt[1][node_priority][DFS](58/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:58/58=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=58==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_15]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (4): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (5): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+                                             {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=58==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args) {
+        for (int i = 0; i < counter(); ++i) {
+          System.out.println(1 << 2);
+        }
+      }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (6): pass===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 6 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 7
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 58 -> 40
+Edit: HoistEdit:[replace_19_with_37]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 19 from 58 to 40
+------------------------------------------------------------
+
+
+=================Reducing node 37, size=40==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 37
+------------------------------------------------------------
+
+
+=================Reducing node 39, size=40==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](40/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:40/58=68.97%
+FixPt[1][node_priority][DFS](40/58)  Testing the empty input. Global ratio:40/58=68.97%
+==========Testing the following program (7): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__block_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](40/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:40/58=68.97%
+FixPt[1][node_priority][DFS](40/58)  There is only one element in the input, and the empty input has been tested. Global ratio:40/58=68.97%
+FixPt[1][node_priority][DFS](40/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:40/58=68.97%
+===================Node reduction is done===================
+
+Failed to reduce node 39
+------------------------------------------------------------
+
+
+=================Reducing node 41, size=40==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_41]
+    context: [kleene_plus:blockStatements]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](40/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:40/58=68.97%
+FixPt[1][node_priority][DFS](40/58)  Testing the empty input. Global ratio:40/58=68.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](40/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:40/58=68.97%
+FixPt[1][node_priority][DFS](40/58)  There is only one element in the input, and the empty input has been tested. Global ratio:40/58=68.97%
+FixPt[1][node_priority][DFS](40/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:40/58=68.97%
+===================Node reduction is done===================
+
+Failed to reduce node 41
+------------------------------------------------------------
+
+
+=================Reducing node 45, size=40==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_45]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+=================Reducing node 220, size=40=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      private static int counter() {
+        return 100;
+      }
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (8): pass===========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 7 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 40 -> 29
+Edit: [delete_220]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 220 from 40 to 29
+------------------------------------------------------------
+
+
+=================Reducing node 48, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 48
+------------------------------------------------------------
+
+
+=================Reducing node 51, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 51
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 192, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 192
+------------------------------------------------------------
+
+
+=================Reducing node 54, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 54
+------------------------------------------------------------
+
+
+=================Reducing node 195, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+==========Testing the following program (9): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__methodDeclarator_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+    public class T {
+      public static void main(             )
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  There is only one element in the input, and the empty input has been tested. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 195
+------------------------------------------------------------
+
+
+=================Reducing node 200, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_200]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 200
+------------------------------------------------------------
+
+
+=================Reducing node 57, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+==========Testing the following program (10): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__explicitConstructorInvocation_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(      );
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  There is only one element in the input, and the empty input has been tested. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 57
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_68]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (11): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (12): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(     2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (13): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+    public class T {
+      public static void main(String   args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  There is only one element in the input, and the empty input has been tested. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 71, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_71]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 71
+------------------------------------------------------------
+
+
+=================Reducing node 52, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (14): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (15): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System    .println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 52
+------------------------------------------------------------
+
+
+=================Reducing node 207, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String   args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  There is only one element in the input, and the empty input has been tested. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 207
+------------------------------------------------------------
+
+
+=================Reducing node 208, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 208
+------------------------------------------------------------
+
+
+=================Reducing node 97, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  There is only one element in the input, and the empty input has been tested. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 97
+------------------------------------------------------------
+
+
+=================Reducing node 99, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_99]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 99
+------------------------------------------------------------
+
+
+=================Reducing node 84, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 84
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+==========Testing the following program (16): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=2,#parts=2#total-parts=2
+    --file: T.java.txt--
+    public class T {
+                    void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:29/58=50.00%
+==========Testing the following program (17): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=2
+    --file: T.java.txt--
+    public class T {
+      public        void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:29/58=50.00%
+==========Testing the following program (18): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=2
+    --file: T.java.txt--
+    public class T {
+             static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:29/58=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 219, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 219
+------------------------------------------------------------
+
+
+=================Reducing node 218, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 218
+------------------------------------------------------------
+
+
+=================Reducing node 215, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 215
+------------------------------------------------------------
+
+
+=================Reducing node 214, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 214
+------------------------------------------------------------
+
+
+=================Reducing node 210, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 210
+------------------------------------------------------------
+
+
+=================Reducing node 209, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 209
+------------------------------------------------------------
+
+
+=================Reducing node 203, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 203
+------------------------------------------------------------
+
+
+=================Reducing node 196, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 196
+------------------------------------------------------------
+
+
+=================Reducing node 194, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 194
+------------------------------------------------------------
+
+
+=================Reducing node 193, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 193
+------------------------------------------------------------
+
+
+=================Reducing node 102, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 102
+------------------------------------------------------------
+
+
+=================Reducing node 101, size=29=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 101
+------------------------------------------------------------
+
+
+=================Reducing node 98, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 98
+------------------------------------------------------------
+
+
+=================Reducing node 96, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 96
+------------------------------------------------------------
+
+
+=================Reducing node 86, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 86
+------------------------------------------------------------
+
+
+=================Reducing node 85, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 85
+------------------------------------------------------------
+
+
+=================Reducing node 83, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 83
+------------------------------------------------------------
+
+
+=================Reducing node 56, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 56
+------------------------------------------------------------
+
+
+=================Reducing node 55, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 55
+------------------------------------------------------------
+
+
+=================Reducing node 53, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 53
+------------------------------------------------------------
+
+
+=================Reducing node 50, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 50
+------------------------------------------------------------
+
+
+=================Reducing node 47, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 47
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+=================Reducing node 38, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 38
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=29==================
+
+The current best program is the following
+
+    --file: T.java.txt--
+    public class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/58=50.00%
+FixPt[1][node_priority][DFS](29/58)  Testing the empty input. Global ratio:29/58=50.00%
+==========Testing the following program (19): pass==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__normalClassDeclaration_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](29/58)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:29/58=50.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+7 entries are removed: 13 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 14
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 29 -> 28
+Edit: [delete_270]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Succeeded to reduce node 6 from 29 to 28
+------------------------------------------------------------
+
+
+(28/58)  Rebuilding spar-tree: The spartree is rebuilt.
+========Fixpoint iteration 2. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
+The spar-tree is the following.
+compilationUnit{id=272,slot_type=compilationUnit}
+|___(*){id=273,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=276,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=277,slot_type=CLASS}
+        |___Token:T{id=278,slot_type=Identifier}
+        |___classBody{id=279,slot_type=classBody}
+            |___Token:{{id=280,slot_type=LBRACE}
+            |___(*){id=281,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=284,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*){id=285,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public{id=382,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static{id=381,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader{id=286,slot_type=methodHeader}
+            |       |   |___Token:void{id=378,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator{id=355,slot_type=methodDeclarator}
+            |       |       |___Token:main{id=356,slot_type=Identifier}
+            |       |       |___Token:({id=357,slot_type=LPAREN}
+            |       |       |___(?){id=358,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter{id=363,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType{id=367,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String{id=377,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+){id=370,slot_type=[dims,kleene_plus__dims_5]}
+            |       |       |       |       |___aux_rule__dims_3{id=371,slot_type=aux_rule__dims_3}
+            |       |       |       |           |___Token:[{id=372,slot_type=LBRACK}
+            |       |       |       |           |___Token:]{id=373,slot_type=RBRACK}
+            |       |       |       |___Token:args{id=366,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:){id=359,slot_type=RPAREN}
+            |       |___block{id=288,slot_type=[methodBody,block]}
+            |           |___Token:{{id=289,slot_type=LBRACE}
+            |           |___(?){id=290,slot_type=optional__block_1}
+            |           |   |___(+){id=292,slot_type=blockStatements}
+            |           |       |___expressionStatement{id=296,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation{id=299,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18{id=302,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName{id=303,slot_type=typeName}
+            |           |           |   |   |   |___(?){id=348,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1{id=350,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System{id=353,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:.{id=352,slot_type=DOT}
+            |           |           |   |   |   |___Token:out{id=349,slot_type=Identifier}
+            |           |           |   |   |___Token:.{id=304,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13{id=305,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println{id=306,slot_type=Identifier}
+            |           |           |   |       |___Token:({id=307,slot_type=LPAREN}
+            |           |           |   |       |___(?){id=308,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___shiftExpression{id=319,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+            |           |           |   |               |___Token:1{id=347,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |   |               |___(*){id=321,slot_type=kleene_star__shiftExpression_1}
+            |           |           |   |                   |___aux_rule__shiftExpression_2{id=322,slot_type=aux_rule__shiftExpression_2}
+            |           |           |   |                       |___aux_rule__shiftExpression_5{id=335,slot_type=[altnt_block__shiftExpression_4,aux_rule__shiftExpression_5]}
+            |           |           |   |                       |   |___Token:<{id=336,slot_type=LT}
+            |           |           |   |                       |   |___Token:<{id=337,slot_type=LT}
+            |           |           |   |                       |___Token:2{id=334,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |   |___Token:){id=301,slot_type=RPAREN}
+            |           |           |___Token:;{id=298,slot_type=SEMI}
+            |           |___Token:}{id=291,slot_type=RBRACE}
+            |___Token:}{id=282,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority](28/58)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](28/58)  Retrieved semantics provider null
+=================Reducing node 273, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 273
+------------------------------------------------------------
+
+
+=================Reducing node 276, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_276]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 276
+------------------------------------------------------------
+
+
+=================Reducing node 279, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 279
+------------------------------------------------------------
+
+
+=================Reducing node 281, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+==========Testing the following program (20): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__classBody_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+           class T {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 281
+------------------------------------------------------------
+
+
+=================Reducing node 284, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_284]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (21): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+           class T {
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 284
+------------------------------------------------------------
+
+
+=================Reducing node 288, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 288
+------------------------------------------------------------
+
+
+=================Reducing node 290, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+==========Testing the following program (22): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__block_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 290
+------------------------------------------------------------
+
+
+=================Reducing node 292, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_292]
+    context: [kleene_plus:blockStatements]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 292
+------------------------------------------------------------
+
+
+=================Reducing node 296, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_296]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 296
+------------------------------------------------------------
+
+
+=================Reducing node 299, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 299
+------------------------------------------------------------
+
+
+=================Reducing node 302, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 302
+------------------------------------------------------------
+
+
+=================Reducing node 286, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 286
+------------------------------------------------------------
+
+
+=================Reducing node 355, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 355
+------------------------------------------------------------
+
+
+=================Reducing node 305, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 305
+------------------------------------------------------------
+
+
+=================Reducing node 358, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+==========Testing the following program (23): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__methodDeclarator_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+           class T {
+      public static void main(             )
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 358
+------------------------------------------------------------
+
+
+=================Reducing node 363, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_363]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 363
+------------------------------------------------------------
+
+
+=================Reducing node 308, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+==========Testing the following program (24): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__explicitConstructorInvocation_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(      );
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 308
+------------------------------------------------------------
+
+
+=================Reducing node 319, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_319]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (25): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (26): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(     2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 319
+------------------------------------------------------------
+
+
+=================Reducing node 367, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (27): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+           class T {
+      public static void main(String   args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 367
+------------------------------------------------------------
+
+
+=================Reducing node 321, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1     );
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 321
+------------------------------------------------------------
+
+
+=================Reducing node 322, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_322]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 322
+------------------------------------------------------------
+
+
+=================Reducing node 303, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (28): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (29): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System    .println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 303
+------------------------------------------------------------
+
+
+=================Reducing node 370, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String   args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 370
+------------------------------------------------------------
+
+
+=================Reducing node 371, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 371
+------------------------------------------------------------
+
+
+=================Reducing node 348, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+                 out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  There is only one element in the input, and the empty input has been tested. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 348
+------------------------------------------------------------
+
+
+=================Reducing node 350, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_350]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 350
+------------------------------------------------------------
+
+
+=================Reducing node 335, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 335
+------------------------------------------------------------
+
+
+=================Reducing node 285, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Testing the empty input. Global ratio:28/58=48.28%
+==========Testing the following program (30): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=2,#parts=2#total-parts=2
+    --file: T.java.txt--
+           class T {
+                    void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:28/58=48.28%
+==========Testing the following program (31): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=2
+    --file: T.java.txt--
+           class T {
+      public        void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:28/58=48.28%
+==========Testing the following program (32): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=2
+    --file: T.java.txt--
+           class T {
+             static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](28/58)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:28/58=48.28%
+FixPt[2][node_priority][DFS](28/58)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:28/58=48.28%
+===================Node reduction is done===================
+
+Failed to reduce node 285
+------------------------------------------------------------
+
+
+=================Reducing node 382, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 382
+------------------------------------------------------------
+
+
+=================Reducing node 381, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 381
+------------------------------------------------------------
+
+
+=================Reducing node 378, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 378
+------------------------------------------------------------
+
+
+=================Reducing node 377, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 377
+------------------------------------------------------------
+
+
+=================Reducing node 373, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 373
+------------------------------------------------------------
+
+
+=================Reducing node 372, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 372
+------------------------------------------------------------
+
+
+=================Reducing node 366, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 366
+------------------------------------------------------------
+
+
+=================Reducing node 359, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 359
+------------------------------------------------------------
+
+
+=================Reducing node 357, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 357
+------------------------------------------------------------
+
+
+=================Reducing node 356, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 356
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 352, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 352
+------------------------------------------------------------
+
+
+=================Reducing node 349, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 349
+------------------------------------------------------------
+
+
+=================Reducing node 347, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 347
+------------------------------------------------------------
+
+
+=================Reducing node 337, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 337
+------------------------------------------------------------
+
+
+=================Reducing node 336, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 336
+------------------------------------------------------------
+
+
+=================Reducing node 334, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 334
+------------------------------------------------------------
+
+
+=================Reducing node 307, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 307
+------------------------------------------------------------
+
+
+=================Reducing node 306, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 306
+------------------------------------------------------------
+
+
+=================Reducing node 304, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 304
+------------------------------------------------------------
+
+
+=================Reducing node 301, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 301
+------------------------------------------------------------
+
+
+=================Reducing node 298, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 298
+------------------------------------------------------------
+
+
+=================Reducing node 291, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 291
+------------------------------------------------------------
+
+
+=================Reducing node 289, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 289
+------------------------------------------------------------
+
+
+=================Reducing node 282, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 282
+------------------------------------------------------------
+
+
+=================Reducing node 280, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 280
+------------------------------------------------------------
+
+
+=================Reducing node 278, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 278
+------------------------------------------------------------
+
+
+=================Reducing node 277, size=28=================
+
+The current best program is the following
+
+    --file: T.java.txt--
+           class T {
+      public static void main(String[] args)
+                                            {
+          System.out.println(1 << 2);
+        }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 277
+------------------------------------------------------------
+
+
+(28/58)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
+The spar-tree is the following.
+compilationUnit{id=272,slot_type=compilationUnit}
+|___(*){id=273,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=276,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=277,slot_type=CLASS}
+        |___Token:T{id=278,slot_type=Identifier}
+        |___classBody{id=279,slot_type=classBody}
+            |___Token:{{id=280,slot_type=LBRACE}
+            |___(*){id=281,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=284,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*){id=285,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public{id=382,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static{id=381,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader{id=286,slot_type=methodHeader}
+            |       |   |___Token:void{id=378,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator{id=355,slot_type=methodDeclarator}
+            |       |       |___Token:main{id=356,slot_type=Identifier}
+            |       |       |___Token:({id=357,slot_type=LPAREN}
+            |       |       |___(?){id=358,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter{id=363,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType{id=367,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String{id=377,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+){id=370,slot_type=[dims,kleene_plus__dims_5]}
+            |       |       |       |       |___aux_rule__dims_3{id=371,slot_type=aux_rule__dims_3}
+            |       |       |       |           |___Token:[{id=372,slot_type=LBRACK}
+            |       |       |       |           |___Token:]{id=373,slot_type=RBRACK}
+            |       |       |       |___Token:args{id=366,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:){id=359,slot_type=RPAREN}
+            |       |___block{id=288,slot_type=[methodBody,block]}
+            |           |___Token:{{id=289,slot_type=LBRACE}
+            |           |___(?){id=290,slot_type=optional__block_1}
+            |           |   |___(+){id=292,slot_type=blockStatements}
+            |           |       |___expressionStatement{id=296,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation{id=299,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18{id=302,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName{id=303,slot_type=typeName}
+            |           |           |   |   |   |___(?){id=348,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1{id=350,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System{id=353,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:.{id=352,slot_type=DOT}
+            |           |           |   |   |   |___Token:out{id=349,slot_type=Identifier}
+            |           |           |   |   |___Token:.{id=304,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13{id=305,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println{id=306,slot_type=Identifier}
+            |           |           |   |       |___Token:({id=307,slot_type=LPAREN}
+            |           |           |   |       |___(?){id=308,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___shiftExpression{id=319,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression]}
+            |           |           |   |               |___Token:1{id=347,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |   |               |___(*){id=321,slot_type=kleene_star__shiftExpression_1}
+            |           |           |   |                   |___aux_rule__shiftExpression_2{id=322,slot_type=aux_rule__shiftExpression_2}
+            |           |           |   |                       |___aux_rule__shiftExpression_5{id=335,slot_type=[altnt_block__shiftExpression_4,aux_rule__shiftExpression_5]}
+            |           |           |   |                       |   |___Token:<{id=336,slot_type=LT}
+            |           |           |   |                       |   |___Token:<{id=337,slot_type=LT}
+            |           |           |   |                       |___Token:2{id=334,slot_type=[additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |   |___Token:){id=301,slot_type=RPAREN}
+            |           |           |___Token:;{id=298,slot_type=SEMI}
+            |           |___Token:}{id=291,slot_type=RBRACE}
+            |___Token:}{id=282,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer](28/58)  Latra does not support LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      3             0     -30            -72      20   time-hidden
+ 1        node_priority      0             0       0              0      13   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      3             0     -30            -72      33   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+           Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Replacement      1             0     -18            -29
+   node_priority.Deletion      2             0     -12            -43
+------------------------------------- End --------------------------------------
+#test success = 3
+#test failure = 30
+#test result cache hits = 9
+#test execution cancelled = 1
+#node edit action set cache hits = 16
+#external test execution cache hits = 0

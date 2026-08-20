@@ -1,0 +1,56 @@
+/*
+ * Copyright (C) 2018-2026 University of Waterloo.
+ *
+ * This file is part of Perses.
+ *
+ * Perses is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3, or (at your option) any later version.
+ *
+ * Perses is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
+ */
+package org.perses.reduction.reducer
+
+import com.google.common.collect.ImmutableList
+import org.perses.reduction.semantics.SccGraph
+import org.perses.spartree.AbstractSparTreeNode
+import org.perses.util.toImmutableList
+
+open class MimirStrategyDagAsList : AbstractLayerBasedMimirStrategy() {
+  override fun internalLayerBasedReduce(
+    context: MimirReductionContext,
+    layersFromTopToBottom: ImmutableList<ImmutableList<SccGraph>>,
+  ) {
+    val input =
+      computeInput(layersFromTopToBottom, context)
+    context.runListMinimizerOverListsOfNodes(
+      false,
+      context.tree,
+      input,
+      context.fixpointReductionState,
+      context.commonPostfix.createByAppending("DagAsList"),
+      context.testWhetherToUseADifferentMinimizerIfInputIsSmall(input),
+    )
+  }
+
+  protected fun computeInput(
+    layersFromTopToBottom: ImmutableList<ImmutableList<SccGraph>>,
+    context: MimirReductionContext,
+  ): ImmutableList<ImmutableList<AbstractSparTreeNode>> =
+    layersFromTopToBottom
+      .asSequence()
+      .flatMap { it }
+      .map { scc ->
+        context.depGraph
+          .getForwardReachableNodesFrom(scc)
+          .asSequence()
+          .flatMap { it.vertexSet().asSequence() }
+          .sortedBy { it.nodeId }
+          .toImmutableList()
+      }.toImmutableList()
+}

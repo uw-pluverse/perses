@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -49,8 +49,12 @@ class FileStreamPool : Closeable {
       "Should not be a symbolic link. $normalizedPath"
     }
     val stream =
-      map.computeIfAbsent(normalizedPath) {
-        ManagedPrintStream(Util.createNonAppendablePrintStream(it))
+      map.computeIfAbsent(normalizedPath) { path ->
+        val parent: Path? = path.parent
+        if (parent != null) {
+          Util.ensureDirExists(parent)
+        }
+        ManagedPrintStream(Util.createNonAppendablePrintStream(path))
       }
     val rentingObject =
       "Description: " + (description ?: "") + "\n" +

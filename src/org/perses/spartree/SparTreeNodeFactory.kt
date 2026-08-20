@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,7 +15,6 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.spartree
-
 import com.google.common.collect.ImmutableList
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.Token
@@ -29,15 +28,21 @@ import org.perses.antlr.ast.AbstractPersesRuleElement
 import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.PersesNotAst
 import org.perses.antlr.ast.PersesTerminalAst
+import org.perses.grammar.AbstractParserFacade
+import org.perses.program.AbstractPersesToken
 import org.perses.program.PersesTokenFactory
-import org.perses.program.TokenizedProgramFactory
+import org.perses.program.TokenPosition
 import org.perses.util.toImmutableList
 
 class SparTreeNodeFactory(
-  val metaTokenInfoDb: MetaTokenInfoDB,
-  val tokenizedProgramFactory: TokenizedProgramFactory,
-  val grammarHierarchy: GrammarHierarchy,
+  val parserFacade: AbstractParserFacade,
 ) : AbstractTreeNode.NodeIdCopyStrategy {
+  val metaTokenInfoDb: MetaTokenInfoDB
+    get() = parserFacade.metaTokenInfoDb
+
+  val grammarHierarchy: GrammarHierarchy
+    get() = parserFacade.ruleHierarchy
+
   private var nodeIdGenerator = 0
 
   private fun nextNodeId(): Int = ++nodeIdGenerator
@@ -49,46 +54,43 @@ class SparTreeNodeFactory(
 
   fun createSentinelRootNode(): SparTreeSentinelRootNode = SparTreeSentinelRootNode(nextNodeId())
 
-  fun createLexerRuleSparTreeNode(node: TerminalNode): LexerRuleSparTreeNode {
+  fun createLexerRuleSparTreeNode(
+    node: TerminalNode,
+    overridingPosition: TokenPosition? = null,
+  ): LexerRuleSparTreeNode {
     val antlrToken = node.symbol
-    return createLexerRuleSparTreeNodeForAntlrToken(antlrToken)
+    return createLexerRuleSparTreeNodeForAntlrToken(antlrToken, overridingPosition)
   }
 
   fun createLexerRuleSparTreeNodeForText(text: String): LexerRuleSparTreeNode {
-    val persesToken =
-      tokenizedProgramFactory
-        .tokenFactory
-        .createPlainTextToken(text)
+    val persesToken = PersesTokenFactory.createPlainTextToken(text)
     return createLexerRuleSparTreeNode(persesToken)
   }
 
-  fun createLexerRuleSparTreeNodeForAntlrToken(antlrToken: Token): LexerRuleSparTreeNode {
-    val persesToken =
-      tokenizedProgramFactory
-        .tokenFactory
-        .createPersesToken(antlrToken)
+  fun createLexerRuleSparTreeNodeForAntlrToken(
+    antlrToken: Token,
+    overridingPosition: TokenPosition?,
+  ): LexerRuleSparTreeNode {
+    val persesToken = PersesTokenFactory.createPersesToken(antlrToken, overridingPosition)
     return createLexerRuleSparTreeNode(persesToken)
   }
 
   fun copyWithNewToken(
     originalLexerTreeNode: LexerRuleSparTreeNode,
-    newToken: PersesTokenFactory.PersesAntlrToken,
+    newToken: AbstractPersesToken.AntlrToken,
   ): LexerRuleSparTreeNode =
     LexerRuleSparTreeNode(nextNodeId(), newToken, originalLexerTreeNode.antlrRule)
 
-  fun createLexerRuleSparTreeNode(
-    persesToken: PersesTokenFactory.AbstractPersesToken,
-  ): LexerRuleSparTreeNode {
+  fun createLexerRuleSparTreeNode(persesToken: AbstractPersesToken): LexerRuleSparTreeNode {
     val tokenRuleName =
       when (persesToken) {
-        is PersesTokenFactory.PersesAntlrToken ->
+        is AbstractPersesToken.AntlrToken -> {
           metaTokenInfoDb
             .getTokenInfoWithType(
               persesToken.tokenType,
             )?.symbolicName
-        is PersesTokenFactory.PersesTokenPlaceholder -> null
-        is PersesTokenFactory.PersesPlainText -> null
-        is PersesTokenFactory.InvalidToken -> null
+        }
+        else -> null
       }
     val nodeId = nextNodeId()
     return LexerRuleSparTreeNode(
@@ -109,7 +111,7 @@ class SparTreeNodeFactory(
   fun createGroupingSparTreeNodeForTokens(tokens: Iterable<Token>): GroupingSparTreeNode =
     createGroupingSparTreeNode(
       tokens.map {
-        createLexerRuleSparTreeNodeForAntlrToken(it)
+        createLexerRuleSparTreeNodeForAntlrToken(it, overridingPosition = null)
       },
     )
 
@@ -167,9 +169,11 @@ class SparTreeNodeFactory(
           }
           node.isTokenNode()
         }
+
         is PersesNotAst -> {
           isCompatibleWithTheTokenSetNegation(source, node)
         }
+
         else -> {
           error("Unexpected source: $source")
         }

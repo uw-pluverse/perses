@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,20 +18,23 @@ package org.perses.reduction.reducer
 
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
+import org.perses.grammar.AbstractParserFacade
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.reducer.TreeTransformations.findCompatibleDescendants
 import org.perses.reduction.reducer.TreeTransformations.findCompatibleKleeneDescendantsForKleeneQuantifiedNode
+import org.perses.reduction.semantics.ISemanticsProvider
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.AbstractSparTreeNode.Companion.canBeEpsilon
-import org.perses.spartree.LexerRuleSparTreeNode
+import org.perses.spartree.ContextDescription
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.NodeReplacementAction
 import org.perses.spartree.NodeReplacementActionSet
 import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.spartree.SparTree
+import org.perses.spartree.TreeNodeFilterResult.CONTINUE
 import org.perses.util.Util.lazyAssert
 import org.perses.util.ktFine
 import org.perses.util.toImmutableList
@@ -41,77 +44,169 @@ open class PersesNodeReducer(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
   reductionQueueStrategy: IReductionQueueStrategy,
+  // These two are constructor values rather than subclass overrides so that specialized node reducers
+  // (the BFS variants, Dyck) stay concrete classes -- an anonymous `object :` subclass has a null
+  // KClass.simpleName, which the list minimizer dereferences with `!!`.
+  //
+  // The list minimizer to reduce node lists with, or null to keep the configured default.
+  private val defaultListMinimizerType: EnumListMinimizerType? = null,
+  // The facade to reparse under before reducing (e.g. a Dyck facade), or null to reduce on the
+  // canonical tree.
+  private val preferredParserFacade: AbstractParserFacade? = null,
 ) : AbstractNodeReducer(
     reducerAnnotation = reducerAnnotation,
     reducerContext = reducerContext,
     reductionQueueStrategy = reductionQueueStrategy,
-    requiresParsableTree = true,
   ) {
-  protected val nodeReducerConfiguation =
-    reducerContext.configuration.persesNodeReducerConfig
+  override fun computeDefaultListMinimizerType(): EnumListMinimizerType =
+    defaultListMinimizerType ?: super.computeDefaultListMinimizerType()
+
+  override fun getPreferredParserFacade(): AbstractParserFacade? = preferredParserFacade
 
   override fun reduceOneNode(
     tree: SparTree,
     node: AbstractSparTreeNode,
+    semanticsProvider: ISemanticsProvider?,
     fixpointReductionState: FixpointReductionState,
-  ): ImmutableList<AbstractSparTreeNode> =
-    when (node) {
-      is LexerRuleSparTreeNode -> ImmutableList.of()
-      is ParserRuleSparTreeNode ->
-        when (node.ruleType) {
-          RuleType.KLEENE_PLUS -> reduceKleenePlus(tree, node, fixpointReductionState)
-          RuleType.KLEENE_STAR, RuleType.OPTIONAL ->
-            reduceKleeneStar(
-              tree,
-              node,
-              fixpointReductionState,
-            )
-          RuleType.ALT_BLOCKS, RuleType.OTHER_RULE -> reduceRegularRule(tree, node)
-          else -> error("unhandled type: ${node.ruleType}")
-        }
-
-      else -> error("unhandled type: ${node::class}")
+  ): List<AbstractSparTreeNode> {
+    if (node.isTokenNode()) {
+      return ImmutableList.of()
+    }
+    check(node is ParserRuleSparTreeNode) {
+      "Unhandled node type: ${node::class}"
     }
 
-  private fun reduceRegularRule(
+    return try {
+      when (node.ruleType) {
+        RuleType.KLEENE_PLUS -> {
+          if (persesConfig.enableReducingKleeneOptionalNode) {
+            reduceKleenePlus(
+              tree,
+              kleenePlusNode = node,
+              semanticsProvider = semanticsProvider,
+              fixpointReductionState,
+            )
+          } else {
+            node.immutableChildView
+          }
+        }
+
+        RuleType.KLEENE_STAR, RuleType.OPTIONAL -> {
+          if (persesConfig.enableReducingKleeneOptionalNode) {
+            reduceKleeneStar(
+              tree,
+              kleeneStarNode = node,
+              semanticsProvider = semanticsProvider,
+              fixpointReductionState,
+            )
+          } else {
+            node.immutableChildView
+          }
+        }
+
+        RuleType.ALT_BLOCKS, RuleType.OTHER_RULE -> {
+          if (persesConfig.enableReducingRegularRuleNode) {
+            reduceRegularRuleNode(
+              tree,
+              regularRuleNode = node,
+              semanticsProvider,
+              fixpointReductionState,
+            )
+          } else {
+            node.immutableChildView
+          }
+        }
+
+        else -> {
+          error("unhandled type: ${node.ruleType}")
+        }
+      }
+    } catch (e: Exception) {
+      throw RuntimeException(
+        """
+        | The node being reduced is ${node.nodeId}
+        |${node.printTreeStructure()} 
+        """.trimMargin(),
+        e,
+      )
+    }
+  }
+
+  private fun reduceRegularRuleNode(
     tree: SparTree,
     regularRuleNode: AbstractSparTreeNode,
+    semanticsProvider: ISemanticsProvider?,
+    fixpointReductionState: FixpointReductionState,
   ): ImmutableList<AbstractSparTreeNode> {
     // TODO(cnsun): make testAllTreeEditsAndReturnTheBest take a list of futures.
+    //      Followup: why do we want to have this design to make it accept futures?
+    // The good thing about returning a list of futures is that the success rate of compatible
+    // replacement and "can be epsilon" is high, amounts for the most successful operation
+    // in perses.
     logger.ktFine {
       "The node has ${regularRuleNode.leafTokenCount} tokens under."
     }
     val editList =
-      createEditListForRegularRuleNode(tree, regularRuleNode).toList()
+      createEditListForRegularRuleNode(
+        tree,
+        regularRuleNode,
+        semanticsProvider,
+        fixpointReductionState,
+      ).toList()
     val best =
       testAllTreeEditsAndReturnTheBest(editList)
         ?: return ImmutableList.copyOf(regularRuleNode.immutableChildView)
     val edit = best.edit
-    tree.applyEdit(edit)
+    applyEditToTree(treeEditTuple = best)
     return computePendingNodes(regularRuleNode, edit)
   }
 
-  private fun createEditListForRegularRuleNode(
+  /**
+   * TODO(cnsun): this needs testing.
+   */
+  protected open fun createEditListForRegularRuleNode(
     tree: SparTree,
     regularRuleNode: AbstractSparTreeNode,
+    semanticsProvider: ISemanticsProvider?,
+    fixpointReductionState: FixpointReductionState,
+  ): List<AbstractSparTreeEdit<*>> =
+    createEditListForRegularRuleNodeInternal(
+      tree = tree,
+      regularRuleNode = regularRuleNode,
+      semanticsProvider = semanticsProvider,
+      fixpointReductionState = fixpointReductionState,
+      isNodeDeletable = { true },
+      isReplacementValid = { _, _ -> true },
+      subtreeEarlyStopCriterion = { CONTINUE },
+    )
+
+  protected fun createEditListForRegularRuleNodeInternal(
+    tree: SparTree,
+    regularRuleNode: AbstractSparTreeNode,
+    semanticsProvider: ISemanticsProvider?,
+    fixpointReductionState: FixpointReductionState,
+    isNodeDeletable: (AbstractSparTreeNode) -> Boolean,
+    isReplacementValid: (AbstractSparTreeNode, AbstractSparTreeNode) -> Boolean,
+    subtreeEarlyStopCriterion: (AbstractSparTreeNode) -> org.perses.spartree.TreeNodeFilterResult,
   ): List<AbstractSparTreeEdit<*>> {
-    lazyAssert({ regularRuleNode.antlrRule!!.ruleDef.isParserRule }) {
-      regularRuleNode.antlrRule!!.ruleDef
-    }
-    val childCount = regularRuleNode.childCount
-    if (childCount == 0) {
+    lazyAssert(
+      test = { regularRuleNode.antlrRule!!.ruleDef.isParserRule },
+      message = { regularRuleNode.antlrRule!!.ruleDef },
+    )
+    if (regularRuleNode.childCount == 0) {
       return emptyList()
     }
-    val maxEditCount = nodeReducerConfiguation.maxEditCountForRegularRuleNode
+    val maxEditCount = persesConfig.maxEditCountForRegularRuleNode
     val result = java.util.ArrayList<AbstractSparTreeEdit<*>>(maxEditCount)
-    if (canBeEpsilon(regularRuleNode)) {
+    if (regularRuleNode.canBeEpsilon() && isNodeDeletable(regularRuleNode)) {
       // This should be the best edit that can delete the most tokens.
       val edit =
         optionallyCreateDeletionEditAndLog(
-          NodeDeletionActionSet.createByDeleteSingleNode(
-            regularRuleNode,
-            "[regular_node]can be epsilon",
-          ),
+          actionSet =
+            NodeDeletionActionSet.createByDeleteSingleNode(
+              regularRuleNode,
+              contextDescription = "[regular_node]can be epsilon",
+            ),
           tree,
         )
       if (edit != null) {
@@ -121,11 +216,36 @@ open class PersesNodeReducer(
         }
       }
     }
+
+    if (persesConfig.enableLiteralReplacementForRegularRuleNode &&
+      isNodeDeletable(regularRuleNode)
+    ) {
+      createTreeEditForLiteralReplacement(
+        tree,
+        allNodesToBeDeleted = ImmutableList.of(regularRuleNode),
+        actionSetDescriptionPrefix = "[regular_node]literal replacement:",
+        fixpointReductionState,
+      )?.let { edit ->
+        result.add(edit)
+        if (result.size >= maxEditCount) {
+          return result
+        }
+      }
+    }
+
     val actionSetProfiler = reducerContext.actionSetProfiler
+
     findCompatibleKleeneDescendantsForKleeneQuantifiedNode(
       kleeneQuantifiedCurrentNode = regularRuleNode,
       maxBfsDepth = 3,
+      subtreeEarlyStopCriterion = subtreeEarlyStopCriterion,
     ).forEach { replacement ->
+      if (!isReplacementValid(regularRuleNode, replacement)) {
+        return@forEach
+      }
+      // TODO(cnsun): need to consider whether the semantic tokens are affected. If the important
+      //    semantic tokens are deleted, we should be careful whether we should proceed with the
+      //    replacement.
       val action =
         NodeReplacementAction(targetNode = regularRuleNode, replacingNode = replacement)
       actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(action)
@@ -146,10 +266,14 @@ open class PersesNodeReducer(
     }
     findCompatibleDescendants(
       currentNode = regularRuleNode,
-      stopAtFirstCompatible = nodeReducerConfiguation.stopAtFirstCompatibleChildren,
-      maxBfsDepth = nodeReducerConfiguation.maxBfsDepthForRegularRuleNode,
-    ).forEach {
-      val action = NodeReplacementAction(targetNode = regularRuleNode, replacingNode = it)
+      stopAtFirstCompatible = persesConfig.stopAtFirstCompatibleChildren,
+      maxBfsDepth = persesConfig.maxBfsDepthForRegularRuleNode,
+      subtreeEarlyStopCriterion = subtreeEarlyStopCriterion,
+    ).forEach { replacement ->
+      if (!isReplacementValid(regularRuleNode, replacement)) {
+        return@forEach
+      }
+      val action = NodeReplacementAction(targetNode = regularRuleNode, replacingNode = replacement)
       actionSetProfiler.onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(action)
       val edit =
         optionallyCreateReplacementEditAndLog(
@@ -170,75 +294,149 @@ open class PersesNodeReducer(
     return result
   }
 
-  /** Perform delta debugging.  */
   private fun reduceKleeneStar(
     tree: SparTree,
-    kleeneStar: AbstractSparTreeNode,
+    kleeneStarNode: AbstractSparTreeNode,
+    semanticsProvider: ISemanticsProvider?,
     fixpointReductionState: FixpointReductionState,
   ): ImmutableList<AbstractSparTreeNode> {
-    val childCount = kleeneStar.childCount
+    val childCount = kleeneStarNode.childCount
     if (childCount == 0) {
       return ImmutableList.of()
     }
-    runListMinimizerOverNodes(
-      tree = tree,
-      fixpointReductionState = fixpointReductionState,
-      input = kleeneStar.immutableChildView.toImmutableList(),
-      actionsDescriptionPostfix = "[kleene_star:${kleeneStar.ruleName}]",
-    )
-    return if (kleeneStar.isPermanentlyDeleted) {
+    minimizeList(semanticsProvider, kleeneStarNode, tree, fixpointReductionState)
+
+    return if (kleeneStarNode.isPermanentlyDeleted) {
       ImmutableList.of()
     } else {
-      ImmutableList.copyOf(kleeneStar.immutableChildView)
+      ImmutableList.copyOf(kleeneStarNode.immutableChildView)
     }
   }
 
-  private fun reduceKleenePlus(
+  protected open fun minimizeList(
+    semanticsProvider: ISemanticsProvider?,
+    kleeneNode: AbstractSparTreeNode,
     tree: SparTree,
-    kleenePlus: AbstractSparTreeNode,
     fixpointReductionState: FixpointReductionState,
+  ) {
+    val commonPostfix = createCommonActionDescriptionPostfix(kleeneNode)
+    // This is Perses only, with Mimir disabled (no semantic information is provided).
+    // Just use the regular way to reduce the nodes.
+    runListMinimizerOverNodes(
+      needToTestEmpty = true,
+      tree = tree,
+      fixpointReductionState = fixpointReductionState,
+      input = kleeneNode.immutableChildView.toImmutableList(),
+      actionsDescriptionPostfix = commonPostfix,
+    )
+  }
+
+  protected fun createCommonActionDescriptionPostfix(
+    kleeneNode: AbstractSparTreeNode,
+  ): ContextDescription {
+    val nodeType =
+      when {
+        kleeneNode.isKleenePlusRuleNode -> "kleene_plus"
+        kleeneNode.isKleeneStarRuleNode -> "kleene_star"
+        kleeneNode.isOptionalRuleNode -> "optional"
+        else -> "unknown"
+      }
+    return ContextDescription.of(
+      ImmutableList.of(nodeType, kleeneNode.ruleName ?: "<null-rule-name>"),
+    )
+  }
+
+  protected open fun reduceKleenePlus(
+    tree: SparTree,
+    kleenePlusNode: AbstractSparTreeNode,
+    semanticsProvider: ISemanticsProvider?,
+    fixpointReductionState: FixpointReductionState,
+  ): ImmutableList<AbstractSparTreeNode> =
+    reduceKleenePlusInternal(
+      tree = tree,
+      kleenePlusNode = kleenePlusNode,
+      semanticsProvider = semanticsProvider,
+      fixpointReductionState = fixpointReductionState,
+      locallyUsedNodes = kleenePlusNode.immutableChildView,
+      isNodeDeletable = { true },
+    )
+
+  protected fun reduceKleenePlusInternal(
+    tree: SparTree,
+    kleenePlusNode: AbstractSparTreeNode,
+    semanticsProvider: ISemanticsProvider?,
+    fixpointReductionState: FixpointReductionState,
+    locallyUsedNodes: Collection<AbstractSparTreeNode>,
+    isNodeDeletable: (AbstractSparTreeNode) -> Boolean,
   ): ImmutableList<AbstractSparTreeNode> {
-    val childCount = kleenePlus.childCount
-    if (childCount == 0) {
+    if (kleenePlusNode.childCount == 0) {
       return ImmutableList.of()
     }
-    val kleeneActionSetPrefix = "[kleene_plus:${kleenePlus.ruleName}]"
+    val kleeneActionSetPrefix = "[kleene_plus:${kleenePlusNode.ruleName}]"
     val editList = ArrayList<AbstractSparTreeEdit<*>>()
-    if (canBeEpsilon(kleenePlus)) {
-      optionallyCreateDeletionEditAndLog(
-        NodeDeletionActionSet.createByDeleteSingleNode(
-          kleenePlus,
-          "${kleeneActionSetPrefix}can be epsilon",
-        ),
-        tree,
-      )?.let { editList.add(it) }
+    if (kleenePlusNode.canBeEpsilon()) {
+      val message = kleeneActionSetPrefix + "can be epsilon"
+      val actionSet =
+        if (isNodeDeletable(kleenePlusNode)) {
+          NodeDeletionActionSet.createByDeleteSingleNode(
+            kleenePlusNode,
+            contextDescription = message,
+          )
+        } else if (locallyUsedNodes.isNotEmpty()) {
+          val ratio = "$({locallyUsedNodes.size}/${kleenePlusNode.childCount})"
+          NodeDeletionActionSet.createByDeletingNodes(
+            nodes = locallyUsedNodes,
+            contextDescription =
+              "$message (only locally used nodes, $ratio)",
+          )
+        } else {
+          null
+        }
+      if (actionSet != null) {
+        optionallyCreateDeletionEditAndLog(actionSet, tree)?.let { editList.add(it) }
+      }
     }
-    if (childCount > 1) {
-      // Skip the first element
-      val wholePartition = kleenePlus.immutableChildView.drop(1).toImmutableList()
+    if (kleenePlusNode.childCount > 1 && locallyUsedNodes.isNotEmpty()) {
+      // TODO(cnsun): need to experiment whether we can iterate through the list, and delete
+      //   the complement of each element.
+      val (wholePartition, descriptSuffix) =
+        if (locallyUsedNodes.size == kleenePlusNode.childCount) {
+          // Skip the first element, as the first does not fail semantics, such as var def.
+          kleenePlusNode.immutableChildView.let {
+            it.subList(
+              1,
+              it.size,
+            )
+          } to "all except first"
+        } else {
+          locallyUsedNodes to "locally used nodes"
+        }
+
+      check(wholePartition.isNotEmpty()) { "The whole partition is empty." }
       optionallyCreateDeletionEditAndLog(
-        NodeDeletionActionSet
-          .Builder(
-            "${kleeneActionSetPrefix}remove whole except first",
-          ).deleteNodes(wholePartition)
-          .build(),
-        tree,
+        actionSet =
+          NodeDeletionActionSet
+            .Builder(
+              "${kleeneActionSetPrefix}remove $descriptSuffix",
+            ).deleteNodes(wholePartition)
+            .build(),
+        tree = tree,
       )?.let { editList.add(it) }
     }
     val best = testAllTreeEditsAndReturnTheBest(editList)
     if (best != null) {
-      tree.applyEdit(best.edit)
-      return computePendingNodes(kleenePlus, best.edit)
+      applyEditToTree(treeEditTuple = best)
     }
-    if (childCount > 1) {
-      runListMinimizerOverNodes(
-        // Cannot delete all elements at once as this is kleene-plus.
-        tree = tree,
-        fixpointReductionState = fixpointReductionState,
-        input = kleenePlus.immutableChildView.toImmutableList(),
-        actionsDescriptionPostfix = kleeneActionSetPrefix,
-      )
+    kleenePlusNode.immutableChildView.let { children ->
+      if (children.isNotEmpty()) {
+        minimizeList(
+          semanticsProvider,
+          kleenePlusNode,
+          tree,
+          fixpointReductionState,
+        )
+      }
     }
-    return ImmutableList.copyOf(kleenePlus.immutableChildView)
+    return ImmutableList.copyOf(kleenePlusNode.immutableChildView)
   }
 }

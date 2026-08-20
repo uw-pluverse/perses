@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -49,6 +49,19 @@ class GrammarFlagGroup : AbstractCommandLineFlagGroup(groupName = "") {
     order = 200,
   )
   var tokenNamesOfIdentifiers: List<String> = listOf()
+
+  @JvmField
+  @Parameter(
+    names = ["--include-auto-detected-identifier-token-types"],
+    description =
+      "Whether to also treat heuristically auto-detected tokens as identifiers, " +
+        "in addition to --token-names-of-identifiers. Defaults to true for ad-hoc " +
+        "grammars; curated grammars should pass false to stay authoritative.",
+    required = false,
+    arity = 1,
+    order = 201,
+  )
+  var includeAutoDetectedIdentifierTokenTypes: Boolean = true
 
   @JvmField
   @Parameter(
@@ -137,6 +150,7 @@ class GrammarFlagGroup : AbstractCommandLineFlagGroup(groupName = "") {
       existingLanguageKindClassFullName = existingLanguageKindClassFullName,
       startRuleName = startRuleName!!,
       tokenNamesOfIdentifiers = tokenNamesOfIdentifiers,
+      includeAutoDetectedIdentifierTokenTypes = includeAutoDetectedIdentifierTokenTypes,
       shaAlgorithm = EnumShaAlgorithm.SHA512,
     )
 
@@ -180,9 +194,11 @@ class GrammarFlagGroup : AbstractCommandLineFlagGroup(groupName = "") {
           "The $languageKindYamlFile is not a file."
         }
       }
+
       existingLanguageKindClassFullName != null -> {
         check(languageKindYamlFile == null)
       }
+
       else -> {
         error(
           "Unreachable. You need to specify --language-kind-yaml-file or " +

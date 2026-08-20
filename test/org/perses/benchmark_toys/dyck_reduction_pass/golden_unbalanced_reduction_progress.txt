@@ -1,0 +1,954 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 12
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: true
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_unbalanced_node_priority_t_unbalanced.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r_unbalanced.sh"
+  inputFiles:
+  - "t_unbalanced.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "OFF"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "unbalanced_reduction_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+(12/12)  WARNING: t_unbalanced.c does not parse under its c grammar; reducing an error-tolerant parse of that grammar. The reduced output may not be valid c.
+(12/12)  WARNING: t_unbalanced.c does not parse under its c grammar; reducing an error-tolerant parse of that grammar. The reduced output may not be valid c.
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(12/12)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (smaller) {
+        if (dyck_node_reducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(12/12)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 1. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=47,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=48,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=83,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___(?){id=49,slot_type=optional__declaration_2}
+        |   |   |___initDeclarator{id=53,slot_type=[initDeclaratorList,initDeclarator]}
+        |   |       |___Token:a{id=79,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+        |   |       |___(?){id=55,slot_type=optional__initDeclarator_2}
+        |   |           |___aux_rule__initDeclarator_1{id=56,slot_type=aux_rule__initDeclarator_1}
+        |   |               |___Token:={id=57,slot_type=Assign}
+        |   |               |___Token:3{id=76,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |   |___Token:{{id=50,slot_type=LeftBrace}
+        |   |___Token:4{id=51,slot_type=Constant}
+        |___Token:;{id=45,slot_type=[aux_rule__translationUnit_2,Semi]}
+        |___aux_rule__declaration_3{id=9,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=10,slot_type=declarationSpecifiers}
+            |   |___Token:int{id=44,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___(?){id=11,slot_type=optional__declaration_2}
+            |   |___initDeclarator{id=14,slot_type=[initDeclaratorList,initDeclarator]}
+            |       |___Token:keep{id=40,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |       |___(?){id=16,slot_type=optional__initDeclarator_2}
+            |           |___aux_rule__initDeclarator_1{id=17,slot_type=aux_rule__initDeclarator_1}
+            |               |___Token:={id=18,slot_type=Assign}
+            |               |___Token:9{id=37,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+            |___Token:;{id=12,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority](12/12)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](12/12)  Retrieved semantics provider null
+==================Reducing node 2, size=12==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+    int a = 3 { 4 ;
+    int keep = 9 ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](12/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/12=100.00%
+FixPt[1][node_priority][DFS](12/12)  Testing the empty input. Global ratio:12/12=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](12/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/12=100.00%
+FixPt[1][node_priority][DFS](12/12)  There is only one element in the input, and the empty input has been tested. Global ratio:12/12=100.00%
+FixPt[1][node_priority][DFS](12/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/12=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=12==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+    int a = 3 { 4 ;
+    int keep = 9 ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (1): fail===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove all except first
+    --file: t_unbalanced.c--
+    int a = 3 { 4
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](12/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:12/12=100.00%
+FixPt[1][node_priority][DFS](12/12)  Testing the empty input. Global ratio:12/12=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](12/12)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:12/12=100.00%
+==========Testing the following program (2): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__translationUnit_3]dd@#nodes=1,#parts=1#total-parts=3
+    --file: t_unbalanced.c--
+    int a = 3 { 4 ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](12/12)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:12/12=100.00%
+==========Testing the following program (3): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__translationUnit_3]dd@#nodes=2,#parts=2#total-parts=3
+    --file: t_unbalanced.c--
+    int keep = 9 ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](12/12)  Try deleting [0-1]#2: Interesting. Local ratio: 3/3=100.00%. Global ratio:12/12=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 3 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 12 -> 5
+Edit: [delete: 45,47]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](5/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[2]#1. Local ratio: 1/3=33.33%. Global ratio:5/12=41.67%
+===================Node reduction is done===================
+
+Succeeded to reduce node 4 from 12 to 5
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=5===================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+    int keep = 9 ;
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+==========Testing the following program (4): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t_unbalanced.c--
+                 ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 11, size=5==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+    int keep = 9 ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](5/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/12=41.67%
+FixPt[1][node_priority][DFS](5/12)  Testing the empty input. Global ratio:5/12=41.67%
+==========Testing the following program (5): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__declaration_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t_unbalanced.c--
+    int          ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](5/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/12=41.67%
+FixPt[1][node_priority][DFS](5/12)  There is only one element in the input, and the empty input has been tested. Global ratio:5/12=41.67%
+FixPt[1][node_priority][DFS](5/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/12=41.67%
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 14, size=5==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+    int keep = 9 ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_14]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (6): pass===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t_unbalanced.c--
+    int keep     ;
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 5 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 5 -> 3
+Edit: HoistEdit:[replace_14_with_40]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 14 from 5 to 3
+------------------------------------------------------------
+
+
+==================Reducing node 40, size=3==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+    int keep     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+==================Reducing node 12, size=3==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+    int keep     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+==================Reducing node 10, size=3==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+    int keep     ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](3/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/12=25.00%
+FixPt[1][node_priority][DFS](3/12)  Testing the empty input. Global ratio:3/12=25.00%
+==========Testing the following program (7): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](3/12)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:3/12=25.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 3 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 3 -> 2
+Edit: [delete_44]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](2/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:2/12=16.67%
+===================Node reduction is done===================
+
+Succeeded to reduce node 10 from 3 to 2
+------------------------------------------------------------
+
+
+(2/12)  Rebuilding spar-tree: The spartree is rebuilt.
+========Fixpoint iteration 2. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=85,slot_type=compilationUnit}
+|___(?){id=86,slot_type=optional__compilationUnit_1}
+    |___(+){id=88,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=91,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=92,slot_type=declarationSpecifiers}
+            |   |___Token:keep{id=98,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=93,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority](2/12)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](2/12)  Retrieved semantics provider null
+==================Reducing node 86, size=2==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](2/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  Testing the empty input. Global ratio:2/12=16.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](2/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  There is only one element in the input, and the empty input has been tested. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+===================Node reduction is done===================
+
+Failed to reduce node 86
+------------------------------------------------------------
+
+
+==================Reducing node 88, size=2==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_88]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](2/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  Testing the empty input. Global ratio:2/12=16.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](2/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  There is only one element in the input, and the empty input has been tested. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+===================Node reduction is done===================
+
+Failed to reduce node 88
+------------------------------------------------------------
+
+
+==================Reducing node 91, size=2==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_91]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+                 ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 91
+------------------------------------------------------------
+
+
+==================Reducing node 93, size=2==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 93
+------------------------------------------------------------
+
+
+==================Reducing node 92, size=2==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](2/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  Testing the empty input. Global ratio:2/12=16.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+                 ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](2/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  There is only one element in the input, and the empty input has been tested. Global ratio:2/12=16.67%
+FixPt[2][node_priority][DFS](2/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+===================Node reduction is done===================
+
+Failed to reduce node 92
+------------------------------------------------------------
+
+
+==================Reducing node 98, size=2==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 98
+------------------------------------------------------------
+
+
+======Fixpoint iteration 3. Reducer: dyck_node_reducer======
+
+Parser Facade: class org.perses.grammar.dyck.AdaptiveDyckParserFacade
+The spar-tree is the following.
+start{id=1,slot_type=start}
+|___(*){id=2,slot_type=lines}
+    |___(+){id=5,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+        |___(+){id=7,slot_type=[node,text]}
+            |___Token:keep{id=8,slot_type=OTHER}
+            |___Token:;{id=9,slot_type=OTHER}
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer](2/12)  Starting to retrieve the semantics provider
+FixPt[3][dyck_node_reducer](2/12)  Retrieved semantics provider null
+==================Reducing node 2, size=2===================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](2/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:2/12=16.67%
+FixPt[3][dyck_node_reducer][DFS](2/12)  Testing the empty input. Global ratio:2/12=16.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](2/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+FixPt[3][dyck_node_reducer][DFS](2/12)  There is only one element in the input, and the empty input has been tested. Global ratio:2/12=16.67%
+FixPt[3][dyck_node_reducer][DFS](2/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=2===================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_5]
+    context: [kleene_plus:kleene_plus__line_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](2/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:2/12=16.67%
+FixPt[3][dyck_node_reducer][DFS](2/12)  Testing the empty input. Global ratio:2/12=16.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](2/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+FixPt[3][dyck_node_reducer][DFS](2/12)  There is only one element in the input, and the empty input has been tested. Global ratio:2/12=16.67%
+FixPt[3][dyck_node_reducer][DFS](2/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:2/12=16.67%
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=2===================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep     ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_7]
+    context: [kleene_plus:text]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (8): pass===========
+
+// edit action set type: [kleene_plus:text]remove all except first
+    --file: t_unbalanced.c--
+        keep
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 3 --> 2.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 2 -> 1
+Edit: [delete_9]
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](1/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/12=8.33%
+FixPt[3][dyck_node_reducer][DFS](1/12)  Testing the empty input. Global ratio:1/12=8.33%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](1/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/12=8.33%
+FixPt[3][dyck_node_reducer][DFS](1/12)  There is only one element in the input, and the empty input has been tested. Global ratio:1/12=8.33%
+FixPt[3][dyck_node_reducer][DFS](1/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/12=8.33%
+===================Node reduction is done===================
+
+Succeeded to reduce node 7 from 2 to 1
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=1===================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+(1/12)  The reducer node_priority is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
+(1/12)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 4. Reducer: dyck_node_reducer======
+
+Parser Facade: class org.perses.grammar.dyck.AdaptiveDyckParserFacade
+The spar-tree is the following.
+start{id=11,slot_type=start}
+|___(*){id=12,slot_type=lines}
+    |___(+){id=15,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+        |___(+){id=17,slot_type=[node,text]}
+            |___Token:keep{id=18,slot_type=OTHER}
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer](1/12)  Starting to retrieve the semantics provider
+FixPt[4][dyck_node_reducer](1/12)  Retrieved semantics provider null
+==================Reducing node 12, size=1==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  Testing the empty input. Global ratio:1/12=8.33%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  There is only one element in the input, and the empty input has been tested. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/12=8.33%
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+==================Reducing node 15, size=1==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_15]
+    context: [kleene_plus:kleene_plus__line_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  Testing the empty input. Global ratio:1/12=8.33%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  There is only one element in the input, and the empty input has been tested. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/12=8.33%
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+==================Reducing node 17, size=1==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_17]
+    context: [kleene_plus:text]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/12)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  Testing the empty input. Global ratio:1/12=8.33%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t_unbalanced.c--
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/12)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  There is only one element in the input, and the empty input has been tested. Global ratio:1/12=8.33%
+FixPt[4][dyck_node_reducer][DFS](1/12)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/12=8.33%
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+==================Reducing node 18, size=1==================
+
+The current best program is the following
+
+    --file: t_unbalanced.c--
+        keep
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+(1/12)  The reducer FineGritLatraReducer is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0     node_priority      3             0     -10            -14       8   time-hidden
+ 1     node_priority      0             0       0              0       0   time-hidden
+ 2 dyck_node_reducer      1             0      -1             -1       1   time-hidden
+ 3 dyck_node_reducer      0             0       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+    node_priority     2      3             0     -10            -14       8   time-hidden
+dyck_node_reducer     2      1             0      -1             -1       1   time-hidden
+
+------------------------------- Transformations --------------------------------
+            Transformation Worked #NonDeletions #Tokens #NonBlankChars
+    node_priority.Deletion      2             0      -8            -12
+ node_priority.Replacement      1             0      -2             -2
+dyck_node_reducer.Deletion      1             0      -1             -1
+------------------------------------- End --------------------------------------
+#test success = 4
+#test failure = 5
+#test result cache hits = 12
+#test execution cancelled = 0
+#node edit action set cache hits = 8
+#external test execution cache hits = 0

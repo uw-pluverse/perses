@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -34,7 +34,6 @@ class ElementWrapper<out T : Any>(
     private set
 
   fun markAsDeleted() {
-    check(!deleted) { "Cannot mark element as deleted more than once $this." }
     deleted = true
   }
 

@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = [
     "//visibility:public",
@@ -8,11 +9,13 @@ kt_jvm_library(
     name = "antlr_exception_strategy",
     srcs = [
         "AntlrFailureException.kt",
+        "CollectingAntlrErrorListener.kt",
         "ExceptionErrorStrategy.kt",
         "FailOnErrorAntlrErrorListener.kt",
     ],
     deps = [
         "//:antlr_runtime",
+        "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/util",
     ],
 )
@@ -34,8 +37,12 @@ kt_jvm_library(
 kt_jvm_library(
     name = "parser_facade_interface",
     srcs = [
+        "AbstractLexerAdaptingParserFacade.kt",
         "AbstractParserFacade.kt",
+        "DroppedCharacterCollector.kt",
+        "ErrorTolerantLexer.kt",
         "ParserFacadeTag.kt",
+        "TolerantErrorStrategy.kt",
     ],
     deps = [
         ":antlr_exception_strategy",
@@ -53,6 +60,19 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "tolerant_fallback_facades",
+    srcs = [
+        "TolerantFallbackParserFacades.kt",
+    ],
+    deps = [
+        ":parser_facade_interface",
+        "//src/org/perses/grammar/dyck:parser_facade",
+        "//src/org/perses/grammar/line:parser_facade",
+        "//src/org/perses/grammar/onetoken:parser_facade",
+    ],
+)
+
+kt_jvm_library(
     name = "facade_factory",
     srcs = [
         "AbstractParserFacadeFactory.kt",
@@ -60,9 +80,12 @@ kt_jvm_library(
         "SingleParserFacadeFactory.kt",
     ],
     deps = [
+        ":antlr_exception_strategy",
         ":parser_facade_interface",
+        "//:antlr_runtime",
         "//:flogger",
         "//:guava",
+        "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar/c:optc_parser_facade",
         "//src/org/perses/grammar/c:orig_parser_facade",
         "//src/org/perses/grammar/c:parser_facade",
@@ -75,6 +98,7 @@ kt_jvm_library(
         "//src/org/perses/grammar/java:parser_facade_java8",
         "//src/org/perses/grammar/javascript:parser_facade",
         "//src/org/perses/grammar/line:parser_facade",
+        "//src/org/perses/grammar/makefile:parser_facade",
         "//src/org/perses/grammar/onetoken:parser_facade",
         "//src/org/perses/grammar/php:parser_facade",
         "//src/org/perses/grammar/python3:parser_facade",

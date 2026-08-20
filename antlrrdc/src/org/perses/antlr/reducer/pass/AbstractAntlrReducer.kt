@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,45 +18,24 @@ package org.perses.antlr.reducer.pass
 
 import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.reducer.io.GrammarReductionIOManager
-import org.perses.antlr.util.AntlrToolWrapper
-import org.perses.program.LanguageKind
-import org.perses.reduction.AbstractReducer
 import org.perses.reduction.AbstractReducerNameAndDesc
+import org.perses.reduction.AbstractWholeProgramReducer
 import org.perses.reduction.ListenableReductionState
 import org.perses.reduction.TestScriptExecutorService
-import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
+import org.perses.reduction.io.AbstractOutputManagerFactory
 
 abstract class AbstractAntlrReducer(
   nameAndDesc: AbstractReducerNameAndDesc,
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
-) : AbstractReducer<PersesGrammar, LanguageKind, GrammarReductionIOManager>(
+  outputManagerFactory: AbstractOutputManagerFactory<PersesGrammar>,
+) : AbstractWholeProgramReducer<
+    PersesGrammar,
+    GrammarReductionIOManager,
+    ListenableReductionState<PersesGrammar>,
+  >(
     nameAndDesc,
     ioManager,
     testScriptExecutorService,
-  ) {
-  abstract fun reduce(state: ListenableReductionState<PersesGrammar>)
-
-  fun testProgram(program: PersesGrammar): Boolean {
-    try {
-      return executorService
-        .testProgramAsync(
-          TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
-          IDENTITY_POST_CHECK,
-          ioManager.createOutputManager(program),
-          payload = "dummy payload",
-        ).getWithTimeoutWarnings()
-        .isInteresting
-    } catch (e: Throwable) {
-      var exception: Throwable? = e
-      while (exception != null && exception !is AntlrToolWrapper.AntlrException) {
-        exception = exception.cause
-      }
-      if (exception is AntlrToolWrapper.AntlrException) {
-        return false
-      } else {
-        throw e
-      }
-    }
-  }
-}
+    outputManagerFactory,
+  )

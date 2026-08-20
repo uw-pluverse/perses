@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -33,14 +33,14 @@ class PhpParserFacade :
         antlrLexerGrammarFileName = "PhpLexer.g4",
         classUnderSamePkg = PhpParserFacade::class.java,
       ),
-    identifierTokenTypes = ImmutableIntArray.of(PhpLexer.VarName),
+    identifierTokenTypes = ImmutableIntArray.of(PhpLexer.VarName, PhpLexer.Label),
+    includeAutoDetectedIdentifierTokenTypes = false,
     lexerClass = PhpLexer::class.java,
     parserClass = PnfPhpParser::class.java,
   ) {
   fun parseWithOrigParser(program: String?): ParseTreeWithParser {
     StringReader(program).use { reader ->
       return parseReader(
-        "<dummy-file>",
         reader,
         { charStream: CharStream? -> PhpLexer(charStream) },
         { commonTokenStream: CommonTokenStream? -> PhpParser(commonTokenStream) },

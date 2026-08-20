@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,7 +23,7 @@ import org.perses.util.Util
 import org.perses.util.ktFine
 import org.perses.util.shell.CmdOutput
 import org.perses.util.shell.Shells.Companion.CURRENT_ENV
-import org.perses.util.shell.Shells.Companion.singleton
+import org.perses.util.shell.Shells.Companion.defaultSingleton
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -37,7 +37,7 @@ class TestScript(
   fun test(): PropertyTestResult {
     val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
     val output =
-      singleton.run(
+      defaultSingleton.run(
         cmd = "${scriptTemplate.shebang}  ${scriptFile.fileName}",
         workingDirectory = scriptFile.parent,
         captureOutput = false,
@@ -50,7 +50,7 @@ class TestScript(
   }
 
   fun runAndCaptureOutput(): CmdOutput =
-    singleton.run(
+    defaultSingleton.run(
       cmd = "${scriptTemplate.shebang}  ${scriptFile.fileName}",
       workingDirectory = scriptFile.parent,
       captureOutput = true,

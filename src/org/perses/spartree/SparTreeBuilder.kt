@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,6 +22,7 @@ import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.RuleNode
 import org.antlr.v4.runtime.tree.TerminalNode
 import org.perses.antlr.ParseTreeWithParser
+import org.perses.grammar.AbstractParserFacade
 import org.perses.util.SimpleStack
 import org.perses.util.Util.lazyAssert
 
@@ -29,7 +30,9 @@ import org.perses.util.Util.lazyAssert
 class SparTreeBuilder(
   private val sparTreeNodeFactory: SparTreeNodeFactory,
   private val parseTreeWithParser: ParseTreeWithParser,
-  val simplifyTree: Boolean = true,
+  val simplifyTree: Boolean,
+  val canonicalTokenCountComputer: (() -> Int?),
+  val enableNodeActionSetCache: Boolean = false,
 ) : ISparTreeAntlrTreeMapping {
   private val spar2antlrMap = HashBiMap.create<AbstractSparTreeNode, ParseTree>()
   private var built = false
@@ -63,7 +66,7 @@ class SparTreeBuilder(
       val childCount = parseTree.childCount
       for (i in 0 until childCount) {
         val child = parseTree.getChild(i)
-        if (isEmptyRuleNode(child) || isEOFToken(child)) {
+        if (isEmptyRuleNode(child) || isEOFToken(child) || isFabricatedTokenNode(child)) {
           continue
         }
         val sparChild = createSparTreeNode(child)
@@ -85,11 +88,19 @@ class SparTreeBuilder(
           root
         },
       sparTreeNodeFactory = sparTreeNodeFactory,
+      initialCanonicalTokenCount = canonicalTokenCountComputer?.invoke(),
+      enableNodeActionSetCache = enableNodeActionSetCache,
+      hasSyntaxErrors = parseTreeWithParser.hasError,
     )
   }
 
   private fun isEOFToken(node: ParseTree): Boolean =
     isTokenNode(node) && (node as TerminalNode).symbol.type == Token.EOF
+
+  // Fabricated tokens (only ever present in a tolerantly-parsed tree) carry synthetic text such as
+  // "<missing ';'>" and must not become leaves, or they would corrupt the reconstructed program.
+  private fun isFabricatedTokenNode(node: ParseTree): Boolean =
+    isTokenNode(node) && AbstractParserFacade.isFabricatedToken((node as TerminalNode).symbol)
 
   private fun createSparTreeNode(parseTree: ParseTree): AbstractSparTreeNode {
     if (isTokenNode(parseTree)) {
@@ -132,11 +143,25 @@ class SparTreeBuilder(
     fun createSparTree(
       sparTreeNodeFactory: SparTreeNodeFactory,
       parseTreeWithParser: ParseTreeWithParser,
-    ): SparTree = SparTreeBuilder(sparTreeNodeFactory, parseTreeWithParser).result
+      canonicalTokenCountComputer: () -> Int,
+      enableNodeActionSetCache: Boolean = false,
+    ): SparTree =
+      SparTreeBuilder(
+        sparTreeNodeFactory,
+        parseTreeWithParser,
+        simplifyTree = true,
+        canonicalTokenCountComputer,
+        enableNodeActionSetCache = enableNodeActionSetCache,
+      ).result
 
     fun createSparTreeNode(
       sparTreeNodeFactory: SparTreeNodeFactory,
       parseTreeWithParser: ParseTreeWithParser,
-    ) = createSparTree(sparTreeNodeFactory, parseTreeWithParser).detachRootFromTree()
+      canonicalTokenCountComputer: () -> Int,
+    ) = createSparTree(
+      sparTreeNodeFactory,
+      parseTreeWithParser,
+      canonicalTokenCountComputer,
+    ).detachRootFromTree()
   }
 }

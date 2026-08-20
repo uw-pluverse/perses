@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,7 +24,9 @@ import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.java.LanguageJava
+import org.perses.grammar.makefile.LanguageMakefile
 import org.perses.util.transformToImmutableList
+import java.nio.file.Path
 
 @RunWith(JUnit4::class)
 class ParserFacadeFactoryTest {
@@ -88,6 +90,28 @@ class ParserFacadeFactoryTest {
       .isSameInstanceAs(LanguageJava)
     assertThat(factory.computeLanguageKindWithLanguageNameIgnoreCase("JAva"))
       .isSameInstanceAs(LanguageJava)
+  }
+
+  @Test
+  fun testDetectMakefileByExtensionlessFileName() {
+    val factory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
+    // Case-insensitive: a test script may load any casing via `make -f <file>`.
+    for (name in listOf("Makefile", "makefile", "GNUmakefile", "MAKEFILE", "MakeFile", "gnumakefile")) {
+      assertThat(factory.computeLanguageKindWithFileName(Path.of(name)))
+        .isSameInstanceAs(LanguageMakefile)
+    }
+    assertThat(factory.computeLanguageKindWithFileName(Path.of("build.mk")))
+      .isSameInstanceAs(LanguageMakefile)
+    assertThat(factory.computeLanguageKindWithLanguageNameIgnoreCase("makefile"))
+      .isSameInstanceAs(LanguageMakefile)
+  }
+
+  @Test
+  fun testExtensionDetectionUnaffectedByFileNameMatching() {
+    val factory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
+    // A file with a real extension must still resolve by extension, not be shadowed by file names.
+    assertThat(factory.computeLanguageKindWithFileName(Path.of("foo.c")))
+      .isSameInstanceAs(LanguageC)
   }
 
   @Test

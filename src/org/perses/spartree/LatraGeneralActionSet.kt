@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,14 +23,21 @@ import com.google.common.collect.ImmutableList
  * and the actions do not need to be sorted.
  */
 class LatraGeneralActionSet private constructor(
-  actions: ImmutableList<AbstractTreeEditAction>,
-  actionsDescription: String,
-) : AbstractActionSet<AbstractTreeEditAction>(actions, actionsDescription, canBeSorted = false) {
+  actions: ImmutableList<AbstractTargetedTreeEditAction>,
+  contextDescription: String,
+  transformationName: String,
+) : TargetedActionSet<AbstractTargetedTreeEditAction>(
+    actions = actions,
+    contextDescription = contextDescription,
+    canBeSorted = false,
+    transformationName = transformationName,
+  ) {
   class Builder(
-    private val actionsDescription: String,
+    private var contextDescription: String,
+    private val transformationName: String,
   ) {
     private val deletedNodeUpToNow = HashSet<AbstractSparTreeNode>()
-    private val actionSetBuilder = ImmutableList.Builder<AbstractTreeEditAction>()
+    private val actionSetBuilder = ImmutableList.Builder<AbstractTargetedTreeEditAction>()
 
     fun deleteNode(targetNode: AbstractSparTreeNode): Builder {
       actionSetBuilder.add(NodeDeletionAction(targetNode))
@@ -41,6 +48,7 @@ class LatraGeneralActionSet private constructor(
     fun replaceNode(
       targetNode: AbstractSparTreeNode,
       replacingNode: AbstractSparTreeNode,
+      extraActionsDescription: String? = null,
     ): Builder {
       check(replacingNode.parent == null)
       // checking here might be expensive
@@ -50,6 +58,9 @@ class LatraGeneralActionSet private constructor(
       }
       deletedNodeUpToNow.add(targetNode)
       actionSetBuilder.add(NodeReplacementAction(targetNode, replacingNode))
+      if (extraActionsDescription != null) {
+        contextDescription += extraActionsDescription
+      }
       return this
     }
 
@@ -58,7 +69,7 @@ class LatraGeneralActionSet private constructor(
       return if (actionSet.isEmpty()) {
         null
       } else {
-        LatraGeneralActionSet(actionSet, actionsDescription)
+        LatraGeneralActionSet(actionSet, contextDescription, transformationName)
       }
     }
   }

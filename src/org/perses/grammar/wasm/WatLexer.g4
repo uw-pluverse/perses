@@ -152,6 +152,11 @@ CONVERT
   | IXX '.trunc_f32_u'
   | IXX '.trunc_f64_s'
   | IXX '.trunc_f64_u'
+  // floating-point to integer saturation truncation
+  | IXX '.trunc_sat_f32_s'
+  | IXX '.trunc_sat_f32_u'
+  | IXX '.trunc_sat_f64_s'
+  | IXX '.trunc_sat_f64_u'
   // convert...
   | FXX '.convert_i32_s'
   | FXX '.convert_i32_u'
@@ -165,6 +170,8 @@ CONVERT
 
 MEMORY_SIZE : 'memory.size' ;
 MEMORY_GROW : 'memory.grow' ;
+MEMORY_COPY : 'memory.copy' ;
+MEMORY_FILL : 'memory.fill' ;
 
 TYPE: 'type' ;
 FUNC: 'func' ;

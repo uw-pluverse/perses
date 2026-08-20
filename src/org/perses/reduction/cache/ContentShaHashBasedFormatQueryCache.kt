@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,47 +16,103 @@
  */
 package org.perses.reduction.cache
 
-import org.perses.program.TokenizedProgram
+import com.github.benmanes.caffeine.cache.Caffeine
+import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.io.AbstractOutputManager
+import org.perses.util.ImmutableIntArray
+import org.perses.util.hashing.ShaHashCode
+import java.util.concurrent.TimeUnit
+import kotlin.system.measureNanoTime
 
+/**
+ * A query cache of the content hashes of programs already found uninteresting. The key is the
+ * content identity ([ShaHashCode]); the value is the program's per-file sizes (non-blank character
+ * counts), kept only as metadata for [evictEntriesNotSmallerThan]. A hit therefore needs only the
+ * SHA hash.
+ */
 class ContentShaHashBasedFormatQueryCache(
-  tokenizedProgram: TokenizedProgram,
-  profiler: AbstractQueryCacheProfiler,
-  configuration: QueryCacheConfiguration,
-) : AbstractRealQueryCache<
-    ContentShaHashEncoding,
-    ContentShaHashBasedFormatQueryCache.OutputManagerShaHashEncoder,
-  >(
-    tokenizedProgram,
-    profiler,
-    configuration,
-  ) {
-  override fun createEncoder(
-    baseProgram: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler,
-  ): OutputManagerShaHashEncoder = OutputManagerShaHashEncoder(baseProgram, profiler)
+  private val profiler: AbstractQueryCacheProfiler,
+) : AbstractQueryCache() {
+  private val cache =
+    Caffeine
+      .newBuilder()
+      .expireAfterAccess(2, TimeUnit.HOURS)
+      .build<ShaHashCode, ImmutableIntArray>()
 
-  class OutputManagerShaHashEncoder(
-    program: TokenizedProgram,
-    profiler: AbstractQueryCacheProfiler,
-  ) : AbstractTokenizedProgramEncoder<ContentShaHashEncoding>(
-      program,
-      profiler,
-      supportsRccReEncoding = false,
-    ) {
-    override fun reEncode(previousEncoding: ContentShaHashEncoding): ContentShaHashEncoding =
-      previousEncoding
+  override fun cacheSize(): Int {
+    cache.cleanUp()
+    return cache.estimatedSize().toInt()
+  }
 
-    override fun encode(
-      program: TokenizedProgram,
-      outputManager: AbstractOutputManager,
-    ): ContentShaHashEncoding =
-      ContentShaHashEncoding(
-        shaHashCode = outputManager.shaHashCode,
-        tokenCount = program.tokenCount,
-      )
-
-    override fun updateEncoderMore(encoderBaseProgram: TokenizedProgram) {
+  override fun constructObjectsForMemoryMeasurement(): Any =
+    cache.asMap().entries.map {
+      it.key to it.value
     }
+
+  @Synchronized
+  override fun lookUp(outputManager: AbstractOutputManager): CacheLookupResult {
+    val result: CacheLookupResult
+    val nanoDuration =
+      measureNanoTime {
+        val isHit = cache.getIfPresent(outputManager.shaHashCode) != null
+        result = if (isHit) CacheLookupResult.HIT else CacheLookupResult.MISS
+      }
+    profiler.afterGetCachedResult(cache = this, nanoDuration = nanoDuration)
+    return result
+  }
+
+  @Synchronized
+  override fun recordUninteresting(
+    outputManager: AbstractOutputManager,
+    perFileNonBlankCharacterCounts: ImmutableIntArray,
+    result: PropertyTestResult,
+  ) {
+    val nanoDuration =
+      measureNanoTime {
+        check(result.isNotInteresting)
+        val shaHashCode = outputManager.shaHashCode
+        check(cache.getIfPresent(shaHashCode) == null) {
+          "The key is already in the cache $shaHashCode"
+        }
+        cache.put(shaHashCode, perFileNonBlankCharacterCounts)
+      }
+    profiler.afterCacheProgramAndResult(cache = this, nanoDuration = nanoDuration)
+  }
+
+  /**
+   * The size-based refresh (Section 6.2 of the caching paper -- see
+   * [org.perses.listminimizer.RccConfigCache] for the flagship RCC scheme on the list minimizer)
+   * applied to this content-hash cache: when a new
+   * minimum is found, evict every entry no smaller than it, since a deletion-based reducer can never
+   * regenerate a variant that is not smaller than the current minimum. This is a sound, conservative
+   * refresh -- it removes only entries that are provably unreachable, so it loses no cache hits.
+   */
+  @Synchronized
+  override fun evictEntriesNotSmallerThan(perFileNonBlankCharacterCounts: ImmutableIntArray) {
+    profiler.beforeCacheEviction(cache = this)
+    val nanoDuration =
+      measureNanoTime {
+        val keysToRemove =
+          cache
+            .asMap()
+            .entries
+            .filter { (_, entryNonBlankCharacterCounts) ->
+              // Partial order: evict an entry only when its size is >= the threshold in every file,
+              // so a vector that is larger in one file but smaller in another is kept.
+              entryNonBlankCharacterCounts.isComponentwiseGreaterThanOrEqualTo(
+                perFileNonBlankCharacterCounts,
+              )
+            }.map { it.key }
+        cache.invalidateAll(keysToRemove)
+      }
+    profiler.afterCacheEviction(cache = this, nanoDuration = nanoDuration)
+  }
+
+  override fun triggerHeartBeat() {
+    profiler.onHeartBeat(this)
+  }
+
+  override fun clearCache() {
+    cache.invalidateAll()
   }
 }

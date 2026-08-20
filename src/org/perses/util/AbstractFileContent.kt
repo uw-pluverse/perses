@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -84,17 +84,23 @@ sealed class AbstractFileContent(
       fileContents: List<AbstractFileContent>,
     ): ShaHashCode =
       when (fileContents.size) {
-        0 -> error("The list cannot be empty.")
+        0 -> {
+          // A valid state: the interestingness test can require no input files, so the rendered file
+          // set can have no files at all. Every such no-string set shares one well-defined identity --
+          // the singleton hash code.
+          ShaHashCode.ForNoStrings
+        }
+
         1 -> {
           val fileContent = fileContents.single()
-          ShaHashCode.ShaHashCodeForSingleString(
+          ShaHashCode.ForSingleString(
             stringLength = fileContent.length,
             digest = fileContent.hashWithSha(shaHash),
           )
         }
 
         else -> {
-          ShaHashCode.ShaHashCodeForMultiStrings(
+          ShaHashCode.ForMultiStrings(
             stringLengths =
               ImmutableIntArray
                 .builder(fileContents.size)

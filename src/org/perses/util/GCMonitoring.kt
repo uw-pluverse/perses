@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -234,8 +234,10 @@ class GCMonitoring : NotificationListener {
       // 5. A problematic cause is identified.
 
       val currentPressureState =
-        (overallHeapUsageHigh || oldGenUsageHigh) &&
-          consecutiveHighHeapUsageCount.incrementAndGet() >= SUSTAINED_HIGH_USAGE_COUNT ||
+        (
+          (overallHeapUsageHigh || oldGenUsageHigh) &&
+            consecutiveHighHeapUsageCount.incrementAndGet() >= SUSTAINED_HIGH_USAGE_COUNT
+        ) ||
           // Sustained high usage
           duration > LONG_GC_PAUSE_THRESHOLD_MS ||
           // Any single long pause

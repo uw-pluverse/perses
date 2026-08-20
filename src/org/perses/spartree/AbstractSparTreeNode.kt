@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -32,30 +32,36 @@ sealed class AbstractSparTreeNode(
   nodeId: Int,
   val antlrRule: RuleHierarchyEntry?,
 ) : AbstractTreeNode<AbstractSparTreeNode, AbstractNodePayload>(nodeId) {
-  /** The count of tokens under this node.  */
-  var leafTokenCount = INVALID_LEAF_TOKEN_COUNT
-    protected set
+  internal var rawLeafTokenCount = INVALID_LEAF_TOKEN_COUNT
+
+  var leafTokenCount: Int
     get() {
+      var res = rawLeafTokenCount
       if (isTokenNode()) {
-        field = 1
+        res = 1
       }
       check(!isPermanentlyDeleted) {
         """The node $this has been deleted. Use other methods to get the token count of this node.
           |node: ${printTreeStructure()}
         """.trimMargin()
       }
-      lazyAssert({ field == tokenListCostlyComputed.size }) {
+      lazyAssert({ res == tokenListCostlyComputed.size }) {
         """Need to update the leafTokenCount. The value is stale.
-          |stale value : $field
+          |stale value : $res
           |actual value: ${tokenListCostlyComputed.size}
           |is deleted: $isPermanentlyDeleted
           |node: ${printTreeStructure()}
         """.trimMargin()
       }
-      return field
+      return res
+    }
+    internal set(value) {
+      rawLeafTokenCount = value
     }
 
   protected abstract val labelPrefix: String
+
+  open val ruleType: RuleType? = null
 
   val isKleeneStarRuleNode: Boolean
     get() = this is ParserRuleSparTreeNode && this.ruleType === RuleType.KLEENE_STAR
@@ -91,27 +97,6 @@ sealed class AbstractSparTreeNode(
 
   open fun asLexerRule(): LexerRuleSparTreeNode {
     error("The current class is ${this::class}. $this")
-  }
-
-  /**
-   * Update the leaf token count
-   *
-   * @return the number of leaf tokens.
-   */
-  fun updateLeafTokenCount(): Int {
-    postOrderVisit { node ->
-      if (node.isTokenNode()) {
-        node.leafTokenCount = 1
-      } else {
-        var countNum = 0
-        val num = node.childCount
-        for (i in 0 until num) {
-          countNum += node.getChild(i).leafTokenCount
-        }
-        node.leafTokenCount = countNum
-      }
-    }
-    return leafTokenCount
   }
 
   fun leafNodeSequence(): Sequence<LexerRuleSparTreeNode> {
@@ -157,10 +142,81 @@ sealed class AbstractSparTreeNode(
 
   override fun deleteCurrentNode() {
     super.deleteCurrentNode()
+    beginToken = null
+    endToken = null
     lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
   }
 
   override fun checkNodeIntegrity(): ErrorMessage? = null
+
+  fun canBeEpsilon(): Boolean {
+    require(this.isParserRuleNode() || this.isTokenNode())
+    var node: AbstractSparTreeNode? = this
+    while (node != null) {
+      val antlrRule = node.antlrRule
+      check(antlrRule != null) {
+        "No antlrRule found for node $node"
+      }
+      if (antlrRule.canRuleBeEpsilon()) {
+        // If the rule of the current node can be epsilon.
+        return true
+      }
+      val parent = node.parent
+      if (parent == null || parent.isSentinelRoot()) {
+        // The root node.
+        return false
+      }
+      val payload = node.payload!!
+      val antlrRuleForTheChild = payload.expectedAntlrRuleType!!
+      if (antlrRuleForTheChild.canRuleBeEpsilon()) {
+        // If the EXPECTED rule of the current node can be epsilon.
+        return true
+      }
+      val childCount = parent.childCount
+      if (childCount == 1) {
+        // Only the current node, then check whether the parent node rule can be epsilon.
+        node = parent
+        continue
+      } else if (childCount > 1) {
+        check(parent is ParserRuleSparTreeNode) {
+          "The parent is expected to be a parser rule node"
+        }
+        return when (parent.ruleType) {
+          RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> {
+            true
+          }
+
+          RuleType.OPTIONAL -> {
+            error(
+              "Optional should have a single child. " + node.printTreeStructure(),
+            )
+          }
+
+          else -> {
+            false
+          }
+        }
+      } else {
+        error("Unreachable. " + node.printTreeStructure())
+      }
+    }
+    return false
+  }
+
+  fun findEpsilonDeletableAncestor(
+    stopPredicate: (AbstractSparTreeNode) -> Boolean,
+  ): AbstractSparTreeNode? {
+    check(this.isRootNode().not()) { "The starting node should not be a root node." }
+    var node: AbstractSparTreeNode? = this
+    do {
+      checkNotNull(node) { "The node should be non-null." }
+      if (node.canBeEpsilon()) {
+        return node
+      }
+      node = node.parent
+    } while (node != null && !node.isRootNode() && !stopPredicate(node))
+    return null
+  }
 
   fun slowCollectLeavesWithPostorder(): ImmutableList<LexerRuleSparTreeNode> {
     val leaves = ImmutableList.builder<LexerRuleSparTreeNode>()
@@ -249,7 +305,7 @@ sealed class AbstractSparTreeNode(
       writer: Writer,
     ) {
       writer.append(getStringLabel(root)).append('\n')
-      printTreeStructure(root, writer, ArrayList())
+      printTreeStructure(root = root, writer = writer, prefix = ArrayList())
     }
 
     private fun outputPrefix(
@@ -286,62 +342,16 @@ sealed class AbstractSparTreeNode(
     private fun getStringLabel(node: AbstractSparTreeNode): String {
       val builder = StringBuilder()
       builder.append(node.labelPrefix)
-      builder.append(" {")
+      builder.append("{")
       builder.append("id=").append(node.nodeId)
       node.payload?.let {
         builder.append(",").append("slot_type=").append(it.label())
       }
-
+      if (node.isPermanentlyDeleted) {
+        builder.append(",deleted")
+      }
       builder.append("}")
       return builder.toString()
-    }
-
-    // TODO(cnsun): needs tests.
-    fun canBeEpsilon(nodeForTest: AbstractSparTreeNode): Boolean {
-      require(nodeForTest.isParserRuleNode() || nodeForTest.isTokenNode())
-      var node: AbstractSparTreeNode? = nodeForTest
-      while (node != null) {
-        val antlrRule = node.antlrRule
-        check(antlrRule != null) {
-          "No antlrRule found for node $node"
-        }
-        if (antlrRule.canRuleBeEpsilon()) {
-          // If the rule of the current node can be epsilon.
-          return true
-        }
-        val parent = node.parent
-        if (parent == null || parent.isSentinelRoot()) {
-          // The root node.
-          return false
-        }
-        val payload = node.payload!!
-        val antlrRuleForTheChild = payload.expectedAntlrRuleType!!
-        if (antlrRuleForTheChild.canRuleBeEpsilon()) {
-          // If the EXPECTED rule of the current node can be epsilon.
-          return true
-        }
-        val childCount = parent.childCount
-        return if (childCount == 1) {
-          // Only the current node, then check whether the parent node rule can be epsilon.
-          node = parent
-          continue
-        } else if (childCount > 1) {
-          check(parent is ParserRuleSparTreeNode) {
-            "The parent is expected to be a parser rule node"
-          }
-          when (parent.ruleType) {
-            RuleType.KLEENE_PLUS, RuleType.KLEENE_STAR -> true
-            RuleType.OPTIONAL ->
-              error(
-                "Optional should have a single child. " + node.printTreeStructure(),
-              )
-            else -> false
-          }
-        } else {
-          error("Unreachable. " + node.printTreeStructure())
-        }
-      }
-      return false
     }
   }
 }

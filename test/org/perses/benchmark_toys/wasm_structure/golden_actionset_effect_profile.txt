@@ -1,0 +1,2252 @@
+---
+- interesting: true
+  contextDescription: "Latra Transformation ClearBodyForUnnamedFuncsWithTypeReference\
+    \ created by LatraRewriterBuilderForSimpleFromToPattern"
+  actions:
+  - "replace_15485_with_31266"
+  newProgramSize: 4259
+  originalProgramSize: 4718
+- interesting: true
+  contextDescription: "Latra Transformation ClearBodyForUnnamedFuncsWithTypeReference\
+    \ created by LatraRewriterBuilderForSimpleFromToPattern"
+  actions:
+  - "replace_15490_with_31448"
+  - "replace_15474_with_31461"
+  newProgramSize: 4132
+  originalProgramSize: 4259
+- interesting: true
+  contextDescription: "Latra Transformation ClearBodyForUnnamedFuncsWithTypeReference\
+    \ created by LatraRewriterBuilderForSimpleFromToPattern"
+  actions:
+  - "replace_15489_with_31591"
+  newProgramSize: 4091
+  originalProgramSize: 4132
+- interesting: true
+  contextDescription: "Latra Transformation ClearBodyForUnnamedFuncsWithTypeReference\
+    \ created by LatraRewriterBuilderForSimpleFromToPattern"
+  actions:
+  - "replace_15488_with_31734"
+  - "replace_15476_with_31747"
+  newProgramSize: 4082
+  originalProgramSize: 4091
+- interesting: true
+  contextDescription: "Latra Transformation ClearBodyForUnnamedFuncsWithTypeReference\
+    \ created by LatraRewriterBuilderForSimpleFromToPattern"
+  actions:
+  - "replace_15475_with_31851"
+  newProgramSize: 4072
+  originalProgramSize: 4082
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@1,instr->unreachable"
+  actions:
+  - "replace_77421_with_89837"
+  newProgramSize: 4043
+  originalProgramSize: 4044
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_77426_with_77448"
+  newProgramSize: 4037
+  originalProgramSize: 4043
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_77448_with_77476"
+  newProgramSize: 4030
+  originalProgramSize: 4037
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_77476_with_77498"
+  newProgramSize: 4024
+  originalProgramSize: 4030
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_77498_with_77527"
+  newProgramSize: 4016
+  originalProgramSize: 4024
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_77527_with_77538"
+  newProgramSize: 4010
+  originalProgramSize: 4016
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_84741"
+  - "delete_84747"
+  newProgramSize: 4006
+  originalProgramSize: 4010
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_84753"
+  - "delete_84759"
+  - "delete_84761"
+  - "delete_84767"
+  newProgramSize: 3999
+  originalProgramSize: 4006
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=8,#parts=8"
+  actions:
+  - "delete_84773"
+  - "delete_84779"
+  - "delete_84781"
+  - "delete_84783"
+  - "delete_84788"
+  - "delete_84794"
+  - "delete_84800"
+  - "delete_84806"
+  newProgramSize: 3985
+  originalProgramSize: 3999
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@17,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable"
+  actions:
+  - "replace_77731_with_89980"
+  - "replace_77725_with_89981"
+  - "replace_77719_with_89982"
+  - "replace_77713_with_89983"
+  - "replace_77707_with_89984"
+  - "replace_77701_with_89985"
+  - "replace_77696_with_89986"
+  - "replace_77690_with_89987"
+  - "replace_77684_with_89988"
+  - "replace_77678_with_89989"
+  - "replace_77673_with_89990"
+  - "replace_77671_with_89991"
+  - "replace_77665_with_89992"
+  - "replace_77659_with_89993"
+  - "replace_77653_with_89994"
+  - "replace_77647_with_89995"
+  - "replace_77641_with_89996"
+  newProgramSize: 3969
+  originalProgramSize: 3985
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=9,#parts=9"
+  actions:
+  - "delete_77737"
+  - "delete_77742"
+  - "delete_77748"
+  - "delete_77754"
+  - "delete_77759"
+  - "delete_77765"
+  - "delete_77771"
+  - "delete_77773"
+  - "delete_77778"
+  newProgramSize: 3952
+  originalProgramSize: 3969
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_77784"
+  - "delete_77790"
+  - "delete_77796"
+  - "delete_77801"
+  newProgramSize: 3944
+  originalProgramSize: 3952
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_77807"
+  - "delete_77813"
+  newProgramSize: 3940
+  originalProgramSize: 3944
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_77819"
+  newProgramSize: 3938
+  originalProgramSize: 3940
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_77825"
+  newProgramSize: 3936
+  originalProgramSize: 3938
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=9,#parts=9"
+  actions:
+  - "delete_77837"
+  - "delete_77843"
+  - "delete_77849"
+  - "delete_77855"
+  - "delete_77860"
+  - "delete_77866"
+  - "delete_77872"
+  - "delete_77874"
+  - "delete_77880"
+  newProgramSize: 3919
+  originalProgramSize: 3936
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_77886"
+  - "delete_77888"
+  - "delete_77890"
+  - "delete_77896"
+  newProgramSize: 3913
+  originalProgramSize: 3919
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_77902"
+  - "delete_77908"
+  newProgramSize: 3910
+  originalProgramSize: 3913
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_77910"
+  newProgramSize: 3908
+  originalProgramSize: 3910
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_77916"
+  newProgramSize: 3906
+  originalProgramSize: 3908
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=9,#parts=9"
+  actions:
+  - "delete_77928"
+  - "delete_77934"
+  - "delete_77939"
+  - "delete_77945"
+  - "delete_77947"
+  - "delete_77949"
+  - "delete_77954"
+  - "delete_77960"
+  - "delete_77966"
+  newProgramSize: 3891
+  originalProgramSize: 3906
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_77968"
+  - "delete_77970"
+  - "delete_77976"
+  - "delete_77982"
+  newProgramSize: 3884
+  originalProgramSize: 3891
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_77988"
+  - "delete_77990"
+  newProgramSize: 3881
+  originalProgramSize: 3884
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_77996"
+  newProgramSize: 3879
+  originalProgramSize: 3881
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_78002"
+  newProgramSize: 3877
+  originalProgramSize: 3879
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_78052"
+  - "delete_78058"
+  - "delete_78064"
+  newProgramSize: 3871
+  originalProgramSize: 3877
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_78076"
+  - "delete_78082"
+  newProgramSize: 3867
+  originalProgramSize: 3871
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_78094"
+  - "delete_78100"
+  newProgramSize: 3863
+  originalProgramSize: 3867
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_78135"
+  newProgramSize: 3861
+  originalProgramSize: 3863
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_78170"
+  - "delete_78276"
+  - "delete_78328"
+  - "delete_78509"
+  - "delete_78515"
+  newProgramSize: 3759
+  originalProgramSize: 3861
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_78520"
+  - "delete_78526"
+  - "delete_78528"
+  newProgramSize: 3754
+  originalProgramSize: 3759
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_84719"
+  newProgramSize: 3752
+  originalProgramSize: 3754
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@4,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable"
+  actions:
+  - "replace_78591_with_90277"
+  - "replace_78589_with_90278"
+  - "replace_78583_with_90279"
+  - "replace_78577_with_90280"
+  newProgramSize: 3749
+  originalProgramSize: 3752
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_78596"
+  - "delete_78602"
+  newProgramSize: 3745
+  originalProgramSize: 3749
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_78608"
+  newProgramSize: 3743
+  originalProgramSize: 3745
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_78614"
+  newProgramSize: 3741
+  originalProgramSize: 3743
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@42,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable"
+  actions:
+  - "replace_81891_with_90378"
+  - "replace_81884_with_90379"
+  - "replace_81882_with_90380"
+  - "replace_81876_with_90381"
+  - "replace_81870_with_90382"
+  - "replace_81865_with_90383"
+  - "replace_81863_with_90384"
+  - "replace_81857_with_90385"
+  - "replace_81851_with_90386"
+  - "replace_81845_with_90387"
+  - "replace_81840_with_90388"
+  - "replace_81838_with_90389"
+  - "replace_81836_with_90390"
+  - "replace_81830_with_90391"
+  - "replace_81825_with_90392"
+  - "replace_81819_with_90393"
+  - "replace_81814_with_90394"
+  - "replace_81808_with_90395"
+  - "replace_81802_with_90396"
+  - "replace_81796_with_90397"
+  - "replace_78834_with_90398"
+  - "replace_78829_with_90399"
+  - "replace_78823_with_90400"
+  - "replace_78818_with_90401"
+  - "replace_78816_with_90402"
+  - "replace_78814_with_90403"
+  - "replace_78808_with_90404"
+  - "replace_78803_with_90405"
+  - "replace_78797_with_90406"
+  - "replace_78791_with_90407"
+  - "replace_78785_with_90408"
+  - "replace_78779_with_90409"
+  - "replace_78773_with_90410"
+  - "replace_78767_with_90411"
+  - "replace_78761_with_90412"
+  - "replace_78755_with_90413"
+  - "replace_78749_with_90414"
+  - "replace_78730_with_90415"
+  - "replace_78726_with_90416"
+  - "replace_78724_with_90417"
+  - "replace_78718_with_90418"
+  - "replace_78712_with_90419"
+  newProgramSize: 2843
+  originalProgramSize: 3741
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=21,#parts=21"
+  actions:
+  - "delete_81893"
+  - "delete_81898"
+  - "delete_82233"
+  - "delete_82239"
+  - "delete_82245"
+  - "delete_82250"
+  - "delete_82441"
+  - "delete_83089"
+  - "delete_83095"
+  - "delete_83100"
+  - "delete_83106"
+  - "delete_83110"
+  - "delete_83771"
+  - "delete_84109"
+  - "delete_84115"
+  - "delete_84120"
+  - "delete_84126"
+  - "delete_84132"
+  - "delete_84137"
+  - "delete_84273"
+  - "delete_84279"
+  newProgramSize: 2151
+  originalProgramSize: 2843
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_84284"
+  - "delete_84290"
+  - "delete_84292"
+  - "delete_84297"
+  - "delete_84303"
+  newProgramSize: 2142
+  originalProgramSize: 2151
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_84309"
+  - "delete_84315"
+  newProgramSize: 2138
+  originalProgramSize: 2142
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_84387"
+  - "delete_84393"
+  newProgramSize: 2135
+  originalProgramSize: 2138
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_84401"
+  newProgramSize: 2134
+  originalProgramSize: 2135
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=6,#parts=6"
+  actions:
+  - "delete_84408"
+  - "delete_84414"
+  - "delete_84420"
+  - "delete_84422"
+  - "delete_84428"
+  - "delete_84433"
+  newProgramSize: 2047
+  originalProgramSize: 2134
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_87399_with_87401"
+  newProgramSize: 2043
+  originalProgramSize: 2047
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_84907_with_84909"
+  newProgramSize: 2039
+  originalProgramSize: 2043
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_84913_with_84916"
+  newProgramSize: 2032
+  originalProgramSize: 2039
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_87451"
+  - "delete_87457"
+  newProgramSize: 2028
+  originalProgramSize: 2032
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_88357"
+  - "delete_88359"
+  newProgramSize: 2025
+  originalProgramSize: 2028
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_88383"
+  - "delete_88385"
+  newProgramSize: 2022
+  originalProgramSize: 2025
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_88403"
+  - "delete_88409"
+  - "delete_88415"
+  newProgramSize: 2016
+  originalProgramSize: 2022
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_88451"
+  - "delete_88457"
+  - "delete_88463"
+  - "delete_88469"
+  - "delete_88475"
+  newProgramSize: 2006
+  originalProgramSize: 2016
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@3,instr->unreachable,instr->unreachable,instr->unreachable"
+  actions:
+  - "replace_84954_with_90803"
+  - "replace_84948_with_90804"
+  - "replace_84942_with_90805"
+  newProgramSize: 2004
+  originalProgramSize: 2006
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_84956"
+  newProgramSize: 2002
+  originalProgramSize: 2004
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_84961"
+  newProgramSize: 2000
+  originalProgramSize: 2002
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=6,#parts=6"
+  actions:
+  - "delete_85904"
+  - "delete_85910"
+  - "delete_85916"
+  - "delete_85922"
+  - "delete_85928"
+  - "delete_85930"
+  newProgramSize: 1989
+  originalProgramSize: 2000
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=6,#parts=6"
+  actions:
+  - "delete_85935"
+  - "delete_85940"
+  - "delete_85942"
+  - "delete_85947"
+  - "delete_85953"
+  - "delete_85959"
+  newProgramSize: 1978
+  originalProgramSize: 1989
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_85965"
+  newProgramSize: 1976
+  originalProgramSize: 1978
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_85971"
+  newProgramSize: 1974
+  originalProgramSize: 1976
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_84966_with_85322"
+  newProgramSize: 1797
+  originalProgramSize: 1974
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_87475_with_87624"
+  newProgramSize: 1754
+  originalProgramSize: 1797
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_86044_with_86046"
+  newProgramSize: 1750
+  originalProgramSize: 1754
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=9,#parts=9"
+  actions:
+  - "delete_87651"
+  - "delete_87657"
+  - "delete_87663"
+  - "delete_87669"
+  - "delete_87675"
+  - "delete_87677"
+  - "delete_87683"
+  - "delete_87689"
+  - "delete_87695"
+  newProgramSize: 1733
+  originalProgramSize: 1750
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_86050_with_86053"
+  newProgramSize: 1727
+  originalProgramSize: 1733
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@1,instr->unreachable"
+  actions:
+  - "replace_86057_with_90909"
+  newProgramSize: 1726
+  originalProgramSize: 1727
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_86062_with_86069"
+  newProgramSize: 1724
+  originalProgramSize: 1726
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=9,#parts=9"
+  actions:
+  - "delete_86089"
+  - "delete_86095"
+  - "delete_86097"
+  - "delete_86103"
+  - "delete_86109"
+  - "delete_86115"
+  - "delete_86117"
+  - "delete_86123"
+  - "delete_86129"
+  newProgramSize: 1708
+  originalProgramSize: 1724
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_86135"
+  - "delete_86141"
+  - "delete_86143"
+  - "delete_86149"
+  newProgramSize: 1701
+  originalProgramSize: 1708
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_86155"
+  - "delete_86161"
+  newProgramSize: 1697
+  originalProgramSize: 1701
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_86166"
+  newProgramSize: 1598
+  originalProgramSize: 1697
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_87748_with_87780"
+  newProgramSize: 1589
+  originalProgramSize: 1598
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@31,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable"
+  actions:
+  - "replace_88007_with_91022"
+  - "replace_88002_with_91023"
+  - "replace_87996_with_91024"
+  - "replace_87994_with_91025"
+  - "replace_87992_with_91026"
+  - "replace_87986_with_91027"
+  - "replace_87980_with_91028"
+  - "replace_87978_with_91029"
+  - "replace_87970_with_91030"
+  - "replace_87968_with_91031"
+  - "replace_87966_with_91032"
+  - "replace_87958_with_91033"
+  - "replace_87952_with_91034"
+  - "replace_87950_with_91035"
+  - "replace_87944_with_91036"
+  - "replace_87938_with_91037"
+  - "replace_87932_with_91038"
+  - "replace_87926_with_91039"
+  - "replace_87920_with_91040"
+  - "replace_87914_with_91041"
+  - "replace_87908_with_91042"
+  - "replace_87902_with_91043"
+  - "replace_87900_with_91044"
+  - "replace_87894_with_91045"
+  - "replace_87888_with_91046"
+  - "replace_87883_with_91047"
+  - "replace_87881_with_91048"
+  - "replace_87875_with_91049"
+  - "replace_87869_with_91050"
+  - "replace_87867_with_91051"
+  - "replace_87861_with_91052"
+  newProgramSize: 1567
+  originalProgramSize: 1589
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=15,#parts=15"
+  actions:
+  - "delete_88012"
+  - "delete_88020"
+  - "delete_88022"
+  - "delete_88024"
+  - "delete_88030"
+  - "delete_88032"
+  - "delete_88034"
+  - "delete_88040"
+  - "delete_88045"
+  - "delete_88051"
+  - "delete_88059"
+  - "delete_88061"
+  - "delete_88067"
+  - "delete_88073"
+  - "delete_88075"
+  newProgramSize: 1544
+  originalProgramSize: 1567
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=8,#parts=8"
+  actions:
+  - "delete_88077"
+  - "delete_88083"
+  - "delete_88085"
+  - "delete_88091"
+  - "delete_88097"
+  - "delete_88103"
+  - "delete_88109"
+  - "delete_88114"
+  newProgramSize: 1529
+  originalProgramSize: 1544
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_88119"
+  - "delete_88124"
+  newProgramSize: 1512
+  originalProgramSize: 1529
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_88184"
+  newProgramSize: 1511
+  originalProgramSize: 1512
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_88204"
+  newProgramSize: 1509
+  originalProgramSize: 1511
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_85322_with_85329"
+  newProgramSize: 1507
+  originalProgramSize: 1509
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_86819_with_86821"
+  newProgramSize: 1503
+  originalProgramSize: 1507
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_85347"
+  newProgramSize: 1501
+  originalProgramSize: 1503
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_85359"
+  newProgramSize: 1499
+  originalProgramSize: 1501
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_85371"
+  - "delete_85373"
+  - "delete_85378"
+  - "delete_85384"
+  newProgramSize: 1493
+  originalProgramSize: 1499
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_85397"
+  - "delete_85399"
+  newProgramSize: 1490
+  originalProgramSize: 1493
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_85421"
+  newProgramSize: 1426
+  originalProgramSize: 1490
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_88877_with_88880"
+  newProgramSize: 1422
+  originalProgramSize: 1426
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_86825_with_86828"
+  newProgramSize: 1418
+  originalProgramSize: 1422
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=14,#parts=14"
+  actions:
+  - "delete_86858"
+  - "delete_86863"
+  - "delete_86869"
+  - "delete_86871"
+  - "delete_86877"
+  - "delete_86883"
+  - "delete_86889"
+  - "delete_86895"
+  - "delete_86901"
+  - "delete_86907"
+  - "delete_86913"
+  - "delete_86919"
+  - "delete_86925"
+  - "delete_86931"
+  newProgramSize: 1391
+  originalProgramSize: 1418
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_87060"
+  - "delete_87062"
+  newProgramSize: 1388
+  originalProgramSize: 1391
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_87067"
+  - "delete_87073"
+  newProgramSize: 1384
+  originalProgramSize: 1388
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_88908"
+  - "delete_88910"
+  - "delete_88916"
+  - "delete_88922"
+  - "delete_88924"
+  newProgramSize: 1376
+  originalProgramSize: 1384
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_88929"
+  - "delete_88935"
+  newProgramSize: 1372
+  originalProgramSize: 1376
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@1,instr->unreachable"
+  actions:
+  - "replace_88941_with_91321"
+  newProgramSize: 1371
+  originalProgramSize: 1372
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_89067"
+  newProgramSize: 1369
+  originalProgramSize: 1371
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_89073"
+  - "delete_89078"
+  newProgramSize: 1365
+  originalProgramSize: 1369
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=6,#parts=6"
+  actions:
+  - "delete_89101"
+  - "delete_89107"
+  - "delete_89113"
+  - "delete_89119"
+  - "delete_89121"
+  - "delete_89126"
+  newProgramSize: 1354
+  originalProgramSize: 1365
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_88562_with_88564"
+  newProgramSize: 1350
+  originalProgramSize: 1354
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_88568_with_88571"
+  newProgramSize: 1346
+  originalProgramSize: 1350
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_88945_with_88976"
+  newProgramSize: 1337
+  originalProgramSize: 1346
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_88591"
+  - "delete_88597"
+  - "delete_88603"
+  - "delete_88605"
+  newProgramSize: 1330
+  originalProgramSize: 1337
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_88610"
+  - "delete_88616"
+  newProgramSize: 1326
+  originalProgramSize: 1330
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_86571"
+  - "delete_86577"
+  newProgramSize: 1322
+  originalProgramSize: 1326
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_86583"
+  - "delete_86585"
+  - "delete_86587"
+  newProgramSize: 1318
+  originalProgramSize: 1322
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_86593"
+  - "delete_86599"
+  newProgramSize: 1314
+  originalProgramSize: 1318
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_86605"
+  newProgramSize: 1312
+  originalProgramSize: 1314
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@2,instr->unreachable,instr->unreachable"
+  actions:
+  - "replace_88241_with_91514"
+  - "replace_88235_with_91515"
+  newProgramSize: 1310
+  originalProgramSize: 1312
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_88247"
+  newProgramSize: 1308
+  originalProgramSize: 1310
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_88261"
+  newProgramSize: 1306
+  originalProgramSize: 1308
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_88304"
+  newProgramSize: 1304
+  originalProgramSize: 1306
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_77308_with_77310"
+  newProgramSize: 1300
+  originalProgramSize: 1304
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_76936"
+  newProgramSize: 1272
+  originalProgramSize: 1300
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_77096_with_77098"
+  newProgramSize: 1268
+  originalProgramSize: 1272
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_89000"
+  newProgramSize: 1266
+  originalProgramSize: 1268
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_89032"
+  - "delete_89034"
+  newProgramSize: 1263
+  originalProgramSize: 1266
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_89046"
+  - "delete_89048"
+  newProgramSize: 1260
+  originalProgramSize: 1263
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_89053"
+  newProgramSize: 1258
+  originalProgramSize: 1260
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_86961"
+  newProgramSize: 1234
+  originalProgramSize: 1258
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=6,#parts=6"
+  actions:
+  - "delete_86638"
+  - "delete_86644"
+  - "delete_86650"
+  - "delete_86656"
+  - "delete_86662"
+  - "delete_86668"
+  newProgramSize: 1222
+  originalProgramSize: 1234
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_86680"
+  - "delete_86685"
+  newProgramSize: 1218
+  originalProgramSize: 1222
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_86691"
+  newProgramSize: 1216
+  originalProgramSize: 1218
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_body_3]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_84828"
+  newProgramSize: 1193
+  originalProgramSize: 1216
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_89417"
+  newProgramSize: 1173
+  originalProgramSize: 1193
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_77317_with_77324"
+  newProgramSize: 1171
+  originalProgramSize: 1173
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_89458"
+  newProgramSize: 1153
+  originalProgramSize: 1171
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_88808_with_88814"
+  newProgramSize: 1149
+  originalProgramSize: 1153
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_77362"
+  - "delete_77368"
+  - "delete_77370"
+  - "delete_77377"
+  - "delete_77379"
+  newProgramSize: 1141
+  originalProgramSize: 1149
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_89526"
+  newProgramSize: 1126
+  originalProgramSize: 1141
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_84332_with_84339"
+  newProgramSize: 1124
+  originalProgramSize: 1126
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@2,instr->unreachable,instr->unreachable"
+  actions:
+  - "replace_88822_with_91693"
+  - "replace_88820_with_91694"
+  newProgramSize: 1123
+  originalProgramSize: 1124
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_88833"
+  newProgramSize: 1114
+  originalProgramSize: 1123
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=2,#parts=2#total-parts=2"
+  actions:
+  - "delete_89727"
+  - "delete_89728"
+  newProgramSize: 1101
+  originalProgramSize: 1114
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_84372"
+  newProgramSize: 1099
+  originalProgramSize: 1101
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_84378"
+  - "delete_84380"
+  newProgramSize: 1096
+  originalProgramSize: 1099
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_89393"
+  newProgramSize: 1084
+  originalProgramSize: 1096
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=2,#parts=2#total-parts=2"
+  actions:
+  - "delete_89766"
+  - "delete_89767"
+  newProgramSize: 1074
+  originalProgramSize: 1084
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_89557"
+  newProgramSize: 1064
+  originalProgramSize: 1074
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=2,#parts=2#total-parts=2"
+  actions:
+  - "delete_89344"
+  - "delete_89345"
+  newProgramSize: 1054
+  originalProgramSize: 1064
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=2,#parts=2#total-parts=2"
+  actions:
+  - "delete_89505"
+  - "delete_89506"
+  newProgramSize: 1045
+  originalProgramSize: 1054
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=2,#parts=2#total-parts=2"
+  actions:
+  - "delete_89313"
+  - "delete_89314"
+  newProgramSize: 1036
+  originalProgramSize: 1045
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__elem_4]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_76838"
+  - "delete_76840"
+  - "delete_76842"
+  - "delete_76844"
+  newProgramSize: 1032
+  originalProgramSize: 1036
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__elem_4]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_76846"
+  newProgramSize: 1031
+  originalProgramSize: 1032
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_89285"
+  newProgramSize: 1023
+  originalProgramSize: 1031
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_89160"
+  newProgramSize: 1015
+  originalProgramSize: 1023
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87306"
+  newProgramSize: 1007
+  originalProgramSize: 1015
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87191"
+  newProgramSize: 999
+  originalProgramSize: 1007
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77068"
+  newProgramSize: 991
+  originalProgramSize: 999
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77046"
+  newProgramSize: 983
+  originalProgramSize: 991
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77024"
+  newProgramSize: 975
+  originalProgramSize: 983
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_89377"
+  newProgramSize: 968
+  originalProgramSize: 975
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_88524"
+  - "delete_88525"
+  - "delete_88526"
+  newProgramSize: 965
+  originalProgramSize: 968
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_84894"
+  newProgramSize: 964
+  originalProgramSize: 965
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_89705"
+  newProgramSize: 959
+  originalProgramSize: 964
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_88768"
+  newProgramSize: 954
+  originalProgramSize: 959
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_88746"
+  newProgramSize: 949
+  originalProgramSize: 954
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_88724"
+  newProgramSize: 944
+  originalProgramSize: 949
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87377"
+  newProgramSize: 939
+  originalProgramSize: 944
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87355"
+  newProgramSize: 934
+  originalProgramSize: 939
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87333"
+  newProgramSize: 929
+  originalProgramSize: 934
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87284"
+  newProgramSize: 924
+  originalProgramSize: 929
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87262"
+  newProgramSize: 919
+  originalProgramSize: 924
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87240"
+  newProgramSize: 914
+  originalProgramSize: 919
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87218"
+  newProgramSize: 909
+  originalProgramSize: 914
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87169"
+  newProgramSize: 904
+  originalProgramSize: 909
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87147"
+  newProgramSize: 899
+  originalProgramSize: 904
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87125"
+  newProgramSize: 894
+  originalProgramSize: 899
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_86797"
+  newProgramSize: 889
+  originalProgramSize: 894
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_86775"
+  newProgramSize: 884
+  originalProgramSize: 889
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_86753"
+  newProgramSize: 879
+  originalProgramSize: 884
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77286"
+  newProgramSize: 874
+  originalProgramSize: 879
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77264"
+  newProgramSize: 869
+  originalProgramSize: 874
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77242"
+  newProgramSize: 864
+  originalProgramSize: 869
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77220"
+  newProgramSize: 859
+  originalProgramSize: 864
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77198"
+  newProgramSize: 854
+  originalProgramSize: 859
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_77176"
+  newProgramSize: 849
+  originalProgramSize: 854
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__call_instr_params_6]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_89141"
+  newProgramSize: 845
+  originalProgramSize: 849
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[optional:optional__call_instr_instr_1]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_88796"
+  newProgramSize: 841
+  originalProgramSize: 845
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__call_instr_params_6]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_84874"
+  newProgramSize: 837
+  originalProgramSize: 841
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_76890_with_76896"
+  newProgramSize: 835
+  originalProgramSize: 837
+- interesting: true
+  contextDescription: "[regular_node]literal replacement:LiteralReplacement@1,instr->unreachable"
+  actions:
+  - "replace_86943_with_91777"
+  newProgramSize: 833
+  originalProgramSize: 835
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_89139"
+  newProgramSize: 832
+  originalProgramSize: 833
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_89084"
+  newProgramSize: 830
+  originalProgramSize: 832
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_88645_with_88649"
+  newProgramSize: 829
+  originalProgramSize: 830
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_88421_with_88425"
+  newProgramSize: 828
+  originalProgramSize: 829
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_88377"
+  newProgramSize: 826
+  originalProgramSize: 828
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_88192_with_88196"
+  newProgramSize: 825
+  originalProgramSize: 826
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_87731_with_87735"
+  newProgramSize: 824
+  originalProgramSize: 825
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_87719_with_87723"
+  newProgramSize: 823
+  originalProgramSize: 824
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_87701_with_87705"
+  newProgramSize: 822
+  originalProgramSize: 823
+- interesting: true
+  contextDescription: "[regular_node]literal replacement:LiteralReplacement@1,instr->unreachable"
+  actions:
+  - "replace_87085_with_91848"
+  newProgramSize: 821
+  originalProgramSize: 822
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87079"
+  newProgramSize: 819
+  originalProgramSize: 821
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87054"
+  newProgramSize: 817
+  originalProgramSize: 819
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_87046"
+  newProgramSize: 815
+  originalProgramSize: 817
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_86956"
+  newProgramSize: 813
+  originalProgramSize: 815
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_86951"
+  newProgramSize: 811
+  originalProgramSize: 813
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_86937"
+  newProgramSize: 809
+  originalProgramSize: 811
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_86697_with_86701"
+  newProgramSize: 808
+  originalProgramSize: 809
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_85416"
+  newProgramSize: 806
+  originalProgramSize: 808
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_84327"
+  newProgramSize: 804
+  originalProgramSize: 806
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_78105_with_78109"
+  newProgramSize: 803
+  originalProgramSize: 804
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_76913_with_76914"
+  newProgramSize: 802
+  originalProgramSize: 803
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_76829_with_76853"
+  newProgramSize: 801
+  originalProgramSize: 802
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_87112"
+  newProgramSize: 800
+  originalProgramSize: 801
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_87104"
+  newProgramSize: 799
+  originalProgramSize: 800
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[optional:optional__table_type_1]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_76929"
+  newProgramSize: 798
+  originalProgramSize: 799
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_92097"
+  newProgramSize: 795
+  originalProgramSize: 798
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_94058"
+  - "delete_94067"
+  newProgramSize: 783
+  originalProgramSize: 795
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_94076"
+  - "delete_94085"
+  newProgramSize: 771
+  originalProgramSize: 783
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_94094"
+  newProgramSize: 765
+  originalProgramSize: 771
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_92319"
+  newProgramSize: 764
+  originalProgramSize: 765
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_93537"
+  - "delete_93543"
+  newProgramSize: 760
+  originalProgramSize: 764
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_93554"
+  - "delete_93556"
+  newProgramSize: 757
+  originalProgramSize: 760
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_93625"
+  - "delete_93631"
+  newProgramSize: 753
+  originalProgramSize: 757
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=10,#parts=10"
+  actions:
+  - "delete_92358"
+  - "delete_92360"
+  - "delete_92362"
+  - "delete_92364"
+  - "delete_92366"
+  - "delete_92368"
+  - "delete_92370"
+  - "delete_92372"
+  - "delete_92374"
+  - "delete_92376"
+  newProgramSize: 743
+  originalProgramSize: 753
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_92378"
+  - "delete_92380"
+  - "delete_92382"
+  - "delete_92384"
+  - "delete_92386"
+  newProgramSize: 738
+  originalProgramSize: 743
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_92388"
+  - "delete_92390"
+  newProgramSize: 736
+  originalProgramSize: 738
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_93260_with_93267"
+  newProgramSize: 734
+  originalProgramSize: 736
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_92540"
+  - "delete_92542"
+  newProgramSize: 732
+  originalProgramSize: 734
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_92544"
+  newProgramSize: 731
+  originalProgramSize: 732
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_92546"
+  newProgramSize: 730
+  originalProgramSize: 731
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=24,#parts=24"
+  actions:
+  - "delete_92605"
+  - "delete_92607"
+  - "delete_92609"
+  - "delete_92611"
+  - "delete_92613"
+  - "delete_92615"
+  - "delete_92617"
+  - "delete_92619"
+  - "delete_92621"
+  - "delete_92623"
+  - "delete_92625"
+  - "delete_92627"
+  - "delete_92629"
+  - "delete_92631"
+  - "delete_92633"
+  - "delete_92635"
+  - "delete_92637"
+  - "delete_92639"
+  - "delete_92641"
+  - "delete_92643"
+  - "delete_92645"
+  - "delete_92647"
+  - "delete_92649"
+  - "delete_92651"
+  newProgramSize: 706
+  originalProgramSize: 730
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=12,#parts=12"
+  actions:
+  - "delete_92653"
+  - "delete_92655"
+  - "delete_92657"
+  - "delete_92659"
+  - "delete_92661"
+  - "delete_92663"
+  - "delete_92665"
+  - "delete_92667"
+  - "delete_92669"
+  - "delete_92671"
+  - "delete_92673"
+  - "delete_92675"
+  newProgramSize: 694
+  originalProgramSize: 706
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=6,#parts=6"
+  actions:
+  - "delete_92677"
+  - "delete_92679"
+  - "delete_92681"
+  - "delete_92683"
+  - "delete_92685"
+  - "delete_92687"
+  newProgramSize: 688
+  originalProgramSize: 694
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=17,#parts=17"
+  actions:
+  - "delete_93373"
+  - "delete_93375"
+  - "delete_93377"
+  - "delete_93379"
+  - "delete_93381"
+  - "delete_93383"
+  - "delete_93385"
+  - "delete_93387"
+  - "delete_93389"
+  - "delete_93391"
+  - "delete_93393"
+  - "delete_93395"
+  - "delete_93397"
+  - "delete_93399"
+  - "delete_93401"
+  - "delete_93403"
+  - "delete_93405"
+  newProgramSize: 671
+  originalProgramSize: 688
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=9,#parts=9"
+  actions:
+  - "delete_93407"
+  - "delete_93409"
+  - "delete_93411"
+  - "delete_93413"
+  - "delete_93415"
+  - "delete_93417"
+  - "delete_93419"
+  - "delete_93421"
+  - "delete_93423"
+  newProgramSize: 662
+  originalProgramSize: 671
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4"
+  actions:
+  - "delete_93425"
+  - "delete_93427"
+  - "delete_93429"
+  - "delete_93431"
+  newProgramSize: 658
+  originalProgramSize: 662
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_93433"
+  newProgramSize: 657
+  originalProgramSize: 658
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_93941"
+  - "delete_93946"
+  newProgramSize: 653
+  originalProgramSize: 657
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_93733"
+  - "delete_93740"
+  - "delete_93742"
+  newProgramSize: 648
+  originalProgramSize: 653
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_93748"
+  - "delete_93754"
+  - "delete_93760"
+  newProgramSize: 642
+  originalProgramSize: 648
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@3,instr->unreachable,instr->unreachable,instr->unreachable"
+  actions:
+  - "replace_92806_with_94883"
+  - "replace_92804_with_94884"
+  - "replace_92802_with_94885"
+  newProgramSize: 642
+  originalProgramSize: 642
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_92843"
+  newProgramSize: 640
+  originalProgramSize: 642
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_93479"
+  newProgramSize: 639
+  originalProgramSize: 640
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_93481"
+  newProgramSize: 638
+  originalProgramSize: 639
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_93489"
+  newProgramSize: 637
+  originalProgramSize: 638
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_92903_with_92910"
+  newProgramSize: 635
+  originalProgramSize: 637
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_93883_with_93890"
+  newProgramSize: 633
+  originalProgramSize: 635
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_93901"
+  newProgramSize: 632
+  originalProgramSize: 633
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_93919"
+  - "delete_93925"
+  - "delete_93927"
+  - "delete_93929"
+  - "delete_93934"
+  newProgramSize: 624
+  originalProgramSize: 632
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_93049"
+  newProgramSize: 615
+  originalProgramSize: 624
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_92962_with_92969"
+  newProgramSize: 613
+  originalProgramSize: 615
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_92768"
+  - "delete_92769"
+  - "delete_92770"
+  newProgramSize: 610
+  originalProgramSize: 613
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_body_3]dd@#nodes=1,#parts=1#total-parts=1"
+  actions:
+  - "delete_93951"
+  newProgramSize: 606
+  originalProgramSize: 610
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_93855"
+  newProgramSize: 605
+  originalProgramSize: 606
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_93857"
+  newProgramSize: 604
+  originalProgramSize: 605
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_92071_with_92076"
+  newProgramSize: 601
+  originalProgramSize: 604
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_93793"
+  newProgramSize: 600
+  originalProgramSize: 601
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_92837"
+  newProgramSize: 598
+  originalProgramSize: 600
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_92831"
+  newProgramSize: 596
+  originalProgramSize: 598
+- interesting: true
+  contextDescription: "[regular_node]can be epsilon"
+  actions:
+  - "delete_92825"
+  newProgramSize: 594
+  originalProgramSize: 596
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_96403"
+  - "delete_96409"
+  newProgramSize: 590
+  originalProgramSize: 594
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_95934"
+  newProgramSize: 589
+  originalProgramSize: 590
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_96333_with_96340"
+  newProgramSize: 587
+  originalProgramSize: 589
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_95851"
+  - "delete_95853"
+  newProgramSize: 585
+  originalProgramSize: 587
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_96678"
+  newProgramSize: 583
+  originalProgramSize: 585
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_98726"
+  - "delete_98728"
+  newProgramSize: 580
+  originalProgramSize: 583
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_98353"
+  - "delete_98361"
+  - "delete_98363"
+  newProgramSize: 575
+  originalProgramSize: 580
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_98160"
+  newProgramSize: 573
+  originalProgramSize: 575
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_98245"
+  - "delete_98250"
+  newProgramSize: 570
+  originalProgramSize: 573
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3"
+  actions:
+  - "delete_101044"
+  - "delete_101052"
+  - "delete_101054"
+  newProgramSize: 565
+  originalProgramSize: 570
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_103088"
+  - "delete_103090"
+  newProgramSize: 562
+  originalProgramSize: 565
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2"
+  actions:
+  - "delete_103238"
+  - "delete_103244"
+  newProgramSize: 558
+  originalProgramSize: 562
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_103308"
+  newProgramSize: 557
+  originalProgramSize: 558
+- interesting: true
+  contextDescription: "Latra Transformation ReplaceBrIfWithDrop created by LatraRewriterBuilderForSimpleFromToPattern"
+  actions:
+  - "replace_106961_with_108075"
+  - "replace_106913_with_108078"
+  newProgramSize: 557
+  originalProgramSize: 557
+- interesting: true
+  contextDescription: "Latra Transformation ReplaceBrIfWithDrop created by LatraRewriterBuilderForSimpleFromToPattern"
+  actions:
+  - "replace_107459_with_108081"
+  - "replace_107472_with_108084"
+  newProgramSize: 557
+  originalProgramSize: 557
+- interesting: true
+  contextDescription: "Latra Transformation ReplaceBrIfWithDrop created by LatraRewriterBuilderForSimpleFromToPattern"
+  actions:
+  - "replace_106937_with_108087"
+  newProgramSize: 557
+  originalProgramSize: 557
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_108474_with_108481"
+  newProgramSize: 550
+  originalProgramSize: 552
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_109099"
+  - "delete_109101"
+  - "delete_109109"
+  - "delete_109111"
+  - "delete_109117"
+  newProgramSize: 542
+  originalProgramSize: 550
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_108483_with_108490"
+  newProgramSize: 540
+  originalProgramSize: 542
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_108506_with_108529"
+  newProgramSize: 534
+  originalProgramSize: 540
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_108529_with_108571"
+  newProgramSize: 523
+  originalProgramSize: 534
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_108571_with_108578"
+  newProgramSize: 521
+  originalProgramSize: 523
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_108593_with_108612"
+  newProgramSize: 516
+  originalProgramSize: 521
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_109122_with_109129"
+  newProgramSize: 514
+  originalProgramSize: 516
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1"
+  actions:
+  - "delete_109139"
+  newProgramSize: 506
+  originalProgramSize: 514
+- interesting: true
+  contextDescription: "[regular node]compatible replacement"
+  actions:
+  - "replace_108612_with_108625"
+  newProgramSize: 499
+  originalProgramSize: 506
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_108625_with_108632"
+  newProgramSize: 497
+  originalProgramSize: 499
+- interesting: true
+  contextDescription: "[regular_node]kleene replacement"
+  actions:
+  - "replace_108634_with_108641"
+  newProgramSize: 495
+  originalProgramSize: 497
+- interesting: true
+  contextDescription: "DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5"
+  actions:
+  - "delete_110915"
+  - "delete_110923"
+  - "delete_110925"
+  - "delete_110931"
+  - "delete_110937"
+  newProgramSize: 487
+  originalProgramSize: 495
+
+Interesting=49  ,Uninteresting=846 ,Total=895 ,  5.47%. [regular_node]can be epsilon
+Interesting=46  ,Uninteresting=677 ,Total=723 ,  6.36%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1
+Interesting=38  ,Uninteresting=2299,Total=2337,  1.63%. [regular node]compatible replacement
+Interesting=38  ,Uninteresting=337 ,Total=375 , 10.13%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=2,#parts=2
+Interesting=15  ,Uninteresting=83  ,Total=98  , 15.31%. [regular_node]kleene replacement
+Interesting=9   ,Uninteresting=33  ,Total=42  , 21.43%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5
+Interesting=8   ,Uninteresting=170 ,Total=178 ,  4.49%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3
+Interesting=8   ,Uninteresting=50  ,Total=58  , 13.79%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4
+Interesting=6   ,Uninteresting=4   ,Total=10  , 60.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=9,#parts=9
+Interesting=6   ,Uninteresting=17  ,Total=23  , 26.09%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=6,#parts=6
+Interesting=5   ,Uninteresting=36  ,Total=41  , 12.20%. Latra Transformation ClearBodyForUnnamedFuncsWithTypeReference created by LatraRewriterBuilderForSimpleFromToPattern
+Interesting=5   ,Uninteresting=36  ,Total=41  , 12.20%. DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=2,#parts=2#total-parts=2
+Interesting=4   ,Uninteresting=294 ,Total=298 ,  1.34%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=1,#parts=1
+Interesting=3   ,Uninteresting=678 ,Total=681 ,  0.44%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@1,instr->unreachable
+Interesting=3   ,Uninteresting=9   ,Total=12  , 25.00%. DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=3   ,Uninteresting=1   ,Total=4   , 75.00%. Latra Transformation ReplaceBrIfWithDrop created by LatraRewriterBuilderForSimpleFromToPattern
+Interesting=2   ,Uninteresting=229 ,Total=231 ,  0.87%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=2,#parts=2
+Interesting=2   ,Uninteresting=252 ,Total=254 ,  0.79%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=1,#parts=1
+Interesting=2   ,Uninteresting=352 ,Total=354 ,  0.56%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@2,instr->unreachable,instr->unreachable
+Interesting=2   ,Uninteresting=478 ,Total=480 ,  0.42%. [regular_node]literal replacement:LiteralReplacement@1,instr->unreachable
+Interesting=2   ,Uninteresting=218 ,Total=220 ,  0.91%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@3,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=2   ,Uninteresting=7   ,Total=9   , 22.22%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=8,#parts=8
+Interesting=2   ,Uninteresting=9   ,Total=11  , 18.18%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_body_3]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=2   ,Uninteresting=10  ,Total=12  , 16.67%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=3,#parts=3
+Interesting=2   ,Uninteresting=32  ,Total=34  ,  5.88%. DFS in PersesNodeReducer[kleene_star:kleene_star__call_instr_params_6]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=2   ,Uninteresting=58  ,Total=60  ,  3.33%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=1   ,Uninteresting=1   ,Total=2   , 50.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=17,#parts=17
+Interesting=1   ,Uninteresting=0   ,Total=1   ,100.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@17,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=1   ,Uninteresting=59  ,Total=60  ,  1.67%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@4,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=1   ,Uninteresting=0   ,Total=1   ,100.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@42,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=1   ,Uninteresting=1   ,Total=2   , 50.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=21,#parts=21
+Interesting=1   ,Uninteresting=8   ,Total=9   , 11.11%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=10,#parts=10
+Interesting=1   ,Uninteresting=3   ,Total=4   , 25.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=12,#parts=12
+Interesting=1   ,Uninteresting=0   ,Total=1   ,100.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@31,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=1   ,Uninteresting=0   ,Total=1   ,100.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=15,#parts=15
+Interesting=1   ,Uninteresting=2   ,Total=3   , 33.33%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=14,#parts=14
+Interesting=1   ,Uninteresting=0   ,Total=1   ,100.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__elem_4]dd@#nodes=4,#parts=4
+Interesting=1   ,Uninteresting=23  ,Total=24  ,  4.17%. DFS in PersesNodeReducer[kleene_star:kleene_star__elem_4]dd@#nodes=1,#parts=1
+Interesting=1   ,Uninteresting=8   ,Total=9   , 11.11%. DFS in PersesNodeReducer[optional:optional__call_instr_instr_1]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=1   ,Uninteresting=0   ,Total=1   ,100.00%. DFS in PersesNodeReducer[optional:optional__table_type_1]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=1   ,Uninteresting=0   ,Total=1   ,100.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=24,#parts=24
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__meta_2]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=70,#parts=70#total-parts=70
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=35,#parts=35
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=17,#parts=17
+Interesting=0   ,Uninteresting=8   ,Total=8   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=8,#parts=8
+Interesting=0   ,Uninteresting=85  ,Total=85  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=4,#parts=4
+Interesting=0   ,Uninteresting=6   ,Total=6   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=9,#parts=9
+Interesting=0   ,Uninteresting=6   ,Total=6   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=5,#parts=5
+Interesting=0   ,Uninteresting=72  ,Total=72  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=3,#parts=3
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=18,#parts=18
+Interesting=0   ,Uninteresting=72  ,Total=72  ,  0.00%. [regular_node]literal replacement:LiteralReplacement@1,func_fields->unreachable
+Interesting=0   ,Uninteresting=45  ,Total=45  ,  0.00%. [regular_node]literal replacement:LiteralReplacement@1,func_result_body->unreachable
+Interesting=0   ,Uninteresting=13  ,Total=13  ,  0.00%. [regular_node]literal replacement:LiteralReplacement@1,func_body->unreachable
+Interesting=0   ,Uninteresting=83  ,Total=83  ,  0.00%. [regular_node]literal replacement:LiteralReplacement@1,altnt_block__instr_2->block
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@15,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=19  ,Total=19  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=7,#parts=7
+Interesting=0   ,Uninteresting=24  ,Total=24  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@7,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@71,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=35,#parts=35
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@35,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=3   ,Total=3   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=18,#parts=18
+Interesting=0   ,Uninteresting=19  ,Total=19  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@9,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=62  ,Total=62  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@5,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=36,#parts=36
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@36,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=6   ,Total=6   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@18,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=10  ,Total=10  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@13,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=54  ,Total=54  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@6,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=7   ,Total=7   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@11,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@84,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=42,#parts=42
+Interesting=0   ,Uninteresting=4   ,Total=4   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@21,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=13  ,Total=13  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@10,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=5   ,Total=5   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=11,#parts=11
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=41,#parts=41#total-parts=41
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@41,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=20,#parts=20
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@20,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=24,#parts=24#total-parts=24
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@24,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=5   ,Total=5   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@12,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@62,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=31,#parts=31
+Interesting=0   ,Uninteresting=4   ,Total=4   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@16,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=8   ,Total=8   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@8,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=16,#parts=16#total-parts=16
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@28,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=4   ,Total=4   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@14,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=21,#parts=21#total-parts=21
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=18,#parts=18#total-parts=18
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=15,#parts=15#total-parts=15
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=12,#parts=12#total-parts=12
+Interesting=0   ,Uninteresting=11  ,Total=11  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=10,#parts=10#total-parts=10
+Interesting=0   ,Uninteresting=3   ,Total=3   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=4,#parts=4#total-parts=4
+Interesting=0   ,Uninteresting=3   ,Total=3   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=7,#parts=7#total-parts=7
+Interesting=0   ,Uninteresting=9   ,Total=9   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=6,#parts=6#total-parts=6
+Interesting=0   ,Uninteresting=72  ,Total=72  ,  0.00%. DFS in PersesNodeReducer[kleene_star:func_type]dd@#nodes=1,#parts=1
+Interesting=0   ,Uninteresting=40  ,Total=40  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_fields_body_3]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__elem_4]dd@#nodes=8,#parts=8#total-parts=8
+Interesting=0   ,Uninteresting=9   ,Total=9   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__elem_4]dd@#nodes=2,#parts=2
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=7,#parts=7#total-parts=7
+Interesting=0   ,Uninteresting=117 ,Total=117 ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=2,#parts=2
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=4,#parts=4
+Interesting=0   ,Uninteresting=74  ,Total=74  ,  0.00%. [regular_node]literal replacement:LiteralReplacement@1,altnt_block__func_type_4->param
+Interesting=0   ,Uninteresting=36  ,Total=36  ,  0.00%. [regular_node]literal replacement:LiteralReplacement@1,altnt_block__import_desc_6->func
+Interesting=0   ,Uninteresting=9   ,Total=9   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=5,#parts=5#total-parts=5
+Interesting=0   ,Uninteresting=7   ,Total=7   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=4,#parts=4#total-parts=4
+Interesting=0   ,Uninteresting=43  ,Total=43  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=3,#parts=3#total-parts=3
+Interesting=0   ,Uninteresting=3   ,Total=3   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=2,#parts=2#total-parts=2
+Interesting=0   ,Uninteresting=24  ,Total=24  ,  0.00%. [regular_node]literal replacement:LiteralReplacement@1,expr1->unreachable
+Interesting=0   ,Uninteresting=6   ,Total=6   ,  0.00%. DFS in PersesNodeReducer[optional:optional__plain_instr_2]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=0   ,Uninteresting=16  ,Total=16  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__data_2]dd@#nodes=1,#parts=1#total-parts=1
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=31,#parts=31
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=15,#parts=15
+Interesting=0   ,Uninteresting=63  ,Total=63  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=7,#parts=7
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=16,#parts=16
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=26,#parts=26#total-parts=26
+Interesting=0   ,Uninteresting=3   ,Total=3   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@26,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=6   ,Total=6   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=13,#parts=13
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@49,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@25,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=13,#parts=13#total-parts=13
+Interesting=0   ,Uninteresting=5   ,Total=5   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=5,#parts=5#total-parts=5
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__func_type_1]dd@#nodes=6,#parts=6#total-parts=6
+Interesting=0   ,Uninteresting=8   ,Total=8   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=3,#parts=3#total-parts=3
+Interesting=0   ,Uninteresting=7   ,Total=7   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__elem_4]dd@#nodes=3,#parts=3#total-parts=3
+Interesting=0   ,Uninteresting=13  ,Total=13  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=28,#parts=28
+Interesting=0   ,Uninteresting=29  ,Total=29  ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__module__2]dd@#nodes=14,#parts=14
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@23,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=2   ,Total=2   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]LiteralReplacement@19,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable,instr->unreachable
+Interesting=0   ,Uninteresting=1   ,Total=1   ,  0.00%. DFS in PersesNodeReducer[kleene_star:kleene_star__instr_list_1]dd@#nodes=19,#parts=19#total-parts=19

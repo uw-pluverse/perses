@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -57,10 +57,10 @@ abstract class AbstractCompilationAction(
     require(file.isFile) { file }
     val cmd = constructCompileCmd(file)
     return ActionResult(
-      Shells.singleton.run(
+      Shells.defaultSingleton.run(
         cmd,
-        file.absoluteFile.parentFile.toPath(),
         captureOutput = true,
+        workingDirectory = file.absoluteFile.parentFile.toPath(),
         environment = env,
       ),
       cmd,
@@ -69,7 +69,7 @@ abstract class AbstractCompilationAction(
 
   override fun getVersion(): String {
     val result =
-      Shells.singleton.run(
+      Shells.defaultSingleton.run(
         versionPrintCmd,
         captureOutput = true,
         environment = Shells.CURRENT_ENV,

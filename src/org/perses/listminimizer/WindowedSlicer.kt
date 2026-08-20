@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,48 +16,14 @@
  */
 package org.perses.listminimizer
 
-import com.google.common.collect.ImmutableList
-
 open class WindowedSlicer<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
 ) : AbstractWindowedSlicer<T, PropertyPayload>(arguments) {
-  override fun reduceNonEmptyInput() {
-    val minWindowSize = extraArguments.minSlidingWindowSize
-    val maxWindowSize = extraArguments.maxSlidingWindowSize
-
-    val visited = mutableSetOf<ImmutableList<ElementWrapper<T>>>()
-    for (windowSize in maxWindowSize downTo minWindowSize) {
-      arguments.log { "Window size: $windowSize" }
-
-      val slider =
-        BackwardWindowSlider(expectedWindowSize = windowSize, list = best) {
-          it.deleted
-        }
-      while (true) {
-        val window = slider.slideBackByOnePosition()
-        if (window.isEmpty()) {
-          break
-        }
-        if (!visited.add(window)) {
-          // The window has been processed before, then skip to the next window.
-          continue
-        }
-        val configuration =
-          Candidate.DeletionsFromOriginal(
-            original = best,
-            deleted_ = window,
-          )
-        val testResult = testProperty(configuration)
-        if (testResult !is LMPropertyTestResult.Completed) {
-          continue
-        }
-        if (testResult.result.isInteresting) {
-          // A new best is found, and reset the visited cache.
-          visited.clear()
-          configuration.deletedWrappers.forEach { it.markAsDeleted() }
-          updateBest(configuration.candidateWrappers, testResult.payload)
-        }
-      }
-    }
-  }
+  override fun createCursor(): DeletionCandidateCursor<T> =
+    WindowedSliceCursor(
+      minWindowSize = extraArguments.minSlidingWindowSize,
+      maxWindowSize = extraArguments.maxSlidingWindowSize,
+      currentBest = { best },
+      onWindowSizeStarted = { windowSize -> arguments.log { "Window size: $windowSize" } },
+    )
 }

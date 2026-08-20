@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -36,9 +36,7 @@ class ListDiffCmdOptions : AbstractPPRCommandOptions() {
       description = "The variant file to reduce",
       order = 11,
     )
-    var variantFile: String? = null
-
-    fun getVariantFile(): Path = Paths.get(checkNotNull(variantFile))
+    var variantFile: Path? = null
 
     @JvmField
     @Parameter(
@@ -61,7 +59,10 @@ class ListDiffCmdOptions : AbstractPPRCommandOptions() {
     override fun validate() {
       super.validate()
 
-      val variantFile = getVariantFile()
+      val variantFile =
+        checkNotNull(variantFile) {
+          "variantFile cannot be null"
+        }
       check(Files.isRegularFile(variantFile)) {
         val workingDirectory = Paths.get(".").toAbsolutePath()
         "The variant program $variantFile is not a file. " +

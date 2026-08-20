@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -46,10 +46,13 @@ class ExternalTestScriptExecutionCacheTest :
 
     val propertyTestResult = PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMillis = 1)
     cache.cacheTestScriptResult(outputManager, propertyTestResult)
-    cache.getCachedResultOrNull(outputManagerFactory.createManagerFor(program)).let {
-      assertThat(it!!.exitCode.intValue).isSameInstanceAs(propertyTestResult.exitCode.intValue)
-      assertThat(it.elapsedMillis).isEqualTo(propertyTestResult.elapsedMillis)
-    }
+    cache
+      .getCachedResultOrNull(
+        outputManagerFactory.createManagerFor(program),
+      ).let {
+        assertThat(it!!.exitCode.intValue).isSameInstanceAs(propertyTestResult.exitCode.intValue)
+        assertThat(it.elapsedMillis).isEqualTo(propertyTestResult.elapsedMillis)
+      }
 
     val resultFile = workingDir.resolve("result.csv")
     assertThat(Files.exists(resultFile)).isFalse()

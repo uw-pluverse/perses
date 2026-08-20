@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -46,19 +46,23 @@ class GccCrashDetector : AbstractCompilerCrashDetector() {
                 }
               CrashMessageLine(it.substring(startIndex, endIndex))
             }
+
             isStacktrace(it) -> {
               val indexFirstSpace = it.indexOf(' ')
               check(indexFirstSpace > 0)
               StackTraceLine(it.substring(indexFirstSpace + 1).trim())
             }
+
             isSegfault(it) -> {
               val firstSpaceIndex = it.indexOf(' ')
               check(firstSpaceIndex > 0)
               CrashMessageLine(it.substring(firstSpaceIndex + 1).trim())
             }
+
             isCompareDebugFailure(it) -> {
               CrashMessageLine(KW_COMPARE_DEBUG)
             }
+
             else -> {
               CrashMessageLine(it)
             }

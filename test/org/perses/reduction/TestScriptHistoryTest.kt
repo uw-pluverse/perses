@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,6 +18,7 @@ package org.perses.reduction
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -26,8 +27,11 @@ import org.perses.reduction.TestScriptHistory.Companion.NAME_COLUMN_EXIT_CODE
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.ExitCode
 import java.nio.file.Files
+import java.util.zip.GZIPOutputStream
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
+import kotlin.io.path.outputStream
+import kotlin.io.path.readBytes
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
@@ -76,6 +80,57 @@ class TestScriptHistoryTest {
       assertThat(history.asReadOnlyMap()).isEqualTo(it.asReadOnlyMap())
       assertThat(it.asReadOnlyMap()).hasSize(2)
     }
+  }
+
+  @Test
+  fun testLoadFromGzippedCsv() {
+    history.cacheExecutionHistory(hash("AA"), PropertyTestResult(ExitCode.ZERO, 100))
+    history.cacheExecutionHistory(hash("BB"), PropertyTestResult(ExitCode.ZERO, 200))
+    history.saveToCSV(file)
+
+    val gzFile = tempDir.resolve("a.csv.gz")
+    GZIPOutputStream(gzFile.outputStream()).use { it.write(file.readBytes()) }
+
+    TestScriptHistory.loadFromCSV(shaAlgorithm, gzFile).let {
+      assertThat(it.asReadOnlyMap()).isEqualTo(history.asReadOnlyMap())
+      assertThat(it.asReadOnlyMap()).hasSize(2)
+    }
+  }
+
+  @Test
+  fun testSaveToGzippedCsv() {
+    history.cacheExecutionHistory(hash("AA"), PropertyTestResult(ExitCode.ZERO, 100))
+    history.cacheExecutionHistory(hash("BB"), PropertyTestResult(ExitCode.ZERO, 200))
+
+    val gzFile = tempDir.resolve("a.csv.gz")
+    history.saveToCSV(gzFile)
+
+    val bytes = gzFile.readBytes()
+    assertThat(bytes[0]).isEqualTo(0x1f.toByte())
+    assertThat(bytes[1]).isEqualTo(0x8b.toByte())
+
+    TestScriptHistory.loadFromCSV(shaAlgorithm, gzFile).let {
+      assertThat(it.asReadOnlyMap()).isEqualTo(history.asReadOnlyMap())
+      assertThat(it.asReadOnlyMap()).hasSize(2)
+    }
+  }
+
+  @Test
+  fun testLoadUnsupportedExtensionRejected() {
+    val txtFile = tempDir.resolve("a.txt")
+    txtFile.writeText("")
+    val e = assertThrows(IllegalStateException::class.java) {
+      TestScriptHistory.loadFromCSV(shaAlgorithm, txtFile)
+    }
+    assertThat(e).hasMessageThat().contains("Unsupported cache file extension")
+  }
+
+  @Test
+  fun testSaveUnsupportedExtensionRejected() {
+    val e = assertThrows(IllegalStateException::class.java) {
+      history.saveToCSV(tempDir.resolve("a.txt"))
+    }
+    assertThat(e).hasMessageThat().contains("Unsupported cache file extension")
   }
 
   private fun hash(s: String) = shaAlgorithm.createFromString(s).digest

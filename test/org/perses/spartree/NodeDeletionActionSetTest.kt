@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -38,7 +38,7 @@ class NodeDeletionActionSetTest {
       builder.deleteNode(node10!!)
       builder.build()
     }.also {
-      assertThat(it.actionsDescription).isEqualTo("edit 1")
+      assertThat(it.contextDescription).isEqualTo("edit 1")
     }
   private var actionSet2 =
     run {
@@ -47,7 +47,7 @@ class NodeDeletionActionSetTest {
       builder.deleteNode(node5!!)
       builder.build()
     }.also {
-      assertThat(it.actionsDescription).isEqualTo("test 2")
+      assertThat(it.contextDescription).isEqualTo("test 2")
     }
 
   @Test
@@ -96,6 +96,6 @@ class NodeDeletionActionSetTest {
       )
     assertThat(actionSet).isNotEqualTo(other)
     assertThat(actionSet.hashCode()).isNotEqualTo(other.hashCode())
-    assertThat(other.actionsDescription).isEqualTo("")
+    assertThat(other.contextDescription).isEqualTo("")
   }
 }

@@ -13,6 +13,7 @@ kt_jvm_test(
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:truth",
+        "//src/org/perses/antlr/atn:lexer_wrapper",
         "//src/org/perses/antlr/atn/nfa",
         "//src/org/perses/antlr/atn/simulator/ast",
         "//src/org/perses/antlr/atn/tdtree",

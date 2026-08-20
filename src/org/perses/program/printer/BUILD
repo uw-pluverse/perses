@@ -42,6 +42,7 @@ kt_jvm_library(
         "AbstractTokenPositionProvider.kt",
         "AbstractTokenizedProgramPrinter.kt",
         "DeducedPositionProvider.kt",
+        "TokenPlacementRecorder.kt",
     ],
     deps = [
         "//:antlr_runtime",

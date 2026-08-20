@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -33,7 +33,6 @@ import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.rust.LanguageRust
 import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
-import org.perses.program.TokenizedProgramFactory
 import org.perses.spartree.SparTreeBuilder
 import org.perses.spartree.SparTreeNodeFactory
 import org.perses.util.Util
@@ -120,10 +119,10 @@ class FuzzerDriverTest {
     val reductionScriptFile = deltaFolder.scriptFile
     println(reductionScriptFile.readText())
     val cmdOutput =
-      Shells.singleton.run(
+      Shells.defaultSingleton.run(
         "./${deltaFolder.info().scriptFileName}",
-        deltaFolder.folder.toPath(),
         captureOutput = true,
+        deltaFolder.folder.toPath(),
         environment = Shells.CURRENT_ENV,
       )
     assertThat(cmdOutput.exitCode.intValue).isEqualTo(0)
@@ -195,24 +194,19 @@ class FuzzerDriverTest {
 
       val treeByOpt = parserFacade.parseFile(file.toPath())
       val tokens = ParseTreeUtil.getTokens(treeByOpt.tree)
-      val tokenizedProgramFactory =
-        TokenizedProgramFactory.createFactory(
-          tokens,
-          parserFacade.language,
-        )
       val sparTreeNodeFactory =
         SparTreeNodeFactory(
-          parserFacade.metaTokenInfoDb,
-          tokenizedProgramFactory,
-          parserFacade.ruleHierarchy,
+          parserFacade,
         )
       val sparTree =
         SparTreeBuilder(
           sparTreeNodeFactory,
           treeByOpt,
+          simplifyTree = true,
+          canonicalTokenCountComputer = { null },
         ).result
 
-      return sparTree.programSnapshot
+      return sparTree.programSnapshot.payload
     }
   }
 }

@@ -1,6 +1,8 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("@rules_java//java:defs.bzl", "java_import")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//:perses.bzl", "copy")
-load("//test/org/perses:test.bzl", "golden_test")
+load("//test:test.bzl", "golden_test")
 
 package(default_visibility = [
     "//fuzzer/org/perses:__subpackages__",
@@ -44,6 +46,7 @@ kt_jvm_library(
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/spartree",
+        "//src/org/perses/spartree:spar_tree_parser_utility",
     ],
 )
 
@@ -167,7 +170,16 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses:perses_contants",
+        "//src/org/perses:perses_constants",
+    ],
+)
+
+kt_jvm_test(
+    name = "ParseabilityMainTest",
+    srcs = ["ParseabilityMainTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses:parseability_lib",
     ],
 )
 
@@ -217,5 +229,16 @@ sh_test(
     ],
     data = [
         PERSES_BIN,
+    ],
+)
+
+kt_jvm_test(
+    name = "PersesListenerManagerCreatorTest",
+    srcs = ["PersesListenerManagerCreatorTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses:perses_command_options",
+        "//src/org/perses:perses_listener_manager_creator",
+        "//src/org/perses/util",
     ],
 )

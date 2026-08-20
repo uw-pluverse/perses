@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,61 +21,32 @@ import com.google.common.base.Joiner
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
-import org.perses.program.AbstractDataKind
-import org.perses.program.LanguageKind
-import org.perses.program.SourceFile
-import org.perses.util.AutoIncrementDirectory
-import org.perses.util.GlobalSequenceGenerator
 import org.perses.util.TimeUtil
 import org.perses.util.Util
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.toImmutableList
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import java.time.LocalDateTime
 import java.util.concurrent.atomic.AtomicInteger
-import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 
 abstract class AbstractReductionIOManager<
   P,
-  K : AbstractDataKind,
-  Self : AbstractReductionIOManager<P, K, Self>,
+  Self : AbstractReductionIOManager<P, Self>,
 >(
-  private val workingFolder: Path,
-  val reductionInputs: AbstractReductionInputs<K, *>,
-  val outputManagerFactory: AbstractOutputManagerFactory<P>,
-  outputDirectory: Path?,
+  private val workingDirectory: Path,
+  val originalReductionInputs: DefaultLanguageOriginalReductionInputs,
+  val resultFolder: ReductionFolder,
 ) {
-  val tempRootFolder: Path =
-    workingFolder.resolve(
-      getTempRootFolderName(
-        reductionInputs.relativePathSequence().asIterable(),
-        reductionInputs.testScript.file.fileName
-          .toString(),
-        LocalDateTime.now(),
-      ),
-    )
-
-  abstract fun getConcreteReductionInputs(): AbstractReductionInputs<*, *>
-
-  val resultFolder =
-    if (outputDirectory == null) {
-      val dir =
-        AutoIncrementDirectory(DEFAULT_PERSES_BEST_DIR_NAME)
-          .computeAndCreate(workingFolder)
-      ReductionFolder(reductionInputs, dir)
-    } else {
-      if (!Files.exists(outputDirectory)) {
-        Files.createDirectories(outputDirectory)
-      }
-      check(Files.isDirectory(outputDirectory)) {
-        "$outputDirectory is not a directory."
-      }
-      ReductionFolder(reductionInputs, outputDirectory)
-    }
-
-  fun updateBestResult(program: P) {
+  /**
+   * Writes an already-rendered [outputManager] to [resultFolder] as the current best. The caller
+   * owns the renderer (the factory) -- e.g. a reduction driver, whose code format may be adapted --
+   * renders the program itself, and passes the output manager here, so the IO manager stays out of
+   * the rendering decision.
+   */
+  fun saveBestProgram(outputManager: AbstractOutputManager) {
     /*
      * We try to make the writing-best-result operation atomic.
      *
@@ -84,12 +55,23 @@ abstract class AbstractReductionIOManager<
      * https://github.com/chengniansun/perses-private/issues/508
      */
     val tempDirectory = createCurrentBestResultFolder()
-    createOutputManager(program).write(tempDirectory)
+    outputManager.write(tempDirectory)
     Util.copyDirectory(
-      tempDirectory.folder,
-      resultFolder.folder,
+      tempDirectory.path,
+      resultFolder.path,
       StandardCopyOption.REPLACE_EXISTING,
     )
+    // `copyDirectory` only adds/overwrites; it never removes, so a file that is in [resultFolder] but
+    // no longer rendered would linger forever. Delete any mutable file the output manager did not
+    // render so the folder mirrors the rendered set. This is a no-op for every default output manager
+    // (each renders the full fixed mutable-file set); it matters only when the set has shrunk -- e.g.
+    // after the cross-file empty-file-deletion reducer drops an emptied file.
+    val renderedFiles = outputManager.fileContentList.pairs.mapTo(HashSet()) { it.fileName }
+    originalReductionInputs.mutableFiles.forEach { file ->
+      if (file !in renderedFiles) {
+        resultFolder.deleteMutableFile(file)
+      }
+    }
     tempDirectory.deleteThisDirectoryRecursively()
   }
 
@@ -99,127 +81,66 @@ abstract class AbstractReductionIOManager<
     // create the result folder besides the resultFolder
     val timestamp = TimeUtil.formatDateForFileName(System.currentTimeMillis())
     val path =
-      resultFolder.folder.parent.resolve(
-        resultFolder.folder.name + "_best_result_snapshot_${++snapshotCounter}_at_" + timestamp,
+      resultFolder.path.parent.resolve(
+        resultFolder.path.name + "_best_result_snapshot_${++snapshotCounter}_at_" + timestamp,
       )
     check(!Files.exists(path))
     Files.createDirectories(path)
     check(Files.isDirectory(path)) { path }
-    return ReductionFolder(reductionInputs, path)
+    return ReductionFolder(originalReductionInputs, path)
   }
 
-  fun createTempResultFolder(): ReductionFolder =
-    lazilyInitializedReductionFolderManager.createNextFolder(
-      prefix = "temp_",
-      postfix = System.currentTimeMillis().toString(),
-    )
-
-  fun createOutputManager(program: P): AbstractOutputManager =
-    outputManagerFactory.createManagerFor(program)
-
   fun getScriptFileBaseNameIn(folder: ReductionFolder): String {
-    val scriptBaseName = reductionInputs.testScript.baseName
+    val scriptBaseName = originalReductionInputs.testScript.baseName
     check(folder.checkFileExistence(scriptBaseName))
     return scriptBaseName
   }
 
-  fun getSingleSourceFileBaseName(folder: ReductionFolder): String {
-    val baseName = reductionInputs.relativePathSequence().single().toString()
-    check(folder.checkFileExistence(baseName))
-    return baseName
-  }
-
-  fun getAllSourceFileBaseNamesIn(folder: ReductionFolder): ImmutableList<String> {
-    val baseNameList =
-      reductionInputs
-        .relativePathSequence()
-        .map {
-          val baseName = it.toString()
-          check(folder.checkFileExistence(baseName))
-          baseName
-        }.toImmutableList()
-    return baseNameList
-  }
-
-  fun getMainSourceFileBaseName(): String {
-    check(reductionInputs is AbstractSingleFileReductionInputs<*, *, *>) {
-      "We currently only support AbstractSingleFileReductionInputs."
-    }
-    return reductionInputs.mainFile.baseName
-  }
-
-  inline fun <T> visitMainSourceFileIn(
-    reductionFolder: ReductionFolder,
-    visitor: (SourceFile) -> T,
-  ): T =
-    visitor.invoke(
-      SourceFile(
-        reductionFolder.folder.resolve(getMainSourceFileBaseName()),
-        reductionInputs.initiallyDeterminedMainDataKind as LanguageKind,
-      ),
-    )
-
-  fun getProfileFile() =
-    workingFolder.resolve(
-      getCompactNameForFileList(reductionInputs.relativePathSequence().asIterable()) + "." +
-        TimeUtil.formatDateForFileName(System.currentTimeMillis()) + ".profile.txt",
-    )
-
-  fun backupAllMutableFiles(): ImmutableList<Path> {
-    val formatDateForFileName = TimeUtil.formatDateForFileName(System.currentTimeMillis())
-    val globalId = GlobalSequenceGenerator.nextWithPadding(paddingLength = 2, paddingChar = '0')
-    return reductionInputs
-      .sequenceOfMutableFiles()
-      .map {
-        val fileToReduce = it.origFile
-        val relativePath = it.relativePath
-        val backupFile =
-          workingFolder.resolve(
-            "$relativePath.${formatDateForFileName}_$globalId.orig",
-          )
-        check(!Files.exists(backupFile)) {
-          buildString {
-            append(
-              "The backup file ${backupFile.fileName} exists in directory ${backupFile.parent}",
-            )
-            append('\n')
-            append("The directory currently has the following children.")
-            workingFolder.listDirectoryEntries().forEach { fileInWorkingFolder ->
-              append('\n')
-              append("    ${fileInWorkingFolder.fileName}")
-            }
-          }
-        }
-        // Note that a file can be a binary file, so it is good to copy the file directly.
-        Files.copy(fileToReduce.file, backupFile)
-        backupFile
-      }.toImmutableList()
-  }
-
-  val lazilyInitializedReductionFolderManager by lazy {
-    materializeTempRootFolder()
-    ReductionFolderManager(
-      reductionInputs = reductionInputs,
-      rootFolder = tempRootFolder,
-    )
-  }
-
-  private fun materializeTempRootFolder(): Path {
-    if (!Files.exists(tempRootFolder)) {
-      Files.createDirectory(tempRootFolder)
-    }
-    check(Files.isDirectory(tempRootFolder)) {
-      "The temp root folder is not a directory: $tempRootFolder"
-    }
-    return tempRootFolder
-  }
+  /**
+   * The *root-relative paths* (e.g. `dir/a.c` for a file in a subdirectory -- equal to the bare base
+   * name only for a top-level file) of the input files actually present in [folder], in input order.
+   * Keys off the input universe but keeps only files that exist on disk, so it tolerates a subset
+   * folder: a mutable file deleted by the file-deletion phase is simply omitted (the never-deleted
+   * test script and dependency files always remain). For a full folder this is every input file,
+   * unchanged.
+   *
+   * The sole caller ([org.perses.reduction.reducer.FormatReducer]) runs the formatter with each path
+   * (as a string) as the file argument and [folder] as the working directory, so it must be the
+   * root-relative path, not the bare base name -- otherwise a nested or same-base-name file would not
+   * be found. The `benchmark_toys/format_nested_c` golden test pins this.
+   */
+  fun getExistingInputFileRelativePathsIn(folder: ReductionFolder): ImmutableList<Path> =
+    originalReductionInputs
+      .relativePathSequence()
+      .filter { folder.checkFileExistence(it.toString()) }
+      .toImmutableList()
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
 
     protected const val PERSES_TEMP_ROOT_PREFIX = "PersesTempRoot"
-    protected const val DEFAULT_PERSES_BEST_DIR_NAME = "perses_result"
     protected val idGenerator = AtomicInteger(0)
+
+    /**
+     * Builds a [ReductionFolder] under [outputDirectory] populated with the original inputs -- the
+     * test script and dependency files (written by [ReductionFolder] construction) plus every
+     * mutable file's original content (written via [AbstractOutputManager.createForOriginalInput]).
+     * Callers populate the result folder this way *before* constructing an IO manager that requires
+     * it (e.g. [org.perses.reduction.io.token.TokenReductionIOManager]).
+     */
+    fun createPopulatedResultFolder(
+      originalReductionInputs: AbstractOriginalReductionInputs,
+      shaAlgorithm: EnumShaAlgorithm,
+      outputDirectory: Path,
+    ): ReductionFolder {
+      val resultFolder = ReductionFolder(originalReductionInputs, outputDirectory)
+      AbstractOutputManager
+        .createForOriginalInput(
+          originalReductionInputs,
+          shaAlgorithm,
+        ).write(resultFolder)
+      return resultFolder
+    }
 
     fun getCompactNameForFileList(fileList: Iterable<Path>): String {
       return fileList
@@ -228,7 +149,7 @@ abstract class AbstractReductionIOManager<
           return if (pathList.size < 2) {
             fileName
           } else {
-            return "${fileName}${pathList.size}"
+            "${fileName}${pathList.size}"
           }
         }.joinToString("_")
     }
@@ -239,6 +160,7 @@ abstract class AbstractReductionIOManager<
       fileNameForReduction: Iterable<Path>,
       testScriptName: String?,
       time: LocalDateTime,
+      currentProcessID: Long,
     ): String {
       val separator = "_"
       val fileListString = getCompactNameForFileList(fileNameForReduction)
@@ -249,17 +171,18 @@ abstract class AbstractReductionIOManager<
           fileListString,
           testScriptName,
           TimeUtil.formatDateForFileName(time),
+          "pid_$currentProcessID",
           Strings.padStart(idGenerator.getAndIncrement().toString(), 2, '0'),
         )
     }
   }
 
   init {
-    require(Files.exists(workingFolder)) {
-      "The working folder does not exist: $workingFolder"
+    require(Files.exists(workingDirectory)) {
+      "The working folder does not exist: $workingDirectory"
     }
-    require(Files.isDirectory(workingFolder)) {
-      "The working folder is not a directory: $workingFolder"
+    require(Files.isDirectory(workingDirectory)) {
+      "The working folder is not a directory: $workingDirectory"
     }
   }
 }

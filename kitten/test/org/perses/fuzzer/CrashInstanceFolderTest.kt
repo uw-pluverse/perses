@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -118,10 +118,10 @@ class CrashInstanceFolderTest {
       assertThat(File(it, "mutant.c").isFile).isTrue()
 
       val cmdOutput =
-        Shells.singleton.run(
+        Shells.defaultSingleton.run(
           "./r.sh",
-          it.toPath(),
           captureOutput = false,
+          workingDirectory = it.toPath(),
           environment = Shells.CURRENT_ENV,
         )
       assertThat(cmdOutput.exitCode.intValue).isEqualTo(0)

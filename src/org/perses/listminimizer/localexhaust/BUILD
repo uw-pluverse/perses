@@ -8,6 +8,7 @@ kt_jvm_library(
         "CachedUniformLengthDeletionPatternSets.kt",
         "ElementEditPattern.kt",
         "EnumOperation.kt",
+        "LocalExhaustCursor.kt",
         "LocalExhaustWindowedMinimizer.kt",
         "UniformLengthDeletionPatternSet.kt",
     ],

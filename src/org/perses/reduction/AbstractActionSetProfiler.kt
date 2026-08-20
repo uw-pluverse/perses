@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,6 @@ package org.perses.reduction
 
 import org.perses.spartree.NodeReplacementAction
 import java.io.BufferedWriter
-import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -39,37 +38,25 @@ abstract class AbstractActionSetProfiler {
     override fun onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant(
       kleeneDescendant: NodeReplacementAction,
     ) {
-      try {
-        writer!!
-          .append("onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant: ")
-          .append("1")
-          .append('\n')
-          .flush()
-      } catch (e: IOException) {
-        throw RuntimeException(e)
-      }
+      writer!!
+        .append("onReplaceKleeneQualifiedNodeWithKleeneQualifiedDescendant: ")
+        .append("1")
+        .append('\n')
+        .flush()
     }
 
     override fun onReplaceNodeWithNearestCompatibleDescendant(replacement: NodeReplacementAction) {
-      try {
-        writer!!
-          .append("onReplaceNodeWithNearestCompatibleDescendant: size=")
-          .append("1")
-          .append('\n')
-          .flush()
-      } catch (e: IOException) {
-        throw RuntimeException(e)
-      }
+      writer!!
+        .append("onReplaceNodeWithNearestCompatibleDescendant: size=")
+        .append("1")
+        .append('\n')
+        .flush()
     }
 
     override fun close() {
-      try {
-        val local = writer
-        writer = null
-        local?.close()
-      } catch (e: IOException) {
-        throw RuntimeException(e)
-      }
+      val local = writer
+      writer = null
+      local?.close()
     }
 
     init {

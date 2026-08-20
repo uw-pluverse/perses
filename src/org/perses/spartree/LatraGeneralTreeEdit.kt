@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,9 +22,12 @@ import org.perses.util.Util.lazyAssert
 class LatraGeneralTreeEdit internal constructor(
   tree: SparTree,
   actionSet: LatraGeneralActionSet,
-) : AbstractSparTreeEdit<AbstractTreeEditAction>(actionSet, tree) {
-  override fun computeProgram(tree: SparTree): TokenizedProgram =
+) : AbstractSparTreeEdit<AbstractTargetedTreeEditAction>(actionSet, tree) {
+  override fun internalComputeProgram(tree: SparTree): TokenizedProgram =
     tree.customizeProgram(TokenizedProgramConstructor(actionSet))
+
+  override val structureDescriptionPrefix: String
+    get() = "LatraEdit"
 
   override fun internalApplyToTree() {
     actionSet.actions.forEach { action ->
@@ -33,8 +36,11 @@ class LatraGeneralTreeEdit internal constructor(
     }
   }
 
+  override fun computeDeletedTokens(): AbstractDeletedTokens =
+    AbstractDeletedTokens.Unsupported(this::class.java)
+
   private class TokenizedProgramConstructor(
-    private val actionSet: AbstractActionSet<AbstractTreeEditAction>,
+    private val actionSet: AbstractActionSet<AbstractTargetedTreeEditAction>,
   ) : AbstractTokenizedProgramCustomizer(actionSet) {
     override fun visit(node: AbstractSparTreeNode): List<AbstractSparTreeNode> {
       lazyAssert { !node.isPermanentlyDeleted }
@@ -47,7 +53,9 @@ class LatraGeneralTreeEdit internal constructor(
             addTokenIntervalToResult(action.replacingNode)
           }
 
-          is NodeDeletionAction -> Unit
+          is NodeDeletionAction -> {
+            // Do nothing
+          }
 
           else -> {
             error("Unsupported action: $action")

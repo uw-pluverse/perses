@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -90,23 +90,28 @@ class RuleTransitionGraph private constructor(
       childSelector: (PersesSequenceAst) -> AbstractPersesRuleElement,
     ) {
       when (ast.tag) {
-        AstTag.ALTERNATIVE_BLOCK ->
+        AstTag.ALTERNATIVE_BLOCK -> {
           ast.childSequence().forEach { child ->
             addEdge(graph, sourceVertex, edgeLabel, child, childSelector)
           }
+        }
+
         AstTag.RULE_REF -> {
           val targetVertex = (ast as PersesRuleReferenceAst).ruleNameHandle
           if (sourceVertex != targetVertex) {
             graph.addEdge(sourceVertex, targetVertex, edgeLabel)
           }
         }
+
         AstTag.OPTIONAL -> {
           addEdge(graph, sourceVertex, edgeLabel, (ast as PersesOptionalAst).body, childSelector)
         }
+
         AstTag.SEQUENCE -> {
           val seq = ast as PersesSequenceAst
           addEdge(graph, sourceVertex, edgeLabel, childSelector(seq), childSelector)
         }
+
         else -> {
           // do nothing
         }

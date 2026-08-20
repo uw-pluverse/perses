@@ -1,0 +1,2812 @@
+---
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 2
+  ruleName: "optional__compilationUnit_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 4
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 4
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compilationUnit_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_4]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 50
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 4
+  ruleName: "kleene_plus__translationUnit_3"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 354
+  - 7
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 354
+  - 7
+  editsTested:
+  - contextualDescription: "[kleene_plus:kleene_plus__translationUnit_3]remove all\
+      \ except first"
+    structureDescription: "[delete_7]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 49
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2"
+    structureDescription: "[delete_354]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 1
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 7
+  ruleName: "functionDefinition"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 8
+  - 340
+  - 10
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 8
+  - 340
+  - 10
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_7_with_321]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 48
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_7_with_161]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 48
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_7_with_123]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 48
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_7_with_52]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 48
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_7_with_318]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 44
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 10
+  ruleName: "compoundStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 11
+  - 12
+  - 13
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 11
+  - 12
+  - 13
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_10_with_181]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 27
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 12
+  ruleName: "optional__compoundStatement_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 15
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 15
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compoundStatement_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_15]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 43
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 15
+  ruleName: "kleene_plus__blockItemList_3"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 318
+  - 154
+  - 121
+  - 50
+  - 23
+  deletedTokenCount: 3
+  childrenAfterReduction:
+  - 318
+  - 154
+  - 121
+  - 50
+  editsTested:
+  - contextualDescription: "[kleene_plus:kleene_plus__blockItemList_3]remove all except\
+      \ first"
+    structureDescription: "[delete: 23,50,121,154]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 38
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:Layer-Top-0]dd@#nodes=3,#parts=1#total-parts=1"
+    structureDescription: "[delete: 50,121,318]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 16
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=4"
+    structureDescription: "[delete_23]"
+    propertyTestResult:
+      exitCode: 0
+      elapsedMillis: 0
+    successfullyDeletedCode: "12:  return 0;"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=3"
+    structureDescription: "[delete_50]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 7
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=3"
+    structureDescription: "[delete_121]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 4
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=3"
+    structureDescription: "[delete_154]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 24
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 154
+  ruleName: "aux_rule__statement_7"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 155
+  - 181
+  - 157
+  - 158
+  - 179
+  - 160
+  - 161
+  deletedTokenCount: 6
+  childrenAfterReduction: []
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_154_with_161]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 23
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_154_with_265]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 23
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_154_with_194]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 23
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_154_with_263]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 20
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_154_with_295]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 19
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_154_with_192]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 17
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular_node]kleene replacement"
+    structureDescription: "HoistEdit:[replace_154_with_186]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 8
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_154_with_181]"
+    propertyTestResult:
+      exitCode: 0
+      elapsedMillis: 0
+    successfullyDeletedCode: "5:  do\n9:    while(0);"
+    deletedTokenCount: 6
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 181
+  ruleName: "compoundStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 182
+  - 183
+  - 184
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 182
+  - 183
+  - 184
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 183
+  ruleName: "optional__compoundStatement_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 186
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 186
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compoundStatement_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_186]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 16
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 186
+  ruleName: "kleene_plus__blockItemList_3"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 295
+  - 263
+  - 192
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 295
+  - 263
+  - 192
+  editsTested:
+  - contextualDescription: "[kleene_plus:kleene_plus__blockItemList_3]remove all except\
+      \ first"
+    structureDescription: "[delete: 192,263]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 11
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2"
+    structureDescription: "[delete_192]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 7
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2"
+    structureDescription: "[delete_263]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 4
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 192
+  ruleName: "expressionStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 193
+  - 194
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 193
+  - 194
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_192_with_194]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 6
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 50
+  ruleName: "expressionStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 51
+  - 52
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 51
+  - 52
+  editsTested:
+  - contextualDescription: "[regular_node]can be epsilon"
+    structureDescription: "[delete_50]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 7
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_50_with_52]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 6
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 193
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 211
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 211
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 211
+  ruleName: "postfixExpression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 260
+  - 213
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 260
+  - 213
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_211_with_258]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 5
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_211_with_260]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 5
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_211_with_219]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 51
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 69
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 69
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 69
+  ruleName: "postfixExpression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 118
+  - 71
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 118
+  - 71
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_69_with_118]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 5
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_69_with_116]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 5
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_69_with_77]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 318
+  ruleName: "aux_rule__declaration_3"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 319
+  - 320
+  - 321
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 319
+  - 320
+  - 321
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 295
+  ruleName: "aux_rule__declaration_3"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 296
+  - 297
+  - 298
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 296
+  - 297
+  - 298
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 213
+  ruleName: "kleene_star__postfixExpression_2"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 215
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 215
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 215
+  ruleName: "aux_rule__postfixExpression_11"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 216
+  - 217
+  - 218
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 216
+  - 217
+  - 218
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 71
+  ruleName: "kleene_star__postfixExpression_2"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 73
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 73
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 73
+  ruleName: "aux_rule__postfixExpression_11"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 74
+  - 75
+  - 76
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 74
+  - 75
+  - 76
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 263
+  ruleName: "expressionStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 264
+  - 265
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 264
+  - 265
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_263_with_265]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 121
+  ruleName: "expressionStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 122
+  - 123
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 122
+  - 123
+  editsTested:
+  - contextualDescription: "[regular_node]can be epsilon"
+    structureDescription: "[delete_121]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 4
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_121_with_123]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 340
+  ruleName: "directDeclarator"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 348
+  - 342
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 348
+  - 342
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_340_with_348]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 320
+  ruleName: "optional__declaration_2"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 322
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 322
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 322
+  ruleName: "initDeclaratorList"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 335
+  - 324
+  deletedTokenCount: 2
+  childrenAfterReduction: []
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_322_with_335]"
+    propertyTestResult:
+      exitCode: 0
+      elapsedMillis: 0
+    successfullyDeletedCode: "4:       , j"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 297
+  ruleName: "optional__declaration_2"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 299
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 299
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 299
+  ruleName: "initDeclaratorList"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 312
+  - 301
+  deletedTokenCount: 2
+  childrenAfterReduction: []
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_299_with_312]"
+    propertyTestResult:
+      exitCode: 0
+      elapsedMillis: 0
+    successfullyDeletedCode: "6:         , j"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 264
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 267
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 267
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_267]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 267
+  ruleName: "assignmentExpression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 268
+  - 285
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 268
+  - 285
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_267_with_293]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_267_with_285]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 217
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 219
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 219
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_219]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 219
+  ruleName: "expression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 258
+  - 221
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 258
+  - 221
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_219_with_241]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_219_with_258]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 122
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 125
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 125
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_125]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 125
+  ruleName: "assignmentExpression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 126
+  - 143
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 126
+  - 143
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_125_with_151]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_125_with_143]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 75
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 77
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 77
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_77]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 77
+  ruleName: "expression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 116
+  - 79
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 116
+  - 79
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_77_with_99]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_77_with_116]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 342
+  ruleName: "kleene_star__directDeclarator_7"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 344
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 344
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_star:kleene_star__directDeclarator_7:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_344]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 344
+  ruleName: "aux_rule__directDeclarator_15"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 345
+  - 347
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 345
+  - 347
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 268
+  ruleName: "kleene_star__assignmentExpression_1"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 286
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 286
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 286
+  ruleName: "aux_rule__assignmentExpression_2"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 293
+  - 289
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 293
+  - 289
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 221
+  ruleName: "kleene_star__expression_1"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 222
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 222
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 222
+  ruleName: "aux_rule__expression_2"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 223
+  - 241
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 223
+  - 241
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 126
+  ruleName: "kleene_star__assignmentExpression_1"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 144
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 144
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 144
+  ruleName: "aux_rule__assignmentExpression_2"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 151
+  - 147
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 151
+  - 147
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 79
+  ruleName: "kleene_star__expression_1"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 80
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 80
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 80
+  ruleName: "aux_rule__expression_2"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 81
+  - 99
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 81
+  - 99
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 354
+  ruleName: "IncludeDirective"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 348
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 347
+  ruleName: "RightParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 345
+  ruleName: "LeftParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 335
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 321
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 319
+  ruleName: "declarationSpecifiers"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 339
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 339
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:declarationSpecifiers:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_339]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 1
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 339
+  ruleName: "Int"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 312
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 298
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 296
+  ruleName: "declarationSpecifiers"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 316
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 316
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:declarationSpecifiers:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_316]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 1
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 316
+  ruleName: "Int"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 293
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 289
+  ruleName: "Assign"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 285
+  ruleName: "Constant"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 265
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 260
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 258
+  ruleName: "kleene_plus__primaryExpression_1"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 259
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 259
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__primaryExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_259]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 1
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 259
+  ruleName: "StringLiteral"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 241
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 223
+  ruleName: "Comma"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 218
+  ruleName: "RightParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 216
+  ruleName: "LeftParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 194
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 184
+  ruleName: "RightBrace"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 182
+  ruleName: "LeftBrace"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 151
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 147
+  ruleName: "Assign"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 143
+  ruleName: "Constant"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 123
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 118
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 116
+  ruleName: "kleene_plus__primaryExpression_1"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 117
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 117
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__primaryExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_117]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 1
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 117
+  ruleName: "StringLiteral"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 99
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 81
+  ruleName: "Comma"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 76
+  ruleName: "RightParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 74
+  ruleName: "LeftParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 52
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 13
+  ruleName: "RightBrace"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 11
+  ruleName: "LeftBrace"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 8
+  ruleName: "optional__functionDefinition_2"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 349
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 349
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__functionDefinition_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_349]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 1
+    startPersesTimeSeconds: 0
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 349
+  ruleName: "declarationSpecifiers"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 353
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 353
+  editsTested: []
+- fixpointIteration: 1
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 353
+  ruleName: "Int"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 357
+  ruleName: "optional__compilationUnit_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 359
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 359
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 359
+  ruleName: "kleene_plus__translationUnit_3"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 634
+  - 362
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 634
+  - 362
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2"
+    structureDescription: "[delete_634]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 1
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 362
+  ruleName: "functionDefinition"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 363
+  - 620
+  - 365
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 363
+  - 620
+  - 365
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_362_with_608]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 33
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 365
+  ruleName: "compoundStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 366
+  - 367
+  - 368
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 366
+  - 367
+  - 368
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_365_with_481]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 16
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 367
+  ruleName: "optional__compoundStatement_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 370
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 370
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 370
+  ruleName: "kleene_plus__blockItemList_3"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 608
+  - 481
+  - 448
+  - 377
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 608
+  - 481
+  - 448
+  - 377
+  editsTested:
+  - contextualDescription: "[kleene_plus:kleene_plus__blockItemList_3]remove all except\
+      \ first"
+    structureDescription: "[delete: 377,448,481]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 27
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:Layer-Top-0]dd@#nodes=3,#parts=1#total-parts=1"
+    structureDescription: "[delete: 377,448,608]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 14
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=3"
+    structureDescription: "[delete_377]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 7
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=3"
+    structureDescription: "[delete_448]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 4
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=3"
+    structureDescription: "[delete_481]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 16
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 481
+  ruleName: "compoundStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 482
+  - 483
+  - 484
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 482
+  - 483
+  - 484
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_481_with_597]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 15
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_481_with_565]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 15
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_481_with_494]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 15
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_481_with_595]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 13
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_481_with_563]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 12
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_481_with_492]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 9
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular_node]kleene replacement"
+    structureDescription: "HoistEdit:[replace_481_with_486]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 2
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 483
+  ruleName: "optional__compoundStatement_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 486
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 486
+  editsTested:
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compoundStatement_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1"
+    structureDescription: "[delete_486]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 14
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 486
+  ruleName: "kleene_plus__blockItemList_3"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 595
+  - 563
+  - 492
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 595
+  - 563
+  - 492
+  editsTested:
+  - contextualDescription: "[kleene_plus:kleene_plus__blockItemList_3]remove all except\
+      \ first"
+    structureDescription: "[delete: 492,563]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 11
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2"
+    structureDescription: "[delete_492]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 7
+    startPersesTimeSeconds: 0
+  - contextualDescription: "ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2"
+    structureDescription: "[delete_563]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 4
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 492
+  ruleName: "expressionStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 493
+  - 494
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 493
+  - 494
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_492_with_494]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 6
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 377
+  ruleName: "expressionStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 378
+  - 379
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 378
+  - 379
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_377_with_379]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 6
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 493
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 511
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 511
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 511
+  ruleName: "postfixExpression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 560
+  - 513
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 560
+  - 513
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_511_with_558]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 5
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_511_with_560]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 5
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_511_with_519]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 378
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 396
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 396
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 396
+  ruleName: "postfixExpression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 445
+  - 398
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 445
+  - 398
+  editsTested:
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_396_with_445]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 5
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_396_with_443]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 5
+    startPersesTimeSeconds: 0
+  - contextualDescription: "[regular node]compatible replacement"
+    structureDescription: "HoistEdit:[replace_396_with_404]"
+    propertyTestResult:
+      exitCode: 1
+      elapsedMillis: 0
+    successfullyDeletedCode: "<uninteresting>"
+    deletedTokenCount: 3
+    startPersesTimeSeconds: 0
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 513
+  ruleName: "kleene_star__postfixExpression_2"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 515
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 515
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 515
+  ruleName: "aux_rule__postfixExpression_11"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 516
+  - 517
+  - 518
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 516
+  - 517
+  - 518
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 398
+  ruleName: "kleene_star__postfixExpression_2"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 400
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 400
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 400
+  ruleName: "aux_rule__postfixExpression_11"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 401
+  - 402
+  - 403
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 401
+  - 402
+  - 403
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 563
+  ruleName: "expressionStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 564
+  - 565
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 564
+  - 565
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 448
+  ruleName: "expressionStatement"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 449
+  - 450
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 449
+  - 450
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 620
+  ruleName: "directDeclarator"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 628
+  - 622
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 628
+  - 622
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 608
+  ruleName: "aux_rule__declaration_3"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 609
+  - 610
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 609
+  - 610
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 595
+  ruleName: "aux_rule__declaration_3"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 596
+  - 597
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 596
+  - 597
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 564
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 567
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 567
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 567
+  ruleName: "assignmentExpression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 568
+  - 585
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 568
+  - 585
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 517
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 519
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 519
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 519
+  ruleName: "expression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 558
+  - 521
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 558
+  - 521
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 449
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 452
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 452
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 452
+  ruleName: "assignmentExpression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 453
+  - 470
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 453
+  - 470
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 402
+  ruleName: "optional__postfixExpression_1"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 404
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 404
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 404
+  ruleName: "expression"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 443
+  - 406
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 443
+  - 406
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 622
+  ruleName: "kleene_star__directDeclarator_7"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 624
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 624
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 624
+  ruleName: "aux_rule__directDeclarator_15"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 625
+  - 627
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 625
+  - 627
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 609
+  ruleName: "declarationSpecifiers"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 619
+  - 616
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 619
+  - 616
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 596
+  ruleName: "declarationSpecifiers"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 606
+  - 603
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 606
+  - 603
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 568
+  ruleName: "kleene_star__assignmentExpression_1"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 586
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 586
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 586
+  ruleName: "aux_rule__assignmentExpression_2"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 593
+  - 589
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 593
+  - 589
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 521
+  ruleName: "kleene_star__expression_1"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 522
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 522
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 522
+  ruleName: "aux_rule__expression_2"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 523
+  - 541
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 523
+  - 541
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 453
+  ruleName: "kleene_star__assignmentExpression_1"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 471
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 471
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 471
+  ruleName: "aux_rule__assignmentExpression_2"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 478
+  - 474
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 478
+  - 474
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 406
+  ruleName: "kleene_star__expression_1"
+  ruleType: "KLEENE_STAR"
+  childrenBeforeReduction:
+  - 407
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 407
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 407
+  ruleName: "aux_rule__expression_2"
+  ruleType: "OTHER_RULE"
+  childrenBeforeReduction:
+  - 408
+  - 426
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 408
+  - 426
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 634
+  ruleName: "IncludeDirective"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 628
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 627
+  ruleName: "RightParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 625
+  ruleName: "LeftParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 619
+  ruleName: "Int"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 616
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 610
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 606
+  ruleName: "Int"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 603
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 597
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 593
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 589
+  ruleName: "Assign"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 585
+  ruleName: "Constant"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 565
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 560
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 558
+  ruleName: "kleene_plus__primaryExpression_1"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 559
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 559
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 559
+  ruleName: "StringLiteral"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 541
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 523
+  ruleName: "Comma"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 518
+  ruleName: "RightParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 516
+  ruleName: "LeftParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 494
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 484
+  ruleName: "RightBrace"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 482
+  ruleName: "LeftBrace"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 478
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 474
+  ruleName: "Assign"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 470
+  ruleName: "Constant"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 450
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 445
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 443
+  ruleName: "kleene_plus__primaryExpression_1"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 444
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 444
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 444
+  ruleName: "StringLiteral"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 426
+  ruleName: "Identifier"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 408
+  ruleName: "Comma"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 403
+  ruleName: "RightParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 401
+  ruleName: "LeftParen"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 379
+  ruleName: "Semi"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 368
+  ruleName: "RightBrace"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 366
+  ruleName: "LeftBrace"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 363
+  ruleName: "optional__functionDefinition_2"
+  ruleType: "OPTIONAL"
+  childrenBeforeReduction:
+  - 629
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 629
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 629
+  ruleName: "declarationSpecifiers"
+  ruleType: "KLEENE_PLUS"
+  childrenBeforeReduction:
+  - 633
+  deletedTokenCount: 0
+  childrenAfterReduction:
+  - 633
+  editsTested: []
+- fixpointIteration: 2
+  startPersesTimeSeconds: 0
+  endPersesTimeSeconds: 0
+  nodeId: 633
+  ruleName: "Int"
+  ruleType: null
+  childrenBeforeReduction: []
+  deletedTokenCount: 0
+  childrenAfterReduction: []
+  editsTested: []

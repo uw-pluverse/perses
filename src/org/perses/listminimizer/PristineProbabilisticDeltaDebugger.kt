@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.listminimizer
 
+import com.google.common.base.MoreObjects
 import kotlin.random.Random
 
 open class PristineProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
@@ -81,5 +82,11 @@ open class PristineProbabilisticDeltaDebugger<T : Any, PropertyPayload>(
       ProbabilityPayload(
         probability = newProbability,
       )
+
+    override fun toString(): String =
+      MoreObjects
+        .toStringHelper(this::class.java.simpleName)
+        .add("prob", probability)
+        .toString()
   }
 }

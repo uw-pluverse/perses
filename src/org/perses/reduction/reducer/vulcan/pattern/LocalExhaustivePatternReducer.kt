@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,64 +17,50 @@
 package org.perses.reduction.reducer.vulcan.pattern
 
 import com.google.common.collect.ImmutableList
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.localexhaust.CachedUniformLengthDeletionPatternSets
-import org.perses.listminimizer.localexhaust.ElementEditPattern
-import org.perses.listminimizer.localexhaust.EnumOperation
-import org.perses.reduction.AbstractTokenReducer
-import org.perses.reduction.EditTestPayload
+import org.perses.reduction.AbstractSparTreeReducer
+import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.TestScriptExecResult
-import org.perses.reduction.reducer.token.AbstractConcurrentTokenSlicer
-import org.perses.reduction.reducer.token.AbstractSlicingTask
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.spartree.NodeDeletionActionSet
+import org.perses.spartree.ContextDescription
 import org.perses.spartree.SparTree
-import org.perses.util.Util
 import org.perses.util.toImmutableList
 
-class LocalExhaustivePatternReducer internal constructor(
-  patternReducerAnnotation: LocalExhaustivePatternReducerAnnotation,
+class LocalExhaustivePatternReducer(
   reducerContext: ReducerContext,
-) : AbstractConcurrentTokenSlicer(patternReducerAnnotation, reducerContext) {
-  constructor(reducerContext: ReducerContext) : this(
-    LocalExhaustivePatternReducerAnnotation(
-      reducerContext.configuration.vulcanConfig.windowSizeForLocalExhaustivePatternReduction,
-    ),
-    reducerContext,
-  )
+) : AbstractSparTreeReducer(META, reducerContext) {
+  private val windowSize =
+    reducerContext.configuration.vulcanConfig.windowSizeForLocalExhaustivePatternReduction
 
-  private val deletionPatternSet =
-    CachedUniformLengthDeletionPatternSets
-      .getDeletionPatternSet(
-        patternReducerAnnotation.windowSize,
-      ).interestingPatternsInDescendingOfNumOfDeletes
+  init {
+    // Lower bound comes from LocalExhaustMinimizerArguments (window size must be > 2); upper bound
+    // is the largest pattern set the enumeration is precomputed for.
+    require(
+      windowSize in MIN_WINDOW_SIZE..CachedUniformLengthDeletionPatternSets.MAX_PATTERN_LENGTH,
+    ) {
+      "The local-exhaustive pattern window size must be in " +
+        "[$MIN_WINDOW_SIZE, ${CachedUniformLengthDeletionPatternSets.MAX_PATTERN_LENGTH}], " +
+        "but got $windowSize."
+    }
+  }
 
-  override fun createSequenceOfIndependentSlicingTasks(
-    tokenSlicingGranularity: Int,
-    tree: SparTree,
-  ): Sequence<ListOfIndependentSlicingTasks> =
-    computeSequenceOfCandidateNodesToSlideThrough(tree, tokenSlicingGranularity)
-      .map { nodeList ->
-        val list =
-          Util
-            .slideReverseIfSlideable(
-              nodeList,
-              slidingWindowSize = tokenSlicingGranularity,
-            ).flatMap { sublist ->
-              val interval = sublist.interval
-              check(interval.size() == tokenSlicingGranularity)
-              deletionPatternSet.map { deletionPattern ->
-                TokenPatternDeleteTask(
-                  tree,
-                  nodeList,
-                  interval.inclusiveStart,
-                  deletionPattern,
-                )
-              }
-            }.toImmutableList()
-        ListOfIndependentSlicingTasks(list)
-      }
+  override fun computeDefaultListMinimizerType(): EnumListMinimizerType =
+    EnumListMinimizerType.LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION
+
+  override fun internalReduce(fixpointReductionState: FixpointReductionState) {
+    val tree = fixpointReductionState.inputRepresentation.tree
+    computeSequenceOfCandidateNodesToSlideThrough(tree, windowSize).forEach { levelNodes ->
+      runListMinimizerOverNodes(
+        needToTestEmpty = false,
+        tree = tree,
+        input = levelNodes,
+        fixpointReductionState = fixpointReductionState,
+        actionsDescriptionPostfix = ContextDescription.of(NAME_PREFIX),
+      )
+    }
+  }
 
   object META : ReducerAnnotation(
     shortName = NAME_PREFIX,
@@ -85,12 +71,14 @@ class LocalExhaustivePatternReducer internal constructor(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(LocalExhaustivePatternReducer(reducerContext))
   }
 
   companion object {
     internal const val NAME_PREFIX = "token_pattern_reducer"
+
+    private const val MIN_WINDOW_SIZE = 3
 
     internal fun computeSequenceOfCandidateNodesToSlideThrough(
       tree: SparTree,
@@ -125,52 +113,5 @@ class LocalExhaustivePatternReducer internal constructor(
           }
         }
       }
-  }
-
-  // The code can be merged with [TokenSlicingTask]
-  inner class TokenPatternDeleteTask(
-    tree: SparTree,
-    nodeList: ImmutableList<out AbstractSparTreeNode>,
-    startIndex: Int,
-    private val tokenEditPattern: ElementEditPattern,
-  ) : AbstractSlicingTask(
-      tree,
-      reducerContext,
-      this@LocalExhaustivePatternReducer.executorService::testProgramAsync,
-    ) {
-    init {
-      require(tokenEditPattern.numOfDeletes > 0)
-      val patternLength = tokenEditPattern.patternLength
-      require(startIndex + patternLength <= nodeList.size)
-    }
-
-    private val nodesToEdit =
-      nodeList
-        .subList(
-          startIndex,
-          startIndex + tokenEditPattern.patternLength,
-        ).onEach { assert(!it.isPermanentlyDeleted) }
-
-    private val actionSet =
-      run {
-        val operations = tokenEditPattern.operations
-        assert(nodesToEdit.size == operations.size)
-        val builder = NodeDeletionActionSet.Builder("token_pattern_$tokenEditPattern")
-        nodesToEdit.zip(operations).forEach {
-          if (it.second == EnumOperation.DELETE) {
-            builder.deleteNode(it.first)
-          }
-        }
-        builder.build()
-      }
-
-    override fun tryAsyncRunPreconditionCheck(): Boolean =
-      nodesToEdit.all { !it.isPermanentlyDeleted }
-
-    override fun createNodeDeletionActionSet(): NodeDeletionActionSet = actionSet
-
-    override fun analyzeResultAndGetBest(futureResult: TestScriptExecResult<EditTestPayload>) =
-      this@LocalExhaustivePatternReducer
-        .analyzeOneTestFutureAndGetBest(futureResult)
   }
 }

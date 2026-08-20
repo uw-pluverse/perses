@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,7 @@ package org.perses.dotgraph
 
 import org.apache.commons.text.StringEscapeUtils
 import org.perses.util.shell.Shells
-import org.perses.util.shell.Shells.Companion.singleton
+import org.perses.util.shell.Shells.Companion.defaultSingleton
 import java.nio.file.Path
 import java.util.function.Consumer
 import kotlin.io.path.absolute
@@ -47,11 +47,11 @@ class DotGraph<T> {
     val dotFile = outputFile.parent.resolve(outputFile.name + ".dot")
     dotFile.writeText(dotContent)
     val (_, _, stderr) =
-      singleton
+      defaultSingleton
         .run(
           "dot -Tpdf " + dotFile.absolute() + " -o " + outputFile.absolute(),
           true,
-          Shells.CURRENT_ENV,
+          environment = Shells.CURRENT_ENV,
         )
     println(stderr)
   }

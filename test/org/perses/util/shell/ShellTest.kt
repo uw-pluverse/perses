@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,14 +21,15 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.junit.runners.Parameterized
 import org.perses.util.DaemonThreadPool
 import org.perses.util.Util
 import org.perses.util.shell.ShellCommandOnPath.Companion.normalizeAndCheckExecutability
 import org.perses.util.shell.Shells.Companion.CURRENT_ENV
 import org.perses.util.shell.Shells.Companion.SHEBANG_BASH
+import org.perses.util.shell.Shells.Companion.apacheExecSingleton
 import org.perses.util.shell.Shells.Companion.createNewEnvironmentVar
-import org.perses.util.shell.Shells.Companion.singleton
+import org.perses.util.shell.Shells.Companion.jdkBasedSingleton
 import java.nio.file.Files
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.createFile
@@ -36,8 +37,10 @@ import kotlin.io.path.deleteRecursively
 import kotlin.io.path.writeText
 import kotlin.time.Duration.Companion.seconds
 
-@RunWith(JUnit4::class)
-class ShellTest {
+@RunWith(Parameterized::class)
+class ShellTest(
+  private val shell: Shells,
+) {
   private val tempDir = Files.createTempDirectory(this::class.qualifiedName)
 
   @OptIn(ExperimentalPathApi::class)
@@ -80,7 +83,7 @@ class ShellTest {
   @Test
   fun noCaptureOutput() {
     val cmd = "echo 'hello'"
-    val cmdOutput = singleton.run(cmd, captureOutput = false, environment = CURRENT_ENV)
+    val cmdOutput = shell.run(cmd, captureOutput = false, environment = CURRENT_ENV)
     assertThat(cmdOutput.stdout.hasLines()).isFalse()
     assertThat(cmdOutput.stderr.hasLines()).isFalse()
   }
@@ -88,7 +91,7 @@ class ShellTest {
   @Test
   fun captureOutput() {
     val cmd = "echo 'hello'"
-    val cmdOutput = singleton.run(cmd, captureOutput = true, environment = CURRENT_ENV)
+    val cmdOutput = shell.run(cmd, captureOutput = true, environment = CURRENT_ENV)
     assertThat(cmdOutput.stdout.hasLines()).isTrue()
     assertThat(cmdOutput.stderr.hasLines()).isFalse()
   }
@@ -106,7 +109,7 @@ class ShellTest {
     )
 
     val cmdOutput =
-      singleton.run(
+      shell.run(
         script.toString(),
         captureOutput = true,
         environment = createNewEnvironmentVar("TEST_ENV_VALUE", "hello world"),
@@ -116,7 +119,17 @@ class ShellTest {
 
   @Test
   fun testRunningProcessShouldBeKilledInsteadOfBeingInterrupted() {
-    val markFile = tempDir.resolve("mark_file.sh")
+    verifyProcessKilling(captureOutput = true)
+  }
+
+  @Test
+  fun testRunningProcessShouldBeKilledWhenOutputIsNotCaptured() {
+    verifyProcessKilling(captureOutput = false)
+  }
+
+  private fun verifyProcessKilling(captureOutput: Boolean) {
+    val suffix = if (captureOutput) "" else "_no_capture"
+    val markFile = tempDir.resolve("mark_file$suffix.sh")
     assertThat(Files.exists(markFile)).isFalse()
 
     val scriptBodyForRunningForever =
@@ -127,7 +140,7 @@ class ShellTest {
       """.trimMargin()
 
     val grandChildScript =
-      tempDir.resolve("run-forever-grandchild.sh").also {
+      tempDir.resolve("run-forever-grandchild$suffix.sh").also {
         it.writeText(
           """
           |$SHEBANG_BASH
@@ -137,7 +150,7 @@ class ShellTest {
         Util.setExecutable(it)
       }
     val childScript =
-      tempDir.resolve("run-forever-child.sh").also {
+      tempDir.resolve("run-forever-child$suffix.sh").also {
         it.writeText(
           """
           |$SHEBANG_BASH
@@ -149,7 +162,7 @@ class ShellTest {
       }
     Util.setExecutable(childScript)
     val mainScript =
-      tempDir.resolve("run-forever-main.sh").also {
+      tempDir.resolve("run-forever-main$suffix.sh").also {
         it.writeText(
           """
           |$SHEBANG_BASH
@@ -160,15 +173,18 @@ class ShellTest {
         )
       }
     Util.setExecutable(mainScript)
-    val thread = DaemonThreadPool.createSingleThreadPool()
+    val thread =
+      DaemonThreadPool.createSingleThreadPool(
+        creatorObject = this,
+      )
     try {
       val future =
         thread.submit {
           try {
-            singleton.run(
+            shell.run(
               cmd = mainScript.toString(),
-              captureOutput = true,
-              environment = Shells.CURRENT_ENV,
+              captureOutput = captureOutput,
+              environment = CURRENT_ENV,
             )
           } catch (e: InterruptedException) {
             e.printStackTrace()
@@ -176,7 +192,7 @@ class ShellTest {
         }
       Thread.sleep(2.seconds.inWholeMilliseconds) // to make sure the mark file is created.
       assertThat(Files.exists(markFile)).isTrue()
-      singleton
+      apacheExecSingleton
         .run(
           cmd = "ps aux",
           captureOutput = true,
@@ -193,7 +209,7 @@ class ShellTest {
       DaemonThreadPool.waitInfinitelyToShutdown(thread)
     }
 
-    singleton
+    apacheExecSingleton
       .run(
         cmd = "ps aux",
         captureOutput = true,
@@ -205,5 +221,15 @@ class ShellTest {
         assertThat(it).doesNotContain(childScript.toString())
         assertThat(it).doesNotContain(grandChildScript.toString())
       }
+  }
+
+  companion object {
+    @JvmStatic
+    @Parameterized.Parameters(name = "{0}")
+    fun parameters() =
+      listOf(
+        arrayOf(apacheExecSingleton),
+        arrayOf(jdkBasedSingleton),
+      )
   }
 }

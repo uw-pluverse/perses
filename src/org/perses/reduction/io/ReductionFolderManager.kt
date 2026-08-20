@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,18 +16,19 @@
  */
 package org.perses.reduction.io
 
+import org.perses.util.AtomicSequenceGenerator
 import org.perses.util.Util
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
-class ReductionFolderManager internal constructor(
-  private val reductionInputs: AbstractReductionInputs<*, *>,
+class ReductionFolderManager(
+  private val originalReductionInputs: AbstractOriginalReductionInputs,
   val rootFolder: Path,
 ) {
   private val sequenceGenerator =
-    Util.AtomicSequenceGenerator(
+    AtomicSequenceGenerator(
       start = 0,
       minLengthForPadding = FOLDER_NAME_MIN_LENGTH,
     )
@@ -37,7 +38,7 @@ class ReductionFolderManager internal constructor(
     postfix: String = "",
   ): ReductionFolder {
     val folderName = prefix + sequenceGenerator.next() + postfix
-    return ReductionFolder(reductionInputs, createDirectory(folderName))
+    return ReductionFolder(originalReductionInputs, createDirectory(folderName))
   }
 
   fun createTempDirectory(

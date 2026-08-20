@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,7 +27,7 @@ import org.antlr.v4.tool.Grammar
 import org.antlr.v4.tool.ast.GrammarAST
 import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
-import org.perses.program.TokenizedProgramFactory.Companion.createFactory
+import org.perses.util.SimpleStack
 import org.perses.util.Util
 import java.io.IOException
 import java.io.StringWriter
@@ -35,6 +35,26 @@ import java.io.Writer
 
 /** Utility class to process Antlr grammars.  */
 object AntlrGrammarUtil {
+  fun countLeafTokens(tree: ParseTree): Int {
+    var count = 0
+    val stack = SimpleStack<ParseTree>()
+    stack.add(tree)
+    while (stack.isNotEmpty()) {
+      val node = stack.remove()
+      if (node is TerminalNode) {
+        if (node.symbol.type != Token.EOF) {
+          count++
+        }
+      } else {
+        val childCount = node.getChildCount()
+        for (i in 0 until childCount) {
+          stack.add(node.getChild(i))
+        }
+      }
+    }
+    return count
+  }
+
   fun <T : Lexer> getAtnFromLexer(lexerClass: Class<T>): ATN? {
     val field =
       lexerClass.fields.singleOrNull { it.name == FIELD_NAME_OF_ATN }
@@ -44,15 +64,37 @@ object AntlrGrammarUtil {
 
   private const val FIELD_NAME_OF_ATN = "_ATN"
 
-  fun readAllTokensInDefaultChannel(lexer: Lexer): ImmutableList<Token> {
-    val builder = ImmutableList.builder<Token>()
+  /**
+   * Feeds every token [lexer] produces on the default channel (EOF excluded) to [action], one at
+   * a time, without retaining any of them. The streaming building block of
+   * [countTokensInDefaultChannel] and [readAllTokensInDefaultChannel].
+   */
+  inline fun forEachTokenInDefaultChannel(
+    lexer: Lexer,
+    action: (Token) -> Unit,
+  ) {
     var token: Token = lexer.nextToken()
     while (token.type != Token.EOF) {
       if (token.channel == Token.DEFAULT_CHANNEL) {
-        builder.add(token)
+        action(token)
       }
       token = lexer.nextToken()
     }
+  }
+
+  /**
+   * Counts the tokens [lexer] produces on the default channel (EOF excluded) without retaining
+   * them. This is the list-free counterpart of [readAllTokensInDefaultChannel].
+   */
+  fun countTokensInDefaultChannel(lexer: Lexer): Int {
+    var count = 0
+    forEachTokenInDefaultChannel(lexer) { ++count }
+    return count
+  }
+
+  fun readAllTokensInDefaultChannel(lexer: Lexer): ImmutableList<Token> {
+    val builder = ImmutableList.builder<Token>()
+    forEachTokenInDefaultChannel(lexer) { builder.add(it) }
     return builder.build().also { tokens ->
       Util.lazyAssert(
         test = {
@@ -96,7 +138,7 @@ object AntlrGrammarUtil {
     val builder = ImmutableList.builder<Token>()
     convertParseTreeToProgram(root, builder)
     val tokens = builder.build()
-    return createFactory(tokens, languageKind).create(tokens)
+    return TokenizedProgram.createForFreshAntlrLexemes(tokens)
   }
 
   private fun convertParseTreeToProgram(
@@ -105,7 +147,11 @@ object AntlrGrammarUtil {
   ) {
     if (node is TerminalNode) {
       val symbol = node.symbol
-      builder.add(symbol)
+      // EOF is not a source token. It only appears when the start rule anchors to EOF (e.g. the C
+      // facade's compilationUnit); SparTreeBuilder skips it for the same reason.
+      if (symbol.type != Token.EOF) {
+        builder.add(symbol)
+      }
       return
     }
     val childCount = node.childCount

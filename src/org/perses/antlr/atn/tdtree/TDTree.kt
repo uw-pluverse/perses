@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -84,11 +84,13 @@ class TDTree {
               yield(value)
             }
           }
+
           is OptionalTDTreeNode,
           is StarTDTreeNode,
           -> {
             yield(setOf(node))
           }
+
           is AlternativeBlockTDTreeNode,
           is CharTDTreeNode,
           is SequenceTDTreeNode,
@@ -98,6 +100,7 @@ class TDTree {
               is StarTDTreeNode,
               is OptionalTDTreeNode,
               -> yield(setOf(node))
+
               else -> Unit
             }
           }

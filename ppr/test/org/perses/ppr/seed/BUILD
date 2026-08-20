@@ -8,8 +8,8 @@ kt_jvm_test(
     deps = [
         "//:truth",
         "//ppr/src/org/perses/ppr/diff:ppr_diff_utils",
+        "//ppr/src/org/perses/ppr/diff:reduction_inputs",
         "//ppr/src/org/perses/ppr/seed:output_manager",
-        "//ppr/src/org/perses/ppr/seed:reduction_inputs",
         "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/program",
         "//src/org/perses/program:enum_format_control",

@@ -1,0 +1,107 @@
+---
+microbenchmarkId: "000000"
+targetFilePath: "t.c"
+inputList:
+  elements:
+  - ranges:
+    - leftInclusive: 0
+      rightExclusive: 3
+  - ranges:
+    - leftInclusive: 4
+      rightExclusive: 11
+  - ranges:
+    - leftInclusive: 11
+      rightExclusive: 12
+  - ranges:
+    - leftInclusive: 13
+      rightExclusive: 16
+  - ranges:
+    - leftInclusive: 17
+      rightExclusive: 18
+  - ranges:
+    - leftInclusive: 18
+      rightExclusive: 19
+  - ranges:
+    - leftInclusive: 20
+      rightExclusive: 23
+  - ranges:
+    - leftInclusive: 24
+      rightExclusive: 25
+  - ranges:
+    - leftInclusive: 25
+      rightExclusive: 26
+  - ranges:
+    - leftInclusive: 27
+      rightExclusive: 30
+  - ranges:
+    - leftInclusive: 31
+      rightExclusive: 32
+  - ranges:
+    - leftInclusive: 32
+      rightExclusive: 33
+  - ranges:
+    - leftInclusive: 34
+      rightExclusive: 37
+  - ranges:
+    - leftInclusive: 38
+      rightExclusive: 39
+  - ranges:
+    - leftInclusive: 39
+      rightExclusive: 40
+recordingContext:
+  languageName: "c"
+  parserFacadeClassName: "org.perses.grammar.c.PnfCParserFacade"
+  reducerClassName: "org.perses.reduction.reducer.token.TokenSlicer"
+  minimizerType: "WINDOWED_SLICER"
+  contextDescription: "WINDOWED_SLICER in token_slicer(TokenSlicer)[ReducingAllTokens]"
+  fixpointIteration: 1
+  commandLineOptions: "---\nhelpFlags:\n  groupName: \"Help\"\n  help: false\nverbosityFlags:\n\
+    \  groupName: \"Verbosity\"\n  verbosity: \"INFO\"\n  listVerbosity: false\n \
+    \ hideTimestamps: true\n  fullyDeterministicMode: false\nversionFlags:\n  groupName:\
+    \ \"Version\"\n  version: false\nresultOutputFlags:\n  groupName: \"Outputs\"\n\
+    \  outputDir: \"result_record_mode_golden_test_token_slicer_t.c\"\ninputFlags:\n\
+    \  groupName: \"Inputs\"\n  testScript: \"r.sh\"\n  inputFiles:\n  - \"t.c\"\n\
+    \  deps: []\nreductionControlFlags:\n  groupName: \"General Reduction Control\"\
+    \n  globalFixpoint: false\n  fixpointForMainReducer: true\n  numOfThreads: 1\n\
+    \  codeFormat: \"COMPACT_ORIG_FORMAT\"\n  testScriptExecutionTimeoutInSeconds:\
+    \ 600\n  testScriptExecutionKeepWaitingAfterTimeout: true\noutputRefiningFlags:\n\
+    \  groupName: \"Output Refining Control\"\n  callFormatter: false\n  formatCmd:\
+    \ \"\"\n  callCReduce: false\n  creduceCmd: \"creduce\"\nalgorithmControlFlags:\n\
+    \  groupName: \"Reduction Algorithm Control\"\n  mainReductionAlgorithm: \"token_slicer\"\
+    \n  cleanupReductionAlgorithm: null\n  listAllReductionAlgorithms: false\n  rebuildParseTreeEachIteration:\
+    \ true\n  enableTokenSlicer: false\n  enableTreeSlicer: false\n  lineSlicer: \"\
+    AUTO\"\n  defaultListMinimizerTypeForHDD: \"CDD\"\n  minSlicingWindowSize: 1\n\
+    \  maxSlicingWindowSize: 14\nlanguageControlFlags:\n  groupName: \"Language Control\"\
+    \n  languageName: \"\"\n  listLangs: false\n  designatedParserFacadeClassName:\
+    \ \"\"\n  listParserFacades: false\n  languageJarFiles: []\n  underlyingLexerClassForDyckParser:\
+    \ \"\"\npersesFlags:\n  groupName: \"Classical Perses Reducer Control\"\n  enableTopDownReduction:\
+    \ true\n  enableReductionOnRegularNodes: true\n  maxEditCountForRegularRuleNode:\
+    \ 100\n  maxBfsDepthForRegularRuleNode: 5\n  enableLiteralReplacementForRegularRuleNode:\
+    \ false\n  enableLiteralReplacementForListMinimizer: false\n  stopAtFirstCompatibleChildForRegularRuleNode:\
+    \ false\n  listMinimizerTypeForKleene: \"DFS\"\n  enableReductionOnKleeneAndOptionalNodes:\
+    \ true\n  anticipatedTokenCountInResult: 150\nvulcanFlags:\n  groupName: \"Vulcan\
+    \ Reducer Control\"\n  enableVulcan: false\n  nonDeletionIterationLimit: 10\n\
+    \  windowSize: 4\n  vulcanFixpoint: false\ntrecFlags:\n  groupName: \"T-Rec Reducer\
+    \ Control\"\n  enableTRec: false\nprofilingFlags:\n  groupName: \"Profiling\"\n\
+    \  progressDumpFile: null\n  actionsetEffectProfile: null\n  statDumpFile: null\n\
+    \  profileQueryCacheTime: null\n  profileQueryCacheTimeCSV: null\n  profileQueryCacheMemory:\
+    \ null\n  actionSetProfiler: null\n  profileListMinimizer: null\n  profileProgramSizeTrend:\
+    \ null\n  profileReductionProcessDifferentialAnalysis: null\n  enableWebUi: false\n\
+    \  webUiPort: 9000\ncacheControlFlags:\n  groupName: \"Cache Control\"\n  queryCaching:\
+    \ true\n  nodeActionSetCaching: true\n  enablePassCache: true\n  enableGlobalCache:\
+    \ false\n  globalCacheFile: null\n  pathToSaveUpdatedGlobalCache: null\n  defaultShaAlgorithm:\
+    \ \"SHA256\"\nlistMinimizerMicrobenchmarkingFlags:\n  groupName: \"List Minimizer\
+    \ Microbenchmarking\"\n  mode: \"RECORD\"\n  microbenchmarkOutputDirectory: \"\
+    recorded\"\n  minListSizeToRecord: 1\n  maxMicrobenchmarksToRecord: null\n  microbenchmarkFile:\
+    \ null\n  minimizerUnderEvaluation: null\n  evaluationOutputDirectory: null\n\
+    experimentFlags:\n  groupName: \"Experiment Control\"\n  onDemandFineGritReducerAnnotationClasses:\
+    \ []\n  onDemandMediumGritReducerAnnotationClasses: []\n  onDemandCoarseGritReducerAnnotationClasses:\
+    \ []\n  keepReductionHistory: false\n  enableErrorTolerantGrammar: true\n  dyckNodeReducer:\
+    \ \"AUTO\"\nlprFlags:\n  groupName: \"LPR Reducer Control\"\n  enableLPR: false\n\
+    \  lprFixpoint: false\n  llmClientPath: null\nlatraFlags:\n  groupName: \"Latra\
+    \ Reducer Control\"\n  enableLatra: true\n  enableFixpoint: true\n  transformationListMinimizer:\
+    \ \"WPROBDD\"\nmimirFlags:\n  groupName: \"Mimir Reducer Control\"\n  nodeCountThresholdToUseOneByOne:\
+    \ 10\n  enableBottomUpReductionAfterMainReductionLoop: true\n  bottomUpReductionMaxDepth:\
+    \ 5\n  mimirReductionAlgorithm: \"FINE_DAG_AS_LIST\"\n  enableMimirForRegularNode:\
+    \ true\n  enableMimirDeleteDefWithAllItsConcreteUses: false\n  javaLanguageServerCmd:\
+    \ \"start_jdtls.sh\"\n  clanguageServerCmd: \"clangd-18\"\n"

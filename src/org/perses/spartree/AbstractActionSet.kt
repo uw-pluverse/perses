@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.spartree
 
+import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.util.Util.lazyAssert
@@ -23,35 +24,46 @@ import org.perses.util.toImmutableMap
 
 sealed class AbstractActionSet<ACTION : AbstractTreeEditAction>(
   val actions: ImmutableList<ACTION>,
-  val actionsDescription: String,
+  // TODO(cnsun): use ActionDescription here.
+  val contextDescription: String,
   canBeSorted: Boolean,
+  // The bare name of the transformation that produced this edit, so every edit is attributable in the
+  // statistics. For reducers with named sub-transformations it is that name (astra: the transformation
+  // class; latra: the definition name); otherwise it is the edit's operation kind (e.g. "Deletion",
+  // "Replacement"), supplied as the factory default of each action-set type. It is required (never
+  // null) so no edit can be left untracked. The owning reducer's name is added by the statistics
+  // listener to form a "<reducer>.<transformation>" key, so only the bare name is carried here.
+  val transformationName: String,
 ) {
-  private val targetToActionMap =
-    actions
-      .asSequence()
-      .toImmutableMap(keyFunc = { it.targetNode }, valueFunc = { it!! })
-
   init {
     if (canBeSorted) {
       checkSortedAndDistinct(actions)
     }
-    lazyAssert { actions.size == targetToActionMap.size }
-    lazyAssert { actions.size > 0 }
   }
 
-  val targets: ImmutableSet<AbstractSparTreeNode>
-    get() = targetToActionMap.keys
+  open val structureDescription: String
+    get() =
+      buildString {
+        actions.joinTo(this, separator = ",", prefix = "[", postfix = "]") {
+          it.conciseDescription
+        }
+      }
 
-  fun containsNodeAsTarget(node: AbstractSparTreeNode): Boolean =
-    targetToActionMap.containsKey(node)
+  final override fun toString(): String =
+    MoreObjects.toStringHelper(this).addValue(structureDescription).toString()
 
-  fun getActionForTarget(targetNode: AbstractSparTreeNode): ACTION? =
-    targetToActionMap[targetNode]!!
+  abstract val targets: ImmutableSet<AbstractSparTreeNode>
+
+  abstract fun containsNodeAsTarget(node: AbstractSparTreeNode): Boolean
+
+  abstract fun getActionForTarget(targetNode: AbstractSparTreeNode): ACTION?
 
   fun size(): Int = actions.size
 
   val isEmpty: Boolean
     get() = actions.isEmpty()
+
+  val isNotEmpty: Boolean = !isEmpty
 
   override fun equals(other: Any?): Boolean {
     if (other == null) {
@@ -81,4 +93,32 @@ sealed class AbstractActionSet<ACTION : AbstractTreeEditAction>(
     }
     return
   }
+}
+
+abstract class TargetedActionSet<ACTION : AbstractTargetedTreeEditAction>(
+  actions: ImmutableList<ACTION>,
+  contextDescription: String,
+  canBeSorted: Boolean,
+  transformationName: String,
+) : AbstractActionSet<ACTION>(
+    actions = actions,
+    contextDescription = contextDescription,
+    canBeSorted = canBeSorted,
+    transformationName = transformationName,
+  ) {
+  private val targetToActionMap =
+    actions.toImmutableMap(keyFunc = { it.targetNode }, valueFunc = { it!! })
+
+  init {
+    lazyAssert { actions.size == targetToActionMap.size }
+  }
+
+  override val targets: ImmutableSet<AbstractSparTreeNode>
+    get() = targetToActionMap.keys
+
+  override fun containsNodeAsTarget(node: AbstractSparTreeNode): Boolean =
+    targetToActionMap.containsKey(node)
+
+  override fun getActionForTarget(targetNode: AbstractSparTreeNode): ACTION? =
+    targetToActionMap[targetNode]
 }

@@ -1,6 +1,4 @@
-load("//:perses.bzl", "reduce")
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
-load("//test/org/perses:test.bzl", "golden_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
@@ -25,6 +23,9 @@ reduction_golden_test(
     golden_global_cache_file = "golden_global_cache.csv",
     golden_progress_file = "golden_progress_dump_reduced_with_global_cache.txt",
     golden_reduced_file = "golden_global_cache_reduced.Hello.sc",
+    other_flags = {
+        "--fully-deterministic-mode": "true",
+    },
     reduction_algorithm = "node-dfs",
     source_file = "Hello.sc",
     test_script = "r.sh",
@@ -35,11 +36,8 @@ reduction_golden_test(
     enable_query_caching = True,
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_Hello.sc",
-    other_flags = {
-        "--query-cache-type": "COMPACT_QUERY_CACHE_FORMAT_SENSITIVE",
-    },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "Hello.sc",
     test_script = "r.sh",
 )
@@ -49,8 +47,7 @@ reduction_golden_test(
     enable_query_caching = True,
     golden_reduced_file = "golden_reduced_Hello_line_slicer.sc",
     other_flags = {
-        "--enable-line-slicer": "true",
-        "--query-cache-type": "COMPACT_QUERY_CACHE_FORMAT_SENSITIVE",
+        "--line-slicer": "on",
     },
     reduction_algorithm = "line_based_concurrent_token_slicer",
     source_file = "Hello.sc",
@@ -77,7 +74,7 @@ reduction_golden_test(
     golden_reduced_file = "golden_reduced_hello_with_token_slicer.sc",
     other_flags = {
         "--enable-token-slicer": "true",
-        "--query-cache-type": "COMPACT_QUERY_CACHE_FORMAT_SENSITIVE",
+        "--fully-deterministic-mode": "true",
     },
     source_file = "Hello.sc",
     test_script = "r.sh",
@@ -93,7 +90,6 @@ reduction_golden_test(
     other_flags = {
         "--enable-tree-slicer": "true",
         "--fully-deterministic-mode": "true",
-        "--query-cache-type": "COMPACT_QUERY_CACHE_FORMAT_SENSITIVE",
     },
     reduction_algorithm = "node-dfs",
     source_file = "Hello.sc",

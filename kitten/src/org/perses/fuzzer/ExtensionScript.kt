@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -49,10 +49,10 @@ class ExtensionScript(
   override fun run(mutantFile: Path) {
     val cmd = "$extensionScript $mutantFile $absResultFolder"
     val cmdOutput =
-      Shells.singleton.run(
+      Shells.defaultSingleton.run(
         cmd,
         false,
-        Shells.CURRENT_ENV,
+        environment = Shells.CURRENT_ENV,
       )
     if (cmdOutput.exitCode == ERROR_EXIT_CODE) {
       val message = "Fatal error in extension script $extensionScript"

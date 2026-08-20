@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,7 +26,7 @@ class ParserRuleSparTreeNode internal constructor(
   nodeId: Int,
   antlrRule: RuleHierarchyEntry,
 ) : AbstractInternalSparTreeNode(nodeId, antlrRule) {
-  val ruleType = AstUtil.computeNodeType(antlrRule.ruleDef)
+  override val ruleType = AstUtil.computeNodeType(antlrRule.ruleDef)
 
   init {
     require(ruleType.isParserRule) { ruleType }

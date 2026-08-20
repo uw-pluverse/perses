@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -49,28 +49,28 @@ class LatraGeneralActionSetTest {
   @Before
   fun setup() {
     run {
-      val builder = LatraGeneralActionSet.Builder("test 1")
+      val builder = LatraGeneralActionSet.Builder("test 1", transformationName = "test")
       builder.replaceNode(nodePrintf, nodeSemicol)
       builder.replaceNode(nodeInt, nodeMain)
       builder.deleteNode(nodeMain)
       actionSet = builder.buildOrNull()!!
-      assertThat(actionSet.actionsDescription).isEqualTo("test 1")
+      assertThat(actionSet.contextDescription).isEqualTo("test 1")
     }
     run {
-      val builder = LatraGeneralActionSet.Builder("test 2")
+      val builder = LatraGeneralActionSet.Builder("test 2", transformationName = "test")
       builder.replaceNode(nodePrintf, nodeSemicol)
       builder.replaceNode(nodeInt, nodeMain)
       builder.deleteNode(nodeMain)
       actionSet2 = builder.buildOrNull()!!
-      assertThat(actionSet2.actionsDescription).isEqualTo("test 2")
+      assertThat(actionSet2.contextDescription).isEqualTo("test 2")
     }
 
     run {
-      val builder = LatraGeneralActionSet.Builder("test 3")
+      val builder = LatraGeneralActionSet.Builder("test 3", transformationName = "test")
       builder.replaceNode(nodePrintf, nodeSemicol)
       builder.replaceNode(nodeInt, nodeMain)
       actionSet3 = builder.buildOrNull()!!
-      assertThat(actionSet3.actionsDescription).isEqualTo("test 3")
+      assertThat(actionSet3.contextDescription).isEqualTo("test 3")
     }
   }
 
@@ -117,19 +117,19 @@ class LatraGeneralActionSetTest {
   fun testActionSetNotEqual() {
     assertThat(actionSet).isNotEqualTo(actionSet3)
     assertThat(actionSet.hashCode()).isNotEqualTo(actionSet3.hashCode())
-    assertThat(actionSet3.actionsDescription).isEqualTo("test 3")
+    assertThat(actionSet3.contextDescription).isEqualTo("test 3")
   }
 
   @Test
   fun testReplaceNode() {
     // replace deleted node, expect to fail
-    val builder1 = LatraGeneralActionSet.Builder("test 4")
+    val builder1 = LatraGeneralActionSet.Builder("test 4", transformationName = "test")
     builder1.deleteNode(nodePrintf)
     Assert.assertThrows(Exception::class.java) {
       builder1.replaceNode(nodePrintf, nodeSemicol)
     }
 
-    val builder2 = LatraGeneralActionSet.Builder("test 5")
+    val builder2 = LatraGeneralActionSet.Builder("test 5", transformationName = "test")
     builder2.deleteNode(
       AbstractTreeNode.findLowestAncestor(nodePrintf, tree.getTokenNodeForText(";")[0]).parent!!,
     )
@@ -138,7 +138,7 @@ class LatraGeneralActionSetTest {
     }
 
     // replace not deleted node, expect to pass
-    val builder3 = LatraGeneralActionSet.Builder("test 6")
+    val builder3 = LatraGeneralActionSet.Builder("test 6", transformationName = "test")
     builder3.deleteNode(nodePrintf)
     builder3.replaceNode(nodeInt, nodeMain)
     assertThat(

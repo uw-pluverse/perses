@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,7 @@ package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.AbstractPersesToken
 import org.perses.util.AbstractEditOperation
 import org.perses.util.ktInfo
 

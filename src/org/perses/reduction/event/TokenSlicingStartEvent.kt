@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,12 +16,14 @@
  */
 package org.perses.reduction.event
 
+import org.perses.reduction.io.PerFileSizeMetrics
+
 class TokenSlicingStartEvent internal constructor(
   val fixpointIterationStartEvent: FixpointIterationStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
+  perFileSizeMetrics: PerFileSizeMetrics,
   val tokenSliceGranularity: Int,
-) : AbstractStartEvent(currentTimeMillis, programSize) {
+) : AbstractStartEvent(currentTimeMillis, perFileSizeMetrics) {
   val iteration = fixpointIterationStartEvent.iteration
 
   override val prefixLabelFromRootToHere: String
@@ -31,16 +33,17 @@ class TokenSlicingStartEvent internal constructor(
 
   fun createEndEvent(
     currentTimeMillis: Long,
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
   ): TokenSlicingEndEvent {
     check(!ended)
     ended = true
     return TokenSlicingEndEvent(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
     )
   }
 
-  override fun initialProgramSize(): Int = fixpointIterationStartEvent.initialProgramSize()
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    fixpointIterationStartEvent.initialPerFileSizeMetrics()
 }

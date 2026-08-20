@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,13 +16,11 @@
  */
 package org.perses.reduction
 
-import org.perses.program.AbstractDataKind
 import org.perses.reduction.io.AbstractReductionIOManager
 
 abstract class AbstractReducer<
   Program,
-  K : AbstractDataKind,
-  IOManager : AbstractReductionIOManager<Program, K, IOManager>,
+  IOManager : AbstractReductionIOManager<Program, IOManager>,
 >(
   val nameAndDesc: AbstractReducerNameAndDesc,
   protected val ioManager: IOManager,

@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test")
+load("//test:test.bzl", "reduction_golden_test")
 
 reduction_golden_test(
     name = "subtree_replacement_reduction_golden_test",
@@ -13,7 +13,7 @@ reduction_golden_test(
     },
     perses_bin = "//src/org/perses:perses",
     progress_dump_file = "progress_dump_subtree_replacement.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "t.c",
     test_script = "r.sh",
 )

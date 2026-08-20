@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.AntlrGrammarUtil
 import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.ParseErrorHandling
 
 @RunWith(JUnit4::class)
 class JavaParserFacadeTest {
@@ -37,6 +38,7 @@ class JavaParserFacadeTest {
       }
       """,
         filename = "Test.java",
+        errorMode = ParseErrorHandling.STRICT,
       )
     assertThat(
       AntlrGrammarUtil

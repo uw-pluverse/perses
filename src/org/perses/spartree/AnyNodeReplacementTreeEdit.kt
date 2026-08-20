@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,12 @@ class AnyNodeReplacementTreeEdit internal constructor(
   tree: SparTree,
   actionSet: NodeReplacementActionSet,
 ) : AbstractNodeReplacementTreeEdit(tree, actionSet) {
+  override val structureDescriptionPrefix: String
+    get() = "AnyNodeReplace"
+
+  override fun computeDeletedTokens(): AbstractDeletedTokens =
+    AbstractDeletedTokens.Unsupported(this::class.java)
+
   override fun internalApplyToTree() {
     actionSet.actions.forEach { action ->
       action.apply()

@@ -1,4 +1,40 @@
 build --workspace_status_command "./version/org/perses/version/compute_workspace_buildstamp.sh"
+
+# Persistent on-disk cache, kept outside the workspace so that repeated presubmit
+# runs, `bazelisk clean`, and switching branches/worktrees reuse previously built
+# and tested outputs instead of recompiling from scratch.
+build --disk_cache=~/.cache/perses-bazel-disk
+# Reuse passing test results when their inputs are unchanged (this is Bazel's
+# default; set explicitly to document intent and guard against future changes).
+test --cache_test_results=auto
+
 # build --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
-build --output_groups=+clippy_checks
+# build --output_groups=+clippy_checks
+# build --local_cpu_resources=2
+# Enable Bzlmod for modern dependency management in Bazel 9
 common --enable_bzlmod
+# Explicitly disable the legacy WORKSPACE file to ensure full Bzlmod compliance
+common --noenable_workspace
+# Propagate PATH to ensure host-installed benchmark tools (wasmedge, wat2wasm) are found in the sandbox
+build --action_env=PATH
+# Propagate HOME to allow rustup to locate toolchains within the isolated sandbox environment
+build --action_env=HOME
+
+# Ensure target compatibility with JDK 17 as requested by the user
+build --java_language_version=17
+build --java_runtime_version=remotejdk_17
+
+# Use JDK 17 for build tools (compiler) to ensure stability with Bazel 9 and Kotlin 2.1
+build --tool_java_runtime_version=remotejdk_17
+
+# Global --add-opens for Java 17+ support (required for memory profiling and deep reflection)
+build --jvmopt="--add-opens=java.base/java.lang=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/java.lang.module=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/java.util=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/java.util.concurrent=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/jdk.internal.reflect=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/jdk.internal.math=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/jdk.internal.module=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/jdk.internal.loader=ALL-UNNAMED"
+build --jvmopt="--add-opens=java.base/jdk.internal.ref=ALL-UNNAMED"

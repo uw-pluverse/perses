@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses
 
+import org.perses.util.TimeSpan
 import org.perses.util.Util
 import java.nio.file.Files
 import java.nio.file.Path
@@ -62,6 +63,21 @@ class PersesConstants private constructor(
 
   companion object {
     const val HOME_DIR_PROPERTY_NAME = "org.perses.home"
+
+    val PERSES_UNIVERSE_SINGULARITY_TIME by lazy {
+      System.currentTimeMillis()
+    }
+
+    @JvmStatic
+    fun computeElapsedSeconds(currentTimeMillis: Long): Int =
+      ((currentTimeMillis - PERSES_UNIVERSE_SINGULARITY_TIME) / 1000).toInt()
+
+    @JvmStatic
+    fun elapsedTimeSpan(): TimeSpan =
+      TimeSpan(
+        startTimeMillis = PERSES_UNIVERSE_SINGULARITY_TIME,
+        endTimeMillis = System.currentTimeMillis(),
+      )
 
     @JvmStatic
     fun createDefaultConstants(): PersesConstants {

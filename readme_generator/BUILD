@@ -27,6 +27,7 @@ genrule(
         "license.segment.md",
         "publication.segment.md",
         "formatted_perses_cmd_usage.txt",
+        "acknowledgement.md",
         "build_and_use.segment.md",
         "//readme_generator/org/pluverse/perses:supported_languages_segment",
     ],
@@ -37,6 +38,7 @@ genrule(
           "$(location formatted_perses_cmd_usage.txt) " +
           "$(location license.segment.md) " +
           "$(location publication.segment.md) " +
+          "$(location acknowledgement.md)" +
           "> $@",
 )
 

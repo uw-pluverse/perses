@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,37 +18,42 @@ package org.perses.reduction.reducer.hdd
 
 import com.google.common.collect.ImmutableList
 import org.perses.listminimizer.EnumListMinimizerType
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.ContextDescription
 import org.perses.spartree.SparTreeSimplifier
 
 class PristineHDDReducer(
   reducerContext: ReducerContext,
-) : AbstractTokenReducer(META, reducerContext) {
+) : AbstractSparTreeReducer(META, reducerContext) {
   /**
    * Need to remove
    *   1) optional nodes,
    *   2) kleene nodes which have only one child
    */
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+    val tree = fixpointReductionState.inputRepresentation.tree
     SparTreeSimplifier.simplify(tree)
     var currentLevel = ImmutableList.of(tree.realRoot)
+    var levelId = 0
     while (currentLevel.isNotEmpty()) {
       val reducedCurrentLevel =
         runListMinimizerOverNodes(
+          needToTestEmpty = true,
           tree = tree,
           fixpointReductionState = fixpointReductionState,
           input = currentLevel,
+          actionsDescriptionPostfix = ContextDescription.of("Level-$levelId"),
         )
+      ++levelId
       currentLevel = moveToNextLevel(reducedCurrentLevel)
     }
   }
 
-  override fun computeListMinimizerType(): EnumListMinimizerType =
+  override fun computeDefaultListMinimizerType(): EnumListMinimizerType =
     EnumListMinimizerType.PRISTINE_DDMIN
 
   object META : ReducerAnnotation(
@@ -58,7 +63,7 @@ class PristineHDDReducer(
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
     override fun create(reducerContext: ReducerContext) =
-      ImmutableList.of<AbstractTokenReducer>(
+      ImmutableList.of<AbstractSparTreeReducer>(
         PristineHDDReducer(
           reducerContext,
         ),
@@ -78,15 +83,21 @@ class PristineHDDReducer(
         while (candidates.isNotEmpty()) {
           val candidate = candidates.pollFirst()
           when (candidate.childCount) {
-            0 ->
+            0 -> {
               if (candidate.isTokenNode()) {
                 builder.add(candidate)
               } else {
                 continue
               }
+            }
 
-            1 -> candidates.addFirst(candidate.getChild(0))
-            else -> builder.add(candidate)
+            1 -> {
+              candidates.addFirst(candidate.getChild(0))
+            }
+
+            else -> {
+              builder.add(candidate)
+            }
           }
         }
       }

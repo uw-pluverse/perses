@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,7 @@ package org.perses.reduction.reducer.token
 
 import com.google.common.base.Objects
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.spartree.LexerRuleSparTreeNode
@@ -44,12 +44,15 @@ class ConcurrentStateBasedTokenSlicer(
     tree.remainingLexerRuleNodes
 
   override fun createInitialState(tree: SparTree): ConcurrentTokenSlicingState? =
-    ConcurrentTokenSlicingState.create(slicerAnnotation.granularity, tree.tokenCount)
+    ConcurrentTokenSlicingState.create(
+      slicerAnnotation.granularity,
+      tree.programSnapshot.surrogateTokenCount,
+    )
 
   override fun getStateOnSuccess(
     tree: SparTree,
     state: ConcurrentTokenSlicingState,
-  ): ConcurrentTokenSlicingState? = state.advanceOnSuccess(tree.tokenCount)
+  ): ConcurrentTokenSlicingState? = state.advanceOnSuccess(tree.programSnapshot.surrogateTokenCount)
 
   override fun computeNodeActionSet(
     state: ConcurrentTokenSlicingState,
@@ -68,7 +71,7 @@ class ConcurrentStateBasedTokenSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       REDUCER_ANNOTATIONS
         .asSequence()
         .flatMap { it.create(reducerContext) }
@@ -103,7 +106,7 @@ class ConcurrentStateBasedTokenSlicer(
       require(granularity > 0)
     }
 
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(ConcurrentStateBasedTokenSlicer(reducerContext, this))
 
     override fun hashCode(): Int = Objects.hashCode(this::class.java, namePrefix, granularity)

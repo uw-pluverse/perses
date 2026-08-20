@@ -18,6 +18,7 @@ kt_jvm_library(
     deps = [
         "//:flogger",
         "//:guava",
+        "//:jackson",
         "//:jcommander",
         "//src/org/perses/util",
         "//src/org/perses/util:default_logging_configurations",

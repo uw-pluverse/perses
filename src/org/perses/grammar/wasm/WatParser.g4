@@ -119,6 +119,8 @@ plain_instr
   | STORE OFFSET_EQ_NAT? ALIGN_EQ_NAT?
   | MEMORY_SIZE
   | MEMORY_GROW
+  | MEMORY_COPY
+  | MEMORY_FILL
   | CONST literal
   | TEST
   | COMPARE

@@ -34,6 +34,7 @@ outline_implicit_token_defs(
 
 pnf_parser_facade_library(
     name = "parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.sql.mysql",
     language_kind_full_name = "org.perses.grammar.sql.mysql.LanguageMySQL",
     lexer_file_name = ito_lexer_file,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,10 +19,11 @@ package org.perses.reduction.reducer.token
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
 import org.perses.listminimizer.EnumListMinimizerType
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
+import org.perses.spartree.ContextDescription
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.util.Util.lazyAssert
@@ -30,16 +31,18 @@ import org.perses.util.shell.ExitCode
 
 class TokenSlicer(
   reducerContext: ReducerContext,
-) : AbstractTokenReducer(META, reducerContext) {
-  override fun computeListMinimizerType(): EnumListMinimizerType =
+) : AbstractSparTreeReducer(META, reducerContext) {
+  override fun computeDefaultListMinimizerType(): EnumListMinimizerType =
     EnumListMinimizerType.WINDOWED_SLICER
 
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+    val tree = fixpointReductionState.inputRepresentation.tree
     runListMinimizerOverNodes(
+      needToTestEmpty = true,
       tree = tree,
       fixpointReductionState = fixpointReductionState,
       input = tree.remainingLexerRuleNodes,
+      actionsDescriptionPostfix = ContextDescription.of("ReducingAllTokens"),
     )
   }
 
@@ -49,7 +52,7 @@ class TokenSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(TokenSlicer(reducerContext))
   }
 

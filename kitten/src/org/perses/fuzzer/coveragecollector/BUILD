@@ -1,8 +1,9 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 kt_jvm_library(
     name = "coverage_collector",
@@ -16,7 +17,7 @@ kt_jvm_library(
         "NullCoverageCollector.kt",
         "RustcCoverageCollector.kt",
     ],
-    resource_strip_prefix = "kitten/src/",
+    resource_strip_prefix = "kitten/src",
     resources = [
         ":libafl_coverage_jni.so",
     ],

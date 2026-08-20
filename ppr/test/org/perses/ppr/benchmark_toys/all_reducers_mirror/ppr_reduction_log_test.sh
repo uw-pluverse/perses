@@ -18,7 +18,7 @@ readonly FILE="$1"
 
 cat "${FILE}"
 
-if ! grep --quiet '\[node_priority-dfs\] New fixpoint iteration started' "${FILE}"; then
+if ! grep --quiet '\[node_priority\] New fixpoint iteration started' "${FILE}"; then
   echo "Reduction algorithm should be node_priority-dfs"
   exit 1
 fi

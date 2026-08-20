@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -44,9 +44,11 @@ class IndirectLeftRecursionEliminationPass : AbstractIndirectRecursionEliminatio
       toInline.tag === AstTag.SEQUENCE -> {
         toInline.foreachChildRuleElement { newSeqBuilder.add(it) }
       }
+
       toInline.tag === AstTag.EPSILON -> {
         // Do not inline epsilon, as it is empty.
       }
+
       else -> {
         newSeqBuilder.add(toInline)
       }

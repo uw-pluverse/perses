@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -41,10 +41,12 @@ import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TestScriptExecutionCacheEntryEvictionEvent
 import org.perses.reduction.event.TokenSlicingEndEvent
 import org.perses.reduction.event.TokenSlicingStartEvent
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.spartree.AbstractActionSet
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.util.DaemonThreadPool
-import org.perses.util.FileNameContentPair
+import org.perses.util.Util
+import org.perses.util.ktFine
 import java.io.Closeable
 import kotlin.Exception
 
@@ -52,10 +54,13 @@ class AsyncReductionListenerManager(
   private val listeners: ImmutableList<AbstractReductionListener>,
   private val synchronousMode: Boolean,
 ) : Closeable {
-  private val executorService = DaemonThreadPool.createSingleThreadPool()
+  private val executorService = DaemonThreadPool.createSingleThreadPool(creatorObject = this)
 
   override fun close() {
+    val className: String = this::class.java.name
+    logger.ktFine { "Closing the executor service in $className..." }
     DaemonThreadPool.waitInfinitelyToShutdown(executorService)
+    logger.ktFine { "Closing the listeners in $className..." }
     listeners.forEach { it.close() }
   }
 
@@ -75,10 +80,6 @@ class AsyncReductionListenerManager(
       future.get()
     }
     return future
-  }
-
-  fun notifyNumOfLexemesInPersesTokenFactory(numOfLexemes: Int) {
-    submitEvent { listener -> listener.notifyNumOfLexemesInPersesTokenFactory(numOfLexemes) }
   }
 
   fun notifyCacheSettings(
@@ -125,8 +126,15 @@ class AsyncReductionListenerManager(
   }
 
   fun onCriticalException(exception: Exception) {
-    submitEvent { listener ->
-      listener.onCriticalException(exception)
+    val future =
+      submitEvent { listener ->
+        listener.onCriticalException(exception)
+      }
+    if (Util.ASSERTION_ENABLED) {
+      future.get()
+      // If the assertion is enabled, make sure we throw the exception
+      // so tests can see this failure.
+      throw exception
     }
   }
 
@@ -190,7 +198,7 @@ class AsyncReductionListenerManager(
     result: PropertyTestResult,
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
-    outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
+    outputManager: AbstractOutputManager,
   ) {
     val event =
       TestScriptExecutionEvent(
@@ -198,7 +206,7 @@ class AsyncReductionListenerManager(
         result,
         program,
         edit,
-        outputCreator,
+        outputManager,
       )
     submitEvent { listener ->
       listener.onTestScriptExecution(event)
@@ -209,7 +217,6 @@ class AsyncReductionListenerManager(
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
     millisToCancelTheTask: Int,
-    outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
   ) {
     val event =
       AbstractTestScriptExecutionEvent.TestScriptExecutionCanceledEvent(
@@ -217,7 +224,6 @@ class AsyncReductionListenerManager(
         millisToCancelTheTask,
         program,
         edit,
-        outputCreator,
       )
     submitEvent { listener ->
       listener.onTestScriptExecutionCancelled(event)
@@ -227,14 +233,14 @@ class AsyncReductionListenerManager(
   fun onTestResultCacheHit(
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
-    outputCreator: (TokenizedProgram) -> ImmutableList<FileNameContentPair<String>>,
+    outputManager: AbstractOutputManager,
   ) {
     val event =
       AbstractTestScriptExecutionEvent.TestResultCacheHitEvent(
         System.currentTimeMillis(),
         program,
         edit,
-        outputCreator,
+        outputManager,
       )
     submitEvent { listener ->
       listener.onTestResultCacheHit(event)

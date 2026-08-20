@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,7 @@ import com.beust.jcommander.Parameter
 import com.beust.jcommander.converters.PathConverter
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.absolute
 
 class OutputOnlyFlagGroup : AbstractCommandLineFlagGroup(groupName = "Output") {
   @Parameter(
@@ -45,8 +46,16 @@ class InputOnlyFlagGroup : AbstractCommandLineFlagGroup(groupName = "Input") {
   var inputFile: Path? = null
 
   override fun validate() {
-    requireNotNull(inputFile)
-    require(Files.exists(inputFile))
+    requireNotNull(inputFile) { "input file must be specified" }
+    inputFile!!.let { inputFile ->
+      require(Files.isRegularFile(inputFile)) {
+        """input file does not exist: $inputFile.
+        |
+        |The absolute path is ${inputFile.absolute()}
+        |${org.perses.util.Util.listFilesInFolder(inputFile.parent)}
+        """.trimMargin()
+      }
+    }
   }
 }
 

@@ -19,7 +19,6 @@ readonly USE_COMPCERT=true
 readonly CFILE=small.c
 readonly CFLAG="-o t"
 readonly CLANGFC="clang-7.1.0 -w -m64 -O0 -Wall -fwrapv -ftrapv -fsanitize=undefined,address"
-readonly CLANG_MEM_SANITIZER="clang-7.1.0 -w -O0 -m64 -fsanitize=memory"
 
 #################################################################################
 
@@ -84,26 +83,11 @@ if $USE_COMPCERT; then
     exit 1
   fi
 fi
-###################################################
-# clang-7.1.0 memory sanitizer
-###################################################
-readonly TEMP_EXE="temp.exe"
-timeout -s 9 $TIMEOUTCC $CLANG_MEM_SANITIZER $CFILE -o $TEMP_EXE > /dev/null
-if [[ $? != 0 ]]; then
-  exit 1
-fi
-
-readonly MEM_SANITIZER_OUTPUT="mem-sanitizer.output"
-(timeout -s 9 $TIMEOUTEXE ./$TEMP_EXE &> $MEM_SANITIZER_OUTPUT) &> /dev/null
-if [[ $? != 0 ]]; then
-  exit 1
-fi
-
-if grep -q "MemorySanitizer" $MEM_SANITIZER_OUTPUT; then
-  exit 1
-fi
-
-rm $MEM_SANITIZER_OUTPUT $TEMP_EXE
+# The MemorySanitizer stage that used to sit here was dropped: `ccomp -interp` above
+# already rejects uninitialized reads, and does so strictly more aggressively than MSan
+# (it is stuck even on `<undef> & 0`, which MSan considers defined). The MSan runtime
+# also fails to map its shadow memory under ASLR at random, which made this oracle
+# non-deterministic. See internal_doc/taotie_c_benchmark_determinism.md.
 
 ###################################################
 # @ clangtkfc @ -O0 to check for undefined behavior

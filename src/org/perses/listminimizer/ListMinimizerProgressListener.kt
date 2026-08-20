@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -31,15 +31,19 @@ class ListMinimizerProgressListener(
   override fun startReduction(
     originalInput: List<ElementWrapper<*>>,
     listMinimizerClass: KClass<out AbstractListMinimizer<*, *>>,
+    descriptionPrefix: String,
   ) {
     val size = originalInput.size
     stream.println("Reduction starts: algorithm=${listMinimizerClass.simpleName}")
+    stream.println("desc: $descriptionPrefix")
     stream.println("The original input has $size element(s).")
     for (i in 0 until size) {
-      val element = originalInput[i]
+      val wrapper = originalInput[i]
       stream.println("--Element $i")
-      stream.println("  index=${element.index}, payload=$element.elementPayload}")
-      stream.println("  element=${element.element}")
+      stream.println("  index=${wrapper.index}, payload=${wrapper.elementPayload}")
+      val element = wrapper.element
+      stream.println("  class=${element::class.simpleName}")
+      stream.println("  element=$element")
     }
   }
 
@@ -62,7 +66,7 @@ class ListMinimizerProgressListener(
 
   override fun onPropertyTest(
     configuration: Candidate<*>,
-    result: LMPropertyTestResult<*, *>,
+    result: ListMinimizerPropertyTestResult<*, *>,
     sizeOfOriginalList: Int,
     sizeOfCurrentMinimizationResult: Int,
   ) {

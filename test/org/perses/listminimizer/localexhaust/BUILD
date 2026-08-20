@@ -16,3 +16,15 @@ kt_jvm_test(
         "//:truth",
     ],
 )
+
+kt_jvm_test(
+    name = "LocalExhaustWindowedMinimizerTest",
+    srcs = ["LocalExhaustWindowedMinimizerTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer",
+        "//src/org/perses/listminimizer:interfaces",
+        "//test/org/perses/listminimizer:AbstractListMinimizerTest",
+    ],
+)

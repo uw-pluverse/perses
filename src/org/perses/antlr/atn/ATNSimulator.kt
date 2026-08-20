@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -90,6 +90,7 @@ class ATNSimulator(
             }
             stateSimulator.sampleTransition(decisionMaker)
           }
+
           is PlusBlockStartState -> {
             val plusSimulator = stateSimulatorRegistry.getSimulator(currentState)
             if (expectingStopStatesSimpleStack.peek() == plusSimulator.endState) {
@@ -107,10 +108,12 @@ class ATNSimulator(
             expectingStopStatesSimpleStack.add(currentState.endState)
             plusSimulator.sampleTransition(decisionMaker)
           }
+
           is PlusLoopbackState -> {
             check(currentState.numberOfTransitions == 2)
             decisionMaker.sampleTransition(currentState)
           }
+
           else -> {
             check(numOfTransitions == 1) { "${currentState::class.java}, $numOfTransitions" }
             decisionMaker.sampleTransition(currentState)

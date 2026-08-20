@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 55
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_node_priority_Hello.java"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "Hello.java"
+  inputFiles:
+  - "Hello.java"
   deps: []
-  sourceFile: "Hello.java"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_node_priority-dfs_Hello.java"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: true
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,141 +130,153 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.java.Java8ParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 27
 (55/55)  The reducer execution plan is listed below.
     fixpoint (smaller) {
-        node_priority-dfs
+        node_priority
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            node_priority-dfs
+            fixpoint (smaller) {
+                node_priority
+            }
         }
     }
 
 
 (55/55)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-======Fixpoint iteration 1. Reducer: node_priority-dfs======
+========Fixpoint iteration 1. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
 The spar-tree is the following.
-compilationUnit {id=1,slot_type=compilationUnit}
-|___(*) {id=2,slot_type=kleene_star__compilationUnit_3}
-    |___normalClassDeclaration {id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
-        |___(*) {id=6,slot_type=kleene_star__normalClassDeclaration_1}
-        |   |___Token:public {id=285,slot_type=[classModifier,PUBLIC]}
-        |___Token:class {id=7,slot_type=CLASS}
-        |___Token:Hello {id=8,slot_type=Identifier}
-        |___classBody {id=9,slot_type=classBody}
-            |___Token:{ {id=10,slot_type=LBRACE}
-            |___(*) {id=11,slot_type=kleene_star__classBody_1}
-            |   |___methodDeclaration {id=14,slot_type=[classBodyDeclaration,methodDeclaration]}
-            |       |___(*) {id=15,slot_type=kleene_star__methodDeclaration_1}
-            |       |   |___Token:public {id=283,slot_type=[methodModifier,PUBLIC]}
-            |       |   |___Token:static {id=282,slot_type=[methodModifier,STATIC]}
-            |       |___methodHeader {id=16,slot_type=methodHeader}
-            |       |   |___Token:void {id=279,slot_type=[result,VOID]}
-            |       |   |___methodDeclarator {id=256,slot_type=methodDeclarator}
-            |       |       |___Token:main {id=257,slot_type=Identifier}
-            |       |       |___Token:( {id=258,slot_type=LPAREN}
-            |       |       |___(?) {id=259,slot_type=optional__methodDeclarator_1}
-            |       |       |   |___formalParameter {id=264,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
-            |       |       |       |___unannArrayType {id=268,slot_type=[unannType,unannArrayType]}
-            |       |       |       |   |___Token:String {id=278,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |       |       |       |   |___(+) {id=271,slot_type=[dims,kleene_plus__dims_5]}
-            |       |       |       |       |___aux_rule__dims_3 {id=272,slot_type=aux_rule__dims_3}
-            |       |       |       |           |___Token:[ {id=273,slot_type=LBRACK}
-            |       |       |       |           |___Token:] {id=274,slot_type=RBRACK}
-            |       |       |       |___Token:args {id=267,slot_type=[variableDeclaratorId,Identifier]}
-            |       |       |___Token:) {id=260,slot_type=RPAREN}
-            |       |___block {id=18,slot_type=[methodBody,block]}
-            |           |___Token:{ {id=19,slot_type=LBRACE}
-            |           |___(?) {id=20,slot_type=optional__block_1}
-            |           |   |___(+) {id=22,slot_type=blockStatements}
-            |           |       |___localVariableDeclarationStatement {id=218,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration {id=219,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:String {id=254,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |           |       |   |   |___variableDeclarator {id=223,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |       |___Token:a {id=250,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |       |___(?) {id=225,slot_type=optional__variableDeclarator_2}
-            |           |       |   |           |___aux_rule__variableDeclarator_1 {id=226,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |               |___Token:= {id=227,slot_type=ASSIGN}
-            |           |       |   |               |___Token:"hello" {id=249,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
-            |           |       |   |___Token:; {id=220,slot_type=SEMI}
-            |           |       |___localVariableDeclarationStatement {id=183,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration {id=184,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:String {id=217,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |           |       |   |   |___variableDeclarator {id=188,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |       |___Token:b {id=213,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |       |___(?) {id=190,slot_type=optional__variableDeclarator_2}
-            |           |       |   |           |___aux_rule__variableDeclarator_1 {id=191,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |               |___Token:= {id=192,slot_type=ASSIGN}
-            |           |       |   |               |___Token:a {id=212,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
-            |           |       |   |___Token:; {id=185,slot_type=SEMI}
-            |           |       |___localVariableDeclarationStatement {id=146,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration {id=147,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:String {id=182,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |           |       |   |   |___variableDeclarator {id=151,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |       |___Token:c {id=178,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |       |___(?) {id=153,slot_type=optional__variableDeclarator_2}
-            |           |       |   |           |___aux_rule__variableDeclarator_1 {id=154,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |               |___Token:= {id=155,slot_type=ASSIGN}
-            |           |       |   |               |___Token:"world" {id=177,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
-            |           |       |   |___Token:; {id=148,slot_type=SEMI}
-            |           |       |___localVariableDeclarationStatement {id=111,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration {id=112,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:String {id=145,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |           |       |   |   |___variableDeclarator {id=116,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |       |___Token:d {id=141,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |       |___(?) {id=118,slot_type=optional__variableDeclarator_2}
-            |           |       |   |           |___aux_rule__variableDeclarator_1 {id=119,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |               |___Token:= {id=120,slot_type=ASSIGN}
-            |           |       |   |               |___Token:c {id=140,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
-            |           |       |   |___Token:; {id=113,slot_type=SEMI}
-            |           |       |___expressionStatement {id=72,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |           |       |   |___methodInvocation {id=75,slot_type=[statementExpression,methodInvocation]}
-            |           |       |   |   |___aux_rule__methodInvocation_18 {id=78,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
-            |           |       |   |   |   |___typeName {id=79,slot_type=typeName}
-            |           |       |   |   |   |   |___(?) {id=105,slot_type=optional__typeName_2}
-            |           |       |   |   |   |   |   |___aux_rule__typeName_1 {id=107,slot_type=aux_rule__typeName_1}
-            |           |       |   |   |   |   |       |___Token:System {id=110,slot_type=[packageName,Identifier]}
-            |           |       |   |   |   |   |       |___Token:. {id=109,slot_type=DOT}
-            |           |       |   |   |   |   |___Token:out {id=106,slot_type=Identifier}
-            |           |       |   |   |   |___Token:. {id=80,slot_type=DOT}
-            |           |       |   |   |   |___altnt_block__methodInvocation_13 {id=81,slot_type=altnt_block__methodInvocation_13}
-            |           |       |   |   |       |___Token:println {id=82,slot_type=Identifier}
-            |           |       |   |   |       |___Token:( {id=83,slot_type=LPAREN}
-            |           |       |   |   |       |___(?) {id=84,slot_type=optional__explicitConstructorInvocation_2}
-            |           |       |   |   |           |___Token:b {id=104,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
-            |           |       |   |   |___Token:) {id=77,slot_type=RPAREN}
-            |           |       |   |___Token:; {id=74,slot_type=SEMI}
-            |           |       |___expressionStatement {id=31,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |           |           |___methodInvocation {id=34,slot_type=[statementExpression,methodInvocation]}
-            |           |           |   |___aux_rule__methodInvocation_18 {id=37,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
-            |           |           |   |   |___typeName {id=38,slot_type=typeName}
-            |           |           |   |   |   |___(?) {id=64,slot_type=optional__typeName_2}
-            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=66,slot_type=aux_rule__typeName_1}
-            |           |           |   |   |   |       |___Token:System {id=69,slot_type=[packageName,Identifier]}
-            |           |           |   |   |   |       |___Token:. {id=68,slot_type=DOT}
-            |           |           |   |   |   |___Token:out {id=65,slot_type=Identifier}
-            |           |           |   |   |___Token:. {id=39,slot_type=DOT}
-            |           |           |   |   |___altnt_block__methodInvocation_13 {id=40,slot_type=altnt_block__methodInvocation_13}
-            |           |           |   |       |___Token:println {id=41,slot_type=Identifier}
-            |           |           |   |       |___Token:( {id=42,slot_type=LPAREN}
-            |           |           |   |       |___(?) {id=43,slot_type=optional__explicitConstructorInvocation_2}
-            |           |           |   |           |___Token:d {id=63,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
-            |           |           |   |___Token:) {id=36,slot_type=RPAREN}
-            |           |           |___Token:; {id=33,slot_type=SEMI}
-            |           |___Token:} {id=21,slot_type=RBRACE}
-            |___Token:} {id=12,slot_type=RBRACE}
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(*){id=2,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___(*){id=6,slot_type=kleene_star__normalClassDeclaration_1}
+        |   |___Token:public{id=285,slot_type=[classModifier,PUBLIC]}
+        |___Token:class{id=7,slot_type=CLASS}
+        |___Token:Hello{id=8,slot_type=Identifier}
+        |___classBody{id=9,slot_type=classBody}
+            |___Token:{{id=10,slot_type=LBRACE}
+            |___(*){id=11,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=14,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*){id=15,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public{id=283,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static{id=282,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader{id=16,slot_type=methodHeader}
+            |       |   |___Token:void{id=279,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator{id=256,slot_type=methodDeclarator}
+            |       |       |___Token:main{id=257,slot_type=Identifier}
+            |       |       |___Token:({id=258,slot_type=LPAREN}
+            |       |       |___(?){id=259,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter{id=264,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType{id=268,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String{id=278,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+){id=271,slot_type=[dims,kleene_plus__dims_5]}
+            |       |       |       |       |___aux_rule__dims_3{id=272,slot_type=aux_rule__dims_3}
+            |       |       |       |           |___Token:[{id=273,slot_type=LBRACK}
+            |       |       |       |           |___Token:]{id=274,slot_type=RBRACK}
+            |       |       |       |___Token:args{id=267,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:){id=260,slot_type=RPAREN}
+            |       |___block{id=18,slot_type=[methodBody,block]}
+            |           |___Token:{{id=19,slot_type=LBRACE}
+            |           |___(?){id=20,slot_type=optional__block_1}
+            |           |   |___(+){id=22,slot_type=blockStatements}
+            |           |       |___localVariableDeclarationStatement{id=218,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=219,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:String{id=254,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |           |       |   |   |___variableDeclarator{id=223,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:a{id=250,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=225,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=226,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=227,slot_type=ASSIGN}
+            |           |       |   |               |___Token:"hello"{id=249,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |       |   |___Token:;{id=220,slot_type=SEMI}
+            |           |       |___localVariableDeclarationStatement{id=183,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=184,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:String{id=217,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |           |       |   |   |___variableDeclarator{id=188,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:b{id=213,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=190,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=191,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=192,slot_type=ASSIGN}
+            |           |       |   |               |___Token:a{id=212,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |       |   |___Token:;{id=185,slot_type=SEMI}
+            |           |       |___localVariableDeclarationStatement{id=146,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=147,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:String{id=182,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |           |       |   |   |___variableDeclarator{id=151,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:c{id=178,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=153,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=154,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=155,slot_type=ASSIGN}
+            |           |       |   |               |___Token:"world"{id=177,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |       |   |___Token:;{id=148,slot_type=SEMI}
+            |           |       |___localVariableDeclarationStatement{id=111,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=112,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:String{id=145,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |           |       |   |   |___variableDeclarator{id=116,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:d{id=141,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=118,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=119,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=120,slot_type=ASSIGN}
+            |           |       |   |               |___Token:c{id=140,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |       |   |___Token:;{id=113,slot_type=SEMI}
+            |           |       |___expressionStatement{id=72,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |       |   |___methodInvocation{id=75,slot_type=[statementExpression,methodInvocation]}
+            |           |       |   |   |___aux_rule__methodInvocation_18{id=78,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |       |   |   |   |___typeName{id=79,slot_type=typeName}
+            |           |       |   |   |   |   |___(?){id=105,slot_type=optional__typeName_2}
+            |           |       |   |   |   |   |   |___aux_rule__typeName_1{id=107,slot_type=aux_rule__typeName_1}
+            |           |       |   |   |   |   |       |___Token:System{id=110,slot_type=[packageName,Identifier]}
+            |           |       |   |   |   |   |       |___Token:.{id=109,slot_type=DOT}
+            |           |       |   |   |   |   |___Token:out{id=106,slot_type=Identifier}
+            |           |       |   |   |   |___Token:.{id=80,slot_type=DOT}
+            |           |       |   |   |   |___altnt_block__methodInvocation_13{id=81,slot_type=altnt_block__methodInvocation_13}
+            |           |       |   |   |       |___Token:println{id=82,slot_type=Identifier}
+            |           |       |   |   |       |___Token:({id=83,slot_type=LPAREN}
+            |           |       |   |   |       |___(?){id=84,slot_type=optional__explicitConstructorInvocation_2}
+            |           |       |   |   |           |___Token:b{id=104,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |       |   |   |___Token:){id=77,slot_type=RPAREN}
+            |           |       |   |___Token:;{id=74,slot_type=SEMI}
+            |           |       |___expressionStatement{id=31,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation{id=34,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18{id=37,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName{id=38,slot_type=typeName}
+            |           |           |   |   |   |___(?){id=64,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1{id=66,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System{id=69,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:.{id=68,slot_type=DOT}
+            |           |           |   |   |   |___Token:out{id=65,slot_type=Identifier}
+            |           |           |   |   |___Token:.{id=39,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13{id=40,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println{id=41,slot_type=Identifier}
+            |           |           |   |       |___Token:({id=42,slot_type=LPAREN}
+            |           |           |   |       |___(?){id=43,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___Token:d{id=63,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |           |   |___Token:){id=36,slot_type=RPAREN}
+            |           |           |___Token:;{id=33,slot_type=SEMI}
+            |           |___Token:}{id=21,slot_type=RBRACE}
+            |___Token:}{id=12,slot_type=RBRACE}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority](55/55)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](55/55)  Retrieved semantics provider null
 ==================Reducing node 2, size=55==================
 
 The current best program is the following
@@ -261,18 +295,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:55/55=100.00%
-FixPt[1][node_priority-dfs][DFS](55/55)  Testing the empty input. Global ratio:55/55=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](55/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Testing the empty input. Global ratio:55/55=100.00%
+==========Testing the following program (0): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__compilationUnit_3]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__compilationUnit_3]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
-FixPt[1][node_priority-dfs][DFS](55/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  There is only one element in the input, and the empty input has been tested. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
@@ -299,7 +333,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=5}
+    structure: [delete_5]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -351,22 +386,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:55/55=100.00%
-FixPt[1][node_priority-dfs][DFS](55/55)  Testing the empty input. Global ratio:55/55=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](55/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Testing the empty input. Global ratio:55/55=100.00%
+==========Testing the following program (1): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__classBody_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-    public class Hello {
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
     }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
-FixPt[1][node_priority-dfs][DFS](55/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  There is only one element in the input, and the empty input has been tested. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 11
@@ -393,25 +426,15 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=14}
+    structure: [delete_14]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (2): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-    public class Hello {
-                                             {
-        String a = "hello";
-        String b = a;
-        String c = "world";
-        String d = c;
-        System.out.println(b);
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
                                              {
         String a = "hello";
@@ -473,17 +496,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:55/55=100.00%
-FixPt[1][node_priority-dfs][DFS](55/55)  Testing the empty input. Global ratio:55/55=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](55/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Testing the empty input. Global ratio:55/55=100.00%
+==========Testing the following program (3): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__block_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
       }
@@ -491,8 +509,9 @@ FixPt[1][node_priority-dfs][DFS](55/55)  Testing the empty input. Global ratio:5
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
-FixPt[1][node_priority-dfs][DFS](55/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  There is only one element in the input, and the empty input has been tested. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:55/55=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 20
@@ -519,30 +538,25 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=22}
+    structure: [delete_22]
+    context: [kleene_plus:blockStatements]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (4): fail===========
 
-// edit action set type: [kleene_plus:blockStatements]remove whole except first
+// edit action set type: [kleene_plus:blockStatements]remove all except first
     --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
         String a = "hello";
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String a = "hello";
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Minimizer DfsListMinimizer starts. Input=[0-5]#6. Global ratio:55/55=100.00%
-FixPt[1][node_priority-dfs][DFS](55/55)  Testing the empty input. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-5]#6. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Testing the empty input. Global ratio:55/55=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
@@ -550,18 +564,13 @@ FixPt[1][node_priority-dfs][DFS](55/55)  Testing the empty input. Global ratio:5
       public static void main(String[] args) {
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](55/55)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
+==========Testing the following program (5): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@3
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=3,#parts=3#total-parts=6
     --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
@@ -570,21 +579,13 @@ FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [0-5]#6: Uninteresting. Lo
         String c = "world";
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String a = "hello";
-        String b = a;
-        String c = "world";
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [3-5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](55/55)  Try deleting [3-5]#3: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
+==========Testing the following program (6): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=1,#parts=1#total-parts=6
     --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
@@ -595,23 +596,13 @@ FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [3-5]#3: Uninteresting. Lo
         System.out.println(b);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String a = "hello";
-        String b = a;
-        String c = "world";
-        String d = c;
-        System.out.println(b);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [5]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](55/55)  Try deleting [5]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
+==========Testing the following program (7): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=2,#parts=2#total-parts=6
     --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
@@ -621,22 +612,13 @@ FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [5]#1: Uninteresting. Loca
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String a = "hello";
-        String b = a;
-        String c = "world";
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [3-4]#2: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
-============Testing the following program: pass=============
+FixPt[1][node_priority][DFS](55/55)  Try deleting [3-4]#2: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
+==========Testing the following program (8): pass===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=1,#parts=1#total-parts=6
     --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
@@ -647,20 +629,10 @@ FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [3-4]#2: Uninteresting. Lo
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String a = "hello";
-        String b = a;
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [4]#1: Interesting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
+FixPt[1][node_priority][DFS](55/55)  Try deleting [4]#1: Interesting. Local ratio: 6/6=100.00%. Global ratio:55/55=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 1 entries are removed: 8 --> 7.
@@ -676,6 +648,7 @@ FixPt[1][node_priority-dfs][DFS](55/55)  Try deleting [4]#1: Interesting. Local 
 ================The best program is updated.================
 
 token count change 55 -> 46
+Edit: [delete_72]
 ------------------------------------------------------------
 
 
@@ -690,22 +663,13 @@ token count change 55 -> 46
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String a = "hello";
-        String b = a;
-        String c = "world";
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](46/55)  Try deleting [3]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:46/55=83.64%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](46/55)  Try deleting [3]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:46/55=83.64%
+==========Testing the following program (9): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@3
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=3,#parts=3#total-parts=5
     --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
@@ -713,20 +677,13 @@ FixPt[1][node_priority-dfs][DFS](46/55)  Try deleting [3]#1: Uninteresting. Loca
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](46/55)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:46/55=83.64%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](46/55)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:46/55=83.64%
+==========Testing the following program (10): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=1,#parts=1#total-parts=5
     --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
@@ -736,22 +693,13 @@ FixPt[1][node_priority-dfs][DFS](46/55)  Try deleting [0-2]#3: Uninteresting. Lo
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String a = "hello";
-        String b = a;
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](46/55)  Try deleting [2]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:46/55=83.64%
-============Testing the following program: pass=============
+FixPt[1][node_priority][DFS](46/55)  Try deleting [2]#1: Uninteresting. Local ratio: 5/6=83.33%. Global ratio:46/55=83.64%
+==========Testing the following program (11): pass==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=2,#parts=2#total-parts=5
     --file: Hello.java--
     public class Hello {
       public static void main(String[] args) {
@@ -760,18 +708,10 @@ FixPt[1][node_priority-dfs][DFS](46/55)  Try deleting [2]#1: Uninteresting. Loca
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](46/55)  Try deleting [0-1]#2: Interesting. Local ratio: 5/6=83.33%. Global ratio:46/55=83.64%
+FixPt[1][node_priority][DFS](46/55)  Try deleting [0-1]#2: Interesting. Local ratio: 5/6=83.33%. Global ratio:46/55=83.64%
 ===========TestScriptExecutionCacheEntryEviction============
 
 3 entries are removed: 9 --> 6.
@@ -787,10 +727,11 @@ FixPt[1][node_priority-dfs][DFS](46/55)  Try deleting [0-1]#2: Interesting. Loca
 ================The best program is updated.================
 
 token count change 46 -> 36
+Edit: [delete: 183,218]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer ends. Result=[2-3,5]#3. Local ratio: 3/6=50.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[2-3,5]#3. Local ratio: 3/6=50.00%. Global ratio:36/55=65.45%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 22 from 55 to 36
@@ -812,17 +753,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (12): fail==========
 
 // edit action set type: [regular_node]can be epsilon
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -946,13 +880,6 @@ The current best program is the following
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
@@ -977,17 +904,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (13): fail==========
 
 // edit action set type: [regular_node]can be epsilon
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -1018,20 +938,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
+==========Testing the following program (14): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__methodDeclarator_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__methodDeclarator_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-    public class Hello {
-      public static void main(             ) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(             ) {
         String c = "world";
@@ -1042,8 +954,9 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:3
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  There is only one element in the input, and the empty input has been tested. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 259
@@ -1067,7 +980,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=264}
+    structure: [delete_264]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1134,18 +1048,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (15): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-    public class Hello {
-      public static void main(String   args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String   args) {
         String c = "world";
@@ -1177,18 +1083,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (16): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-        String c          ;
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         String c          ;
@@ -1220,18 +1118,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (17): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d    ;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -1242,18 +1132,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (18): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String     c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -1306,18 +1188,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (19): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-               out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -1328,18 +1202,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (20): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System    .println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -1371,6 +1237,24 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.java--
+    public class Hello {
+      public static void main(String   args) {
+        String c = "world";
+        String d = c;
+        System.out.println(d);
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  There is only one element in the input, and the empty input has been tested. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 271
@@ -1413,8 +1297,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
@@ -1425,19 +1309,12 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:3
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String c          ;
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  There is only one element in the input, and the empty input has been tested. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 153
@@ -1461,7 +1338,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=154}
+    structure: [delete_154]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1486,8 +1364,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
@@ -1498,19 +1376,12 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:3
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d    ;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  There is only one element in the input, and the empty input has been tested. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 118
@@ -1534,7 +1405,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=119}
+    structure: [delete_119]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1559,8 +1431,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
@@ -1571,19 +1443,12 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:3
                out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-               out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  There is only one element in the input, and the empty input has been tested. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 64
@@ -1607,7 +1472,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=66}
+    structure: [delete_66]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1632,20 +1498,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
+==========Testing the following program (21): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=2,#parts=2#total-parts=2
     --file: Hello.java--
-    public class Hello {
-                    void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
                     void main(String[] args) {
         String c = "world";
@@ -1656,19 +1514,11 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:3
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:36/55=65.45%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:36/55=65.45%
+==========Testing the following program (22): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: Hello.java--
-    public class Hello {
-      public        void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public        void main(String[] args) {
         String c = "world";
@@ -1679,19 +1529,11 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0-1]#2: Uninteresting. Lo
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:36/55=65.45%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/55)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:36/55=65.45%
+==========Testing the following program (23): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: Hello.java--
-    public class Hello {
-             static void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
              static void main(String[] args) {
         String c = "world";
@@ -1702,8 +1544,8 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [1]#1: Uninteresting. Loca
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:36/55=65.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 15
@@ -2208,20 +2050,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
+==========Testing the following program (24): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__explicitConstructorInvocation_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__explicitConstructorInvocation_2]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-    public class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println( );
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
     public class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -2232,8 +2066,9 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:3
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  There is only one element in the input, and the empty input has been tested. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 43
@@ -2507,11 +2342,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
-FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
-============Testing the following program: pass=============
+FixPt[1][node_priority][DFS](36/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Testing the empty input. Global ratio:36/55=65.45%
+==========Testing the following program (25): pass==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__normalClassDeclaration_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__normalClassDeclaration_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
            class Hello {
       public static void main(String[] args) {
@@ -2520,37 +2355,30 @@ FixPt[1][node_priority-dfs][DFS](36/55)  Testing the empty input. Global ratio:3
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/55)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
+FixPt[1][node_priority][DFS](36/55)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:36/55=65.45%
 ===========TestScriptExecutionCacheEntryEviction============
 
-3 entries are removed: 19 --> 16.
+8 entries are removed: 19 --> 11.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 18
+    size before clearance = 19
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
 token count change 36 -> 35
+Edit: [delete_285]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:35/55=63.64%
+FixPt[1][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 6 from 36 to 35
@@ -2558,82 +2386,85 @@ Succeeded to reduce node 6 from 36 to 35
 
 
 (35/55)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 2. Reducer: node_priority-dfs======
+========Fixpoint iteration 2. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
 The spar-tree is the following.
-compilationUnit {id=287,slot_type=compilationUnit}
-|___(*) {id=288,slot_type=kleene_star__compilationUnit_3}
-    |___normalClassDeclaration {id=291,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
-        |___Token:class {id=292,slot_type=CLASS}
-        |___Token:Hello {id=293,slot_type=Identifier}
-        |___classBody {id=294,slot_type=classBody}
-            |___Token:{ {id=295,slot_type=LBRACE}
-            |___(*) {id=296,slot_type=kleene_star__classBody_1}
-            |   |___methodDeclaration {id=299,slot_type=[classBodyDeclaration,methodDeclaration]}
-            |       |___(*) {id=300,slot_type=kleene_star__methodDeclaration_1}
-            |       |   |___Token:public {id=452,slot_type=[methodModifier,PUBLIC]}
-            |       |   |___Token:static {id=451,slot_type=[methodModifier,STATIC]}
-            |       |___methodHeader {id=301,slot_type=methodHeader}
-            |       |   |___Token:void {id=448,slot_type=[result,VOID]}
-            |       |   |___methodDeclarator {id=425,slot_type=methodDeclarator}
-            |       |       |___Token:main {id=426,slot_type=Identifier}
-            |       |       |___Token:( {id=427,slot_type=LPAREN}
-            |       |       |___(?) {id=428,slot_type=optional__methodDeclarator_1}
-            |       |       |   |___formalParameter {id=433,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
-            |       |       |       |___unannArrayType {id=437,slot_type=[unannType,unannArrayType]}
-            |       |       |       |   |___Token:String {id=447,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |       |       |       |   |___(+) {id=440,slot_type=[dims,kleene_plus__dims_5]}
-            |       |       |       |       |___aux_rule__dims_3 {id=441,slot_type=aux_rule__dims_3}
-            |       |       |       |           |___Token:[ {id=442,slot_type=LBRACK}
-            |       |       |       |           |___Token:] {id=443,slot_type=RBRACK}
-            |       |       |       |___Token:args {id=436,slot_type=[variableDeclaratorId,Identifier]}
-            |       |       |___Token:) {id=429,slot_type=RPAREN}
-            |       |___block {id=303,slot_type=[methodBody,block]}
-            |           |___Token:{ {id=304,slot_type=LBRACE}
-            |           |___(?) {id=305,slot_type=optional__block_1}
-            |           |   |___(+) {id=307,slot_type=blockStatements}
-            |           |       |___localVariableDeclarationStatement {id=387,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration {id=388,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:String {id=423,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |           |       |   |   |___variableDeclarator {id=392,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |       |___Token:c {id=419,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |       |___(?) {id=394,slot_type=optional__variableDeclarator_2}
-            |           |       |   |           |___aux_rule__variableDeclarator_1 {id=395,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |               |___Token:= {id=396,slot_type=ASSIGN}
-            |           |       |   |               |___Token:"world" {id=418,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
-            |           |       |   |___Token:; {id=389,slot_type=SEMI}
-            |           |       |___localVariableDeclarationStatement {id=352,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration {id=353,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:String {id=386,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |           |       |   |   |___variableDeclarator {id=357,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |       |___Token:d {id=382,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |       |___(?) {id=359,slot_type=optional__variableDeclarator_2}
-            |           |       |   |           |___aux_rule__variableDeclarator_1 {id=360,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |               |___Token:= {id=361,slot_type=ASSIGN}
-            |           |       |   |               |___Token:c {id=381,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
-            |           |       |   |___Token:; {id=354,slot_type=SEMI}
-            |           |       |___expressionStatement {id=313,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |           |           |___methodInvocation {id=316,slot_type=[statementExpression,methodInvocation]}
-            |           |           |   |___aux_rule__methodInvocation_18 {id=319,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
-            |           |           |   |   |___typeName {id=320,slot_type=typeName}
-            |           |           |   |   |   |___(?) {id=346,slot_type=optional__typeName_2}
-            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=348,slot_type=aux_rule__typeName_1}
-            |           |           |   |   |   |       |___Token:System {id=351,slot_type=[packageName,Identifier]}
-            |           |           |   |   |   |       |___Token:. {id=350,slot_type=DOT}
-            |           |           |   |   |   |___Token:out {id=347,slot_type=Identifier}
-            |           |           |   |   |___Token:. {id=321,slot_type=DOT}
-            |           |           |   |   |___altnt_block__methodInvocation_13 {id=322,slot_type=altnt_block__methodInvocation_13}
-            |           |           |   |       |___Token:println {id=323,slot_type=Identifier}
-            |           |           |   |       |___Token:( {id=324,slot_type=LPAREN}
-            |           |           |   |       |___(?) {id=325,slot_type=optional__explicitConstructorInvocation_2}
-            |           |           |   |           |___Token:d {id=345,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
-            |           |           |   |___Token:) {id=318,slot_type=RPAREN}
-            |           |           |___Token:; {id=315,slot_type=SEMI}
-            |           |___Token:} {id=306,slot_type=RBRACE}
-            |___Token:} {id=297,slot_type=RBRACE}
+compilationUnit{id=287,slot_type=compilationUnit}
+|___(*){id=288,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=291,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=292,slot_type=CLASS}
+        |___Token:Hello{id=293,slot_type=Identifier}
+        |___classBody{id=294,slot_type=classBody}
+            |___Token:{{id=295,slot_type=LBRACE}
+            |___(*){id=296,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=299,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*){id=300,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public{id=452,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static{id=451,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader{id=301,slot_type=methodHeader}
+            |       |   |___Token:void{id=448,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator{id=425,slot_type=methodDeclarator}
+            |       |       |___Token:main{id=426,slot_type=Identifier}
+            |       |       |___Token:({id=427,slot_type=LPAREN}
+            |       |       |___(?){id=428,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter{id=433,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType{id=437,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String{id=447,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+){id=440,slot_type=[dims,kleene_plus__dims_5]}
+            |       |       |       |       |___aux_rule__dims_3{id=441,slot_type=aux_rule__dims_3}
+            |       |       |       |           |___Token:[{id=442,slot_type=LBRACK}
+            |       |       |       |           |___Token:]{id=443,slot_type=RBRACK}
+            |       |       |       |___Token:args{id=436,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:){id=429,slot_type=RPAREN}
+            |       |___block{id=303,slot_type=[methodBody,block]}
+            |           |___Token:{{id=304,slot_type=LBRACE}
+            |           |___(?){id=305,slot_type=optional__block_1}
+            |           |   |___(+){id=307,slot_type=blockStatements}
+            |           |       |___localVariableDeclarationStatement{id=387,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=388,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:String{id=423,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |           |       |   |   |___variableDeclarator{id=392,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:c{id=419,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=394,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=395,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=396,slot_type=ASSIGN}
+            |           |       |   |               |___Token:"world"{id=418,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |       |   |___Token:;{id=389,slot_type=SEMI}
+            |           |       |___localVariableDeclarationStatement{id=352,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=353,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:String{id=386,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |           |       |   |   |___variableDeclarator{id=357,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:d{id=382,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=359,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=360,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=361,slot_type=ASSIGN}
+            |           |       |   |               |___Token:c{id=381,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |       |   |___Token:;{id=354,slot_type=SEMI}
+            |           |       |___expressionStatement{id=313,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation{id=316,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18{id=319,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName{id=320,slot_type=typeName}
+            |           |           |   |   |   |___(?){id=346,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1{id=348,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System{id=351,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:.{id=350,slot_type=DOT}
+            |           |           |   |   |   |___Token:out{id=347,slot_type=Identifier}
+            |           |           |   |   |___Token:.{id=321,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13{id=322,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println{id=323,slot_type=Identifier}
+            |           |           |   |       |___Token:({id=324,slot_type=LPAREN}
+            |           |           |   |       |___(?){id=325,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___Token:d{id=345,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |           |   |___Token:){id=318,slot_type=RPAREN}
+            |           |           |___Token:;{id=315,slot_type=SEMI}
+            |           |___Token:}{id=306,slot_type=RBRACE}
+            |___Token:}{id=297,slot_type=RBRACE}
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority](35/55)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](35/55)  Retrieved semantics provider null
 =================Reducing node 288, size=35=================
 
 The current best program is the following
@@ -2649,17 +2480,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 288
@@ -2683,7 +2514,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=291}
+    structure: [delete_291]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -2729,22 +2561,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+==========Testing the following program (26): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__classBody_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__classBody_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-           class Hello {
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
     }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 296
@@ -2768,22 +2598,15 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=299}
+    structure: [delete_299]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (27): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-           class Hello {
-                                             {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
                                              {
         String c = "world";
@@ -2836,17 +2659,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+==========Testing the following program (28): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__block_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-           class Hello {
-      public static void main(String[] args) {
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(String[] args) {
       }
@@ -2854,8 +2672,9 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:3
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 305
@@ -2879,30 +2698,25 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=307}
+    structure: [delete_307]
+    context: [kleene_plus:blockStatements]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (29): fail==========
 
-// edit action set type: [kleene_plus:blockStatements]remove whole except first
+// edit action set type: [kleene_plus:blockStatements]remove all except first
     --file: Hello.java--
            class Hello {
       public static void main(String[] args) {
         String c = "world";
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
@@ -2910,18 +2724,13 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:3
       public static void main(String[] args) {
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
+==========Testing the following program (30): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=1,#parts=1#total-parts=3
     --file: Hello.java--
            class Hello {
       public static void main(String[] args) {
@@ -2929,39 +2738,26 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0-2]#3: Uninteresting. Lo
         String d = c;
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
+==========Testing the following program (31): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=2,#parts=2#total-parts=3
     --file: Hello.java--
            class Hello {
       public static void main(String[] args) {
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
+==========Testing the following program (32): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=1,#parts=1#total-parts=3
     --file: Hello.java--
            class Hello {
       public static void main(String[] args) {
@@ -2969,20 +2765,13 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0-1]#2: Uninteresting. Lo
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
+==========Testing the following program (33): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_plus:blockStatements]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:blockStatements]dd@#nodes=1,#parts=1#total-parts=3
     --file: Hello.java--
            class Hello {
       public static void main(String[] args) {
@@ -2990,18 +2779,11 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [1]#1: Uninteresting. Loca
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 307
@@ -3025,7 +2807,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=313}
+    structure: [delete_313]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3136,7 +2919,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=387}
+    structure: [delete_387]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3163,7 +2947,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=352}
+    structure: [delete_352]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3188,20 +2973,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+==========Testing the following program (34): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__methodDeclarator_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__methodDeclarator_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-           class Hello {
-      public static void main(             ) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(             ) {
         String c = "world";
@@ -3212,8 +2989,9 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:3
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 428
@@ -3237,7 +3015,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=433}
+    structure: [delete_433]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3304,18 +3083,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (35): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-           class Hello {
-      public static void main(String   args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(String   args) {
         String c = "world";
@@ -3347,18 +3118,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (36): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-           class Hello {
-      public static void main(String[] args) {
-        String c          ;
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(String[] args) {
         String c          ;
@@ -3390,18 +3153,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (37): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d    ;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -3412,18 +3167,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (38): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String     c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -3476,18 +3223,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (39): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-               out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -3498,18 +3237,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (40): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.java--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System    .println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -3541,6 +3272,24 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.java--
+           class Hello {
+      public static void main(String   args) {
+        String c = "world";
+        String d = c;
+        System.out.println(d);
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 440
@@ -3583,8 +3332,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
@@ -3595,19 +3344,12 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:3
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        String c          ;
-        String d = c;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 394
@@ -3631,7 +3373,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=395}
+    structure: [delete_395]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3656,8 +3399,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
@@ -3668,19 +3411,12 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:3
         System.out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d    ;
-        System.out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 359
@@ -3704,7 +3440,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=360}
+    structure: [delete_360]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3729,8 +3466,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.java--
@@ -3741,19 +3478,12 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:3
                out.println(d);
       }
     }
-    --file: <formatted tokenized program in its original format>--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-               out.println(d);
-      }
-    }
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 346
@@ -3777,7 +3507,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=348}
+    structure: [delete_348]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3802,20 +3533,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+==========Testing the following program (41): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=2,#parts=2#total-parts=2
     --file: Hello.java--
-           class Hello {
-                    void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
                     void main(String[] args) {
         String c = "world";
@@ -3826,19 +3549,11 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:3
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:35/55=63.64%
+==========Testing the following program (42): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: Hello.java--
-           class Hello {
-      public        void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public        void main(String[] args) {
         String c = "world";
@@ -3849,19 +3564,11 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0-1]#2: Uninteresting. Lo
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:35/55=63.64%
+==========Testing the following program (43): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__methodDeclaration_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: Hello.java--
-           class Hello {
-             static void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println(d);
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
              static void main(String[] args) {
         String c = "world";
@@ -3872,8 +3579,8 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [1]#1: Uninteresting. Loca
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 300
@@ -4378,20 +4085,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Testing the empty input. Global ratio:35/55=63.64%
+==========Testing the following program (44): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__explicitConstructorInvocation_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__explicitConstructorInvocation_2]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.java--
-           class Hello {
-      public static void main(String[] args) {
-        String c = "world";
-        String d = c;
-        System.out.println( );
-      }
-    }
-    --file: <formatted tokenized program in its original format>--
            class Hello {
       public static void main(String[] args) {
         String c = "world";
@@ -4402,8 +4101,9 @@ FixPt[2][node_priority-dfs][DFS](35/55)  Testing the empty input. Global ratio:3
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
-FixPt[2][node_priority-dfs][DFS](35/55)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  There is only one element in the input, and the empty input has been tested. Global ratio:35/55=63.64%
+FixPt[2][node_priority][DFS](35/55)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:35/55=63.64%
 ===================Node reduction is done===================
 
 Failed to reduce node 325
@@ -4662,101 +4362,104 @@ Failed to reduce node 292
 ------------------------------------------------------------
 
 
+(35/55)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
 The spar-tree is the following.
-compilationUnit {id=287,slot_type=compilationUnit}
-|___(*) {id=288,slot_type=kleene_star__compilationUnit_3}
-    |___normalClassDeclaration {id=291,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
-        |___Token:class {id=292,slot_type=CLASS}
-        |___Token:Hello {id=293,slot_type=Identifier}
-        |___classBody {id=294,slot_type=classBody}
-            |___Token:{ {id=295,slot_type=LBRACE}
-            |___(*) {id=296,slot_type=kleene_star__classBody_1}
-            |   |___methodDeclaration {id=299,slot_type=[classBodyDeclaration,methodDeclaration]}
-            |       |___(*) {id=300,slot_type=kleene_star__methodDeclaration_1}
-            |       |   |___Token:public {id=452,slot_type=[methodModifier,PUBLIC]}
-            |       |   |___Token:static {id=451,slot_type=[methodModifier,STATIC]}
-            |       |___methodHeader {id=301,slot_type=methodHeader}
-            |       |   |___Token:void {id=448,slot_type=[result,VOID]}
-            |       |   |___methodDeclarator {id=425,slot_type=methodDeclarator}
-            |       |       |___Token:main {id=426,slot_type=Identifier}
-            |       |       |___Token:( {id=427,slot_type=LPAREN}
-            |       |       |___(?) {id=428,slot_type=optional__methodDeclarator_1}
-            |       |       |   |___formalParameter {id=433,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
-            |       |       |       |___unannArrayType {id=437,slot_type=[unannType,unannArrayType]}
-            |       |       |       |   |___Token:String {id=447,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |       |       |       |   |___(+) {id=440,slot_type=[dims,kleene_plus__dims_5]}
-            |       |       |       |       |___aux_rule__dims_3 {id=441,slot_type=aux_rule__dims_3}
-            |       |       |       |           |___Token:[ {id=442,slot_type=LBRACK}
-            |       |       |       |           |___Token:] {id=443,slot_type=RBRACK}
-            |       |       |       |___Token:args {id=436,slot_type=[variableDeclaratorId,Identifier]}
-            |       |       |___Token:) {id=429,slot_type=RPAREN}
-            |       |___block {id=303,slot_type=[methodBody,block]}
-            |           |___Token:{ {id=304,slot_type=LBRACE}
-            |           |___(?) {id=305,slot_type=optional__block_1}
-            |           |   |___(+) {id=307,slot_type=blockStatements}
-            |           |       |___localVariableDeclarationStatement {id=387,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration {id=388,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:String {id=423,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |           |       |   |   |___variableDeclarator {id=392,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |       |___Token:c {id=419,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |       |___(?) {id=394,slot_type=optional__variableDeclarator_2}
-            |           |       |   |           |___aux_rule__variableDeclarator_1 {id=395,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |               |___Token:= {id=396,slot_type=ASSIGN}
-            |           |       |   |               |___Token:"world" {id=418,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
-            |           |       |   |___Token:; {id=389,slot_type=SEMI}
-            |           |       |___localVariableDeclarationStatement {id=352,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration {id=353,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:String {id=386,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
-            |           |       |   |   |___variableDeclarator {id=357,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |       |___Token:d {id=382,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |       |___(?) {id=359,slot_type=optional__variableDeclarator_2}
-            |           |       |   |           |___aux_rule__variableDeclarator_1 {id=360,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |               |___Token:= {id=361,slot_type=ASSIGN}
-            |           |       |   |               |___Token:c {id=381,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
-            |           |       |   |___Token:; {id=354,slot_type=SEMI}
-            |           |       |___expressionStatement {id=313,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |           |           |___methodInvocation {id=316,slot_type=[statementExpression,methodInvocation]}
-            |           |           |   |___aux_rule__methodInvocation_18 {id=319,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
-            |           |           |   |   |___typeName {id=320,slot_type=typeName}
-            |           |           |   |   |   |___(?) {id=346,slot_type=optional__typeName_2}
-            |           |           |   |   |   |   |___aux_rule__typeName_1 {id=348,slot_type=aux_rule__typeName_1}
-            |           |           |   |   |   |       |___Token:System {id=351,slot_type=[packageName,Identifier]}
-            |           |           |   |   |   |       |___Token:. {id=350,slot_type=DOT}
-            |           |           |   |   |   |___Token:out {id=347,slot_type=Identifier}
-            |           |           |   |   |___Token:. {id=321,slot_type=DOT}
-            |           |           |   |   |___altnt_block__methodInvocation_13 {id=322,slot_type=altnt_block__methodInvocation_13}
-            |           |           |   |       |___Token:println {id=323,slot_type=Identifier}
-            |           |           |   |       |___Token:( {id=324,slot_type=LPAREN}
-            |           |           |   |       |___(?) {id=325,slot_type=optional__explicitConstructorInvocation_2}
-            |           |           |   |           |___Token:d {id=345,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
-            |           |           |   |___Token:) {id=318,slot_type=RPAREN}
-            |           |           |___Token:; {id=315,slot_type=SEMI}
-            |           |___Token:} {id=306,slot_type=RBRACE}
-            |___Token:} {id=297,slot_type=RBRACE}
+compilationUnit{id=287,slot_type=compilationUnit}
+|___(*){id=288,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=291,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=292,slot_type=CLASS}
+        |___Token:Hello{id=293,slot_type=Identifier}
+        |___classBody{id=294,slot_type=classBody}
+            |___Token:{{id=295,slot_type=LBRACE}
+            |___(*){id=296,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=299,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*){id=300,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:public{id=452,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static{id=451,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader{id=301,slot_type=methodHeader}
+            |       |   |___Token:void{id=448,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator{id=425,slot_type=methodDeclarator}
+            |       |       |___Token:main{id=426,slot_type=Identifier}
+            |       |       |___Token:({id=427,slot_type=LPAREN}
+            |       |       |___(?){id=428,slot_type=optional__methodDeclarator_1}
+            |       |       |   |___formalParameter{id=433,slot_type=[formalParameterList,aux_rule__formalParameterList_3,lastFormalParameter,formalParameter]}
+            |       |       |       |___unannArrayType{id=437,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String{id=447,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |       |       |       |   |___(+){id=440,slot_type=[dims,kleene_plus__dims_5]}
+            |       |       |       |       |___aux_rule__dims_3{id=441,slot_type=aux_rule__dims_3}
+            |       |       |       |           |___Token:[{id=442,slot_type=LBRACK}
+            |       |       |       |           |___Token:]{id=443,slot_type=RBRACK}
+            |       |       |       |___Token:args{id=436,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:){id=429,slot_type=RPAREN}
+            |       |___block{id=303,slot_type=[methodBody,block]}
+            |           |___Token:{{id=304,slot_type=LBRACE}
+            |           |___(?){id=305,slot_type=optional__block_1}
+            |           |   |___(+){id=307,slot_type=blockStatements}
+            |           |       |___localVariableDeclarationStatement{id=387,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=388,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:String{id=423,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |           |       |   |   |___variableDeclarator{id=392,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:c{id=419,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=394,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=395,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=396,slot_type=ASSIGN}
+            |           |       |   |               |___Token:"world"{id=418,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,StringLiteral]}
+            |           |       |   |___Token:;{id=389,slot_type=SEMI}
+            |           |       |___localVariableDeclarationStatement{id=352,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=353,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:String{id=386,slot_type=[unannType,unannClassOrInterfaceType,altnt_block__unannClassOrInterfaceType_3,unannClassType_lfno_unannClassOrInterfaceType,Identifier]}
+            |           |       |   |   |___variableDeclarator{id=357,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:d{id=382,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=359,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=360,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=361,slot_type=ASSIGN}
+            |           |       |   |               |___Token:c{id=381,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |       |   |___Token:;{id=354,slot_type=SEMI}
+            |           |       |___expressionStatement{id=313,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |           |___methodInvocation{id=316,slot_type=[statementExpression,methodInvocation]}
+            |           |           |   |___aux_rule__methodInvocation_18{id=319,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |   |___typeName{id=320,slot_type=typeName}
+            |           |           |   |   |   |___(?){id=346,slot_type=optional__typeName_2}
+            |           |           |   |   |   |   |___aux_rule__typeName_1{id=348,slot_type=aux_rule__typeName_1}
+            |           |           |   |   |   |       |___Token:System{id=351,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |       |___Token:.{id=350,slot_type=DOT}
+            |           |           |   |   |   |___Token:out{id=347,slot_type=Identifier}
+            |           |           |   |   |___Token:.{id=321,slot_type=DOT}
+            |           |           |   |   |___altnt_block__methodInvocation_13{id=322,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |       |___Token:println{id=323,slot_type=Identifier}
+            |           |           |   |       |___Token:({id=324,slot_type=LPAREN}
+            |           |           |   |       |___(?){id=325,slot_type=optional__explicitConstructorInvocation_2}
+            |           |           |   |           |___Token:d{id=345,slot_type=[argumentList,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,typeName,Identifier]}
+            |           |           |   |___Token:){id=318,slot_type=RPAREN}
+            |           |           |___Token:;{id=315,slot_type=SEMI}
+            |           |___Token:}{id=306,slot_type=RBRACE}
+            |___Token:}{id=297,slot_type=RBRACE}
 ------------------------------------------------------------
 
 
-FixPt[3][FineGritLatraReducer](35/55)  Latra does not support LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=SINGLE_TOKEN_PER_LINE} langauge yet.
-(35/55)  The history of the reducer invocation.
+FixPt[3][FineGritLatraReducer](35/55)  Latra does not support LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0    node_priority-dfs     -20    -54             0
- 1    node_priority-dfs       0      0             0
- 2 FineGritLatraReducer       0      0             0
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      3             0     -20            -54      26   time-hidden
+ 1        node_priority      0             0       0              0      19   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-   node_priority-dfs     2     -20    -54
-FineGritLatraReducer     1       0      0
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      3             0     -20            -54      45   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+        Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Deletion      3             0     -20            -54
 ------------------------------------- End --------------------------------------
-
-
 #test success = 3
 #test failure = 42
-#test result cache hits = 11
+#test result cache hits = 13
 #test execution cancelled = 0
 #node edit action set cache hits = 17
 #external test execution cache hits = 0

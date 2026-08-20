@@ -50,8 +50,8 @@ To build Kitten from source, follow these steps:
 2. Clone the Kitten repository (as part of Perses) and compile:
 ```shell
 git clone https://github.com/uw-pluverse/perses.git && cd perses
-bazel build kitten/src/org/perses/fuzzer:kitten_deploy.jar
-bazel build kitten/src/org/perses/fuzzer/organizer:kitten_organizer_deploy.jar
+bazelisk build kitten/src/org/perses/fuzzer:kitten_deploy.jar
+bazelisk build kitten/src/org/perses/fuzzer/organizer:kitten_organizer_deploy.jar
 cp bazel-bin/kitten/src/org/perses/fuzzer/kitten_deploy.jar .
 cp bazel-bin/kitten/src/org/perses/fuzzer/organizer/kitten_organizer_deploy.jar .
 ```

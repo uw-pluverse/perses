@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,7 +22,15 @@ class NodeActionSetCache : AbstractNodeActionSetCache() {
   // For thread-safety.
   private val cache = Util.createConcurrentSet<AbstractActionSet<*>>()
 
-  override fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): Boolean = !cache.add(actionSet)
+  override fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): NodeActionSetCacheResult =
+    if (cache.add(
+        actionSet,
+      )
+    ) {
+      NodeActionSetCacheResult.MISS_BUT_CACHED_NOW
+    } else {
+      NodeActionSetCacheResult.HIT
+    }
 
   override fun clear() {
     cache.clear()

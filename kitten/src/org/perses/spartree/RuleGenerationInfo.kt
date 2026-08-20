@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -94,18 +94,24 @@ class RuleGenerationInfo(
           result.addAll(findAllReferredRuleName(it))
         }
       }
+
       is AbstractPersesQuantifiedAst -> {
         result.addAll(findAllReferredRuleName(rule.body))
       }
+
       is PersesSequenceAst -> {
         rule.foreachChildRuleElement {
           result.addAll(findAllReferredRuleName(it))
         }
       }
+
       is PersesRuleReferenceAst -> {
         result.add(rule.ruleNameHandle)
       }
-      else -> return emptySet()
+
+      else -> {
+        return emptySet()
+      }
     }
     return result
   }
@@ -136,6 +142,7 @@ class RuleGenerationInfo(
           alternatives.minOf { getMinDepth(it) }
         }
       }
+
       is AbstractPersesQuantifiedAst -> {
         if (ruleBody is PersesPlusAst) {
           getMinDepth(ruleBody.body)
@@ -143,11 +150,13 @@ class RuleGenerationInfo(
           0
         }
       }
+
       is PersesSequenceAst -> {
         ruleBody.children.maxOf { child ->
           getMinDepth(child)
         }
       }
+
       is PersesRuleReferenceAst -> {
         val ruleNameHandle = ruleBody.ruleNameHandle
         if (ruleToDepthMap.containsKey(ruleNameHandle)) {
@@ -162,9 +171,11 @@ class RuleGenerationInfo(
           }
         getMinDepth(rule.body) + 1
       }
+
       is PersesRuleElementLabel -> {
         getMinDepth(ruleBody.getChild(0))
       }
+
       else -> {
         if (canBeTerminal(ruleBody)) {
           return 0

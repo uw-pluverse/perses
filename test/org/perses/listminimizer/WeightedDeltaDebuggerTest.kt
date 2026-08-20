@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,18 +21,9 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.PropertyTestResult
 
 @RunWith(JUnit4::class)
-class WeightedDeltaDebuggerTest {
-  val input: ImmutableList<Int> = ImmutableList.of(1, 2, 3, 5, 10)
-
-  val dummyHandler = {
-    _: ImmutableList<ElementWrapper<Int>>,
-    _: String,
-    ->
-  }
-
+class WeightedDeltaDebuggerTest : AbstractWeightedMinimizerTest() {
   @Test
   fun testA() {
     testWdd(property = listOf(), expected = listOf())
@@ -107,35 +98,13 @@ class WeightedDeltaDebuggerTest {
     property: List<Int>,
     expected: List<Int>,
     enableCache: Boolean = false,
-  ): ImmutableList<String> {
-    val testHistory = ArrayList<String>()
-
-    val propertyTest =
-      IPropertyTester<Int, String> { configuration ->
-        val candidate = configuration.getCandidateOrFail()
-        testHistory.add(candidate.joinToString(""))
-        if (candidate.containsAll(property)) {
-          LMPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "")
-        } else {
-          LMPropertyTestResult.Completed(PropertyTestResult.NON_INTERESTING_RESULT, "")
-        }
-      }
-
-    val debugger =
-      WeightedDeltaDebugger(
-        ListMinimizerArguments(
-          needToTestEmpty = true,
-          input = input,
-          propertyTester = propertyTest,
-          onBestUpdateHandler = dummyHandler,
-          descriptionPrefix = "prefix",
-          weightProvider = { it },
-        ),
-        enableCache = enableCache,
-      )
-
-    val result = debugger.reduce()
-    assertThat(result).isEqualTo(expected)
-    return ImmutableList.copyOf(testHistory)
-  }
+  ): ImmutableList<String> =
+    runMinimizerTest(
+      input = input,
+      property = property,
+      expected = expected,
+      weightProvider = { it },
+    ) { args ->
+      WeightedDeltaDebugger(args, enableCache = enableCache)
+    }
 }

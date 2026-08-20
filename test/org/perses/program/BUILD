@@ -15,6 +15,12 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "TokenPositionTest",
+    srcs = ["TokenPositionTest.kt"],
+    deps = DEFAULT_DEPS,
+)
+
+kt_jvm_test(
     name = "TokenizedProgramTest",
     srcs = ["TokenizedProgramTest.kt"],
     data = [
@@ -22,7 +28,9 @@ kt_jvm_test(
         "//test_data/java_helloworld",
         "//test_data/parentheses",
     ],
-    deps = DEFAULT_DEPS,
+    deps = DEFAULT_DEPS + [
+        "//:antlr_runtime",
+    ],
 )
 
 kt_jvm_test(
@@ -59,19 +67,16 @@ kt_jvm_library(
 )
 
 kt_jvm_test(
-    name = "TokenizedProgramFactoryTest",
-    srcs = ["TokenizedProgramFactoryTest.kt"],
-    deps = DEFAULT_DEPS + [
-        "//:antlr_runtime",
-        "//src/org/perses/grammar/c:language_kind",
-    ],
-)
-
-kt_jvm_test(
     name = "SerializableLanguageKindTest",
     srcs = ["SerializableLanguageKindTest.kt"],
     associates = ["//src/org/perses/program:serializable_language_kind"],
     deps = [
         "//:truth",
     ],
+)
+
+kt_jvm_test(
+    name = "ProgramSizeTest",
+    srcs = ["ProgramSizeTest.kt"],
+    deps = DEFAULT_DEPS,
 )

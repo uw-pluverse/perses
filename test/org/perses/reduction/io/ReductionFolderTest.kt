@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,7 +26,6 @@ import org.junit.runners.JUnit4
 import org.perses.grammar.c.LanguageC
 import org.perses.program.AbstractDataKind
 import org.perses.program.BinaryReductionFile
-import org.perses.program.LanguageKind
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.util.Util
@@ -72,11 +71,9 @@ class ReductionFolderTest {
 
     val testScript = createTestScript(root.resolve("r.sh"))
 
-    class ReductionInputs :
-      AbstractReductionInputs<LanguageKind, ReductionInputs>(
+    class OriginalReductionInputs :
+      AbstractOriginalReductionInputs(
         testScript,
-        initiallyDeterminedMainDataKind = LanguageC,
-        rootDirectory = root,
         mutableFiles =
           sequenceOf(
             fileA,
@@ -90,15 +87,15 @@ class ReductionFolderTest {
           ),
       )
 
-    val reductionInputs = ReductionInputs()
+    val originalReductionInputs = OriginalReductionInputs()
 
     val reductionFolder =
       ReductionFolder(
-        reductionInputs = reductionInputs,
+        originalReductionInputs = originalReductionInputs,
         folder = Files.createDirectories(tempDir.resolve("reduction-folder")),
       )
     assertThat(
-      reductionFolder.folder
+      reductionFolder.path
         .toFile()
         .listFiles()
         ?.map { it.name },
@@ -107,19 +104,19 @@ class ReductionFolderTest {
       depDir1.name,
       depDir2.name,
     )
-    reductionInputs
+    originalReductionInputs
       .computeAbsPathListWrt(
-        reductionFolder.folder,
+        reductionFolder.path,
         reductionFileSelectionPredicate = {
-          reductionInputs.mutableFiles.contains(it.origFile)
+          originalReductionInputs.mutableFiles.contains(it)
         },
       ).forEach {
         Files.createDirectories(it.parent)
         Files.createFile(it)
       }
     assertThat(
-      reductionInputs.sequenceOfMutableFiles().transformToImmutableList {
-        it.origFile.file.name
+      originalReductionInputs.sequenceOfMutableFiles().transformToImmutableList {
+        it.key.file.name
       },
     ).containsExactly(
       fileA.name,
@@ -127,9 +124,9 @@ class ReductionFolderTest {
       file2.name,
     )
     val extraFileName = "extra.txt"
-    Files.createFile(reductionFolder.folder.resolve(extraFileName))
+    Files.createFile(reductionFolder.path.resolve(extraFileName))
     assertThat(
-      reductionFolder.folder
+      reductionFolder.path
         .toFile()
         .listFiles()
         ?.map { it.name },
@@ -144,7 +141,7 @@ class ReductionFolderTest {
     )
     reductionFolder.deleteAllOtherFiles()
     assertThat(
-      reductionFolder.folder
+      reductionFolder.path
         .toFile()
         .listFiles()
         ?.map { it.name },
@@ -157,18 +154,62 @@ class ReductionFolderTest {
       fileA.name,
     )
 
-    assertThat(Files.isRegularFile(reductionFolder.folder.resolve("a.txt"))).isTrue()
-    assertThat(Files.isRegularFile(reductionFolder.folder.resolve("${dir1.name}/z.txt"))).isTrue()
-    assertThat(Files.isRegularFile(reductionFolder.folder.resolve("${dir2.name}/b.txt"))).isTrue()
+    assertThat(Files.isRegularFile(reductionFolder.path.resolve("a.txt"))).isTrue()
+    assertThat(Files.isRegularFile(reductionFolder.path.resolve("${dir1.name}/z.txt"))).isTrue()
+    assertThat(Files.isRegularFile(reductionFolder.path.resolve("${dir2.name}/b.txt"))).isTrue()
 
-    assertThat(Files.isRegularFile(reductionFolder.folder.resolve(testScript.baseName))).isTrue()
+    assertThat(Files.isRegularFile(reductionFolder.path.resolve(testScript.baseName))).isTrue()
 
     assertThat(
-      Files.isRegularFile(reductionFolder.folder.resolve("dep_dir_1/dep1.txt")),
+      Files.isRegularFile(reductionFolder.path.resolve("dep_dir_1/dep1.txt")),
     ).isTrue()
     assertThat(
-      Files.isRegularFile(reductionFolder.folder.resolve("dep_dir_2/dep2.txt")),
+      Files.isRegularFile(reductionFolder.path.resolve("dep_dir_2/dep2.txt")),
     ).isTrue()
+  }
+
+  @Test
+  fun testSequenceOfMutableFiles() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val fileA = Files.createFile(root.resolve("a.txt"))
+    val fileB = Files.createFile(root.resolve("b.txt"))
+    val scriptFile = createTestScript(root.resolve("r.sh"))
+
+    class OriginalReductionInputs :
+      AbstractOriginalReductionInputs(
+        testScript = scriptFile,
+        mutableFiles =
+          ImmutableList.of(
+            SourceFile(fileA, LanguageC),
+            SourceFile(fileB, LanguageC),
+          ),
+        immutableDependencyFiles = ImmutableList.of(),
+      )
+
+    val originalReductionInputs = OriginalReductionInputs()
+    val reductionFolder =
+      ReductionFolder(
+        originalReductionInputs = originalReductionInputs,
+        folder = Files.createDirectories(tempDir.resolve("reduction-folder")),
+      )
+    // Seed each mutable file's current best in the folder with known content.
+    reductionFolder
+      .computeAbsPathForOrigFile(
+        originalReductionInputs.mutableFiles[0],
+      ).writeText("aaa")
+    reductionFolder
+      .computeAbsPathForOrigFile(
+        originalReductionInputs.mutableFiles[1],
+      ).writeText("bbbbb")
+
+    // sequenceOfLiveMutableFiles yields each live file's identity paired with its absolute path in
+    // the folder, in mutable-file order; the caller picks the terminal operation.
+    val results =
+      reductionFolder
+        .sequenceOfLiveMutableFiles()
+        .map { (origFile, absPath) -> origFile.baseName to absPath.readText().length }
+        .toList()
+    assertThat(results).containsExactly("a.txt" to 3, "b.txt" to 5).inOrder()
   }
 
   @Test
@@ -177,11 +218,9 @@ class ReductionFolderTest {
     val file = Files.createFile(root.resolve("a.txt"))
     val scriptFile = createTestScript(root.resolve("r.sh"))
 
-    class ReductionInputs :
-      AbstractReductionInputs<LanguageKind, ReductionInputs>(
+    class OriginalReductionInputs :
+      AbstractOriginalReductionInputs(
         testScript = scriptFile,
-        initiallyDeterminedMainDataKind = LanguageC,
-        rootDirectory = root,
         mutableFiles = ImmutableList.of(SourceFile(file, LanguageC)),
         immutableDependencyFiles = ImmutableList.of(),
       )
@@ -189,7 +228,7 @@ class ReductionFolderTest {
     val folderPath = Files.createDirectories(tempDir.resolve("reduction-folder"))
     val reductionFolder =
       ReductionFolder(
-        ReductionInputs(),
+        OriginalReductionInputs(),
         folder = folderPath,
       )
 
@@ -217,23 +256,21 @@ class ReductionFolderTest {
     val file3 = Files.createFile(subdir.resolve("c.txt"))
     file3.writeText("file3")
 
-    class ReductionInputs :
-      AbstractReductionInputs<LanguageKind, ReductionInputs>(
+    class OriginalReductionInputs :
+      AbstractOriginalReductionInputs(
         testScript = scriptFile,
-        initiallyDeterminedMainDataKind = LanguageC,
-        rootDirectory = root,
         mutableFiles = ImmutableList.of(SourceFile(file, LanguageC)),
         immutableDependencyFiles = ImmutableList.of(),
       )
 
     val reductionFolder1 =
       ReductionFolder(
-        ReductionInputs(),
+        OriginalReductionInputs(),
         folder = dir1,
       )
     val reductionFolder2 =
       ReductionFolder(
-        ReductionInputs(),
+        OriginalReductionInputs(),
         folder = dir2,
       )
 
@@ -249,6 +286,278 @@ class ReductionFolderTest {
     assertThat(copyedFile1.readText()).isEqualTo(file1.readText())
     assertThat(copyedFile2.readText()).isEqualTo(file2.readText())
     assertThat(copyedFile3.readText()).isEqualTo(file3.readText())
+  }
+
+  @Test
+  fun testDeleteMutableFilePrunesEmptyParentDirs() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    // A deeply-nested mutable file (the cf-3020 shape) alongside a top-level one.
+    val nested =
+      Files.createFile(
+        Files
+          .createDirectories(root.resolve("com/google/common/annotations"))
+          .resolve("GwtCompatible.java"),
+      )
+    val topLevel = Files.createFile(root.resolve("Bug.java"))
+    val scriptFile = createTestScript(root.resolve("r.sh"))
+
+    class OriginalReductionInputs :
+      AbstractOriginalReductionInputs(
+        testScript = scriptFile,
+        mutableFiles =
+          ImmutableList.of(
+            SourceFile(topLevel, LanguageC),
+            SourceFile(nested, LanguageC),
+          ),
+        immutableDependencyFiles = ImmutableList.of(),
+      )
+
+    val originalReductionInputs = OriginalReductionInputs()
+    val reductionFolder =
+      ReductionFolder(
+        originalReductionInputs,
+        folder = Files.createDirectories(tempDir.resolve("reduction-folder")),
+      )
+    // The constructor writes only the script + dependency files, so populate the mutable files.
+    originalReductionInputs.mutableFiles.forEach { file ->
+      val absPath = reductionFolder.computeAbsPathForOrigFile(file)
+      Util.ensureDirExists(absPath.parent)
+      absPath.writeText("content")
+    }
+    val nestedInFolder =
+      reductionFolder.computeAbsPathForOrigFile(
+        originalReductionInputs.mutableFiles[1],
+      )
+    assertThat(Files.exists(nestedInFolder)).isTrue()
+
+    reductionFolder.deleteMutableFile(originalReductionInputs.mutableFiles[1])
+
+    // The file is gone, and every parent directory it left empty is pruned, all the way up to (but
+    // not including) the folder root.
+    assertThat(Files.exists(nestedInFolder)).isFalse()
+    assertThat(
+      Files.exists(reductionFolder.path.resolve("com/google/common/annotations")),
+    ).isFalse()
+    assertThat(Files.exists(reductionFolder.path.resolve("com/google/common"))).isFalse()
+    assertThat(Files.exists(reductionFolder.path.resolve("com"))).isFalse()
+    // The folder root, the test script, and the other (still-live) file survive.
+    assertThat(Files.isDirectory(reductionFolder.path)).isTrue()
+    assertThat(Files.exists(reductionFolder.path.resolve(scriptFile.baseName))).isTrue()
+    assertThat(
+      Files.exists(
+        reductionFolder.computeAbsPathForOrigFile(originalReductionInputs.mutableFiles[0]),
+      ),
+    ).isTrue()
+  }
+
+  @Test
+  fun testDeleteMutableFileKeepsAParentThatStillHasOtherFiles() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val pkgDir = Files.createDirectories(root.resolve("pkg"))
+    val fileX = Files.createFile(pkgDir.resolve("X.java"))
+    val fileY = Files.createFile(pkgDir.resolve("Y.java"))
+    val scriptFile = createTestScript(root.resolve("r.sh"))
+
+    class OriginalReductionInputs :
+      AbstractOriginalReductionInputs(
+        testScript = scriptFile,
+        mutableFiles =
+          ImmutableList.of(
+            SourceFile(fileX, LanguageC),
+            SourceFile(fileY, LanguageC),
+          ),
+        immutableDependencyFiles = ImmutableList.of(),
+      )
+
+    val originalReductionInputs = OriginalReductionInputs()
+    val reductionFolder =
+      ReductionFolder(
+        originalReductionInputs,
+        folder = Files.createDirectories(tempDir.resolve("reduction-folder")),
+      )
+    originalReductionInputs.mutableFiles.forEach { file ->
+      val absPath = reductionFolder.computeAbsPathForOrigFile(file)
+      Util.ensureDirExists(absPath.parent)
+      absPath.writeText("content")
+    }
+
+    reductionFolder.deleteMutableFile(originalReductionInputs.mutableFiles[0])
+
+    // X is gone, but pkg/ stays because its sibling Y is still there.
+    assertThat(Files.exists(reductionFolder.path.resolve("pkg/X.java"))).isFalse()
+    assertThat(Files.exists(reductionFolder.path.resolve("pkg/Y.java"))).isTrue()
+    assertThat(Files.isDirectory(reductionFolder.path.resolve("pkg"))).isTrue()
+  }
+
+  @Test
+  fun testDeleteMutableFileIsNoOpWhenFileAbsent() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val file = Files.createFile(root.resolve("a.txt"))
+    val scriptFile = createTestScript(root.resolve("r.sh"))
+
+    class OriginalReductionInputs :
+      AbstractOriginalReductionInputs(
+        testScript = scriptFile,
+        mutableFiles = ImmutableList.of(SourceFile(file, LanguageC)),
+        immutableDependencyFiles = ImmutableList.of(),
+      )
+
+    val originalReductionInputs = OriginalReductionInputs()
+    val reductionFolder =
+      ReductionFolder(
+        originalReductionInputs,
+        folder = Files.createDirectories(tempDir.resolve("reduction-folder")),
+      )
+    // The constructor never writes mutable files, so this slot is already absent; deleting it must
+    // be a no-op rather than throwing, and must not touch the folder root.
+    reductionFolder.deleteMutableFile(originalReductionInputs.mutableFiles[0])
+
+    assertThat(
+      Files.exists(
+        reductionFolder.computeAbsPathForOrigFile(originalReductionInputs.mutableFiles[0]),
+      ),
+    ).isFalse()
+    assertThat(Files.isDirectory(reductionFolder.path)).isTrue()
+  }
+
+  @Test
+  fun testSequenceOfLiveMutableFilesExcludesDeletedSlotAndPreservesOrder() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val fileA = Files.createFile(root.resolve("a.txt"))
+    val fileB = Files.createFile(root.resolve("b.txt"))
+    val fileC = Files.createFile(root.resolve("c.txt"))
+    val inputs =
+      createInputs(
+        createTestScript(root.resolve("r.sh")),
+        ImmutableList.of(
+          SourceFile(fileA, LanguageC),
+          SourceFile(fileB, LanguageC),
+          SourceFile(fileC, LanguageC),
+        ),
+      )
+    val folder = createPopulatedFolder(inputs)
+
+    folder.deleteMutableFile(inputs.mutableFiles[1])
+
+    // The live view filters out the dropped slot but never renumbers, so survivors keep their order.
+    val live = folder.sequenceOfLiveMutableFiles().toList()
+    assertThat(live.map { it.first })
+      .containsExactly(inputs.mutableFiles[0], inputs.mutableFiles[2])
+      .inOrder()
+    assertThat(live.map { it.second })
+      .containsExactly(
+        folder.computeAbsPathForOrigFile(inputs.mutableFiles[0]),
+        folder.computeAbsPathForOrigFile(inputs.mutableFiles[2]),
+      ).inOrder()
+  }
+
+  @Test
+  fun testReadLiveMutableFileContentsAfterDeletion() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val fileA = Files.createFile(root.resolve("a.txt"))
+    val fileB = Files.createFile(root.resolve("b.txt"))
+    val inputs =
+      createInputs(
+        createTestScript(root.resolve("r.sh")),
+        ImmutableList.of(SourceFile(fileA, LanguageC), SourceFile(fileB, LanguageC)),
+      )
+    val folder = createPopulatedFolder(inputs)
+    folder.computeAbsPathForOrigFile(inputs.mutableFiles[0]).writeText("aaa")
+    folder.computeAbsPathForOrigFile(inputs.mutableFiles[1]).writeText("bbbbb")
+
+    folder.deleteMutableFile(inputs.mutableFiles[0])
+
+    // The deleted slot is absent (no NoSuchFileException), and the survivor's content is returned.
+    val contents = folder.readLiveMutableFileContents()
+    assertThat(contents.keys).containsExactly(inputs.mutableFiles[1])
+    assertThat(contents[inputs.mutableFiles[1]]).isEqualTo("bbbbb")
+  }
+
+  @Test
+  fun testLiveViewsAreEmptyWhenAllMutableFilesDeleted() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val fileA = Files.createFile(root.resolve("a.txt"))
+    val fileB = Files.createFile(root.resolve("b.txt"))
+    val inputs =
+      createInputs(
+        createTestScript(root.resolve("r.sh")),
+        ImmutableList.of(SourceFile(fileA, LanguageC), SourceFile(fileB, LanguageC)),
+      )
+    val folder = createPopulatedFolder(inputs)
+
+    // A test may legitimately need no input files, so the live set can shrink all the way to empty.
+    inputs.mutableFiles.forEach { folder.deleteMutableFile(it) }
+
+    assertThat(folder.sequenceOfLiveMutableFiles().toList()).isEmpty()
+    assertThat(folder.readLiveMutableFileContents()).isEmpty()
+  }
+
+  @Test
+  fun testCheckAllInputFilesPopulatedThrowsAfterDeletion() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val fileA = Files.createFile(root.resolve("a.txt"))
+    val fileB = Files.createFile(root.resolve("b.txt"))
+    val inputs =
+      createInputs(
+        createTestScript(root.resolve("r.sh")),
+        ImmutableList.of(SourceFile(fileA, LanguageC), SourceFile(fileB, LanguageC)),
+      )
+    val folder = createPopulatedFolder(inputs)
+
+    folder.checkAllInputFilesPopulated()
+
+    // Once a file is dropped, the folder is a strict subset, so the precondition must fail.
+    folder.deleteMutableFile(inputs.mutableFiles[0])
+    assertThrows(Exception::class.java) { folder.checkAllInputFilesPopulated() }
+  }
+
+  @Test
+  fun testCheckLiveFilesAreSubsetOfInputsHoldsAfterMutableDeletionButNotDependencyLoss() {
+    val root = Files.createDirectories(tempDir.resolve("root"))
+    val fileA = Files.createFile(root.resolve("a.txt"))
+    val fileB = Files.createFile(root.resolve("b.txt"))
+    val depFile = Files.createFile(root.resolve("dep.txt"))
+    val inputs =
+      createInputs(
+        createTestScript(root.resolve("r.sh")),
+        ImmutableList.of(SourceFile(fileA, LanguageC), SourceFile(fileB, LanguageC)),
+        ImmutableList.of(
+          BinaryReductionFile(file = depFile, dataKind = AbstractDataKind.UnknownDataKind),
+        ),
+      )
+    val folder = createPopulatedFolder(inputs)
+
+    // A mutable-file deletion keeps the subset invariant: the never-deleted script and dependency
+    // files are still on disk.
+    folder.deleteMutableFile(inputs.mutableFiles[0])
+    folder.checkLiveFilesAreSubsetOfInputs()
+
+    // Losing a dependency file (which is never supposed to be deleted) breaks the invariant.
+    Files.delete(folder.computeAbsPathForOrigFile(inputs.immutableDependencyFiles[0]))
+    assertThrows(Exception::class.java) { folder.checkLiveFilesAreSubsetOfInputs() }
+  }
+
+  private fun createInputs(
+    script: ScriptFile,
+    mutableFiles: ImmutableList<out org.perses.program.AbstractReductionFile<*, *>>,
+    immutableDependencyFiles: ImmutableList<BinaryReductionFile> = ImmutableList.of(),
+  ): AbstractOriginalReductionInputs =
+    object : AbstractOriginalReductionInputs(script, mutableFiles, immutableDependencyFiles) {}
+
+  // Builds the folder (constructor writes the script + dependency files) and seeds each mutable
+  // file's slot, so the folder starts as the full input universe.
+  private fun createPopulatedFolder(inputs: AbstractOriginalReductionInputs): ReductionFolder {
+    val folder =
+      ReductionFolder(
+        inputs,
+        folder = Files.createDirectories(tempDir.resolve("reduction-folder")),
+      )
+    inputs.mutableFiles.forEach { file ->
+      val absPath = folder.computeAbsPathForOrigFile(file)
+      Util.ensureDirExists(absPath.parent)
+      absPath.writeText("content")
+    }
+    return folder
   }
 
   private fun createTestScript(path: Path): ScriptFile =

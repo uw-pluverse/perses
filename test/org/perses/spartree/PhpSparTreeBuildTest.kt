@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -40,6 +40,6 @@ class PhpSparTreeBuildTest {
         """.trimIndent(),
         LanguagePhp,
       )
-    Truth.assertThat(tree.programSnapshot.tokens).isNotEmpty()
+    Truth.assertThat(tree.programSnapshot.payload.tokens).isNotEmpty()
   }
 }

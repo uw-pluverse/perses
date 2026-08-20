@@ -1,3 +1,1 @@
-    main                          {
-        "world\n" ;
-}
+        "world\n"

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -62,7 +62,7 @@ private val allStableVersionStrings: ImmutableList<String> =
   ImmutableList
     .builder<String>()
     .apply {
-      (57 downTo 30).forEach { major ->
+      (94 downTo 30).forEach { major ->
         (2 downTo 0).forEach { minor ->
           add("1.$major.$minor")
         }

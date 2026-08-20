@@ -7,11 +7,14 @@ package(default_visibility = [
 kt_jvm_library(
     name = "shell",
     srcs = [
-        "AbstractShellDiscardingOutputPolicy.kt",
+        "AbstractShellExecutionPolicy.kt",
         "AbstractShellOutputStream.kt",
+        "ApacheExecShellExecutionPolicy.kt",
         "CmdOutput.kt",
         "CommonShellCommands.kt",
+        "JDKShellExecutionPolicy.kt",
         "NullShellOutputStream.kt",
+        "ProcessUtil.kt",
         "ShellCommandOnPath.kt",
         "ShellOutputLines.kt",
         "ShellOutputStream.kt",

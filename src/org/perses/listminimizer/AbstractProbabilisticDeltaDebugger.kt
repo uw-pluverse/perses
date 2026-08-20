@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -62,7 +62,7 @@ abstract class AbstractProbabilisticDeltaDebugger<T : Any, PropertyPayload, Payl
         )
 
       val propertyTestResult = testProperty(config)
-      if (propertyTestResult is LMPropertyTestResult.Completed<T, PropertyPayload> &&
+      if (propertyTestResult is ListMinimizerPropertyTestResult.Completed<T, PropertyPayload> &&
         propertyTestResult.result.isInteresting
       ) {
         val newBest = Util.computeDifference(best, toBeDeleted)

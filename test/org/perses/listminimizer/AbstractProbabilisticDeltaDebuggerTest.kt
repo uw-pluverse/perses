@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,19 +21,12 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.PropertyTestResult.Companion.INTERESTING_RESULT
-import org.perses.reduction.PropertyTestResult.Companion.NON_INTERESTING_RESULT
 
 @RunWith(JUnit4::class)
-class AbstractProbabilisticDeltaDebuggerTest {
+class AbstractProbabilisticDeltaDebuggerTest : AbstractListMinimizerTest<String>() {
   val input = ImmutableList.of("a", "b", "c", "d", "e", "f", "g", "h")
-  val dummyHandler = {
-    _: ImmutableList<ElementWrapper<String>>,
-    _: String,
-    ->
-  }
 
-  private fun checkOrder(list: ImmutableList<String>?): Boolean {
+  private fun checkOrder(list: List<String>?): Boolean {
     var currVal = 0
     for (str in list!!) {
       for (c in str) {
@@ -181,40 +174,29 @@ class AbstractProbabilisticDeltaDebuggerTest {
     property: List<String>,
     expected: List<String>,
     isProbabilisticDeltaDebugger: Boolean,
-  ): ImmutableList<String>? {
-    val testHistory = ArrayList<String>()
-    val delHistory = ArrayList<String>()
+  ): List<String> {
+    val delHistory = mutableListOf<String>()
 
-    val propertyTest =
-      IPropertyTester<String, String> { configuration ->
-        val candidate = configuration.getCandidateOrFail()
-        val deleted = configuration.deletedElements
-        testHistory.add(candidate.joinToString(separator = ""))
-        delHistory.add(deleted.joinToString(separator = ""))
-        if (candidate.containsAll(property)) {
-          LMPropertyTestResult.Completed(INTERESTING_RESULT, "payload")
-        } else {
-          LMPropertyTestResult.Completed(NON_INTERESTING_RESULT, "payload")
+    return runMinimizerTest(
+      input = input,
+      property = property,
+      expected = expected,
+    ) { args ->
+      val originalPropertyTester = args.propertyTester
+      val wrapperPropertyTester =
+        IPropertyTester<String, String> { configuration ->
+          val result = originalPropertyTester.testProperty(configuration)
+          delHistory.add(configuration.deletedElements.joinToString(separator = ""))
+          result
         }
-      }
 
-    val arguments =
-      ListMinimizerArguments(
-        needToTestEmpty = true,
-        input,
-        propertyTest,
-        dummyHandler,
-        descriptionPrefix = "",
-      )
-    val debugger =
       if (isProbabilisticDeltaDebugger) {
-        PristineProbabilisticDeltaDebugger<String, String>(arguments)
+        PristineProbabilisticDeltaDebugger<String, String>(
+          args.copy(propertyTester = wrapperPropertyTester),
+        )
       } else {
-        CounterBasedDeltaDebugger<String, String>(arguments)
+        CounterBasedDeltaDebugger<String, String>(args.copy(propertyTester = wrapperPropertyTester))
       }
-
-    val result = debugger.reduce()
-    assertThat(result).isEqualTo(expected)
-    return ImmutableList.copyOf(testHistory)
+    }
   }
 }

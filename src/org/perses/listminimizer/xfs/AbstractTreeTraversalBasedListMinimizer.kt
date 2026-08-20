@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList
 import org.perses.listminimizer.AbstractListMinimizer
 import org.perses.listminimizer.Candidate
 import org.perses.listminimizer.ElementWrapper
-import org.perses.listminimizer.LMPropertyTestResult
+import org.perses.listminimizer.ListMinimizerPropertyTestResult
 import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.Partition
 import org.perses.util.Util
@@ -28,6 +28,7 @@ import java.util.ArrayDeque
 
 abstract class AbstractTreeTraversalBasedListMinimizer<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
+  protected val splitPolicy: SplitPolicy,
 ) : AbstractListMinimizer<T, PropertyPayload>(arguments) {
   override fun reduceNonEmptyInput() {
     val initialPartition = Partition(best)
@@ -38,9 +39,19 @@ abstract class AbstractTreeTraversalBasedListMinimizer<T : Any, PropertyPayload>
       val partition = pollFromWorklist(worklist)
       val deletedInThisIteration = partition.asImmutableList()
       val testResult =
-        testProperty(Candidate.DeletionOnly(deleted_ = deletedInThisIteration))
-      if (testResult !is LMPropertyTestResult.Completed || testResult.result.isNotInteresting) {
-        addToWorklist(worklist, partition.splitEvently())
+        testProperty(
+          Candidate.DeletionsFromOriginal(original = best, deleted_ = deletedInThisIteration),
+        )
+      if (testResult !is ListMinimizerPropertyTestResult.Completed || testResult.result.isNotInteresting) {
+        val splits =
+          when (splitPolicy) {
+            SplitPolicy.EVEN -> partition.splitEvently()
+            SplitPolicy.WEIGHTED_EVEN ->
+              partition.weightedSplit { elementWrapper ->
+                arguments.weightProvider.weight(elementWrapper.element)
+              }
+          }
+        addToWorklist(worklist, splits)
         continue
       } else {
         updateBest(Util.computeDifference(best, deletedInThisIteration), testResult.payload)
@@ -56,4 +67,9 @@ abstract class AbstractTreeTraversalBasedListMinimizer<T : Any, PropertyPayload>
     worklist: ArrayDeque<Partition<ElementWrapper<T>>>,
     partitions: ImmutableList<Partition<ElementWrapper<T>>>,
   )
+
+  enum class SplitPolicy {
+    EVEN,
+    WEIGHTED_EVEN,
+  }
 }

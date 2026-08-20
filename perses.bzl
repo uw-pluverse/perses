@@ -1,4 +1,9 @@
 load(
+    "@rules_java//java:defs.bzl",
+    "java_binary",
+    "java_library",
+)
+load(
     "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
     "kt_jvm_library",
 )
@@ -36,7 +41,7 @@ def kt_binary_for_genrule(
         jvm_flags = []
     if not args:
         args = []
-    native.java_binary(
+    java_binary(
         name = name,
         main_class = main_class,
         runtime_deps = [
@@ -47,15 +52,16 @@ def kt_binary_for_genrule(
     )
 
 DEFAULT_PERSES_BIN = "//src/org/perses:perses"
-DEFAULT_MAIN_REDUCTION_ALGORITHM = "node_priority-dfs"
+DEFAULT_MAIN_REDUCTION_ALGORITHM = "node_priority"
 
-def reduce(
+def reduce_multiple_files(
         name,
         reduction_algorithm,
-        source_file,
+        source_files,
         test_script,
         output_dir = None,
         names_of_other_files_in_output_dir = None,
+        expected_deleted_files = None,
         enable_query_caching = None,
         enable_edit_caching = None,
         enable_token_reducer = None,
@@ -66,15 +72,27 @@ def reduce(
         verbosity = None,
         log_file = None,
         call_formatter = None,
-        query_cache_type = None,
         other_flags = None,
         extra_output_files = None,
         list_minimizer_profile = None,
         perses_bin = DEFAULT_PERSES_BIN,
         cmd_deps = None,
         deps = None):
-    if "/" in source_file:
-        fail("The source file should be in the current folder.")
+    """Reduces one or more source files together against a single interestingness test.
+
+    Passes one --input-file flag per file; with more than one file Perses dispatches to its
+    multi-file reduction path. When output_dir is set, every reduced file lands in it and is declared
+    as a genrule output -- except files listed in expected_deleted_files, which Perses' file-deletion
+    phase removes from the result folder, so they must NOT be declared as outputs. [reduce] is the
+    single-file special case of this macro.
+    """
+    expected_deleted_files = expected_deleted_files or []
+    for source_file in source_files:
+        # Source files may live in subdirectories of this package (e.g. "src/a.c"): the reducer keeps
+        # each file at its path relative to the test script's directory. Absolute or parent-escaping
+        # paths are rejected because they would fall outside that root.
+        if source_file.startswith("/") or source_file.startswith("../") or "/../" in source_file:
+            fail("The source file must be within the current folder: " + source_file)
     if "/" in test_script:
         fail("The test script should be in the current folder.")
     if output_dir == None and names_of_other_files_in_output_dir != None:
@@ -86,11 +104,13 @@ def reduce(
     args = [
         "$(location %s)" % perses_bin,
         "--test-script $(location %s)" % test_script,
-        "--input-file $(location %s)" % source_file,
-        "--alg %s" % reduction_algorithm,
-        "--threads %s" % thread_count,
-        "--fixpoint true",
     ]
+    for source_file in source_files:
+        args.append("--input-file $(location %s)" % source_file)
+    args.append("--alg %s" % reduction_algorithm)
+    args.append("--threads %s" % thread_count)
+    args.append("--hide-timestamps true")
+
     outs = []
     if enable_query_caching != None:
         args.append("--query-caching %s" % ("true" if enable_query_caching else "false"))
@@ -109,8 +129,6 @@ def reduce(
 
     if call_formatter != None:
         args.append("--call-formatter %s" % ("true" if call_formatter else "false"))
-    if query_cache_type:
-        args.append("--query-cache-type %s" % query_cache_type)
     if progress_dump_file:
         args.append("--progress-dump-file $(location %s)" % progress_dump_file)
         outs.append(progress_dump_file)
@@ -122,9 +140,20 @@ def reduce(
         outs.append(list_minimizer_profile)
 
     if output_dir != None:
-        main_result_file = "%s/%s" % (output_dir, source_file)
-        args.append("--output-dir $$(dirname $(location %s))" % main_result_file)
-        outs.append(main_result_file)
+        # All reduced files land in output_dir; derive it from the first file's result location by
+        # stripping that file's (possibly nested) relative path. source_files[0] may sit in a
+        # subdirectory (e.g. "src/main.c"), so peel off one path component per "/" plus the file name
+        # itself -- i.e. (number of "/" + 1) dirname calls -- to land back on output_dir.
+        main_result_file = "%s/%s" % (output_dir, source_files[0])
+        output_dir_location = "$(location %s)" % main_result_file
+        for _ in range(source_files[0].count("/") + 1):
+            output_dir_location = "$$(dirname %s)" % output_dir_location
+        args.append("--output-dir %s" % output_dir_location)
+        for source_file in source_files:
+            # A file Perses is expected to delete is gone from the result folder, so it cannot be a
+            # declared genrule output (bazel would fail on the missing output).
+            if source_file not in expected_deleted_files:
+                outs.append("%s/%s" % (output_dir, source_file))
         if names_of_other_files_in_output_dir:
             for file_name in names_of_other_files_in_output_dir:
                 outs.append("%s/%s" % (output_dir, file_name))
@@ -148,7 +177,7 @@ def reduce(
         args.append("$(location %s)" % stdout_file)
         outs.append(stdout_file)
 
-    srcs = [source_file, test_script]
+    srcs = list(source_files) + [test_script]
 
     if cmd_deps:  # The flags --deps
         srcs.append(cmd_deps)
@@ -161,4 +190,53 @@ def reduce(
         srcs = srcs,
         tools = [perses_bin],
         cmd = " ".join(args),
+    )
+
+def reduce(
+        name,
+        reduction_algorithm,
+        source_file,
+        test_script,
+        output_dir = None,
+        names_of_other_files_in_output_dir = None,
+        enable_query_caching = None,
+        enable_edit_caching = None,
+        enable_token_reducer = None,
+        enable_vulcan = None,
+        statistics_file = None,
+        progress_dump_file = None,
+        thread_count = None,
+        verbosity = None,
+        log_file = None,
+        call_formatter = None,
+        other_flags = None,
+        extra_output_files = None,
+        list_minimizer_profile = None,
+        perses_bin = DEFAULT_PERSES_BIN,
+        cmd_deps = None,
+        deps = None):
+    """Reduces a single source file: the one-file special case of [reduce_multiple_files]."""
+    reduce_multiple_files(
+        name = name,
+        reduction_algorithm = reduction_algorithm,
+        source_files = [source_file],
+        test_script = test_script,
+        output_dir = output_dir,
+        names_of_other_files_in_output_dir = names_of_other_files_in_output_dir,
+        enable_query_caching = enable_query_caching,
+        enable_edit_caching = enable_edit_caching,
+        enable_token_reducer = enable_token_reducer,
+        enable_vulcan = enable_vulcan,
+        statistics_file = statistics_file,
+        progress_dump_file = progress_dump_file,
+        thread_count = thread_count,
+        verbosity = verbosity,
+        log_file = log_file,
+        call_formatter = call_formatter,
+        other_flags = other_flags,
+        extra_output_files = extra_output_files,
+        list_minimizer_profile = list_minimizer_profile,
+        perses_bin = perses_bin,
+        cmd_deps = cmd_deps,
+        deps = deps,
     )

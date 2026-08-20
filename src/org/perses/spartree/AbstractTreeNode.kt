@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,11 +20,12 @@ import com.google.common.collect.HashBiMap
 import com.google.common.collect.ImmutableList
 import com.google.common.graph.SuccessorsFunction
 import com.google.common.graph.Traverser
+import org.perses.spartree.TreeNodeFilterResult.CONTINUE
+import org.perses.spartree.TreeNodeFilterResult.STOP
 import org.perses.util.SimpleQueue
 import org.perses.util.SimpleStack
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
-import java.util.function.Predicate
 
 abstract class AbstractTreeNode<
   T : AbstractTreeNode<T, Payload>,
@@ -71,7 +72,7 @@ abstract class AbstractTreeNode<
   /** Return the child at the specified index.  */
   fun getChild(index: Int): T = children[index]
 
-  fun copyAndReverseChildren(): ImmutableList<T> {
+  fun copyChildrenThenReverse(): ImmutableList<T> {
     val builder: ImmutableList.Builder<T> = ImmutableList.builder()
     val length = children.size
     for (i in length - 1 downTo 0) {
@@ -121,14 +122,7 @@ abstract class AbstractTreeNode<
    * Permanently delete this node, and its children recursively.
    *
    *
-   * Note that this method does not remove the current node from its parent. This behavior is
-   * intended, as program reduction traverses the tree from the top to the bottom.
-   *
-   *
-   *
-   *
-   *
-   * Package-private, so that this can only be called within this package.
+   * Note that this method does not remove the current node from its parent.
    */
   fun delete() {
     if (isPermanentlyDeleted) {
@@ -256,24 +250,35 @@ abstract class AbstractTreeNode<
    *  * it passes the given `nodePredicate`
    *  * and is the first node along the path from this to the node at the max depth.
    */
-  fun boundedBreadthFirstSearchForFirstQualifiedNodes(
-    nodePredicate: Predicate<T>,
+  inline fun boundedBreadthFirstSearchToSelectNodes(
+    crossinline selectionPredicate: (T) -> Boolean,
+    stopAtFirstSelectionPerPath: Boolean,
     maxBfsDepth: Int,
+    crossinline subtreeEarlyStopCriterion: (
+      T,
+    ) -> TreeNodeFilterResult = { CONTINUE },
   ) = sequence {
     boundedBFSChildren { node: T, currentDepth: Int ->
       if (currentDepth > maxBfsDepth) {
-        return@boundedBFSChildren TreeNodeFilterResult.STOP
+        return@boundedBFSChildren STOP
       }
-      val predicateResult = nodePredicate.test(node)
-      if (predicateResult) {
+      if (subtreeEarlyStopCriterion(node) == STOP) {
+        return@boundedBFSChildren STOP
+      }
+      val selectionResult = selectionPredicate(node)
+      if (selectionResult) {
         yield(node)
-        return@boundedBFSChildren TreeNodeFilterResult.STOP
+        return@boundedBFSChildren if (stopAtFirstSelectionPerPath) {
+          STOP
+        } else {
+          CONTINUE
+        }
       }
       if (currentDepth == maxBfsDepth) {
-        return@boundedBFSChildren TreeNodeFilterResult.STOP
+        STOP
       } else {
-        lazyAssert { currentDepth < maxBfsDepth }
-        return@boundedBFSChildren TreeNodeFilterResult.CONTINUE
+        check(currentDepth < maxBfsDepth) { "$currentDepth is not less than $maxBfsDepth" }
+        CONTINUE
       }
     }
   }
@@ -288,10 +293,10 @@ abstract class AbstractTreeNode<
       for (i in 0 until queueSize) {
         val node = queue.remove()
         val filterResult = visitor(node, currentDepth)
-        if (filterResult === TreeNodeFilterResult.STOP) {
+        if (filterResult === STOP) {
           continue
         }
-        lazyAssert { filterResult === TreeNodeFilterResult.CONTINUE }
+        lazyAssert { filterResult === CONTINUE }
         node.forEachChild { queue.add(it) }
       }
     }

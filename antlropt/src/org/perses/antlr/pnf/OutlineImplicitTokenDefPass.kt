@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -39,8 +39,12 @@ class OutlineImplicitTokenDefPass : AbstractPnfPass() {
           lexerGrammar,
         )
       when (val decision = edit.apply(alt)) {
-        is TransformDecision.Keep -> Unit // do nothing.
-        is TransformDecision.Replace ->
+        is TransformDecision.Keep -> {
+          Unit
+        }
+
+        // do nothing.
+        is TransformDecision.Replace -> {
           edits.add(
             RuleEditTriple(
               name,
@@ -48,7 +52,11 @@ class OutlineImplicitTokenDefPass : AbstractPnfPass() {
               newDef = decision.newValue,
             ),
           )
-        else -> error("Unhandled decision: $decision")
+        }
+
+        else -> {
+          error("Unhandled decision: $decision")
+        }
       }
     }
     edits.forEach { it.applyTo(mutableParserRules) }

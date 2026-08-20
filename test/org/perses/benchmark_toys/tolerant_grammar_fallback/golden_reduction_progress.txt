@@ -1,0 +1,500 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 11
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: true
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_node_priority_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: false
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+(11/11)  WARNING: t.c is not parseable by its c grammar; falling back to the tolerant 'dyck-adaptive' grammar to keep reducing. The reduced output may not be valid c.
+(11/11)  WARNING: t.c is not parseable by its c grammar; falling back to the tolerant 'dyck-adaptive' grammar to keep reducing. The reduced output may not be valid c.
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(11/11)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(11/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 1. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.dyck.AdaptiveDyckParserFacade
+The spar-tree is the following.
+start{id=1,slot_type=start}
+|___(*){id=2,slot_type=lines}
+    |___(+){id=5,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+        |___aux_rule__node_1{id=7,slot_type=[node,aux_rule__node_1]}
+            |___Token:{{id=8,slot_type=OPEN_BRACE}
+            |___(*){id=9,slot_type=lines}
+            |   |___(+){id=13,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+            |       |___(+){id=26,slot_type=[node,text]}
+            |       |   |___Token:keep_me{id=27,slot_type=OTHER}
+            |       |   |___Token:;{id=28,slot_type=OTHER}
+            |       |   |___Token:drop_one{id=29,slot_type=OTHER}
+            |       |   |___Token:;{id=30,slot_type=OTHER}
+            |       |   |___Token:drop_two{id=31,slot_type=OTHER}
+            |       |   |___Token:;{id=32,slot_type=OTHER}
+            |       |___aux_rule__node_2{id=16,slot_type=[node,aux_rule__node_2]}
+            |           |___Token:({id=17,slot_type=OPEN_PARENTHESIS}
+            |           |___(*){id=18,slot_type=lines}
+            |           |   |___(+){id=22,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+            |           |       |___(+){id=24,slot_type=[node,text]}
+            |           |           |___Token:drop_three{id=25,slot_type=OTHER}
+            |           |___Token:){id=19,slot_type=CLOSE_PARENTHESIS}
+            |___Token:}{id=10,slot_type=CLOSE_BRACE}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority](11/11)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](11/11)  Retrieved semantics provider null
+==================Reducing node 2, size=11==================
+
+The current best program is the following
+
+    --file: t.c--
+    { keep_me ; drop_one ; drop_two ; ( drop_three ) }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](11/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  Testing the empty input. Global ratio:11/11=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:lines]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](11/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  There is only one element in the input, and the empty input has been tested. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:11/11=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=11==================
+
+The current best program is the following
+
+    --file: t.c--
+    { keep_me ; drop_one ; drop_two ; ( drop_three ) }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_5]
+    context: [kleene_plus:kleene_plus__line_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](11/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  Testing the empty input. Global ratio:11/11=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](11/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  There is only one element in the input, and the empty input has been tested. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:11/11=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=11==================
+
+The current best program is the following
+
+    --file: t.c--
+    { keep_me ; drop_one ; drop_two ; ( drop_three ) }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_7]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (1): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+              ;
+------------------------------------------------------------
+
+
+==========Testing the following program (2): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                         ;
+------------------------------------------------------------
+
+
+==========Testing the following program (3): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+                                    ;
+------------------------------------------------------------
+
+
+==========Testing the following program (4): pass===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+      keep_me
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 4 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 11
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 11 -> 1
+Edit: HoistEdit:[replace_7_with_27]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 7 from 11 to 1
+------------------------------------------------------------
+
+
+==================Reducing node 27, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+      keep_me
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 27
+------------------------------------------------------------
+
+
+(1/11)  Rebuilding spar-tree: The spartree is rebuilt.
+========Fixpoint iteration 2. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.dyck.AdaptiveDyckParserFacade
+The spar-tree is the following.
+start{id=34,slot_type=start}
+|___(*){id=35,slot_type=lines}
+    |___(+){id=38,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+        |___(+){id=40,slot_type=[node,text]}
+            |___Token:keep_me{id=41,slot_type=OTHER}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority](1/11)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](1/11)  Retrieved semantics provider null
+==================Reducing node 35, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+      keep_me
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](1/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  Testing the empty input. Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  There is only one element in the input, and the empty input has been tested. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+==================Reducing node 38, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+      keep_me
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_38]
+    context: [kleene_plus:kleene_plus__line_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](1/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  Testing the empty input. Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  There is only one element in the input, and the empty input has been tested. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+===================Node reduction is done===================
+
+Failed to reduce node 38
+------------------------------------------------------------
+
+
+==================Reducing node 40, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+      keep_me
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_40]
+    context: [kleene_plus:text]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](1/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  Testing the empty input. Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  There is only one element in the input, and the empty input has been tested. Global ratio:1/11=9.09%
+FixPt[2][node_priority][DFS](1/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+===================Node reduction is done===================
+
+Failed to reduce node 40
+------------------------------------------------------------
+
+
+==================Reducing node 41, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+      keep_me
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 41
+------------------------------------------------------------
+
+
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.dyck.AdaptiveDyckParserFacade
+The spar-tree is the following.
+start{id=34,slot_type=start}
+|___(*){id=35,slot_type=lines}
+    |___(+){id=38,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+        |___(+){id=40,slot_type=[node,text]}
+            |___Token:keep_me{id=41,slot_type=OTHER}
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer](1/11)  Latra does not support LanguageAdaptiveDyck{name=dyck-adaptive, extensions=[dyck_adaptive], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      1             0     -10            -33       5   time-hidden
+ 1        node_priority      0             0       0              0       0   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      1             0     -10            -33       5   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+           Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Replacement      1             0     -10            -33
+------------------------------------- End --------------------------------------
+#test success = 1
+#test failure = 4
+#test result cache hits = 4
+#test execution cancelled = 0
+#node edit action set cache hits = 4
+#external test execution cache hits = 0

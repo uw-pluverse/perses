@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -43,14 +43,14 @@ class NodeReplacementActionSetTest {
       builder.replaceNode(node5, node10)
       builder.replaceNode(node46, node72)
       actionSet = builder.build()
-      assertThat(actionSet.actionsDescription).isEqualTo("test 1")
+      assertThat(actionSet.contextDescription).isEqualTo("test 1")
     }
     run {
       val builder = NodeReplacementActionSet.Builder("test 2")
       builder.replaceNode(node5, node10)
       builder.replaceNode(node46, node72)
       actionSet2 = builder.build()
-      assertThat(actionSet2.actionsDescription).isEqualTo("test 2")
+      assertThat(actionSet2.contextDescription).isEqualTo("test 2")
     }
   }
 
@@ -97,6 +97,6 @@ class NodeReplacementActionSetTest {
     val other = createByReplacingSingleNode(node72, node5, "test desc")
     assertThat(actionSet).isNotEqualTo(other)
     assertThat(actionSet.hashCode()).isNotEqualTo(other.hashCode())
-    assertThat(other.actionsDescription).isEqualTo("test desc")
+    assertThat(other.contextDescription).isEqualTo("test desc")
   }
 }

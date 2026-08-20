@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,7 +20,9 @@ object DummyClassWithResource {
   fun read(): String =
     Util
       .openResourceAsStream(
-        "test_data.txt",
+        // Load from the JAR root because resource_strip_prefix in the BUILD file
+        // strips the entire package path to avoid filename-stripping bugs.
+        "/test_data.txt",
         this::class.java,
       ).use {
         it.bufferedReader().readText()

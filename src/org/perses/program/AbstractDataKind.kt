@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,9 @@
 package org.perses.program
 
 import com.google.common.collect.ImmutableSet
+import com.google.common.io.Files
 import org.perses.util.containsNoWhitespace
+import java.nio.file.Path
 
 abstract class AbstractDataKind(
   val name: String,
@@ -33,6 +35,13 @@ abstract class AbstractDataKind(
       }
     }
   }
+
+  // Whether [file] belongs to this data kind. Takes a Path (not a String) so the caller need not
+  // decide between full path and basename: this method extracts the basename itself. The default
+  // matches by file extension; a subclass whose files can also be identified by exact name (e.g. an
+  // extension-less "Makefile") overrides this, falls back to super, and then compares the name.
+  open fun isOfThisLanguageKind(file: Path): Boolean =
+    Files.getFileExtension(file.fileName.toString()) in extensions
 
   final override fun equals(other: Any?): Boolean {
     if (other === this) {

@@ -1,3 +1,5 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
 perses_bin = "//kitten/src/org/perses/fuzzer:kitten_deploy.jar"
 
 adhoc_bin = "//src/org/perses/grammar/adhoc:perses_adhoc_installer_deploy.jar"
@@ -10,6 +12,7 @@ sh_test(
     name = "system_test_of_adhoc_fuzz_testing",
     srcs = ["system_test.sh"],
     args = [
+        "$(JAVABASE)/bin/java",
         "$(location %s)" % adhoc_bin,
         "$(location %s)" % grammar_file,
         "$(location %s)" % yaml_file,
@@ -20,5 +23,7 @@ sh_test(
         grammar_file,
         yaml_file,
         adhoc_bin,
+        "@bazel_tools//tools/jdk:current_java_runtime",
     ],
+    toolchains = ["@bazel_tools//tools/jdk:current_java_runtime"],
 )

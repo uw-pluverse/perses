@@ -19,6 +19,7 @@ kt_jvm_library(
 
 pnf_parser_facade_library(
     name = "parser_facade_java8",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.java",
     language_kind_full_name = "org.perses.grammar.java.LanguageJava",
     lexer_file_name = "Java8Lexer.g4",
@@ -34,6 +35,7 @@ pnf_parser_facade_library(
 
 orig_parser_facade_library(
     name = "orig_parser_facade_java8",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.java",
     language_kind_full_name = "org.perses.grammar.java.LanguageJava",
     lexer_file_name = "Java8Lexer.g4",
@@ -49,6 +51,7 @@ orig_parser_facade_library(
 
 pnf_parser_facade_library(
     name = "parser_facade_java20",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.java",
     language_kind_full_name = "org.perses.grammar.java.LanguageJava",
     lexer_file_name = "Java20Lexer.g4",

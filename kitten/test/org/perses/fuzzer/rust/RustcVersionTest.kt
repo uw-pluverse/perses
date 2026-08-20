@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -31,6 +31,7 @@ import org.perses.fuzzer.config.TestingConfiguration
 import org.perses.grammar.SingleParserFacadeFactory
 import java.io.File
 import java.nio.file.Files
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
@@ -38,6 +39,7 @@ class RustcVersionTest {
   private val workingDir = Files.createTempDirectory(javaClass.simpleName)
   private val parserFacadeFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
 
+  @OptIn(ExperimentalPathApi::class)
   @After
   fun teardown() {
     workingDir.deleteRecursively()

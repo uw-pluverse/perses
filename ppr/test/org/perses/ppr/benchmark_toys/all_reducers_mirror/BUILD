@@ -1,5 +1,6 @@
-load("//benchmark:benchmark.bzl", "sanity_test")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//ppr/test/org/perses/ppr:ppr_reduction.bzl", "ppr_reduction_golden_test")
+load("//test:test.bzl", "sanity_test")
 
 PPR_REDUCER_BIN = "//ppr/src/org/perses/ppr:main"
 
@@ -27,11 +28,10 @@ ppr_reduction_golden_test(
         "--enable-mirror": "true",
         "--call-formatter": "false",
         "--code-format": "COMPACT_ORIG_FORMAT",
-        "--append-to-progress-dump-file": "true",
     },
     perses_bin = PPR_REDUCER_BIN,
     progress_dump_file = "progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     seed_file = "seed.c",
     test_script = "r.sh",
     thread_count = 1,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,26 +18,29 @@ package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.cmd.OutputFlagGroup
 import org.perses.cmd.ReductionControlFlagGroup
 import org.perses.grammar.AbstractParserFacade
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.ppr.diff.PPRDiffUtils
-import org.perses.program.LanguageKind
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.AbstractPersesToken
+import org.perses.program.ProgramSize
 import org.perses.program.TokenizedProgram
-import org.perses.program.TokenizedProgramFactory
-import org.perses.reduction.AbstractProgramReductionDriver.Companion.createSparTree
+import org.perses.reduction.AbstractProgramReductionDriver.Companion.createInputRepresentation
 import org.perses.reduction.AbstractReductionDriver
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
+import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.createSnapshot
 import org.perses.reduction.event.ReductionStartEvent
+import org.perses.reduction.io.AbstractOutputManagerFactory
+import org.perses.reduction.io.PerFileSizeMetrics
+import org.perses.reduction.io.ReductionFolder
 import org.perses.util.AbstractEditOperation
 import org.perses.util.ListAlignment
-import org.perses.util.Serialization
 import org.perses.util.hashing.EnumShaAlgorithm
+import org.perses.util.toImmutableList
 import java.lang.StringBuilder
-import java.lang.ref.WeakReference
+import java.nio.file.Path
 
 class ListDiffReductionDriver private constructor(
   globalContent: GlobalContext,
@@ -47,68 +50,85 @@ class ListDiffReductionDriver private constructor(
   private val enableDiffDdmin: Boolean,
   private val enableDiffSlicer: Boolean,
   private val listenerManager: AsyncReductionListenerManager,
+  // The renderer (carries the code format) this driver owns, rather than the IO manager: it renders
+  // the best diff for the Layer-2 sanity check, hands it to the reducers, and renders each accepted
+  // best diff before saving. The list-diff stack does not adapt the format, so this is fixed.
+  private val outputManagerFactory:
+    AbstractOutputManagerFactory<ImmutableList<AbstractEditOperation<AbstractPersesToken>>>,
+  // The single whole-reduction start event, created once by AbstractMain and shared by every driver;
+  // this driver reuses it for its fixpoint-iteration messages rather than creating its own.
+  private val reductionStartEvent: ReductionStartEvent,
+  executorService: TestScriptExecutorService,
 ) : AbstractReductionDriver<
     ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
-    LanguageKind,
     ListDiffReductionIOManager,
   >(
     globalContent,
     ioManagerList,
-    cmd.reductionControlFlags.getNumOfThreads(),
-    cmd.reductionControlFlags.testScriptExecutionTimeoutInSeconds,
-    cmd.reductionControlFlags.testScriptExecutionKeepWaitingAfterTimeout,
+    executorService,
     hideTimestampsInLog = cmd.verbosityFlags.hideTimestamps,
   ) {
-  override fun getInitialProgram(): ImmutableList<AbstractEditOperation<AbstractPersesToken>> = diff
-
   override fun reduce() {
     printStartTime()
-    sanityCheckOrThrow(diff)
 
     val reductionState =
       ListDiffReductionState(diff) {
-        ioManager.updateBestResult(it)
+        ioManager.saveBestProgram(outputManagerFactory.createManagerFor(it))
       }
 
     val reducers = createReducers()
-    val reductionStartEvent =
-      ReductionStartEvent(
-        currentTimeMillis = System.currentTimeMillis(),
-        tree = WeakReference(null),
-        programSize = reductionState.bestDiff.size,
-        commandLineOptions =
-          Serialization.toYamlString(
-            value = cmd,
-            objectMapperCustomizer = Serialization::customizeObjectMapperByUsingBasenameForPath,
-          ),
-        extraData = listToString(reductionState.bestDiff),
-      )
-    listenerManager.onReductionStart(reductionStartEvent)
     for (reducer in reducers) {
       val fixpointIterationStartEvent =
         reductionStartEvent.nextFixpointIteration(
-          programSize = reductionState.bestDiff.size,
+          perFileSizeMetrics = diffSizeMetrics(reductionState.bestDiff.size),
           reducerClass = reducer.nameAndDesc,
           treeStructureDumper = { listToString(reductionState.bestDiff) },
           testScriptStatistics = executorService.statistics.createSnapshot(),
+          // The current diff is what this driver reduces; carry it as per-iteration context so it is
+          // reported even though the whole-reduction start/end events (fired once by AbstractMain) no
+          // longer carry this ppr-specific extraData.
+          extraData = listToString(reductionState.bestDiff),
         )
       listenerManager.onFixpointIterationStart(fixpointIterationStartEvent)
-      reducer.reduce(reductionState)
+      try {
+        // Layer-2 sanity check: the current best diff is the reducer's input representation; verify
+        // the program it reconstructs still passes the test before the reducer runs.
+        checkRepresentationPreservesPropertyOrThrow(
+          outputManagerFactory.createManagerFor(reductionState.bestDiff),
+          reducer.nameAndDesc.shortName,
+        )
+        reducer.reduce(reductionState)
+      } catch (e: Exception) {
+        listenerManager.onCriticalException(e)
+      }
       val fixpointIterationEndEvent =
         fixpointIterationStartEvent.createEndEvent(
           currentTimeMillis = System.currentTimeMillis(),
-          programSize = reductionState.bestDiff.size,
+          perFileSizeMetrics = diffSizeMetrics(reductionState.bestDiff.size),
           testScriptStatistics = executorService.statistics.createSnapshot(),
         )
       listenerManager.onFixpointIterationEnd(fixpointIterationEndEvent)
     }
-    val reductionEndEvent =
-      reductionStartEvent.createEndEvent(
-        programSize = reductionState.bestDiff.size,
-        testScriptStatistics = executorService.statistics.createSnapshot(),
-        extraData = listToString(reductionState.bestDiff),
-      )
-    listenerManager.onReductionEnd(reductionEndEvent)
+  }
+
+  // PPR reduces a diff, not a set of files, so there is no genuine per-file program size. To
+  // satisfy the event API, attribute the diff size to the seed slot (and zero to the variant),
+  // keeping the reported total equal to the diff size.
+  private fun diffSizeMetrics(diffSize: Int): PerFileSizeMetrics {
+    val inputs = ioManager.originalReductionInputs
+    return PerFileSizeMetrics(
+      inputs,
+      inputs.mutableFiles
+        .mapIndexed { index, _ ->
+          ProgramSize(
+            payload = Unit,
+            canonicalTokenCount = if (index == 0) diffSize else 0,
+            surrogateTokenCount = if (index == 0) diffSize else 0,
+            totalCharacterCount = 0,
+            nonBlankCharacterCount = 0,
+          )
+        }.toImmutableList(),
+    )
   }
 
   private fun createReducers(): ImmutableList<AbstractListDiffReducer> {
@@ -117,10 +137,10 @@ class ListDiffReductionDriver private constructor(
         .builder<AbstractListDiffReducer>()
         .apply {
           if (enableDiffSlicer) {
-            add(ListDiffSlicer(ioManager, executorService))
+            add(ListDiffSlicer(ioManager, executorService, outputManagerFactory))
           }
           if (enableDiffDdmin) {
-            add(ListDiffDdmin(ioManager, executorService))
+            add(ListDiffDdmin(ioManager, executorService, outputManagerFactory))
           }
         }
     return builder.build()
@@ -139,16 +159,25 @@ class ListDiffReductionDriver private constructor(
 
   companion object {
     private fun createIOManager(
-      reductionInputsList: ListDiffReductionInputs,
+      workingDirectory: Path,
+      reductionInputsList: DiffOriginalReductionInputs,
+      resultFolder: ReductionFolder,
+    ): ListDiffReductionIOManager =
+      ListDiffReductionIOManager(
+        workingDirectory,
+        reductionInputsList,
+        resultFolder = resultFolder,
+      )
+
+    private fun createOutputManagerFactory(
+      reductionInputsList: DiffOriginalReductionInputs,
       reductionControlFlags: ReductionControlFlagGroup,
-      outputFlags: OutputFlagGroup,
       program: TokenizedProgram,
       originalAlignment: ListAlignment<AbstractPersesToken>,
       originalDiff: List<AbstractEditOperation<AbstractPersesToken>>,
       lexerAtnWrapper: LexerAtnWrapper,
       shaAlgorithm: EnumShaAlgorithm,
-    ): ListDiffReductionIOManager {
-      val workingDirectory = reductionInputsList.seedFile.parentFile
+    ): ListDiffOutputManagerFactory {
       val languageKind = reductionInputsList.seedFile.dataKind
       val programFormatControl =
         reductionControlFlags.codeFormat.let { codeFormat ->
@@ -161,20 +190,14 @@ class ListDiffReductionDriver private constructor(
             languageKind.defaultCodeFormatControl
           }
         }
-      return ListDiffReductionIOManager(
-        workingDirectory,
+      return ListDiffOutputManagerFactory(
         reductionInputsList,
-        outputManagerFactory =
-          ListDiffOutputManagerFactory(
-            reductionInputsList,
-            program,
-            originalAlignment,
-            originalDiff,
-            programFormatControl,
-            lexerAtnWrapper,
-            shaAlgorithm,
-          ),
-        outputDirectory = outputFlags.outputDir,
+        program,
+        originalAlignment,
+        originalDiff,
+        programFormatControl,
+        lexerAtnWrapper,
+        shaAlgorithm,
       )
     }
 
@@ -182,28 +205,36 @@ class ListDiffReductionDriver private constructor(
     fun create(
       globalContent: GlobalContext,
       cmd: ListDiffCmdOptions,
-      reductionInputs: ListDiffReductionInputs,
+      workingDirectory: Path,
+      resultFolder: ReductionFolder,
+      originalReductionInputs: DiffOriginalReductionInputs,
       parserFacade: AbstractParserFacade,
       listenerManager: AsyncReductionListenerManager,
+      reductionStartEvent: ReductionStartEvent,
+      executorService: TestScriptExecutorService,
     ): ListDiffReductionDriver {
-      val languageKind = reductionInputs.initiallyDeterminedMainDataKind
+      val languageKind = originalReductionInputs.initiallyDeterminedMainDataKind
 
       // get seed tokens
       val seedTree =
-        createSparTree(
-          fileToReduce = reductionInputs.seedFile,
+        createInputRepresentation(
+          fileToReduce = originalReductionInputs.seedFile,
           parserFacade = parserFacade,
           hideTimeStampsInLog = cmd.verbosityFlags.hideTimestamps,
+          // TODO(cnsun): need to enable semantics for PPR.
+          semanticsProviderCreator = null,
+          enableNodeActionSetCache = cmd.cacheControlFlags.nodeActionSetCaching,
+          originalReductionInputs = originalReductionInputs,
         )
-      val seedProgram = seedTree.programSnapshot
-      val seedPersesToken = seedProgram.tokens
+      val seedProgram = seedTree.tree.programSnapshot
+      val seedPersesToken = seedProgram.payload.tokens
 
       // get variant tokens
-      val variantTokens = parserFacade.tokenizeFile(cmd.listDiffInputFlags.getVariantFile())
-      val variantTokenizedProgramFactory =
-        TokenizedProgramFactory
-          .createFactory(variantTokens, languageKind)
-      val variantPersesTokens = variantTokenizedProgramFactory.create(variantTokens).tokens
+      val variantTokens = parserFacade.tokenizeFile(cmd.listDiffInputFlags.variantFile!!)
+      val variantPersesTokens =
+        TokenizedProgram
+          .createForFreshAntlrLexemes(variantTokens)
+          .tokens
 
       val listAlignment =
         ListAlignment.create(
@@ -222,17 +253,22 @@ class ListDiffReductionDriver private constructor(
       }
       val originalDiff = insertAndReplace.build()
 
-      // pass listAlignment to IOManager
       val ioManager =
         createIOManager(
-          reductionInputs,
-          cmd.reductionControlFlags,
-          cmd.resultOutputFlags,
-          seedProgram,
-          listAlignmentWithReplace,
-          originalDiff,
-          parserFacade.lexerAtnWrapper,
-          cmd.cacheControlFlags.defaultShaAlgorithm,
+          workingDirectory = workingDirectory,
+          reductionInputsList = originalReductionInputs,
+          resultFolder = resultFolder,
+        )
+      // pass listAlignment to the renderer factory
+      val outputManagerFactory =
+        createOutputManagerFactory(
+          reductionInputsList = originalReductionInputs,
+          reductionControlFlags = cmd.reductionControlFlags,
+          program = seedProgram.payload,
+          originalAlignment = listAlignmentWithReplace,
+          originalDiff = originalDiff,
+          lexerAtnWrapper = parserFacade.lexerAtnWrapper,
+          shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
         )
 
       return ListDiffReductionDriver(
@@ -243,6 +279,9 @@ class ListDiffReductionDriver private constructor(
         cmd.listDiffInputFlags.enableDiffDdmin,
         cmd.listDiffInputFlags.enableDiffSlicer,
         listenerManager,
+        outputManagerFactory,
+        reductionStartEvent,
+        executorService,
       )
     }
   }

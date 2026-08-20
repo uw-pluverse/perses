@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,6 +15,8 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.spartree
+import com.google.common.collect.ImmutableList
+import org.perses.program.AbstractPersesToken
 
 class DescendantHoistingTreeEdit internal constructor(
   tree: SparTree,
@@ -25,6 +27,29 @@ class DescendantHoistingTreeEdit internal constructor(
       "Only single action is allowed for not."
     }
   }
+
+  override fun computeDeletedTokens(): AbstractDeletedTokens.DeletedTokens {
+    val result = ImmutableList.builder<AbstractPersesToken.AntlrToken>()
+    val action = actionSet.actions.single()
+    val target = action.targetNode
+    val replacement = action.replacingNode
+    val exclusionStart = replacement.beginToken!!
+    var token = target.beginToken
+    while (token != null && token !== exclusionStart) {
+      result.add(token.token.asAntlrToken())
+      token = token.next
+    }
+    token = replacement.endToken!!.next
+    val exclusionEnd = target.endToken!!.next
+    while (token != null && token !== exclusionEnd) {
+      result.add(token.token.asAntlrToken())
+      token = token.next
+    }
+    return AbstractDeletedTokens.DeletedTokens(result.build())
+  }
+
+  override val structureDescriptionPrefix: String
+    get() = "HoistEdit"
 
   override fun internalApplyToTree() {
     val action = actionSet.actions.single()

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,37 +18,25 @@ package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
 import com.google.common.io.Closer
-import org.perses.program.AbstractDataKind
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.util.TimeUtil.formatDateForDisplay
-import org.perses.util.ktFine
 import org.perses.util.ktInfo
 import java.io.Closeable
-import java.nio.file.Files
-import java.nio.file.Path
 
 abstract class AbstractReductionDriver<
   Program,
-  Kind : AbstractDataKind,
-  IOManager : AbstractReductionIOManager<Program, Kind, IOManager>,
+  IOManager : AbstractReductionIOManager<Program, IOManager>,
 >(
   protected val globalContext: GlobalContext,
   protected val ioManager: IOManager,
-  specifiedNumOfThreads: Int,
-  scriptExecutionTimeoutInSeconds: Long,
-  keepWaitingAfterScriptTimeout: Boolean,
+  // Created once and shared by every driver of a reduction, owned and closed by AbstractMain (so its
+  // thread pools are reused across per-file sweeps / cross-file passes, and its statistics are the
+  // whole-reduction total). This driver therefore does NOT register it with [closer].
+  protected val executorService: TestScriptExecutorService,
   protected val hideTimestampsInLog: Boolean,
 ) : IReductionDriver {
   private val closer = Closer.create()
-
-  protected val executorService =
-    TestScriptExecutorService(
-      ioManager.lazilyInitializedReductionFolderManager,
-      specifiedNumOfThreads,
-      scriptExecutionTimeoutInSeconds,
-      keepWaitingAfterScriptTimeout,
-      globalContext.globalExecutionCache,
-    ).also { closer.register(it) }
 
   override fun close() {
     try {
@@ -73,144 +61,41 @@ abstract class AbstractReductionDriver<
     }
   }
 
-  override val cachedSanityCheckResult: IReductionDriver.SanityCheckResult by lazy {
-    val program = getInitialProgram()
-    try {
-      sanityCheckOrThrow(program)
-    } catch (e: SanityCheckFailedException) {
-      return@lazy IReductionDriver.SanityCheckResult.Failing(e)
-    }
-    return@lazy IReductionDriver.SanityCheckResult.Passing
-  }
-
-  protected abstract fun getInitialProgram(): Program
-
-  protected fun sanityCheckOrThrow(program: Program) {
-    logger.ktFine { "sanity checking..." }
-    /**
-     * TODO: need two steps of sanity check:
-     *     (1) use the original source program and test script.
-     *     This ensures the test script is correct.
-     *
-     *     (2) use the spar-tree. This ensures the Antlr parser works correctly.
-     *
-     */
-    val sanityChecker = {
-      executorService.testProgramAsyncWithoutPayload(
-        preCheck = TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
-        postCheck = TestScriptExecutorService.IDENTITY_POST_CHECK,
-        ioManager.createOutputManager(program),
-      )
-    }
-    val future = sanityChecker.invoke()
-    if (future.getWithTimeoutWarnings().isNotInteresting) {
-      logger.ktInfo { "The initial sanity check failed." }
-      val flakinessChecker =
-        PropertyFlakinessChecker(
-          numberOfTrials = 5,
-          initialNumOfUninteresting = 1,
-          sanityChecker,
-        )
-      logger.ktInfo {
-        "Checking whether the script is flaky. #trials=${flakinessChecker.numberOfTrials}"
-      }
-      val flakinessCheckResult = flakinessChecker.run().computeResult()
-
-      val cmdOutput = future.workingDirectory.testScript.runAndCaptureOutput()
-      logger.ktFine { "The initial sanity check failed. Folder: ${future.workingDirectory}" }
-      val tempDir = copyFilesToTempDir(future.workingDirectory.folder)
-      val message =
-        """The initial sanity check failed. 
-        
-        ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
-        *
-        * The script exit code is ${cmdOutput.exitCode} 
-        * The files have been saved, and you can check them at:
-        *     $tempDir
-        * ${flakinessCheckResult.describeResult()}
-        ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
-        
-        ============= stderr =============
-        ${cmdOutput.stderr.combinedLines.let { it.ifBlank { "<empty>" } }}
-         
-        ============= stdout =============
-        ${cmdOutput.stdout.combinedLines.let { it.ifBlank { "<empty>" } }} 
-      """.lineSequence()
-          .map {
-            it.trimStart()
-          }.joinToString("\n")
-
-      throw SanityCheckFailedException(message)
-    }
-  }
-
-  class PropertyFlakinessChecker(
-    val numberOfTrials: Int,
-    val initialNumOfUninteresting: Int,
-    private val sanityChecker: () -> TestScriptExecResult<Any>,
+  /**
+   * The Layer-2 sanity check, run before each reducer starts: verify that the program reconstructed
+   * from the reducer's current input representation -- already rendered into [outputManager] by the
+   * caller -- still passes the property test. A reducer cannot reduce a program that is already
+   * uninteresting (every candidate it produces is a subset and would also fail), so on failure this
+   * throws [SanityCheckFailedException] to stop the reducer immediately. The caller is responsible
+   * for reporting the exception to its listener manager before letting it propagate.
+   *
+   * This complements the Layer-1 check ([org.perses.AbstractMain.runInitialSanityCheck]),
+   * which tests the populated result folder once before reduction begins. Layer 1 catches a broken
+   * test script or a mis-populated folder; Layer 2 catches a representation that no longer preserves
+   * the property (e.g. an Antlr parse/unparse round-trip that corrupts the program).
+   */
+  protected fun checkRepresentationPreservesPropertyOrThrow(
+    outputManager: AbstractOutputManager,
+    reducerName: String,
   ) {
-    private val results = mutableListOf<PropertyTestResult>()
-
-    init {
-      require(numberOfTrials > 0) { numberOfTrials }
-    }
-
-    fun run(): PropertyFlakinessChecker {
-      check(results.isEmpty()) { "This method can only be called once." }
-      (1..numberOfTrials).forEach { _ ->
-        results.add(sanityChecker.invoke().getWithTimeoutWarnings())
-      }
-      check(results.size == numberOfTrials)
-      return this
-    }
-
-    fun computeResult() =
-      Result(
-        numOfInteresting = results.count { it.isInteresting },
-        numOfUninteresting = results.count { it.isNotInteresting } + initialNumOfUninteresting,
+    val result =
+      executorService
+        .testProgramAsyncWithoutPayload(
+          preCheck = TestScriptExecutorService.ALWAYS_TRUE_PRECHECK,
+          postCheck = TestScriptExecutorService.IDENTITY_POST_CHECK,
+          outputManager,
+        ).getWithTimeoutWarnings()
+    if (result.isNotInteresting) {
+      throw SanityCheckFailedException(
+        "The per-reducer sanity check failed before running '$reducerName': the program " +
+          "reconstructed from the current input representation no longer passes the property " +
+          "test. A reducer cannot reduce an already-uninteresting program, so the reduction is " +
+          "stopped.",
       )
-
-    data class Result(
-      val numOfInteresting: Int,
-      val numOfUninteresting: Int,
-    ) {
-      init {
-        require(numOfInteresting >= 0)
-        require(numOfUninteresting >= 0)
-      }
-
-      val totalNumber: Int
-        get() = numOfInteresting + numOfUninteresting
-
-      val isFlaky = numOfInteresting != 0 && numOfUninteresting != 0
-
-      fun describeResult(): String =
-        buildString {
-          append("The property test is")
-          if (!isFlaky) {
-            append(" not")
-          }
-          append(" flaky. ")
-          append("#total runs: $totalNumber")
-          append(", #interesting: $numOfInteresting, #uninteresting: $numOfUninteresting")
-        }
     }
   }
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
-
-    @JvmStatic
-    protected fun copyFilesToTempDir(directory: Path): Path {
-      val tempDir = Files.createTempDirectory("perses_failure_")
-      Files.newDirectoryStream(directory).use {
-        for (file in it) {
-          if (Files.isRegularFile(file)) {
-            Files.copy(file, tempDir.resolve(file.fileName))
-          }
-        }
-      }
-      return tempDir
-    }
   }
 }

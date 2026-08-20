@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,8 +22,9 @@ import kotlin.reflect.KClass
 data class ListMinimizerArguments<T : Any, PropertyPayload>(
   val needToTestEmpty: Boolean,
   val input: ImmutableList<out T>,
-  private val propertyTester: IPropertyTester<T, PropertyPayload>,
-  private val onBestUpdateHandler: OnBestUpdateHandler<T, PropertyPayload>,
+  val isElementDeletedElsewhere: (T) -> Boolean,
+  val propertyTester: IPropertyTester<T, PropertyPayload>,
+  val onBestUpdateHandler: OnBestUpdateHandler<T, PropertyPayload>,
   val descriptionPrefix: String,
   val partitionComplementControl: PartitionComplementControl =
     PartitionComplementControl(
@@ -34,12 +35,20 @@ data class ListMinimizerArguments<T : Any, PropertyPayload>(
   private val listener: AbstractListMinimizerListener = NullListMinimizerListener,
   val windowedSlicerSpecificArguments: WindowedSlicerSpecificArguments? = null,
   val localExhaustMinimizerArguments: LocalExhaustMinimizerArguments? = null,
+  val oneByOneMinimizerArguments: OneByOneMinimizerArguments? =
+    null,
+  val adaptiveGainDrivenMinimizerArguments: AdaptiveGainDrivenMinimizerArguments =
+    AdaptiveGainDrivenMinimizerArguments.NULL,
+  // The number of property tests a concurrency-capable minimizer may keep in flight. Values greater
+  // than 1 only help when [propertyTester] overrides IPropertyTester.submitProperty to be truly
+  // asynchronous.
+  val concurrency: Int = 1,
 ) {
   fun startReduction(
     originalInput: List<ElementWrapper<*>>,
     listMinimizerClass: KClass<out AbstractListMinimizer<*, *>>,
   ) {
-    listener.startReduction(originalInput, listMinimizerClass)
+    listener.startReduction(originalInput, listMinimizerClass, descriptionPrefix)
   }
 
   fun log(msg: () -> String) {
@@ -64,8 +73,8 @@ data class ListMinimizerArguments<T : Any, PropertyPayload>(
   fun testProperty(
     configuration: Candidate<T>,
     sizeOfCurrentMinimizationResult: Int,
-  ): LMPropertyTestResult<T, PropertyPayload> =
-    propertyTester.testProperty(configuration).also { result ->
+  ): ListMinimizerPropertyTestResult<T, PropertyPayload> =
+    propertyTester.testProperty(configuration).get().also { result ->
       listener.onPropertyTest(
         configuration,
         result,
@@ -73,6 +82,28 @@ data class ListMinimizerArguments<T : Any, PropertyPayload>(
         sizeOfCurrentMinimizationResult = sizeOfCurrentMinimizationResult,
       )
     }
+
+  fun submitProperty(
+    configuration: Candidate<T>,
+    sizeOfCurrentMinimizationResult: Int,
+  ): PropertyTestHandle<T, PropertyPayload> {
+    val handle = propertyTester.testProperty(configuration)
+    return object : PropertyTestHandle<T, PropertyPayload> {
+      override fun get(): ListMinimizerPropertyTestResult<T, PropertyPayload> =
+        handle.get().also { result ->
+          listener.onPropertyTest(
+            configuration,
+            result,
+            sizeOfOriginalList = input.size,
+            sizeOfCurrentMinimizationResult = sizeOfCurrentMinimizationResult,
+          )
+        }
+
+      override fun requestToCancel() {
+        handle.requestToCancel()
+      }
+    }
+  }
 }
 
 fun interface IWeightProvider<T : Any> {
@@ -110,5 +141,32 @@ data class LocalExhaustMinimizerArguments(
     require(windowSize > 2) {
       "Window size must be greater than 2 ($windowSize)"
     }
+  }
+}
+
+// TODO(cnsun): need to parameterize this argument class.
+data class OneByOneMinimizerArguments(
+  val deleteFromFrontToBack: Boolean = false,
+  val repeatForFixpoint: Boolean = false,
+)
+
+data class AdaptiveGainDrivenMinimizerArguments(
+  val getCurrentTotalTokenCount: () -> Int,
+  val anticipatedTokenCountInResult: Int,
+) {
+  fun computeProbabilityOfIndividualTokenRelevance(): Double {
+    val total = getCurrentTotalTokenCount()
+    if (total == 0) {
+      return 0.0
+    }
+    return (anticipatedTokenCountInResult.toDouble() / total).coerceAtMost(1.0)
+  }
+
+  companion object {
+    val NULL =
+      AdaptiveGainDrivenMinimizerArguments(
+        getCurrentTotalTokenCount = { 0 },
+        anticipatedTokenCountInResult = 0,
+      )
   }
 }

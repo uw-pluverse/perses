@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -55,6 +55,12 @@ abstract class AbstractInternalSparTreeNode(
   override fun buildTokenIntervalInfoForCurrentNode() {
     beginToken = computeLeftmostTokenBasedOnChildren()
     endToken = computeRightmostTokenBasedOnChildren()
+    var countNum = 0
+    val num = childCount
+    for (i in 0 until num) {
+      countNum += getChild(i).rawLeafTokenCount
+    }
+    rawLeafTokenCount = countNum
   }
 
   override fun onChildRemoved(

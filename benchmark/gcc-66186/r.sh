@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# Longest per-process wall cap in this script is 30s (enforced by `timeout`);
+# set the CPU limit to 2x=60s so real runs finish, but a process that outlives
+# `timeout` (e.g. a compiler grandchild orphaned when its driver was SIGKILLed) is
+# reaped by the kernel via RLIMIT_CPU, which `timeout` cannot reach across reparenting.
+# The value below is in CPU seconds (ulimit -t sets RLIMIT_CPU).
+ulimit -t 60
 BADCC1=()
 BADCC2=()
 BADCC3=("gcc-4.9.0 -O3")

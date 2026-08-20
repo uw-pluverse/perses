@@ -1,5 +1,6 @@
 load("@io_bazel_rules_kotlin//kotlin:core.bzl", "define_kt_toolchain", "kt_kotlinc_options")
-load("//test/org/perses:test.bzl", "golden_test")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("//test:test.bzl", "golden_test")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -38,10 +39,28 @@ java_library(
 )
 
 java_library(
+    name = "lsp4j",
+    exports = [
+        "@maven//:org_eclipse_lsp4j_org_eclipse_lsp4j",
+        "@maven//:org_eclipse_lsp4j_org_eclipse_lsp4j_jsonrpc",
+    ],
+)
+
+java_library(
     name = "arrow_kt",
     exports = [
         "@maven//:io_arrow_kt_arrow_core",
         "@maven//:io_arrow_kt_arrow_fx_coroutines",
+    ],
+)
+
+java_library(
+    name = "langchain4j",
+    exports = [
+        "@maven//:dev_langchain4j_langchain4j",
+        "@maven//:dev_langchain4j_langchain4j_anthropic",
+        "@maven//:dev_langchain4j_langchain4j_core",
+        "@maven//:dev_langchain4j_langchain4j_google_ai_gemini",
     ],
 )
 
@@ -90,6 +109,7 @@ java_library(
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",
         "@maven//:com_fasterxml_jackson_core_jackson_core",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:com_fasterxml_jackson_dataformat_jackson_dataformat_csv",
         "@maven//:com_fasterxml_jackson_dataformat_jackson_dataformat_yaml",
         "@maven//:com_fasterxml_jackson_datatype_jackson_datatype_guava",
         "@maven//:com_fasterxml_jackson_module_jackson_module_kotlin",
@@ -126,6 +146,7 @@ java_library(
 kt_kotlinc_options(
     name = "perses_kotlinc_options",
     warn = "error",  # Any warning should be fixed for compilation.
+    x_consistent_data_class_copy_visibility = True,
     x_no_call_assertions = True,
     x_no_param_assertions = True,
     x_no_receiver_assertions = True,
@@ -136,10 +157,10 @@ kt_kotlinc_options(
 
 define_kt_toolchain(
     name = "kotlin_toolchain",
-    api_version = "2.0",
+    api_version = "2.1",
     jvm_target = "1.8",
     kotlinc_options = ":perses_kotlinc_options",
-    language_version = "2.0",
+    language_version = "2.1",
 )
 
 exports_files(["README.md"])

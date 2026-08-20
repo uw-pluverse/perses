@@ -1,6 +1,6 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 load("//:perses.bzl", "kt_binary_for_genrule")
-load("//test/org/perses:test.bzl", "golden_test")
+load("//test:test.bzl", "golden_test")
 
 DEFAULT_DEPS = [
     "//src/org/perses/antlr:antlr_grammar_parser",

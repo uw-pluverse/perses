@@ -1,5 +1,44 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
-load("//test/org/perses:test.bzl", "cross_folder_golden_test")
+load("//test:test.bzl", "cross_folder_golden_test")
+
+kt_jvm_test(
+    name = "DroppedCharacterCollectorTest",
+    srcs = ["DroppedCharacterCollectorTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar/c:parser_facade",
+        "//test/org/perses:test_util",
+    ],
+)
+
+kt_jvm_test(
+    name = "PreprocessingDirectiveTokenTest",
+    srcs = ["PreprocessingDirectiveTokenTest.kt"],
+    deps = [
+        "//:antlr_runtime",
+        "//:truth",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar/c:parser_facade",
+    ],
+)
+
+kt_jvm_test(
+    name = "LineSpliceReconstructionTest",
+    srcs = ["LineSpliceReconstructionTest.kt"],
+    deps = [
+        "//:antlr_runtime",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar/c:parser_facade",
+        "//src/org/perses/grammar/dyck:parser_facade",
+        "//src/org/perses/program",
+        "//src/org/perses/program/printer",
+        "//src/org/perses/spartree",
+        "//src/org/perses/spartree:spar_tree_parser_utility",
+    ],
+)
 
 kt_jvm_test(
     name = "OptCParserTest",
@@ -63,6 +102,19 @@ kt_jvm_test(
         "//src/org/perses/grammar/c:parser_facade",
         "//test/org/perses:test_util",
         "//test/org/perses/program:LanguageKindTestUtil",
+    ],
+)
+
+kt_jvm_test(
+    name = "IdentifierTokenAutoDetectionTest",
+    srcs = ["IdentifierTokenAutoDetectionTest.kt"],
+    deps = [
+        "//:antlr_runtime",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/antlr:antlr_type_wrappers",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/grammar/c:optc_parser_facade",
     ],
 )
 

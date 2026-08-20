@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "reduction",
@@ -14,6 +14,7 @@ kt_jvm_library(
         "//:guava",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
         "//src/org/perses:perses_lib",
+        "//src/org/perses/grammar/adhoc:language_kind",
         "@maven//:org_apache_commons_commons_text",
     ],
 )

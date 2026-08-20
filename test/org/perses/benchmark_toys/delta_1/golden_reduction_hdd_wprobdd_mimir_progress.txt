@@ -1,0 +1,2266 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 56
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_hdd_wprobdd_mimir_hdd-mimir_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "hdd-mimir"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "WPROBDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "_reduction_golden_test_hdd_wprobdd_mimir_by_default_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(56/56)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        hdd-mimir
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                hdd-mimir
+            }
+        }
+    }
+
+
+(56/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+==========Fixpoint iteration 1. Reducer: hdd-mimir==========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=362,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=363,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=404,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___(?){id=364,slot_type=optional__declaration_2}
+        |   |   |___directDeclarator{id=369,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+        |   |       |___Token:printf{id=400,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |       |___(*){id=371,slot_type=kleene_star__directDeclarator_7}
+        |   |           |___aux_rule__directDeclarator_15{id=373,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |               |___Token:({id=374,slot_type=LeftParen}
+        |   |               |___parameterTypeList{id=377,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+        |   |               |   |___parameterDeclaration{id=383,slot_type=[parameterList,parameterDeclaration]}
+        |   |               |   |   |___(+){id=384,slot_type=declarationSpecifiers}
+        |   |               |   |   |   |___Token:const{id=399,slot_type=[declarationSpecifier,typeQualifier,Const]}
+        |   |               |   |   |   |___Token:char{id=397,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+        |   |               |   |   |___(?){id=386,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+        |   |               |   |       |___(+){id=389,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
+        |   |               |   |           |___Token:*{id=392,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+        |   |               |   |___(?){id=379,slot_type=optional__parameterTypeList_2}
+        |   |               |       |___aux_rule__parameterTypeList_1{id=380,slot_type=aux_rule__parameterTypeList_1}
+        |   |               |           |___Token:,{id=381,slot_type=Comma}
+        |   |               |           |___Token:...{id=382,slot_type=Ellipsis}
+        |   |               |___Token:){id=376,slot_type=RightParen}
+        |   |___Token:;{id=365,slot_type=Semi}
+        |___functionDefinition{id=7,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=8,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=356,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=360,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=305,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=355,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=307,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=309,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=310,slot_type=LeftParen}
+            |           |___parameterList{id=314,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+            |           |   |___(+){id=344,slot_type=[parameterDeclaration,declarationSpecifiers]}
+            |           |   |   |___Token:int{id=354,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |           |   |   |___Token:argc{id=351,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |           |   |___(*){id=316,slot_type=kleene_star__parameterList_1}
+            |           |       |___aux_rule__parameterList_2{id=317,slot_type=aux_rule__parameterList_2}
+            |           |           |___Token:,{id=318,slot_type=Comma}
+            |           |           |___parameterDeclaration{id=319,slot_type=parameterDeclaration}
+            |           |               |___(+){id=320,slot_type=declarationSpecifiers}
+            |           |               |   |___Token:char{id=343,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+            |           |               |___declarator{id=322,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+            |           |                   |___(?){id=323,slot_type=optional__declarator_1}
+            |           |                   |   |___(+){id=336,slot_type=[pointer,kleene_plus__pointer_8]}
+            |           |                   |       |___Token:*{id=339,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+            |           |                   |___directDeclarator{id=324,slot_type=directDeclarator}
+            |           |                       |___Token:argv{id=334,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |           |                       |___(*){id=326,slot_type=kleene_star__directDeclarator_7}
+            |           |                           |___aux_rule__directDeclarator_14{id=328,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
+            |           |                               |___Token:[{id=329,slot_type=LeftBracket}
+            |           |                               |___Token:]{id=331,slot_type=RightBracket}
+            |           |___Token:){id=312,slot_type=RightParen}
+            |___compoundStatement{id=10,slot_type=compoundStatement}
+                |___Token:{{id=11,slot_type=LeftBrace}
+                |___(?){id=12,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=269,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=270,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=304,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=271,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=274,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=300,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=276,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=277,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=278,slot_type=Assign}
+                |       |   |               |___Token:1{id=297,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=272,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=221,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=222,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=267,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=223,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=226,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:b{id=263,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=228,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=229,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=230,slot_type=Assign}
+                |       |   |               |___additiveExpression{id=242,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+                |       |   |                   |___Token:a{id=260,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |                   |___(*){id=244,slot_type=kleene_star__additiveExpression_1}
+                |       |   |                       |___aux_rule__additiveExpression_2{id=245,slot_type=aux_rule__additiveExpression_2}
+                |       |   |                           |___Token:+{id=254,slot_type=[altnt_block__additiveExpression_3,Plus]}
+                |       |   |                           |___Token:1{id=253,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=224,slot_type=Semi}
+                |       |___expressionStatement{id=151,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=152,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=170,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=219,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=172,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=174,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=175,slot_type=LeftParen}
+                |       |   |               |___(?){id=176,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=178,slot_type=expression}
+                |       |   |               |       |___(+){id=217,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |   |___Token:"%d\n"{id=218,slot_type=StringLiteral}
+                |       |   |               |       |___(*){id=180,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=181,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=182,slot_type=Comma}
+                |       |   |               |               |___Token:b{id=200,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |___Token:){id=177,slot_type=RightParen}
+                |       |   |___Token:;{id=153,slot_type=Semi}
+                |       |___expressionStatement{id=101,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=102,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=120,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=148,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=122,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=124,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=125,slot_type=LeftParen}
+                |       |   |               |___(?){id=126,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___(+){id=146,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |___Token:"hello\n"{id=147,slot_type=StringLiteral}
+                |       |   |               |___Token:){id=127,slot_type=RightParen}
+                |       |   |___Token:;{id=103,slot_type=Semi}
+                |       |___expressionStatement{id=51,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=52,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=70,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=98,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=72,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=74,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=75,slot_type=LeftParen}
+                |       |   |               |___(?){id=76,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___(+){id=96,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |___Token:"world\n"{id=97,slot_type=StringLiteral}
+                |       |   |               |___Token:){id=77,slot_type=RightParen}
+                |       |   |___Token:;{id=53,slot_type=Semi}
+                |       |___jumpStatement{id=24,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=27,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=28,slot_type=Return}
+                |           |   |___(?){id=29,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:0{id=48,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=26,slot_type=Semi}
+                |___Token:}{id=13,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level1:1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  There is only one element in the input, and the empty input has been tested. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  There is only one element in the input, and the empty input has been tested. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (1): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level3:2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (2): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level3:2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer starts. Input=[0-5]#6. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (3): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[])
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [5]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (4): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+    int                               {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [4]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (5): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+        main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [3]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (6): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...)
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [2]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (7): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int                         ;
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [1]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (8): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+        printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer ends. Result=[0-5]#6. Local ratio: 6/6=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer starts. Input=[0-7]#8. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+==========Testing the following program (9): fail===========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=8,#parts=8#total-parts=8
+    --file: t.c--
+                                ;
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0-7]#8: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (10): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [7]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (11): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [6]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (12): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[])
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [5]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (13): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [4]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (14): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int      (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [3]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+        main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [2]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int                         ;
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [1]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+        printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer ends. Result=[0-7]#8. Local ratio: 8/8=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer starts. Input=[0-4]#5. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Testing the empty input. Global ratio:56/56=100.00%
+==========Testing the following program (15): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level6:5:NoDepsAmongNodes]dd@#nodes=5,#parts=5#total-parts=5
+    --file: t.c--
+    int                         ;
+        main                          {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:56/56=100.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+        main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (16): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level6:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf                  ;
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:56/56=100.00%
+==========Testing the following program (17): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level6:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int       (const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Minimizer OneByOneMinimizer starts. Input=[0-9]#10. Global ratio:56/56=100.00%
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Testing the empty input is disabled. Global ratio:56/56=100.00%
+==========Testing the following program (18): pass==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=10
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](56/56)  Try deleting [9]#1: Interesting. Local ratio: 10/10=100.00%. Global ratio:56/56=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+7 entries are removed: 18 --> 11.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 28
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 56 -> 53
+Edit: [delete_24]
+------------------------------------------------------------
+
+
+==========Testing the following program (19): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=9
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](53/56)  Try deleting [8]#1: Uninteresting. Local ratio: 9/10=90.00%. Global ratio:53/56=94.64%
+==========Testing the following program (20): pass==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=9
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("%d\n", b);
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](53/56)  Try deleting [7]#1: Interesting. Local ratio: 9/10=90.00%. Global ratio:53/56=94.64%
+===========TestScriptExecutionCacheEntryEviction============
+
+6 entries are removed: 12 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 53 -> 48
+Edit: [delete_101]
+------------------------------------------------------------
+
+
+==========Testing the following program (21): pass==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]) {
+         int a = 1;
+              int b = a + 1;
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](48/56)  Try deleting [6]#1: Interesting. Local ratio: 8/10=80.00%. Global ratio:48/56=85.71%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 6 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 48 -> 41
+Edit: [delete_151]
+------------------------------------------------------------
+
+
+==========Testing the following program (22): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=7
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (int argc, char *argv[]  {
+         int a = 1;
+              int b = a + 1;
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](41/56)  Try deleting [5]#1: Uninteresting. Local ratio: 7/10=70.00%. Global ratio:41/56=73.21%
+==========Testing the following program (23): pass==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=7
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+         int a = 1;
+              int b = a + 1;
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](41/56)  Try deleting [4]#1: Interesting. Local ratio: 7/10=70.00%. Global ratio:41/56=73.21%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 7 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 41 -> 33
+Edit: [delete_314]
+------------------------------------------------------------
+
+
+==========Testing the following program (24): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                        ) {
+         int a = 1;
+              int b = a + 1;
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](33/56)  Try deleting [3]#1: Uninteresting. Local ratio: 6/10=60.00%. Global ratio:33/56=58.93%
+==========Testing the following program (25): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+         int a = 1;
+              int b = a + 1;
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](33/56)  Try deleting [2]#1: Uninteresting. Local ratio: 6/10=60.00%. Global ratio:33/56=58.93%
+==========Testing the following program (26): pass==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+         int a = 1;
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](33/56)  Try deleting [1]#1: Interesting. Local ratio: 6/10=60.00%. Global ratio:33/56=58.93%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 8 --> 7.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 33 -> 26
+Edit: [delete_221]
+------------------------------------------------------------
+
+
+==========Testing the following program (27): pass==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:10:FineDagAsList]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](26/56)  Try deleting [0]#1: Interesting. Local ratio: 5/10=50.00%. Global ratio:26/56=46.43%
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 7 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 26 -> 21
+Edit: [delete_269]
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[2-3,5,8]#4. Local ratio: 4/10=40.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-4]#5. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+==========Testing the following program (28): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level8:5:NoDepsAmongNodes]dd@#nodes=5,#parts=5#total-parts=5
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (29): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level8:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n")
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (30): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level8:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (31): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level8:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char*, ... ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (32): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level8:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (33): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level8:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-2]#3. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+==========Testing the following program (34): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level9:3:NoDepsAmongNodes]dd@#nodes=3,#parts=3#total-parts=3
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (35): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level9:3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=3
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (36): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level9:3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=3
+    --file: t.c--
+    int printf(           , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-4]#5. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (37): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level10:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (38): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level10:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+           ("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (39): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level10:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (40): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level10:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf(          *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-5]#6. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+==========Testing the following program (41): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level11:6:NoDepsAmongNodes]dd@#nodes=6,#parts=6#total-parts=6
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [5]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (42): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level11:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*,    );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (43): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level11:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*  ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (44): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level11:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const     *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (45): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level11:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(      char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-5]#6. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-3]#4. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+==========Testing the following program (46): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level12:4:NoDepsAmongNodes]dd@#nodes=4,#parts=4#total-parts=4
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (47): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level12:4:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=4
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n" ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (48): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level12:4:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=4
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (49): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level12:4:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=4
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf "world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  There is only one element in the input, and the empty input has been tested. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  There is only one element in the input, and the empty input has been tested. Global ratio:21/56=37.50%
+FixPt[1][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+(21/56)  Rebuilding spar-tree: The spartree is rebuilt.
+==========Fixpoint iteration 2. Reducer: hdd-mimir==========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=406,slot_type=compilationUnit}
+|___(?){id=407,slot_type=optional__compilationUnit_1}
+    |___(+){id=409,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=487,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=488,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=529,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___(?){id=489,slot_type=optional__declaration_2}
+        |   |   |___directDeclarator{id=494,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+        |   |       |___Token:printf{id=525,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |       |___(*){id=496,slot_type=kleene_star__directDeclarator_7}
+        |   |           |___aux_rule__directDeclarator_15{id=498,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |               |___Token:({id=499,slot_type=LeftParen}
+        |   |               |___parameterTypeList{id=502,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+        |   |               |   |___parameterDeclaration{id=508,slot_type=[parameterList,parameterDeclaration]}
+        |   |               |   |   |___(+){id=509,slot_type=declarationSpecifiers}
+        |   |               |   |   |   |___Token:const{id=524,slot_type=[declarationSpecifier,typeQualifier,Const]}
+        |   |               |   |   |   |___Token:char{id=522,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+        |   |               |   |   |___(?){id=511,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+        |   |               |   |       |___(+){id=514,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
+        |   |               |   |           |___Token:*{id=517,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+        |   |               |   |___(?){id=504,slot_type=optional__parameterTypeList_2}
+        |   |               |       |___aux_rule__parameterTypeList_1{id=505,slot_type=aux_rule__parameterTypeList_1}
+        |   |               |           |___Token:,{id=506,slot_type=Comma}
+        |   |               |           |___Token:...{id=507,slot_type=Ellipsis}
+        |   |               |___Token:){id=501,slot_type=RightParen}
+        |   |___Token:;{id=490,slot_type=Semi}
+        |___functionDefinition{id=412,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=413,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=481,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=485,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=472,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=480,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=474,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=476,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=477,slot_type=LeftParen}
+            |           |___Token:){id=479,slot_type=RightParen}
+            |___compoundStatement{id=415,slot_type=compoundStatement}
+                |___Token:{{id=416,slot_type=LeftBrace}
+                |___(?){id=417,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=420,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=424,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |           |___(?){id=425,slot_type=optional__postfixExpression_1}
+                |           |   |___postfixExpression{id=443,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |___Token:printf{id=471,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |___(*){id=445,slot_type=kleene_star__postfixExpression_2}
+                |           |           |___aux_rule__postfixExpression_11{id=447,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |           |               |___Token:({id=448,slot_type=LeftParen}
+                |           |               |___(?){id=449,slot_type=optional__postfixExpression_1}
+                |           |               |   |___(+){id=469,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |           |               |       |___Token:"world\n"{id=470,slot_type=StringLiteral}
+                |           |               |___Token:){id=450,slot_type=RightParen}
+                |           |___Token:;{id=426,slot_type=Semi}
+                |___Token:}{id=418,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  There is only one element in the input, and the empty input has been tested. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  There is only one element in the input, and the empty input has been tested. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (50): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level3:2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-5]#6. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (51): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      )
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [5]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (52): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+    int                               {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (53): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (54): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int printf(const char*, ...)
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (55): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+    int                         ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (56): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level4:6:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=6
+    --file: t.c--
+        printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-5]#6. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-7]#8. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+                                ;
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-7]#8: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (57): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [7]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (58): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [6]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (59): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      )
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [5]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (60): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (61): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level5:8:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=8
+    --file: t.c--
+    int printf(const char*, ...);
+    int      (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int                         ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+        printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-7]#8. Local ratio: 8/8=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-4]#5. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int                         ;
+        main                          {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                          {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+        main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (62): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level6:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (63): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level6:5:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=5
+    --file: t.c--
+    int       (const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-3]#4. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+==========Testing the following program (64): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:4:NoDepsAmongNodes]dd@#nodes=4,#parts=4#total-parts=4
+    --file: t.c--
+    int printf                  ;
+    int main                          {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (65): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:4:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=4
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                        {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+==========Testing the following program (66): fail==========
+
+// edit action set type: ONE_BY_ONE in hdd-mimir(LevelBasedReducer)[Level7:4:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=4
+    --file: t.c--
+    int printf(const char*, ...);
+    int main                        ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-4]#5. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf                  ;
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n")
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ... ;
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf const char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-2]#3. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(           , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-4]#5. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+                      ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+           ("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*     );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(          *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-5]#6. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(                );
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [5]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*,    );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [4]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*  ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const     *, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(      char*, ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-5]#6. Local ratio: 6/6=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0-3]#4. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf("world\n" ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf "world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char , ...);
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  There is only one element in the input, and the empty input has been tested. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Testing the empty input. Global ratio:21/56=37.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int printf(const char*, ...);
+    int main (                      ) {
+     printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  There is only one element in the input, and the empty input has been tested. Global ratio:21/56=37.50%
+FixPt[2][hdd-mimir][ONE_BY_ONE](21/56)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/56=37.50%
+(21/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=406,slot_type=compilationUnit}
+|___(?){id=407,slot_type=optional__compilationUnit_1}
+    |___(+){id=409,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=487,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=488,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=529,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___(?){id=489,slot_type=optional__declaration_2}
+        |   |   |___directDeclarator{id=494,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator]}
+        |   |       |___Token:printf{id=525,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |       |___(*){id=496,slot_type=kleene_star__directDeclarator_7}
+        |   |           |___aux_rule__directDeclarator_15{id=498,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |               |___Token:({id=499,slot_type=LeftParen}
+        |   |               |___parameterTypeList{id=502,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+        |   |               |   |___parameterDeclaration{id=508,slot_type=[parameterList,parameterDeclaration]}
+        |   |               |   |   |___(+){id=509,slot_type=declarationSpecifiers}
+        |   |               |   |   |   |___Token:const{id=524,slot_type=[declarationSpecifier,typeQualifier,Const]}
+        |   |               |   |   |   |___Token:char{id=522,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+        |   |               |   |   |___(?){id=511,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+        |   |               |   |       |___(+){id=514,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
+        |   |               |   |           |___Token:*{id=517,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+        |   |               |   |___(?){id=504,slot_type=optional__parameterTypeList_2}
+        |   |               |       |___aux_rule__parameterTypeList_1{id=505,slot_type=aux_rule__parameterTypeList_1}
+        |   |               |           |___Token:,{id=506,slot_type=Comma}
+        |   |               |           |___Token:...{id=507,slot_type=Ellipsis}
+        |   |               |___Token:){id=501,slot_type=RightParen}
+        |   |___Token:;{id=490,slot_type=Semi}
+        |___functionDefinition{id=412,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=413,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=481,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=485,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=472,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=480,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=474,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=476,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=477,slot_type=LeftParen}
+            |           |___Token:){id=479,slot_type=RightParen}
+            |___compoundStatement{id=415,slot_type=compoundStatement}
+                |___Token:{{id=416,slot_type=LeftBrace}
+                |___(?){id=417,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=420,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=424,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |           |___(?){id=425,slot_type=optional__postfixExpression_1}
+                |           |   |___postfixExpression{id=443,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |___Token:printf{id=471,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |___(*){id=445,slot_type=kleene_star__postfixExpression_2}
+                |           |           |___aux_rule__postfixExpression_11{id=447,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |           |               |___Token:({id=448,slot_type=LeftParen}
+                |           |               |___(?){id=449,slot_type=optional__postfixExpression_1}
+                |           |               |   |___(+){id=469,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |           |               |       |___Token:"world\n"{id=470,slot_type=StringLiteral}
+                |           |               |___Token:){id=450,slot_type=RightParen}
+                |           |___Token:;{id=426,slot_type=Semi}
+                |___Token:}{id=418,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer](21/56)  For c, there are 46 transformations.
+FixPt[3][FineGritLatraReducer](21/56)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 44 --> 44.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 62
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 21 -> 21
+Edit: AnyNodeReplace:[replace_406_with_531]
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](21/56)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[3][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](21/56)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[3][FineGritLatraReducer][DivideOperationSimplification](21/56)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[3][FineGritLatraReducer][MultiplyOperationSimplification](21/56)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[3][FineGritLatraReducer][MinusOperationSimplification](21/56)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[3][FineGritLatraReducer][PlusOperationSimplification](21/56)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation](21/56)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[3][FineGritLatraReducer][UnionToStruct](21/56)  Found matches: 0 in transformation UnionToStruct
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](21/56)  Found matches: 1 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](21/56)  Built a LatraGeneralActionSet subroot(id=535,#10) in VoidReturnFunctionDeclLatraTransformation
+==========Testing the following program (67): fail==========
+
+// edit action set type: Latra Transformation VoidReturnFunctionDeclLatraTransformation created by LatraRewriterBuilderForSimpleFromToPattern
+    --file: t.c--
+     void  printf   ( const char*, ...   );
+    int main (                      ) {
+     printf("world\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[3][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](21/56)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[3][FineGritLatraReducer][FunctionInlining4Args](21/56)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[3][FineGritLatraReducer][FunctionInlining4ArgsNoType](21/56)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInliningLatraTransformation](21/56)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[3][FineGritLatraReducer][FunctionInlining3ArgsNoType](21/56)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInlining2Args](21/56)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[3][FineGritLatraReducer][FunctionInlining2ArgsNoType](21/56)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[3][FineGritLatraReducer][FunctionInlining1Arg](21/56)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[3][FineGritLatraReducer][FunctionInlining1ArgNoType](21/56)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[3][FineGritLatraReducer][FunctionInliningNoArg](21/56)  Found matches: 1 in transformation FunctionInliningNoArg
+FixPt[3][FineGritLatraReducer][FunctionInliningNoArg](21/56)  Exception: There must be at least one match for this transformation FunctionInliningNoArg
+FixPt[3][FineGritLatraReducer][LiftAssignmentExpr](21/56)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[3][FineGritLatraReducer][CopyPropagation](21/56)  Found matches: 0 in transformation CopyPropagation
+FixPt[3][FineGritLatraReducer][CallExprToValue](21/56)  Found matches: 0 in transformation CallExprToValue
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr1Arg](21/56)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr2Arg](21/56)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[3][FineGritLatraReducer][ReplaceCallExpr3Arg](21/56)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[3][FineGritLatraReducer][SimplifyCallExpr](21/56)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[3][FineGritLatraReducer][SimplifyIf](21/56)  Found matches: 0 in transformation SimplifyIf
+FixPt[3][FineGritLatraReducer][SimplifyIf2](21/56)  Found matches: 0 in transformation SimplifyIf2
+FixPt[3][FineGritLatraReducer][ReduceArrayDim3](21/56)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[3][FineGritLatraReducer][ReduceArrayDim2](21/56)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[3][FineGritLatraReducer][ReduceArrayDim](21/56)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl](21/56)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDecl2](21/56)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam](21/56)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam](21/56)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](21/56)  Found matches: 1 in transformation MoveFuncDefToDeclNoParam2
+FixPt[3][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](21/56)  Exception: There must be at least one match for this transformation MoveFuncDefToDeclNoParam2
+FixPt[3][FineGritLatraReducer][SimplifyComma](21/56)  Found matches: 0 in transformation SimplifyComma
+FixPt[3][FineGritLatraReducer][TypeDefTransform](21/56)  Found matches: 0 in transformation TypeDefTransform
+FixPt[3][FineGritLatraReducer][EmptyStructToInt](21/56)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[3][FineGritLatraReducer][RemoveAssignment](21/56)  Found matches: 0 in transformation RemoveAssignment
+FixPt[3][FineGritLatraReducer][RemoveAddrTaken](21/56)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[3][FineGritLatraReducer][ReplaceArrayAccessWithIndex](21/56)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[3][FineGritLatraReducer][SimplifyUnionDecl](21/56)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[3][FineGritLatraReducer][SimplifyStructDecl](21/56)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[3][FineGritLatraReducer][ReplaceDefByDecl](21/56)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[3][FineGritLatraReducer][CombineLocalVarDecl](21/56)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[3][FineGritLatraReducer][UnifyFunctionDecl](21/56)  Found matches: 0 in transformation UnifyFunctionDecl
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0            hdd-mimir      6             0     -35            -78      50   time-hidden
+ 1            hdd-mimir      0             0       0              0      17   time-hidden
+ 2 FineGritLatraReducer      1             1       0              0       1   time-hidden
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+           hdd-mimir     2      6             0     -35            -78      67   time-hidden
+FineGritLatraReducer     1      1             1       0              0       1   time-hidden
+
+------------------------------- Transformations --------------------------------
+              Transformation Worked #NonDeletions #Tokens #NonBlankChars
+          hdd-mimir.Deletion      6             0     -35            -78
+FineGritLatraReducer.Reparse      1             1       0              0
+------------------------------------- End --------------------------------------
+#test success = 6
+#test failure = 62
+#test result cache hits = 62
+#test execution cancelled = 0
+#node edit action set cache hits = 0
+#external test execution cache hits = 0

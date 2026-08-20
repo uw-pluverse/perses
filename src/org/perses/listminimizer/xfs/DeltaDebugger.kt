@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,9 +17,9 @@
 package org.perses.listminimizer.xfs
 
 import org.perses.listminimizer.AbstractListMinimizer
-import org.perses.listminimizer.Candidate.DeletionOnly
+import org.perses.listminimizer.Candidate.DeletionsFromOriginal
 import org.perses.listminimizer.ElementWrapper
-import org.perses.listminimizer.LMPropertyTestResult
+import org.perses.listminimizer.ListMinimizerPropertyTestResult
 import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.Partition
 import org.perses.util.Util
@@ -44,8 +44,8 @@ class DeltaDebugger<T : Any, PropertyPayload>(
           val partition = iterator.next()
           val deletedInThisIteration = partition.asSequence().toImmutableList()
           val testResult =
-            testProperty(DeletionOnly(deleted_ = deletedInThisIteration))
-          if (testResult !is LMPropertyTestResult.Completed || testResult.result.isNotInteresting) {
+            testProperty(DeletionsFromOriginal(original = best, deleted_ = deletedInThisIteration))
+          if (testResult !is ListMinimizerPropertyTestResult.Completed || testResult.result.isNotInteresting) {
             continue
           }
           val newBest = Util.computeDifference(best, deletedInThisIteration)

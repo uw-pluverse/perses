@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -183,6 +183,7 @@ class CompilersTest : AbstractAntlrrdcTest() {
               ),
             parserFacadeClassSimpleName = "TestCombinedAdhocParserFacade",
             tokenNamesOfIdentifiers = listOf("ID"),
+            includeAutoDetectedIdentifierTokenTypes = true,
           ),
         packageName = "org.perses.grammar.adhoc",
         jarFileCustomizer = {},
@@ -227,6 +228,7 @@ class CompilersTest : AbstractAntlrrdcTest() {
               ),
             parserFacadeClassSimpleName = "TestAdhocParserFacade",
             tokenNamesOfIdentifiers = listOf("ID"),
+            includeAutoDetectedIdentifierTokenTypes = true,
           ),
         packageName = "org.perses.grammar.adhoc",
         jarFileCustomizer = {},

@@ -1,0 +1,43 @@
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+|   |___(+){id=8,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+|       |___Token:int{id=98,slot_type=[aux_rule__translationUnit_2,Int]}
+|       |___functionDefinition{id=11,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+|           |___directDeclarator{id=73,slot_type=[declarator,directDeclarator]}
+|           |   |___Token:f{id=97,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+|           |   |___(*){id=75,slot_type=kleene_star__directDeclarator_7}
+|           |       |___aux_rule__directDeclarator_15{id=77,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+|           |           |___Token:({id=78,slot_type=LeftParen}
+|           |           |___parameterTypeList{id=80,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+|           |               |___(+){id=86,slot_type=[parameterList,parameterDeclaration,declarationSpecifiers]}
+|           |               |   |___Token:int{id=96,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+|           |               |   |___Token:a{id=93,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+|           |               |___(?){id=82,slot_type=optional__parameterTypeList_2}
+|           |                   |___Token:,{id=84,slot_type=[aux_rule__parameterTypeList_1,Comma]}
+|           |___compoundStatement{id=13,slot_type=compoundStatement}
+|               |___Token:{{id=14,slot_type=LeftBrace}
+|               |___(?){id=15,slot_type=optional__compoundStatement_1}
+|               |   |___(+){id=18,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+|               |       |___aux_rule__declaration_3{id=55,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+|               |       |   |___(+){id=56,slot_type=declarationSpecifiers}
+|               |       |   |   |___Token:int{id=72,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+|               |       |   |___(?){id=57,slot_type=optional__declaration_2}
+|               |       |   |   |___initDeclarator{id=60,slot_type=[initDeclaratorList,initDeclarator]}
+|               |       |   |       |___Token:b{id=68,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+|               |       |   |       |___(?){id=62,slot_type=optional__initDeclarator_2}
+|               |       |   |           |___aux_rule__initDeclarator_1{id=63,slot_type=aux_rule__initDeclarator_1}
+|               |       |   |               |___Token:={id=64,slot_type=Assign}
+|               |       |   |               |___Token:@{id=65,slot_type=Token}
+|               |       |   |___Token:;{id=58,slot_type=Semi}
+|               |       |___aux_rule__jumpStatement_4{id=25,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement,altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+|               |           |___Token:return{id=26,slot_type=Return}
+|               |           |___(?){id=27,slot_type=optional__postfixExpression_1}
+|               |               |___additiveExpression{id=39,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+|               |                   |___Token:a{id=53,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+|               |                   |___(*){id=41,slot_type=kleene_star__additiveExpression_1}
+|               |                       |___Token:+{id=47,slot_type=[aux_rule__additiveExpression_2,altnt_block__additiveExpression_3,Plus]}
+|               |___Token:}{id=16,slot_type=RightBrace}
+|___Token:?{id=3,slot_type=Question}
+|___Token:?{id=4,slot_type=Question}
+|___Token:?{id=5,slot_type=Question}
+|___Token:tail{id=6,slot_type=Identifier}

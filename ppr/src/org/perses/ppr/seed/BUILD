@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = [
     "//visibility:public",
@@ -40,8 +41,8 @@ kt_jvm_library(
     deps = [
         ":cmd_options",
         ":output_manager",
-        ":reduction_inputs",
         "//ppr/src/org/perses/ppr/diff:ppr_diff_utils",
+        "//ppr/src/org/perses/ppr/diff:reduction_inputs",
         "//src/org/perses/reduction:reduction_driver",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",
     ],
@@ -51,18 +52,10 @@ kt_jvm_library(
     name = "output_manager",
     srcs = ["SeedOutputManagerFactory.kt"],
     deps = [
-        ":reduction_inputs",
+        "//ppr/src/org/perses/ppr/diff:reduction_inputs",
         "//src/org/perses/program",
         "//src/org/perses/reduction/io/token:token_output_manager_factory_interface",
         "//src/org/perses/util:perses_diffutil",
-    ],
-)
-
-kt_jvm_library(
-    name = "reduction_inputs",
-    srcs = ["SeedReductionInputs.kt"],
-    deps = [
-        "//src/org/perses/reduction/io:reduction_inputs_interface",
     ],
 )
 
@@ -73,6 +66,6 @@ kt_jvm_library(
     ],
     deps = [
         "//ppr/src/org/perses/ppr:AbstractPPRCommandOptions",
-        "//src/org/perses:command_options",
+        "//src/org/perses:perses_command_options",
     ],
 )

@@ -3,6 +3,7 @@
 import os
 import unittest
 import tempfile
+import shutil
 from copyright.pluverse_check_copyright import CopyrightChecker
 
 
@@ -23,8 +24,7 @@ class TestCheckCopyright(unittest.TestCase):
             self.java_temp_file.write("import java.util.*;")
 
     def tearDown(self):
-        os.unlink(self.java_temp_file.name)
-        os.rmdir(self.temp_dir)
+        shutil.rmtree(self.temp_dir)
 
     def test_locate_files(self):
         ## Test if locate_files() returns correct list
@@ -69,6 +69,36 @@ class TestCheckCopyright(unittest.TestCase):
         with open(self.java_temp_file.name) as java_file:
             new_content = java_file.read()
         self.assertEqual(new_content, TINY_COPYRIGHT_CMTBLK + old_content)
+
+    def test_locate_files_with_exclusion(self):
+        # Create a nested structure:
+        # base/
+        #   file1.java
+        #   copyright_checking_excluded
+        #   sub/
+        #     file2.java
+        base_dir = tempfile.mkdtemp(dir=self.temp_dir)
+        file1_path = os.path.join(base_dir, "file1.java")
+        with open(file1_path, 'w') as f:
+            f.write("test")
+
+        exclude_file = os.path.join(base_dir, "copyright_checking_excluded")
+        with open(exclude_file, 'w') as f:
+            f.write("")
+
+        sub_dir = os.path.join(base_dir, "sub")
+        os.mkdir(sub_dir)
+        file2_path = os.path.join(sub_dir, "file2.java")
+        with open(file2_path, 'w') as f:
+            f.write("test")
+
+        file_list = self.copyright_checker.locate_files(base_dir, 'java')
+
+        # file1.java should be excluded because of 'copyright_checking_excluded' in base_dir
+        # file2.java should be included because 'copyright_checking_excluded' is NOT in sub_dir
+        self.assertIn(file2_path, file_list)
+        self.assertNotIn(file1_path, file_list)
+        self.assertEqual(len(file_list), 1)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -56,7 +56,6 @@ fun Iterable<Int>.toImmutableIntArray(): ImmutableIntArray = this.asSequence().t
 fun Sequence<Int>.toImmutableIntArray(): ImmutableIntArray =
   fold(ImmutableIntArray.builder()) { builder, e ->
     builder.add(e)
-    builder
   }.build()
 
 inline fun <T : Any, V : Any> Set<T>.transformToImmutableSet(
@@ -64,7 +63,6 @@ inline fun <T : Any, V : Any> Set<T>.transformToImmutableSet(
 ): ImmutableSet<V> =
   fold(ImmutableSet.builderWithExpectedSize<V>(size)) { builder, e ->
     builder.add(transform(e))
-    builder
   }.build()
 
 inline fun <T : Any, V : Any> List<T>.transformToImmutableList(
@@ -72,7 +70,6 @@ inline fun <T : Any, V : Any> List<T>.transformToImmutableList(
 ): ImmutableList<V> =
   fold(ImmutableList.builderWithExpectedSize<V>(size)) { builder, e ->
     builder.add(transform(e))
-    builder
   }.build()
 
 inline fun <T : Any> List<T>.filterToImmutableList(
@@ -84,7 +81,6 @@ inline fun <T : Any, V : Any> Sequence<T>.transformToImmutableList(
 ): ImmutableList<V> =
   fold(ImmutableList.builder<V>()) { builder, e ->
     builder.add(transform(e))
-    builder
   }.build()
 
 inline fun <T : Any, V : Any> Iterable<T>.transformToImmutableList(transform: (T) -> V) =

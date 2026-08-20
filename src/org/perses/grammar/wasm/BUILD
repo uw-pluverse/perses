@@ -1,7 +1,6 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 load(
     "//src/org/perses/grammar/adhoc:adhoc_grammar.bzl",
-    "orig_parser_facade_library",
     "pnf_parser_facade_library",
 )
 
@@ -21,6 +20,7 @@ kt_jvm_library(
 
 pnf_parser_facade_library(
     name = "parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.wasm",
     language_kind_full_name = "org.perses.grammar.wasm.LanguageWebAssembly",
     lexer_file_name = "WatLexer.g4",

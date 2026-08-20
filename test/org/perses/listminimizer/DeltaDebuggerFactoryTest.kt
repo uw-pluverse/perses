@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,8 +21,8 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.listminimizer.xfs.BfsListMinimizer
 import org.perses.listminimizer.xfs.DeltaDebugger
+import org.perses.listminimizer.xfs.UnweightedBfsListMinimizer
 import org.perses.reduction.PropertyTestResult
 
 @RunWith(JUnit4::class)
@@ -31,8 +31,9 @@ class DeltaDebuggerFactoryTest {
     ListMinimizerArguments(
       needToTestEmpty = true,
       input = ImmutableList.of("a"),
+      isElementDeletedElsewhere = { false },
       propertyTester = {
-        LMPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "payload")
+        ListMinimizerPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "payload")
       },
       onBestUpdateHandler = { _, _ -> },
       descriptionPrefix = "",
@@ -41,7 +42,7 @@ class DeltaDebuggerFactoryTest {
   @Test
   fun testCreationWithEnum() {
     ListMinimizerFactory.create(EnumListMinimizerType.BFS, args).let {
-      assertThat(it).isInstanceOf(BfsListMinimizer::class.java)
+      assertThat(it).isInstanceOf(UnweightedBfsListMinimizer::class.java)
     }
     ListMinimizerFactory
       .create(
@@ -54,8 +55,8 @@ class DeltaDebuggerFactoryTest {
 
   @Test
   fun testCreationWithClassName() {
-    ListMinimizerFactory.create(BfsListMinimizer::class.java.canonicalName, args).let {
-      assertThat(it).isInstanceOf(BfsListMinimizer::class.java)
+    ListMinimizerFactory.create(UnweightedBfsListMinimizer::class.java.canonicalName, args).let {
+      assertThat(it).isInstanceOf(UnweightedBfsListMinimizer::class.java)
     }
   }
 }

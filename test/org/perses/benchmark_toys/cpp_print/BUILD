@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 sanity_test(
     name = "sanity_test",
@@ -14,7 +14,7 @@ reduction_golden_test(
     golden_reduced_file = "golden_reduced_t.cpp",
     log_file = "reduction_golden_test.log",
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "t.cpp",
     test_script = "r.sh",
 )

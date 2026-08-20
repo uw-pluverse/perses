@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,12 +18,13 @@ package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
 import com.google.common.util.concurrent.ListenableFuture
-import org.perses.reduction.TestScriptExecutorService.AbstractOutputManagerCreatorResult.ProceedResult
+import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Proceed
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.ReductionFolderManager
 import org.perses.util.DaemonThreadPool
 import org.perses.util.shell.ExitCode
 import java.io.Closeable
+import java.nio.file.Path
 import java.util.concurrent.Callable
 import java.util.concurrent.CancellationException
 import java.util.concurrent.atomic.AtomicInteger
@@ -38,9 +39,21 @@ class TestScriptExecutorService(
 ) : Closeable {
   val statistics = Statistics()
 
-  private val scriptExecutorService = DaemonThreadPool.create(specifiedNumOfThreads)
-  private val outputManagerCreatorService = DaemonThreadPool.create(specifiedNumOfThreads)
-  private val genericThreadPool = DaemonThreadPool.create(specifiedNumOfThreads)
+  private val scriptExecutorService =
+    DaemonThreadPool.create(
+      numThreads = specifiedNumOfThreads,
+      creatorObject = this,
+    )
+  private val outputManagerCreatorService =
+    DaemonThreadPool.create(
+      numThreads = specifiedNumOfThreads,
+      creatorObject = this,
+    )
+  private val genericThreadPool =
+    DaemonThreadPool.create(
+      numThreads = specifiedNumOfThreads,
+      creatorObject = this,
+    )
 
   init {
     require(specifiedNumOfThreads > 0) {
@@ -52,6 +65,14 @@ class TestScriptExecutorService(
     prefix: String,
     suffix: String,
   ) = reductionFolderManager.createNextFolder(prefix, suffix)
+
+  /** A plain temp directory under the shared folder manager's root, for reducers that need scratch
+   * space (e.g. the LPR reducer's LLM client). Routed through the shared folder manager so all of a
+   * reduction's temp dirs live under one root rather than a separate per-IO-manager one. */
+  fun createTempDirectory(
+    prefix: String = "",
+    postfix: String = "",
+  ): Path = reductionFolderManager.createTempDirectory(prefix, postfix)
 
   @Override
   override fun close() {
@@ -77,36 +98,32 @@ class TestScriptExecutorService(
     outputManager: AbstractOutputManager,
     payload: Payload,
   ): TestScriptExecResult<Payload> =
-    testProgramAsync(preCheck, postCheck) {
-      ProceedResult(outputManager, payload)
-    }
+    testProgramAsync(preCheck, postCheck, outputManagerCreator = {
+      Proceed(outputManager, payload)
+    })
 
   fun testProgramAsyncWithoutPayload(
     preCheck: IPreCheck<Any>,
     postCheck: IPostCheck<Any>,
     outputManager: AbstractOutputManager,
   ): TestScriptExecResult<Any> =
-    testProgramAsync(preCheck, postCheck) {
-      ProceedResult(outputManager, DUMMY_PAYLOAD)
-    }
+    testProgramAsync(preCheck, postCheck, outputManagerCreator = {
+      Proceed(outputManager, DUMMY_PAYLOAD)
+    })
 
-  sealed class AbstractOutputManagerCreatorResult<Payload : Any> {
-    class EmptyResult<Payload : Any> : AbstractOutputManagerCreatorResult<Payload>()
+  sealed class OutputManagerCreatorResult<Payload : Any> {
+    class Skip<Payload : Any> : OutputManagerCreatorResult<Payload>()
 
-    class ProceedResult<Payload : Any>(
+    class Proceed<Payload : Any>(
       val outputManager: AbstractOutputManager,
       val payload: Payload,
-    ) : AbstractOutputManagerCreatorResult<Payload>()
-
-    class StopResult<Payload : Any>(
-      val payload: Payload,
-    ) : AbstractOutputManagerCreatorResult<Payload>()
+    ) : OutputManagerCreatorResult<Payload>()
   }
 
   fun <Payload : Any> testProgramAsync(
     preCheck: IPreCheck<Payload>,
     postCheck: IPostCheck<Payload>,
-    outputManagerCreator: () -> AbstractOutputManagerCreatorResult<Payload>,
+    outputManagerCreator: () -> OutputManagerCreatorResult<Payload>,
   ): TestScriptExecResult<Payload> {
     val outputManagerCreatorFuture =
       createRestrictedFuture(
@@ -127,7 +144,7 @@ class TestScriptExecutorService(
             val outputManagerWithPayload =
               try {
                 when (val t = outputManagerCreatorFuture.getWithTimeoutWarnings()) {
-                  is ProceedResult<Payload> -> t
+                  is Proceed<Payload> -> t
                   else -> return@Callable null
                 }
               } catch (e: Exception) {

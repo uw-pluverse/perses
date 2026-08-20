@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,50 +16,51 @@
  */
 package org.perses.reduction.io.token
 
+import com.google.common.collect.ImmutableMap
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.program.AbstractLazySourceCode
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
-import org.perses.program.LanguageKind
-import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
-import org.perses.program.printer.AbstractTokenizedProgramPrinter
-import org.perses.program.printer.PrinterRegistry
+import org.perses.reduction.io.AbstractOriginalReductionInputs
 import org.perses.reduction.io.AbstractOutputManager
-import org.perses.reduction.io.AbstractSingleFileReductionInputs
+import org.perses.reduction.io.SuppliedContentOutputManager
 import org.perses.util.hashing.EnumShaAlgorithm
 
 class RegularOutputManagerFactory(
-  private val reductionInputs: AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>,
+  override val originalReductionInputs: AbstractOriginalReductionInputs,
   codeFormatControl: EnumFormatControl,
   lexerAtnWrapper: LexerAtnWrapper,
-  private val shaAlgorithm: EnumShaAlgorithm,
+  shaAlgorithm: EnumShaAlgorithm,
+  /** The single mutable file this factory's programs represent (the file under reduction). */
+  private val fileRepresentedByProgram: AbstractReductionFile<*, *>,
+  /** The fixed content of every sibling (mutable files other than the represented one), bound at
+   * construction. Its keys are the siblings to render. */
+  private val otherMutableFileContents: ImmutableMap<AbstractReductionFile<*, *>, String>,
 ) : AbstractTokenOutputManagerFactory(
+    originalReductionInputs,
     codeFormatControl,
     lexerAtnWrapper,
+    shaAlgorithm,
   ) {
   override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager =
-    OutputManager(program, defaultProgramPrinter)
+    SuppliedContentOutputManager(
+      originalReductionInputs,
+      shaAlgorithm,
+      fileRepresentedByProgram,
+      otherMutableFileContents,
+      renderFileRepresentedByProgram = { defaultProgramPrinter.print(program).sourceCode },
+    )
 
-  override fun createManagerFor(
-    program: TokenizedProgram,
-    format: EnumFormatControl,
-  ): AbstractOutputManager =
-    OutputManager(program, PrinterRegistry.getPrinter(format, lexerAtnWrapper))
-
-  inner class OutputManager(
-    private val program: TokenizedProgram,
-    private val programPrinter: AbstractTokenizedProgramPrinter,
-  ) : AbstractOutputManager(reductionInputs, shaAlgorithm) {
-    val sourceCode: AbstractLazySourceCode by lazy {
-      programPrinter.print(program)
-    }
-
-    override fun internalComputeContentForFile(
-      origReductionFile: AbstractReductionFile<*, *>,
-    ): String {
-      check(origReductionFile === reductionInputs.mainFile)
-      return sourceCode.sourceCode
-    }
-  }
+  // A sibling factory in a different code format: same file-management collaborators, new printer.
+  override fun cloneWithCodeFormat(
+    codeFormat: EnumFormatControl,
+  ): AbstractTokenOutputManagerFactory =
+    RegularOutputManagerFactory(
+      originalReductionInputs,
+      codeFormat,
+      lexerAtnWrapper,
+      shaAlgorithm,
+      fileRepresentedByProgram,
+      otherMutableFileContents,
+    )
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -44,16 +44,29 @@ object PrinterRegistry {
     tokenPositionProvider: AbstractTokenPositionProvider,
   ): AbstractTokenizedProgramPrinter =
     when (format) {
-      EnumFormatControl.SINGLE_TOKEN_PER_LINE -> SingleTokenPerLinePrinter
-      EnumFormatControl.COMPACT_ORIG_FORMAT ->
+      EnumFormatControl.SINGLE_TOKEN_PER_LINE -> {
+        SingleTokenPerLinePrinter
+      }
+
+      EnumFormatControl.COMPACT_ORIG_FORMAT -> {
         OrigFormatPrinter.getCompactOrigFormat(tokenPositionProvider)
-      EnumFormatControl.ORIG_FORMAT ->
+      }
+
+      EnumFormatControl.ORIG_FORMAT -> {
         OrigFormatPrinter.getOrigFormat(tokenPositionProvider)
-      EnumFormatControl.PYTHON3_FORMAT ->
+      }
+
+      EnumFormatControl.PYTHON3_FORMAT -> {
         PythonPrinter.getOrigFormat(tokenPositionProvider)
-      EnumFormatControl.COMPACT_PYTHON3_FORMAT ->
+      }
+
+      EnumFormatControl.COMPACT_PYTHON3_FORMAT -> {
         PythonPrinter.getCompactOrigFormat(tokenPositionProvider)
-      EnumFormatControl.YAML_FORMAT -> YamlTokenizedProgramPrinter()
+      }
+
+      EnumFormatControl.YAML_FORMAT -> {
+        YamlTokenizedProgramPrinter()
+      }
     }
 
   fun printToString(

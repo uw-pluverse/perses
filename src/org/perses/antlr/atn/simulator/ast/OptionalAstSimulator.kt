@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -33,9 +33,13 @@ class OptionalAstSimulator(
     val node = tree.createOptionalTDTreeNode()
     parent.addChild(node)
     when (decisionMaker.decideOnKleene()) {
-      AbstractDecisionMaker.EnumKleeneDecision.SKIP -> Unit
-      AbstractDecisionMaker.EnumKleeneDecision.TAKE ->
+      AbstractDecisionMaker.EnumKleeneDecision.SKIP -> {
+        Unit
+      }
+
+      AbstractDecisionMaker.EnumKleeneDecision.TAKE -> {
         childSimulator.simulate(decisionMaker, tree, node)
+      }
     }
   }
 }

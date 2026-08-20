@@ -1,31 +1,8 @@
 #include <stdio.h>
-int
-main
-(
-void
-)
+int main(void)
 {
-int
-a
-=
-1
-;
-int
-b
-=
-2
-;
-a
-++
-;
-printf
-(
-"%d"
-,
-a
-)
-;
-return
-0
-;
+    int a = 1;
+    int b = 2;
+    a++;printf("%d", a);
+    return 0;
 }

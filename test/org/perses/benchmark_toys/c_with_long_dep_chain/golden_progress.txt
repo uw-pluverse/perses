@@ -1,0 +1,3108 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 121
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_mimir_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "mimir"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "_reduction_golden_test_by_default_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: "_reduction_golden_test_list_minimizer_profile.txt"
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "LAYER_BY_LAYER_TOP_DOWN"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(121/121)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        mimir
+    }
+
+
+(121/121)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+============Fixpoint iteration 1. Reducer: mimir============
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=733,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___functionDefinition{id=682,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=683,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=728,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=732,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=719,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:f1{id=727,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=721,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=723,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=724,slot_type=LeftParen}
+        |   |           |___Token:){id=726,slot_type=RightParen}
+        |   |___compoundStatement{id=685,slot_type=compoundStatement}
+        |       |___Token:{{id=686,slot_type=LeftBrace}
+        |       |___(?){id=687,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=690,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___jumpStatement{id=694,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=697,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=698,slot_type=Return}
+        |       |           |   |___(?){id=699,slot_type=optional__postfixExpression_1}
+        |       |           |       |___Token:0{id=718,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |       |           |___Token:;{id=696,slot_type=Semi}
+        |       |___Token:}{id=688,slot_type=RightBrace}
+        |___functionDefinition{id=615,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=616,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=677,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=681,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=668,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:f2{id=676,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=670,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=672,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=673,slot_type=LeftParen}
+        |   |           |___Token:){id=675,slot_type=RightParen}
+        |   |___compoundStatement{id=618,slot_type=compoundStatement}
+        |       |___Token:{{id=619,slot_type=LeftBrace}
+        |       |___(?){id=620,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=623,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___jumpStatement{id=627,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=630,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=631,slot_type=Return}
+        |       |           |   |___(?){id=632,slot_type=optional__postfixExpression_1}
+        |       |           |       |___additiveExpression{id=644,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+        |       |           |           |___postfixExpression{id=660,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+        |       |           |           |   |___Token:f1{id=667,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+        |       |           |           |   |___(*){id=662,slot_type=kleene_star__postfixExpression_2}
+        |       |           |           |       |___aux_rule__postfixExpression_11{id=664,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+        |       |           |           |           |___Token:({id=665,slot_type=LeftParen}
+        |       |           |           |           |___Token:){id=666,slot_type=RightParen}
+        |       |           |           |___(*){id=646,slot_type=kleene_star__additiveExpression_1}
+        |       |           |               |___aux_rule__additiveExpression_2{id=647,slot_type=aux_rule__additiveExpression_2}
+        |       |           |                   |___Token:+{id=656,slot_type=[altnt_block__additiveExpression_3,Plus]}
+        |       |           |                   |___Token:1{id=655,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+        |       |           |___Token:;{id=629,slot_type=Semi}
+        |       |___Token:}{id=621,slot_type=RightBrace}
+        |___functionDefinition{id=559,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=560,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=610,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=614,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=601,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:f3{id=609,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=603,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=605,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=606,slot_type=LeftParen}
+        |   |           |___Token:){id=608,slot_type=RightParen}
+        |   |___compoundStatement{id=562,slot_type=compoundStatement}
+        |       |___Token:{{id=563,slot_type=LeftBrace}
+        |       |___(?){id=564,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=567,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___jumpStatement{id=571,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=574,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=575,slot_type=Return}
+        |       |           |   |___(?){id=576,slot_type=optional__postfixExpression_1}
+        |       |           |       |___postfixExpression{id=593,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+        |       |           |           |___Token:f2{id=600,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+        |       |           |           |___(*){id=595,slot_type=kleene_star__postfixExpression_2}
+        |       |           |               |___aux_rule__postfixExpression_11{id=597,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+        |       |           |                   |___Token:({id=598,slot_type=LeftParen}
+        |       |           |                   |___Token:){id=599,slot_type=RightParen}
+        |       |           |___Token:;{id=573,slot_type=Semi}
+        |       |___Token:}{id=565,slot_type=RightBrace}
+        |___functionDefinition{id=503,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=504,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=554,slot_type=declarationSpecifiers}
+        |   |       |___Token:int{id=558,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |___directDeclarator{id=545,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:f4{id=553,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=547,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=549,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=550,slot_type=LeftParen}
+        |   |           |___Token:){id=552,slot_type=RightParen}
+        |   |___compoundStatement{id=506,slot_type=compoundStatement}
+        |       |___Token:{{id=507,slot_type=LeftBrace}
+        |       |___(?){id=508,slot_type=optional__compoundStatement_1}
+        |       |   |___(+){id=511,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+        |       |       |___jumpStatement{id=515,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+        |       |           |___aux_rule__jumpStatement_4{id=518,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+        |       |           |   |___Token:return{id=519,slot_type=Return}
+        |       |           |   |___(?){id=520,slot_type=optional__postfixExpression_1}
+        |       |           |       |___postfixExpression{id=537,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+        |       |           |           |___Token:f1{id=544,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+        |       |           |           |___(*){id=539,slot_type=kleene_star__postfixExpression_2}
+        |       |           |               |___aux_rule__postfixExpression_11{id=541,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+        |       |           |                   |___Token:({id=542,slot_type=LeftParen}
+        |       |           |                   |___Token:){id=543,slot_type=RightParen}
+        |       |           |___Token:;{id=517,slot_type=Semi}
+        |       |___Token:}{id=509,slot_type=RightBrace}
+        |___functionDefinition{id=11,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=12,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=498,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=502,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=447,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=497,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=449,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=451,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=452,slot_type=LeftParen}
+            |           |___parameterList{id=456,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+            |           |   |___(+){id=486,slot_type=[parameterDeclaration,declarationSpecifiers]}
+            |           |   |   |___Token:int{id=496,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |           |   |   |___Token:argc{id=493,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |           |   |___(*){id=458,slot_type=kleene_star__parameterList_1}
+            |           |       |___aux_rule__parameterList_2{id=459,slot_type=aux_rule__parameterList_2}
+            |           |           |___Token:,{id=460,slot_type=Comma}
+            |           |           |___parameterDeclaration{id=461,slot_type=parameterDeclaration}
+            |           |               |___(+){id=462,slot_type=declarationSpecifiers}
+            |           |               |   |___Token:char{id=485,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
+            |           |               |___declarator{id=464,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+            |           |                   |___(?){id=465,slot_type=optional__declarator_1}
+            |           |                   |   |___(+){id=478,slot_type=[pointer,kleene_plus__pointer_8]}
+            |           |                   |       |___Token:*{id=481,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+            |           |                   |___directDeclarator{id=466,slot_type=directDeclarator}
+            |           |                       |___Token:argv{id=476,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |           |                       |___(*){id=468,slot_type=kleene_star__directDeclarator_7}
+            |           |                           |___aux_rule__directDeclarator_14{id=470,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_14]}
+            |           |                               |___Token:[{id=471,slot_type=LeftBracket}
+            |           |                               |___Token:]{id=473,slot_type=RightBracket}
+            |           |___Token:){id=454,slot_type=RightParen}
+            |___compoundStatement{id=14,slot_type=compoundStatement}
+                |___Token:{{id=15,slot_type=LeftBrace}
+                |___(?){id=16,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=19,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=435,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=436,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=446,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |   |___Token:a{id=443,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=437,slot_type=Semi}
+                |       |___expressionStatement{id=403,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=404,slot_type=optional__postfixExpression_1}
+                |       |   |   |___assignmentExpression{id=407,slot_type=[expression,assignmentExpression]}
+                |       |   |       |___(*){id=408,slot_type=kleene_star__assignmentExpression_1}
+                |       |   |       |   |___aux_rule__assignmentExpression_2{id=426,slot_type=aux_rule__assignmentExpression_2}
+                |       |   |       |       |___Token:a{id=433,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___Token:={id=429,slot_type=[assignmentOperator,Assign]}
+                |       |   |       |___Token:0{id=425,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=405,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=389,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=390,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=400,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |   |___Token:b{id=397,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=391,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=376,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=377,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=387,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |   |___Token:e{id=384,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=378,slot_type=Semi}
+                |       |___expressionStatement{id=333,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=334,slot_type=optional__postfixExpression_1}
+                |       |   |   |___assignmentExpression{id=337,slot_type=[expression,assignmentExpression]}
+                |       |   |       |___(*){id=338,slot_type=kleene_star__assignmentExpression_1}
+                |       |   |       |   |___aux_rule__assignmentExpression_2{id=367,slot_type=aux_rule__assignmentExpression_2}
+                |       |   |       |       |___Token:b{id=374,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___Token:={id=370,slot_type=[assignmentOperator,Assign]}
+                |       |   |       |___additiveExpression{id=348,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+                |       |   |           |___Token:a{id=366,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |           |___(*){id=350,slot_type=kleene_star__additiveExpression_1}
+                |       |   |               |___aux_rule__additiveExpression_2{id=351,slot_type=aux_rule__additiveExpression_2}
+                |       |   |                   |___Token:+{id=360,slot_type=[altnt_block__additiveExpression_3,Plus]}
+                |       |   |                   |___Token:1{id=359,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=335,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=319,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=320,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=330,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |   |___Token:c{id=327,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=321,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=306,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=307,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=317,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |   |___Token:d{id=314,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=308,slot_type=Semi}
+                |       |___expressionStatement{id=263,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=264,slot_type=optional__postfixExpression_1}
+                |       |   |   |___assignmentExpression{id=267,slot_type=[expression,assignmentExpression]}
+                |       |   |       |___(*){id=268,slot_type=kleene_star__assignmentExpression_1}
+                |       |   |       |   |___aux_rule__assignmentExpression_2{id=297,slot_type=aux_rule__assignmentExpression_2}
+                |       |   |       |       |___Token:c{id=304,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___Token:={id=300,slot_type=[assignmentOperator,Assign]}
+                |       |   |       |___additiveExpression{id=278,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+                |       |   |           |___Token:b{id=296,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |           |___(*){id=280,slot_type=kleene_star__additiveExpression_1}
+                |       |   |               |___aux_rule__additiveExpression_2{id=281,slot_type=aux_rule__additiveExpression_2}
+                |       |   |                   |___Token:+{id=290,slot_type=[altnt_block__additiveExpression_3,Plus]}
+                |       |   |                   |___Token:2{id=289,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=265,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=249,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=250,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=260,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |   |___Token:f{id=257,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=251,slot_type=Semi}
+                |       |___expressionStatement{id=206,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=207,slot_type=optional__postfixExpression_1}
+                |       |   |   |___assignmentExpression{id=210,slot_type=[expression,assignmentExpression]}
+                |       |   |       |___(*){id=211,slot_type=kleene_star__assignmentExpression_1}
+                |       |   |       |   |___aux_rule__assignmentExpression_2{id=240,slot_type=aux_rule__assignmentExpression_2}
+                |       |   |       |       |___Token:d{id=247,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___Token:={id=243,slot_type=[assignmentOperator,Assign]}
+                |       |   |       |___additiveExpression{id=221,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+                |       |   |           |___Token:c{id=239,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |           |___(*){id=223,slot_type=kleene_star__additiveExpression_1}
+                |       |   |               |___aux_rule__additiveExpression_2{id=224,slot_type=aux_rule__additiveExpression_2}
+                |       |   |                   |___Token:+{id=233,slot_type=[altnt_block__additiveExpression_3,Plus]}
+                |       |   |                   |___Token:3{id=232,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=208,slot_type=Semi}
+                |       |___expressionStatement{id=162,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=163,slot_type=optional__postfixExpression_1}
+                |       |   |   |___assignmentExpression{id=166,slot_type=[expression,assignmentExpression]}
+                |       |   |       |___(*){id=167,slot_type=kleene_star__assignmentExpression_1}
+                |       |   |       |   |___aux_rule__assignmentExpression_2{id=196,slot_type=aux_rule__assignmentExpression_2}
+                |       |   |       |       |___Token:e{id=203,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___Token:={id=199,slot_type=[assignmentOperator,Assign]}
+                |       |   |       |___additiveExpression{id=177,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+                |       |   |           |___Token:d{id=195,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |           |___(*){id=179,slot_type=kleene_star__additiveExpression_1}
+                |       |   |               |___aux_rule__additiveExpression_2{id=180,slot_type=aux_rule__additiveExpression_2}
+                |       |   |                   |___Token:+{id=189,slot_type=[altnt_block__additiveExpression_3,Plus]}
+                |       |   |                   |___Token:4{id=188,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=164,slot_type=Semi}
+                |       |___expressionStatement{id=118,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=119,slot_type=optional__postfixExpression_1}
+                |       |   |   |___assignmentExpression{id=122,slot_type=[expression,assignmentExpression]}
+                |       |   |       |___(*){id=123,slot_type=kleene_star__assignmentExpression_1}
+                |       |   |       |   |___aux_rule__assignmentExpression_2{id=152,slot_type=aux_rule__assignmentExpression_2}
+                |       |   |       |       |___Token:f{id=159,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___Token:={id=155,slot_type=[assignmentOperator,Assign]}
+                |       |   |       |___additiveExpression{id=133,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+                |       |   |           |___Token:e{id=151,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |           |___(*){id=135,slot_type=kleene_star__additiveExpression_1}
+                |       |   |               |___aux_rule__additiveExpression_2{id=136,slot_type=aux_rule__additiveExpression_2}
+                |       |   |                   |___Token:+{id=145,slot_type=[altnt_block__additiveExpression_3,Plus]}
+                |       |   |                   |___Token:5{id=144,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=120,slot_type=Semi}
+                |       |___expressionStatement{id=68,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=69,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=87,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=115,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=89,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=91,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=92,slot_type=LeftParen}
+                |       |   |               |___(?){id=93,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___(+){id=113,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |___Token:"hello\n"{id=114,slot_type=StringLiteral}
+                |       |   |               |___Token:){id=94,slot_type=RightParen}
+                |       |   |___Token:;{id=70,slot_type=Semi}
+                |       |___jumpStatement{id=36,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=39,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=40,slot_type=Return}
+                |           |   |___(?){id=41,slot_type=optional__postfixExpression_1}
+                |           |       |___postfixExpression{id=58,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |           |___Token:f4{id=65,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |           |___(*){id=60,slot_type=kleene_star__postfixExpression_2}
+                |           |               |___aux_rule__postfixExpression_11{id=62,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |           |                   |___Token:({id=63,slot_type=LeftParen}
+                |           |                   |___Token:){id=64,slot_type=RightParen}
+                |           |___Token:;{id=38,slot_type=Semi}
+                |___Token:}{id=17,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[1][mimir](121/121)  Starting to retrieve the semantics provider
+FixPt[1][mimir](121/121)  Retrieved semantics provider MimirSemanticsProvider{semanticTokenTypeMap=28, defs=13, deUseGraphVertices=28, defUseGraphEdges=15}
+=================Reducing node 2, size=121==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f2() {
+      return f1() + 1;
+    }
+    int f3() {
+      return f2();
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+      a = 0;
+      int b;
+      int e;
+      b = a + 1;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:121/121=100.00%
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Testing the empty input. Global ratio:121/121=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compilationUnit_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:121/121=100.00%
+FixPt[1][mimir][ONE_BY_ONE](121/121)  There is only one element in the input, and the empty input has been tested. Global ratio:121/121=100.00%
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:121/121=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+=================Reducing node 4, size=121==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f2() {
+      return f1() + 1;
+    }
+    int f3() {
+      return f2();
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+      a = 0;
+      int b;
+      int e;
+      b = a + 1;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (1): fail===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove all except first
+    --file: t.c--
+    #include <stdio.h>
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:121/121=100.00%
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Testing the empty input is disabled. Global ratio:121/121=100.00%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 11,503,559,615,682]
+    context: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:Layer-Top-0]dd@#nodes=5,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:121/121=100.00%
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:121/121=100.00%
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:121/121=100.00%
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Testing the empty input is disabled. Global ratio:121/121=100.00%
+==========Testing the following program (2): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:Layer-Top-1]dd@#nodes=2,#parts=1#total-parts=2
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f2() {
+      return f1() + 1;
+    }
+    int f3() {
+      return f2();
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:121/121=100.00%
+==========Testing the following program (3): pass===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:Layer-Top-1]dd@#nodes=2,#parts=1#total-parts=2
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+      a = 0;
+      int b;
+      int e;
+      b = a + 1;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](121/121)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:121/121=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 3 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 121 -> 97
+Edit: [delete: 559,615]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Minimizer OneByOneMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:97/121=80.17%
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:97/121=80.17%
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Testing the empty input. Global ratio:97/121=80.17%
+==========Testing the following program (4): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:LayerBottom]dd@#nodes=2,#parts=2#total-parts=2
+    --file: t.c--
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:97/121=80.17%
+==========Testing the following program (5): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:97/121=80.17%
+==========Testing the following program (6): fail===========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+      a = 0;
+      int b;
+      int e;
+      b = a + 1;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:97/121=80.17%
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Minimizer OneByOneMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:97/121=80.17%
+===================Node reduction is done===================
+
+Succeeded to reduce node 4 from 121 to 97
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=97==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+      a = 0;
+      int b;
+      int e;
+      b = a + 1;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_11]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (7): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+           ;
+------------------------------------------------------------
+
+
+==========Testing the following program (8): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+               ;
+------------------------------------------------------------
+
+
+==========Testing the following program (9): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+                       ;
+------------------------------------------------------------
+
+
+==========Testing the following program (10): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+                 ;
+------------------------------------------------------------
+
+
+==========Testing the following program (11): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+      int a;
+------------------------------------------------------------
+
+
+==========Testing the following program (12): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+      int b;
+------------------------------------------------------------
+
+
+==========Testing the following program (13): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+      int e;
+------------------------------------------------------------
+
+
+==========Testing the following program (14): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+      int c;
+------------------------------------------------------------
+
+
+==========Testing the following program (15): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+      int d;
+------------------------------------------------------------
+
+
+==========Testing the following program (16): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+      int f;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=97==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+      a = 0;
+      int b;
+      int e;
+      b = a + 1;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=97==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+      a = 0;
+      int b;
+      int e;
+      b = a + 1;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:97/121=80.17%
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Testing the empty input. Global ratio:97/121=80.17%
+==========Testing the following program (17): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__compoundStatement_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:97/121=80.17%
+FixPt[1][mimir][ONE_BY_ONE](97/121)  There is only one element in the input, and the empty input has been tested. Global ratio:97/121=80.17%
+FixPt[1][mimir][ONE_BY_ONE](97/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:97/121=80.17%
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=97==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+      a = 0;
+      int b;
+      int e;
+      b = a + 1;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_19]
+    context: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (18): fail==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove all except first
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int a;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (19): pass==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3:Layer-Top-0:OverlappingCluster0]
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int b;
+      int e;
+      int c;
+      int d;
+      c = b + 2;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 18 --> 18.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 26
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 97 -> 84
+Edit: [delete: 333,403,435]
+------------------------------------------------------------
+
+
+==========Testing the following program (20): pass==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3:Layer-Top-0:OverlappingCluster1]
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int e;
+      int c;
+      int d;
+      int f;
+      d = c + 3;
+      e = d + 4;
+      f = e + 5;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 18 --> 17.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 84 -> 75
+Edit: [delete: 263,389]
+------------------------------------------------------------
+
+
+==========Testing the following program (21): pass==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3:Layer-Top-0:OverlappingCluster2]
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int c;
+      int d;
+      int f;
+      d = c + 3;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 17 --> 17.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 75 -> 60
+Edit: [delete: 118,162,376]
+------------------------------------------------------------
+
+
+==========Testing the following program (22): pass==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3:Layer-Top-0:OverlappingCluster3]
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int d;
+      int f;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 17 --> 17.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 60 -> 51
+Edit: [delete: 206,319]
+------------------------------------------------------------
+
+
+==========Testing the following program (23): pass==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3:Layer-Top-0:OverlappingCluster4]
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      int f;
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 17 --> 17.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 51 -> 48
+Edit: [delete_306]
+------------------------------------------------------------
+
+
+==========Testing the following program (24): pass==========
+
+// edit action set type: [kleene_plus:kleene_plus__blockItemList_3:Layer-Top-0:OverlappingCluster5]
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+      return f4();
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 17 --> 17.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 48 -> 45
+Edit: [delete_249]
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](45/121)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:45/121=37.19%
+FixPt[1][mimir][ONE_BY_ONE](45/121)  Testing the empty input. Global ratio:45/121=37.19%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](45/121)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:45/121=37.19%
+==========Testing the following program (25): pass==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__blockItemList_3:LayerBottom]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](45/121)  Try deleting [1]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:45/121=37.19%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 17 --> 17.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 45 -> 40
+Edit: [delete_36]
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](40/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/2=50.00%. Global ratio:40/121=33.06%
+FixPt[1][mimir][ONE_BY_ONE](40/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:40/121=33.06%
+===================Node reduction is done===================
+
+Succeeded to reduce node 19 from 97 to 40
+------------------------------------------------------------
+
+
+=================Reducing node 503, size=40=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int f4() {
+      return f1();
+    }
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (26): pass==========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+2 entries are removed: 17 --> 15.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 40 -> 29
+Edit: [delete_503]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 503 from 40 to 29
+------------------------------------------------------------
+
+
+=================Reducing node 447, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (27): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int main                          {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (28): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int           argc                {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 447
+------------------------------------------------------------
+
+
+=================Reducing node 449, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:29/121=23.97%
+FixPt[1][mimir][ONE_BY_ONE](29/121)  Testing the empty input. Global ratio:29/121=23.97%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int main                          {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](29/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/121=23.97%
+FixPt[1][mimir][ONE_BY_ONE](29/121)  There is only one element in the input, and the empty input has been tested. Global ratio:29/121=23.97%
+FixPt[1][mimir][ONE_BY_ONE](29/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/121=23.97%
+===================Node reduction is done===================
+
+Failed to reduce node 449
+------------------------------------------------------------
+
+
+=================Reducing node 451, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_451]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 451
+------------------------------------------------------------
+
+
+=================Reducing node 682, size=29=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int f1() {
+      return 0;
+    }
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (29): pass==========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    #include <stdio.h>
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 17 --> 16.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 29 -> 20
+Edit: [delete_682]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 682 from 29 to 20
+------------------------------------------------------------
+
+
+=================Reducing node 456, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (int argc, char *argv[]) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (30): pass==========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+13 entries are removed: 16 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 7
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 20 -> 12
+Edit: [delete_456]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 456 from 20 to 12
+------------------------------------------------------------
+
+
+=================Reducing node 68, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (31): fail==========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (32): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+                       ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 68
+------------------------------------------------------------
+
+
+=================Reducing node 69, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+                       ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 69
+------------------------------------------------------------
+
+
+=================Reducing node 87, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_87]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (33): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf           ;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (34): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+             "hello\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 87
+------------------------------------------------------------
+
+
+=================Reducing node 89, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 89
+------------------------------------------------------------
+
+
+=================Reducing node 91, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_91]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 91
+------------------------------------------------------------
+
+
+=================Reducing node 733, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 733
+------------------------------------------------------------
+
+
+=================Reducing node 497, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 497
+------------------------------------------------------------
+
+
+=================Reducing node 454, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 454
+------------------------------------------------------------
+
+
+=================Reducing node 452, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 452
+------------------------------------------------------------
+
+
+=================Reducing node 115, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 115
+------------------------------------------------------------
+
+
+=================Reducing node 94, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 94
+------------------------------------------------------------
+
+
+=================Reducing node 93, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+==========Testing the following program (35): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__postfixExpression_1:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 93
+------------------------------------------------------------
+
+
+=================Reducing node 113, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_113]
+    context: [kleene_plus:kleene_plus__primaryExpression_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Testing the empty input is disabled. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 113
+------------------------------------------------------------
+
+
+=================Reducing node 114, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 114
+------------------------------------------------------------
+
+
+=================Reducing node 92, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 92
+------------------------------------------------------------
+
+
+=================Reducing node 70, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 70
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=12==================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+==========Testing the following program (36): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[optional:optional__functionDefinition_2:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    #include <stdio.h>
+        main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 498, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_498]
+    context: [kleene_plus:declarationSpecifiers]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Testing the empty input is disabled. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+        main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[1][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 498
+------------------------------------------------------------
+
+
+=================Reducing node 502, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 502
+------------------------------------------------------------
+
+
+FixPt[1][mimir](12/121)  After the main reduction process: 0 nodes have 0 out-degree; 0 nodes have reduced out-degree. 1 nodes unchanged.
+(12/121)  Rebuilding spar-tree: The spartree is rebuilt.
+============Fixpoint iteration 2. Reducer: mimir============
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=735,slot_type=compilationUnit}
+|___(?){id=736,slot_type=optional__compilationUnit_1}
+    |___(+){id=738,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=815,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___functionDefinition{id=741,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=742,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=810,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=814,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=801,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=809,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=803,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=805,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=806,slot_type=LeftParen}
+            |           |___Token:){id=808,slot_type=RightParen}
+            |___compoundStatement{id=744,slot_type=compoundStatement}
+                |___Token:{{id=745,slot_type=LeftBrace}
+                |___(?){id=746,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=749,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___expressionStatement{id=753,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |           |___(?){id=754,slot_type=optional__postfixExpression_1}
+                |           |   |___postfixExpression{id=772,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |___Token:printf{id=800,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |___(*){id=774,slot_type=kleene_star__postfixExpression_2}
+                |           |           |___aux_rule__postfixExpression_11{id=776,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |           |               |___Token:({id=777,slot_type=LeftParen}
+                |           |               |___(?){id=778,slot_type=optional__postfixExpression_1}
+                |           |               |   |___(+){id=798,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |           |               |       |___Token:"hello\n"{id=799,slot_type=StringLiteral}
+                |           |               |___Token:){id=779,slot_type=RightParen}
+                |           |___Token:;{id=755,slot_type=Semi}
+                |___Token:}{id=747,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[2][mimir](12/121)  Starting to retrieve the semantics provider
+FixPt[2][mimir](12/121)  Retrieved semantics provider MimirSemanticsProvider{semanticTokenTypeMap=1, defs=1, deUseGraphVertices=1, defUseGraphEdges=0}
+=================Reducing node 736, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 736
+------------------------------------------------------------
+
+
+=================Reducing node 738, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_738]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0-1]#2. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input is disabled. Global ratio:12/121=9.92%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_741]
+    context: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:12/121=9.92%
+==========Testing the following program (37): fail==========
+
+// edit action set type: ONE_BY_ONE in mimir(MimirNodeReducer)[kleene_plus:kleene_plus__translationUnit_3:NoDepsAmongNodes]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 738
+------------------------------------------------------------
+
+
+=================Reducing node 741, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_741]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (38): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+                       ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 741
+------------------------------------------------------------
+
+
+=================Reducing node 744, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 744
+------------------------------------------------------------
+
+
+=================Reducing node 746, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 746
+------------------------------------------------------------
+
+
+=================Reducing node 749, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_749]
+    context: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input is disabled. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 749
+------------------------------------------------------------
+
+
+=================Reducing node 753, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_753]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+                       ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 753
+------------------------------------------------------------
+
+
+=================Reducing node 754, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+                       ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 754
+------------------------------------------------------------
+
+
+=================Reducing node 772, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_772]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf           ;
+    }
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+             "hello\n" ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 772
+------------------------------------------------------------
+
+
+=================Reducing node 801, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (39): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    #include <stdio.h>
+    int main                          {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 801
+------------------------------------------------------------
+
+
+=================Reducing node 774, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf           ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 774
+------------------------------------------------------------
+
+
+=================Reducing node 776, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_776]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 776
+------------------------------------------------------------
+
+
+=================Reducing node 803, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main                          {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 803
+------------------------------------------------------------
+
+
+=================Reducing node 805, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_805]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 805
+------------------------------------------------------------
+
+
+=================Reducing node 815, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 815
+------------------------------------------------------------
+
+
+=================Reducing node 809, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 809
+------------------------------------------------------------
+
+
+=================Reducing node 808, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 808
+------------------------------------------------------------
+
+
+=================Reducing node 806, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 806
+------------------------------------------------------------
+
+
+=================Reducing node 800, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 800
+------------------------------------------------------------
+
+
+=================Reducing node 779, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 779
+------------------------------------------------------------
+
+
+=================Reducing node 778, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 778
+------------------------------------------------------------
+
+
+=================Reducing node 798, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_798]
+    context: [kleene_plus:kleene_plus__primaryExpression_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input is disabled. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf(         );
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 798
+------------------------------------------------------------
+
+
+=================Reducing node 799, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 799
+------------------------------------------------------------
+
+
+=================Reducing node 777, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 777
+------------------------------------------------------------
+
+
+=================Reducing node 755, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 755
+------------------------------------------------------------
+
+
+=================Reducing node 747, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 747
+------------------------------------------------------------
+
+
+=================Reducing node 745, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 745
+------------------------------------------------------------
+
+
+=================Reducing node 742, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+        main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  There is only one element in the input, and the empty input has been tested. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 742
+------------------------------------------------------------
+
+
+=================Reducing node 810, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_810]
+    context: [kleene_plus:declarationSpecifiers]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer starts. Input=[0]#1. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Testing the empty input is disabled. Global ratio:12/121=9.92%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    #include <stdio.h>
+        main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+FixPt[2][mimir][ONE_BY_ONE](12/121)  Minimizer OneByOneMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/121=9.92%
+===================Node reduction is done===================
+
+Failed to reduce node 810
+------------------------------------------------------------
+
+
+=================Reducing node 814, size=12=================
+
+The current best program is the following
+
+    --file: t.c--
+    #include <stdio.h>
+    int main (                      ) {
+      printf("hello\n");
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 814
+------------------------------------------------------------
+
+
+FixPt[2][mimir](12/121)  After the main reduction process: 0 nodes have 0 out-degree; 0 nodes have reduced out-degree. 1 nodes unchanged.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0   mimir     11             0    -109           -173      37   time-hidden
+ 1   mimir      0             0       0              0       3   time-hidden
+
+----------------------------------- Summary ------------------------------------
+Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+  mimir     2     11             0    -109           -173      40   time-hidden
+
+------------------------------- Transformations --------------------------------
+Transformation Worked #NonDeletions #Tokens #NonBlankChars
+mimir.Deletion     11             0    -109           -173
+------------------------------------- End --------------------------------------
+#test success = 11
+#test failure = 29
+#test result cache hits = 21
+#test execution cancelled = 7
+#node edit action set cache hits = 19
+#external test execution cache hits = 0

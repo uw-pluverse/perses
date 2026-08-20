@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.grammar.wasm
 
+import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
@@ -28,4 +29,5 @@ object LanguageWebAssembly : LanguageKind(
   defaultFormatterCommandCreators = createPotentialCodeFormatterList(),
   allowedCodeFormatControl =
     ImmutableSet.of(EnumFormatControl.ORIG_FORMAT, EnumFormatControl.COMPACT_ORIG_FORMAT),
+  orderedImportantLiterals = ImmutableList.of("unreachable"),
 )

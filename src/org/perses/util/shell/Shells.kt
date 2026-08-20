@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,71 +18,57 @@ package org.perses.util.shell
 
 import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.FluentLogger
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.exec.DefaultExecutor
-import org.apache.commons.exec.ExecuteException
-import org.apache.commons.exec.ExecuteWatchdog
-import org.apache.commons.exec.PumpStreamHandler
-import org.perses.util.Util
-import org.perses.util.ktFine
-import java.io.IOException
-import java.io.OutputStream
-import java.lang.RuntimeException
-import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.time.Duration
 
 class Shells(
-  private val shellPolicyDiscardingOutput: AbstractShellDiscardingOutputPolicy,
+  private val policy: AbstractShellExecutionPolicy,
 ) {
   fun run(
     cmd: String,
     captureOutput: Boolean,
-    environment: ImmutableMap<String, String>,
-  ): CmdOutput = run(cmd, CURRENT_DIR, captureOutput, environment)
+    workingDirectory: Path = CURRENT_DIR,
+    environment: ImmutableMap<String, String> = CURRENT_ENV,
+  ): CmdOutput {
+    val stdout = if (captureOutput) ShellOutputStream() else null
+    val stderr = if (captureOutput) ShellOutputStream() else null
 
-  fun run(
-    cmd: String,
-    workingDirectory: Path,
-    captureOutput: Boolean,
-    environment: ImmutableMap<String, String>,
-  ): CmdOutput =
-    if (captureOutput) {
-      val resultTuple =
-        Util.useResources(
-          creatorA = { ShellOutputStream() },
-          creatorB = { ShellOutputStream() },
-        ) { stdout, stderr ->
-          runAndGetExitCode(
-            cmd,
-            workingDirectory,
-            stdout,
-            stderr,
-            environment,
-          )
-        }
-      CmdOutput(
-        exitCode = resultTuple.result,
-        stdout = resultTuple.resourceA.toOutputStringList(),
-        stderr = resultTuple.resourceB.toOutputStringList(),
-      )
-    } else {
-      val exitCode =
-        shellPolicyDiscardingOutput.runAndGetExitCode(
+    val exitCode =
+      try {
+        policy.runAndGetExitCode(
           cmd,
           workingDirectory,
           environment,
+          stdout,
+          stderr,
         )
-      CmdOutput(exitCode, ShellOutputLines.EMPTY, ShellOutputLines.EMPTY)
-    }
+      } finally {
+        stdout?.close()
+        stderr?.close()
+      }
+
+    return CmdOutput(
+      exitCode,
+      stdout?.toOutputStringList() ?: ShellOutputLines.EMPTY,
+      stderr?.toOutputStringList() ?: ShellOutputLines.EMPTY,
+    )
+  }
 
   companion object {
     @JvmStatic
-    val singleton: Shells =
+    val apacheExecSingleton: Shells =
       Shells(
-        AbstractShellDiscardingOutputPolicy.ApacheExecShellDiscardingOutputPolicy,
+        ApacheExecShellExecutionPolicy,
       )
+
+    @JvmStatic
+    val jdkBasedSingleton: Shells =
+      Shells(
+        JDKShellExecutionPolicy,
+      )
+
+    @JvmStatic
+    val defaultSingleton = jdkBasedSingleton
 
     @JvmField
     val CURRENT_ENV: ImmutableMap<String, String> = ImmutableMap.copyOf(System.getenv())
@@ -106,101 +92,5 @@ class Shells(
         .put(key, value)
         .putAll(CURRENT_ENV)
         .build()
-
-    fun runAndGetExitCode(
-      cmd: String,
-      workingDirectory: Path,
-      stdout: OutputStream,
-      stderr: OutputStream,
-      environment: ImmutableMap<String, String>,
-    ): ExitCode {
-      val commandline = CommandLine.parse(cmd)
-      val pumpStreamHandler = PumpStreamHandler(stdout, stderr)
-      val exec =
-        DefaultExecutor
-          .builder()
-          .setExecuteStreamHandler(pumpStreamHandler)
-          .setWorkingDirectory(workingDirectory.toFile())
-          .get()
-          .also {
-            it.watchdog = ForciblyProcessDestroyerWatchDog(pumpStreamHandler)
-          }
-      logger.ktFine { commandline.toString() }
-
-      return try {
-        ExitCode(exec.execute(commandline, environment))
-      } catch (e: ExecuteException) {
-        val exceptionExitCode = e.exitValue
-        if (exceptionExitCode == DefaultExecutor.INVALID_EXITVALUE) {
-          val exceptionMessage =
-            """The execution of the process '$cmd' is interrupted.
-            |cmd stdout: $stdout
-            |cmd stderr: $stderr
-            """.trimMargin()
-          logger.ktFine { exceptionMessage }
-          throw RuntimeException(exceptionMessage, e)
-        } else {
-          ExitCode(exceptionExitCode)
-        }
-      } catch (e: IOException) {
-        if (!Files.isDirectory(workingDirectory)) {
-          throw WorkingDirectoryDoesNotExistException(workingDirectory, cmd, e)
-        }
-        val exceptionMessage =
-          """Fail to run command in the working directory:'$cmd', dir='$workingDirectory'.
-            |$e
-          """.trimMargin()
-        throw RuntimeException(exceptionMessage, e)
-      }
-    }
-  }
-
-  class WorkingDirectoryDoesNotExistException(
-    workingDirectory: Path,
-    cmd: String,
-    cause: Exception,
-  ) : IOException(
-      "The working directory for command '$cmd' does not exist: $workingDirectory",
-      cause,
-    )
-
-  @Suppress("DEPRECATION")
-  class ForciblyProcessDestroyerWatchDog(
-    private val pumpStreamHandler: PumpStreamHandler,
-  ) : ExecuteWatchdog(ExecuteWatchdog.INFINITE_TIMEOUT) {
-    override fun stop() {
-      ExecuteWatchdog::class.java
-        .getDeclaredField("process")
-        .let {
-          it.isAccessible = true
-          it.get(this) as Process?
-        }?.let { process ->
-          if (process.isAlive) {
-          /*
-           * If this process cannot be destroyed, then forcibly destroy it.
-           *
-           * Do not try to close the streams of the process, because these streams
-           * are used and locked by the StreamPumper.
-           *
-           * Also, note that BufferedInputStream.read() is blocking and is not interruptable.
-           */
-            process.descendants().use { stream ->
-              stream.forEach { descendant ->
-                if ((descendant.isAlive)) {
-                  descendant.destroy() // Try to shut down the process cleanly first.
-                  if (descendant.isAlive) {
-                    descendant.destroyForcibly()
-                  }
-                }
-              }
-            }
-            process.destroyForcibly()
-            // Set up the stop timeout, so that the stream pumping threads can be stopped. Otherwise,
-            // all these pumping threads will be blocked on BufferedOutputStream.read()
-            pumpStreamHandler.setStopTimeout(Duration.ofMillis(1))
-          }
-        }
-      super.stop()
-    }
   }
 }

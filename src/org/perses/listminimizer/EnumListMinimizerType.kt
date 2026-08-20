@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,9 +22,13 @@ enum class EnumListMinimizerType {
   DFS,
   BFS,
   CDD,
+  WEIGHTED_DFS,
+  WEIGHTED_BFS,
   PROBDD,
   WDD,
   WPROBDD,
   WINDOWED_SLICER,
   LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION,
+  ONE_BY_ONE,
+  ADAPTIVE_GAIN_DRIVEN,
 }

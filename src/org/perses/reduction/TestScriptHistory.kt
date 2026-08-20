@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,10 +20,16 @@ import com.google.common.hash.HashCode
 import org.apache.commons.csv.CSVFormat
 import org.perses.util.Util.lazyAssert
 import org.perses.util.hashing.EnumShaAlgorithm
+import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.nio.file.Path
 import java.util.concurrent.ConcurrentHashMap
+import java.util.zip.GZIPInputStream
+import java.util.zip.GZIPOutputStream
 import kotlin.io.path.bufferedReader
 import kotlin.io.path.bufferedWriter
+import kotlin.io.path.inputStream
+import kotlin.io.path.outputStream
 
 class TestScriptHistory(
   private val shaAlgorithm: EnumShaAlgorithm,
@@ -43,7 +49,7 @@ class TestScriptHistory(
   fun asReadOnlyMap(): Map<HashCode, PropertyTestResult> = history
 
   fun saveToCSV(file: Path) {
-    file.bufferedWriter().use { writer ->
+    openCsvWriter(file).use { writer ->
       CSVFormat.DEFAULT.print(writer).apply {
         printRecord(shaAlgorithm.name, NAME_COLUMN_EXIT_CODE, NAME_COLUMN_ELLAPSED_MILLIES)
         history.entries
@@ -60,13 +66,43 @@ class TestScriptHistory(
   companion object {
     const val NAME_COLUMN_EXIT_CODE = "ExitCode"
     const val NAME_COLUMN_ELLAPSED_MILLIES = "EllapsedMillies"
+    // A .gz path is a gzip-compressed CSV; a .csv path is plain.
+    private enum class CacheFormat(val suffix: String) {
+      CSV(".csv"),
+      GZIP(".gz"),
+    }
+
+    // Reject an unknown extension so a mistyped path fails loudly instead of
+    // writing/parsing garbage. singleOrNull (not firstOrNull) so an ambiguous
+    // match from an overlapping future suffix also fails rather than resolving
+    // by declaration order.
+    private fun cacheFormatOf(file: Path): CacheFormat {
+      val fileName = file.fileName.toString()
+      return CacheFormat.entries.singleOrNull { fileName.endsWith(it.suffix) }
+        ?: error(
+          "Unsupported cache file extension: $file. " +
+            "Expected ${CacheFormat.entries.joinToString(" or ") { it.suffix }}.",
+        )
+    }
+
+    private fun openCsvReader(file: Path): BufferedReader =
+      when (cacheFormatOf(file)) {
+        CacheFormat.GZIP -> GZIPInputStream(file.inputStream()).bufferedReader()
+        CacheFormat.CSV -> file.bufferedReader()
+      }
+
+    private fun openCsvWriter(file: Path): BufferedWriter =
+      when (cacheFormatOf(file)) {
+        CacheFormat.GZIP -> GZIPOutputStream(file.outputStream()).bufferedWriter()
+        CacheFormat.CSV -> file.bufferedWriter()
+      }
 
     fun loadFromCSV(
       shaAlgorithm: EnumShaAlgorithm,
       file: Path,
     ): TestScriptHistory {
       val history = TestScriptHistory(shaAlgorithm)
-      file.bufferedReader().use { reader ->
+      openCsvReader(file).use { reader ->
         val csvFormat =
           CSVFormat.Builder
             .create(CSVFormat.DEFAULT)

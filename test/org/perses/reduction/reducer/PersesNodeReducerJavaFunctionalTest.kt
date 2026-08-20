@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,15 +28,18 @@ class PersesNodeReducerJavaFunctionalTest {
   fun testFunctionalTest() {
     ReducerFunctionalTestUtility.runJavaTestSubject(
       reductionFolder = "test_data/java_helloworld",
-      reducerAnnotation = PersesNodePrioritizedDfsReducer.META,
+      reducerAnnotation = PersesNodeReducerAnnotations.PrioritizedDfs,
       cmdCustomizer = {},
+      // The interestingness test now only requires the marker string to remain
+      // (see test_data/java_helloworld/r.sh), so the reducer strips the program
+      // down to the minimal structure that still contains it.
       expected =
-        """class t { 
-        |   public static void main (String[] args) { 
-        |       System.out.println ("helloworld");
-        |   }
+        """
+        |class t {
+        |  {
+        |    out.println("hello world");
+        |  }
         |}
-        |
         """.trimMargin(),
     )
   }

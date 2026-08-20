@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,81 +18,39 @@ package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
 
-abstract class AbstractConfigCache<T> {
-  abstract fun add(config: ConfigurationBasedOnElementSystemIdentity)
+abstract class AbstractConfigCache<T : Any> {
+  abstract fun add(config: ImmutableList<ElementWrapper<T>>)
 
-  abstract fun contains(config: ConfigurationBasedOnElementSystemIdentity): Boolean
+  abstract fun contains(config: ImmutableList<ElementWrapper<T>>): Boolean
 
-  abstract fun deleteStaleConfigs(newSize: Int)
+  abstract fun refreshAndUpdateBest(newBest: ImmutableList<ElementWrapper<T>>)
 }
 
-class NullConfigCache<T> : AbstractConfigCache<T>() {
-  override fun add(config: ConfigurationBasedOnElementSystemIdentity) {}
+class NullConfigCache<T : Any> : AbstractConfigCache<T>() {
+  override fun add(config: ImmutableList<ElementWrapper<T>>) {}
 
-  override fun contains(config: ConfigurationBasedOnElementSystemIdentity): Boolean = false
+  override fun contains(config: ImmutableList<ElementWrapper<T>>): Boolean = false
 
-  override fun deleteStaleConfigs(newSize: Int) {}
+  override fun refreshAndUpdateBest(newBest: ImmutableList<ElementWrapper<T>>) {}
 }
 
-class ConfigCache<T>(
-  private val enableRefresh: Boolean = false,
-) : AbstractConfigCache<T>() {
-  private val cache = HashSet<ConfigurationBasedOnElementSystemIdentity>()
+class ConfigCache<T : Any> : AbstractConfigCache<T>() {
+  private val cache = HashSet<ImmutableList<ElementWrapper<T>>>()
 
   val size: Int
     get() = cache.size
 
-  override fun add(config: ConfigurationBasedOnElementSystemIdentity) {
-    check(!cache.contains(config)) { "A cache item was created before. This is unexpected." }
+  override fun add(config: ImmutableList<ElementWrapper<T>>) {
+    check(
+      !cache.contains(config),
+    ) { "A cache item was created before. This is unexpected." }
     cache.add(config)
   }
 
-  override fun contains(config: ConfigurationBasedOnElementSystemIdentity): Boolean =
-    cache.contains(config)
+  override fun contains(config: ImmutableList<ElementWrapper<T>>): Boolean = cache.contains(config)
 
-  override fun deleteStaleConfigs(newSize: Int) {
-    if (!enableRefresh) {
-      return
-    }
-    val cacheIterator = cache.iterator()
-    while (cacheIterator.hasNext()) {
-      val config = cacheIterator.next()
-      if (config.size >= newSize) {
-        cacheIterator.remove()
-      }
-    }
-  }
-}
-
-data class ConfigurationBasedOnElementSystemIdentity(
-  private val configList: ImmutableList<*>,
-) {
-  val size: Int
-    get() = configList.size
-
-  private val hashcode =
-    configList.let { list ->
-      var result = 17
-      list.forEach { result = 31 * result + System.identityHashCode(it) }
-      result
-    }
-
-  override fun hashCode(): Int = hashcode
-
-  override fun equals(other: Any?): Boolean {
-    if (this === other) return true
-    if (other == null || javaClass != other.javaClass) {
-      return false
-    }
-    other as ConfigurationBasedOnElementSystemIdentity
-    val size = configList.size
-    if (size != other.configList.size) return false
-    // Referential equality
-    for (i in 0 until size) {
-      if (configList[i] !== other.configList[i]) {
-        return false
-      }
-    }
-    return true
+  override fun refreshAndUpdateBest(newBest: ImmutableList<ElementWrapper<T>>) {
+    val newSize = newBest.size
+    cache.removeIf { it.size >= newSize }
   }
 }

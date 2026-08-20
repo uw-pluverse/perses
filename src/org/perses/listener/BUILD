@@ -11,16 +11,37 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "differential_events",
+    srcs = [
+        "DifferentialEvents.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//:jackson",
+        "//antlropt/src/org/perses/antlr:enum_rule_type",
+        "//src/org/perses/reduction:property_test_result",
+        "//src/org/perses/util:Serialization",
+    ],
+)
+
+kt_jvm_library(
     name = "listeners",
     srcs = [
+        "AbstractProgressMonitor.kt",
+        "ActionSetEffectProfiler.kt",
+        "DifferentialAnalysisProfiler.kt",
+        "ExceptionRecorder.kt",
         "LoggingListener.kt",
+        "ProgramSizeTrendProfiler.kt",
         "ProgressMonitorForNodeReducer.kt",
+        "ReducerStatisticsSummaryListener.kt",
         "StatisticsListener.kt",
         "TestScriptExecutionListener.kt",
     ],
     deps = [
-        "//:flogger",
+        ":differential_events",
         "//:guava",
+        "//:jackson",
         "//src/org/perses/program",
         "//src/org/perses/program/printer",
         "//src/org/perses/reduction:abstract_reducer",
@@ -29,6 +50,7 @@ kt_jvm_library(
         "//src/org/perses/reduction/event",
         "//src/org/perses/spartree",
         "//src/org/perses/util",
+        "//src/org/perses/util:Serialization",
         "//src/org/perses/util:timeutil",
     ],
 )

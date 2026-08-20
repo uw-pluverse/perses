@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -59,7 +59,9 @@ object OptionalExtractionUtil {
           AstTag.TERMINAL,
           AstTag.UNKNOWN_TERMINAL_WITH_UNIT_PRECEDENCE,
           -> CandidateElement(e, ImmutableList.of(e))
+
           AstTag.SEQUENCE -> CandidateElement(e, (e as PersesSequenceAst).children)
+
           else -> error("Cannot reach here")
         }
       }

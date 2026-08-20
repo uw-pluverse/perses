@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -60,10 +60,7 @@ class ReducerExecutionPlan(
       then: () -> AbstractExecutionPlanStep,
     ): IfProgressedThenStep = ifProgressed(atomic(condition), then)
 
-    fun atomic(
-      reducer: ReducerAnnotation,
-      actionBefore: () -> Unit = {},
-    ): AtomicReducerStep = AtomicReducerStep(reducer, actionBefore)
+    fun atomic(reducer: ReducerAnnotation): AtomicReducerStep = AtomicReducerStep(reducer)
   }
 
   sealed class AbstractExecutionPlanStep {
@@ -79,17 +76,20 @@ class ReducerExecutionPlan(
         body = body.toDefinition(),
         condition =
           when (continueCondition) {
-            is AbstractCondition.ContinueOnSmallSize -> "smaller"
-            is AbstractCondition.ContinueOnChange ->
+            is AbstractCondition.ContinueOnSmallSize -> {
+              "smaller"
+            }
+
+            is AbstractCondition.ContinueOnChange -> {
               continueCondition.maxCountOfAllowedChanges
                 .toString()
+            }
           },
       )
   }
 
   class AtomicReducerStep(
     val reducer: ReducerAnnotation,
-    val actionBefore: () -> Unit,
   ) : AbstractExecutionPlanStep() {
     override fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef =
       ExecutionPlanYamlDefinition.AtomicReducerStepDef(

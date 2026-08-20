@@ -18,7 +18,9 @@ if __name__ == '__main__':
                         help='update copyright (default: check copyright only)')
     parser.add_argument('copyright',
                         help='copyright filepath')
-    parser.add_argument('dirs', nargs='*')
+    parser.add_argument('paths', nargs='*',
+                        help='directories to scan recursively and/or individual '
+                             'files to check')
     flags = parser.parse_args()
 
     with open(flags.copyright) as file:
@@ -26,12 +28,21 @@ if __name__ == '__main__':
     copyright_checker = CopyrightChecker(copyright_text)
 
     extensions = ['java', 'kt', "proto"]
+    suffixes = tuple('.' + extension for extension in extensions)
     file_list = list()
-    print('Checking files in folders:\n%s\n' % '\n'.join(flags.dirs))
-    for folder in flags.dirs:
-        assert os.path.exists(folder), 'folder=%s, cwd=%s' % (folder, os.getcwd())
-        for extension in extensions:
-            file_list += copyright_checker.locate_files(folder, extension)
+    print('Checking copyright for %d path(s):\n%s\n'
+          % (len(flags.paths), '\n'.join(flags.paths)))
+    for path in flags.paths:
+        assert os.path.exists(path), 'path=%s, cwd=%s' % (path, os.getcwd())
+        if os.path.isdir(path):
+            for extension in extensions:
+                file_list += copyright_checker.locate_files(path, extension)
+        elif path.endswith(suffixes):
+            # An individual file: include it unless its directory opts out via a
+            # 'copyright_checking_excluded' marker, mirroring locate_files().
+            sibling_dir = os.path.dirname(path) or '.'
+            if 'copyright_checking_excluded' not in os.listdir(sibling_dir):
+                file_list.append(path)
 
     if flags.update_copyright:
         copyright_checker.update_files(file_list)

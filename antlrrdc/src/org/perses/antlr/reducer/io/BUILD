@@ -7,7 +7,7 @@ kt_jvm_library(
     srcs = [
         "GrammarOutputManagerFactory.kt",
         "GrammarReductionIOManager.kt",
-        "SeparateGrammarReductionInput.kt",
+        "SeparateGrammarOriginalReductionInput.kt",
     ],
     deps = [
         "//antlropt/src/org/perses/antlr/ast",

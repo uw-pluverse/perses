@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,7 @@ import org.perses.reduction.GlobalContext
 import org.perses.util.cmd.AbstractMain
 import org.perses.util.cmd.CommandLineProcessor
 import org.perses.util.hashing.EnumShaAlgorithm
+import java.nio.file.Paths
 
 class Main(
   cmd: CommandOptions,
@@ -31,7 +32,12 @@ class Main(
       pathToSaveUpdatedGlobalCache = null,
       shaAlgorithm = EnumShaAlgorithm.SHA512,
     ).use { context ->
-      GrammarReductionDriver.create(context, cmd).use { driver -> driver.reduce() }
+      GrammarReductionDriver
+        .create(
+          context,
+          cmd,
+          Paths.get(".").toAbsolutePath(),
+        ).use { driver -> driver.reduce() }
     }
   }
 

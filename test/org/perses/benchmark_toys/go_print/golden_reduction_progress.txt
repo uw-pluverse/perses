@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 70
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_node_priority_small.go"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "small.go"
+  inputFiles:
+  - "small.go"
   deps: []
-  sourceFile: "small.go"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_node_priority-dfs_small.go"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: true
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,182 +130,194 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 28
 (70/70)  The reducer execution plan is listed below.
     fixpoint (smaller) {
-        node_priority-dfs
+        node_priority
     }
     fixpoint (10) {
         if (token_canonicalizer) {
             fixpoint (smaller) {
-                node_priority-dfs
+                node_priority
             }
         }
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            node_priority-dfs
+            fixpoint (smaller) {
+                node_priority
+            }
         }
     }
 
 
 (70/70)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-======Fixpoint iteration 1. Reducer: node_priority-dfs======
+========Fixpoint iteration 1. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 The spar-tree is the following.
-(|:sourceFile) {id=1,slot_type=sourceFile}
-|___aux_rule__sourceFile_6 {id=2,slot_type=aux_rule__sourceFile_6}
-    |___packageClause {id=3,slot_type=packageClause}
-    |   |___Token:package {id=294,slot_type=PACKAGE}
-    |   |___Token:main {id=295,slot_type=IDENTIFIER}
-    |___Token:; {id=293,slot_type=[eos,SEMI]}
-    |___(*) {id=5,slot_type=kleene_star__sourceFile_2}
-    |   |___aux_rule__sourceFile_1 {id=283,slot_type=aux_rule__sourceFile_1}
-    |       |___importDecl {id=284,slot_type=importDecl}
-    |       |   |___Token:import {id=287,slot_type=IMPORT}
-    |       |   |___Token:"fmt" {id=292,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
-    |       |___Token:; {id=286,slot_type=[eos,SEMI]}
-    |___(*) {id=6,slot_type=kleene_star__sourceFile_4}
-        |___aux_rule__sourceFile_3 {id=7,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl {id=11,slot_type=[altnt_block__sourceFile_5,functionDecl]}
-            |   |___Token:func {id=12,slot_type=FUNC}
-            |   |___Token:main {id=13,slot_type=IDENTIFIER}
-            |   |___parameters {id=280,slot_type=[signature,parameters]}
-            |   |   |___Token:( {id=281,slot_type=L_PAREN}
-            |   |   |___Token:) {id=282,slot_type=R_PAREN}
-            |   |___(?) {id=15,slot_type=optional__functionDecl_1}
-            |       |___block {id=16,slot_type=block}
-            |           |___Token:{ {id=17,slot_type=L_CURLY}
-            |           |___(?) {id=18,slot_type=optional__block_1}
-            |           |   |___(+) {id=20,slot_type=statementList}
-            |           |       |___aux_rule__statementList_2 {id=239,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=247,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=279,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=249,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=275,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=276,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=277,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=252,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=253,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=254,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression {id=259,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |       |   |           |       |___Token:"go" {id=274,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |       |   |           |       |___(*) {id=261,slot_type=kleene_star__expression_1}
-            |           |       |   |           |           |___aux_rule__expression_2 {id=262,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:+ {id=270,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |       |   |           |               |___Token:"lang" {id=269,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |       |   |           |___Token:) {id=255,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=242,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=191,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=199,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=238,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=201,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=234,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=235,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=236,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=204,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=205,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=206,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expressionList {id=210,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
-            |           |       |   |           |       |___Token:"1+1 =" {id=233,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |       |   |           |       |___(*) {id=212,slot_type=kleene_star__expressionList_2}
-            |           |       |   |           |           |___aux_rule__expressionList_1 {id=213,slot_type=aux_rule__expressionList_1}
-            |           |       |   |           |               |___Token:, {id=214,slot_type=COMMA}
-            |           |       |   |           |               |___expression {id=215,slot_type=expression}
-            |           |       |   |           |                   |___Token:1 {id=228,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
-            |           |       |   |           |                   |___(*) {id=217,slot_type=kleene_star__expression_1}
-            |           |       |   |           |                       |___aux_rule__expression_2 {id=218,slot_type=aux_rule__expression_2}
-            |           |       |   |           |                           |___Token:+ {id=225,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |       |   |           |                           |___Token:1 {id=224,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
-            |           |       |   |           |___Token:) {id=207,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=194,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=143,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=151,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=190,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=153,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=186,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=187,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=188,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=156,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=157,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=158,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expressionList {id=162,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
-            |           |       |   |           |       |___Token:"7.0/3.0 =" {id=185,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |       |   |           |       |___(*) {id=164,slot_type=kleene_star__expressionList_2}
-            |           |       |   |           |           |___aux_rule__expressionList_1 {id=165,slot_type=aux_rule__expressionList_1}
-            |           |       |   |           |               |___Token:, {id=166,slot_type=COMMA}
-            |           |       |   |           |               |___expression {id=167,slot_type=expression}
-            |           |       |   |           |                   |___Token:7.0 {id=180,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
-            |           |       |   |           |                   |___(*) {id=169,slot_type=kleene_star__expression_1}
-            |           |       |   |           |                       |___aux_rule__expression_2 {id=170,slot_type=aux_rule__expression_2}
-            |           |       |   |           |                           |___Token:/ {id=177,slot_type=[altnt_block__expression_3,DIV]}
-            |           |       |   |           |                           |___Token:3.0 {id=176,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
-            |           |       |   |           |___Token:) {id=159,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=146,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=102,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=110,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=142,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=112,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=138,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=139,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=140,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=115,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=116,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=117,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression {id=122,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |       |   |           |       |___Token:true {id=137,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |           |       |___(*) {id=124,slot_type=kleene_star__expression_1}
-            |           |       |   |           |           |___aux_rule__expression_2 {id=125,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:&& {id=133,slot_type=[altnt_block__expression_3,LOGICAL_AND]}
-            |           |       |   |           |               |___Token:false {id=132,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |           |___Token:) {id=118,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=105,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=61,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |       |   |___primaryExpr {id=69,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |       |   |   |___Token:fmt {id=101,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |   |___(*) {id=71,slot_type=kleene_star__primaryExpr_1}
-            |           |       |   |       |___aux_rule__primaryExpr_4 {id=97,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |       |   |       |   |___Token:. {id=98,slot_type=DOT}
-            |           |       |   |       |   |___Token:Println {id=99,slot_type=IDENTIFIER}
-            |           |       |   |       |___arguments {id=74,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |       |   |           |___Token:( {id=75,slot_type=L_PAREN}
-            |           |       |   |           |___(?) {id=76,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression {id=81,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |       |   |           |       |___Token:true {id=96,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |           |       |___(*) {id=83,slot_type=kleene_star__expression_1}
-            |           |       |   |           |           |___aux_rule__expression_2 {id=84,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:|| {id=92,slot_type=[altnt_block__expression_3,LOGICAL_OR]}
-            |           |       |   |           |               |___Token:false {id=91,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |       |   |           |___Token:) {id=77,slot_type=R_PAREN}
-            |           |       |   |___Token:; {id=64,slot_type=[eos,SEMI]}
-            |           |       |___aux_rule__statementList_2 {id=27,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |           |___primaryExpr {id=35,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |           |   |___Token:fmt {id=60,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |           |   |___(*) {id=37,slot_type=kleene_star__primaryExpr_1}
-            |           |           |       |___aux_rule__primaryExpr_4 {id=56,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |           |       |   |___Token:. {id=57,slot_type=DOT}
-            |           |           |       |   |___Token:Println {id=58,slot_type=IDENTIFIER}
-            |           |           |       |___arguments {id=40,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |           |           |___Token:( {id=41,slot_type=L_PAREN}
-            |           |           |           |___(?) {id=42,slot_type=optional__arguments_6}
-            |           |           |           |   |___unaryExpr {id=48,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression,unaryExpr]}
-            |           |           |           |       |___(*) {id=49,slot_type=kleene_star__unaryExpr_1}
-            |           |           |           |       |   |___Token:! {id=55,slot_type=[aux_rule__unaryExpr_2,EXCLAMATION]}
-            |           |           |           |       |___Token:true {id=53,slot_type=[primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |           |           |___Token:) {id=43,slot_type=R_PAREN}
-            |           |           |___Token:; {id=30,slot_type=[eos,SEMI]}
-            |           |___Token:} {id=19,slot_type=R_CURLY}
-            |___Token:; {id=10,slot_type=[eos,SEMI]}
+(|:sourceFile){id=1,slot_type=sourceFile}
+|___aux_rule__sourceFile_6{id=2,slot_type=aux_rule__sourceFile_6}
+    |___packageClause{id=3,slot_type=packageClause}
+    |   |___Token:package{id=294,slot_type=PACKAGE}
+    |   |___Token:main{id=295,slot_type=IDENTIFIER}
+    |___Token:;{id=293,slot_type=[eos,SEMI]}
+    |___(*){id=5,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1{id=283,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl{id=284,slot_type=importDecl}
+    |       |   |___Token:import{id=287,slot_type=IMPORT}
+    |       |   |___Token:"fmt"{id=292,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:;{id=286,slot_type=[eos,SEMI]}
+    |___(*){id=6,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3{id=7,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl{id=11,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func{id=12,slot_type=FUNC}
+            |   |___Token:main{id=13,slot_type=IDENTIFIER}
+            |   |___parameters{id=280,slot_type=[signature,parameters]}
+            |   |   |___Token:({id=281,slot_type=L_PAREN}
+            |   |   |___Token:){id=282,slot_type=R_PAREN}
+            |   |___(?){id=15,slot_type=optional__functionDecl_1}
+            |       |___block{id=16,slot_type=block}
+            |           |___Token:{{id=17,slot_type=L_CURLY}
+            |           |___(?){id=18,slot_type=optional__block_1}
+            |           |   |___(+){id=20,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2{id=239,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr{id=247,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt{id=279,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*){id=249,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4{id=275,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:.{id=276,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println{id=277,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments{id=252,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:({id=253,slot_type=L_PAREN}
+            |           |       |   |           |___(?){id=254,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expression{id=259,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |       |___Token:"go"{id=274,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |       |   |           |       |___(*){id=261,slot_type=kleene_star__expression_1}
+            |           |       |   |           |           |___aux_rule__expression_2{id=262,slot_type=aux_rule__expression_2}
+            |           |       |   |           |               |___Token:+{id=270,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |       |   |           |               |___Token:"lang"{id=269,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |       |   |           |___Token:){id=255,slot_type=R_PAREN}
+            |           |       |   |___Token:;{id=242,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2{id=191,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr{id=199,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt{id=238,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*){id=201,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4{id=234,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:.{id=235,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println{id=236,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments{id=204,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:({id=205,slot_type=L_PAREN}
+            |           |       |   |           |___(?){id=206,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expressionList{id=210,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
+            |           |       |   |           |       |___Token:"1+1 ="{id=233,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |       |   |           |       |___(*){id=212,slot_type=kleene_star__expressionList_2}
+            |           |       |   |           |           |___aux_rule__expressionList_1{id=213,slot_type=aux_rule__expressionList_1}
+            |           |       |   |           |               |___Token:,{id=214,slot_type=COMMA}
+            |           |       |   |           |               |___expression{id=215,slot_type=expression}
+            |           |       |   |           |                   |___Token:1{id=228,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
+            |           |       |   |           |                   |___(*){id=217,slot_type=kleene_star__expression_1}
+            |           |       |   |           |                       |___aux_rule__expression_2{id=218,slot_type=aux_rule__expression_2}
+            |           |       |   |           |                           |___Token:+{id=225,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |       |   |           |                           |___Token:1{id=224,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
+            |           |       |   |           |___Token:){id=207,slot_type=R_PAREN}
+            |           |       |   |___Token:;{id=194,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2{id=143,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr{id=151,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt{id=190,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*){id=153,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4{id=186,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:.{id=187,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println{id=188,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments{id=156,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:({id=157,slot_type=L_PAREN}
+            |           |       |   |           |___(?){id=158,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expressionList{id=162,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
+            |           |       |   |           |       |___Token:"7.0/3.0 ="{id=185,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |       |   |           |       |___(*){id=164,slot_type=kleene_star__expressionList_2}
+            |           |       |   |           |           |___aux_rule__expressionList_1{id=165,slot_type=aux_rule__expressionList_1}
+            |           |       |   |           |               |___Token:,{id=166,slot_type=COMMA}
+            |           |       |   |           |               |___expression{id=167,slot_type=expression}
+            |           |       |   |           |                   |___Token:7.0{id=180,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
+            |           |       |   |           |                   |___(*){id=169,slot_type=kleene_star__expression_1}
+            |           |       |   |           |                       |___aux_rule__expression_2{id=170,slot_type=aux_rule__expression_2}
+            |           |       |   |           |                           |___Token:/{id=177,slot_type=[altnt_block__expression_3,DIV]}
+            |           |       |   |           |                           |___Token:3.0{id=176,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
+            |           |       |   |           |___Token:){id=159,slot_type=R_PAREN}
+            |           |       |   |___Token:;{id=146,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2{id=102,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr{id=110,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt{id=142,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*){id=112,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4{id=138,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:.{id=139,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println{id=140,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments{id=115,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:({id=116,slot_type=L_PAREN}
+            |           |       |   |           |___(?){id=117,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expression{id=122,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |       |___Token:true{id=137,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |           |       |___(*){id=124,slot_type=kleene_star__expression_1}
+            |           |       |   |           |           |___aux_rule__expression_2{id=125,slot_type=aux_rule__expression_2}
+            |           |       |   |           |               |___Token:&&{id=133,slot_type=[altnt_block__expression_3,LOGICAL_AND]}
+            |           |       |   |           |               |___Token:false{id=132,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |           |___Token:){id=118,slot_type=R_PAREN}
+            |           |       |   |___Token:;{id=105,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2{id=61,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |       |   |___primaryExpr{id=69,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |       |   |   |___Token:fmt{id=101,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |   |___(*){id=71,slot_type=kleene_star__primaryExpr_1}
+            |           |       |   |       |___aux_rule__primaryExpr_4{id=97,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |       |   |       |   |___Token:.{id=98,slot_type=DOT}
+            |           |       |   |       |   |___Token:Println{id=99,slot_type=IDENTIFIER}
+            |           |       |   |       |___arguments{id=74,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |       |   |           |___Token:({id=75,slot_type=L_PAREN}
+            |           |       |   |           |___(?){id=76,slot_type=optional__arguments_6}
+            |           |       |   |           |   |___expression{id=81,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |       |___Token:true{id=96,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |           |       |___(*){id=83,slot_type=kleene_star__expression_1}
+            |           |       |   |           |           |___aux_rule__expression_2{id=84,slot_type=aux_rule__expression_2}
+            |           |       |   |           |               |___Token:||{id=92,slot_type=[altnt_block__expression_3,LOGICAL_OR]}
+            |           |       |   |           |               |___Token:false{id=91,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |       |   |           |___Token:){id=77,slot_type=R_PAREN}
+            |           |       |   |___Token:;{id=64,slot_type=[eos,SEMI]}
+            |           |       |___aux_rule__statementList_2{id=27,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr{id=35,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt{id=60,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*){id=37,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4{id=56,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:.{id=57,slot_type=DOT}
+            |           |           |       |   |___Token:Println{id=58,slot_type=IDENTIFIER}
+            |           |           |       |___arguments{id=40,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:({id=41,slot_type=L_PAREN}
+            |           |           |           |___(?){id=42,slot_type=optional__arguments_6}
+            |           |           |           |   |___unaryExpr{id=48,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression,unaryExpr]}
+            |           |           |           |       |___(*){id=49,slot_type=kleene_star__unaryExpr_1}
+            |           |           |           |       |   |___Token:!{id=55,slot_type=[aux_rule__unaryExpr_2,EXCLAMATION]}
+            |           |           |           |       |___Token:true{id=53,slot_type=[primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |           |___Token:){id=43,slot_type=R_PAREN}
+            |           |           |___Token:;{id=30,slot_type=[eos,SEMI]}
+            |           |___Token:}{id=19,slot_type=R_CURLY}
+            |___Token:;{id=10,slot_type=[eos,SEMI]}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority](70/70)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](70/70)  Retrieved semantics provider null
 ==================Reducing node 2, size=70==================
 
 The current best program is the following
@@ -326,22 +360,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
-FixPt[1][node_priority-dfs][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](70/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
+==========Testing the following program (0): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__sourceFile_4]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__sourceFile_4]dd@#nodes=1,#parts=1#total-parts=1
     --file: small.go--
-    package main;
-    import "fmt";
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
-FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  There is only one element in the input, and the empty input has been tested. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 6
@@ -368,7 +400,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=7}
+    structure: [delete_7]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -420,17 +453,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
-FixPt[1][node_priority-dfs][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](70/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
+==========Testing the following program (1): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__functionDecl_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__functionDecl_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: small.go--
-    package main;
-    import "fmt";
-    func main()
-     ;
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main()
@@ -438,8 +466,9 @@ FixPt[1][node_priority-dfs][DFS](70/70)  Testing the empty input. Global ratio:7
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
-FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  There is only one element in the input, and the empty input has been tested. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 15
@@ -466,7 +495,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=16}
+    structure: [delete_16]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -494,17 +524,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
-FixPt[1][node_priority-dfs][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](70/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Testing the empty input. Global ratio:70/70=100.00%
+==========Testing the following program (2): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__block_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__block_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -512,8 +537,9 @@ FixPt[1][node_priority-dfs][DFS](70/70)  Testing the empty input. Global ratio:7
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
-FixPt[1][node_priority-dfs][DFS](70/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  There is only one element in the input, and the empty input has been tested. Global ratio:70/70=100.00%
+FixPt[1][node_priority][DFS](70/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:70/70=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 18
@@ -540,20 +566,15 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=20}
+    structure: [delete_20]
+    context: [kleene_plus:statementList]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (3): pass===========
 
-// edit action set type: [kleene_plus:statementList]remove whole except first
+// edit action set type: [kleene_plus:statementList]remove all except first
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -577,9 +598,25 @@ The current best program is the following
 ================The best program is updated.================
 
 token count change 70 -> 22
+Edit: [delete: 27,61,102,143,191]
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 20 from 70 to 22
@@ -599,18 +636,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
+==============Node edit action set cache hit.===============
 
-    --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-    };
+    structure: [delete_239]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -633,7 +662,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (4): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: small.go--
@@ -642,34 +671,10 @@ The current best program is the following
     func main() {
         fmt                       ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt                       ;
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-            Println               ;
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-            Println               ;
-    };
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (5): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: small.go--
@@ -678,25 +683,25 @@ The current best program is the following
     func main() {
                     "go"          ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-                    "go"          ;
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (6): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: small.go--
     package main;
     import "fmt";
     func main() {
-                    "go" + "lang" ;
+            Println               ;
     };
-    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+==========Testing the following program (7): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
@@ -724,8 +729,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
-FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -734,55 +739,37 @@ FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt                       ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt                       ;
-    };
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+==========Testing the following program (8): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__primaryExpr_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__primaryExpr_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: small.go--
     package main;
     import "fmt";
     func main() {
         fmt.Println               ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println               ;
-    };
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+==========Testing the following program (9): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__primaryExpr_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__primaryExpr_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: small.go--
     package main;
     import "fmt";
     func main() {
         fmt        ("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt        ("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
-FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 249
@@ -804,7 +791,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=252}
+    structure: [delete_252]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -827,18 +815,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+==========Testing the following program (10): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__arguments_6]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__arguments_6]dd@#nodes=1,#parts=1#total-parts=1
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(             );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -847,8 +829,9 @@ FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 254
@@ -870,11 +853,12 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=259}
+    structure: [delete_259]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (11): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: small.go--
@@ -883,25 +867,13 @@ The current best program is the following
     func main() {
         fmt.Println("go"         );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go"         );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (12): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(       "lang");
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -929,17 +901,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+==========Testing the following program (13): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__sourceFile_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__sourceFile_2]dd@#nodes=1,#parts=1#total-parts=1
     --file: small.go--
-    package main;
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     func main() {
         fmt.Println("go" + "lang");
@@ -947,8 +914,9 @@ FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 5
@@ -970,7 +938,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=283}
+    structure: [delete_283]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1033,7 +1002,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=275}
+    structure: [delete_275]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1056,8 +1026,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -1066,17 +1036,12 @@ FixPt[1][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt.Println("go"         );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go"         );
-    };
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[1][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[1][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 261
@@ -1098,7 +1063,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=262}
+    structure: [delete_262]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1546,57 +1512,60 @@ Failed to reduce node 10
 
 
 (22/70)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 2. Reducer: node_priority-dfs======
+========Fixpoint iteration 2. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 The spar-tree is the following.
-(|:sourceFile) {id=297,slot_type=sourceFile}
-|___aux_rule__sourceFile_6 {id=298,slot_type=aux_rule__sourceFile_6}
-    |___packageClause {id=299,slot_type=packageClause}
-    |   |___Token:package {id=373,slot_type=PACKAGE}
-    |   |___Token:main {id=374,slot_type=IDENTIFIER}
-    |___Token:; {id=372,slot_type=[eos,SEMI]}
-    |___(*) {id=301,slot_type=kleene_star__sourceFile_2}
-    |   |___aux_rule__sourceFile_1 {id=362,slot_type=aux_rule__sourceFile_1}
-    |       |___importDecl {id=363,slot_type=importDecl}
-    |       |   |___Token:import {id=366,slot_type=IMPORT}
-    |       |   |___Token:"fmt" {id=371,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
-    |       |___Token:; {id=365,slot_type=[eos,SEMI]}
-    |___(*) {id=302,slot_type=kleene_star__sourceFile_4}
-        |___aux_rule__sourceFile_3 {id=303,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl {id=307,slot_type=[altnt_block__sourceFile_5,functionDecl]}
-            |   |___Token:func {id=308,slot_type=FUNC}
-            |   |___Token:main {id=309,slot_type=IDENTIFIER}
-            |   |___parameters {id=359,slot_type=[signature,parameters]}
-            |   |   |___Token:( {id=360,slot_type=L_PAREN}
-            |   |   |___Token:) {id=361,slot_type=R_PAREN}
-            |   |___(?) {id=311,slot_type=optional__functionDecl_1}
-            |       |___block {id=312,slot_type=block}
-            |           |___Token:{ {id=313,slot_type=L_CURLY}
-            |           |___(?) {id=314,slot_type=optional__block_1}
-            |           |   |___(+) {id=316,slot_type=statementList}
-            |           |       |___aux_rule__statementList_2 {id=318,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |           |___primaryExpr {id=326,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |           |   |___Token:fmt {id=358,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |           |   |___(*) {id=328,slot_type=kleene_star__primaryExpr_1}
-            |           |           |       |___aux_rule__primaryExpr_4 {id=354,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |           |       |   |___Token:. {id=355,slot_type=DOT}
-            |           |           |       |   |___Token:Println {id=356,slot_type=IDENTIFIER}
-            |           |           |       |___arguments {id=331,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |           |           |___Token:( {id=332,slot_type=L_PAREN}
-            |           |           |           |___(?) {id=333,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression {id=338,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |           |           |       |___Token:"go" {id=353,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |       |___(*) {id=340,slot_type=kleene_star__expression_1}
-            |           |           |           |           |___aux_rule__expression_2 {id=341,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+ {id=349,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |           |           |               |___Token:"lang" {id=348,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |___Token:) {id=334,slot_type=R_PAREN}
-            |           |           |___Token:; {id=321,slot_type=[eos,SEMI]}
-            |           |___Token:} {id=315,slot_type=R_CURLY}
-            |___Token:; {id=306,slot_type=[eos,SEMI]}
+(|:sourceFile){id=297,slot_type=sourceFile}
+|___aux_rule__sourceFile_6{id=298,slot_type=aux_rule__sourceFile_6}
+    |___packageClause{id=299,slot_type=packageClause}
+    |   |___Token:package{id=373,slot_type=PACKAGE}
+    |   |___Token:main{id=374,slot_type=IDENTIFIER}
+    |___Token:;{id=372,slot_type=[eos,SEMI]}
+    |___(*){id=301,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1{id=362,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl{id=363,slot_type=importDecl}
+    |       |   |___Token:import{id=366,slot_type=IMPORT}
+    |       |   |___Token:"fmt"{id=371,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:;{id=365,slot_type=[eos,SEMI]}
+    |___(*){id=302,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3{id=303,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl{id=307,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func{id=308,slot_type=FUNC}
+            |   |___Token:main{id=309,slot_type=IDENTIFIER}
+            |   |___parameters{id=359,slot_type=[signature,parameters]}
+            |   |   |___Token:({id=360,slot_type=L_PAREN}
+            |   |   |___Token:){id=361,slot_type=R_PAREN}
+            |   |___(?){id=311,slot_type=optional__functionDecl_1}
+            |       |___block{id=312,slot_type=block}
+            |           |___Token:{{id=313,slot_type=L_CURLY}
+            |           |___(?){id=314,slot_type=optional__block_1}
+            |           |   |___(+){id=316,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2{id=318,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr{id=326,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt{id=358,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*){id=328,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4{id=354,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:.{id=355,slot_type=DOT}
+            |           |           |       |   |___Token:Println{id=356,slot_type=IDENTIFIER}
+            |           |           |       |___arguments{id=331,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:({id=332,slot_type=L_PAREN}
+            |           |           |           |___(?){id=333,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression{id=338,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go"{id=353,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*){id=340,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2{id=341,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+{id=349,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"lang"{id=348,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:){id=334,slot_type=R_PAREN}
+            |           |           |___Token:;{id=321,slot_type=[eos,SEMI]}
+            |           |___Token:}{id=315,slot_type=R_CURLY}
+            |___Token:;{id=306,slot_type=[eos,SEMI]}
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority](22/70)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](22/70)  Retrieved semantics provider null
 =================Reducing node 298, size=22=================
 
 The current best program is the following
@@ -1629,21 +1598,19 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
     import "fmt";
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 302
@@ -1665,7 +1632,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=303}
+    structure: [delete_303]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1707,8 +1675,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -1716,16 +1684,12 @@ FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     import "fmt";
     func main()
      ;
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main()
-     ;
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 311
@@ -1747,7 +1711,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=312}
+    structure: [delete_312]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1770,8 +1735,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -1779,16 +1744,12 @@ FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     import "fmt";
     func main() {
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-    };
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 314
@@ -1810,10 +1771,26 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=316}
+    structure: [delete_316]
+    context: [kleene_plus:statementList]can be epsilon
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 316
@@ -1833,18 +1810,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
+==============Node edit action set cache hit.===============
 
-    --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-    };
+    structure: [delete_318]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1875,11 +1844,16 @@ The current best program is the following
     func main() {
         fmt                       ;
     };
-    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
-        fmt                       ;
+                    "go"          ;
     };
 ------------------------------------------------------------
 
@@ -1892,41 +1866,12 @@ The current best program is the following
     func main() {
             Println               ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-            Println               ;
-    };
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-                    "go"          ;
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-                    "go"          ;
-    };
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-                    "go" + "lang" ;
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -1954,8 +1899,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -1964,16 +1909,10 @@ FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt                       ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt                       ;
-    };
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -1982,16 +1921,10 @@ FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Lo
     func main() {
         fmt.Println               ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println               ;
-    };
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -2000,17 +1933,11 @@ FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [1]#1: Uninteresting. Loca
     func main() {
         fmt        ("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt        ("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 328
@@ -2032,7 +1959,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=331}
+    structure: [delete_331]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -2055,8 +1983,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -2065,17 +1993,12 @@ FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt.Println(             );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(             );
-    };
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 333
@@ -2097,7 +2020,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=338}
+    structure: [delete_338]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -2109,24 +2033,12 @@ The current best program is the following
     func main() {
         fmt.Println("go"         );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go"         );
-    };
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(       "lang");
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -2154,8 +2066,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -2163,16 +2075,12 @@ FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 301
@@ -2194,7 +2102,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=362}
+    structure: [delete_362]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -2257,7 +2166,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=354}
+    structure: [delete_354]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -2280,8 +2190,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -2290,17 +2200,12 @@ FixPt[2][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt.Println("go"         );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go"         );
-    };
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[2][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[2][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 340
@@ -2322,7 +2227,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=341}
+    structure: [delete_341]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -2769,76 +2675,60 @@ Failed to reduce node 306
 ------------------------------------------------------------
 
 
+(22/70)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 =====Fixpoint iteration 3. Reducer: token_canonicalizer=====
 
+Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 The spar-tree is the following.
-(|:sourceFile) {id=297,slot_type=sourceFile}
-|___aux_rule__sourceFile_6 {id=298,slot_type=aux_rule__sourceFile_6}
-    |___packageClause {id=299,slot_type=packageClause}
-    |   |___Token:package {id=373,slot_type=PACKAGE}
-    |   |___Token:main {id=374,slot_type=IDENTIFIER}
-    |___Token:; {id=372,slot_type=[eos,SEMI]}
-    |___(*) {id=301,slot_type=kleene_star__sourceFile_2}
-    |   |___aux_rule__sourceFile_1 {id=362,slot_type=aux_rule__sourceFile_1}
-    |       |___importDecl {id=363,slot_type=importDecl}
-    |       |   |___Token:import {id=366,slot_type=IMPORT}
-    |       |   |___Token:"fmt" {id=371,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
-    |       |___Token:; {id=365,slot_type=[eos,SEMI]}
-    |___(*) {id=302,slot_type=kleene_star__sourceFile_4}
-        |___aux_rule__sourceFile_3 {id=303,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl {id=307,slot_type=[altnt_block__sourceFile_5,functionDecl]}
-            |   |___Token:func {id=308,slot_type=FUNC}
-            |   |___Token:main {id=309,slot_type=IDENTIFIER}
-            |   |___parameters {id=359,slot_type=[signature,parameters]}
-            |   |   |___Token:( {id=360,slot_type=L_PAREN}
-            |   |   |___Token:) {id=361,slot_type=R_PAREN}
-            |   |___(?) {id=311,slot_type=optional__functionDecl_1}
-            |       |___block {id=312,slot_type=block}
-            |           |___Token:{ {id=313,slot_type=L_CURLY}
-            |           |___(?) {id=314,slot_type=optional__block_1}
-            |           |   |___(+) {id=316,slot_type=statementList}
-            |           |       |___aux_rule__statementList_2 {id=318,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |           |___primaryExpr {id=326,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |           |   |___Token:fmt {id=358,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |           |   |___(*) {id=328,slot_type=kleene_star__primaryExpr_1}
-            |           |           |       |___aux_rule__primaryExpr_4 {id=354,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |           |       |   |___Token:. {id=355,slot_type=DOT}
-            |           |           |       |   |___Token:Println {id=356,slot_type=IDENTIFIER}
-            |           |           |       |___arguments {id=331,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |           |           |___Token:( {id=332,slot_type=L_PAREN}
-            |           |           |           |___(?) {id=333,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression {id=338,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |           |           |       |___Token:"go" {id=353,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |       |___(*) {id=340,slot_type=kleene_star__expression_1}
-            |           |           |           |           |___aux_rule__expression_2 {id=341,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+ {id=349,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |           |           |               |___Token:"lang" {id=348,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |___Token:) {id=334,slot_type=R_PAREN}
-            |           |           |___Token:; {id=321,slot_type=[eos,SEMI]}
-            |           |___Token:} {id=315,slot_type=R_CURLY}
-            |___Token:; {id=306,slot_type=[eos,SEMI]}
+(|:sourceFile){id=297,slot_type=sourceFile}
+|___aux_rule__sourceFile_6{id=298,slot_type=aux_rule__sourceFile_6}
+    |___packageClause{id=299,slot_type=packageClause}
+    |   |___Token:package{id=373,slot_type=PACKAGE}
+    |   |___Token:main{id=374,slot_type=IDENTIFIER}
+    |___Token:;{id=372,slot_type=[eos,SEMI]}
+    |___(*){id=301,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1{id=362,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl{id=363,slot_type=importDecl}
+    |       |   |___Token:import{id=366,slot_type=IMPORT}
+    |       |   |___Token:"fmt"{id=371,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:;{id=365,slot_type=[eos,SEMI]}
+    |___(*){id=302,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3{id=303,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl{id=307,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func{id=308,slot_type=FUNC}
+            |   |___Token:main{id=309,slot_type=IDENTIFIER}
+            |   |___parameters{id=359,slot_type=[signature,parameters]}
+            |   |   |___Token:({id=360,slot_type=L_PAREN}
+            |   |   |___Token:){id=361,slot_type=R_PAREN}
+            |   |___(?){id=311,slot_type=optional__functionDecl_1}
+            |       |___block{id=312,slot_type=block}
+            |           |___Token:{{id=313,slot_type=L_CURLY}
+            |           |___(?){id=314,slot_type=optional__block_1}
+            |           |   |___(+){id=316,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2{id=318,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr{id=326,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt{id=358,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*){id=328,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4{id=354,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:.{id=355,slot_type=DOT}
+            |           |           |       |   |___Token:Println{id=356,slot_type=IDENTIFIER}
+            |           |           |       |___arguments{id=331,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:({id=332,slot_type=L_PAREN}
+            |           |           |           |___(?){id=333,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression{id=338,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go"{id=353,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*){id=340,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2{id=341,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+{id=349,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"lang"{id=348,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:){id=334,slot_type=R_PAREN}
+            |           |           |___Token:;{id=321,slot_type=[eos,SEMI]}
+            |           |___Token:}{id=315,slot_type=R_CURLY}
+            |___Token:;{id=306,slot_type=[eos,SEMI]}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme 'a'
-    --file: small.go--
-    package a   ;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-    --file: <formatted tokenized program in its original format>--
-    package a   ;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (14): fail==========
 
 // edit action set type: replace 2 lexer nodes with new lexeme 'a'
     --file: small.go--
@@ -2847,25 +2737,25 @@ The spar-tree is the following.
     func a   () {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+==========Testing the following program (15): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
     package a   ;
     import "fmt";
-    func a   () {
+    func main() {
         fmt.Println("go" + "lang");
     };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (16): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: small.go--
-    package main;
-    import ""   ;
-    func main() {
-        fmt.Println("go" + "lang");
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import ""   ;
     func main() {
@@ -2882,16 +2772,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import ""   ;
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (17): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"mt"'
     --file: small.go--
@@ -2900,16 +2784,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "mt" ;
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (18): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"ft"'
     --file: small.go--
@@ -2918,16 +2796,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "ft" ;
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (19): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"fm"'
     --file: small.go--
@@ -2936,16 +2808,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fm" ;
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (20): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '" mt"'
     --file: small.go--
@@ -2954,16 +2820,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import " mt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (21): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"!mt"'
     --file: small.go--
@@ -2972,16 +2832,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "!mt";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (22): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"f t"'
     --file: small.go--
@@ -2990,16 +2844,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "f t";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (23): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"f!t"'
     --file: small.go--
@@ -3008,16 +2856,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "f!t";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (24): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"fm "'
     --file: small.go--
@@ -3026,16 +2868,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fm ";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (25): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"fm!"'
     --file: small.go--
@@ -3044,12 +2880,6 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fm!";
-    func main() {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
@@ -3061,16 +2891,10 @@ The spar-tree is the following.
     func a   () {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package a   ;
-    import "fmt";
-    func a   () {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (26): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: small.go--
@@ -3079,16 +2903,10 @@ The spar-tree is the following.
     func a   () {
         fmt.Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func a   () {
-        fmt.Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (27): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: small.go--
@@ -3097,34 +2915,22 @@ The spar-tree is the following.
     func main() {
         a  .Println("go" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        a  .Println("go" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (28): fail==========
 
-// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+// edit action set type: replace 1 lexer nodes with new lexeme 'A'
     --file: small.go--
     package main;
     import "fmt";
     func main() {
-        fmt.a      ("go" + "lang");
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.a      ("go" + "lang");
+        fmt.A      ("go" + "lang");
     };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (29): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: small.go--
@@ -3133,12 +2939,6 @@ The spar-tree is the following.
     func main() {
         fmt.Println(""   + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(""   + "lang");
-    };
 ------------------------------------------------------------
 
 
@@ -3150,16 +2950,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println(""   + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(""   + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (30): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"o"'
     --file: small.go--
@@ -3168,16 +2962,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("o"  + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("o"  + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (31): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"g"'
     --file: small.go--
@@ -3186,16 +2974,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("g"  + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("g"  + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (32): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '" o"'
     --file: small.go--
@@ -3204,16 +2986,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println(" o" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(" o" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (33): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"!o"'
     --file: small.go--
@@ -3222,16 +2998,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("!o" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("!o" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (34): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"g "'
     --file: small.go--
@@ -3240,16 +3010,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("g " + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("g " + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (35): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"g!"'
     --file: small.go--
@@ -3258,25 +3022,13 @@ The spar-tree is the following.
     func main() {
         fmt.Println("g!" + "lang");
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("g!" + "lang");
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (36): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + ""    );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -3293,16 +3045,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + ""    );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + ""    );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (37): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"ang"'
     --file: small.go--
@@ -3311,16 +3057,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "ang" );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "ang" );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (38): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"lng"'
     --file: small.go--
@@ -3329,25 +3069,13 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "lng" );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lng" );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (39): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"lag"'
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lag" );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -3360,58 +3088,40 @@ The spar-tree is the following.
 
 It took less than 1 second to cancel the task.
 
-    --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lan" );
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lan" );
-    };
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-25 entries are removed: 38 --> 13.
+17 entries are removed: 38 --> 21.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 29
+    size before clearance = 16
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
 token count change 22 -> 22
+Edit: AnyNodeReplace:[replace_348_with_432]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: small.go--
     package main;
     import "fmt";
     func main() {
         fmt.Println("go" + ""    );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + ""    );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (40): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"ag"'
     --file: small.go--
@@ -3420,16 +3130,10 @@ token count change 22 -> 22
     func main() {
         fmt.Println("go" + "ag"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "ag"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (41): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"lg"'
     --file: small.go--
@@ -3438,25 +3142,13 @@ token count change 22 -> 22
     func main() {
         fmt.Println("go" + "lg"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "lg"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (42): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"la"'
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -3467,7 +3159,7 @@ token count change 22 -> 22
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-3 entries are removed: 16 --> 13.
+4 entries are removed: 23 --> 19.
 ------------------------------------------------------------
 
 
@@ -3480,28 +3172,22 @@ token count change 22 -> 22
 ================The best program is updated.================
 
 token count change 22 -> 22
+Edit: AnyNodeReplace:[replace_432_with_442]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: small.go--
     package main;
     import "fmt";
     func main() {
         fmt.Println("go" + ""    );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + ""    );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (43): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"a"'
     --file: small.go--
@@ -3510,16 +3196,10 @@ token count change 22 -> 22
     func main() {
         fmt.Println("go" + "a"   );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "a"   );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (44): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"l"'
     --file: small.go--
@@ -3528,16 +3208,10 @@ token count change 22 -> 22
     func main() {
         fmt.Println("go" + "l"   );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "l"   );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (45): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '" a"'
     --file: small.go--
@@ -3546,16 +3220,10 @@ token count change 22 -> 22
     func main() {
         fmt.Println("go" + " a"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + " a"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (46): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"!a"'
     --file: small.go--
@@ -3564,16 +3232,10 @@ token count change 22 -> 22
     func main() {
         fmt.Println("go" + "!a"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "!a"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (47): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"l "'
     --file: small.go--
@@ -3582,25 +3244,13 @@ token count change 22 -> 22
     func main() {
         fmt.Println("go" + "l "  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "l "  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (48): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"l!"'
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "l!"  );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -3610,57 +3260,60 @@ token count change 22 -> 22
 
 
 (22/70)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 4. Reducer: node_priority-dfs======
+========Fixpoint iteration 4. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 The spar-tree is the following.
-(|:sourceFile) {id=458,slot_type=sourceFile}
-|___aux_rule__sourceFile_6 {id=459,slot_type=aux_rule__sourceFile_6}
-    |___packageClause {id=460,slot_type=packageClause}
-    |   |___Token:package {id=534,slot_type=PACKAGE}
-    |   |___Token:main {id=535,slot_type=IDENTIFIER}
-    |___Token:; {id=533,slot_type=[eos,SEMI]}
-    |___(*) {id=462,slot_type=kleene_star__sourceFile_2}
-    |   |___aux_rule__sourceFile_1 {id=523,slot_type=aux_rule__sourceFile_1}
-    |       |___importDecl {id=524,slot_type=importDecl}
-    |       |   |___Token:import {id=527,slot_type=IMPORT}
-    |       |   |___Token:"fmt" {id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
-    |       |___Token:; {id=526,slot_type=[eos,SEMI]}
-    |___(*) {id=463,slot_type=kleene_star__sourceFile_4}
-        |___aux_rule__sourceFile_3 {id=464,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl {id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
-            |   |___Token:func {id=469,slot_type=FUNC}
-            |   |___Token:main {id=470,slot_type=IDENTIFIER}
-            |   |___parameters {id=520,slot_type=[signature,parameters]}
-            |   |   |___Token:( {id=521,slot_type=L_PAREN}
-            |   |   |___Token:) {id=522,slot_type=R_PAREN}
-            |   |___(?) {id=472,slot_type=optional__functionDecl_1}
-            |       |___block {id=473,slot_type=block}
-            |           |___Token:{ {id=474,slot_type=L_CURLY}
-            |           |___(?) {id=475,slot_type=optional__block_1}
-            |           |   |___(+) {id=477,slot_type=statementList}
-            |           |       |___aux_rule__statementList_2 {id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |           |___primaryExpr {id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |           |   |___Token:fmt {id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |           |   |___(*) {id=489,slot_type=kleene_star__primaryExpr_1}
-            |           |           |       |___aux_rule__primaryExpr_4 {id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |           |       |   |___Token:. {id=516,slot_type=DOT}
-            |           |           |       |   |___Token:Println {id=517,slot_type=IDENTIFIER}
-            |           |           |       |___arguments {id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |           |           |___Token:( {id=493,slot_type=L_PAREN}
-            |           |           |           |___(?) {id=494,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression {id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |           |           |       |___Token:"go" {id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |       |___(*) {id=501,slot_type=kleene_star__expression_1}
-            |           |           |           |           |___aux_rule__expression_2 {id=502,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+ {id=510,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |           |           |               |___Token:"la" {id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |___Token:) {id=495,slot_type=R_PAREN}
-            |           |           |___Token:; {id=482,slot_type=[eos,SEMI]}
-            |           |___Token:} {id=476,slot_type=R_CURLY}
-            |___Token:; {id=467,slot_type=[eos,SEMI]}
+(|:sourceFile){id=458,slot_type=sourceFile}
+|___aux_rule__sourceFile_6{id=459,slot_type=aux_rule__sourceFile_6}
+    |___packageClause{id=460,slot_type=packageClause}
+    |   |___Token:package{id=534,slot_type=PACKAGE}
+    |   |___Token:main{id=535,slot_type=IDENTIFIER}
+    |___Token:;{id=533,slot_type=[eos,SEMI]}
+    |___(*){id=462,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1{id=523,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl{id=524,slot_type=importDecl}
+    |       |   |___Token:import{id=527,slot_type=IMPORT}
+    |       |   |___Token:"fmt"{id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:;{id=526,slot_type=[eos,SEMI]}
+    |___(*){id=463,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3{id=464,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl{id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func{id=469,slot_type=FUNC}
+            |   |___Token:main{id=470,slot_type=IDENTIFIER}
+            |   |___parameters{id=520,slot_type=[signature,parameters]}
+            |   |   |___Token:({id=521,slot_type=L_PAREN}
+            |   |   |___Token:){id=522,slot_type=R_PAREN}
+            |   |___(?){id=472,slot_type=optional__functionDecl_1}
+            |       |___block{id=473,slot_type=block}
+            |           |___Token:{{id=474,slot_type=L_CURLY}
+            |           |___(?){id=475,slot_type=optional__block_1}
+            |           |   |___(+){id=477,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2{id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr{id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt{id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*){id=489,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4{id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:.{id=516,slot_type=DOT}
+            |           |           |       |   |___Token:Println{id=517,slot_type=IDENTIFIER}
+            |           |           |       |___arguments{id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:({id=493,slot_type=L_PAREN}
+            |           |           |           |___(?){id=494,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go"{id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*){id=501,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2{id=502,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+{id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"la"{id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:){id=495,slot_type=R_PAREN}
+            |           |           |___Token:;{id=482,slot_type=[eos,SEMI]}
+            |           |___Token:}{id=476,slot_type=R_CURLY}
+            |___Token:;{id=467,slot_type=[eos,SEMI]}
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority](22/70)  Starting to retrieve the semantics provider
+FixPt[4][node_priority](22/70)  Retrieved semantics provider null
 =================Reducing node 459, size=22=================
 
 The current best program is the following
@@ -3693,21 +3346,19 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
     package main;
     import "fmt";
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 463
@@ -3729,7 +3380,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=464}
+    structure: [delete_464]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3771,8 +3423,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -3780,16 +3432,12 @@ FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     import "fmt";
     func main()
      ;
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main()
-     ;
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 472
@@ -3811,7 +3459,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=473}
+    structure: [delete_473]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3834,8 +3483,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -3843,16 +3492,12 @@ FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     import "fmt";
     func main() {
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-    };
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 475
@@ -3874,10 +3519,26 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=477}
+    structure: [delete_477]
+    context: [kleene_plus:statementList]can be epsilon
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
+    package main;
+    import "fmt";
+    func main() {
+    };
+------------------------------------------------------------
+
+
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 477
@@ -3897,18 +3558,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
+==============Node edit action set cache hit.===============
 
-    --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-    };
+    structure: [delete_479]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -3939,11 +3592,16 @@ The current best program is the following
     func main() {
         fmt                       ;
     };
-    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: small.go--
     package main;
     import "fmt";
     func main() {
-        fmt                       ;
+                    "go"          ;
     };
 ------------------------------------------------------------
 
@@ -3956,42 +3614,13 @@ The current best program is the following
     func main() {
             Println               ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-            Println               ;
-    };
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
-
-    --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-                    "go"          ;
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-                    "go"          ;
-    };
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (49): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-                    "go" + "la"   ;
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -4019,8 +3648,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -4029,16 +3658,10 @@ FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt                       ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt                       ;
-    };
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -4047,36 +3670,24 @@ FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0-1]#2: Uninteresting. Lo
     func main() {
         fmt.Println               ;
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println               ;
-    };
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
-============Testing the following program: fail=============
+FixPt[4][node_priority][DFS](22/70)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+==========Testing the following program (50): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__primaryExpr_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__primaryExpr_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: small.go--
     package main;
     import "fmt";
     func main() {
         fmt        ("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt        ("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 489
@@ -4098,7 +3709,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=492}
+    structure: [delete_492]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -4121,8 +3733,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -4131,17 +3743,12 @@ FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt.Println(             );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(             );
-    };
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 494
@@ -4163,7 +3770,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=499}
+    structure: [delete_499]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -4175,25 +3783,13 @@ The current best program is the following
     func main() {
         fmt.Println("go"         );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go"         );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (51): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(       "la"  );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -4221,17 +3817,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
-============Testing the following program: fail=============
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+==========Testing the following program (52): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__sourceFile_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__sourceFile_2]dd@#nodes=1,#parts=1#total-parts=1
     --file: small.go--
-    package main;
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     func main() {
         fmt.Println("go" + "la"  );
@@ -4239,8 +3830,9 @@ FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 462
@@ -4262,7 +3854,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=523}
+    structure: [delete_523]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -4325,7 +3918,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=515}
+    structure: [delete_515]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -4348,8 +3942,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Testing the empty input. Global ratio:22/70=31.43%
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
@@ -4358,17 +3952,12 @@ FixPt[4][node_priority-dfs][DFS](22/70)  Testing the empty input. Global ratio:2
     func main() {
         fmt.Println("go"         );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go"         );
-    };
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
-FixPt[4][node_priority-dfs][DFS](22/70)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  There is only one element in the input, and the empty input has been tested. Global ratio:22/70=31.43%
+FixPt[4][node_priority][DFS](22/70)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/70=31.43%
 ===================Node reduction is done===================
 
 Failed to reduce node 501
@@ -4390,7 +3979,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=502}
+    structure: [delete_502]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -4837,76 +4427,60 @@ Failed to reduce node 467
 ------------------------------------------------------------
 
 
+(22/70)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 =====Fixpoint iteration 5. Reducer: token_canonicalizer=====
 
+Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 The spar-tree is the following.
-(|:sourceFile) {id=458,slot_type=sourceFile}
-|___aux_rule__sourceFile_6 {id=459,slot_type=aux_rule__sourceFile_6}
-    |___packageClause {id=460,slot_type=packageClause}
-    |   |___Token:package {id=534,slot_type=PACKAGE}
-    |   |___Token:main {id=535,slot_type=IDENTIFIER}
-    |___Token:; {id=533,slot_type=[eos,SEMI]}
-    |___(*) {id=462,slot_type=kleene_star__sourceFile_2}
-    |   |___aux_rule__sourceFile_1 {id=523,slot_type=aux_rule__sourceFile_1}
-    |       |___importDecl {id=524,slot_type=importDecl}
-    |       |   |___Token:import {id=527,slot_type=IMPORT}
-    |       |   |___Token:"fmt" {id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
-    |       |___Token:; {id=526,slot_type=[eos,SEMI]}
-    |___(*) {id=463,slot_type=kleene_star__sourceFile_4}
-        |___aux_rule__sourceFile_3 {id=464,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl {id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
-            |   |___Token:func {id=469,slot_type=FUNC}
-            |   |___Token:main {id=470,slot_type=IDENTIFIER}
-            |   |___parameters {id=520,slot_type=[signature,parameters]}
-            |   |   |___Token:( {id=521,slot_type=L_PAREN}
-            |   |   |___Token:) {id=522,slot_type=R_PAREN}
-            |   |___(?) {id=472,slot_type=optional__functionDecl_1}
-            |       |___block {id=473,slot_type=block}
-            |           |___Token:{ {id=474,slot_type=L_CURLY}
-            |           |___(?) {id=475,slot_type=optional__block_1}
-            |           |   |___(+) {id=477,slot_type=statementList}
-            |           |       |___aux_rule__statementList_2 {id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |           |___primaryExpr {id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |           |   |___Token:fmt {id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |           |   |___(*) {id=489,slot_type=kleene_star__primaryExpr_1}
-            |           |           |       |___aux_rule__primaryExpr_4 {id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |           |       |   |___Token:. {id=516,slot_type=DOT}
-            |           |           |       |   |___Token:Println {id=517,slot_type=IDENTIFIER}
-            |           |           |       |___arguments {id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |           |           |___Token:( {id=493,slot_type=L_PAREN}
-            |           |           |           |___(?) {id=494,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression {id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |           |           |       |___Token:"go" {id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |       |___(*) {id=501,slot_type=kleene_star__expression_1}
-            |           |           |           |           |___aux_rule__expression_2 {id=502,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+ {id=510,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |           |           |               |___Token:"la" {id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |___Token:) {id=495,slot_type=R_PAREN}
-            |           |           |___Token:; {id=482,slot_type=[eos,SEMI]}
-            |           |___Token:} {id=476,slot_type=R_CURLY}
-            |___Token:; {id=467,slot_type=[eos,SEMI]}
+(|:sourceFile){id=458,slot_type=sourceFile}
+|___aux_rule__sourceFile_6{id=459,slot_type=aux_rule__sourceFile_6}
+    |___packageClause{id=460,slot_type=packageClause}
+    |   |___Token:package{id=534,slot_type=PACKAGE}
+    |   |___Token:main{id=535,slot_type=IDENTIFIER}
+    |___Token:;{id=533,slot_type=[eos,SEMI]}
+    |___(*){id=462,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1{id=523,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl{id=524,slot_type=importDecl}
+    |       |   |___Token:import{id=527,slot_type=IMPORT}
+    |       |   |___Token:"fmt"{id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:;{id=526,slot_type=[eos,SEMI]}
+    |___(*){id=463,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3{id=464,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl{id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func{id=469,slot_type=FUNC}
+            |   |___Token:main{id=470,slot_type=IDENTIFIER}
+            |   |___parameters{id=520,slot_type=[signature,parameters]}
+            |   |   |___Token:({id=521,slot_type=L_PAREN}
+            |   |   |___Token:){id=522,slot_type=R_PAREN}
+            |   |___(?){id=472,slot_type=optional__functionDecl_1}
+            |       |___block{id=473,slot_type=block}
+            |           |___Token:{{id=474,slot_type=L_CURLY}
+            |           |___(?){id=475,slot_type=optional__block_1}
+            |           |   |___(+){id=477,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2{id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr{id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt{id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*){id=489,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4{id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:.{id=516,slot_type=DOT}
+            |           |           |       |   |___Token:Println{id=517,slot_type=IDENTIFIER}
+            |           |           |       |___arguments{id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:({id=493,slot_type=L_PAREN}
+            |           |           |           |___(?){id=494,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go"{id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*){id=501,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2{id=502,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+{id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"la"{id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:){id=495,slot_type=R_PAREN}
+            |           |           |___Token:;{id=482,slot_type=[eos,SEMI]}
+            |           |___Token:}{id=476,slot_type=R_CURLY}
+            |___Token:;{id=467,slot_type=[eos,SEMI]}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme 'a'
-    --file: small.go--
-    package a   ;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
-    --file: <formatted tokenized program in its original format>--
-    package a   ;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (53): fail==========
 
 // edit action set type: replace 2 lexer nodes with new lexeme 'a'
     --file: small.go--
@@ -4915,25 +4489,25 @@ The spar-tree is the following.
     func a   () {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+==========Testing the following program (54): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+    --file: small.go--
     package a   ;
     import "fmt";
-    func a   () {
+    func main() {
         fmt.Println("go" + "la"  );
     };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (55): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: small.go--
-    package main;
-    import ""   ;
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import ""   ;
     func main() {
@@ -4950,16 +4524,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import ""   ;
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (56): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"mt"'
     --file: small.go--
@@ -4968,16 +4536,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "mt" ;
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (57): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"ft"'
     --file: small.go--
@@ -4986,16 +4548,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "ft" ;
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (58): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"fm"'
     --file: small.go--
@@ -5004,16 +4560,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fm" ;
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (59): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '" mt"'
     --file: small.go--
@@ -5022,16 +4572,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import " mt";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (60): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"!mt"'
     --file: small.go--
@@ -5040,16 +4584,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "!mt";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (61): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"f t"'
     --file: small.go--
@@ -5058,16 +4596,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "f t";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (62): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"f!t"'
     --file: small.go--
@@ -5076,16 +4608,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "f!t";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (63): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"fm "'
     --file: small.go--
@@ -5094,16 +4620,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fm ";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (64): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"fm!"'
     --file: small.go--
@@ -5112,12 +4632,6 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fm!";
-    func main() {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
@@ -5129,16 +4643,10 @@ The spar-tree is the following.
     func a   () {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package a   ;
-    import "fmt";
-    func a   () {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (65): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: small.go--
@@ -5147,16 +4655,10 @@ The spar-tree is the following.
     func a   () {
         fmt.Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func a   () {
-        fmt.Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (66): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: small.go--
@@ -5165,34 +4667,22 @@ The spar-tree is the following.
     func main() {
         a  .Println("go" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        a  .Println("go" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (67): fail==========
 
-// edit action set type: replace 1 lexer nodes with new lexeme 'a'
+// edit action set type: replace 1 lexer nodes with new lexeme 'A'
     --file: small.go--
     package main;
     import "fmt";
     func main() {
-        fmt.a      ("go" + "la"  );
-    };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.a      ("go" + "la"  );
+        fmt.A      ("go" + "la"  );
     };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (68): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: small.go--
@@ -5201,12 +4691,6 @@ The spar-tree is the following.
     func main() {
         fmt.Println(""   + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(""   + "la"  );
-    };
 ------------------------------------------------------------
 
 
@@ -5218,16 +4702,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println(""   + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(""   + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (69): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"o"'
     --file: small.go--
@@ -5236,16 +4714,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("o"  + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("o"  + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (70): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"g"'
     --file: small.go--
@@ -5254,16 +4726,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("g"  + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("g"  + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (71): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '" o"'
     --file: small.go--
@@ -5272,16 +4738,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println(" o" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println(" o" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (72): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"!o"'
     --file: small.go--
@@ -5290,16 +4750,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("!o" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("!o" + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (73): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"g "'
     --file: small.go--
@@ -5308,16 +4762,10 @@ The spar-tree is the following.
     func main() {
         fmt.Println("g " + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("g " + "la"  );
-    };
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (74): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"g!"'
     --file: small.go--
@@ -5326,12 +4774,6 @@ The spar-tree is the following.
     func main() {
         fmt.Println("g!" + "la"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("g!" + "la"  );
-    };
 ------------------------------------------------------------
 
 
@@ -5343,24 +4785,12 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + ""    );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + ""    );
-    };
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + ""    );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -5377,24 +4807,12 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "a"   );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "a"   );
-    };
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "l"   );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -5411,24 +4829,12 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + " a"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + " a"  );
-    };
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: small.go--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "!a"  );
-    };
-    --file: <formatted tokenized program in its original format>--
     package main;
     import "fmt";
     func main() {
@@ -5445,12 +4851,6 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "l "  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "l "  );
-    };
 ------------------------------------------------------------
 
 
@@ -5462,89 +4862,87 @@ The spar-tree is the following.
     func main() {
         fmt.Println("go" + "l!"  );
     };
-    --file: <formatted tokenized program in its original format>--
-    package main;
-    import "fmt";
-    func main() {
-        fmt.Println("go" + "l!"  );
-    };
 ------------------------------------------------------------
 
 
+(22/70)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 6. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.go.PnfGoParserFacade
 The spar-tree is the following.
-(|:sourceFile) {id=458,slot_type=sourceFile}
-|___aux_rule__sourceFile_6 {id=459,slot_type=aux_rule__sourceFile_6}
-    |___packageClause {id=460,slot_type=packageClause}
-    |   |___Token:package {id=534,slot_type=PACKAGE}
-    |   |___Token:main {id=535,slot_type=IDENTIFIER}
-    |___Token:; {id=533,slot_type=[eos,SEMI]}
-    |___(*) {id=462,slot_type=kleene_star__sourceFile_2}
-    |   |___aux_rule__sourceFile_1 {id=523,slot_type=aux_rule__sourceFile_1}
-    |       |___importDecl {id=524,slot_type=importDecl}
-    |       |   |___Token:import {id=527,slot_type=IMPORT}
-    |       |   |___Token:"fmt" {id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
-    |       |___Token:; {id=526,slot_type=[eos,SEMI]}
-    |___(*) {id=463,slot_type=kleene_star__sourceFile_4}
-        |___aux_rule__sourceFile_3 {id=464,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl {id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
-            |   |___Token:func {id=469,slot_type=FUNC}
-            |   |___Token:main {id=470,slot_type=IDENTIFIER}
-            |   |___parameters {id=520,slot_type=[signature,parameters]}
-            |   |   |___Token:( {id=521,slot_type=L_PAREN}
-            |   |   |___Token:) {id=522,slot_type=R_PAREN}
-            |   |___(?) {id=472,slot_type=optional__functionDecl_1}
-            |       |___block {id=473,slot_type=block}
-            |           |___Token:{ {id=474,slot_type=L_CURLY}
-            |           |___(?) {id=475,slot_type=optional__block_1}
-            |           |   |___(+) {id=477,slot_type=statementList}
-            |           |       |___aux_rule__statementList_2 {id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
-            |           |           |___primaryExpr {id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
-            |           |           |   |___Token:fmt {id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
-            |           |           |   |___(*) {id=489,slot_type=kleene_star__primaryExpr_1}
-            |           |           |       |___aux_rule__primaryExpr_4 {id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
-            |           |           |       |   |___Token:. {id=516,slot_type=DOT}
-            |           |           |       |   |___Token:Println {id=517,slot_type=IDENTIFIER}
-            |           |           |       |___arguments {id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
-            |           |           |           |___Token:( {id=493,slot_type=L_PAREN}
-            |           |           |           |___(?) {id=494,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression {id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
-            |           |           |           |       |___Token:"go" {id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |       |___(*) {id=501,slot_type=kleene_star__expression_1}
-            |           |           |           |           |___aux_rule__expression_2 {id=502,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+ {id=510,slot_type=[altnt_block__expression_3,PLUS]}
-            |           |           |           |               |___Token:"la" {id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
-            |           |           |           |___Token:) {id=495,slot_type=R_PAREN}
-            |           |           |___Token:; {id=482,slot_type=[eos,SEMI]}
-            |           |___Token:} {id=476,slot_type=R_CURLY}
-            |___Token:; {id=467,slot_type=[eos,SEMI]}
+(|:sourceFile){id=458,slot_type=sourceFile}
+|___aux_rule__sourceFile_6{id=459,slot_type=aux_rule__sourceFile_6}
+    |___packageClause{id=460,slot_type=packageClause}
+    |   |___Token:package{id=534,slot_type=PACKAGE}
+    |   |___Token:main{id=535,slot_type=IDENTIFIER}
+    |___Token:;{id=533,slot_type=[eos,SEMI]}
+    |___(*){id=462,slot_type=kleene_star__sourceFile_2}
+    |   |___aux_rule__sourceFile_1{id=523,slot_type=aux_rule__sourceFile_1}
+    |       |___importDecl{id=524,slot_type=importDecl}
+    |       |   |___Token:import{id=527,slot_type=IMPORT}
+    |       |   |___Token:"fmt"{id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |___Token:;{id=526,slot_type=[eos,SEMI]}
+    |___(*){id=463,slot_type=kleene_star__sourceFile_4}
+        |___aux_rule__sourceFile_3{id=464,slot_type=aux_rule__sourceFile_3}
+            |___functionDecl{id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |   |___Token:func{id=469,slot_type=FUNC}
+            |   |___Token:main{id=470,slot_type=IDENTIFIER}
+            |   |___parameters{id=520,slot_type=[signature,parameters]}
+            |   |   |___Token:({id=521,slot_type=L_PAREN}
+            |   |   |___Token:){id=522,slot_type=R_PAREN}
+            |   |___(?){id=472,slot_type=optional__functionDecl_1}
+            |       |___block{id=473,slot_type=block}
+            |           |___Token:{{id=474,slot_type=L_CURLY}
+            |           |___(?){id=475,slot_type=optional__block_1}
+            |           |   |___(+){id=477,slot_type=statementList}
+            |           |       |___aux_rule__statementList_2{id=479,slot_type=[aux_rule__statementList_1,aux_rule__statementList_2]}
+            |           |           |___primaryExpr{id=487,slot_type=[realStatement,realSimpleStmt,expressionStmt,expression,unaryExpr,primaryExpr]}
+            |           |           |   |___Token:fmt{id=519,slot_type=[aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
+            |           |           |   |___(*){id=489,slot_type=kleene_star__primaryExpr_1}
+            |           |           |       |___aux_rule__primaryExpr_4{id=515,slot_type=[aux_rule__primaryExpr_2,aux_rule__primaryExpr_4]}
+            |           |           |       |   |___Token:.{id=516,slot_type=DOT}
+            |           |           |       |   |___Token:Println{id=517,slot_type=IDENTIFIER}
+            |           |           |       |___arguments{id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
+            |           |           |           |___Token:({id=493,slot_type=L_PAREN}
+            |           |           |           |___(?){id=494,slot_type=optional__arguments_6}
+            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |       |___Token:"go"{id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |       |___(*){id=501,slot_type=kleene_star__expression_1}
+            |           |           |           |           |___aux_rule__expression_2{id=502,slot_type=aux_rule__expression_2}
+            |           |           |           |               |___Token:+{id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:"la"{id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
+            |           |           |           |___Token:){id=495,slot_type=R_PAREN}
+            |           |           |___Token:;{id=482,slot_type=[eos,SEMI]}
+            |           |___Token:}{id=476,slot_type=R_CURLY}
+            |___Token:;{id=467,slot_type=[eos,SEMI]}
 ------------------------------------------------------------
 
 
 FixPt[6][FineGritLatraReducer](22/70)  Latra does not support LanguageGo{name=go, extensions=[go], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
-(22/70)  The history of the reducer invocation.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0    node_priority-dfs     -48   -127             0
- 1    node_priority-dfs       0      0             0
- 2  token_canonicalizer       0     -2             1
- 3    node_priority-dfs       0      0             1
- 4  token_canonicalizer       0      0             1
- 5 FineGritLatraReducer       0      0             1
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      1             0     -48           -125      14   time-hidden
+ 1        node_priority      0             0       0              0       0   time-hidden
+ 2  token_canonicalizer      2             2       0             -2      35   time-hidden
+ 3        node_priority      0             0       0              0       4   time-hidden
+ 4  token_canonicalizer      0             0       0              0      22   time-hidden
+ 5 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-   node_priority-dfs     3     -48   -127
- token_canonicalizer     2       0     -2
-FineGritLatraReducer     1       0      0
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     3      1             0     -48           -125      18   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+ token_canonicalizer     2      2             2       0             -2      57   time-hidden
+
+------------------------------- Transformations --------------------------------
+                 Transformation Worked #NonDeletions #Tokens #NonBlankChars
+         node_priority.Deletion      1             0     -48           -125
+token_canonicalizer.Replacement      2             2       0             -2
 ------------------------------------- End --------------------------------------
-
-
 #test success = 3
-#test failure = 74
-#test result cache hits = 46
+#test failure = 72
+#test result cache hits = 48
 #test execution cancelled = 1
-#node edit action set cache hits = 24
+#node edit action set cache hits = 27
 #external test execution cache hits = 0

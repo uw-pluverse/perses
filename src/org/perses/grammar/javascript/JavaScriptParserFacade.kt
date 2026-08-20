@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -31,6 +31,7 @@ class JavaScriptParserFacade :
         JavaScriptParserFacade::class.java,
       ),
     identifierTokenTypes = ImmutableIntArray.of(JavaScriptLexer.Identifier),
+    includeAutoDetectedIdentifierTokenTypes = false,
     lexerClass = JavaScriptLexer::class.java,
     parserClass = PnfJavaScriptParser::class.java,
   )

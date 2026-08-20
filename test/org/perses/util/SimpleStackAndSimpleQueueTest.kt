@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -107,7 +107,7 @@ class SimpleStackAndSimpleQueueTest {
   @Test
   fun testEqualStack() {
     assertThat(stack).isEqualTo(stack)
-    assertThat(stack).isNotEqualTo(Object())
+    assertThat(stack).isNotEqualTo(Any())
     assertThat(stack).isNotEqualTo(SimpleStack.of(1).add(2).add(4))
     assertThat(stack).isNotEqualTo(SimpleStack.of(2).add(4))
     assertThat(stack).isEqualTo(SimpleStack.of(1).add(2).add(3))

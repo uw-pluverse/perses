@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,49 +18,60 @@ package org.perses.antlr.reducer.io
 
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.AntlrCompiler
+import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.reducer.codegen.GrammarMainStubFactory
-import org.perses.program.AbstractReductionFile
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.reduction.io.ReductionFolder
+import org.perses.reduction.io.SuppliedContentOutputManager
 import org.perses.util.AutoDeletableFolder
 import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import java.nio.file.Path
 
 class GrammarOutputManagerFactory(
-  val reductionInputs: SeparateGrammarReductionInput,
+  override val originalReductionInputs: SeparateGrammarOriginalReductionInput,
   val startRuleName: String,
   val jarFileName: String,
   val testPrograms: ImmutableList<Path>,
-  val shaAlgorithmType: EnumShaAlgorithm,
-) : AbstractOutputManagerFactory<PersesGrammar>() {
+  shaAlgorithm: EnumShaAlgorithm,
+) : AbstractOutputManagerFactory<PersesGrammar>(originalReductionInputs, shaAlgorithm) {
+  // Grammar reduction reduces only the parser grammar; the lexer (the only other mutable file) is
+  // fixed, so its content is captured once here and supplied to every output manager.
+  private val otherMutableFileContents =
+    originalReductionInputs.mutableFileContentsExcluding(
+      fileExcluded = originalReductionInputs.parserFile,
+    )
+
   override fun createManagerFor(program: PersesGrammar): AbstractOutputManager =
     OutputManager(program)
 
-  inner class OutputManager(
-    private val program: PersesGrammar,
-  ) : AbstractOutputManager(reductionInputs, shaAlgorithmType) {
-    override fun internalComputeContentForFile(
-      origReductionFile: AbstractReductionFile<*, *>,
-    ): String =
-      when (origReductionFile) {
-        reductionInputs.mainFile -> {
-          program.sourceCode
-        }
-        reductionInputs.lexerFile -> {
-          reductionInputs.lexerFile.textualFileContent
-        }
-        else -> error("unhandled file $origReductionFile")
-      }
+  override fun createOutputManagerForOriginalInput(): AbstractOutputManager {
+    val originalProgram =
+      PersesAstBuilder.loadGrammarFromString(
+        originalReductionInputs.parserFile.textualFileContent,
+      )
+    return createManagerFor(originalProgram)
+  }
 
+  inner class OutputManager(
+    program: PersesGrammar,
+  ) : SuppliedContentOutputManager(
+      originalReductionInputs,
+      shaAlgorithm,
+      // The parser grammar being reduced is the represented file; the lexer comes from the fixed
+      // content captured at construction.
+      fileRepresentedByProgram = originalReductionInputs.parserFile,
+      otherMutableFileContents = otherMutableFileContents,
+      renderFileRepresentedByProgram = { program.sourceCode },
+    ) {
     override fun writeMore(folder: ReductionFolder) {
-      val parserFile = folder.computeAbsPathForOrigFile(reductionInputs.mainFile)
-      val lexerFile = folder.computeAbsPathForOrigFile(reductionInputs.lexerFile)
-      val jarFilePath = folder.folder.resolve(jarFileName)
+      val parserFile = folder.computeAbsPathForOrigFile(originalReductionInputs.parserFile)
+      val lexerFile = folder.computeAbsPathForOrigFile(originalReductionInputs.lexerFile)
+      val jarFilePath = folder.path.resolve(jarFileName)
       AutoDeletableFolder(
-        folder.folder.resolve("temp_antlr_compiler_folder"),
+        folder.path.resolve("temp_antlr_compiler_folder"),
       ).use {
         val compiler =
           AntlrCompiler.createFromFiles(

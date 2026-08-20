@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -163,11 +163,11 @@ class DeltaFolder(
       check(reductionScript.exists())
       check(programFile.exists())
 
-      Shells.singleton
+      Shells.defaultSingleton
         .run(
           "./$scriptName",
-          folder.toPath(),
           captureOutput = true,
+          workingDirectory = folder.toPath(),
           environment = Shells.CURRENT_ENV,
         ).let {
           check(it.exitCode.isZero()) { it }

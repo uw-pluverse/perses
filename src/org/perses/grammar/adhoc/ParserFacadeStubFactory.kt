@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,6 +27,7 @@ class ParserFacadeStubFactory(
   val languageKindSetting: AbstractLanguageKindSetting,
   val parserFacadeClassSimpleName: String,
   val tokenNamesOfIdentifiers: List<String>,
+  val includeAutoDetectedIdentifierTokenTypes: Boolean,
 ) : AbstractGrammarStubFactory() {
   override fun createStub(
     packageName: String,
@@ -35,7 +36,7 @@ class ParserFacadeStubFactory(
     startRuleName: String,
   ): AbstractGrammarStub =
     when (languageKindSetting) {
-      is YamlLanguageKindSetting ->
+      is YamlLanguageKindSetting -> {
         YamlParserFacadeStubTemplate(
           packageName,
           parserClassSimpleName,
@@ -47,8 +48,11 @@ class ParserFacadeStubFactory(
           languageKindSetting.content,
           parserFacadeClassSimpleName = parserFacadeClassSimpleName,
           tokenNamesOfIdentifiers = tokenNamesOfIdentifiers,
+          includeAutoDetectedIdentifierTokenTypes = includeAutoDetectedIdentifierTokenTypes,
         )
-      is ExistingLanguageKindSetting ->
+      }
+
+      is ExistingLanguageKindSetting -> {
         ExistingLangParserFacadeStubTemplate(
           packageName,
           parserClassSimpleName,
@@ -60,7 +64,9 @@ class ParserFacadeStubFactory(
           languageKindSetting.content,
           parserFacadeClassSimpleName = parserFacadeClassSimpleName,
           tokenNamesOfIdentifiers = tokenNamesOfIdentifiers,
+          includeAutoDetectedIdentifierTokenTypes = includeAutoDetectedIdentifierTokenTypes,
         )
+      }
     }
 
   sealed class AbstractLanguageKindSetting(

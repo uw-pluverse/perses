@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,10 +16,14 @@
  */
 package org.perses.spartree
 
+import org.perses.program.ProgramSize
+
 abstract class AbstractSparTreeEditListener {
   class SparTreeEditEvent(
-    val programSizeBefore: Int,
-    edit: AbstractSparTreeEdit<*>,
+    val programSizeBefore: ProgramSize<*>,
+    val edit: AbstractSparTreeEdit<*>,
+    val programSizeAfter: ProgramSize<*>,
+    val cacheSizeBeforeClearance: Int = 0,
   ) {
     val program = edit.program
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,8 +17,9 @@
 package org.perses.spartree
 
 import com.google.common.base.MoreObjects
+import com.google.common.escape.CharEscaperBuilder
 import org.perses.antlr.RuleHierarchyEntry
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.AbstractPersesToken
 
 class LexerRuleSparTreeNode internal constructor(
   nodeId: Int,
@@ -38,10 +39,10 @@ class LexerRuleSparTreeNode internal constructor(
     get() = next
 
   override val labelPrefix: String
-    get() = "Token:" + token.lexemeText
+    get() = "Token:" + escaper.escape(token.lexemeText)
 
   override fun buildTokenIntervalInfoForCurrentNode() {
-    // do nothing
+    rawLeafTokenCount = 1
   }
 
   override fun internalCopyCurrentNode(computedNewNodeId: Int): LexerRuleSparTreeNode =
@@ -55,6 +56,12 @@ class LexerRuleSparTreeNode internal constructor(
     error("Cannot call this method on a token node.")
   }
 
+  override fun deleteCurrentNode() {
+    super.deleteCurrentNode()
+    prev = null
+    next = null
+  }
+
   override fun asLexerRule(): LexerRuleSparTreeNode = this
 
   override fun onChildRemoved(
@@ -65,12 +72,30 @@ class LexerRuleSparTreeNode internal constructor(
   }
 
   override var beginToken: LexerRuleSparTreeNode?
-    get() = this
-    set(_) = error("Cannot change this")
+    get() {
+      check(!isPermanentlyDeleted) {
+        "The current node $this is already deleted."
+      }
+      return this
+    }
+    set(value) {
+      check(value == null) {
+        "Can only set this value to null."
+      }
+    }
 
   override var endToken: LexerRuleSparTreeNode?
-    get() = this
-    set(_) = error("Cannot change this")
+    get() {
+      check(!isPermanentlyDeleted) {
+        "The current node $this is already deleted."
+      }
+      return this
+    }
+    set(value) {
+      check(value == null) {
+        "Can only set this value to null."
+      }
+    }
 
   override fun toString(): String =
     MoreObjects
@@ -78,4 +103,13 @@ class LexerRuleSparTreeNode internal constructor(
       .add("token", token)
       .addValue(super.toString())
       .toString()
+
+  companion object {
+    private val escaper =
+      CharEscaperBuilder()
+        .addEscape('\n', "\\n")
+        .addEscape('\t', "\\t")
+        .addEscape('\r', "\\r")
+        .toEscaper()
+  }
 }

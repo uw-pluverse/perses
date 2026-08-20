@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test")
+load("//test:test.bzl", "reduction_golden_test")
 
 reduction_golden_test(
     name = "reduce_c_program_with_identifier_replacement",
@@ -12,7 +12,7 @@ reduction_golden_test(
     },
     perses_bin = "//src/org/perses:perses",
     progress_dump_file = "progress_dump_identifier_replacement.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "t.c",
     test_script = "r.sh",
 )

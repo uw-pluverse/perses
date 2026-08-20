@@ -1,4 +1,4 @@
-load("//test/org/perses:test.bzl", "golden_test")
+load("//test:test.bzl", "golden_test")
 
 def pnf_pass_golden_test(
         name,

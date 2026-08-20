@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,15 +18,13 @@ package org.perses.fuzzer
 
 import com.google.common.collect.ImmutableList
 import com.google.common.primitives.ImmutableIntArray
-import org.perses.antlr.ParseTreeUtil
 import org.perses.antlr.RuleType
 import org.perses.antlr.TokenType
 import org.perses.fuzzer.languagemodel.AbstractLanguageModel
 import org.perses.fuzzer.languagemodel.FeatureOfSparTree
 import org.perses.grammar.AbstractParserFacade
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.AbstractPersesToken
 import org.perses.program.TokenizedProgram
-import org.perses.program.TokenizedProgramFactory
 import org.perses.spartree.AbstractSparTreeGenerator
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
@@ -51,25 +49,20 @@ class SparTreeFuzzer private constructor(
   tree: SparTree?,
   val isInitial: Boolean,
 ) {
-  private val identifierTokenType: ImmutableList<TokenType> = parserFacade.identifierTokenTypes
+  private val identifierTokenType: ImmutableList<TokenType> =
+    parserFacade.fusedIdentifierTokenTypes
   val sparTree: SparTree =
     tree ?: run {
       val parseTree = parserFacade.parseFile(seedFile.toPath())
-      val tokens = ParseTreeUtil.getTokens(parseTree.tree)
-      val tokenizedProgramFactory =
-        TokenizedProgramFactory.createFactory(
-          tokens,
-          parserFacade.language,
-        )
       val sparTreeNodeFactory =
         SparTreeNodeFactory(
-          parserFacade.metaTokenInfoDb,
-          tokenizedProgramFactory,
-          parserFacade.ruleHierarchy,
+          parserFacade,
         )
       SparTreeBuilder(
         sparTreeNodeFactory,
         parseTree,
+        simplifyTree = true,
+        canonicalTokenCountComputer = { null },
       ).result
     }
   private val identifierIndex: ImmutableIntArray
@@ -93,7 +86,7 @@ class SparTreeFuzzer private constructor(
 
   init {
     flattenedTree = flatSparTree(sparTree)
-    seedProgram = sparTree.programSnapshot
+    seedProgram = sparTree.programSnapshot.payload
     identifierIndex = buildIdentifierIndex(seedProgram.tokens)
   }
 
@@ -176,10 +169,11 @@ class SparTreeFuzzer private constructor(
       hashMapOf<AbstractSparTreeNode, List<AbstractSparTreeNode>>()
     val recursiveNodes =
       sparTree.realRoot
-        .boundedBreadthFirstSearchForFirstQualifiedNodes(
-          { node ->
+        .boundedBreadthFirstSearchToSelectNodes(
+          selectionPredicate = { node ->
             findAllRecursiveChildren(node, recursiveNodesToCorrespondingChildrenMap, random)
           },
+          stopAtFirstSelectionPerPath = true,
           maxBfsDepth = 10,
         ).toImmutableList()
     if (recursiveNodes.isEmpty()) {
@@ -358,7 +352,7 @@ class SparTreeFuzzer private constructor(
       val beginToken = nodeToBeDeleted.beginToken!!.token
       val endToken = nodeToBeDeleted.endToken!!.token
       var inRange = false
-      for (token in copiedTree.programSnapshot.tokens) {
+      for (token in copiedTree.programSnapshot.payload.tokens) {
         if (token == beginToken) {
           inRange = true
         }
@@ -372,7 +366,7 @@ class SparTreeFuzzer private constructor(
       }
       nodesToBeDeleted.add(nodeToBeDeleted)
     }
-    if (removedTokens.size == copiedTree.tokenCount) {
+    if (removedTokens.size == copiedTree.programSnapshot.surrogateTokenCount) {
       return null
     }
     builder.deleteNodes(nodesToBeDeleted)
@@ -381,7 +375,7 @@ class SparTreeFuzzer private constructor(
       return null
     }
     val edit = copiedTree.createNodeDeletionEdit(actionSet)
-    copiedTree.applyEdit(edit)
+    copiedTree.applyEdit(edit, canonicalTokenCount = null)
     numOfTreeLevelMutationApplied++
     return copiedTree
   }
@@ -593,19 +587,20 @@ class SparTreeFuzzer private constructor(
     }
     val children =
       node
-        .boundedBreadthFirstSearchForFirstQualifiedNodes(
-          { child: AbstractSparTreeNode ->
+        .boundedBreadthFirstSearchToSelectNodes(
+          selectionPredicate = { child: AbstractSparTreeNode ->
             val expectedSuperRuleType =
               child
                 .payload!!
                 .expectedAntlrRuleType
-                ?: return@boundedBreadthFirstSearchForFirstQualifiedNodes false
+                ?: return@boundedBreadthFirstSearchToSelectNodes false
             if (haveSameTokens(child, node)) {
-              return@boundedBreadthFirstSearchForFirstQualifiedNodes false
+              return@boundedBreadthFirstSearchToSelectNodes false
             }
             expectedSuperRuleType.isEqualToOrSuperOf(node.antlrRule!!)
           },
-          5,
+          stopAtFirstSelectionPerPath = true,
+          maxBfsDepth = 5,
         ).toImmutableList()
     if (children.isNotEmpty()) {
       recursiveChildren[node] = children
@@ -669,10 +664,10 @@ class SparTreeFuzzer private constructor(
           NodeReplacementActionSet.createByReplacingSingleNode(
             targetNode,
             replacingNode,
-            actionsDescription = "Replacing for generative mutation",
+            contextDescription = "Replacing for generative mutation",
           ),
         )
-      sparTree.applyEdit(edit)
+      sparTree.applyEdit(edit, canonicalTokenCount = null)
       return sparTree
     }
   }

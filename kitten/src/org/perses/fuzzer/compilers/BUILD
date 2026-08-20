@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "compiler_configuration",
@@ -18,7 +18,7 @@ kt_jvm_library(
     ],
     deps = [
         "//kitten/src/org/perses/fuzzer/config:testing_configuration",
-        "//src/org/perses/program:language_kind",
+        "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/util",
     ],
 )

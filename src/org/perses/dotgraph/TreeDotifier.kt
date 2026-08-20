@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -48,16 +48,30 @@ object TreeDotifier {
           ?: when (node) {
             is ParserRuleSparTreeNode -> {
               when (node.ruleType) {
-                RuleType.KLEENE_PLUS -> "(+)"
-                RuleType.KLEENE_STAR -> "(*)"
-                RuleType.OPTIONAL -> "(?)"
-                RuleType.ALT_BLOCKS -> "(|)" + node.antlrRule!!.ruleName
+                RuleType.KLEENE_PLUS -> {
+                  "(+)"
+                }
+
+                RuleType.KLEENE_STAR -> {
+                  "(*)"
+                }
+
+                RuleType.OPTIONAL -> {
+                  "(?)"
+                }
+
+                RuleType.ALT_BLOCKS -> {
+                  "(|)" + node.antlrRule!!.ruleName
+                }
+
                 RuleType.OTHER_RULE -> {
                   assert(node.antlrRule != null)
                   node.antlrRule!!.ruleName
                 }
 
-                else -> throw AssertionError("Cannot reach here")
+                else -> {
+                  throw AssertionError("Cannot reach here")
+                }
               }
             }
 

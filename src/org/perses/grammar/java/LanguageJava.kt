@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,7 +23,7 @@ import org.perses.program.LanguageKind
 object LanguageJava : LanguageKind(
   name = "java",
   extensions = ImmutableSet.of("java"),
-  defaultCodeFormatControl = EnumFormatControl.SINGLE_TOKEN_PER_LINE,
+  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
   origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
   allowedCodeFormatControl =
     ImmutableSet.of(

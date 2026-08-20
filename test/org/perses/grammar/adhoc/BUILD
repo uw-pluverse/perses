@@ -1,6 +1,7 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("@rules_java//java:defs.bzl", "java_binary")
 load(
-    "//test/org/perses:test.bzl",
+    "//test:test.bzl",
     "golden_test",
 )
 
@@ -20,7 +21,7 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
-        "//src/org/perses:perses_contants",
+        "//src/org/perses:perses_constants",
         "//src/org/perses/grammar/adhoc:adhoc_grammar_inaller_lib",
         "//src/org/perses/grammar/adhoc:adhoc_grammar_util",
         "//src/org/perses/grammar/adhoc:command_options",

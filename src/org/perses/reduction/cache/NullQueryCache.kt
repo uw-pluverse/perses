@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,27 +16,23 @@
  */
 package org.perses.reduction.cache
 
-import org.perses.program.TokenizedProgram
 import org.perses.reduction.PropertyTestResult
-import org.perses.reduction.cache.AbstractCacheRetrievalResult.CacheMiss
 import org.perses.reduction.io.AbstractOutputManager
+import org.perses.util.ImmutableIntArray
 
 class NullQueryCache : AbstractQueryCache() {
-  override fun getCachedResult(
-    program: TokenizedProgram,
-    outputManager: AbstractOutputManager,
-  ): AbstractCacheRetrievalResult = CacheMiss(owner = this, program = program, encoding = null)
+  override fun lookUp(outputManager: AbstractOutputManager): CacheLookupResult =
+    CacheLookupResult.MISS
 
-  override fun cacheProgramAndResult(
-    program: CacheMiss,
+  override fun recordUninteresting(
+    outputManager: AbstractOutputManager,
+    perFileNonBlankCharacterCounts: ImmutableIntArray,
     result: PropertyTestResult,
-  ) {
-    require(program.owner === this)
-  }
+  ) = Unit
 
   override fun cacheSize() = 0
 
-  override fun evictEntriesLargerThan(best: TokenizedProgram) = Unit
+  override fun evictEntriesNotSmallerThan(perFileNonBlankCharacterCounts: ImmutableIntArray) = Unit
 
   override fun triggerHeartBeat() = Unit
 

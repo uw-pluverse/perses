@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -124,18 +124,28 @@ class FuzzerDriver(
       .create()
   private val languageModel: AbstractLanguageModel =
     when (options.generalFlags.languageModelType) {
-      LanguageModelType.NULL_MODEL -> NullLanguageModel(parserFacade)
-      LanguageModelType.N_GRAM_MODEL -> error("N_GRAM_MODEL is unavailable for now")
-      LanguageModelType.N_DEPTH_TREE_MODEL ->
+      LanguageModelType.NULL_MODEL -> {
+        NullLanguageModel(parserFacade)
+      }
+
+      LanguageModelType.N_GRAM_MODEL -> {
+        error("N_GRAM_MODEL is unavailable for now")
+      }
+
+      LanguageModelType.N_DEPTH_TREE_MODEL -> {
         NDepthTreeModel(contextSizeLimit = 3, parserFacade, allowToEnableGuidance)
-      else -> error("invalid language model option.")
+      }
     }
   private val generator =
     when (options.mutationControl.generatorType) {
-      SparTreeGeneratorType.NULL_GENERATOR -> null
+      SparTreeGeneratorType.NULL_GENERATOR -> {
+        null
+      }
+
       SparTreeGeneratorType.RANDOM_GENERATOR -> {
         RandomSparTreeGenerator(parserFacade, random)
       }
+
       SparTreeGeneratorType.GUIDED_GENERATOR -> {
         if (languageModel is NDepthTreeModel) {
           GuidedSparTreeGenerator(
@@ -147,7 +157,6 @@ class FuzzerDriver(
           error("The language model selected cannot guide the generator")
         }
       }
-      else -> error("Unreachable")
     }
   private val scheduler: FuzzingScheduler
   private val coverageCollector: ICoverageCollector =
@@ -165,9 +174,11 @@ class FuzzerDriver(
       FuzzerMode.ONLY_ON_INITIAL_SEED -> {
         runInitialSeeds()
       }
+
       FuzzerMode.ONLY_GENERATE_MUTANTS -> {
         startCreatingMutants()
       }
+
       FuzzerMode.NORMAL_FUZZING -> {
         startFuzzing()
       }
@@ -383,7 +394,11 @@ class FuzzerDriver(
   private fun generateNewInstanceAndAddToFuzzerInstances() {
     assert(generator != null)
     val generatedTree = generator!!.generateFromStartSymbol() ?: return
-    val generatedSource = SingleTokenPerLinePrinter.print(generatedTree.programSnapshot).sourceCode
+    val generatedSource =
+      SingleTokenPerLinePrinter
+        .print(
+          generatedTree.programSnapshot.payload,
+        ).sourceCode
     val generatedFile =
       File(
         interestingFolder,

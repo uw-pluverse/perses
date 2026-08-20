@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,17 +16,20 @@
  */
 package org.perses.reduction.event
 
+import org.perses.reduction.io.PerFileSizeMetrics
+
 class LevelGranularityReductionEndEvent(
   startEvent: LevelGranularityReductionStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
+  perFileSizeMetrics: PerFileSizeMetrics,
   val maxNumOfNodesPerPartition: Int,
 ) : AbstractEndEvent<LevelGranularityReductionStartEvent>(
     startEvent,
     currentTimeMillis,
-    programSize,
+    perFileSizeMetrics,
   ) {
   val iteration = startEvent.iteration
 
-  override fun initialProgramSize(): Int = startEvent.initialProgramSize()
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    startEvent.initialPerFileSizeMetrics()
 }

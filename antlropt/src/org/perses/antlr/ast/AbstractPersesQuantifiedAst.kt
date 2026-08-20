@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -26,13 +26,17 @@ abstract class AbstractPersesQuantifiedAst(
 ) : AbstractPersesRuleElement() {
   init {
     when (body.tag) {
-      AstTag.EPSILON, AstTag.STAR, AstTag.PLUS, AstTag.OPTIONAL ->
+      AstTag.EPSILON, AstTag.STAR, AstTag.PLUS, AstTag.OPTIONAL -> {
         error(
           "Kleene node is disallowed in a quantified node: " +
             "${body::class.java}, current=${this::class.java}." +
             "body=${body.sourceCode}",
         )
-      else -> Unit
+      }
+
+      else -> {
+        Unit
+      }
     }
   }
 

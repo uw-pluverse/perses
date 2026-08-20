@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.reduction.cache
 
 import com.google.common.collect.ImmutableList
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.AbstractPersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.util.FileStreamPool
 import java.lang.AutoCloseable
@@ -35,29 +35,6 @@ class QueryCacheTimeProfiler(
       .append('\t')
       .append("origin_token_count=")
       .append(tokensInOrigin.size.toString())
-      .append('\t')
-      .append("duration=")
-      .append(nanoDuration.toString())
-      .append('\n')
-      .flush()
-  }
-
-  override fun onDecodingProgram(
-    tokensInOrigin: ImmutableList<out AbstractPersesToken>,
-    encoding: RccProgramEncoding,
-    nanoDuration: Long,
-  ) {
-    writer!!
-      .append("decode")
-      .append('\t')
-      .append("origin_token_count=")
-      .append(tokensInOrigin.size.toString())
-      .append('\t')
-      .append("encoding_token_count=")
-      .append(encoding.tokenCount.toString())
-      .append('\t')
-      .append("encoding_length=")
-      .append(encoding.encodingSize().toString())
       .append('\t')
       .append("duration=")
       .append(nanoDuration.toString())

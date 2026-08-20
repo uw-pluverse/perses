@@ -1,8 +1,8 @@
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
 
 kt_jvm_library(
     name = "language_model",
@@ -17,6 +17,7 @@ kt_jvm_library(
         "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/spartree",
         "//src/org/perses/spartree:tree_node_filter_result",
+        "//src/org/perses/util:Serialization",
     ],
 )
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,24 +16,36 @@
  */
 package org.perses.spartree
 
-import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import org.perses.util.toImmutableList
 
 class NodeReplacementActionSet private constructor(
   childHoistingActions: ImmutableList<NodeReplacementAction>,
-  actionsDescription: String,
-) : AbstractActionSet<NodeReplacementAction>(
-    childHoistingActions,
-    actionsDescription,
+  contextDescription: String,
+  transformationName: String,
+) : TargetedActionSet<NodeReplacementAction>(
+    actions = childHoistingActions,
+    contextDescription = contextDescription,
     canBeSorted = true,
+    transformationName = transformationName,
   ) {
   init {
     require(childHoistingActions.isNotEmpty())
   }
 
+  override val structureDescription: String
+    get() =
+      if (actions.size == 1) {
+        actions.joinToString(separator = ",", prefix = "[", postfix = "]") { it.conciseDescription }
+      } else {
+        actions.joinToString(separator = ",", prefix = "[replace: ", postfix = "]") {
+          "${it.targetNode.nodeId}_with_${it.replacingNode.nodeId}"
+        }
+      }
+
   class Builder(
-    private val actionsDescription: String,
+    private val contextDescription: String,
+    private val transformationName: String = REPLACEMENT,
   ) {
     private val node2ReplacementMap = LinkedHashMap<AbstractSparTreeNode, AbstractSparTreeNode>()
 
@@ -51,34 +63,35 @@ class NodeReplacementActionSet private constructor(
           .map { (key, value) -> NodeReplacementAction(key, value) }
           .sorted()
           .toImmutableList(),
-        actionsDescription,
+        contextDescription,
+        transformationName,
       )
   }
 
-  override fun toString(): String =
-    MoreObjects
-      .toStringHelper(this)
-      .add("desc", actionsDescription)
-      .add("actions", actions)
-      .toString()
-
   companion object {
+    // The operation kind reported as the transformation name when the caller does not override it
+    // (astra supplies its own transformation name through this same parameter).
+    const val REPLACEMENT = "Replacement"
+
     @JvmStatic
     fun createByReplacingSingleNode(
       targetNode: AbstractSparTreeNode,
       replacingNode: AbstractSparTreeNode,
-      actionsDescription: String,
+      contextDescription: String,
+      transformationName: String = REPLACEMENT,
     ): NodeReplacementActionSet =
       createByReplacingSingleNode(
         NodeReplacementAction(targetNode, replacingNode),
-        actionsDescription,
+        contextDescription,
+        transformationName,
       )
 
     @JvmStatic
     fun createByReplacingSingleNode(
       action: NodeReplacementAction,
-      actionsDescription: String,
+      contextDescription: String,
+      transformationName: String = REPLACEMENT,
     ): NodeReplacementActionSet =
-      NodeReplacementActionSet(ImmutableList.of(action), actionsDescription)
+      NodeReplacementActionSet(ImmutableList.of(action), contextDescription, transformationName)
   }
 }

@@ -18,8 +18,8 @@ cd perses/benchmark
 ./init_docker.sh
 ```
 Note:
-Ensure the `bazel --version` does not output `0.29.1`.  
-If it does, then `bazel` is not properly installed.  
+Ensure the `bazelisk --version` does not output `0.29.1`.  
+If it does, then `bazelisk` is not properly installed.  
 Try to trace the stdout for error messages.
 
 

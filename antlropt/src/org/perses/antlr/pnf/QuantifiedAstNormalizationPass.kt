@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -48,13 +48,17 @@ class QuantifiedAstNormalizationPass : AbstractPnfPass() {
         is TransformDecision.Keep -> {
           check(factorEdit.newRules.isEmpty) { factorEdit.newRules }
         }
+
         is TransformDecision.Replace -> {
           toReplace.add(RuleEditTriple(ruleName, oldDef, decision.newValue))
           factorEdit.newRules.ruleNameAltPairSequence().forEach {
             toAdd.put(it.key, it.value)
           }
         }
-        else -> TODO(decision.toString())
+
+        else -> {
+          TODO(decision.toString())
+        }
       }.exhaustive
     }
     toReplace.forEach { it.applyTo(mutable) }

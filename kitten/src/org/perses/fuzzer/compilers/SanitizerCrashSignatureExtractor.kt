@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -40,18 +40,21 @@ class SanitizerCrashSignatureExtractor {
               result.addAll(ubMessage.split(NUMBER_REGEX))
             }
           }
+
           it.contains(ASAN_ERROR) -> {
             val matchResult = ASAN_ERROR_PATTERN.matchEntire(it.trim())
             if (matchResult != null && matchResult.groupValues.size > 1) {
               result.add(matchResult.groupValues[1].split(HEX_REGEX)[0])
             }
           }
+
           it.contains(ASAN_SUMMARY) -> {
             val summary = it.split(LINE_NUMBER)
             for (item in summary) {
               result.addAll(item.split(TEMP_PATH))
             }
           }
+
           else -> {
             result.add(it)
           }

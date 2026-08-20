@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,16 +15,15 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.spartree
-
 import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import org.perses.antlr.GrammarHierarchy
-import org.perses.program.PersesTokenFactory
+import org.perses.program.AbstractPersesToken
+import org.perses.program.ProgramSize
 import org.perses.program.TokenizedProgram
-import org.perses.program.TokenizedProgramFactory
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy
 import org.perses.util.Util
 import org.perses.util.Util.lazyAssert
@@ -37,7 +36,26 @@ class SparTree internal constructor(
   realRoot: AbstractSparTreeNode?,
   val sparTreeNodeFactory: SparTreeNodeFactory,
   specifiedSentinelRoot: SparTreeSentinelRootNode? = null,
+  initialCanonicalTokenCount: Int?,
+  val enableNodeActionSetCache: Boolean = false,
+  /**
+   * Whether the parse that produced this tree recovered from syntax errors -- i.e. the source did not
+   * parse cleanly under [sparTreeNodeFactory]'s grammar and was built by tolerant parsing. Carried on
+   * the tree (not snapshotted elsewhere) so it stays current across reparses: every rebuild via
+   * [SparTreeBuilder] sets it from the fresh parse, and a [deepCopy] preserves it. Defaults to false
+   * for the clean/strict case.
+   */
+  val hasSyntaxErrors: Boolean = false,
 ) : AbstractUnmodifiableSparTree() {
+  private val nodeActionSetCache: AbstractNodeActionSetCache =
+    if (enableNodeActionSetCache) NodeActionSetCache() else NullNodeActionSetCache
+
+  fun isNodeActionSetCachedOrCacheIt(actionSet: AbstractActionSet<*>): NodeActionSetCacheResult =
+    nodeActionSetCache.isCachedOrCacheIt(actionSet)
+
+  val nodeActionSetCacheSize: Int
+    get() = nodeActionSetCache.size
+
   init {
     require(realRoot == null || !realRoot.isPermanentlyDeleted) {
       """The realRoot cannot be marked as deleted. 
@@ -65,9 +83,6 @@ class SparTree internal constructor(
 
   val grammarHierarchy: GrammarHierarchy
     get() = sparTreeNodeFactory.grammarHierarchy
-
-  val tokenizedProgramFactory: TokenizedProgramFactory
-    get() = sparTreeNodeFactory.tokenizedProgramFactory
 
   internal var version = 0
     private set
@@ -107,7 +122,7 @@ class SparTree internal constructor(
   internal val dummyTokenHead =
     LexerRuleSparTreeNode(
       Int.MIN_VALUE,
-      PersesTokenFactory.InvalidToken,
+      AbstractPersesToken.Invalid,
       antlrRule = null,
     )
 
@@ -115,10 +130,10 @@ class SparTree internal constructor(
   internal val dummyTokenTail =
     LexerRuleSparTreeNode(
       Int.MIN_VALUE,
-      PersesTokenFactory.InvalidToken,
+      AbstractPersesToken.Invalid,
       antlrRule = null,
     )
-  private var program: TokenizedProgram
+  private var programWithCanonicalSize: ProgramSize<TokenizedProgram>
   private val editListeners = ArrayList<AbstractSparTreeEditListener>()
 
   fun isDummyNode(node: LexerRuleSparTreeNode): Boolean =
@@ -198,19 +213,23 @@ class SparTree internal constructor(
     return AbstractSparTreeEdit.createDeletionSparTreeEdit(this, actionSet)
   }
 
-  fun createNodeReplacementEdit(actionSet: NodeReplacementActionSet): DescendantHoistingTreeEdit =
+  fun createDescendantHoistingEdit(
+    actionSet: NodeReplacementActionSet,
+  ): DescendantHoistingTreeEdit =
     AbstractSparTreeEdit.createReplacementSparTreeEdit(this, actionSet)
 
   fun createRootReplacementEdit(
     newRoot: AbstractSparTreeNode,
-    actionsDescription: String,
+    contextDescription: String,
+    transformationName: String,
   ): AnyNodeReplacementTreeEdit {
     require(newRoot.parent == null) { "New root node must have no parent" }
     return createAnyNodeReplacementEdit(
       NodeReplacementActionSet.createByReplacingSingleNode(
         targetNode = realRoot,
         replacingNode = newRoot,
-        actionsDescription = actionsDescription,
+        contextDescription = contextDescription,
+        transformationName = transformationName,
       ),
     )
   }
@@ -224,28 +243,43 @@ class SparTree internal constructor(
     AbstractSparTreeEdit.createLatraGeneralTreeEdit(this, actionSet)
 
   @Synchronized
-  fun applyEdit(treeEdit: AbstractSparTreeEdit<*>) {
-    val programSizeBefore = program.tokenCount
+  fun applyEdit(
+    treeEdit: AbstractSparTreeEdit<*>,
+    canonicalTokenCount: Int?,
+  ) {
+    if (treeEdit is EmptySparTreeEdit) {
+      return
+    }
+    val cacheSizeBefore = nodeActionSetCacheSize
+    nodeActionSetCache.clear()
+    val programSizeBefore = programWithCanonicalSize
     treeEdit.applyToTree()
-    updateLeafTokenCount()
+    programWithCanonicalSize =
+      treeEdit.program.computeSize(
+        payload = treeEdit.program,
+        canonicalTokenCount = canonicalTokenCount,
+      )
     val event =
       AbstractSparTreeEditListener.SparTreeEditEvent(
-        programSizeBefore,
-        treeEdit,
+        programSizeBefore = programSizeBefore,
+        edit = treeEdit,
+        programSizeAfter = programWithCanonicalSize,
+        cacheSizeBeforeClearance = cacheSizeBefore,
       )
-    program = event.program
-    lazyAssert({ program.tokens == computeTokenizedProgram().tokens }) {
-      """|passed-in program: ${program.tokens}
-         |computed program:  ${computeTokenizedProgram().tokens}
-         |
-      """.trimMargin()
-    }
     editListeners.forEach { it.onAfterSparTreeEditApplied(event) }
     ++version
     dirty = true
     lazyAssert({ validateTreeIntegrity() }) {
       "Invalid spartree after applying edit ${treeEdit::class}"
     }
+    lazyAssert(
+      test = {
+        programSnapshot.payload == event.program
+      },
+      message = {
+        "Invalid programSnapshot after applying edit."
+      },
+    )
   }
 
   fun registerSparTreeEditListeners(listeners: List<AbstractSparTreeEditListener>) {
@@ -323,33 +357,32 @@ class SparTree internal constructor(
       }.toImmutableList()
 
   /** The returned program might be stale if this tree is modified later.  */
-  override val programSnapshot: TokenizedProgram
+  override val programSnapshot: ProgramSize<TokenizedProgram>
     get() {
       lazyAssert { validateTreeIntegrity() }
-      lazyAssert({ program.tokens == computeTokenizedProgram().tokens }) {
-        val snapshot = program.tokens
-        val computed = computeTokenizedProgram().tokens
-        """
+      // Note that the following cannot be put in the #validateTreeIntegrity, as
+      // the tree edit might update the tree but has not yet updated the program snapshot.
+      lazyAssert(
+        test = { programWithCanonicalSize.payload.tokens == computeTokenizedProgram().tokens },
+        message = {
+          val snapshot = programWithCanonicalSize.payload.tokens.map { it.lexemeText }
+          val computed = computeTokenizedProgram().tokens.map { it.lexemeText }
+          """
           |
           |program:  $snapshot
           |
           |computed: $computed
-        """.trimMargin()
-      }
-      return program
+          |
+          """.trimMargin()
+        },
+      )
+      return programWithCanonicalSize
     }
 
   fun customizeProgram(customizer: AbstractTokenizedProgramCustomizer): TokenizedProgram {
     realRoot.preOrderVisit { customizer.visit(it) }
-    return TokenizedProgram(customizer.result, tokenizedProgramFactory)
+    return TokenizedProgram(customizer.result)
   }
-
-  fun updateLeafTokenCount(): Int =
-    if (hasRealRoot()) {
-      realRoot.updateLeafTokenCount()
-    } else {
-      0
-    }
 
   fun printTreeStructureToStdout() {
     println(printTreeStructure())
@@ -370,12 +403,16 @@ class SparTree internal constructor(
         realRoot = it,
         sparTreeNodeFactory = sparTreeNodeFactory,
         specifiedSentinelRoot = sentinelRootCopy,
+        initialCanonicalTokenCount = programWithCanonicalSize.canonicalTokenCount,
+        enableNodeActionSetCache = enableNodeActionSetCache,
+        // A copy is the same logical tree, not a reparse, so it keeps the originating parse's state.
+        hasSyntaxErrors = hasSyntaxErrors,
       )
     }
   }
 
   private fun computeTokenizedProgram(): TokenizedProgram =
-    tokenizedProgramFactory.createFromLeaves(
+    TokenizedProgram(
       leafNodeSequence().transformToImmutableList { it.token },
     )
 
@@ -383,6 +420,18 @@ class SparTree internal constructor(
     if (!hasRealRoot()) {
       return true
     }
+    lazyAssert(
+      test = {
+        leafNodeSequence().all { !it.isPermanentlyDeleted }
+      },
+      message = {
+        "Some leaf nodes are deleted already. " +
+          leafNodeSequence()
+            .filter { it.isPermanentlyDeleted }
+            .map { "${it.nodeId}:${it.token.lexemeText}" }
+            .toList()
+      },
+    )
     val leafNodes =
       ImmutableList.builder<LexerRuleSparTreeNode>().let { builder ->
         realRoot.postOrderVisit {
@@ -437,6 +486,16 @@ class SparTree internal constructor(
       while (nodeInfo != null && nodeInfo.isParserRuleNode()) {
         val node = nodeInfo.asParserRule()
         var changed = false
+        val oldTokenCount = node.rawLeafTokenCount
+        var countNum = 0
+        val num = node.childCount
+        for (i in 0 until num) {
+          countNum += node.getChild(i).rawLeafTokenCount
+        }
+        if (oldTokenCount != countNum) {
+          node.rawLeafTokenCount = countNum
+          changed = true
+        }
         val leftmostToken = node.computeLeftmostTokenBasedOnChildren()
         if (node.beginToken !== leftmostToken) {
           node.beginToken = leftmostToken
@@ -457,21 +516,28 @@ class SparTree internal constructor(
     }
 
     internal fun fixLeafLinkByDeleting(
-      leftInclusive: LexerRuleSparTreeNode,
-      rightExclusive: LexerRuleSparTreeNode,
+      deletionRegionLeftInclusive: LexerRuleSparTreeNode,
+      deletionRegionRightExclusive: LexerRuleSparTreeNode,
     ) {
-      if (leftInclusive === rightExclusive) {
+      if (deletionRegionLeftInclusive === deletionRegionRightExclusive) {
         return
       }
-      val prevLeftInclusive = leftInclusive.prev!!
-      prevLeftInclusive.next = rightExclusive
-      rightExclusive.prev = prevLeftInclusive
+      val prevLeftInclusive = deletionRegionLeftInclusive.prev!!
+      prevLeftInclusive.next = deletionRegionRightExclusive
+      deletionRegionRightExclusive.prev = prevLeftInclusive
     }
   }
 
   fun fixLinkIntegrityAndUpdateProgram() {
     fixLinkIntegrity()
-    program = computeTokenizedProgram()
+    programWithCanonicalSize =
+      computeTokenizedProgram().let { program ->
+        program.computeSize(
+          payload = program,
+          canonicalTokenCount = programWithCanonicalSize.canonicalTokenCount,
+        )
+      }
+    lazyAssert(test = { validateTreeIntegrity() })
   }
 
   private fun fixLinkIntegrity() {
@@ -483,8 +549,13 @@ class SparTree internal constructor(
   }
 
   init {
-    updateLeafTokenCount()
     fixLinkIntegrity()
-    program = computeTokenizedProgram()
+    val tokenizedProgram = computeTokenizedProgram()
+    programWithCanonicalSize =
+      tokenizedProgram.computeSize(
+        payload = tokenizedProgram,
+        canonicalTokenCount = initialCanonicalTokenCount ?: tokenizedProgram.tokenCount,
+      )
+    lazyAssert(test = { validateTreeIntegrity() })
   }
 }

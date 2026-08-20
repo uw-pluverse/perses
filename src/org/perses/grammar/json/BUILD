@@ -15,6 +15,7 @@ kt_jvm_library(
 
 pnf_parser_facade_library(
     name = "parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.json",
     language_kind_full_name = "org.perses.grammar.json.LanguageJson",
     output_jar_file_name = "parser_facade.jar",

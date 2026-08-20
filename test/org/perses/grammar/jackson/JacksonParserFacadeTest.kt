@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,12 +19,12 @@ package org.perses.grammar.jackson
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.google.common.truth.Truth.assertThat
-import org.antlr.runtime.Token
+import org.antlr.v4.runtime.Token
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.ParseTreeUtil
-import org.perses.program.TokenizedProgramFactory
+import org.perses.grammar.ParseErrorHandling
 import org.perses.program.printer.YamlTokenizedProgramPrinter
 import org.perses.spartree.SparTreeBuilder
 import org.perses.spartree.SparTreeNodeFactory
@@ -50,12 +50,7 @@ class JacksonParserFacadeTest {
       |
     """.trimMargin()
 
-  private val sparTreeNodeFactory =
-    SparTreeNodeFactory(
-      metaTokenInfoDb = facade.metaTokenInfoDb,
-      tokenizedProgramFactory = TokenizedProgramFactory.createEmptyFactory(facade.language),
-      grammarHierarchy = facade.ruleHierarchy,
-    )
+  private val sparTreeNodeFactory = SparTreeNodeFactory(facade)
 
   @Test
   fun testSingleString() {
@@ -99,7 +94,7 @@ class JacksonParserFacadeTest {
 
   @Test
   fun testParse() {
-    val tree = facade.parseString(yamlString)
+    val tree = facade.parseString(yamlString, errorMode = ParseErrorHandling.STRICT)
     val tokensFromTree = ParseTreeUtil.getTokens(tree.tree)
     assertThat(tokensFromTree.last().type).isEqualTo(Token.EOF)
     val tokensFromTreeWithoutEOF =
@@ -112,9 +107,13 @@ class JacksonParserFacadeTest {
     assertThat(tokensFromTreeWithoutEOF).isEqualTo(tokenizedTokens)
 
     val sparTree =
-      SparTreeBuilder(sparTreeNodeFactory = sparTreeNodeFactory, tree, simplifyTree = true)
-        .result
-    val tokenizedProgram = sparTree.programSnapshot
+      SparTreeBuilder(
+        sparTreeNodeFactory = sparTreeNodeFactory,
+        tree,
+        simplifyTree = true,
+        canonicalTokenCountComputer = { null },
+      ).result
+    val tokenizedProgram = sparTree.programSnapshot.payload
     tokenizedProgram.tokens.map { it.lexemeText }.let { tokens ->
       assertThat(tokens).isEqualTo(tokensFromTreeWithoutEOF)
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,23 +18,30 @@ package org.perses.util
 
 import com.google.common.util.concurrent.ListeningExecutorService
 import com.google.common.util.concurrent.MoreExecutors
+import com.google.common.util.concurrent.ThreadFactoryBuilder
 import java.time.Duration
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 object DaemonThreadPool {
-  fun create(numThreads: Int): ListeningExecutorService =
-    MoreExecutors.listeningDecorator(
+  fun create(
+    numThreads: Int,
+    creatorObject: Any,
+  ): ListeningExecutorService {
+    val threadNamePrefix = creatorObject::class.simpleName!!
+    return MoreExecutors.listeningDecorator(
       Executors.newFixedThreadPool(
         numThreads,
-      ) { runnable ->
-        val thread = Executors.defaultThreadFactory().newThread(runnable)
-        thread.isDaemon = true
-        thread
-      },
+        ThreadFactoryBuilder()
+          .setNameFormat("pool-$threadNamePrefix-thread-%d")
+          .setDaemon(true)
+          .build(),
+      ),
     )
+  }
 
-  fun createSingleThreadPool() = create(numThreads = 1)
+  fun createSingleThreadPool(creatorObject: Any) =
+    create(numThreads = 1, creatorObject = creatorObject)
 
   private val DEFAULT_SHUTDOWN_DURATION: Duration = Duration.ofMinutes(2)
 

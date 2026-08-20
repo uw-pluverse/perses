@@ -50,6 +50,9 @@ AUX_TOKEN__asmStatement_1
 IncludeDirective
     : '#' 'include' (~[\n])*
     ;
+PreprocessingDirective
+    : '#' ('\\' '\r'? '\n' | ~[\r\n])*
+    ;
 Auto
     : 'auto'
     ;
@@ -500,26 +503,6 @@ fragment SChar
     | EscapeSequence
     | '\\\n'
     | '\\\r\n'
-    ;
-ComplexDefine
-    : '#' Whitespace? 'define' (~[#])* -> skip
-
-    ;
-AsmBlock
-    : 'asm' '{' (~[}])* '}' -> skip
-
-    ;
-LineAfterPreprocessing
-    : '#line' Whitespace* (~[\r\n])* -> skip
-
-    ;
-LineDirective
-    : '#' Whitespace? DecimalConstant Whitespace? StringLiteral (~[\r\n])* -> skip
-
-    ;
-PragmaDirective
-    : '#' Whitespace? 'pragma' Whitespace (~[\r\n])* -> skip
-
     ;
 Whitespace
     : [ \t]+ -> skip

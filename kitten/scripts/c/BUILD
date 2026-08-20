@@ -1,3 +1,5 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
 # Disabled for now, due to breakage.
 # This test only works on Linux. MacOS does not have objdump.
 sh_test(

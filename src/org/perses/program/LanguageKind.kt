@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -32,6 +32,7 @@ abstract class LanguageKind(
   val defaultFormatterCommandCreators: ImmutableList<IShellCommandOnPathCreator> =
     ImmutableList.of(),
   val hidden: Boolean = false,
+  val orderedImportantLiterals: ImmutableList<String> = ImmutableList.of(),
 ) : AbstractDataKind(name, extensions) {
   init {
     check(defaultCodeFormatControl in allowedCodeFormatControl) {
@@ -48,6 +49,7 @@ abstract class LanguageKind(
     } else {
       defaultFormatterCommandCreators.firstNotNullOfOrNull { it.tryCreate() }
     }
+
 
   override fun onEquals(other: Any) {
     check(other is LanguageKind)

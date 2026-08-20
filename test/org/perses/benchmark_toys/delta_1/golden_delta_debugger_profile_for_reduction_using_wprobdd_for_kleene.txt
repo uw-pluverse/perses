@@ -1,11 +1,26 @@
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=56}
+  class=NodeContainerForListMinimizer
+  element=parser(4,#tokens=56,last-pos=10:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__translationUnit_3]
 The original input has 2 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=360, parent=2}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=10}
+  class=NodeContainerForListMinimizer
+  element=parser(362,#tokens=10,last-pos=1:28)
 --Element 1
-  index=1, payload=ElementWrapper{index=1, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=5, parent=2}
+  index=1, payload=WProbDDElementPayload{prob=0.25, weight=46}
+  class=NodeContainerForListMinimizer
+  element=parser(7,#tokens=46,last-pos=10:0)
 Testing the empty input.
 Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
 Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
@@ -13,35 +28,44 @@ Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0,1]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__compoundStatement_1]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=13, parent=10}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=32}
+  class=NodeContainerForListMinimizer
+  element=parser(15,#tokens=32,last-pos=9:12)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]
 The original input has 6 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=267, parent=13}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=5}
+  class=NodeContainerForListMinimizer
+  element=parser(269,#tokens=5,last-pos=4:14)
 --Element 1
-  index=1, payload=ElementWrapper{index=1, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=219, parent=13}
+  index=1, payload=WProbDDElementPayload{prob=0.25, weight=7}
+  class=NodeContainerForListMinimizer
+  element=parser(221,#tokens=7,last-pos=5:23)
 --Element 2
-  index=2, payload=ElementWrapper{index=2, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=149, parent=13}
+  index=2, payload=WProbDDElementPayload{prob=0.25, weight=7}
+  class=NodeContainerForListMinimizer
+  element=parser(151,#tokens=7,last-pos=6:18)
 --Element 3
-  index=3, payload=ElementWrapper{index=3, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=99, parent=13}
+  index=3, payload=WProbDDElementPayload{prob=0.25, weight=5}
+  class=NodeContainerForListMinimizer
+  element=parser(101,#tokens=5,last-pos=7:18)
 --Element 4
-  index=4, payload=ElementWrapper{index=4, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=49, parent=13}
+  index=4, payload=WProbDDElementPayload{prob=0.25, weight=5}
+  class=NodeContainerForListMinimizer
+  element=parser(51,#tokens=5,last-pos=8:18)
 --Element 5
-  index=5, payload=ElementWrapper{index=5, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=22, parent=13}
+  index=5, payload=WProbDDElementPayload{prob=0.25, weight=3}
+  class=NodeContainerForListMinimizer
+  element=parser(24,#tokens=3,last-pos=9:12)
 Testing the empty input.
 Try deleting: [0, 1, 2, 3, 4, 5]: Uninteresting. Local rate: 6/6=100.00%
 Try deleting: [0, 1, 2]: Interesting. Local rate: 6/6=100.00%
@@ -53,63 +77,76 @@ Try deleting: [4]: Uninteresting. Local rate: 1/6=16.67%
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[4]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=307, parent=305}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=10}
+  class=NodeContainerForListMinimizer
+  element=parser(309,#tokens=10,last-pos=3:32)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__declaration_2]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=367, parent=362}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=8}
+  class=NodeContainerForListMinimizer
+  element=parser(369,#tokens=8,last-pos=1:27)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=371, parent=369}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=7}
+  class=NodeContainerForListMinimizer
+  element=parser(373,#tokens=7,last-pos=1:27)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=68, parent=50}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=4}
+  class=NodeContainerForListMinimizer
+  element=parser(70,#tokens=4,last-pos=8:17)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_star:kleene_star__postfixExpression_2]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=72, parent=70}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=3}
+  class=NodeContainerForListMinimizer
+  element=parser(74,#tokens=3,last-pos=8:17)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
 The original input has 2 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'const', line=1, column=11}, LexerRuleSparTreeNode{id=397, parent=382}}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(399,pos=1:11)
 --Element 1
-  index=1, payload=ElementWrapper{index=1, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'char', line=1, column=17}, LexerRuleSparTreeNode{id=395, parent=382}}
+  index=1, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(397,pos=1:17)
 Testing the empty input.
 Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
 Try deleting: [0, 1]: Skipped. Local rate: 2/2=100.00%
@@ -118,53 +155,124 @@ Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0,1]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__parameterTypeList_2]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=378, parent=377}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=2}
+  class=NodeContainerForListMinimizer
+  element=parser(380,#tokens=2,last-pos=1:24)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__typeName_1]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=387, parent=384}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=parser(389,#tokens=1,last-pos=1:21)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__pointer_8]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=94, parent=74}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(392,pos=1:21)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=354, parent=6}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(404,pos=1:0)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=parser(96,#tokens=1,last-pos=8:8)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__primaryExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(97,pos=8:8)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=parser(356,#tokens=1,last-pos=3:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(360,pos=3:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=21}
+  class=NodeContainerForListMinimizer
+  element=parser(409,#tokens=21,last-pos=4:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__translationUnit_3]
 The original input has 2 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=483, parent=405}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=10}
+  class=NodeContainerForListMinimizer
+  element=parser(487,#tokens=10,last-pos=1:28)
 --Element 1
-  index=1, payload=ElementWrapper{index=1, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=408, parent=405}
+  index=1, payload=WProbDDElementPayload{prob=0.25, weight=11}
+  class=NodeContainerForListMinimizer
+  element=parser(412,#tokens=11,last-pos=4:0)
 Testing the empty input.
 Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
 Try deleting: [0, 1]: Skipped. Local rate: 2/2=100.00%
@@ -173,63 +281,88 @@ Try deleting: [0]: Uninteresting. Local rate: 2/2=100.00%
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0,1]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__declaration_2]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=490, parent=485}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=8}
+  class=NodeContainerForListMinimizer
+  element=parser(494,#tokens=8,last-pos=1:27)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=494, parent=492}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=7}
+  class=NodeContainerForListMinimizer
+  element=parser(498,#tokens=7,last-pos=1:27)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__compoundStatement_1]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=416, parent=413}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=5}
+  class=NodeContainerForListMinimizer
+  element=parser(420,#tokens=5,last-pos=3:18)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=439, parent=421}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=5}
+  class=NodeContainerForListMinimizer
+  element=parser(424,#tokens=5,last-pos=3:18)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=443, parent=441}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=4}
+  class=NodeContainerForListMinimizer
+  element=parser(443,#tokens=4,last-pos=3:17)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_star:kleene_star__postfixExpression_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=3}
+  class=NodeContainerForListMinimizer
+  element=parser(447,#tokens=3,last-pos=3:17)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
 The original input has 2 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'const', line=1, column=11}, LexerRuleSparTreeNode{id=520, parent=505}}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(524,pos=1:11)
 --Element 1
-  index=1, payload=ElementWrapper{index=1, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=LexerRuleSparTreeNode{token=PersesAntlrToken{'char', line=1, column=17}, LexerRuleSparTreeNode{id=518, parent=505}}
+  index=1, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(522,pos=1:17)
 Testing the empty input.
 Try deleting: [0, 1]: Uninteresting. Local rate: 2/2=100.00%
 Try deleting: [0, 1]: Skipped. Local rate: 2/2=100.00%
@@ -238,52 +371,110 @@ Try deleting: [1]: Skipped. Local rate: 2/2=100.00%
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0,1]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__parameterTypeList_2]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=501, parent=500}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=2}
+  class=NodeContainerForListMinimizer
+  element=parser(505,#tokens=2,last-pos=1:24)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=472, parent=470}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=2}
+  class=NodeContainerForListMinimizer
+  element=parser(476,#tokens=2,last-pos=2:32)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__typeName_1]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=510, parent=507}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=parser(514,#tokens=1,last-pos=1:21)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__pointer_8]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=465, parent=445}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(517,pos=1:21)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 
 Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
 The original input has 1 element(s).
 --Element 0
-  index=0, payload=ElementWrapper{index=0, element=org.perses.reduction.AbstractTokenReducer.NodeContainerForListMinimizer.SingleNodeContainerForListMinimizer, payload=org.perses.listminimizer.WeightedProbabilisticDeltaDebugger.WProbDDElementPayload}.elementPayload}
-  element=ParserRuleSparTreeNode{id=477, parent=409}
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(529,pos=1:0)
 Testing the empty input.
 Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
-Try deleting: [0]: Skipped. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=parser(469,#tokens=1,last-pos=3:8)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__primaryExpression_1]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(470,pos=3:8)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=parser(481,#tokens=1,last-pos=2:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
+Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
+
+Reduction starts: algorithm=WeightedProbabilisticDeltaDebugger
+desc: WPROBDD in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]
+The original input has 1 element(s).
+--Element 0
+  index=0, payload=WProbDDElementPayload{prob=0.25, weight=1}
+  class=NodeContainerForListMinimizer
+  element=lexer(485,pos=2:0)
+Testing the empty input.
+Try deleting: [0]: Uninteresting. Local rate: 1/1=100.00%
+There is only one element in the input, and the empty input has been tested.
 Reduction WeightedProbabilisticDeltaDebugger ends. Result=[0]
 

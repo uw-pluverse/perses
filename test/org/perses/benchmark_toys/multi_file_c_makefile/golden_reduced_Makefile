@@ -1,0 +1,14 @@
+
+SRCS = main.c
+
+
+
+
+
+OBJS = $(SRCS:.c=.o)
+
+
+prog: $(OBJS)
+
+	$(CC) -o prog $(OBJS)
+

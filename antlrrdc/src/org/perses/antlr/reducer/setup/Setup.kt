@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -92,10 +92,10 @@ class Setup(
       logger.ktInfo { "About to test the generated test script ${it.file}" }
       val startTime = System.currentTimeMillis()
       val result =
-        Shells.singleton.run(
+        Shells.defaultSingleton.run(
           "${it.shebang} ${it.file.fileName}",
-          it.parentFile,
           captureOutput = false,
+          workingDirectory = it.parentFile,
           environment = Shells.CURRENT_ENV,
         )
       val endTime = System.currentTimeMillis()

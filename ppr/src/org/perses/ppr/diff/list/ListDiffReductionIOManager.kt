@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,27 +17,25 @@
 package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
-import org.perses.program.LanguageKind
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.ppr.diff.DiffOriginalReductionInputs
+import org.perses.program.AbstractPersesToken
 import org.perses.reduction.io.AbstractReductionIOManager
+import org.perses.reduction.io.ReductionFolder
 import org.perses.util.AbstractEditOperation
 import java.nio.file.Path
 
 class ListDiffReductionIOManager(
   workingDir: Path,
-  reductionInputs: ListDiffReductionInputs,
-  outputManagerFactory: ListDiffOutputManagerFactory,
-  outputDirectory: Path?,
+  originalReductionInputs: DiffOriginalReductionInputs,
+  resultFolder: ReductionFolder,
 ) : AbstractReductionIOManager<
     ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
-    LanguageKind,
     ListDiffReductionIOManager,
   >(
     workingDir,
-    reductionInputs,
-    outputManagerFactory,
-    outputDirectory,
+    originalReductionInputs,
+    resultFolder,
   ) {
-  override fun getConcreteReductionInputs(): ListDiffReductionInputs =
-    reductionInputs as ListDiffReductionInputs
+  val concreteReductionInputs: DiffOriginalReductionInputs
+    get() = originalReductionInputs as DiffOriginalReductionInputs
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.spartree
 
+import org.perses.program.ProgramSize
 import org.perses.program.TokenizedProgram
 
 /**
@@ -23,13 +24,7 @@ import org.perses.program.TokenizedProgram
  * immutable information provider.
  */
 abstract class AbstractUnmodifiableSparTree {
-  val tokenCount: Int
-    get() = programSnapshot.tokenCount
-
-  val totalCharacterCount: Int
-    get() = programSnapshot.totalCharacterCount
-
-  abstract val programSnapshot: TokenizedProgram
+  abstract val programSnapshot: ProgramSize<TokenizedProgram>
 
   abstract fun hasRealRoot(): Boolean
 

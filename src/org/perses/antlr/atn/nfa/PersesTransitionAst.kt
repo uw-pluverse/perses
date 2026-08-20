@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -42,6 +42,7 @@ class PersesTransitionAst(
         WildcardTransition::class.java,
         NotSetTransition::class.java,
         -> true
+
         else -> false
       },
     ) {
@@ -68,19 +69,26 @@ class PersesTransitionAst(
         val a2 = t2 as AtomTransition
         a1.label == a2.label
       }
+
       NotSetTransition::class.java, SetTransition::class.java -> {
         val s1 = t1 as SetTransition
         val s2 = t2 as SetTransition
         s1.set == s2.set
       }
+
       RangeTransition::class.java -> {
         val r1 = t1 as RangeTransition
         val r2 = t2 as RangeTransition
         r1.from == r2.from && r1.to == r2.to
       }
-      WildcardTransition::class.java -> true
 
-      else -> error("Unreachable. ${t1::class.java}, ${t2::class.java}")
+      WildcardTransition::class.java -> {
+        true
+      }
+
+      else -> {
+        error("Unreachable. ${t1::class.java}, ${t2::class.java}")
+      }
     }
   }
 

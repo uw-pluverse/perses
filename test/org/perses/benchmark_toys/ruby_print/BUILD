@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
@@ -22,8 +22,12 @@ reduction_golden_test(
     enable_query_caching = False,
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_hello.rb",
+    other_flags = {
+        "--enable-literal-replacement-for-list-minimizer": "true",
+        "--enable-literal-replacement-for-regular-rule-node": "true",
+    },
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "hello.rb",
     test_script = "r.sh",
 )

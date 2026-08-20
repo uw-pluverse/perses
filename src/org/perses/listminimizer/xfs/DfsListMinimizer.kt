@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,9 +22,13 @@ import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.Partition
 import java.util.ArrayDeque
 
-class DfsListMinimizer<T : Any, PropertyPayload>(
+abstract class AbstractDfsListMinimizer<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
-) : AbstractTreeTraversalBasedListMinimizer<T, PropertyPayload>(arguments) {
+  splitPolicy: SplitPolicy,
+) : AbstractTreeTraversalBasedListMinimizer<T, PropertyPayload>(
+    arguments,
+    splitPolicy,
+  ) {
   override fun pollFromWorklist(worklist: ArrayDeque<Partition<ElementWrapper<T>>>) =
     worklist.pollLast()
 
@@ -37,3 +41,11 @@ class DfsListMinimizer<T : Any, PropertyPayload>(
     }
   }
 }
+
+class UnweightedDfsListMinimizer<T : Any, PropertyPayload>(
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
+) : AbstractDfsListMinimizer<T, PropertyPayload>(arguments, SplitPolicy.EVEN)
+
+class WeightedDfsListMinimizer<T : Any, PropertyPayload>(
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
+) : AbstractDfsListMinimizer<T, PropertyPayload>(arguments, SplitPolicy.WEIGHTED_EVEN)

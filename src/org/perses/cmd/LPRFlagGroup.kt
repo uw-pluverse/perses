@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -43,7 +43,13 @@ class LPRFlagGroup : AbstractCommandLineFlagGroup(groupName = "LPR Reducer Contr
 
   @Parameter(
     names = ["--llm-client-script"],
-    description = "The script to invoke LLM.",
+    description =
+      "The executable script used to invoke the LLM during LPR. It receives a JSON request " +
+        "(via --input-file) and writes a JSON array of response strings (via --output-file). " +
+        "If omitted, LPR falls back to a bundled default client " +
+        "(lpr/scripts/llm_client.py): an OpenAI-compatible client that by default " +
+        "targets a local ollama server at http://localhost:11434/v1 with model codellama:13b. " +
+        "The fallback is reported in the reduction output when it is used.",
     arity = 1,
     order = 2,
   )

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -29,12 +29,11 @@ class ProfilingFlagGroup : AbstractCommandLineFlagGroup(groupName = "Profiling")
   var progressDumpFile: Path? = null
 
   @Parameter(
-    names = ["--append-to-progress-dump-file"],
-    description = "Whether to append the reduction progress to the progress dump file",
-    order = 5,
-    arity = 1,
+    names = ["--actionset-effect-profile"],
+    description = "The file to profile the effect of edit action sets.",
+    order = 8,
   )
-  var appendToProgressDumpFile = true
+  var actionsetEffectProfile: Path? = null
 
   @Parameter(
     names = ["--stat-dump-file"],
@@ -77,6 +76,35 @@ class ProfilingFlagGroup : AbstractCommandLineFlagGroup(groupName = "Profiling")
     order = 55,
   )
   var profileListMinimizer: Path? = null
+
+  @Parameter(
+    names = ["--profile-program-size-trend"],
+    description = "The file to save the the size of the program being reduced over time.",
+    order = 1000,
+  )
+  var profileProgramSizeTrend: Path? = null
+
+  @Parameter(
+    names = ["--profile-for-reduction-progress-differential-analysis"],
+    description = "The file to save the reduction process for offline differential analysis.",
+    order = 2000,
+  )
+  var profileReductionProcessDifferentialAnalysis: Path? = null
+
+  @Parameter(
+    names = ["--enable-web-ui"],
+    description = "Serve a live web dashboard of the reduction progress on localhost.",
+    arity = 1,
+    order = 3000,
+  )
+  var enableWebUi = false
+
+  @Parameter(
+    names = ["--web-ui-port"],
+    description = "Preferred port for --enable-web-ui. Falls back to an ephemeral port if taken.",
+    order = 3010,
+  )
+  var webUiPort = 9000
 
   override fun validate() {
     val flags =

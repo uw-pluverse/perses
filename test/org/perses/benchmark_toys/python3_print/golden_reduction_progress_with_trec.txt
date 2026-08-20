@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 36
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_with_trec_node_priority_hello.py"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "hello.py"
+  inputFiles:
+  - "hello.py"
   deps: []
-  sourceFile: "hello.py"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_with_trec_node_priority-dfs_hello.py"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "_reduction_golden_test_with_trec_by_default_progress.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: true
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,110 +130,118 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.python3.Python3ParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 19
 (36/36)  The reducer execution plan is listed below.
     fixpoint (smaller) {
-        node_priority-dfs
+        node_priority
     }
     fixpoint (10) {
         if (token_canonicalizer) {
             fixpoint (smaller) {
-                node_priority-dfs
+                node_priority
             }
         }
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            node_priority-dfs
+            fixpoint (smaller) {
+                node_priority
+            }
         }
     }
 
 
 (36/36)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-======Fixpoint iteration 1. Reducer: node_priority-dfs======
+========Fixpoint iteration 1. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.python3.Python3ParserFacade
 The spar-tree is the following.
-file_input {id=1,slot_type=file_input}
-|___(*) {id=2,slot_type=kleene_star__file_input_2}
-    |___Token:
- {id=219,slot_type=[aux_rule__file_input_1,NEWLINE]}
-    |___funcdef {id=79,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
-    |   |___Token:def {id=80,slot_type=DEF}
-    |   |___Token:main {id=81,slot_type=NAME}
-    |   |___parameters {id=82,slot_type=parameters}
-    |   |   |___Token:( {id=217,slot_type=OPEN_PAREN}
-    |   |   |___Token:) {id=218,slot_type=CLOSE_PAREN}
-    |   |___Token:: {id=83,slot_type=COLON}
-    |   |___aux_rule__suite_2 {id=85,slot_type=[suite,aux_rule__suite_2]}
-    |       |___Token:  {id=86,slot_type=NEWLINE}
-    |       |___Token:     {id=87,slot_type=Token}
-    |       |___(+) {id=88,slot_type=kleene_plus__suite_1}
-    |       |   |___simple_stmt {id=169,slot_type=[stmt,simple_stmt]}
-    |       |   |   |___expr_stmt {id=172,slot_type=[small_stmt,expr_stmt]}
-    |       |   |   |   |___Token:a {id=216,slot_type=[testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
-    |       |   |   |   |___(?) {id=174,slot_type=optional__expr_stmt_4}
-    |       |   |   |       |___(+) {id=176,slot_type=[aux_rule__expr_stmt_3,kleene_plus__expr_stmt_2]}
-    |       |   |   |           |___aux_rule__expr_stmt_1 {id=177,slot_type=aux_rule__expr_stmt_1}
-    |       |   |   |               |___Token:= {id=178,slot_type=ASSIGN}
-    |       |   |   |               |___Token:True {id=198,slot_type=[altnt_block__expr_stmt_5,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,TRUE]}
-    |       |   |   |___Token:  {id=171,slot_type=NEWLINE}
-    |       |   |___if_stmt {id=92,slot_type=[stmt,if_stmt]}
-    |       |       |___Token:if {id=93,slot_type=IF}
-    |       |       |___Token:a {id=168,slot_type=[test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
-    |       |       |___Token:: {id=95,slot_type=COLON}
-    |       |       |___aux_rule__suite_2 {id=97,slot_type=[suite,aux_rule__suite_2]}
-    |       |           |___Token:  {id=98,slot_type=NEWLINE}
-    |       |           |___Token:         {id=99,slot_type=Token}
-    |       |           |___(+) {id=100,slot_type=kleene_plus__suite_1}
-    |       |           |   |___simple_stmt {id=103,slot_type=[stmt,simple_stmt]}
-    |       |           |       |___atom_expr {id=123,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-    |       |           |       |   |___Token:print {id=152,slot_type=[atom,NAME]}
-    |       |           |       |   |___(*) {id=125,slot_type=kleene_star__atom_expr_2}
-    |       |           |       |       |___aux_rule__trailer_2 {id=127,slot_type=[trailer,aux_rule__trailer_2]}
-    |       |           |       |           |___Token:( {id=128,slot_type=OPEN_PAREN}
-    |       |           |       |           |___(?) {id=129,slot_type=optional__decorator_1}
-    |       |           |       |           |   |___(+) {id=150,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
-    |       |           |       |           |       |___Token:"hello world" {id=151,slot_type=STRING}
-    |       |           |       |           |___Token:) {id=130,slot_type=CLOSE_PAREN}
-    |       |           |       |___Token:
- {id=105,slot_type=NEWLINE}
-    |       |           |___Token:
- {id=101,slot_type=Token}
-    |       |___Token:
- {id=89,slot_type=Token}
-    |___if_stmt {id=7,slot_type=[aux_rule__file_input_1,stmt,if_stmt]}
-        |___Token:if {id=8,slot_type=IF}
-        |___comparison {id=50,slot_type=[test,aux_rule__test_3,or_test,and_test,not_test,comparison]}
-        |   |___Token:__name__ {id=77,slot_type=[expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
-        |   |___(*) {id=52,slot_type=kleene_star__comparison_2}
-        |       |___aux_rule__comparison_1 {id=53,slot_type=aux_rule__comparison_1}
-        |           |___Token:== {id=67,slot_type=[comp_op,EQUALS]}
-        |           |___(+) {id=65,slot_type=[expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
-        |               |___Token:'__main__' {id=66,slot_type=STRING}
-        |___Token:: {id=10,slot_type=COLON}
-        |___aux_rule__suite_2 {id=12,slot_type=[suite,aux_rule__suite_2]}
-            |___Token:  {id=13,slot_type=NEWLINE}
-            |___Token:     {id=14,slot_type=Token}
-            |___(+) {id=15,slot_type=kleene_plus__suite_1}
-            |   |___simple_stmt {id=18,slot_type=[stmt,simple_stmt]}
-            |       |___atom_expr {id=38,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-            |       |   |___Token:main {id=45,slot_type=[atom,NAME]}
-            |       |   |___(*) {id=40,slot_type=kleene_star__atom_expr_2}
-            |       |       |___aux_rule__trailer_2 {id=42,slot_type=[trailer,aux_rule__trailer_2]}
-            |       |           |___Token:( {id=43,slot_type=OPEN_PAREN}
-            |       |           |___Token:) {id=44,slot_type=CLOSE_PAREN}
-            |       |___Token:) {id=20,slot_type=NEWLINE}
-            |___Token:) {id=16,slot_type=Token}
+file_input{id=1,slot_type=file_input}
+|___(*){id=2,slot_type=kleene_star__file_input_2}
+    |___Token:\n{id=219,slot_type=[aux_rule__file_input_1,NEWLINE]}
+    |___funcdef{id=79,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
+    |   |___Token:def{id=80,slot_type=DEF}
+    |   |___Token:main{id=81,slot_type=NAME}
+    |   |___parameters{id=82,slot_type=parameters}
+    |   |   |___Token:({id=217,slot_type=OPEN_PAREN}
+    |   |   |___Token:){id=218,slot_type=CLOSE_PAREN}
+    |   |___Token::{id=83,slot_type=COLON}
+    |   |___aux_rule__suite_2{id=85,slot_type=[suite,aux_rule__suite_2]}
+    |       |___Token: {id=86,slot_type=NEWLINE}
+    |       |___Token:    {id=87,slot_type=Token}
+    |       |___(+){id=88,slot_type=kleene_plus__suite_1}
+    |       |   |___simple_stmt{id=169,slot_type=[stmt,simple_stmt]}
+    |       |   |   |___expr_stmt{id=172,slot_type=[small_stmt,expr_stmt]}
+    |       |   |   |   |___Token:a{id=216,slot_type=[testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
+    |       |   |   |   |___(?){id=174,slot_type=optional__expr_stmt_4}
+    |       |   |   |       |___(+){id=176,slot_type=[aux_rule__expr_stmt_3,kleene_plus__expr_stmt_2]}
+    |       |   |   |           |___aux_rule__expr_stmt_1{id=177,slot_type=aux_rule__expr_stmt_1}
+    |       |   |   |               |___Token:={id=178,slot_type=ASSIGN}
+    |       |   |   |               |___Token:True{id=198,slot_type=[altnt_block__expr_stmt_5,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,TRUE]}
+    |       |   |   |___Token: {id=171,slot_type=NEWLINE}
+    |       |   |___if_stmt{id=92,slot_type=[stmt,if_stmt]}
+    |       |       |___Token:if{id=93,slot_type=IF}
+    |       |       |___Token:a{id=168,slot_type=[test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
+    |       |       |___Token::{id=95,slot_type=COLON}
+    |       |       |___aux_rule__suite_2{id=97,slot_type=[suite,aux_rule__suite_2]}
+    |       |           |___Token: {id=98,slot_type=NEWLINE}
+    |       |           |___Token:        {id=99,slot_type=Token}
+    |       |           |___(+){id=100,slot_type=kleene_plus__suite_1}
+    |       |           |   |___simple_stmt{id=103,slot_type=[stmt,simple_stmt]}
+    |       |           |       |___atom_expr{id=123,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |           |       |   |___Token:print{id=152,slot_type=[atom,NAME]}
+    |       |           |       |   |___(*){id=125,slot_type=kleene_star__atom_expr_2}
+    |       |           |       |       |___aux_rule__trailer_2{id=127,slot_type=[trailer,aux_rule__trailer_2]}
+    |       |           |       |           |___Token:({id=128,slot_type=OPEN_PAREN}
+    |       |           |       |           |___(?){id=129,slot_type=optional__decorator_1}
+    |       |           |       |           |   |___(+){id=150,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |           |       |           |       |___Token:"hello world"{id=151,slot_type=STRING}
+    |       |           |       |           |___Token:){id=130,slot_type=CLOSE_PAREN}
+    |       |           |       |___Token:\n{id=105,slot_type=NEWLINE}
+    |       |           |___Token:\n{id=101,slot_type=Token}
+    |       |___Token:\n{id=89,slot_type=Token}
+    |___if_stmt{id=7,slot_type=[aux_rule__file_input_1,stmt,if_stmt]}
+        |___Token:if{id=8,slot_type=IF}
+        |___comparison{id=50,slot_type=[test,aux_rule__test_3,or_test,and_test,not_test,comparison]}
+        |   |___Token:__name__{id=77,slot_type=[expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
+        |   |___(*){id=52,slot_type=kleene_star__comparison_2}
+        |       |___aux_rule__comparison_1{id=53,slot_type=aux_rule__comparison_1}
+        |           |___Token:=={id=67,slot_type=[comp_op,EQUALS]}
+        |           |___(+){id=65,slot_type=[expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+        |               |___Token:'__main__'{id=66,slot_type=STRING}
+        |___Token::{id=10,slot_type=COLON}
+        |___aux_rule__suite_2{id=12,slot_type=[suite,aux_rule__suite_2]}
+            |___Token: {id=13,slot_type=NEWLINE}
+            |___Token:    {id=14,slot_type=Token}
+            |___(+){id=15,slot_type=kleene_plus__suite_1}
+            |   |___simple_stmt{id=18,slot_type=[stmt,simple_stmt]}
+            |       |___atom_expr{id=38,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+            |       |   |___Token:main{id=45,slot_type=[atom,NAME]}
+            |       |   |___(*){id=40,slot_type=kleene_star__atom_expr_2}
+            |       |       |___aux_rule__trailer_2{id=42,slot_type=[trailer,aux_rule__trailer_2]}
+            |       |           |___Token:({id=43,slot_type=OPEN_PAREN}
+            |       |           |___Token:){id=44,slot_type=CLOSE_PAREN}
+            |       |___Token:){id=20,slot_type=NEWLINE}
+            |___Token:){id=16,slot_type=Token}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority](36/36)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](36/36)  Retrieved semantics provider null
 ==================Reducing node 2, size=36==================
 
 The current best program is the following
@@ -226,26 +256,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/36)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:36/36=100.00%
-FixPt[1][node_priority-dfs][DFS](36/36)  Testing the empty input. Global ratio:36/36=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:36/36=100.00%
+FixPt[1][node_priority][DFS](36/36)  Testing the empty input. Global ratio:36/36=100.00%
+==========Testing the following program (0): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@3
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=3,#parts=3#total-parts=3
     --file: hello.py--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/36)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/36)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
+==========Testing the following program (1): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=1,#parts=1#total-parts=3
     --file: hello.py--
-    def main():
-        a = True
-        if a:
-            print("hello world")
-    --file: <formatted tokenized program in its original format>--
     def main():
         a = True
         if a:
@@ -253,44 +277,30 @@ FixPt[1][node_priority-dfs][DFS](36/36)  Try deleting [0-2]#3: Uninteresting. Lo
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/36)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/36)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
+==========Testing the following program (2): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=2,#parts=2#total-parts=3
     --file: hello.py--
-    if __name__ == '__main__':
-        main()
-    --file: <formatted tokenized program in its original format>--
     if __name__ == '__main__':
         main()
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/36)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](36/36)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
     --file: hello.py--
-    if __name__ == '__main__':
-        main()
-    --file: <formatted tokenized program in its original format>--
     if __name__ == '__main__':
         main()
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/36)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
-============Testing the following program: pass=============
+FixPt[1][node_priority][DFS](36/36)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
+==========Testing the following program (3): pass===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=1,#parts=1#total-parts=3
     --file: hello.py--
-    def main():
-        a = True
-        if a:
-            print("hello world")
-    if __name__ == '__main__':
-        main()
-    --file: <formatted tokenized program in its original format>--
     def main():
         a = True
         if a:
@@ -300,10 +310,10 @@ FixPt[1][node_priority-dfs][DFS](36/36)  Try deleting [1]#1: Uninteresting. Loca
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](36/36)  Try deleting [0]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
+FixPt[1][node_priority][DFS](36/36)  Try deleting [0]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:36/36=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 4 --> 4.
+0 entries are removed: 3 --> 3.
 ------------------------------------------------------------
 
 
@@ -315,18 +325,19 @@ FixPt[1][node_priority-dfs][DFS](36/36)  Try deleting [0]#1: Interesting. Local 
 
 ================The best program is updated.================
 
-token count change 36 -> 35
+token count change 36 -> 36
+Edit: [delete_219]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](35/36)  Minimizer DfsListMinimizer ends. Result=[1-2]#2. Local ratio: 2/3=66.67%. Global ratio:35/36=97.22%
+FixPt[1][node_priority][DFS](36/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[1-2]#2. Local ratio: 2/3=66.67%. Global ratio:36/36=100.00%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 2 from 36 to 35
+Failed to reduce node 2
 ------------------------------------------------------------
 
 
-=================Reducing node 79, size=35==================
+=================Reducing node 79, size=36==================
 
 The current best program is the following
 
@@ -345,27 +356,20 @@ The current best program is the following
     --file: hello.py--
     if __name__ == '__main__':
         main()
-    --file: <formatted tokenized program in its original format>--
-    if __name__ == '__main__':
-        main()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (4): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
     a = True
     if __name__ == '__main__':
         main()
-    --file: <formatted tokenized program in its original format>--
-    a = True
-    if __name__ == '__main__':
-        main()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (5): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
@@ -373,24 +377,13 @@ The current best program is the following
         print("hello world")
     if __name__ == '__main__':
         main()
-    --file: <formatted tokenized program in its original format>--
-    if a:
-        print("hello world")
-    if __name__ == '__main__':
-        main()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (6): fail===========
 
 // edit action set type: [regular_node]kleene replacement
     --file: hello.py--
-    a = True
-    if a:
-        print("hello world")
-    if __name__ == '__main__':
-        main()
-    --file: <formatted tokenized program in its original format>--
     a = True
     if a:
         print("hello world")
@@ -405,7 +398,7 @@ Failed to reduce node 79
 ------------------------------------------------------------
 
 
-=================Reducing node 85, size=35==================
+=================Reducing node 85, size=36==================
 
 The current best program is the following
 
@@ -419,7 +412,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (7): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
@@ -427,15 +420,10 @@ The current best program is the following
     a = True
     if __name__ == '__main__':
         main()
-    --file: <formatted tokenized program in its original format>--
-    def main():
-    a = True
-    if __name__ == '__main__':
-        main()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (8): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
@@ -443,23 +431,13 @@ The current best program is the following
     print("hello world")
     if __name__ == '__main__':
         main()
-    --file: <formatted tokenized program in its original format>--
-    def main():
-    print("hello world")
-    if __name__ == '__main__':
-        main()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (9): pass===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
-    def main():
-        print("hello world")
-    if __name__ == '__main__':
-        main()
-    --file: <formatted tokenized program in its original format>--
     def main():
         print("hello world")
     if __name__ == '__main__':
@@ -469,7 +447,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-1 entries are removed: 9 --> 8.
+2 entries are removed: 8 --> 6.
 ------------------------------------------------------------
 
 
@@ -481,17 +459,18 @@ The current best program is the following
 
 ================The best program is updated.================
 
-token count change 35 -> 25
+token count change 36 -> 26
+Edit: HoistEdit:[replace_85_with_97]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 85 from 35 to 25
+Succeeded to reduce node 85 from 36 to 26
 ------------------------------------------------------------
 
 
-==================Reducing node 7, size=25==================
+==================Reducing node 7, size=26==================
 
 The current best program is the following
 
@@ -503,26 +482,19 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (10): fail==========
 
 // edit action set type: [regular_node]can be epsilon
     --file: hello.py--
     def main():
         print("hello world")
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print("hello world")
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (11): pass==========
 
 // edit action set type: [regular_node]kleene replacement
     --file: hello.py--
-    def main():
-        print("hello world")
-    main()
-    --file: <formatted tokenized program in its original format>--
     def main():
         print("hello world")
     main()
@@ -531,7 +503,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-4 entries are removed: 9 --> 5.
+4 entries are removed: 7 --> 3.
 ------------------------------------------------------------
 
 
@@ -543,17 +515,18 @@ The current best program is the following
 
 ================The best program is updated.================
 
-token count change 25 -> 17
+token count change 26 -> 18
+Edit: HoistEdit:[replace_7_with_15]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 7 from 25 to 17
+Succeeded to reduce node 7 from 26 to 18
 ------------------------------------------------------------
 
 
-=================Reducing node 97, size=17==================
+=================Reducing node 97, size=18==================
 
 The current best program is the following
 
@@ -564,14 +537,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (12): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
-    def main():
-    print("hello world")
-    main()
-    --file: <formatted tokenized program in its original format>--
     def main():
     print("hello world")
     main()
@@ -584,7 +553,7 @@ Failed to reduce node 97
 ------------------------------------------------------------
 
 
-=================Reducing node 100, size=17=================
+=================Reducing node 100, size=18=================
 
 The current best program is the following
 
@@ -595,13 +564,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+==========Testing the following program (13): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__suite_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: hello.py--
+    def main():
+    main()
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 100
 ------------------------------------------------------------
 
 
-=================Reducing node 103, size=17=================
+=================Reducing node 103, size=18=================
 
 The current best program is the following
 
@@ -618,7 +601,7 @@ Failed to reduce node 103
 ------------------------------------------------------------
 
 
-=================Reducing node 123, size=17=================
+=================Reducing node 123, size=18=================
 
 The current best program is the following
 
@@ -629,28 +612,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (14): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
-    def main():
-        print
-    main()
-    --file: <formatted tokenized program in its original format>--
     def main():
         print
     main()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (15): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
-    def main():
-        "hello world"
-    main()
-    --file: <formatted tokenized program in its original format>--
     def main():
         "hello world"
     main()
@@ -663,7 +638,7 @@ Failed to reduce node 123
 ------------------------------------------------------------
 
 
-=================Reducing node 15, size=17==================
+=================Reducing node 15, size=18==================
 
 The current best program is the following
 
@@ -679,81 +654,29 @@ The current best program is the following
     --file: hello.py--
     def main():
         print("hello world")
-    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
     def main():
         print("hello world")
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 15
 ------------------------------------------------------------
 
 
-=================Reducing node 18, size=17==================
-
-The current best program is the following
-
-    --file: hello.py--
-    def main():
-        print("hello world")
-    main()
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: hello.py--
-    def main():
-        print("hello world")
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print("hello world")
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 18
-------------------------------------------------------------
-
-
-=================Reducing node 125, size=17=================
-
-The current best program is the following
-
-    --file: hello.py--
-    def main():
-        print("hello world")
-    main()
-------------------------------------------------------------
-
-
-FixPt[1][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[1][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: hello.py--
-    def main():
-        print
-    main()
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print
-    main()
-------------------------------------------------------------
-
-
-FixPt[1][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[1][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-===================Node reduction is done===================
-
-Failed to reduce node 125
-------------------------------------------------------------
-
-
-=================Reducing node 127, size=17=================
+=================Reducing node 18, size=18==================
 
 The current best program is the following
 
@@ -766,17 +689,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=127}
+    structure: [delete_18]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 127
+Failed to reduce node 18
 ------------------------------------------------------------
 
 
-=================Reducing node 38, size=17==================
+=================Reducing node 125, size=18=================
 
 The current best program is the following
 
@@ -787,14 +711,65 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [regular node]compatible replacement
+    --file: hello.py--
+    def main():
+        print
+    main()
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 125
+------------------------------------------------------------
+
+
+=================Reducing node 127, size=18=================
+
+The current best program is the following
+
     --file: hello.py--
     def main():
         print("hello world")
-    main
-    --file: <formatted tokenized program in its original format>--
+    main()
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_127]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 127
+------------------------------------------------------------
+
+
+=================Reducing node 38, size=18==================
+
+The current best program is the following
+
+    --file: hello.py--
+    def main():
+        print("hello world")
+    main()
+------------------------------------------------------------
+
+
+==========Testing the following program (16): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: hello.py--
     def main():
         print("hello world")
     main
@@ -807,7 +782,7 @@ Failed to reduce node 38
 ------------------------------------------------------------
 
 
-=================Reducing node 82, size=17==================
+=================Reducing node 82, size=18==================
 
 The current best program is the following
 
@@ -824,7 +799,7 @@ Failed to reduce node 82
 ------------------------------------------------------------
 
 
-=================Reducing node 40, size=17==================
+=================Reducing node 40, size=18==================
 
 The current best program is the following
 
@@ -835,30 +810,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[1][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
     def main():
         print("hello world")
     main
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print("hello world")
-    main
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[1][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
+FixPt[1][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 40
 ------------------------------------------------------------
 
 
-=================Reducing node 42, size=17==================
+=================Reducing node 42, size=18==================
 
 The current best program is the following
 
@@ -871,7 +843,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=42}
+    structure: [delete_42]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -881,7 +854,7 @@ Failed to reduce node 42
 ------------------------------------------------------------
 
 
-=================Reducing node 218, size=17=================
+=================Reducing node 218, size=18=================
 
 The current best program is the following
 
@@ -898,7 +871,7 @@ Failed to reduce node 218
 ------------------------------------------------------------
 
 
-=================Reducing node 217, size=17=================
+=================Reducing node 217, size=18=================
 
 The current best program is the following
 
@@ -915,7 +888,7 @@ Failed to reduce node 217
 ------------------------------------------------------------
 
 
-=================Reducing node 152, size=17=================
+=================Reducing node 152, size=18=================
 
 The current best program is the following
 
@@ -932,7 +905,7 @@ Failed to reduce node 152
 ------------------------------------------------------------
 
 
-=================Reducing node 130, size=17=================
+=================Reducing node 130, size=18=================
 
 The current best program is the following
 
@@ -949,7 +922,7 @@ Failed to reduce node 130
 ------------------------------------------------------------
 
 
-=================Reducing node 129, size=17=================
+=================Reducing node 129, size=18=================
 
 The current best program is the following
 
@@ -960,31 +933,28 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[1][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+==========Testing the following program (17): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__decorator_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__decorator_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.py--
-    def main():
-        print(             )
-    main()
-    --file: <formatted tokenized program in its original format>--
     def main():
         print(             )
     main()
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[1][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
+FixPt[1][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 129
 ------------------------------------------------------------
 
 
-=================Reducing node 150, size=17=================
+=================Reducing node 150, size=18=================
 
 The current best program is the following
 
@@ -997,17 +967,32 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=150}
+    structure: [delete_150]
+    context: [kleene_plus:kleene_plus__atom_5]can be epsilon
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def main():
+        print(             )
+    main()
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[1][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 150
 ------------------------------------------------------------
 
 
-=================Reducing node 151, size=17=================
+=================Reducing node 151, size=18=================
 
 The current best program is the following
 
@@ -1024,7 +1009,7 @@ Failed to reduce node 151
 ------------------------------------------------------------
 
 
-=================Reducing node 128, size=17=================
+=================Reducing node 128, size=18=================
 
 The current best program is the following
 
@@ -1041,7 +1026,7 @@ Failed to reduce node 128
 ------------------------------------------------------------
 
 
-=================Reducing node 105, size=17=================
+=================Reducing node 105, size=18=================
 
 The current best program is the following
 
@@ -1058,7 +1043,7 @@ Failed to reduce node 105
 ------------------------------------------------------------
 
 
-=================Reducing node 101, size=17=================
+=================Reducing node 101, size=18=================
 
 The current best program is the following
 
@@ -1075,7 +1060,7 @@ Failed to reduce node 101
 ------------------------------------------------------------
 
 
-=================Reducing node 99, size=17==================
+=================Reducing node 99, size=18==================
 
 The current best program is the following
 
@@ -1092,7 +1077,7 @@ Failed to reduce node 99
 ------------------------------------------------------------
 
 
-=================Reducing node 98, size=17==================
+=================Reducing node 98, size=18==================
 
 The current best program is the following
 
@@ -1109,7 +1094,7 @@ Failed to reduce node 98
 ------------------------------------------------------------
 
 
-=================Reducing node 83, size=17==================
+=================Reducing node 83, size=18==================
 
 The current best program is the following
 
@@ -1126,7 +1111,7 @@ Failed to reduce node 83
 ------------------------------------------------------------
 
 
-=================Reducing node 81, size=17==================
+=================Reducing node 81, size=18==================
 
 The current best program is the following
 
@@ -1143,7 +1128,7 @@ Failed to reduce node 81
 ------------------------------------------------------------
 
 
-=================Reducing node 80, size=17==================
+=================Reducing node 80, size=18==================
 
 The current best program is the following
 
@@ -1160,7 +1145,7 @@ Failed to reduce node 80
 ------------------------------------------------------------
 
 
-=================Reducing node 45, size=17==================
+=================Reducing node 45, size=18==================
 
 The current best program is the following
 
@@ -1177,7 +1162,7 @@ Failed to reduce node 45
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=17==================
+=================Reducing node 44, size=18==================
 
 The current best program is the following
 
@@ -1194,7 +1179,7 @@ Failed to reduce node 44
 ------------------------------------------------------------
 
 
-=================Reducing node 43, size=17==================
+=================Reducing node 43, size=18==================
 
 The current best program is the following
 
@@ -1211,7 +1196,7 @@ Failed to reduce node 43
 ------------------------------------------------------------
 
 
-=================Reducing node 20, size=17==================
+=================Reducing node 20, size=18==================
 
 The current best program is the following
 
@@ -1229,50 +1214,49 @@ Failed to reduce node 20
 
 
 (18/36)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 2. Reducer: node_priority-dfs======
+========Fixpoint iteration 2. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.python3.Python3ParserFacade
 The spar-tree is the following.
-file_input {id=221,slot_type=file_input}
-|___(*) {id=222,slot_type=kleene_star__file_input_2}
-    |___Token:
- {id=320,slot_type=[aux_rule__file_input_1,NEWLINE]}
-    |___funcdef {id=256,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
-    |   |___Token:def {id=257,slot_type=DEF}
-    |   |___Token:main {id=258,slot_type=NAME}
-    |   |___parameters {id=259,slot_type=parameters}
-    |   |   |___Token:( {id=318,slot_type=OPEN_PAREN}
-    |   |   |___Token:) {id=319,slot_type=CLOSE_PAREN}
-    |   |___Token:: {id=260,slot_type=COLON}
-    |   |___aux_rule__suite_2 {id=262,slot_type=[suite,aux_rule__suite_2]}
-    |       |___Token:  {id=263,slot_type=NEWLINE}
-    |       |___Token:     {id=264,slot_type=Token}
-    |       |___(+) {id=265,slot_type=kleene_plus__suite_1}
-    |       |   |___simple_stmt {id=268,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr {id=288,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-    |       |       |   |___Token:print {id=317,slot_type=[atom,NAME]}
-    |       |       |   |___(*) {id=290,slot_type=kleene_star__atom_expr_2}
-    |       |       |       |___aux_rule__trailer_2 {id=292,slot_type=[trailer,aux_rule__trailer_2]}
-    |       |       |           |___Token:( {id=293,slot_type=OPEN_PAREN}
-    |       |       |           |___(?) {id=294,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+) {id=315,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
-    |       |       |           |       |___Token:"hello world" {id=316,slot_type=STRING}
-    |       |       |           |___Token:) {id=295,slot_type=CLOSE_PAREN}
-    |       |       |___Token:
- {id=270,slot_type=NEWLINE}
-    |       |___Token:
- {id=266,slot_type=Token}
-    |___simple_stmt {id=227,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr {id=247,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-        |   |___Token:main {id=254,slot_type=[atom,NAME]}
-        |   |___(*) {id=249,slot_type=kleene_star__atom_expr_2}
-        |       |___aux_rule__trailer_2 {id=251,slot_type=[trailer,aux_rule__trailer_2]}
-        |           |___Token:( {id=252,slot_type=OPEN_PAREN}
-        |           |___Token:) {id=253,slot_type=CLOSE_PAREN}
-        |___Token:
- {id=229,slot_type=NEWLINE}
+file_input{id=221,slot_type=file_input}
+|___(*){id=222,slot_type=kleene_star__file_input_2}
+    |___Token:\n{id=320,slot_type=[aux_rule__file_input_1,NEWLINE]}
+    |___funcdef{id=256,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
+    |   |___Token:def{id=257,slot_type=DEF}
+    |   |___Token:main{id=258,slot_type=NAME}
+    |   |___parameters{id=259,slot_type=parameters}
+    |   |   |___Token:({id=318,slot_type=OPEN_PAREN}
+    |   |   |___Token:){id=319,slot_type=CLOSE_PAREN}
+    |   |___Token::{id=260,slot_type=COLON}
+    |   |___aux_rule__suite_2{id=262,slot_type=[suite,aux_rule__suite_2]}
+    |       |___Token: {id=263,slot_type=NEWLINE}
+    |       |___Token:    {id=264,slot_type=Token}
+    |       |___(+){id=265,slot_type=kleene_plus__suite_1}
+    |       |   |___simple_stmt{id=268,slot_type=[stmt,simple_stmt]}
+    |       |       |___atom_expr{id=288,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |   |___Token:print{id=317,slot_type=[atom,NAME]}
+    |       |       |   |___(*){id=290,slot_type=kleene_star__atom_expr_2}
+    |       |       |       |___aux_rule__trailer_2{id=292,slot_type=[trailer,aux_rule__trailer_2]}
+    |       |       |           |___Token:({id=293,slot_type=OPEN_PAREN}
+    |       |       |           |___(?){id=294,slot_type=optional__decorator_1}
+    |       |       |           |   |___(+){id=315,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |       |___Token:"hello world"{id=316,slot_type=STRING}
+    |       |       |           |___Token:){id=295,slot_type=CLOSE_PAREN}
+    |       |       |___Token:\n{id=270,slot_type=NEWLINE}
+    |       |___Token:\n{id=266,slot_type=Token}
+    |___simple_stmt{id=227,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
+        |___atom_expr{id=247,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |   |___Token:main{id=254,slot_type=[atom,NAME]}
+        |   |___(*){id=249,slot_type=kleene_star__atom_expr_2}
+        |       |___aux_rule__trailer_2{id=251,slot_type=[trailer,aux_rule__trailer_2]}
+        |           |___Token:({id=252,slot_type=OPEN_PAREN}
+        |           |___Token:){id=253,slot_type=CLOSE_PAREN}
+        |___Token:\n{id=229,slot_type=NEWLINE}
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority](18/36)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](18/36)  Retrieved semantics provider null
 =================Reducing node 222, size=18=================
 
 The current best program is the following
@@ -1284,92 +1268,79 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](18/36)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:18/36=50.00%
-FixPt[2][node_priority-dfs][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](18/36)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](18/36)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
     --file: hello.py--
     def main():
         print("hello world")
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print("hello world")
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](18/36)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](18/36)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+==========Testing the following program (18): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=2,#parts=2#total-parts=3
     --file: hello.py--
     main()
-    --file: <formatted tokenized program in its original format>--
-    main()
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](18/36)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](18/36)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
     --file: hello.py--
     main()
-    --file: <formatted tokenized program in its original format>--
-    main()
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](18/36)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
-============Testing the following program: pass=============
+FixPt[2][node_priority][DFS](18/36)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+==========Testing the following program (19): pass==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=1,#parts=1#total-parts=3
     --file: hello.py--
     def main():
         print("hello world")
     main()
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print("hello world")
-    main()
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](18/36)  Try deleting [0]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Try deleting [0]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 13 --> 13.
+1 entries are removed: 10 --> 9.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 15
+    size before clearance = 5
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
-token count change 18 -> 17
+token count change 18 -> 18
+Edit: [delete_320]
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[1-2]#2. Local ratio: 2/3=66.67%. Global ratio:17/36=47.22%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[1-2]#2. Local ratio: 2/3=66.67%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 222 from 18 to 17
+Failed to reduce node 222
 ------------------------------------------------------------
 
 
-=================Reducing node 256, size=17=================
+=================Reducing node 256, size=18=================
 
 The current best program is the following
 
@@ -1384,18 +1355,13 @@ The current best program is the following
 
     --file: hello.py--
     main()
-    --file: <formatted tokenized program in its original format>--
-    main()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (20): fail==========
 
 // edit action set type: [regular_node]kleene replacement
     --file: hello.py--
-    print("hello world")
-    main()
-    --file: <formatted tokenized program in its original format>--
     print("hello world")
     main()
 ------------------------------------------------------------
@@ -1407,7 +1373,7 @@ Failed to reduce node 256
 ------------------------------------------------------------
 
 
-=================Reducing node 262, size=17=================
+=================Reducing node 262, size=18=================
 
 The current best program is the following
 
@@ -1418,13 +1384,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
+==========Testing the following program (21): fail==========
 
+// edit action set type: [regular node]compatible replacement
     --file: hello.py--
-    def main():
-    print("hello world")
-    main()
-    --file: <formatted tokenized program in its original format>--
     def main():
     print("hello world")
     main()
@@ -1437,7 +1400,7 @@ Failed to reduce node 262
 ------------------------------------------------------------
 
 
-=================Reducing node 265, size=17=================
+=================Reducing node 265, size=18=================
 
 The current best program is the following
 
@@ -1448,13 +1411,26 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def main():
+    main()
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 265
 ------------------------------------------------------------
 
 
-=================Reducing node 268, size=17=================
+=================Reducing node 268, size=18=================
 
 The current best program is the following
 
@@ -1471,7 +1447,7 @@ Failed to reduce node 268
 ------------------------------------------------------------
 
 
-=================Reducing node 288, size=17=================
+=================Reducing node 288, size=18=================
 
 The current best program is the following
 
@@ -1488,20 +1464,12 @@ The current best program is the following
     def main():
         print
     main()
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print
-    main()
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
-    def main():
-        "hello world"
-    main()
-    --file: <formatted tokenized program in its original format>--
     def main():
         "hello world"
     main()
@@ -1514,7 +1482,7 @@ Failed to reduce node 288
 ------------------------------------------------------------
 
 
-=================Reducing node 227, size=17=================
+=================Reducing node 227, size=18=================
 
 The current best program is the following
 
@@ -1528,9 +1496,6 @@ The current best program is the following
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
-    def main():
-        print("hello world")
-    --file: <formatted tokenized program in its original format>--
     def main():
         print("hello world")
 ------------------------------------------------------------
@@ -1542,7 +1507,7 @@ Failed to reduce node 227
 ------------------------------------------------------------
 
 
-=================Reducing node 290, size=17=================
+=================Reducing node 290, size=18=================
 
 The current best program is the following
 
@@ -1553,30 +1518,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[2][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
     def main():
         print
     main()
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print
-    main()
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[2][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
+FixPt[2][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 290
 ------------------------------------------------------------
 
 
-=================Reducing node 292, size=17=================
+=================Reducing node 292, size=18=================
 
 The current best program is the following
 
@@ -1589,7 +1551,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=292}
+    structure: [delete_292]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1599,7 +1562,7 @@ Failed to reduce node 292
 ------------------------------------------------------------
 
 
-=================Reducing node 247, size=17=================
+=================Reducing node 247, size=18=================
 
 The current best program is the following
 
@@ -1616,10 +1579,6 @@ The current best program is the following
     def main():
         print("hello world")
     main
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print("hello world")
-    main
 ------------------------------------------------------------
 
 
@@ -1629,7 +1588,7 @@ Failed to reduce node 247
 ------------------------------------------------------------
 
 
-=================Reducing node 259, size=17=================
+=================Reducing node 259, size=18=================
 
 The current best program is the following
 
@@ -1646,7 +1605,7 @@ Failed to reduce node 259
 ------------------------------------------------------------
 
 
-=================Reducing node 249, size=17=================
+=================Reducing node 249, size=18=================
 
 The current best program is the following
 
@@ -1657,30 +1616,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[2][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
     def main():
         print("hello world")
     main
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print("hello world")
-    main
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[2][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
+FixPt[2][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 249
 ------------------------------------------------------------
 
 
-=================Reducing node 251, size=17=================
+=================Reducing node 251, size=18=================
 
 The current best program is the following
 
@@ -1693,7 +1649,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=251}
+    structure: [delete_251]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -1703,7 +1660,7 @@ Failed to reduce node 251
 ------------------------------------------------------------
 
 
-=================Reducing node 319, size=17=================
+=================Reducing node 319, size=18=================
 
 The current best program is the following
 
@@ -1720,7 +1677,7 @@ Failed to reduce node 319
 ------------------------------------------------------------
 
 
-=================Reducing node 318, size=17=================
+=================Reducing node 318, size=18=================
 
 The current best program is the following
 
@@ -1737,7 +1694,7 @@ Failed to reduce node 318
 ------------------------------------------------------------
 
 
-=================Reducing node 317, size=17=================
+=================Reducing node 317, size=18=================
 
 The current best program is the following
 
@@ -1754,7 +1711,7 @@ Failed to reduce node 317
 ------------------------------------------------------------
 
 
-=================Reducing node 295, size=17=================
+=================Reducing node 295, size=18=================
 
 The current best program is the following
 
@@ -1771,7 +1728,7 @@ Failed to reduce node 295
 ------------------------------------------------------------
 
 
-=================Reducing node 294, size=17=================
+=================Reducing node 294, size=18=================
 
 The current best program is the following
 
@@ -1782,30 +1739,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[2][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
     def main():
         print(             )
     main()
-    --file: <formatted tokenized program in its original format>--
-    def main():
-        print(             )
-    main()
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[2][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
+FixPt[2][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 294
 ------------------------------------------------------------
 
 
-=================Reducing node 315, size=17=================
+=================Reducing node 315, size=18=================
 
 The current best program is the following
 
@@ -1818,17 +1772,32 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=315}
+    structure: [delete_315]
+    context: [kleene_plus:kleene_plus__atom_5]can be epsilon
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def main():
+        print(             )
+    main()
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[2][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 315
 ------------------------------------------------------------
 
 
-=================Reducing node 316, size=17=================
+=================Reducing node 316, size=18=================
 
 The current best program is the following
 
@@ -1845,7 +1814,7 @@ Failed to reduce node 316
 ------------------------------------------------------------
 
 
-=================Reducing node 293, size=17=================
+=================Reducing node 293, size=18=================
 
 The current best program is the following
 
@@ -1862,7 +1831,7 @@ Failed to reduce node 293
 ------------------------------------------------------------
 
 
-=================Reducing node 270, size=17=================
+=================Reducing node 270, size=18=================
 
 The current best program is the following
 
@@ -1879,7 +1848,7 @@ Failed to reduce node 270
 ------------------------------------------------------------
 
 
-=================Reducing node 266, size=17=================
+=================Reducing node 266, size=18=================
 
 The current best program is the following
 
@@ -1896,7 +1865,7 @@ Failed to reduce node 266
 ------------------------------------------------------------
 
 
-=================Reducing node 264, size=17=================
+=================Reducing node 264, size=18=================
 
 The current best program is the following
 
@@ -1913,7 +1882,7 @@ Failed to reduce node 264
 ------------------------------------------------------------
 
 
-=================Reducing node 263, size=17=================
+=================Reducing node 263, size=18=================
 
 The current best program is the following
 
@@ -1930,7 +1899,7 @@ Failed to reduce node 263
 ------------------------------------------------------------
 
 
-=================Reducing node 260, size=17=================
+=================Reducing node 260, size=18=================
 
 The current best program is the following
 
@@ -1947,7 +1916,7 @@ Failed to reduce node 260
 ------------------------------------------------------------
 
 
-=================Reducing node 258, size=17=================
+=================Reducing node 258, size=18=================
 
 The current best program is the following
 
@@ -1964,7 +1933,7 @@ Failed to reduce node 258
 ------------------------------------------------------------
 
 
-=================Reducing node 257, size=17=================
+=================Reducing node 257, size=18=================
 
 The current best program is the following
 
@@ -1981,7 +1950,7 @@ Failed to reduce node 257
 ------------------------------------------------------------
 
 
-=================Reducing node 254, size=17=================
+=================Reducing node 254, size=18=================
 
 The current best program is the following
 
@@ -1998,7 +1967,7 @@ Failed to reduce node 254
 ------------------------------------------------------------
 
 
-=================Reducing node 253, size=17=================
+=================Reducing node 253, size=18=================
 
 The current best program is the following
 
@@ -2015,7 +1984,7 @@ Failed to reduce node 253
 ------------------------------------------------------------
 
 
-=================Reducing node 252, size=17=================
+=================Reducing node 252, size=18=================
 
 The current best program is the following
 
@@ -2032,7 +2001,7 @@ Failed to reduce node 252
 ------------------------------------------------------------
 
 
-=================Reducing node 229, size=17=================
+=================Reducing node 229, size=18=================
 
 The current best program is the following
 
@@ -2049,70 +2018,89 @@ Failed to reduce node 229
 ------------------------------------------------------------
 
 
+(18/36)  Rebuilding spar-tree: The spartree is rebuilt.
 =====Fixpoint iteration 3. Reducer: token_canonicalizer=====
 
+Parser Facade: class org.perses.grammar.python3.Python3ParserFacade
 The spar-tree is the following.
-file_input {id=221,slot_type=file_input}
-|___(*) {id=222,slot_type=kleene_star__file_input_2}
-    |___funcdef {id=256,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
-    |   |___Token:def {id=257,slot_type=DEF}
-    |   |___Token:main {id=258,slot_type=NAME}
-    |   |___parameters {id=259,slot_type=parameters}
-    |   |   |___Token:( {id=318,slot_type=OPEN_PAREN}
-    |   |   |___Token:) {id=319,slot_type=CLOSE_PAREN}
-    |   |___Token:: {id=260,slot_type=COLON}
-    |   |___aux_rule__suite_2 {id=262,slot_type=[suite,aux_rule__suite_2]}
-    |       |___Token:  {id=263,slot_type=NEWLINE}
-    |       |___Token:     {id=264,slot_type=Token}
-    |       |___(+) {id=265,slot_type=kleene_plus__suite_1}
-    |       |   |___simple_stmt {id=268,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr {id=288,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-    |       |       |   |___Token:print {id=317,slot_type=[atom,NAME]}
-    |       |       |   |___(*) {id=290,slot_type=kleene_star__atom_expr_2}
-    |       |       |       |___aux_rule__trailer_2 {id=292,slot_type=[trailer,aux_rule__trailer_2]}
-    |       |       |           |___Token:( {id=293,slot_type=OPEN_PAREN}
-    |       |       |           |___(?) {id=294,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+) {id=315,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
-    |       |       |           |       |___Token:"hello world" {id=316,slot_type=STRING}
-    |       |       |           |___Token:) {id=295,slot_type=CLOSE_PAREN}
-    |       |       |___Token:
- {id=270,slot_type=NEWLINE}
-    |       |___Token:
- {id=266,slot_type=Token}
-    |___simple_stmt {id=227,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr {id=247,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-        |   |___Token:main {id=254,slot_type=[atom,NAME]}
-        |   |___(*) {id=249,slot_type=kleene_star__atom_expr_2}
-        |       |___aux_rule__trailer_2 {id=251,slot_type=[trailer,aux_rule__trailer_2]}
-        |           |___Token:( {id=252,slot_type=OPEN_PAREN}
-        |           |___Token:) {id=253,slot_type=CLOSE_PAREN}
-        |___Token:
- {id=229,slot_type=NEWLINE}
+file_input{id=322,slot_type=file_input}
+|___(*){id=323,slot_type=kleene_star__file_input_2}
+    |___Token:\n{id=421,slot_type=[aux_rule__file_input_1,NEWLINE]}
+    |___funcdef{id=357,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
+    |   |___Token:def{id=358,slot_type=DEF}
+    |   |___Token:main{id=359,slot_type=NAME}
+    |   |___parameters{id=360,slot_type=parameters}
+    |   |   |___Token:({id=419,slot_type=OPEN_PAREN}
+    |   |   |___Token:){id=420,slot_type=CLOSE_PAREN}
+    |   |___Token::{id=361,slot_type=COLON}
+    |   |___aux_rule__suite_2{id=363,slot_type=[suite,aux_rule__suite_2]}
+    |       |___Token: {id=364,slot_type=NEWLINE}
+    |       |___Token:    {id=365,slot_type=Token}
+    |       |___(+){id=366,slot_type=kleene_plus__suite_1}
+    |       |   |___simple_stmt{id=369,slot_type=[stmt,simple_stmt]}
+    |       |       |___atom_expr{id=389,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |   |___Token:print{id=418,slot_type=[atom,NAME]}
+    |       |       |   |___(*){id=391,slot_type=kleene_star__atom_expr_2}
+    |       |       |       |___aux_rule__trailer_2{id=393,slot_type=[trailer,aux_rule__trailer_2]}
+    |       |       |           |___Token:({id=394,slot_type=OPEN_PAREN}
+    |       |       |           |___(?){id=395,slot_type=optional__decorator_1}
+    |       |       |           |   |___(+){id=416,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |       |___Token:"hello world"{id=417,slot_type=STRING}
+    |       |       |           |___Token:){id=396,slot_type=CLOSE_PAREN}
+    |       |       |___Token:\n{id=371,slot_type=NEWLINE}
+    |       |___Token:\n{id=367,slot_type=Token}
+    |___simple_stmt{id=328,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
+        |___atom_expr{id=348,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |   |___Token:main{id=355,slot_type=[atom,NAME]}
+        |   |___(*){id=350,slot_type=kleene_star__atom_expr_2}
+        |       |___aux_rule__trailer_2{id=352,slot_type=[trailer,aux_rule__trailer_2]}
+        |           |___Token:({id=353,slot_type=OPEN_PAREN}
+        |           |___Token:){id=354,slot_type=CLOSE_PAREN}
+        |___Token:\n{id=330,slot_type=NEWLINE}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme 'a'
-    --file: hello.py--
-    def a   ():
-        print("hello world")
-    main()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello world")
-    main()
-------------------------------------------------------------
-
-
-============Testing the following program: pass=============
+==========Testing the following program (22): pass==========
 
 // edit action set type: replace 2 lexer nodes with new lexeme 'a'
     --file: hello.py--
     def a   ():
         print("hello world")
     a   ()
-    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+5 entries are removed: 11 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace: 355_with_425,359_with_424]
+------------------------------------------------------------
+
+
+==========Testing the following program (23): pass==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme '
+'
+    --file: hello.py--
     def a   ():
         print("hello world")
     a   ()
@@ -2121,34 +2109,154 @@ file_input {id=221,slot_type=file_input}
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-1 entries are removed: 15 --> 14.
+0 entries are removed: 6 --> 6.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 15
+    size before clearance = 0
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_364_with_426]
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (24): fail==========
 
-// edit action set type: replace 1 lexer nodes with new lexeme '
-'
+// edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: hello.py--
     def a   ():
-        print("hello world")
+        a    ("hello world")
     a   ()
-    --file: <formatted tokenized program in its original format>--
+------------------------------------------------------------
+
+
+==========Testing the following program (25): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme 'b'
+    --file: hello.py--
     def a   ():
-        print("hello world")
+        b    ("hello world")
     a   ()
+------------------------------------------------------------
+
+
+==========Testing the following program (26): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme '""'
+    --file: hello.py--
+    def a   ():
+        print(""           )
+    a   ()
+------------------------------------------------------------
+
+
+==========Testing the following program (27): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme ''''
+    --file: hello.py--
+    def a   ():
+        print(''           )
+    a   ()
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def a   ():
+        print(""           )
+    a   ()
+------------------------------------------------------------
+
+
+==========Testing the following program (28): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"ello world"'
+    --file: hello.py--
+    def a   ():
+        print("ello world" )
+    a   ()
+------------------------------------------------------------
+
+
+==========Testing the following program (29): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hllo world"'
+    --file: hello.py--
+    def a   ():
+        print("hllo world" )
+    a   ()
+------------------------------------------------------------
+
+
+==========Testing the following program (30): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"helo world"'
+    --file: hello.py--
+    def a   ():
+        print("helo world" )
+    a   ()
+------------------------------------------------------------
+
+
+==========Testing the following program (31): fail==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"hell world"'
+    --file: hello.py--
+    def a   ():
+        print("hell world" )
+    a   ()
+------------------------------------------------------------
+
+
+==========Testing the following program (32): pass==========
+
+// edit action set type: replace 1 lexer nodes with new lexeme '"helloworld"'
+    --file: hello.py--
+    def a   ():
+        print("helloworld" )
+    a   ()
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
 ------------------------------------------------------------
 
 
@@ -2166,63 +2274,8 @@ token count change 17 -> 17
 
 ================The best program is updated.================
 
-token count change 17 -> 17
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme 'a'
-    --file: hello.py--
-    def a   ():
-        a    ("hello world")
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        a    ("hello world")
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme 'b'
-    --file: hello.py--
-    def a   ():
-        b    ("hello world")
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        b    ("hello world")
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
-    --file: hello.py--
-    def a   ():
-        print(""           )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme ''''
-    --file: hello.py--
-    def a   ():
-        print(''           )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(''           )
-    a   ()
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_417_with_448]
 ------------------------------------------------------------
 
 
@@ -2232,257 +2285,56 @@ token count change 17 -> 17
     def a   ():
         print(""           )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"ello world"'
-    --file: hello.py--
-    def a   ():
-        print("ello world" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("ello world" )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"hllo world"'
-    --file: hello.py--
-    def a   ():
-        print("hllo world" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hllo world" )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"helo world"'
-    --file: hello.py--
-    def a   ():
-        print("helo world" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helo world" )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"hell world"'
-    --file: hello.py--
-    def a   ():
-        print("hell world" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hell world" )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: pass=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"helloworld"'
-    --file: hello.py--
-    def a   ():
-        print("helloworld" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helloworld" )
-    a   ()
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.py--
-    def a   ():
-        print("hello orld" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello orld" )
-    a   ()
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.py--
-    def a   ():
-        print("hello wrld" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello wrld" )
-    a   ()
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.py--
-    def a   ():
-        print("hello wold" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello wold" )
-    a   ()
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.py--
-    def a   ():
-        print("hello word" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello word" )
-    a   ()
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.py--
-    def a   ():
-        print("hello worl" )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello worl" )
-    a   ()
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-8 entries are removed: 22 --> 14.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 17 -> 17
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
-    --file: hello.py--
-    def a   ():
-        print(""           )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (33): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"elloworld"'
     --file: hello.py--
     def a   ():
         print("elloworld"  )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("elloworld"  )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (34): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hlloworld"'
     --file: hello.py--
     def a   ():
         print("hlloworld"  )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hlloworld"  )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (35): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"heloworld"'
     --file: hello.py--
     def a   ():
         print("heloworld"  )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("heloworld"  )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (36): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hellworld"'
     --file: hello.py--
     def a   ():
         print("hellworld"  )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellworld"  )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (37): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"helloorld"'
     --file: hello.py--
     def a   ():
         print("helloorld"  )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helloorld"  )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2490,14 +2342,6 @@ token count change 17 -> 17
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("hellowrld"  )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellowrld"  )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2505,14 +2349,6 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("hellowold"  )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellowold"  )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2520,14 +2356,6 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("helloword"  )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helloword"  )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2535,20 +2363,12 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("helloworl"  )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helloworl"  )
-    a   ()
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-5 entries are removed: 19 --> 14.
+8 entries are removed: 18 --> 10.
 ------------------------------------------------------------
 
 
@@ -2560,77 +2380,57 @@ It took less than 1 second to cancel the task.
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_448_with_472]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: hello.py--
     def a   ():
         print(""           )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (38): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"elloorld"'
     --file: hello.py--
     def a   ():
         print("elloorld"   )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("elloorld"   )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (39): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hlloorld"'
     --file: hello.py--
     def a   ():
         print("hlloorld"   )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hlloorld"   )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (40): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"heloorld"'
     --file: hello.py--
     def a   ():
         print("heloorld"   )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("heloorld"   )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (41): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hellorld"'
     --file: hello.py--
     def a   ():
         print("hellorld"   )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellorld"   )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2638,14 +2438,6 @@ token count change 17 -> 17
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("helloold"   )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helloold"   )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2653,14 +2445,6 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("helloord"   )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helloord"   )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2668,20 +2452,12 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("helloorl"   )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helloorl"   )
-    a   ()
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-4 entries are removed: 18 --> 14.
+3 entries are removed: 13 --> 10.
 ------------------------------------------------------------
 
 
@@ -2693,91 +2469,67 @@ It took less than 1 second to cancel the task.
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_472_with_492]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: hello.py--
     def a   ():
         print(""           )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (42): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"ellorld"'
     --file: hello.py--
     def a   ():
         print("ellorld"    )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("ellorld"    )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (43): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hllorld"'
     --file: hello.py--
     def a   ():
         print("hllorld"    )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hllorld"    )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (44): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"helorld"'
     --file: hello.py--
     def a   ():
         print("helorld"    )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helorld"    )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (45): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hellrld"'
     --file: hello.py--
     def a   ():
         print("hellrld"    )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellrld"    )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (46): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hellold"'
     --file: hello.py--
     def a   ():
         print("hellold"    )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellold"    )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2785,14 +2537,6 @@ token count change 17 -> 17
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("hellord"    )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellord"    )
-    a   ()
 ------------------------------------------------------------
 
 
@@ -2800,20 +2544,12 @@ It took less than 1 second to cancel the task.
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("hellorl"    )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellorl"    )
-    a   ()
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-5 entries are removed: 19 --> 14.
+4 entries are removed: 14 --> 10.
 ------------------------------------------------------------
 
 
@@ -2825,88 +2561,64 @@ It took less than 1 second to cancel the task.
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_492_with_514]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: hello.py--
     def a   ():
         print(""           )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (47): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"ellold"'
     --file: hello.py--
     def a   ():
         print("ellold"     )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("ellold"     )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (48): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hllold"'
     --file: hello.py--
     def a   ():
         print("hllold"     )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hllold"     )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (49): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"helold"'
     --file: hello.py--
     def a   ():
         print("helold"     )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helold"     )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (50): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hellld"'
     --file: hello.py--
     def a   ():
         print("hellld"     )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellld"     )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (51): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hellod"'
     --file: hello.py--
-    def a   ():
-        print("hellod"     )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print("hellod"     )
     a   ()
@@ -2917,20 +2629,12 @@ token count change 17 -> 17
 
 It took less than 1 second to cancel the task.
 
-    --file: hello.py--
-    def a   ():
-        print("hellol"     )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hellol"     )
-    a   ()
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-5 entries are removed: 19 --> 14.
+7 entries are removed: 14 --> 7.
 ------------------------------------------------------------
 
 
@@ -2942,97 +2646,73 @@ It took less than 1 second to cancel the task.
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_514_with_532]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: hello.py--
     def a   ():
         print(""           )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (52): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"ellod"'
     --file: hello.py--
     def a   ():
         print("ellod"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("ellod"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (53): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hllod"'
     --file: hello.py--
     def a   ():
         print("hllod"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hllod"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (54): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"helod"'
     --file: hello.py--
     def a   ():
         print("helod"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helod"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (55): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"helld"'
     --file: hello.py--
     def a   ():
         print("helld"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helld"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (56): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hello"'
     --file: hello.py--
     def a   ():
         print("hello"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello"      )
-    a   ()
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-5 entries are removed: 19 --> 14.
+5 entries are removed: 11 --> 6.
 ------------------------------------------------------------
 
 
@@ -3044,242 +2724,174 @@ token count change 17 -> 17
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_532_with_548]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: hello.py--
     def a   ():
         print(""           )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (57): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"ello"'
     --file: hello.py--
     def a   ():
         print("ello"       )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("ello"       )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (58): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hllo"'
     --file: hello.py--
     def a   ():
         print("hllo"       )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hllo"       )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (59): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"helo"'
     --file: hello.py--
     def a   ():
         print("helo"       )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("helo"       )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (60): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hell"'
     --file: hello.py--
     def a   ():
         print("hell"       )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hell"       )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (61): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '" ello"'
     --file: hello.py--
     def a   ():
         print(" ello"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(" ello"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (62): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"!ello"'
     --file: hello.py--
     def a   ():
         print("!ello"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("!ello"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (63): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"h llo"'
     --file: hello.py--
     def a   ():
         print("h llo"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("h llo"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (64): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"h!llo"'
     --file: hello.py--
     def a   ():
         print("h!llo"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("h!llo"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (65): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"he lo"'
     --file: hello.py--
     def a   ():
         print("he lo"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("he lo"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (66): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"he!lo"'
     --file: hello.py--
     def a   ():
         print("he!lo"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("he!lo"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (67): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hel o"'
     --file: hello.py--
     def a   ():
         print("hel o"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hel o"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (68): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hel!o"'
     --file: hello.py--
     def a   ():
         print("hel!o"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hel!o"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (69): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hell "'
     --file: hello.py--
     def a   ():
         print("hell "      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hell "      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (70): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hell!"'
     --file: hello.py--
     def a   ():
         print("hell!"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hell!"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (71): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'b'
     --file: hello.py--
     def a   ():
         print("hello"      )
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello"      )
-    b   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (72): pass==========
 
 // edit action set type: replace 2 lexer nodes with new lexeme 'b'
     --file: hello.py--
-    def b   ():
-        print("hello"      )
-    b   ()
-    --file: <formatted tokenized program in its original format>--
     def b   ():
         print("hello"      )
     b   ()
@@ -3288,7 +2900,7 @@ token count change 17 -> 17
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-16 entries are removed: 30 --> 14.
+6 entries are removed: 21 --> 15.
 ------------------------------------------------------------
 
 
@@ -3300,56 +2912,56 @@ token count change 17 -> 17
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace: 424_with_583,425_with_584]
 ------------------------------------------------------------
 
 
 (18/36)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 4. Reducer: node_priority-dfs======
+========Fixpoint iteration 4. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.python3.Python3ParserFacade
 The spar-tree is the following.
-file_input {id=484,slot_type=file_input}
-|___(*) {id=485,slot_type=kleene_star__file_input_2}
-    |___Token:
- {id=583,slot_type=[aux_rule__file_input_1,NEWLINE]}
-    |___funcdef {id=519,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
-    |   |___Token:def {id=520,slot_type=DEF}
-    |   |___Token:b {id=521,slot_type=NAME}
-    |   |___parameters {id=522,slot_type=parameters}
-    |   |   |___Token:( {id=581,slot_type=OPEN_PAREN}
-    |   |   |___Token:) {id=582,slot_type=CLOSE_PAREN}
-    |   |___Token:: {id=523,slot_type=COLON}
-    |   |___aux_rule__suite_2 {id=525,slot_type=[suite,aux_rule__suite_2]}
-    |       |___Token:  {id=526,slot_type=NEWLINE}
-    |       |___Token:     {id=527,slot_type=Token}
-    |       |___(+) {id=528,slot_type=kleene_plus__suite_1}
-    |       |   |___simple_stmt {id=531,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr {id=551,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-    |       |       |   |___Token:print {id=580,slot_type=[atom,NAME]}
-    |       |       |   |___(*) {id=553,slot_type=kleene_star__atom_expr_2}
-    |       |       |       |___aux_rule__trailer_2 {id=555,slot_type=[trailer,aux_rule__trailer_2]}
-    |       |       |           |___Token:( {id=556,slot_type=OPEN_PAREN}
-    |       |       |           |___(?) {id=557,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+) {id=578,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
-    |       |       |           |       |___Token:"hello" {id=579,slot_type=STRING}
-    |       |       |           |___Token:) {id=558,slot_type=CLOSE_PAREN}
-    |       |       |___Token:
- {id=533,slot_type=NEWLINE}
-    |       |___Token:
- {id=529,slot_type=Token}
-    |___simple_stmt {id=490,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr {id=510,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-        |   |___Token:b {id=517,slot_type=[atom,NAME]}
-        |   |___(*) {id=512,slot_type=kleene_star__atom_expr_2}
-        |       |___aux_rule__trailer_2 {id=514,slot_type=[trailer,aux_rule__trailer_2]}
-        |           |___Token:( {id=515,slot_type=OPEN_PAREN}
-        |           |___Token:) {id=516,slot_type=CLOSE_PAREN}
-        |___Token:
- {id=492,slot_type=NEWLINE}
+file_input{id=585,slot_type=file_input}
+|___(*){id=586,slot_type=kleene_star__file_input_2}
+    |___Token:\n{id=684,slot_type=[aux_rule__file_input_1,NEWLINE]}
+    |___funcdef{id=620,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
+    |   |___Token:def{id=621,slot_type=DEF}
+    |   |___Token:b{id=622,slot_type=NAME}
+    |   |___parameters{id=623,slot_type=parameters}
+    |   |   |___Token:({id=682,slot_type=OPEN_PAREN}
+    |   |   |___Token:){id=683,slot_type=CLOSE_PAREN}
+    |   |___Token::{id=624,slot_type=COLON}
+    |   |___aux_rule__suite_2{id=626,slot_type=[suite,aux_rule__suite_2]}
+    |       |___Token: {id=627,slot_type=NEWLINE}
+    |       |___Token:    {id=628,slot_type=Token}
+    |       |___(+){id=629,slot_type=kleene_plus__suite_1}
+    |       |   |___simple_stmt{id=632,slot_type=[stmt,simple_stmt]}
+    |       |       |___atom_expr{id=652,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |   |___Token:print{id=681,slot_type=[atom,NAME]}
+    |       |       |   |___(*){id=654,slot_type=kleene_star__atom_expr_2}
+    |       |       |       |___aux_rule__trailer_2{id=656,slot_type=[trailer,aux_rule__trailer_2]}
+    |       |       |           |___Token:({id=657,slot_type=OPEN_PAREN}
+    |       |       |           |___(?){id=658,slot_type=optional__decorator_1}
+    |       |       |           |   |___(+){id=679,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |       |___Token:"hello"{id=680,slot_type=STRING}
+    |       |       |           |___Token:){id=659,slot_type=CLOSE_PAREN}
+    |       |       |___Token:\n{id=634,slot_type=NEWLINE}
+    |       |___Token:\n{id=630,slot_type=Token}
+    |___simple_stmt{id=591,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
+        |___atom_expr{id=611,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |   |___Token:b{id=618,slot_type=[atom,NAME]}
+        |   |___(*){id=613,slot_type=kleene_star__atom_expr_2}
+        |       |___aux_rule__trailer_2{id=615,slot_type=[trailer,aux_rule__trailer_2]}
+        |           |___Token:({id=616,slot_type=OPEN_PAREN}
+        |           |___Token:){id=617,slot_type=CLOSE_PAREN}
+        |___Token:\n{id=593,slot_type=NEWLINE}
 ------------------------------------------------------------
 
 
-=================Reducing node 485, size=18=================
+FixPt[4][node_priority](18/36)  Starting to retrieve the semantics provider
+FixPt[4][node_priority](18/36)  Retrieved semantics provider null
+=================Reducing node 586, size=18=================
 
 The current best program is the following
 
@@ -3360,66 +2972,53 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](18/36)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:18/36=50.00%
-FixPt[4][node_priority-dfs][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](18/36)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
-============Testing the following program: fail=============
+FixPt[4][node_priority][DFS](18/36)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+==========Testing the following program (73): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=1,#parts=1#total-parts=3
     --file: hello.py--
     def b   ():
         print("hello"      )
-    --file: <formatted tokenized program in its original format>--
-    def b   ():
-        print("hello"      )
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](18/36)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
-============Testing the following program: fail=============
+FixPt[4][node_priority][DFS](18/36)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+==========Testing the following program (74): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=2,#parts=2#total-parts=3
     --file: hello.py--
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    b   ()
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](18/36)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
-============Testing the following program: fail=============
+FixPt[4][node_priority][DFS](18/36)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
     --file: hello.py--
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    b   ()
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](18/36)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
-============Testing the following program: pass=============
+FixPt[4][node_priority][DFS](18/36)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+==========Testing the following program (75): pass==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__file_input_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__file_input_2]dd@#nodes=1,#parts=1#total-parts=3
     --file: hello.py--
     def b   ():
         print("hello"      )
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    def b   ():
-        print("hello"      )
-    b   ()
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](18/36)  Try deleting [0]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Try deleting [0]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:18/36=50.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 17 --> 17.
@@ -3434,18 +3033,19 @@ FixPt[4][node_priority-dfs][DFS](18/36)  Try deleting [0]#1: Interesting. Local 
 
 ================The best program is updated.================
 
-token count change 18 -> 17
+token count change 18 -> 18
+Edit: [delete_684]
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[1-2]#2. Local ratio: 2/3=66.67%. Global ratio:17/36=47.22%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[1-2]#2. Local ratio: 2/3=66.67%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 485 from 18 to 17
+Failed to reduce node 586
 ------------------------------------------------------------
 
 
-=================Reducing node 519, size=17=================
+=================Reducing node 620, size=18=================
 
 The current best program is the following
 
@@ -3460,30 +3060,25 @@ The current best program is the following
 
     --file: hello.py--
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    b   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (76): fail==========
 
 // edit action set type: [regular_node]kleene replacement
     --file: hello.py--
     print("hello"      )
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    print("hello"      )
-    b   ()
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 519
+Failed to reduce node 620
 ------------------------------------------------------------
 
 
-=================Reducing node 525, size=17=================
+=================Reducing node 626, size=18=================
 
 The current best program is the following
 
@@ -3494,27 +3089,54 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (77): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
     def b   ():
     print("hello"      )
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    def b   ():
-    print("hello"      )
-    b   ()
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 525
+Failed to reduce node 626
 ------------------------------------------------------------
 
 
-=================Reducing node 528, size=17=================
+=================Reducing node 629, size=18=================
+
+The current best program is the following
+
+    --file: hello.py--
+    def b   ():
+        print("hello"      )
+    b   ()
+------------------------------------------------------------
+
+
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+==========Testing the following program (78): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__suite_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: hello.py--
+    def b   ():
+    b   ()
+------------------------------------------------------------
+
+
+FixPt[4][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+===================Node reduction is done===================
+
+Failed to reduce node 629
+------------------------------------------------------------
+
+
+=================Reducing node 632, size=18=================
 
 The current best program is the following
 
@@ -3527,11 +3149,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 528
+Failed to reduce node 632
 ------------------------------------------------------------
 
 
-=================Reducing node 531, size=17=================
+=================Reducing node 652, size=18=================
 
 The current best program is the following
 
@@ -3542,58 +3164,33 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
-
-Failed to reduce node 531
-------------------------------------------------------------
-
-
-=================Reducing node 551, size=17=================
-
-The current best program is the following
-
-    --file: hello.py--
-    def b   ():
-        print("hello"      )
-    b   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (79): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
     def b   ():
         print
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    def b   ():
-        print
-    b   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (80): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
     def b   ():
         "hello"
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    def b   ():
-        "hello"
-    b   ()
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 551
+Failed to reduce node 652
 ------------------------------------------------------------
 
 
-=================Reducing node 490, size=17=================
+=================Reducing node 591, size=18=================
 
 The current best program is the following
 
@@ -3604,13 +3201,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: [regular_node]can be epsilon
     --file: hello.py--
-    def b   ():
-        print("hello"      )
-    --file: <formatted tokenized program in its original format>--
     def b   ():
         print("hello"      )
 ------------------------------------------------------------
@@ -3618,11 +3211,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 490
+Failed to reduce node 591
 ------------------------------------------------------------
 
 
-=================Reducing node 553, size=17=================
+=================Reducing node 654, size=18=================
 
 The current best program is the following
 
@@ -3633,30 +3226,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[4][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
     def b   ():
         print
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    def b   ():
-        print
-    b   ()
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[4][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
+FixPt[4][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 553
+Failed to reduce node 654
 ------------------------------------------------------------
 
 
-=================Reducing node 555, size=17=================
+=================Reducing node 656, size=18=================
 
 The current best program is the following
 
@@ -3669,17 +3259,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=555}
+    structure: [delete_656]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 555
+Failed to reduce node 656
 ------------------------------------------------------------
 
 
-=================Reducing node 510, size=17=================
+=================Reducing node 611, size=18=================
 
 The current best program is the following
 
@@ -3690,27 +3281,23 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (81): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.py--
     def b   ():
         print("hello"      )
     b
-    --file: <formatted tokenized program in its original format>--
-    def b   ():
-        print("hello"      )
-    b
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 510
+Failed to reduce node 611
 ------------------------------------------------------------
 
 
-=================Reducing node 522, size=17=================
+=================Reducing node 623, size=18=================
 
 The current best program is the following
 
@@ -3723,11 +3310,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 522
+Failed to reduce node 623
 ------------------------------------------------------------
 
 
-=================Reducing node 512, size=17=================
+=================Reducing node 613, size=18=================
 
 The current best program is the following
 
@@ -3738,30 +3325,27 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[4][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.py--
     def b   ():
         print("hello"      )
     b
-    --file: <formatted tokenized program in its original format>--
-    def b   ():
-        print("hello"      )
-    b
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[4][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
+FixPt[4][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 512
+Failed to reduce node 613
 ------------------------------------------------------------
 
 
-=================Reducing node 514, size=17=================
+=================Reducing node 615, size=18=================
 
 The current best program is the following
 
@@ -3774,17 +3358,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=514}
+    structure: [delete_615]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 514
+Failed to reduce node 615
 ------------------------------------------------------------
 
 
-=================Reducing node 582, size=17=================
+=================Reducing node 683, size=18=================
 
 The current best program is the following
 
@@ -3797,11 +3382,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 582
+Failed to reduce node 683
 ------------------------------------------------------------
 
 
-=================Reducing node 581, size=17=================
+=================Reducing node 682, size=18=================
 
 The current best program is the following
 
@@ -3814,11 +3399,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 581
+Failed to reduce node 682
 ------------------------------------------------------------
 
 
-=================Reducing node 580, size=17=================
+=================Reducing node 681, size=18=================
 
 The current best program is the following
 
@@ -3831,11 +3416,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 580
+Failed to reduce node 681
 ------------------------------------------------------------
 
 
-=================Reducing node 558, size=17=================
+=================Reducing node 659, size=18=================
 
 The current best program is the following
 
@@ -3848,11 +3433,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 558
+Failed to reduce node 659
 ------------------------------------------------------------
 
 
-=================Reducing node 557, size=17=================
+=================Reducing node 658, size=18=================
 
 The current best program is the following
 
@@ -3863,31 +3448,28 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:17/36=47.22%
-FixPt[4][node_priority-dfs][DFS](17/36)  Testing the empty input. Global ratio:17/36=47.22%
-============Testing the following program: fail=============
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+==========Testing the following program (82): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__decorator_1]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__decorator_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.py--
-    def b   ():
-        print(             )
-    b   ()
-    --file: <formatted tokenized program in its original format>--
     def b   ():
         print(             )
     b   ()
 ------------------------------------------------------------
 
 
-FixPt[4][node_priority-dfs][DFS](17/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
-FixPt[4][node_priority-dfs][DFS](17/36)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:17/36=47.22%
+FixPt[4][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 557
+Failed to reduce node 658
 ------------------------------------------------------------
 
 
-=================Reducing node 578, size=17=================
+=================Reducing node 679, size=18=================
 
 The current best program is the following
 
@@ -3900,17 +3482,32 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=578}
+    structure: [delete_679]
+    context: [kleene_plus:kleene_plus__atom_5]can be epsilon
 ------------------------------------------------------------
 
 
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Testing the empty input. Global ratio:18/36=50.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def b   ():
+        print(             )
+    b   ()
+------------------------------------------------------------
+
+
+FixPt[4][node_priority][DFS](18/36)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  There is only one element in the input, and the empty input has been tested. Global ratio:18/36=50.00%
+FixPt[4][node_priority][DFS](18/36)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:18/36=50.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 578
+Failed to reduce node 679
 ------------------------------------------------------------
 
 
-=================Reducing node 579, size=17=================
+=================Reducing node 680, size=18=================
 
 The current best program is the following
 
@@ -3923,11 +3520,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 579
+Failed to reduce node 680
 ------------------------------------------------------------
 
 
-=================Reducing node 556, size=17=================
+=================Reducing node 657, size=18=================
 
 The current best program is the following
 
@@ -3940,11 +3537,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 556
+Failed to reduce node 657
 ------------------------------------------------------------
 
 
-=================Reducing node 533, size=17=================
+=================Reducing node 634, size=18=================
 
 The current best program is the following
 
@@ -3957,11 +3554,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 533
+Failed to reduce node 634
 ------------------------------------------------------------
 
 
-=================Reducing node 529, size=17=================
+=================Reducing node 630, size=18=================
 
 The current best program is the following
 
@@ -3974,11 +3571,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 529
+Failed to reduce node 630
 ------------------------------------------------------------
 
 
-=================Reducing node 527, size=17=================
+=================Reducing node 628, size=18=================
 
 The current best program is the following
 
@@ -3991,11 +3588,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 527
+Failed to reduce node 628
 ------------------------------------------------------------
 
 
-=================Reducing node 526, size=17=================
+=================Reducing node 627, size=18=================
 
 The current best program is the following
 
@@ -4008,11 +3605,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 526
+Failed to reduce node 627
 ------------------------------------------------------------
 
 
-=================Reducing node 523, size=17=================
+=================Reducing node 624, size=18=================
 
 The current best program is the following
 
@@ -4025,11 +3622,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 523
+Failed to reduce node 624
 ------------------------------------------------------------
 
 
-=================Reducing node 521, size=17=================
+=================Reducing node 622, size=18=================
 
 The current best program is the following
 
@@ -4042,11 +3639,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 521
+Failed to reduce node 622
 ------------------------------------------------------------
 
 
-=================Reducing node 520, size=17=================
+=================Reducing node 621, size=18=================
 
 The current best program is the following
 
@@ -4059,11 +3656,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 520
+Failed to reduce node 621
 ------------------------------------------------------------
 
 
-=================Reducing node 517, size=17=================
+=================Reducing node 618, size=18=================
 
 The current best program is the following
 
@@ -4076,11 +3673,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 517
+Failed to reduce node 618
 ------------------------------------------------------------
 
 
-=================Reducing node 516, size=17=================
+=================Reducing node 617, size=18=================
 
 The current best program is the following
 
@@ -4093,11 +3690,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 516
+Failed to reduce node 617
 ------------------------------------------------------------
 
 
-=================Reducing node 515, size=17=================
+=================Reducing node 616, size=18=================
 
 The current best program is the following
 
@@ -4110,11 +3707,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 515
+Failed to reduce node 616
 ------------------------------------------------------------
 
 
-=================Reducing node 492, size=17=================
+=================Reducing node 593, size=18=================
 
 The current best program is the following
 
@@ -4127,74 +3724,66 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 492
+Failed to reduce node 593
 ------------------------------------------------------------
 
 
+(18/36)  Rebuilding spar-tree: The spartree is rebuilt.
 =====Fixpoint iteration 5. Reducer: token_canonicalizer=====
 
+Parser Facade: class org.perses.grammar.python3.Python3ParserFacade
 The spar-tree is the following.
-file_input {id=484,slot_type=file_input}
-|___(*) {id=485,slot_type=kleene_star__file_input_2}
-    |___funcdef {id=519,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
-    |   |___Token:def {id=520,slot_type=DEF}
-    |   |___Token:b {id=521,slot_type=NAME}
-    |   |___parameters {id=522,slot_type=parameters}
-    |   |   |___Token:( {id=581,slot_type=OPEN_PAREN}
-    |   |   |___Token:) {id=582,slot_type=CLOSE_PAREN}
-    |   |___Token:: {id=523,slot_type=COLON}
-    |   |___aux_rule__suite_2 {id=525,slot_type=[suite,aux_rule__suite_2]}
-    |       |___Token:  {id=526,slot_type=NEWLINE}
-    |       |___Token:     {id=527,slot_type=Token}
-    |       |___(+) {id=528,slot_type=kleene_plus__suite_1}
-    |       |   |___simple_stmt {id=531,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr {id=551,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-    |       |       |   |___Token:print {id=580,slot_type=[atom,NAME]}
-    |       |       |   |___(*) {id=553,slot_type=kleene_star__atom_expr_2}
-    |       |       |       |___aux_rule__trailer_2 {id=555,slot_type=[trailer,aux_rule__trailer_2]}
-    |       |       |           |___Token:( {id=556,slot_type=OPEN_PAREN}
-    |       |       |           |___(?) {id=557,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+) {id=578,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
-    |       |       |           |       |___Token:"hello" {id=579,slot_type=STRING}
-    |       |       |           |___Token:) {id=558,slot_type=CLOSE_PAREN}
-    |       |       |___Token:
- {id=533,slot_type=NEWLINE}
-    |       |___Token:
- {id=529,slot_type=Token}
-    |___simple_stmt {id=490,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr {id=510,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-        |   |___Token:b {id=517,slot_type=[atom,NAME]}
-        |   |___(*) {id=512,slot_type=kleene_star__atom_expr_2}
-        |       |___aux_rule__trailer_2 {id=514,slot_type=[trailer,aux_rule__trailer_2]}
-        |           |___Token:( {id=515,slot_type=OPEN_PAREN}
-        |           |___Token:) {id=516,slot_type=CLOSE_PAREN}
-        |___Token:
- {id=492,slot_type=NEWLINE}
+file_input{id=686,slot_type=file_input}
+|___(*){id=687,slot_type=kleene_star__file_input_2}
+    |___Token:\n{id=785,slot_type=[aux_rule__file_input_1,NEWLINE]}
+    |___funcdef{id=721,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
+    |   |___Token:def{id=722,slot_type=DEF}
+    |   |___Token:b{id=723,slot_type=NAME}
+    |   |___parameters{id=724,slot_type=parameters}
+    |   |   |___Token:({id=783,slot_type=OPEN_PAREN}
+    |   |   |___Token:){id=784,slot_type=CLOSE_PAREN}
+    |   |___Token::{id=725,slot_type=COLON}
+    |   |___aux_rule__suite_2{id=727,slot_type=[suite,aux_rule__suite_2]}
+    |       |___Token: {id=728,slot_type=NEWLINE}
+    |       |___Token:    {id=729,slot_type=Token}
+    |       |___(+){id=730,slot_type=kleene_plus__suite_1}
+    |       |   |___simple_stmt{id=733,slot_type=[stmt,simple_stmt]}
+    |       |       |___atom_expr{id=753,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |   |___Token:print{id=782,slot_type=[atom,NAME]}
+    |       |       |   |___(*){id=755,slot_type=kleene_star__atom_expr_2}
+    |       |       |       |___aux_rule__trailer_2{id=757,slot_type=[trailer,aux_rule__trailer_2]}
+    |       |       |           |___Token:({id=758,slot_type=OPEN_PAREN}
+    |       |       |           |___(?){id=759,slot_type=optional__decorator_1}
+    |       |       |           |   |___(+){id=780,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |       |___Token:"hello"{id=781,slot_type=STRING}
+    |       |       |           |___Token:){id=760,slot_type=CLOSE_PAREN}
+    |       |       |___Token:\n{id=735,slot_type=NEWLINE}
+    |       |___Token:\n{id=731,slot_type=Token}
+    |___simple_stmt{id=692,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
+        |___atom_expr{id=712,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |   |___Token:b{id=719,slot_type=[atom,NAME]}
+        |   |___(*){id=714,slot_type=kleene_star__atom_expr_2}
+        |       |___aux_rule__trailer_2{id=716,slot_type=[trailer,aux_rule__trailer_2]}
+        |           |___Token:({id=717,slot_type=OPEN_PAREN}
+        |           |___Token:){id=718,slot_type=CLOSE_PAREN}
+        |___Token:\n{id=694,slot_type=NEWLINE}
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (83): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: hello.py--
     def a   ():
         print("hello"      )
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello"      )
-    b   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (84): pass==========
 
 // edit action set type: replace 2 lexer nodes with new lexeme 'a'
     --file: hello.py--
-    def a   ():
-        print("hello"      )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print("hello"      )
     a   ()
@@ -4203,23 +3792,24 @@ file_input {id=484,slot_type=file_input}
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-1 entries are removed: 25 --> 24.
+2 entries are removed: 25 --> 23.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 15
+    size before clearance = 0
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace: 719_with_789,723_with_788]
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (85): pass==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '
 '
@@ -4227,16 +3817,12 @@ token count change 17 -> 17
     def a   ():
         print("hello"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello"      )
-    a   ()
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 24 --> 24.
+0 entries are removed: 23 --> 23.
 ------------------------------------------------------------
 
 
@@ -4248,60 +3834,43 @@ token count change 17 -> 17
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_728_with_790]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (86): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'a'
     --file: hello.py--
     def a   ():
         a    ("hello"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        a    ("hello"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (87): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'b'
     --file: hello.py--
     def a   ():
         b    ("hello"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        b    ("hello"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '""'
     --file: hello.py--
-    def a   ():
-        print(""           )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print(""           )
     a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme ''''
     --file: hello.py--
-    def a   ():
-        print(''           )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print(''           )
     a   ()
@@ -4314,231 +3883,154 @@ token count change 17 -> 17
     def a   ():
         print(""           )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print(""           )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '"ello"'
     --file: hello.py--
-    def a   ():
-        print("ello"       )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print("ello"       )
     a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '"hllo"'
     --file: hello.py--
-    def a   ():
-        print("hllo"       )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print("hllo"       )
     a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '"helo"'
     --file: hello.py--
-    def a   ():
-        print("helo"       )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print("helo"       )
     a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '"hell"'
     --file: hello.py--
-    def a   ():
-        print("hell"       )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print("hell"       )
     a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
 
-// edit action set type: replace 1 lexer nodes with new lexeme '" ello"'
     --file: hello.py--
-    def a   ():
-        print(" ello"      )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
     def a   ():
         print(" ello"      )
     a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def a   ():
+        print("h llo"      )
+    a   ()
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def a   ():
+        print("he lo"      )
+    a   ()
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def a   ():
+        print("hel o"      )
+    a   ()
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: hello.py--
+    def a   ():
+        print("hell "      )
+    a   ()
+------------------------------------------------------------
+
+
+==========Testing the following program (88): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"!ello"'
     --file: hello.py--
     def a   ():
         print("!ello"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("!ello"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"h llo"'
-    --file: hello.py--
-    def a   ():
-        print("h llo"      )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("h llo"      )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (89): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"h!llo"'
     --file: hello.py--
     def a   ():
         print("h!llo"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("h!llo"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"he lo"'
-    --file: hello.py--
-    def a   ():
-        print("he lo"      )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("he lo"      )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (90): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"he!lo"'
     --file: hello.py--
     def a   ():
         print("he!lo"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("he!lo"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"hel o"'
-    --file: hello.py--
-    def a   ():
-        print("hel o"      )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hel o"      )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (91): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hel!o"'
     --file: hello.py--
     def a   ():
         print("hel!o"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hel!o"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: replace 1 lexer nodes with new lexeme '"hell "'
-    --file: hello.py--
-    def a   ():
-        print("hell "      )
-    a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hell "      )
-    a   ()
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (92): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"hell!"'
     --file: hello.py--
     def a   ():
         print("hell!"      )
     a   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hell!"      )
-    a   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (93): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'b'
     --file: hello.py--
     def a   ():
         print("hello"      )
     b   ()
-    --file: <formatted tokenized program in its original format>--
-    def a   ():
-        print("hello"      )
-    b   ()
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (94): pass==========
 
 // edit action set type: replace 2 lexer nodes with new lexeme 'b'
     --file: hello.py--
-    def b   ():
-        print("hello"      )
-    b   ()
-    --file: <formatted tokenized program in its original format>--
     def b   ():
         print("hello"      )
     b   ()
@@ -4547,7 +4039,7 @@ token count change 17 -> 17
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-19 entries are removed: 43 --> 24.
+6 entries are removed: 31 --> 25.
 ------------------------------------------------------------
 
 
@@ -4559,76 +4051,143 @@ token count change 17 -> 17
 
 ================The best program is updated.================
 
-token count change 17 -> 17
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace: 788_with_833,789_with_834]
 ------------------------------------------------------------
 
 
+(18/36)  Rebuilding spar-tree: The spartree is rebuilt.
 ====Fixpoint iteration 6. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.python3.Python3ParserFacade
 The spar-tree is the following.
-file_input {id=484,slot_type=file_input}
-|___(*) {id=485,slot_type=kleene_star__file_input_2}
-    |___funcdef {id=519,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
-    |   |___Token:def {id=520,slot_type=DEF}
-    |   |___Token:b {id=631,slot_type=NAME}
-    |   |___parameters {id=522,slot_type=parameters}
-    |   |   |___Token:( {id=581,slot_type=OPEN_PAREN}
-    |   |   |___Token:) {id=582,slot_type=CLOSE_PAREN}
-    |   |___Token:: {id=523,slot_type=COLON}
-    |   |___aux_rule__suite_2 {id=525,slot_type=[suite,aux_rule__suite_2]}
-    |       |___Token:
- {id=588,slot_type=NEWLINE}
-    |       |___Token:     {id=527,slot_type=Token}
-    |       |___(+) {id=528,slot_type=kleene_plus__suite_1}
-    |       |   |___simple_stmt {id=531,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr {id=551,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-    |       |       |   |___Token:print {id=580,slot_type=[atom,NAME]}
-    |       |       |   |___(*) {id=553,slot_type=kleene_star__atom_expr_2}
-    |       |       |       |___aux_rule__trailer_2 {id=555,slot_type=[trailer,aux_rule__trailer_2]}
-    |       |       |           |___Token:( {id=556,slot_type=OPEN_PAREN}
-    |       |       |           |___(?) {id=557,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+) {id=578,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
-    |       |       |           |       |___Token:"hello" {id=579,slot_type=STRING}
-    |       |       |           |___Token:) {id=558,slot_type=CLOSE_PAREN}
-    |       |       |___Token:
- {id=533,slot_type=NEWLINE}
-    |       |___Token:
- {id=529,slot_type=Token}
-    |___simple_stmt {id=490,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr {id=510,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
-        |   |___Token:b {id=632,slot_type=[atom,NAME]}
-        |   |___(*) {id=512,slot_type=kleene_star__atom_expr_2}
-        |       |___aux_rule__trailer_2 {id=514,slot_type=[trailer,aux_rule__trailer_2]}
-        |           |___Token:( {id=515,slot_type=OPEN_PAREN}
-        |           |___Token:) {id=516,slot_type=CLOSE_PAREN}
-        |___Token:
- {id=492,slot_type=NEWLINE}
+file_input{id=835,slot_type=file_input}
+|___(*){id=836,slot_type=kleene_star__file_input_2}
+    |___Token:\n{id=934,slot_type=[aux_rule__file_input_1,NEWLINE]}
+    |___funcdef{id=870,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
+    |   |___Token:def{id=871,slot_type=DEF}
+    |   |___Token:b{id=872,slot_type=NAME}
+    |   |___parameters{id=873,slot_type=parameters}
+    |   |   |___Token:({id=932,slot_type=OPEN_PAREN}
+    |   |   |___Token:){id=933,slot_type=CLOSE_PAREN}
+    |   |___Token::{id=874,slot_type=COLON}
+    |   |___aux_rule__suite_2{id=876,slot_type=[suite,aux_rule__suite_2]}
+    |       |___Token: {id=877,slot_type=NEWLINE}
+    |       |___Token:    {id=878,slot_type=Token}
+    |       |___(+){id=879,slot_type=kleene_plus__suite_1}
+    |       |   |___simple_stmt{id=882,slot_type=[stmt,simple_stmt]}
+    |       |       |___atom_expr{id=902,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |   |___Token:print{id=931,slot_type=[atom,NAME]}
+    |       |       |   |___(*){id=904,slot_type=kleene_star__atom_expr_2}
+    |       |       |       |___aux_rule__trailer_2{id=906,slot_type=[trailer,aux_rule__trailer_2]}
+    |       |       |           |___Token:({id=907,slot_type=OPEN_PAREN}
+    |       |       |           |___(?){id=908,slot_type=optional__decorator_1}
+    |       |       |           |   |___(+){id=929,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |       |___Token:"hello"{id=930,slot_type=STRING}
+    |       |       |           |___Token:){id=909,slot_type=CLOSE_PAREN}
+    |       |       |___Token:\n{id=884,slot_type=NEWLINE}
+    |       |___Token:\n{id=880,slot_type=Token}
+    |___simple_stmt{id=841,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
+        |___atom_expr{id=861,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |   |___Token:b{id=868,slot_type=[atom,NAME]}
+        |   |___(*){id=863,slot_type=kleene_star__atom_expr_2}
+        |       |___aux_rule__trailer_2{id=865,slot_type=[trailer,aux_rule__trailer_2]}
+        |           |___Token:({id=866,slot_type=OPEN_PAREN}
+        |           |___Token:){id=867,slot_type=CLOSE_PAREN}
+        |___Token:\n{id=843,slot_type=NEWLINE}
 ------------------------------------------------------------
 
 
-FixPt[6][FineGritLatraReducer](17/36)  Latra does not support LanguagePython3{name=python3, extensions=[py, py3], defaultCodeFormatControl=COMPACT_PYTHON3_FORMAT} langauge yet.
-(17/36)  The history of the reducer invocation.
+FixPt[6][FineGritLatraReducer](18/36)  Latra does not support LanguagePython3{name=python3, extensions=[py, py3], defaultCodeFormatControl=COMPACT_PYTHON3_FORMAT} langauge yet.
+(18/36)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 7. Reducer: spartree_root_replacement_reducer
+
+Parser Facade: class org.perses.grammar.python3.Python3ParserFacade
+The spar-tree is the following.
+file_input{id=835,slot_type=file_input}
+|___(*){id=836,slot_type=kleene_star__file_input_2}
+    |___Token:\n{id=934,slot_type=[aux_rule__file_input_1,NEWLINE]}
+    |___funcdef{id=870,slot_type=[aux_rule__file_input_1,stmt,funcdef]}
+    |   |___Token:def{id=871,slot_type=DEF}
+    |   |___Token:b{id=872,slot_type=NAME}
+    |   |___parameters{id=873,slot_type=parameters}
+    |   |   |___Token:({id=932,slot_type=OPEN_PAREN}
+    |   |   |___Token:){id=933,slot_type=CLOSE_PAREN}
+    |   |___Token::{id=874,slot_type=COLON}
+    |   |___aux_rule__suite_2{id=876,slot_type=[suite,aux_rule__suite_2]}
+    |       |___Token: {id=877,slot_type=NEWLINE}
+    |       |___Token:    {id=878,slot_type=Token}
+    |       |___(+){id=879,slot_type=kleene_plus__suite_1}
+    |       |   |___simple_stmt{id=882,slot_type=[stmt,simple_stmt]}
+    |       |       |___atom_expr{id=902,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |   |___Token:print{id=931,slot_type=[atom,NAME]}
+    |       |       |   |___(*){id=904,slot_type=kleene_star__atom_expr_2}
+    |       |       |       |___aux_rule__trailer_2{id=906,slot_type=[trailer,aux_rule__trailer_2]}
+    |       |       |           |___Token:({id=907,slot_type=OPEN_PAREN}
+    |       |       |           |___(?){id=908,slot_type=optional__decorator_1}
+    |       |       |           |   |___(+){id=929,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |       |___Token:"hello"{id=930,slot_type=STRING}
+    |       |       |           |___Token:){id=909,slot_type=CLOSE_PAREN}
+    |       |       |___Token:\n{id=884,slot_type=NEWLINE}
+    |       |___Token:\n{id=880,slot_type=Token}
+    |___simple_stmt{id=841,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
+        |___atom_expr{id=861,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |   |___Token:b{id=868,slot_type=[atom,NAME]}
+        |   |___(*){id=863,slot_type=kleene_star__atom_expr_2}
+        |       |___aux_rule__trailer_2{id=865,slot_type=[trailer,aux_rule__trailer_2]}
+        |           |___Token:({id=866,slot_type=OPEN_PAREN}
+        |           |___Token:){id=867,slot_type=CLOSE_PAREN}
+        |___Token:\n{id=843,slot_type=NEWLINE}
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 25 --> 25.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 18 -> 18
+Edit: AnyNodeReplace:[replace_835_with_585]
+------------------------------------------------------------
+
+
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0    node_priority-dfs     -19    -47             0
- 1    node_priority-dfs       0     -4             0
- 2  token_canonicalizer       0    -12             1
- 3    node_priority-dfs       0      0             1
- 4  token_canonicalizer       0      0             1
- 5 FineGritLatraReducer       0      0             1
+ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0                     node_priority      3             1     -18            -34      18   time-hidden
+ 1                     node_priority      1             1       0              0       4   time-hidden
+ 2               token_canonicalizer      9             9       0            -11      51   time-hidden
+ 3                     node_priority      1             1       0              0      10   time-hidden
+ 4               token_canonicalizer      3             3       0              0      12   time-hidden
+ 5              FineGritLatraReducer      0             0       0              0       0   time-hidden
+ 6 spartree_root_replacement_reducer      1             1       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-   node_priority-dfs     3     -19    -51
- token_canonicalizer     2       0    -12
-FineGritLatraReducer     1       0      0
+                          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+                    node_priority     3      5             3     -18            -34      32   time-hidden
+             FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+spartree_root_replacement_reducer     1      1             1       0              0       0   time-hidden
+              token_canonicalizer     2     12            12       0            -11      63   time-hidden
+
+------------------------------- Transformations --------------------------------
+                                   Transformation Worked #NonDeletions #Tokens #NonBlankChars
+                        node_priority.Replacement      2             0     -18            -34
+                           node_priority.Deletion      3             3       0              0
+spartree_root_replacement_reducer.RootReplacement      1             1       0              0
+                  token_canonicalizer.Replacement     12            12       0            -11
 ------------------------------------- End --------------------------------------
-
-
 #test success = 17
-#test failure = 98
-#test result cache hits = 21
-#test execution cancelled = 15
-#node edit action set cache hits = 9
+#test failure = 78
+#test result cache hits = 46
+#test execution cancelled = 16
+#node edit action set cache hits = 10
 #external test execution cache hits = 0

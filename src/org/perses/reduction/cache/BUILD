@@ -5,50 +5,16 @@ package(default_visibility = [
 ])
 
 kt_jvm_library(
-    name = "zip_cache",
-    srcs = [
-        "ContentZipBasedQueryCache.kt",
-    ],
-    deps = [
-        ":query_cache",
-    ],
-)
-
-kt_jvm_library(
     name = "sha_hash_cache",
     srcs = [
         "ContentShaHashBasedFormatQueryCache.kt",
-        "ContentShaHashBasedQueryCache.kt",
     ],
     deps = [
         ":query_cache",
+        ":query_cache_interface",
+        "//src/org/perses/util:immutable_int_array",
+        "@maven//:com_github_ben_manes_caffeine_caffeine",
     ],
-)
-
-kt_jvm_library(
-    name = "query_cache_configuration",
-    srcs = [
-        "QueryCacheConfiguration.kt",
-    ],
-    deps = [
-        "//src/org/perses/util:percentage",
-        "//src/org/perses/util/hashing",
-    ],
-)
-
-kt_jvm_library(
-    name = "enum_query_caching_control",
-    srcs = ["EnumQueryCachingControl.kt"],
-)
-
-kt_jvm_library(
-    name = "program_encoding_interface",
-    srcs = ["AbstractProgramEncoding.kt"],
-)
-
-kt_jvm_library(
-    name = "test_execution_cache_type",
-    srcs = ["QueryCacheType.kt"],
 )
 
 kt_jvm_library(
@@ -60,31 +26,17 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "query_cache_factory",
-    srcs = [
-        "QueryCacheFactory.kt",
-    ],
-    deps = [
-        ":content_based_cache",
-        ":linear_scan_cache",
-        ":query_cache",
-        ":sha_hash_cache",
-        ":test_execution_cache_type",
-        ":zip_cache",
-    ],
-)
-
-kt_jvm_library(
     name = "query_cache_interface",
     srcs = [
-        "AbstractCacheRetrievalResult.kt",
         "AbstractQueryCache.kt",
+        "CacheLookupResult.kt",
     ],
     deps = [
-        ":program_encoding_interface",
         "//src/org/perses/program",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction/io:output_manager_interface",
+        "//src/org/perses/util:immutable_int_array",
+        "//src/org/perses/util/hashing",
     ],
 )
 
@@ -97,6 +49,7 @@ kt_jvm_library(
         ":query_cache_interface",
         "//src/org/perses/program",
         "//src/org/perses/reduction:test_script",
+        "//src/org/perses/util:immutable_int_array",
     ],
 )
 
@@ -114,18 +67,9 @@ kt_jvm_library(
     name = "query_cache",
     srcs = [
         "AbstractQueryCacheProfiler.kt",
-        "AbstractRccProgramEncoder.kt",
-        "AbstractRealQueryCache.kt",
-        "AbstractTokenizedProgramEncoder.kt",
-        "ConfigBasedQueryCache.kt",
         "NullQueryCacheProfiler.kt",
-        "RccProgramEncoding.kt",
     ],
     deps = [
-        ":int_array_compressor",
-        ":interval_expander",
-        ":program_encoding_interface",
-        ":query_cache_configuration",
         ":query_cache_interface",
         "//:fastutil",
         "//:flogger",
@@ -134,7 +78,6 @@ kt_jvm_library(
         "//src/org/perses/reduction:property_test_result",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/util:percentage",
-        "@maven//:com_github_ben_manes_caffeine_caffeine",
         "@maven//:com_google_errorprone_error_prone_annotations",
     ],
 )
@@ -151,22 +94,6 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "content_based_cache",
-    srcs = [
-        "ContentLexemeIdQueryCache.kt",
-        "ContentLexemeListQueryCache.kt",
-        "ContentStringBasedQueryCache.kt",
-    ],
-    deps = [
-        ":program_encoding_interface",
-        ":query_cache_configuration",
-        "//:guava",
-        "//src/org/perses/program",
-        "//src/org/perses/reduction/cache:query_cache",
-    ],
-)
-
-kt_jvm_library(
     name = "PassLevelCache",
     srcs = [
         "PassLevelCache.kt",
@@ -175,28 +102,6 @@ kt_jvm_library(
         "//:guava",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/util:file_name_content_pair",
-    ],
-)
-
-kt_jvm_library(
-    name = "linear_scan_cache",
-    srcs = [
-        "AbstractRccLinearScanEncoder.kt",
-        "QueryCacheWithFastLinearScanWithoutCompression.kt",
-        "RccFormatSensitiveEncoder.kt",
-        "RccFormatSensitiveQueryCache.kt",
-        "RccMemLitQueryCache.kt",
-        "RccMemoryLitProgramEncoder.kt",
-        "RccQueryCache.kt",
-        "RccTokenizedProgramEncoder.kt",
-    ],
-    deps = [
-        ":LogicalSizedArray",
-        ":query_cache",
-        ":query_cache_configuration",
-        "//:fastutil",
-        "//:guava",
-        "//src/org/perses/program",
     ],
 )
 
@@ -211,6 +116,7 @@ kt_jvm_library(
         "//:guava",
         "//src/org/perses/program",
         "//src/org/perses/reduction/cache:query_cache",
+        "//src/org/perses/reduction/cache:sha_hash_cache",
         "//third_party/memory_measurer:object_explorer",
     ],
 )

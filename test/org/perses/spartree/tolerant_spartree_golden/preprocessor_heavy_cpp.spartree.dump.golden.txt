@@ -1,0 +1,123 @@
+compilationUnit{id=1,slot_type=compilationUnit}
+|___Token:#ifndef ENGINE_H{id=2,slot_type=PreprocessingDirective}
+|___Token:#define ENGINE_H{id=3,slot_type=PreprocessingDirective}
+|___Token:#include <vector>{id=4,slot_type=IncludeDirective}
+|___Token:#include <string>{id=5,slot_type=IncludeDirective}
+|___Token:#define MAX_SIZE 1024{id=6,slot_type=PreprocessingDirective}
+|___Token:#define MIN(a, b) ((a) < (b) ? (a) : (b)){id=7,slot_type=PreprocessingDirective}
+|___Token:#define STRINGIFY(x) #x{id=8,slot_type=PreprocessingDirective}
+|___Token:#if defined(__linux__) && !defined(EMBEDDED){id=9,slot_type=PreprocessingDirective}
+|___Token:#define PLATFORM 1{id=10,slot_type=PreprocessingDirective}
+|___Token:#elif defined(_WIN32){id=11,slot_type=PreprocessingDirective}
+|___Token:#define PLATFORM 2{id=12,slot_type=PreprocessingDirective}
+|___Token:#else{id=13,slot_type=PreprocessingDirective}
+|___Token:#define PLATFORM 0{id=14,slot_type=PreprocessingDirective}
+|___Token:#endif{id=15,slot_type=PreprocessingDirective}
+|___Token:namespace{id=16,slot_type=Identifier}
+|___Token:app{id=17,slot_type=Identifier}
+|___Token:{{id=18,slot_type=LeftBrace}
+|___Token:template{id=19,slot_type=Identifier}
+|___Token:<{id=20,slot_type=Less}
+|___Token:typename{id=21,slot_type=Identifier}
+|___Token:T{id=22,slot_type=Identifier}
+|___Token:>{id=23,slot_type=Greater}
+|___Token:class{id=24,slot_type=Identifier}
+|___Token:Buffer{id=25,slot_type=Identifier}
+|___Token:{{id=26,slot_type=LeftBrace}
+|___Token:public{id=27,slot_type=Identifier}
+|___Token::{id=28,slot_type=Colon}
+|___Token:Buffer{id=29,slot_type=Identifier}
+|___Token:({id=30,slot_type=LeftParen}
+|___Token:){id=31,slot_type=RightParen}
+|___Token::{id=32,slot_type=Colon}
+|___Token:size_{id=33,slot_type=Identifier}
+|___Token:({id=34,slot_type=LeftParen}
+|___Token:MAX_SIZE{id=35,slot_type=Identifier}
+|___Token:){id=36,slot_type=RightParen}
+|___Token:{{id=37,slot_type=LeftBrace}
+|___Token:#ifdef ENABLE_LOGGING{id=38,slot_type=PreprocessingDirective}
+|___Token:trace{id=39,slot_type=Identifier}
+|___Token:({id=40,slot_type=LeftParen}
+|___Token:"Buffer created"{id=41,slot_type=StringLiteral}
+|___Token:){id=42,slot_type=RightParen}
+|___Token:;{id=43,slot_type=Semi}
+|___Token:#endif{id=44,slot_type=PreprocessingDirective}
+|___Token:}{id=45,slot_type=RightBrace}
+|___Token:int{id=46,slot_type=Int}
+|___Token:compute{id=47,slot_type=Identifier}
+|___Token:({id=48,slot_type=LeftParen}
+|___Token:int{id=49,slot_type=Int}
+|___Token:x{id=50,slot_type=Identifier}
+|___Token:){id=51,slot_type=RightParen}
+|___Token:{{id=52,slot_type=LeftBrace}
+|___Token:#if defined(FAST_PATH){id=53,slot_type=PreprocessingDirective}
+|___Token:return{id=54,slot_type=Return}
+|___Token:x{id=55,slot_type=Identifier}
+|___Token:<<{id=56,slot_type=LeftShift}
+|___Token:2{id=57,slot_type=Constant}
+|___Token:;{id=58,slot_type=Semi}
+|___Token:#else{id=59,slot_type=PreprocessingDirective}
+|___Token:int{id=60,slot_type=Int}
+|___Token:result{id=61,slot_type=Identifier}
+|___Token:={id=62,slot_type=Assign}
+|___Token:0{id=63,slot_type=Constant}
+|___Token:;{id=64,slot_type=Semi}
+|___Token:for{id=65,slot_type=For}
+|___Token:({id=66,slot_type=LeftParen}
+|___Token:int{id=67,slot_type=Int}
+|___Token:i{id=68,slot_type=Identifier}
+|___Token:={id=69,slot_type=Assign}
+|___Token:0{id=70,slot_type=Constant}
+|___Token:;{id=71,slot_type=Semi}
+|___Token:i{id=72,slot_type=Identifier}
+|___Token:<{id=73,slot_type=Less}
+|___Token:MIN{id=74,slot_type=Identifier}
+|___Token:({id=75,slot_type=LeftParen}
+|___Token:x{id=76,slot_type=Identifier}
+|___Token:,{id=77,slot_type=Comma}
+|___Token:size_{id=78,slot_type=Identifier}
+|___Token:){id=79,slot_type=RightParen}
+|___Token:;{id=80,slot_type=Semi}
+|___Token:++{id=81,slot_type=PlusPlus}
+|___Token:i{id=82,slot_type=Identifier}
+|___Token:){id=83,slot_type=RightParen}
+|___Token:{{id=84,slot_type=LeftBrace}
+|___Token:#ifndef NDEBUG{id=85,slot_type=PreprocessingDirective}
+|___Token:result{id=86,slot_type=Identifier}
+|___Token:+={id=87,slot_type=PlusAssign}
+|___Token:({id=88,slot_type=LeftParen}
+|___Token:i{id=89,slot_type=Identifier}
+|___Token:*{id=90,slot_type=Star}
+|___Token:PLATFORM{id=91,slot_type=Identifier}
+|___Token:){id=92,slot_type=RightParen}
+|___Token:;{id=93,slot_type=Semi}
+|___Token:#else{id=94,slot_type=PreprocessingDirective}
+|___Token:result{id=95,slot_type=Identifier}
+|___Token:+={id=96,slot_type=PlusAssign}
+|___Token:i{id=97,slot_type=Identifier}
+|___Token:;{id=98,slot_type=Semi}
+|___Token:#endif{id=99,slot_type=PreprocessingDirective}
+|___Token:}{id=100,slot_type=RightBrace}
+|___Token:return{id=101,slot_type=Return}
+|___Token:result{id=102,slot_type=Identifier}
+|___Token:;{id=103,slot_type=Semi}
+|___Token:#endif{id=104,slot_type=PreprocessingDirective}
+|___Token:}{id=105,slot_type=RightBrace}
+|___Token:private{id=106,slot_type=Identifier}
+|___Token::{id=107,slot_type=Colon}
+|___Token:int{id=108,slot_type=Int}
+|___Token:size_{id=109,slot_type=Identifier}
+|___Token:;{id=110,slot_type=Semi}
+|___Token:std{id=111,slot_type=Identifier}
+|___Token::{id=112,slot_type=Colon}
+|___Token::{id=113,slot_type=Colon}
+|___Token:vector{id=114,slot_type=Identifier}
+|___Token:<{id=115,slot_type=Less}
+|___Token:T{id=116,slot_type=Identifier}
+|___Token:>{id=117,slot_type=Greater}
+|___Token:data_{id=118,slot_type=Identifier}
+|___Token:;{id=119,slot_type=Semi}
+|___Token:}{id=120,slot_type=RightBrace}
+|___Token:;{id=121,slot_type=Semi}
+|___Token:}{id=122,slot_type=RightBrace}
+|___Token:#endif{id=123,slot_type=PreprocessingDirective}

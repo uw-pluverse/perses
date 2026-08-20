@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 29
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
-  fullyDeterministicMode: false
+  hideTimestamps: true
+  fullyDeterministicMode: true
 versionFlags:
   groupName: "Version"
   version: false
-inputFlags:
-  groupName: "Inputs"
-  testScript: "r.sh"
-  inputFile: "Hello.sc"
-  deps: []
-  sourceFile: "Hello.sc"
 resultOutputFlags:
   groupName: "Outputs"
   outputDir: "result_golden_test_with_global_cache_node-dfs_Hello.sc"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "Hello.sc"
+  deps: []
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node-dfs"
+  mainReductionAlgorithm: "node-dfs"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "_golden_test_with_global_cache_by_default_progress.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: false
   nodeActionSetCaching: false
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: true
   globalCacheFile: "golden_global_cache.csv"
   pathToSaveUpdatedGlobalCache: "golden_test_with_global_cache_updated_global_cache_file.csv"
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,21 +130,30 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=false, edit-caching=false, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 20
 (29/29)  The reducer execution plan is listed below.
     fixpoint (smaller) {
         node-dfs
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            node-dfs
+            fixpoint (smaller) {
+                node-dfs
+            }
         }
     }
 
@@ -130,75 +161,78 @@ The number of lexemes in PersesTokenFactory is 20
 (29/29)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ==========Fixpoint iteration 1. Reducer: node-dfs===========
 
+Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
-compilationUnit {id=1,slot_type=compilationUnit}
-|___(+) {id=2,slot_type=topStatSeq}
-    |___aux_rule__tmplDef_7 {id=8,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
-        |___Token:object {id=9,slot_type=Token}
-        |___objectDef {id=10,slot_type=objectDef}
-            |___Token:Hello {id=11,slot_type=Id}
-            |___(?) {id=13,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
-                |___templateBody {id=15,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
-                    |___Token:{ {id=16,slot_type=Token}
-                    |___(+) {id=17,slot_type=kleene_plus__templateBody_3}
-                    |   |___aux_rule__def_2 {id=23,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
-                    |       |___Token:def {id=24,slot_type=Token}
-                    |       |___aux_rule__funDef_8 {id=26,slot_type=[funDef,aux_rule__funDef_8]}
-                    |           |___funSig {id=27,slot_type=funSig}
-                    |           |   |___Token:main {id=136,slot_type=Id}
-                    |           |   |___(*) {id=138,slot_type=[paramClauses,kleene_star__paramClauses_1]}
-                    |           |       |___paramClause {id=139,slot_type=paramClause}
-                    |           |           |___Token:( {id=140,slot_type=Token}
-                    |           |           |___(?) {id=141,slot_type=optional__paramClause_2}
-                    |           |           |   |___param {id=144,slot_type=[params,param]}
-                    |           |           |       |___Token:args {id=145,slot_type=Id}
-                    |           |           |       |___(?) {id=146,slot_type=optional__param_3}
-                    |           |           |           |___aux_rule__param_2 {id=147,slot_type=aux_rule__param_2}
-                    |           |           |               |___Token:: {id=148,slot_type=Token}
-                    |           |           |               |___simpleType {id=156,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
-                    |           |           |                   |___Token:Array {id=178,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                   |___(*) {id=158,slot_type=kleene_star__simpleType_3}
-                    |           |           |                       |___typeArgs {id=160,slot_type=[aux_rule__simpleType_4,typeArgs]}
-                    |           |           |                           |___Token:[ {id=161,slot_type=Token}
-                    |           |           |                           |___Token:String {id=174,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                           |___Token:] {id=163,slot_type=Token}
-                    |           |           |___Token:) {id=142,slot_type=Token}
-                    |           |___aux_rule__funDef_9 {id=29,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
-                    |               |___Token:= {id=30,slot_type=Token}
-                    |               |___blockExpr {id=40,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,simpleExpr,blockExpr]}
-                    |                   |___Token:{ {id=41,slot_type=Token}
-                    |                   |___(+) {id=45,slot_type=[altnt_block__blockExpr_1,block,kleene_plus__block_1]}
-                    |                   |   |___infixExpr {id=51,slot_type=[blockStat,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
-                    |                   |       |___simpleExpr1 {id=109,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
-                    |                   |       |   |___Token:println {id=135,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
-                    |                   |       |   |___(*) {id=111,slot_type=kleene_star__simpleExpr1_4}
-                    |                   |       |       |___aux_rule__argumentExprs_7 {id=114,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
-                    |                   |       |           |___Token:( {id=115,slot_type=Token}
-                    |                   |       |           |___(?) {id=118,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
-                    |                   |       |           |   |___Token:"line 1" {id=132,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                   |       |           |___Token:) {id=117,slot_type=Token}
-                    |                   |       |___(*) {id=53,slot_type=kleene_star__infixExpr_2}
-                    |                   |           |___aux_rule__infixExpr_3 {id=54,slot_type=aux_rule__infixExpr_3}
-                    |                   |               |___Token:println {id=55,slot_type=Id}
-                    |                   |               |___infixExpr {id=56,slot_type=infixExpr}
-                    |                   |                   |___aux_rule__simpleExpr1_10 {id=89,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
-                    |                   |                   |   |___Token:( {id=90,slot_type=Token}
-                    |                   |                   |   |___(?) {id=91,slot_type=optional__simpleExpr1_1}
-                    |                   |                   |   |   |___Token:"Hello, world" {id=106,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                   |                   |   |___Token:) {id=92,slot_type=Token}
-                    |                   |                   |___(*) {id=58,slot_type=kleene_star__infixExpr_2}
-                    |                   |                       |___aux_rule__infixExpr_3 {id=59,slot_type=aux_rule__infixExpr_3}
-                    |                   |                           |___Token:println {id=60,slot_type=Id}
-                    |                   |                           |___aux_rule__simpleExpr1_10 {id=67,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
-                    |                   |                               |___Token:( {id=68,slot_type=Token}
-                    |                   |                               |___(?) {id=69,slot_type=optional__simpleExpr1_1}
-                    |                   |                               |   |___Token:"line 2" {id=84,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                   |                               |___Token:) {id=70,slot_type=Token}
-                    |                   |___Token:} {id=43,slot_type=Token}
-                    |___Token:} {id=18,slot_type=Token}
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(+){id=2,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7{id=8,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object{id=9,slot_type=Token}
+        |___objectDef{id=10,slot_type=objectDef}
+            |___Token:Hello{id=11,slot_type=Id}
+            |___(?){id=13,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody{id=15,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{{id=16,slot_type=Token}
+                    |___(+){id=17,slot_type=kleene_plus__templateBody_3}
+                    |   |___aux_rule__def_2{id=23,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |       |___Token:def{id=24,slot_type=Token}
+                    |       |___aux_rule__funDef_8{id=26,slot_type=[funDef,aux_rule__funDef_8]}
+                    |           |___funSig{id=27,slot_type=funSig}
+                    |           |   |___Token:main{id=136,slot_type=Id}
+                    |           |   |___(*){id=138,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause{id=139,slot_type=paramClause}
+                    |           |           |___Token:({id=140,slot_type=Token}
+                    |           |           |___(?){id=141,slot_type=optional__paramClause_2}
+                    |           |           |   |___param{id=144,slot_type=[params,param]}
+                    |           |           |       |___Token:args{id=145,slot_type=Id}
+                    |           |           |       |___(?){id=146,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2{id=147,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token::{id=148,slot_type=Token}
+                    |           |           |               |___simpleType{id=156,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array{id=178,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*){id=158,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs{id=160,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[{id=161,slot_type=Token}
+                    |           |           |                           |___Token:String{id=174,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:]{id=163,slot_type=Token}
+                    |           |           |___Token:){id=142,slot_type=Token}
+                    |           |___aux_rule__funDef_9{id=29,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |               |___Token:={id=30,slot_type=Token}
+                    |               |___blockExpr{id=40,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,simpleExpr,blockExpr]}
+                    |                   |___Token:{{id=41,slot_type=Token}
+                    |                   |___(+){id=45,slot_type=[altnt_block__blockExpr_1,block,kleene_plus__block_1]}
+                    |                   |   |___infixExpr{id=51,slot_type=[blockStat,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
+                    |                   |       |___simpleExpr1{id=109,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |       |   |___Token:println{id=135,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |       |   |___(*){id=111,slot_type=kleene_star__simpleExpr1_4}
+                    |                   |       |       |___aux_rule__argumentExprs_7{id=114,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                   |       |           |___Token:({id=115,slot_type=Token}
+                    |                   |       |           |___(?){id=118,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                   |       |           |   |___Token:"line 1"{id=132,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |       |           |___Token:){id=117,slot_type=Token}
+                    |                   |       |___(*){id=53,slot_type=kleene_star__infixExpr_2}
+                    |                   |           |___aux_rule__infixExpr_3{id=54,slot_type=aux_rule__infixExpr_3}
+                    |                   |               |___Token:println{id=55,slot_type=Id}
+                    |                   |               |___infixExpr{id=56,slot_type=infixExpr}
+                    |                   |                   |___aux_rule__simpleExpr1_10{id=89,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                   |                   |   |___Token:({id=90,slot_type=Token}
+                    |                   |                   |   |___(?){id=91,slot_type=optional__simpleExpr1_1}
+                    |                   |                   |   |   |___Token:"Hello, world"{id=106,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |                   |   |___Token:){id=92,slot_type=Token}
+                    |                   |                   |___(*){id=58,slot_type=kleene_star__infixExpr_2}
+                    |                   |                       |___aux_rule__infixExpr_3{id=59,slot_type=aux_rule__infixExpr_3}
+                    |                   |                           |___Token:println{id=60,slot_type=Id}
+                    |                   |                           |___aux_rule__simpleExpr1_10{id=67,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                   |                               |___Token:({id=68,slot_type=Token}
+                    |                   |                               |___(?){id=69,slot_type=optional__simpleExpr1_1}
+                    |                   |                               |   |___Token:"line 2"{id=84,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |                               |___Token:){id=70,slot_type=Token}
+                    |                   |___Token:}{id=43,slot_type=Token}
+                    |___Token:}{id=18,slot_type=Token}
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs](29/29)  Starting to retrieve the semantics provider
+FixPt[1][node-dfs](29/29)  Retrieved semantics provider null
 ==================Reducing node 2, size=29==================
 
 The current best program is the following
@@ -214,6 +248,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](29/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Testing the empty input. Global ratio:29/29=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node-dfs(PersesNodeReducer)[kleene_plus:topStatSeq]dd@#nodes=1,#parts=1#total-parts=1
+    --file: Hello.sc--
+------------------------------------------------------------
+
+
+FixPt[1][node-dfs][DFS](29/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  There is only one element in the input, and the empty input has been tested. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
@@ -277,12 +323,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (1): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.sc--
-    object Hello
-    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
@@ -329,20 +373,19 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node-dfs][DFS](29/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/29=100.00%
 FixPt[1][node-dfs][DFS](29/29)  Testing the empty input. Global ratio:29/29=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (2): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__classTemplateOpt_3]dd@1
+// edit action set type: DFS in node-dfs(PersesNodeReducer)[optional:optional__classTemplateOpt_3]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.sc--
-    object Hello
-    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
 
 FixPt[1][node-dfs][DFS](29/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
-FixPt[1][node-dfs][DFS](29/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  There is only one element in the input, and the empty input has been tested. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 13
@@ -364,12 +407,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (3): fail===========
 
 // edit action set type: [regular_node]can be epsilon
     --file: Hello.sc--
-    object Hello
-    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
@@ -416,6 +457,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[1][node-dfs][DFS](29/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Testing the empty input. Global ratio:29/29=100.00%
+==========Testing the following program (4): fail===========
+
+// edit action set type: DFS in node-dfs(PersesNodeReducer)[kleene_plus:kleene_plus__templateBody_3]dd@#nodes=1,#parts=1#total-parts=1
+    --file: Hello.sc--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node-dfs][DFS](29/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  There is only one element in the input, and the empty input has been tested. Global ratio:29/29=100.00%
+FixPt[1][node-dfs][DFS](29/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
 ===================Node reduction is done===================
 
 Failed to reduce node 17
@@ -458,361 +513,21 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (5): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.sc--
     object Hello {
             main
     }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-            main
-    }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (6): pass===========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.sc--
     object Hello {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-                                        {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-                                        {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 23
-------------------------------------------------------------
-
-
-=================Reducing node 24, size=29==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 24
-------------------------------------------------------------
-
-
-=================Reducing node 26, size=29==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 26
-------------------------------------------------------------
-
-
-=================Reducing node 27, size=29==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main                      = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main                      = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def      args                 = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def      args                 = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 27
-------------------------------------------------------------
-
-
-=================Reducing node 29, size=29==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 29
-------------------------------------------------------------
-
-
-=================Reducing node 136, size=29=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 136
-------------------------------------------------------------
-
-
-=================Reducing node 138, size=29=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](29/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:29/29=100.00%
-FixPt[1][node-dfs][DFS](29/29)  Testing the empty input. Global ratio:29/29=100.00%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__paramClauses_1]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main                      = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main                      = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](29/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
-FixPt[1][node-dfs][DFS](29/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/29=100.00%
-===================Node reduction is done===================
-
-Failed to reduce node 138
-------------------------------------------------------------
-
-
-=================Reducing node 30, size=29==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 30
-------------------------------------------------------------
-
-
-=================Reducing node 40, size=29==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) = {
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-        }
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: pass=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
             println("line 1")
             println("Hello, world")
             println("line 2")
@@ -834,23 +549,23 @@ The current best program is the following
 
 ================The best program is updated.================
 
-token count change 29 -> 27
+token count change 29 -> 16
+Edit: HoistEdit:[replace_23_with_51]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 40 from 29 to 27
+Succeeded to reduce node 23 from 29 to 16
 ------------------------------------------------------------
 
 
-=================Reducing node 139, size=27=================
+=================Reducing node 51, size=16==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
             println("line 1")
             println("Hello, world")
             println("line 2")
@@ -858,269 +573,32 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main                      =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main                      =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 139
-------------------------------------------------------------
-
-
-=================Reducing node 51, size=27==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (7): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
             println
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (8): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-                    "line 1"
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
                     "line 1"
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (9): pass===========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
                    ("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 51
-------------------------------------------------------------
-
-
-=================Reducing node 140, size=27=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 140
-------------------------------------------------------------
-
-
-=================Reducing node 141, size=27=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](27/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:27/29=93.10%
-FixPt[1][node-dfs][DFS](27/29)  Testing the empty input. Global ratio:27/29=93.10%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__paramClause_2]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(                   ) =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(                   ) =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](27/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:27/29=93.10%
-FixPt[1][node-dfs][DFS](27/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:27/29=93.10%
-===================Node reduction is done===================
-
-Failed to reduce node 141
-------------------------------------------------------------
-
-
-=================Reducing node 142, size=27=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 142
-------------------------------------------------------------
-
-
-=================Reducing node 109, size=27=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println("line 1")
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: pass=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-                    "line 1"
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-                    "line 1"
-            println("Hello, world")
-            println("line 2")
     }
 ------------------------------------------------------------
 
@@ -1139,401 +617,34 @@ It took less than 1 second to cancel the task.
 
 ================The best program is updated.================
 
-token count change 27 -> 24
+token count change 16 -> 7
+Edit: HoistEdit:[replace_51_with_89]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 109 from 27 to 24
+Succeeded to reduce node 51 from 16 to 7
 ------------------------------------------------------------
 
 
-=================Reducing node 53, size=24==================
+==================Reducing node 89, size=7==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
+                   ("Hello, world")
     }
 ------------------------------------------------------------
 
 
-FixPt[1][node-dfs][DFS](24/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:24/29=82.76%
-FixPt[1][node-dfs][DFS](24/29)  Testing the empty input. Global ratio:24/29=82.76%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__infixExpr_2]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](24/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/29=82.76%
-FixPt[1][node-dfs][DFS](24/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/29=82.76%
-===================Node reduction is done===================
-
-Failed to reduce node 53
-------------------------------------------------------------
-
-
-=================Reducing node 144, size=24=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main(                   ) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(                   ) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
+==========Testing the following program (10): pass==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.sc--
     object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(      Array        ) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(      Array        ) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 144
-------------------------------------------------------------
-
-
-=================Reducing node 135, size=24=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 135
-------------------------------------------------------------
-
-
-=================Reducing node 54, size=24==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]kleene replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 54
-------------------------------------------------------------
-
-
-=================Reducing node 145, size=24=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 145
-------------------------------------------------------------
-
-
-=================Reducing node 146, size=24=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](24/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:24/29=82.76%
-FixPt[1][node-dfs][DFS](24/29)  Testing the empty input. Global ratio:24/29=82.76%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__param_3]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](24/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:24/29=82.76%
-FixPt[1][node-dfs][DFS](24/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/29=82.76%
-===================Node reduction is done===================
-
-Failed to reduce node 146
-------------------------------------------------------------
-
-
-=================Reducing node 55, size=24==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 55
-------------------------------------------------------------
-
-
-=================Reducing node 56, size=24==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-            println("line 2")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println "Hello, world"
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println "Hello, world"
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println
-            println
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println
-                    "line 2"
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println
-                    "line 2"
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: pass=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println
-                   ("line 2")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println
-                   ("line 2")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
@@ -1552,312 +663,24 @@ It took less than 1 second to cancel the task.
 
 ================The best program is updated.================
 
-token count change 24 -> 20
+token count change 7 -> 5
+Edit: HoistEdit:[replace_89_with_106]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 56 from 24 to 20
+Succeeded to reduce node 89 from 7 to 5
 ------------------------------------------------------------
 
 
-=================Reducing node 147, size=20=================
+=================Reducing node 106, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 147
-------------------------------------------------------------
-
-
-=================Reducing node 89, size=20==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println "Hello, world"
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println "Hello, world"
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 89
-------------------------------------------------------------
-
-
-=================Reducing node 148, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 148
-------------------------------------------------------------
-
-
-=================Reducing node 156, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args:       String ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args:       String ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 156
-------------------------------------------------------------
-
-
-=================Reducing node 90, size=20==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 90
-------------------------------------------------------------
-
-
-=================Reducing node 91, size=20==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[1][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__simpleExpr1_1]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println(              )
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println(              )
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[1][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-===================Node reduction is done===================
-
-Failed to reduce node 91
-------------------------------------------------------------
-
-
-=================Reducing node 92, size=20==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 92
-------------------------------------------------------------
-
-
-=================Reducing node 178, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 178
-------------------------------------------------------------
-
-
-=================Reducing node 158, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[1][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__simpleType_3]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[1][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-===================Node reduction is done===================
-
-Failed to reduce node 158
-------------------------------------------------------------
-
-
-=================Reducing node 106, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
@@ -1868,180 +691,64 @@ Failed to reduce node 106
 ------------------------------------------------------------
 
 
-=================Reducing node 160, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 160
-------------------------------------------------------------
-
-
-=================Reducing node 161, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 161
-------------------------------------------------------------
-
-
-=================Reducing node 174, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 174
-------------------------------------------------------------
-
-
-=================Reducing node 163, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 163
-------------------------------------------------------------
-
-
-(20/29)  Rebuilding spar-tree: The spartree is rebuilt.
+(5/29)  Rebuilding spar-tree: The spartree is rebuilt.
 ==========Fixpoint iteration 2. Reducer: node-dfs===========
 
+Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
-compilationUnit {id=180,slot_type=compilationUnit}
-|___(+) {id=181,slot_type=topStatSeq}
-    |___aux_rule__tmplDef_7 {id=187,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
-        |___Token:object {id=188,slot_type=Token}
-        |___objectDef {id=189,slot_type=objectDef}
-            |___Token:Hello {id=190,slot_type=Id}
-            |___(?) {id=192,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
-                |___templateBody {id=194,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
-                    |___Token:{ {id=195,slot_type=Token}
-                    |___(+) {id=196,slot_type=kleene_plus__templateBody_3}
-                    |   |___aux_rule__def_2 {id=202,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
-                    |       |___Token:def {id=203,slot_type=Token}
-                    |       |___aux_rule__funDef_8 {id=205,slot_type=[funDef,aux_rule__funDef_8]}
-                    |           |___funSig {id=206,slot_type=funSig}
-                    |           |   |___Token:main {id=251,slot_type=Id}
-                    |           |   |___(*) {id=253,slot_type=[paramClauses,kleene_star__paramClauses_1]}
-                    |           |       |___paramClause {id=254,slot_type=paramClause}
-                    |           |           |___Token:( {id=255,slot_type=Token}
-                    |           |           |___(?) {id=256,slot_type=optional__paramClause_2}
-                    |           |           |   |___param {id=259,slot_type=[params,param]}
-                    |           |           |       |___Token:args {id=260,slot_type=Id}
-                    |           |           |       |___(?) {id=261,slot_type=optional__param_3}
-                    |           |           |           |___aux_rule__param_2 {id=262,slot_type=aux_rule__param_2}
-                    |           |           |               |___Token:: {id=263,slot_type=Token}
-                    |           |           |               |___simpleType {id=271,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
-                    |           |           |                   |___Token:Array {id=293,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                   |___(*) {id=273,slot_type=kleene_star__simpleType_3}
-                    |           |           |                       |___typeArgs {id=275,slot_type=[aux_rule__simpleType_4,typeArgs]}
-                    |           |           |                           |___Token:[ {id=276,slot_type=Token}
-                    |           |           |                           |___Token:String {id=289,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                           |___Token:] {id=278,slot_type=Token}
-                    |           |           |___Token:) {id=257,slot_type=Token}
-                    |           |___aux_rule__funDef_9 {id=208,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
-                    |               |___Token:= {id=209,slot_type=Token}
-                    |               |___infixExpr {id=215,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
-                    |                   |___Token:println {id=250,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
-                    |                   |___(*) {id=217,slot_type=kleene_star__infixExpr_2}
-                    |                       |___aux_rule__infixExpr_3 {id=218,slot_type=aux_rule__infixExpr_3}
-                    |                           |___Token:println {id=219,slot_type=Id}
-                    |                           |___aux_rule__simpleExpr1_10 {id=226,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
-                    |                               |___Token:( {id=227,slot_type=Token}
-                    |                               |___(?) {id=228,slot_type=optional__simpleExpr1_1}
-                    |                               |   |___Token:"Hello, world" {id=243,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                               |___Token:) {id=229,slot_type=Token}
-                    |___Token:} {id=197,slot_type=Token}
+compilationUnit{id=180,slot_type=compilationUnit}
+|___(+){id=181,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7{id=187,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object{id=188,slot_type=Token}
+        |___objectDef{id=189,slot_type=objectDef}
+            |___Token:Hello{id=190,slot_type=Id}
+            |___(?){id=192,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody{id=194,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{{id=195,slot_type=Token}
+                    |___(+){id=196,slot_type=kleene_plus__templateBody_3}
+                    |   |___Token:"Hello, world"{id=211,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |___Token:}{id=197,slot_type=Token}
 ------------------------------------------------------------
 
 
-=================Reducing node 181, size=20=================
+FixPt[2][node-dfs](5/29)  Starting to retrieve the semantics provider
+FixPt[2][node-dfs](5/29)  Retrieved semantics provider null
+=================Reducing node 181, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  Testing the empty input. Global ratio:5/29=17.24%
+==========Testing the following program (11): fail==========
+
+// edit action set type: DFS in node-dfs(PersesNodeReducer)[kleene_plus:topStatSeq]dd@#nodes=1,#parts=1#total-parts=1
+    --file: Hello.sc--
+------------------------------------------------------------
+
+
+FixPt[2][node-dfs][DFS](5/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  There is only one element in the input, and the empty input has been tested. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
 ===================Node reduction is done===================
 
 Failed to reduce node 181
 ------------------------------------------------------------
 
 
-=================Reducing node 187, size=20=================
+=================Reducing node 187, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
@@ -2052,15 +759,13 @@ Failed to reduce node 187
 ------------------------------------------------------------
 
 
-=================Reducing node 188, size=20=================
+=================Reducing node 188, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
@@ -2071,25 +776,21 @@ Failed to reduce node 188
 ------------------------------------------------------------
 
 
-=================Reducing node 189, size=20=================
+=================Reducing node 189, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (12): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Hello.sc--
-    object Hello
-    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
@@ -2100,15 +801,13 @@ Failed to reduce node 189
 ------------------------------------------------------------
 
 
-=================Reducing node 190, size=20=================
+=================Reducing node 190, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
@@ -2119,58 +818,51 @@ Failed to reduce node 190
 ------------------------------------------------------------
 
 
-=================Reducing node 192, size=20=================
+=================Reducing node 192, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
 
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
+FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  Testing the empty input. Global ratio:5/29=17.24%
+==========Testing the following program (13): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__classTemplateOpt_3]dd@1
+// edit action set type: DFS in node-dfs(PersesNodeReducer)[optional:optional__classTemplateOpt_3]dd@#nodes=1,#parts=1#total-parts=1
     --file: Hello.sc--
-    object Hello
-    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
 
-FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
+FixPt[2][node-dfs][DFS](5/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  There is only one element in the input, and the empty input has been tested. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
 ===================Node reduction is done===================
 
 Failed to reduce node 192
 ------------------------------------------------------------
 
 
-=================Reducing node 194, size=20=================
+=================Reducing node 194, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (14): fail==========
 
 // edit action set type: [regular_node]can be epsilon
     --file: Hello.sc--
-    object Hello
-    --file: <formatted tokenized program in its original format>--
     object Hello
 ------------------------------------------------------------
 
@@ -2181,15 +873,13 @@ Failed to reduce node 194
 ------------------------------------------------------------
 
 
-=================Reducing node 195, size=20=================
+=================Reducing node 195, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
@@ -2200,34 +890,44 @@ Failed to reduce node 195
 ------------------------------------------------------------
 
 
-=================Reducing node 196, size=20=================
+=================Reducing node 196, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  Testing the empty input. Global ratio:5/29=17.24%
+==========Testing the following program (15): fail==========
+
+// edit action set type: DFS in node-dfs(PersesNodeReducer)[kleene_plus:kleene_plus__templateBody_3]dd@#nodes=1,#parts=1#total-parts=1
+    --file: Hello.sc--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node-dfs][DFS](5/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  There is only one element in the input, and the empty input has been tested. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
 ===================Node reduction is done===================
 
 Failed to reduce node 196
 ------------------------------------------------------------
 
 
-=================Reducing node 197, size=20=================
+=================Reducing node 197, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
+                    "Hello, world"
     }
 ------------------------------------------------------------
 
@@ -2238,1158 +938,63 @@ Failed to reduce node 197
 ------------------------------------------------------------
 
 
-=================Reducing node 202, size=20=================
+=================Reducing node 211, size=5==================
 
 The current best program is the following
 
     --file: Hello.sc--
     object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-            main
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-            main
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-            println
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 202
-------------------------------------------------------------
-
-
-=================Reducing node 203, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 203
-------------------------------------------------------------
-
-
-=================Reducing node 205, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 205
-------------------------------------------------------------
-
-
-=================Reducing node 206, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main                      =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main                      =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def      args                 =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def      args                 =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 206
-------------------------------------------------------------
-
-
-=================Reducing node 208, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 208
-------------------------------------------------------------
-
-
-=================Reducing node 251, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 251
-------------------------------------------------------------
-
-
-=================Reducing node 253, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__paramClauses_1]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main                      =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main                      =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-===================Node reduction is done===================
-
-Failed to reduce node 253
-------------------------------------------------------------
-
-
-=================Reducing node 209, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 209
-------------------------------------------------------------
-
-
-=================Reducing node 215, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-                    "Hello, world"
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
                     "Hello, world"
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-                   ("Hello, world")
-    }
-------------------------------------------------------------
-
-
 ===================Node reduction is done===================
 
-Failed to reduce node 215
+Failed to reduce node 211
 ------------------------------------------------------------
 
 
-=================Reducing node 254, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main                      =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main                      =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 254
-------------------------------------------------------------
-
-
-=================Reducing node 250, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 250
-------------------------------------------------------------
-
-
-=================Reducing node 217, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__infixExpr_2]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-===================Node reduction is done===================
-
-Failed to reduce node 217
-------------------------------------------------------------
-
-
-=================Reducing node 255, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 255
-------------------------------------------------------------
-
-
-=================Reducing node 256, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__paramClause_2]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(                   ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(                   ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-===================Node reduction is done===================
-
-Failed to reduce node 256
-------------------------------------------------------------
-
-
-=================Reducing node 257, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 257
-------------------------------------------------------------
-
-
-=================Reducing node 218, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 218
-------------------------------------------------------------
-
-
-=================Reducing node 259, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main(                   ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(                   ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(      Array        ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(      Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 259
-------------------------------------------------------------
-
-
-=================Reducing node 219, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 219
-------------------------------------------------------------
-
-
-=================Reducing node 226, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println "Hello, world"
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println "Hello, world"
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 226
-------------------------------------------------------------
-
-
-=================Reducing node 260, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 260
-------------------------------------------------------------
-
-
-=================Reducing node 261, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__param_3]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-===================Node reduction is done===================
-
-Failed to reduce node 261
-------------------------------------------------------------
-
-
-=================Reducing node 227, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 227
-------------------------------------------------------------
-
-
-=================Reducing node 228, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:optional__simpleExpr1_1]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println(              )
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println(              )
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-===================Node reduction is done===================
-
-Failed to reduce node 228
-------------------------------------------------------------
-
-
-=================Reducing node 229, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 229
-------------------------------------------------------------
-
-
-=================Reducing node 262, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args               ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 262
-------------------------------------------------------------
-
-
-=================Reducing node 243, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 243
-------------------------------------------------------------
-
-
-=================Reducing node 263, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 263
-------------------------------------------------------------
-
-
-=================Reducing node 271, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: Hello.sc--
-    object Hello {
-        def main(args:       String ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args:       String ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 271
-------------------------------------------------------------
-
-
-=================Reducing node 293, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 293
-------------------------------------------------------------
-
-
-=================Reducing node 273, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Testing the empty input. Global ratio:20/29=68.97%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__simpleType_3]dd@1
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](20/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-FixPt[2][node-dfs][DFS](20/29)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/29=68.97%
-===================Node reduction is done===================
-
-Failed to reduce node 273
-------------------------------------------------------------
-
-
-=================Reducing node 275, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-    --file: <formatted tokenized program in its original format>--
-    object Hello {
-        def main(args: Array        ) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 275
-------------------------------------------------------------
-
-
-=================Reducing node 276, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 276
-------------------------------------------------------------
-
-
-=================Reducing node 289, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 289
-------------------------------------------------------------
-
-
-=================Reducing node 278, size=20=================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-        def main(args: Array[String]) =
-            println
-            println("Hello, world")
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 278
-------------------------------------------------------------
-
-
+(5/29)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
-compilationUnit {id=180,slot_type=compilationUnit}
-|___(+) {id=181,slot_type=topStatSeq}
-    |___aux_rule__tmplDef_7 {id=187,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
-        |___Token:object {id=188,slot_type=Token}
-        |___objectDef {id=189,slot_type=objectDef}
-            |___Token:Hello {id=190,slot_type=Id}
-            |___(?) {id=192,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
-                |___templateBody {id=194,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
-                    |___Token:{ {id=195,slot_type=Token}
-                    |___(+) {id=196,slot_type=kleene_plus__templateBody_3}
-                    |   |___aux_rule__def_2 {id=202,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
-                    |       |___Token:def {id=203,slot_type=Token}
-                    |       |___aux_rule__funDef_8 {id=205,slot_type=[funDef,aux_rule__funDef_8]}
-                    |           |___funSig {id=206,slot_type=funSig}
-                    |           |   |___Token:main {id=251,slot_type=Id}
-                    |           |   |___(*) {id=253,slot_type=[paramClauses,kleene_star__paramClauses_1]}
-                    |           |       |___paramClause {id=254,slot_type=paramClause}
-                    |           |           |___Token:( {id=255,slot_type=Token}
-                    |           |           |___(?) {id=256,slot_type=optional__paramClause_2}
-                    |           |           |   |___param {id=259,slot_type=[params,param]}
-                    |           |           |       |___Token:args {id=260,slot_type=Id}
-                    |           |           |       |___(?) {id=261,slot_type=optional__param_3}
-                    |           |           |           |___aux_rule__param_2 {id=262,slot_type=aux_rule__param_2}
-                    |           |           |               |___Token:: {id=263,slot_type=Token}
-                    |           |           |               |___simpleType {id=271,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
-                    |           |           |                   |___Token:Array {id=293,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                   |___(*) {id=273,slot_type=kleene_star__simpleType_3}
-                    |           |           |                       |___typeArgs {id=275,slot_type=[aux_rule__simpleType_4,typeArgs]}
-                    |           |           |                           |___Token:[ {id=276,slot_type=Token}
-                    |           |           |                           |___Token:String {id=289,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                           |___Token:] {id=278,slot_type=Token}
-                    |           |           |___Token:) {id=257,slot_type=Token}
-                    |           |___aux_rule__funDef_9 {id=208,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
-                    |               |___Token:= {id=209,slot_type=Token}
-                    |               |___infixExpr {id=215,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
-                    |                   |___Token:println {id=250,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
-                    |                   |___(*) {id=217,slot_type=kleene_star__infixExpr_2}
-                    |                       |___aux_rule__infixExpr_3 {id=218,slot_type=aux_rule__infixExpr_3}
-                    |                           |___Token:println {id=219,slot_type=Id}
-                    |                           |___aux_rule__simpleExpr1_10 {id=226,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
-                    |                               |___Token:( {id=227,slot_type=Token}
-                    |                               |___(?) {id=228,slot_type=optional__simpleExpr1_1}
-                    |                               |   |___Token:"Hello, world" {id=243,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                               |___Token:) {id=229,slot_type=Token}
-                    |___Token:} {id=197,slot_type=Token}
+compilationUnit{id=180,slot_type=compilationUnit}
+|___(+){id=181,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7{id=187,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object{id=188,slot_type=Token}
+        |___objectDef{id=189,slot_type=objectDef}
+            |___Token:Hello{id=190,slot_type=Id}
+            |___(?){id=192,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody{id=194,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{{id=195,slot_type=Token}
+                    |___(+){id=196,slot_type=kleene_plus__templateBody_3}
+                    |   |___Token:"Hello, world"{id=211,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |___Token:}{id=197,slot_type=Token}
 ------------------------------------------------------------
 
 
-FixPt[3][FineGritLatraReducer](20/29)  Latra does not support LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
-(20/29)  The history of the reducer invocation.
+FixPt[3][FineGritLatraReducer](5/29)  Latra does not support LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0             node-dfs      -9    -29             0
- 1             node-dfs       0      0             0
- 2 FineGritLatraReducer       0      0             0
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0             node-dfs      3             0     -24            -71      11   time-hidden
+ 1             node-dfs      0             0       0              0       5   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-            node-dfs     2      -9    -29
-FineGritLatraReducer     1       0      0
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+            node-dfs     2      3             0     -24            -71      16   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+      Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node-dfs.Replacement      3             0     -24            -71
 ------------------------------------- End --------------------------------------
-
-
 #test success = 3
-#test failure = 63
+#test failure = 13
 #test result cache hits = 0
-#test execution cancelled = 2
+#test execution cancelled = 0
 #node edit action set cache hits = 0
-#external test execution cache hits = 68
+#external test execution cache hits = 22

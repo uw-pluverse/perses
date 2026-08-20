@@ -22,7 +22,7 @@ class CopyrightChecker:
         file_list = list()
         for root, dirs, files in os.walk(folder):
             for file in files:
-                if file.endswith('.' + extension):
+                if file.endswith('.' + extension) and 'copyright_checking_excluded' not in files:
                     file_list.append(os.path.join(root, file))
         return file_list
 

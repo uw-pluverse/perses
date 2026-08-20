@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -55,10 +55,10 @@ class TestScriptExecutionListener(
     for (executionStatistics in statisticsList) {
       if (executionStatistics.result) {
         ++passCount
-        passTime += executionStatistics.milliSeconds.toInt()
+        passTime += executionStatistics.milliSeconds
       } else {
         ++failCount
-        failTime += executionStatistics.milliSeconds.toInt()
+        failTime += executionStatistics.milliSeconds
       }
     }
     val stream = printStream

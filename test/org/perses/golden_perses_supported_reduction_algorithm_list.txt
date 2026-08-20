@@ -7,323 +7,499 @@ All available reduction algorithms:
     desc : Perform fine-grit language-specific program transformations.
     class: org.perses.reduction.reducer.latra.FineGritLatraReducerAnnotation
 
- 3: concurrent_state_ddmin
+ 3: canonical_concurrent_state_line_slicer
+    desc : A canonical-facade concurrent state based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$CompositeReducerAnnotation
+
+ 4: canonical_concurrent_state_line_slicer@1
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+ 5: canonical_concurrent_state_line_slicer@10
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+ 6: canonical_concurrent_state_line_slicer@11
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+ 7: canonical_concurrent_state_line_slicer@12
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+ 8: canonical_concurrent_state_line_slicer@13
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+ 9: canonical_concurrent_state_line_slicer@14
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+10: canonical_concurrent_state_line_slicer@2
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+11: canonical_concurrent_state_line_slicer@3
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+12: canonical_concurrent_state_line_slicer@4
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+13: canonical_concurrent_state_line_slicer@5
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+14: canonical_concurrent_state_line_slicer@6
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+15: canonical_concurrent_state_line_slicer@7
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+16: canonical_concurrent_state_line_slicer@8
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+17: canonical_concurrent_state_line_slicer@9
+    desc : A canonical-facade concurrent state-based line slicer
+    class: org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer$Companion$CanonicalConcurrentStateLineSlicerAnnotation
+
+18: canonical_line_based_concurrent_token_slicer
+    desc : 
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CompositeReducerAnnotation
+
+19: canonical_line_based_concurrent_token_slicer@1
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+20: canonical_line_based_concurrent_token_slicer@10
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+21: canonical_line_based_concurrent_token_slicer@11
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+22: canonical_line_based_concurrent_token_slicer@12
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+23: canonical_line_based_concurrent_token_slicer@13
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+24: canonical_line_based_concurrent_token_slicer@14
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+25: canonical_line_based_concurrent_token_slicer@2
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+26: canonical_line_based_concurrent_token_slicer@3
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+27: canonical_line_based_concurrent_token_slicer@4
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+28: canonical_line_based_concurrent_token_slicer@5
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+29: canonical_line_based_concurrent_token_slicer@6
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+30: canonical_line_based_concurrent_token_slicer@7
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+31: canonical_line_based_concurrent_token_slicer@8
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+32: canonical_line_based_concurrent_token_slicer@9
+    desc : canonical-facade line-based concurrent token slicer
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer$CanonicalLineBasedConcurrentTokenSlicerAnnotation
+
+33: canonical_sequential_line_slicer
+    desc : 
+    class: org.perses.reduction.reducer.token.CanonicalLineBasedTokenSlicer$META
+
+34: concurrent_state_ddmin
     desc : A parallel ddmin
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedDeltaReducer$META
 
- 4: concurrent_state_line_slicer
+35: concurrent_state_line_slicer
     desc : A concurrent state based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$CompositeReducerAnnotation
 
- 5: concurrent_state_line_slicer@1
+36: concurrent_state_line_slicer@1
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
- 6: concurrent_state_line_slicer@10
+37: concurrent_state_line_slicer@10
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
- 7: concurrent_state_line_slicer@11
+38: concurrent_state_line_slicer@11
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
- 8: concurrent_state_line_slicer@12
+39: concurrent_state_line_slicer@12
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
- 9: concurrent_state_line_slicer@13
+40: concurrent_state_line_slicer@13
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-10: concurrent_state_line_slicer@14
+41: concurrent_state_line_slicer@14
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-11: concurrent_state_line_slicer@2
+42: concurrent_state_line_slicer@2
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-12: concurrent_state_line_slicer@3
+43: concurrent_state_line_slicer@3
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-13: concurrent_state_line_slicer@4
+44: concurrent_state_line_slicer@4
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-14: concurrent_state_line_slicer@5
+45: concurrent_state_line_slicer@5
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-15: concurrent_state_line_slicer@6
+46: concurrent_state_line_slicer@6
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-16: concurrent_state_line_slicer@7
+47: concurrent_state_line_slicer@7
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-17: concurrent_state_line_slicer@8
+48: concurrent_state_line_slicer@8
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-18: concurrent_state_line_slicer@9
+49: concurrent_state_line_slicer@9
     desc : A concurrent state-based line slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer$Companion$ConcurrentStateLineSlicerAnnotation
 
-19: concurrent_state_token_slicer
+50: concurrent_state_token_slicer
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$CompositeReducerAnnotation
 
-20: concurrent_state_token_slicer@1
+51: concurrent_state_token_slicer@1
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-21: concurrent_state_token_slicer@10
+52: concurrent_state_token_slicer@10
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-22: concurrent_state_token_slicer@11
+53: concurrent_state_token_slicer@11
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-23: concurrent_state_token_slicer@12
+54: concurrent_state_token_slicer@12
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-24: concurrent_state_token_slicer@13
+55: concurrent_state_token_slicer@13
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-25: concurrent_state_token_slicer@14
+56: concurrent_state_token_slicer@14
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-26: concurrent_state_token_slicer@2
+57: concurrent_state_token_slicer@2
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-27: concurrent_state_token_slicer@3
+58: concurrent_state_token_slicer@3
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-28: concurrent_state_token_slicer@4
+59: concurrent_state_token_slicer@4
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-29: concurrent_state_token_slicer@5
+60: concurrent_state_token_slicer@5
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-30: concurrent_state_token_slicer@6
+61: concurrent_state_token_slicer@6
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-31: concurrent_state_token_slicer@7
+62: concurrent_state_token_slicer@7
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-32: concurrent_state_token_slicer@8
+63: concurrent_state_token_slicer@8
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-33: concurrent_state_token_slicer@9
+64: concurrent_state_token_slicer@9
     desc : A concurrent state-based token slicer
     class: org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer$ConcurrentStateTokenSlicerAnnotation
 
-34: concurrent_token_slicer
+65: concurrent_token_slicer
     desc : 
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$CompositeReducerAnnotation
 
-35: concurrent_token_slicer@1
+66: concurrent_token_slicer@1
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-36: concurrent_token_slicer@10
+67: concurrent_token_slicer@10
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-37: concurrent_token_slicer@11
+68: concurrent_token_slicer@11
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-38: concurrent_token_slicer@12
+69: concurrent_token_slicer@12
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-39: concurrent_token_slicer@13
+70: concurrent_token_slicer@13
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-40: concurrent_token_slicer@14
+71: concurrent_token_slicer@14
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-41: concurrent_token_slicer@2
+72: concurrent_token_slicer@2
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-42: concurrent_token_slicer@3
+73: concurrent_token_slicer@3
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-43: concurrent_token_slicer@4
+74: concurrent_token_slicer@4
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-44: concurrent_token_slicer@5
+75: concurrent_token_slicer@5
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-45: concurrent_token_slicer@6
+76: concurrent_token_slicer@6
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-46: concurrent_token_slicer@7
+77: concurrent_token_slicer@7
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-47: concurrent_token_slicer@8
+78: concurrent_token_slicer@8
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-48: concurrent_token_slicer@9
+79: concurrent_token_slicer@9
     desc : concurrent token slicer
     class: org.perses.reduction.reducer.token.ConcurrentTokenSlicer$ConcurrentTokenSlicerAnnotation
 
-49: ddmin
+80: ddmin
     desc : 
     class: org.perses.reduction.reducer.token.DeltaDebuggingReducer$META
 
-50: hdd
-    desc : A variant of HDD.
-    class: org.perses.reduction.reducer.hdd.HDDReducer$META
+81: dyck_node_reducer
+    desc : 
+    class: org.perses.reduction.reducer.PersesNodeReducerAnnotations$Dyck
 
-51: line_based_concurrent_token_slicer
+82: hdd
+    desc : A variant of HDD.
+    class: org.perses.reduction.reducer.hdd.HDDReducerAnnotations$Hdd
+
+83: hdd-mimir
+    desc : A variant of HDD with Mimir enabled.
+    class: org.perses.reduction.reducer.hdd.HDDReducerAnnotations$HddWithMimir
+
+84: line_based_concurrent_token_slicer
     desc : 
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$CompositeReducerAnnotation
 
-52: line_based_concurrent_token_slicer@1
+85: line_based_concurrent_token_slicer@1
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-53: line_based_concurrent_token_slicer@10
+86: line_based_concurrent_token_slicer@10
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-54: line_based_concurrent_token_slicer@11
+87: line_based_concurrent_token_slicer@11
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-55: line_based_concurrent_token_slicer@12
+88: line_based_concurrent_token_slicer@12
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-56: line_based_concurrent_token_slicer@13
+89: line_based_concurrent_token_slicer@13
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-57: line_based_concurrent_token_slicer@14
+90: line_based_concurrent_token_slicer@14
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-58: line_based_concurrent_token_slicer@2
+91: line_based_concurrent_token_slicer@2
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-59: line_based_concurrent_token_slicer@3
+92: line_based_concurrent_token_slicer@3
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-60: line_based_concurrent_token_slicer@4
+93: line_based_concurrent_token_slicer@4
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-61: line_based_concurrent_token_slicer@5
+94: line_based_concurrent_token_slicer@5
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-62: line_based_concurrent_token_slicer@6
+95: line_based_concurrent_token_slicer@6
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-63: line_based_concurrent_token_slicer@7
+96: line_based_concurrent_token_slicer@7
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-64: line_based_concurrent_token_slicer@8
+97: line_based_concurrent_token_slicer@8
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-65: line_based_concurrent_token_slicer@9
+98: line_based_concurrent_token_slicer@9
     desc : line-based concurrent token slicer
     class: org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer$LineBasedConcurrentTokenSlicerAnnotation
 
-66: llm_based_data_type_elimination_reducer
+99: llm_based_data_type_elimination_reducer
     desc : Invoke LLMs for data type elimination.
-    class: org.perses.reduction.reducer.lpr.LLMBasedDataTypeEliminationReducer$META
+    class: org.perses.reduction.reducer.lpr.LlmBasedDataTypeEliminationReducer$META
 
-67: llm_based_data_type_simplification_reducer
+100: llm_based_data_type_simplification_reducer
     desc : Invoke LLMs for data type simplification.
-    class: org.perses.reduction.reducer.lpr.LLMBasedDataTypeSimplificationReducer$META
+    class: org.perses.reduction.reducer.lpr.LlmBasedDataTypeSimplificationReducer$META
 
-68: llm_based_function_inlining_reducer
+101: llm_based_function_inlining_reducer
     desc : Invoke LLMs for function inlining.
-    class: org.perses.reduction.reducer.lpr.LLMBasedFunctionInliningReducer$META
+    class: org.perses.reduction.reducer.lpr.LlmBasedFunctionInliningReducer$META
 
-69: llm_based_loop_unrolling_reducer
+102: llm_based_loop_unrolling_reducer
     desc : Invoke LLMs for loop unrolling.
-    class: org.perses.reduction.reducer.lpr.LLMBasedLoopUnrollingReducer$META
+    class: org.perses.reduction.reducer.lpr.LlmBasedLoopUnrollingReducer$META
 
-70: llm_based_variable_elimination_reducer
+103: llm_based_variable_elimination_reducer
     desc : Invoke LLMs for variable elimination.
-    class: org.perses.reduction.reducer.lpr.LLMBasedVariableEliminationReducer$META
+    class: org.perses.reduction.reducer.lpr.LlmBasedVariableEliminationReducer$META
 
-71: node-bfs
+104: mimir
     desc : 
-    class: org.perses.reduction.reducer.PersesNodeBfsReducer$META
+    class: org.perses.reduction.reducer.PersesNodeReducerAnnotations$Mimir
 
-72: node-dfs
+105: node-bfs
     desc : 
-    class: org.perses.reduction.reducer.PersesNodeDfsReducer$META
+    class: org.perses.reduction.reducer.PersesNodeReducerAnnotations$Bfs
 
-73: node_priority-bfs
+106: node-dfs
     desc : 
-    class: org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer$META
+    class: org.perses.reduction.reducer.PersesNodeReducerAnnotations$Dfs
 
-74: node_priority-dfs
+107: node_priority
     desc : 
-    class: org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer$META
+    class: org.perses.reduction.reducer.PersesNodeReducerAnnotations$PrioritizedDfs
 
-75: pristine_hdd
+108: node_priority-bfs
+    desc : 
+    class: org.perses.reduction.reducer.PersesNodeReducerAnnotations$PrioritizedBfs
+
+109: pristine_dyck_node_reducer
+    desc : 
+    class: org.perses.reduction.reducer.PersesNodeReducerAnnotations$PristineDyck
+
+110: pristine_hdd
     desc : 
     class: org.perses.reduction.reducer.hdd.PristineHDDReducer$META
 
-76: sequential_line_slicer
+111: sequential_line_slicer
     desc : 
     class: org.perses.reduction.reducer.token.LineBasedTokenSlicer$META
 
-77: subtree_replacer
+112: subtree_replacer
     desc : Randomly pick up a subtree, and replace it with another subtree of the same type.
     class: org.perses.reduction.reducer.vulcan.SubTreeReplacementReducer$META
 
-78: token_canonicalizer
+113: token_canonicalizer
     desc : 
     class: org.perses.reduction.reducer.trec.TokenCanonicalizer$META
 
-79: token_pattern_reducer
+114: token_pattern_reducer
     desc : traverse all the sets that contain a fixed number (pattern size) of consecutive nodes in each level of the parse tree, and try all possible patterns of deletions.
     class: org.perses.reduction.reducer.vulcan.pattern.LocalExhaustivePatternReducer$META
 
-80: token_replacer
+115: token_replacer
     desc : Randomly pick up an identifier or a set of identifiers, and replace it with another identifier.
     class: org.perses.reduction.reducer.vulcan.IdentifierReplacementReducer$META
 
-81: token_slicer
+116: token_slicer
     desc : 
     class: org.perses.reduction.reducer.token.TokenSlicer$META
 
-82: tree_slicer
+117: topformflat
+    desc : topformflat chunking, swept over C-Reduce's brace-nesting levels
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$CompositeReducerAnnotation
+
+118: topformflat@0
+    desc : topformflat chunking at brace-nesting level 0
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
+
+119: topformflat@1
+    desc : topformflat chunking at brace-nesting level 1
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
+
+120: topformflat@10
+    desc : topformflat chunking at brace-nesting level 10
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
+
+121: topformflat@2
+    desc : topformflat chunking at brace-nesting level 2
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
+
+122: topformflat@3
+    desc : topformflat chunking at brace-nesting level 3
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
+
+123: topformflat@4
+    desc : topformflat chunking at brace-nesting level 4
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
+
+124: topformflat@6
+    desc : topformflat chunking at brace-nesting level 6
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
+
+125: topformflat@8
+    desc : topformflat chunking at brace-nesting level 8
+    class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
+
+126: tree_slicer
     desc : 
     class: org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducer$META
 

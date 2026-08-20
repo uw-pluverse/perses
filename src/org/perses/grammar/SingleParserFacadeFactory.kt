@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,8 +19,10 @@ package org.perses.grammar
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.FluentLogger
+import org.antlr.v4.runtime.Lexer
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
+import org.perses.grammar.c.PnfCLexer
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.cpp.LanguageCpp
 import org.perses.grammar.cpp.PnfCppParserFacade
@@ -42,6 +44,8 @@ import org.perses.grammar.javascript.JavaScriptParserFacade
 import org.perses.grammar.javascript.LanguageJavaScript
 import org.perses.grammar.line.LanguageLine
 import org.perses.grammar.line.LineParserFacade
+import org.perses.grammar.makefile.LanguageMakefile
+import org.perses.grammar.makefile.MakefileParserFacade
 import org.perses.grammar.onetoken.LanguageOneToken
 import org.perses.grammar.onetoken.OneTokenParserFacade
 import org.perses.grammar.php.LanguagePhp
@@ -137,13 +141,18 @@ class SingleParserFacadeFactory private constructor(
           .add(LanguagePython3, Python3ParserFacade::class)
           .add(LanguageRuby, PnfRubyParserFacade::class)
           .add(LanguageLine, LineParserFacade::class)
+          .add(LanguageMakefile, MakefileParserFacade::class)
           .add(LanguageOneToken, OneTokenParserFacade::class)
           .add(LanguageJackson, JacksonParserFacade::class)
           .add(LanguageWebAssembly, WebAssemblyParserFacade::class)
       tryToDynamicallyLoadParserFacades(builder)
 
-      builder.add(LanguageBraceDyck, BraceDyckParserFacade::class)
-      builder.add(LanguageBraceParenthesisDyck, BraceParenthesisDyckParserFacade::class)
+      builder.add(LanguageBraceDyck, BraceDyckParserFacade::class, PnfCLexer::class.java)
+      builder.add(
+        LanguageBraceParenthesisDyck,
+        BraceParenthesisDyckParserFacade::class,
+        PnfCLexer::class.java,
+      )
       return builder
     }
 
@@ -193,11 +202,16 @@ class SingleParserFacadeFactory private constructor(
     fun add(
       language: LanguageKind,
       dyckParserFacadeClass: KClass<out AbstractDyckParserFacade>,
+      underlyingLexerClass: Class<out Lexer>,
     ): Builder {
       language2FacadeMap.put(
         language,
         ParserFacadeList(
-          defaultParserFacade = DyckParserFacadeCreator(dyckParserFacadeClass),
+          defaultParserFacade =
+            DyckParserFacadeCreator(
+              dyckParserFacadeClass,
+              underlyingLexerClass,
+            ),
         ),
       )
       return this

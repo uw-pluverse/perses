@@ -1,3 +1,5 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
+
 py_library(
     name = "check_copyright",
     srcs = ["pluverse_check_copyright.py"],

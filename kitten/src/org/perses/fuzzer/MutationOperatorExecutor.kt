@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -56,7 +56,7 @@ class MutationOperatorExecutor(
   fun mutateWithTreeLevelMutation(treeFuzzer: SparTreeFuzzer): MutationResult? {
     val sparTree = treeLevelMutationOperators?.sample(random)?.invoke(treeFuzzer) ?: return null
     val mutatedSource =
-      SingleTokenPerLinePrinter.print(sparTree.programSnapshot).sourceCode
+      SingleTokenPerLinePrinter.print(sparTree.programSnapshot.payload).sourceCode
     return MutationResult(mutatedSource, sparTree)
   }
 

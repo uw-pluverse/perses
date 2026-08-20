@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,8 +17,8 @@
 package org.perses.grammar
 
 import com.google.common.collect.ImmutableList
-import com.google.common.io.Files
-import org.perses.grammar.c.PnfCLexer
+import org.antlr.v4.runtime.Lexer
+import org.perses.antlr.ParseTreeWithParser
 import org.perses.grammar.dyck.AbstractDyckParserFacade
 import org.perses.program.LanguageKind
 import org.perses.util.transformToImmutableList
@@ -31,12 +31,14 @@ abstract class AbstractParserFacadeFactory {
   fun containsLanguage(languageKind: LanguageKind): Boolean =
     languageSequence().any { it == languageKind }
 
-  fun computeLanguageKindWithFileName(file: Path): LanguageKind? {
-    val ext = Files.getFileExtension(file.fileName.toString())
-    return languageSequence().firstOrNull {
-      ext in it.extensions
+  // TODO: this returns only the first matching language, but a file name can match several languages
+  //  (e.g. shared/ambiguous extensions), and we cannot know which parser actually parses the file
+  //  until we try. This should return all candidate languages so the caller can probe each one's
+  //  parser (as resolveParserFacadeByProbing already does across facades within a single language).
+  fun computeLanguageKindWithFileName(file: Path): LanguageKind? =
+    languageSequence().firstOrNull {
+      it.isOfThisLanguageKind(file)
     }
-  }
 
   fun computeLanguageKindWithLanguageNameIgnoreCase(languageName: String): LanguageKind? {
     val lowerCase = languageName.lowercase()
@@ -59,7 +61,7 @@ abstract class AbstractParserFacadeFactory {
     sourceFileAbsPath: Path,
   ): LanguageKind =
     when {
-      designatedParserFacadeClassName.isNotBlank() ->
+      designatedParserFacadeClassName.isNotBlank() -> {
         getParserFacadeClassForClassNameOrNull(designatedParserFacadeClassName).let { result ->
           if (result == null) {
             error(
@@ -69,9 +71,15 @@ abstract class AbstractParserFacadeFactory {
           }
           result.first
         }
-      specifiedLanguageName.isNotBlank() ->
+      }
+
+      specifiedLanguageName.isNotBlank() -> {
         computeLanguageKindWithLanguageNameIgnoreCase(specifiedLanguageName)!!
-      else -> computeLanguageKindOrThrow(sourceFileAbsPath)
+      }
+
+      else -> {
+        computeLanguageKindOrThrow(sourceFileAbsPath)
+      }
     }
 
   abstract fun languageSequence(): Sequence<LanguageKind>
@@ -102,12 +110,10 @@ abstract class AbstractParserFacadeFactory {
 
   class DyckParserFacadeCreator(
     klass: KClass<out AbstractDyckParserFacade>,
+    private val underlyingLexerClass: Class<out Lexer>,
   ) : ParserFacadeCreator(klass) {
     override fun create(): AbstractDyckParserFacade =
-      klass.primaryConstructor!!.call(
-        // TODO(cnsun): need to figure out a way to let users specify the lexer class.
-        PnfCLexer::class.java,
-      ) as AbstractDyckParserFacade
+      klass.primaryConstructor!!.call(underlyingLexerClass) as AbstractDyckParserFacade
   }
 
   data class ParserFacadeList(
@@ -129,6 +135,46 @@ abstract class AbstractParserFacadeFactory {
         yieldAll(otherParserFacades)
       }
 
+    fun resolveParserFacadeByProbing(
+      probeSourceCode: String,
+      probeFileName: String,
+    ): AbstractParserFacade =
+      resolveParserFacadeByProbingWithParseTree(probeSourceCode, probeFileName).facade
+
+    /**
+     * Like [resolveParserFacadeByProbing], but also returns the parse tree produced while probing so
+     * the caller can reuse it for the first spar-tree build instead of re-parsing the same input.
+     * [ResolvedParserFacade.parseTree] is null in the single-candidate fast path, where no probe
+     * parse happens.
+     */
+    fun resolveParserFacadeByProbingWithParseTree(
+      probeSourceCode: String,
+      probeFileName: String,
+    ): ResolvedParserFacade {
+      if (otherParserFacades.isEmpty()) {
+        return ResolvedParserFacade(defaultParserFacade.create(), parseTree = null)
+      }
+      for (creator in sequenceOfCreators()) {
+        val facade = creator.create()
+        val parseTree =
+          try {
+            facade.parseString(probeSourceCode, errorMode = ParseErrorHandling.STRICT)
+          } catch (e: Exception) {
+            null
+          }
+        if (parseTree != null) {
+          return ResolvedParserFacade(facade, parseTree)
+        }
+      }
+      throw AntlrFailureException(
+        cause = null,
+        file = probeFileName,
+        details =
+          "None of the candidate parser facades can parse the input: " +
+            sequenceOfCreators().joinToString { it.klass.qualifiedName ?: it.klass.toString() },
+      )
+    }
+
     fun numberOfParserFacades() = 1 + otherParserFacades.size
 
     companion object {
@@ -145,4 +191,9 @@ abstract class AbstractParserFacadeFactory {
         )
     }
   }
+
+  data class ResolvedParserFacade(
+    val facade: AbstractParserFacade,
+    val parseTree: ParseTreeWithParser?,
+  )
 }

@@ -8,8 +8,12 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
+        "//src/org/perses/grammar/c:language_kind",
+        "//src/org/perses/program",
         "//src/org/perses/reduction/event",
+        "//src/org/perses/reduction/io:reduction_inputs",
         "//src/org/perses/reduction/reducer/token:token_slicer",
+        "//src/org/perses/util",
         "//test/org/perses:test_util",
     ],
 )

@@ -39,15 +39,6 @@ set -o nounset
 set -o pipefail
 set -o errexit
 
-#sudo apt install --yes curl gnupg
-#curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
-#sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
-#echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
-#
-#sudo apt update && sudo apt install --yes bazel
-#
-#sudo mv /usr/local/bin/bazel /usr/local/bin/bazel.bak
-
 wget https://github.com/bazelbuild/bazelisk/releases/download/v1.11.0/bazelisk-linux-amd64
 chmod +x bazelisk-linux-amd64
 # The bazel binary is bazelisk
@@ -78,6 +69,10 @@ echo "Change password for \$(id -nu $USER_ID) in docker"
 sudo passwd \$(id -nu $USER_ID)
 
 sudo --user=\$(id -nu $USER_ID) ./${UPDATE_BAZEL_SCRIPT}
+sudo --user=\$(id -nu $USER_ID) ./install_clangd.sh
+sudo ln --symbolic --force "${PERSES_ROOT_IN_DOCKER}/benchmark/binaries/clangd-18/bin/clangd" /usr/local/bin/clangd
+sudo ln --symbolic --force "${PERSES_ROOT_IN_DOCKER}/benchmark/binaries/clangd-18/bin/clangd" /usr/local/bin/clangd-18
+
 echo "Switching to user \$(id -nu $USER_ID)"
 su \$(id -nu $USER_ID)
 EOF

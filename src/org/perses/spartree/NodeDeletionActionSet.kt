@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,15 +21,36 @@ import org.perses.util.transformToImmutableList
 
 class NodeDeletionActionSet private constructor(
   actions: ImmutableList<NodeDeletionAction>,
-  actionsDescription: String,
-) : AbstractActionSet<NodeDeletionAction>(actions, actionsDescription, canBeSorted = true) {
+  contextDescription: String,
+  transformationName: String,
+) : TargetedActionSet<NodeDeletionAction>(
+    actions = actions,
+    contextDescription = contextDescription,
+    canBeSorted = true,
+    transformationName = transformationName,
+  ) {
+  override val structureDescription: String
+    get() =
+      if (actions.size == 1) {
+        actions.joinToString(separator = ",", prefix = "[", postfix = "]") { it.conciseDescription }
+      } else {
+        actions.joinToString(separator = ",", prefix = "[delete: ", postfix = "]") {
+          it.targetNode.nodeId.toString()
+        }
+      }
+
   class Builder(
-    private val actionsDescription: String,
+    private val contextDescription: String,
+    private val transformationName: String = DELETION,
   ) {
     private val nodesToDelete = LinkedHashSet<AbstractSparTreeNode>()
 
     fun deleteNode(node: AbstractSparTreeNode): Builder {
-      check(nodesToDelete.add(node))
+      check(!node.isPermanentlyDeleted) {
+        "Node ${node.nodeId} has been deleted."
+      }
+      // Note that we allow to delete a node multiple times.
+      nodesToDelete.add(node)
       return this
     }
 
@@ -38,33 +59,44 @@ class NodeDeletionActionSet private constructor(
       return this
     }
 
-    fun build(): NodeDeletionActionSet =
-      NodeDeletionActionSet(
+    fun build(): NodeDeletionActionSet {
+      check(nodesToDelete.isNotEmpty()) { "The nodesToDelete list is empty." }
+      return NodeDeletionActionSet(
         actions =
           nodesToDelete
             .asSequence()
             .sortedBy { it.nodeId }
             .transformToImmutableList { NodeDeletionAction(it) },
-        actionsDescription = actionsDescription,
+        contextDescription = contextDescription,
+        transformationName = transformationName,
       )
+    }
 
     fun size(): Int = nodesToDelete.size
   }
 
   companion object {
+    // The operation kind reported as the transformation name when the caller does not override it;
+    // node deletion is the same operation regardless of which reducer drives it.
+    const val DELETION = "Deletion"
+
     @JvmStatic
     fun createByDeleteSingleNode(
       node: AbstractSparTreeNode,
-      actionsDescription: String,
+      contextDescription: String,
+      transformationName: String = DELETION,
     ): NodeDeletionActionSet =
       NodeDeletionActionSet(
         ImmutableList.of(NodeDeletionAction(node)),
-        actionsDescription,
+        contextDescription,
+        transformationName,
       )
 
     fun createByDeletingNodes(
       nodes: Iterable<AbstractSparTreeNode>,
-      actionsDescription: String,
-    ): NodeDeletionActionSet = Builder(actionsDescription).deleteNodes(nodes).build()
+      contextDescription: String,
+      transformationName: String = DELETION,
+    ): NodeDeletionActionSet =
+      Builder(contextDescription, transformationName).deleteNodes(nodes).build()
   }
 }

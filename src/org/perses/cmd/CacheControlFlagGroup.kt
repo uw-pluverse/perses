@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,12 +16,7 @@
  */
 package org.perses.cmd
 
-import com.beust.jcommander.IStringConverter
 import com.beust.jcommander.Parameter
-import com.beust.jcommander.ParameterException
-import org.perses.reduction.cache.EnumQueryCachingControl
-import org.perses.reduction.cache.QueryCacheType
-import org.perses.util.Fraction
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
@@ -32,18 +27,9 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
     names = ["--query-caching"],
     description = "Enable query caching for test script executions.",
     arity = 1,
-    converter = QueryCachingControlConverter::class,
     order = 0,
   )
-  var queryCaching = EnumQueryCachingControl.TRUE
-
-  @JvmField
-  @Parameter(
-    names = ["--query-cache-type"],
-    description = "the algorithm of the query cache",
-    order = 10,
-  )
-  var cacheType: QueryCacheType = QueryCacheType.CONTENT_SHA_HASH_FORMAT
+  var queryCaching = true
 
   @Parameter(
     names = ["--edit-caching"],
@@ -53,29 +39,6 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
     hidden = true,
   )
   var nodeActionSetCaching = true
-
-  @Parameter(
-    names = ["--query-cache-refresh-threshold"],
-    description =
-      "The threshold triggers a refresh of the query cache. " +
-        "The refresh follows the equation: t' - t'' >= t * threshold(%). " +
-        "t 	- original tokens. " +
-        "t' 	- tokens of the best program at last refresh. " +
-        "t''	- tokens of the current best program. " +
-        "Refresh threshold requires an integer input ranging [0, 100]. " +
-        "e.g. 0 represents 0%, 85 represents 85%.",
-    order = 30,
-    hidden = true,
-  )
-  var queryCacheRefreshThreshold = 0 // Represent 0/100 = 0%
-
-  @Parameter(
-    names = ["--enable-lightweight-refreshing"],
-    description = "Whether to enable lightweight refreshing",
-    order = 40,
-    arity = 1,
-  )
-  var enableLightweightRefreshing = true
 
   @Parameter(
     names = ["--pass-level-caching"],
@@ -113,8 +76,6 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
   )
   var pathToSaveUpdatedGlobalCache: Path? = null
 
-  fun queryCacheRefreshThresholdAsFraction(): Fraction = Fraction(queryCacheRefreshThreshold, 100)
-
   @Parameter(
     names = ["--default-sha-alg-type"],
     description = "The SHA algorithm used in the reduction process",
@@ -125,7 +86,6 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
   var defaultShaAlgorithm: EnumShaAlgorithm = EnumShaAlgorithm.SHA256
 
   override fun validate() {
-    queryCacheRefreshThresholdAsFraction() // Should not throw exceptions.
     globalCacheFile?.let {
       check(Files.isRegularFile(it)) {
         "The global cache file $it is not a file."
@@ -139,13 +99,5 @@ class CacheControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Cache Co
         "The global cache is disabled, and all global-cache-related flags should not specified."
       }
     }
-  }
-
-  class QueryCachingControlConverter : IStringConverter<EnumQueryCachingControl> {
-    override fun convert(flagValue: String?): EnumQueryCachingControl =
-      EnumQueryCachingControl.convert(flagValue!!)
-        ?: throw ParameterException(
-          "Cannot convert '$flagValue' to an instanceof ${EnumQueryCachingControl::class}",
-        )
   }
 }

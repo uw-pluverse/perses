@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = [
     "//visibility:public",
@@ -22,7 +23,7 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//antlropt/src/org/perses/antlr/ast",
-        "//src/org/perses:perses_contants",
+        "//src/org/perses:perses_constants",
         "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/util:Serialization",
         "//src/org/perses/util/hashing",
@@ -52,9 +53,8 @@ kt_jvm_library(
         ":parser_facade_template",
         "//antlropt/src/org/perses/antlr/ast",
         "//antlropt/src/org/perses/antlr/pnf:pnf_normalizer",
-        "//src/org/perses:perses_contants",
+        "//src/org/perses:perses_constants",
         "//src/org/perses/antlr:antlr_compiler",
-        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/util/hashing",
     ],
 )
@@ -103,7 +103,7 @@ java_binary(
         ":command_options",
         ":language_kind",
         "//:guava",
-        "//src/org/perses:perses_contants",
+        "//src/org/perses:perses_constants",
         "//src/org/perses/util:default_logging_configurations",
         "//src/org/perses/util/cmd",
         "//version/org/perses/version",

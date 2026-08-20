@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,22 +17,24 @@
 package org.perses.reduction
 
 import com.google.common.base.Strings
+import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
 import com.google.common.flogger.FluentLogger
 import org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducer
-import org.perses.reduction.reducer.PersesNodeBfsReducer
-import org.perses.reduction.reducer.PersesNodeDfsReducer
-import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
-import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
-import org.perses.reduction.reducer.hdd.HDDReducer
+import org.perses.reduction.reducer.PersesNodeReducerAnnotations
+import org.perses.reduction.reducer.hdd.HDDReducerAnnotations
 import org.perses.reduction.reducer.hdd.PristineHDDReducer
 import org.perses.reduction.reducer.latra.CoarseGritLatraReducerAnnotation
 import org.perses.reduction.reducer.latra.FineGritLatraReducerAnnotation
-import org.perses.reduction.reducer.lpr.LLMBasedDataTypeEliminationReducer
-import org.perses.reduction.reducer.lpr.LLMBasedDataTypeSimplificationReducer
-import org.perses.reduction.reducer.lpr.LLMBasedFunctionInliningReducer
-import org.perses.reduction.reducer.lpr.LLMBasedLoopUnrollingReducer
-import org.perses.reduction.reducer.lpr.LLMBasedVariableEliminationReducer
+import org.perses.reduction.reducer.line.TopFormFlatReducer
+import org.perses.reduction.reducer.lpr.LlmBasedDataTypeEliminationReducer
+import org.perses.reduction.reducer.lpr.LlmBasedDataTypeSimplificationReducer
+import org.perses.reduction.reducer.lpr.LlmBasedFunctionInliningReducer
+import org.perses.reduction.reducer.lpr.LlmBasedLoopUnrollingReducer
+import org.perses.reduction.reducer.lpr.LlmBasedVariableEliminationReducer
+import org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer
+import org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer
+import org.perses.reduction.reducer.token.CanonicalLineBasedTokenSlicer
 import org.perses.reduction.reducer.token.ConcurrentStateBasedDeltaReducer
 import org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer
 import org.perses.reduction.reducer.token.ConcurrentStateBasedTokenSlicer
@@ -52,107 +54,53 @@ import org.perses.util.toImmutableMap
 import java.lang.RuntimeException
 import kotlin.reflect.full.createInstance
 
-/** Factory to create various reducers.  */
-object ReducerFactory {
-  private val DEFAULT_REDUCTION_ALG = PersesNodePrioritizedDfsReducer.META
-
-  val registeredReductionAlgorithms =
-    ImmutableSet
-      .builder<ReducerAnnotation>()
-      .add(HDDReducer.META)
-      .add(TokenSlicer.META)
-      .addAll(ConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
-      .add(ConcurrentTokenSlicer.CompositeReducerAnnotation)
-      .addAll(LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
-      .add(LineBasedConcurrentTokenSlicer.CompositeReducerAnnotation)
-      .add(ConcurrentStateBasedDeltaReducer.META)
-      .addAll(ConcurrentStateBasedLineSlicer.REDUCER_ANNOTATIONS)
-      .add(ConcurrentStateBasedLineSlicer.CompositeReducerAnnotation)
-      .addAll(ConcurrentStateBasedTokenSlicer.REDUCER_ANNOTATIONS)
-      .add(ConcurrentStateBasedTokenSlicer.CompositeReducerAnnotation)
-      .add(NonSyntacticSingleTreeNodeReducer.META)
-      .add(PersesNodeBfsReducer.META)
-      .add(PersesNodePrioritizedBfsReducer.META)
-      .add(PersesNodeDfsReducer.META)
-      .add(PristineHDDReducer.META)
-      .add(DeltaDebuggingReducer.META)
-      .add(DEFAULT_REDUCTION_ALG)
-      .add(FineGritLatraReducerAnnotation)
-      .add(CoarseGritLatraReducerAnnotation)
-      .add(LLMBasedFunctionInliningReducer.META)
-      .add(LLMBasedLoopUnrollingReducer.META)
-      .add(LLMBasedDataTypeEliminationReducer.META)
-      .add(LLMBasedDataTypeSimplificationReducer.META)
-      .add(LLMBasedVariableEliminationReducer.META)
-      .add(SubTreeReplacementReducer.META)
-      .add(IdentifierReplacementReducer.META)
-      .add(LocalExhaustivePatternReducer.META)
-      .add(TokenCanonicalizer.META)
-      .add(LineBasedTokenSlicer.META)
-      .build()
-      .toImmutableMap(
-        keyFunc = { it.shortName },
-        valueFunc = { it },
-      )
-
-  @JvmStatic
-  val defaultReductionAlgName: String
-    get() {
-      val defaultAlgName = PersesNodePrioritizedDfsReducer.NAME
-      lazyAssert { isValidReducerName(defaultAlgName) }
-      return defaultAlgName
-    }
-
-  @JvmStatic
+/**
+ * Resolves reduction algorithms by name. An instance exposes the built-in algorithms plus any extra
+ * reducers it was created with (e.g. an active [LanguageProfile]'s) -- so it is immutable and holds no
+ * global mutable state. Create one per run with [create] (or use [DEFAULT] for built-ins only).
+ */
+class ReducerFactory private constructor(
+  /** All algorithms addressable by short name: the built-ins plus this factory's extra reducers. */
+  val registeredReductionAlgorithms: ImmutableMap<String, ReducerAnnotation>,
+) {
   fun isValidReducerName(shortName: String): Boolean {
-    val result = registeredReductionAlgorithms.containsKey(shortName)
-    if (result) {
+    if (registeredReductionAlgorithms.containsKey(shortName)) {
       return true
     }
     logger.ktInfo { "Try to use the algorithm name as a class name" }
-    try {
+    return try {
       Class.forName(shortName)
-      return true
+      true
     } catch (e: Throwable) {
       logger.ktInfo { "Unable to load the class $shortName" }
-      return false
+      false
     }
   }
 
-  @JvmStatic
-  fun getReductionAlgorithm(reducerShortName: String): ReducerAnnotation {
-    var annotation = registeredReductionAlgorithms[reducerShortName]
-    if (annotation == null) {
-      logger.ktWarning {
-        "No registered reducer annotation with the name $reducerShortName." +
-          "Retrying to load the reducer by using the given name as a class name"
-      }
-      try {
-        annotation = getReducerAnnotationWithReducerClassName(reducerShortName)
-      } catch (e: Throwable) {
-        logger.ktWarning { "Fail to load the class $reducerShortName. ${e.message}" }
-        throw e
-      }
-    }
-    return annotation
-  }
+  fun getReductionAlgorithm(reducerName: String): ReducerAnnotation {
+    // Prefer an available annotation, addressed either by its short name or by its class name, so a
+    // profile-contributed reducer is returned as the same instance however it is referenced -- rather
+    // than re-instantiated via Class.forName below.
+    registeredReductionAlgorithms[reducerName]?.let { return it }
+    registeredReductionAlgorithms.values
+      .firstOrNull { it::class.qualifiedName == reducerName }
+      ?.let { return it }
 
-  @JvmStatic
-  fun getReducerAnnotationWithReducerClassName(klassName: String): ReducerAnnotation {
-    val klass = Class.forName(klassName).kotlin
-    klass.objectInstance?.let {
-      return it as ReducerAnnotation
+    logger.ktWarning {
+      "No registered reducer annotation with the name $reducerName." +
+        "Retrying to load the reducer by using the given name as a class name"
     }
     return try {
-      klass.createInstance() as ReducerAnnotation
-    } catch (e: Exception) {
-      throw RuntimeException("Cannot create an instance of $klassName", e)
+      getReducerAnnotationWithReducerClassName(reducerName)
+    } catch (e: Throwable) {
+      logger.ktWarning { "Fail to load the class $reducerName. ${e.message}" }
+      throw e
     }
   }
 
-  @JvmStatic
   fun printAllReductionAlgorithms(): String =
-    registeredReductionAlgorithms.values
+    registeredReductionAlgorithms
+      .values
       .asSequence()
       .sortedBy { it.shortName }
       .withIndex()
@@ -169,5 +117,103 @@ object ReducerFactory {
         }
       }.joinToString(separator = "\n")
 
-  private val logger = FluentLogger.forEnclosingClass()
+  fun copyWithExtra(extraReducers: List<ReducerAnnotation>): ReducerFactory {
+    if (extraReducers.isEmpty()) {
+      return this
+    }
+    val merged = LinkedHashMap(registeredReductionAlgorithms)
+    extraReducers.forEach {
+      val previous = merged.put(it.shortName, it)
+      check(previous == null) {
+        "Duplicate reduction algorithm registration: ${it.shortName}"
+      }
+    }
+    return ReducerFactory(merged.toImmutableMap())
+  }
+
+  companion object {
+    private val DEFAULT_REDUCTION_ALG = PersesNodeReducerAnnotations.PrioritizedDfs
+
+    private val builtinReductionAlgorithms: ImmutableMap<String, ReducerAnnotation> =
+      ImmutableSet
+        .builder<ReducerAnnotation>()
+        .add(HDDReducerAnnotations.Hdd)
+        .add(HDDReducerAnnotations.HddWithMimir)
+        .add(TokenSlicer.META)
+        .addAll(ConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
+        .add(ConcurrentTokenSlicer.CompositeReducerAnnotation)
+        .addAll(LineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
+        .add(LineBasedConcurrentTokenSlicer.CompositeReducerAnnotation)
+        .addAll(CanonicalLineBasedConcurrentTokenSlicer.REDUCER_ANNOTATIONS)
+        .add(CanonicalLineBasedConcurrentTokenSlicer.CompositeReducerAnnotation)
+        .add(ConcurrentStateBasedDeltaReducer.META)
+        .addAll(ConcurrentStateBasedLineSlicer.REDUCER_ANNOTATIONS)
+        .add(ConcurrentStateBasedLineSlicer.CompositeReducerAnnotation)
+        .addAll(CanonicalConcurrentStateBasedLineSlicer.REDUCER_ANNOTATIONS)
+        .add(CanonicalConcurrentStateBasedLineSlicer.CompositeReducerAnnotation)
+        .addAll(ConcurrentStateBasedTokenSlicer.REDUCER_ANNOTATIONS)
+        .add(ConcurrentStateBasedTokenSlicer.CompositeReducerAnnotation)
+        .add(NonSyntacticSingleTreeNodeReducer.META)
+        .add(PersesNodeReducerAnnotations.Dyck)
+        .add(PersesNodeReducerAnnotations.PristineDyck)
+        .add(PersesNodeReducerAnnotations.Bfs)
+        .add(PersesNodeReducerAnnotations.PrioritizedBfs)
+        .add(PersesNodeReducerAnnotations.Dfs)
+        .add(PersesNodeReducerAnnotations.PrioritizedDfs)
+        .add(PersesNodeReducerAnnotations.Mimir)
+        .add(PristineHDDReducer.META)
+        .add(DeltaDebuggingReducer.META)
+        .add(DEFAULT_REDUCTION_ALG)
+        .add(FineGritLatraReducerAnnotation)
+        .add(CoarseGritLatraReducerAnnotation)
+        .add(LlmBasedFunctionInliningReducer.META)
+        .add(LlmBasedLoopUnrollingReducer.META)
+        .add(LlmBasedDataTypeEliminationReducer.META)
+        .add(LlmBasedDataTypeSimplificationReducer.META)
+        .add(LlmBasedVariableEliminationReducer.META)
+        .add(SubTreeReplacementReducer.META)
+        .add(IdentifierReplacementReducer.META)
+        .add(LocalExhaustivePatternReducer.META)
+        .add(TokenCanonicalizer.META)
+        .add(LineBasedTokenSlicer.META)
+        .add(CanonicalLineBasedTokenSlicer.META)
+        .addAll(TopFormFlatReducer.REDUCER_ANNOTATIONS)
+        .add(TopFormFlatReducer.CompositeReducerAnnotation)
+        .build()
+        .toImmutableMap(
+          keyFunc = { it.shortName },
+          valueFunc = { it },
+        )
+
+    /** A factory exposing only the built-in algorithms (no profile contributions). */
+    val DEFAULT: ReducerFactory = ReducerFactory(builtinReductionAlgorithms)
+
+    /** A factory exposing the built-in algorithms plus [extraReducers] (e.g. an active profile's). */
+    @JvmStatic
+    fun createWithExtra(extraReducers: List<ReducerAnnotation>): ReducerFactory =
+      DEFAULT.copyWithExtra(extraReducers)
+
+    @JvmStatic
+    val defaultReductionAlgName: String
+      get() {
+        val defaultAlgName = DEFAULT_REDUCTION_ALG.shortName
+        lazyAssert { DEFAULT.isValidReducerName(defaultAlgName) }
+        return defaultAlgName
+      }
+
+    @JvmStatic
+    fun getReducerAnnotationWithReducerClassName(klassName: String): ReducerAnnotation {
+      val klass = Class.forName(klassName).kotlin
+      klass.objectInstance?.let {
+        return it as ReducerAnnotation
+      }
+      return try {
+        klass.createInstance() as ReducerAnnotation
+      } catch (e: Exception) {
+        throw RuntimeException("Cannot create an instance of $klassName", e)
+      }
+    }
+
+    private val logger = FluentLogger.forEnclosingClass()
+  }
 }

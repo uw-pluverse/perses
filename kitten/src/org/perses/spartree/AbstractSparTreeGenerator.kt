@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -44,10 +44,8 @@ import org.perses.antlr.ast.PersesTerminalAst
 import org.perses.antlr.ast.PersesTokenSetAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.grammar.AbstractParserFacade
+import org.perses.program.AbstractPersesToken
 import org.perses.program.PersesTokenFactory
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
-import org.perses.program.PersesTokenFactory.PersesAntlrToken
-import org.perses.program.TokenizedProgramFactory
 import org.perses.util.Util
 import org.perses.util.sample
 import org.perses.util.toImmutableMap
@@ -61,11 +59,26 @@ abstract class AbstractSparTreeGenerator(
   val antlrGrammar: AbstractAntlrGrammar = parserFacade.antlrGrammar
   val grammarHierarchy: GrammarHierarchy = parserFacade.ruleHierarchy
   val language = parserFacade.language
-  private val identifierTokenType = parserFacade.identifierTokenTypes
+  private val identifierTokenType = parserFacade.fusedIdentifierTokenTypes
 
-  private val parserGrammar: PersesGrammar
-  private val persesTokenFactory = PersesTokenFactory()
-  private val lexerGrammar: PersesGrammar?
+  private val parserGrammar: PersesGrammar =
+    if (antlrGrammar.isCombined) {
+      antlrGrammar.asCombined().grammar
+    } else {
+      antlrGrammar.asSeparate().parserGrammar
+    }
+
+  private val lexerGrammar: PersesGrammar? =
+    if (antlrGrammar.isCombined) {
+      null
+    } else {
+      antlrGrammar.asSeparate().lexerGrammar
+    }
+
+  private val sparTreeNodeFactory =
+    SparTreeNodeFactory(
+      parserFacade = parserFacade,
+    )
 
   protected var startNodeId = 0
 
@@ -75,18 +88,6 @@ abstract class AbstractSparTreeGenerator(
   private val corpus: ConcurrentHashMap<TokenType, MutableSet<String>> = ConcurrentHashMap()
 
   init {
-    parserGrammar =
-      if (antlrGrammar.isCombined) {
-        antlrGrammar.asCombined().grammar
-      } else {
-        antlrGrammar.asSeparate().parserGrammar
-      }
-    lexerGrammar =
-      if (antlrGrammar.isCombined) {
-        null
-      } else {
-        antlrGrammar.asSeparate().lexerGrammar
-      }
     ruleGenerationInfo = RuleGenerationInfo(antlrGrammar)
   }
 
@@ -107,26 +108,17 @@ abstract class AbstractSparTreeGenerator(
     val generatedNode =
       generateParserRuleSparTreeNode(ruleGenerationInfo.startSymbol)
         ?: return null
-    val tokenList = mutableListOf<PersesAntlrToken>()
+    val tokenList = mutableListOf<AbstractPersesToken.AntlrToken>()
     generatedNode.preOrderVisit {
       if (it.isTokenNode()) {
         tokenList.add((it as LexerRuleSparTreeNode).token.asAntlrToken())
       }
       it.immutableChildView
     }
-    // TODO(zhenyang): need to factory this
-    val sparTreeNodeFactory =
-      SparTreeNodeFactory(
-        parserFacade.metaTokenInfoDb,
-        // FIXME: this static factory method takes List<Token> as its first parameter and will
-        // convert it to List<PersesToken> but here the token list is already List<PersesToken>
-        // add a static method or think of another way to build a SparTree from SparTreeNode
-        TokenizedProgramFactory.createFactory(tokenList, language),
-        grammarHierarchy,
-      )
     return SparTree(
       realRoot = generatedNode,
       sparTreeNodeFactory,
+      initialCanonicalTokenCount = null,
     )
   }
 
@@ -164,8 +156,26 @@ abstract class AbstractSparTreeGenerator(
   protected fun generateLexerRuleSparTreeNode(
     terminal: AbstractPersesRuleElement,
   ): LexerRuleSparTreeNode {
-    val token = generatePersesToken(terminal)
-    return LexerRuleSparTreeNode(startNodeId++, token, null)
+    val persesToken = generatePersesToken(terminal)
+    return sparTreeNodeFactory.createLexerRuleSparTreeNode(persesToken)
+  }
+
+  /**
+   * Adds a generated leaf for [terminal] under [node], unless it is EOF. EOF is not a source token:
+   * materializing it would emit ANTLR's `<EOF>` display text as a real token and corrupt the
+   * program (a rule such as `compilationUnit : translationUnit? EOF` reaches it). Real spar-trees
+   * drop EOF in SparTreeBuilder, so generated trees must too -- and both generator subclasses must
+   * agree, or the same rule yields structurally different trees.
+   */
+  protected fun addTerminalChildUnlessEof(
+    node: ParserRuleSparTreeNode,
+    terminal: AbstractPersesRuleElement,
+  ) {
+    if (terminal is PersesTerminalAst && terminal.isEOF()) {
+      return
+    }
+    val child = generateLexerRuleSparTreeNode(terminal)
+    node.addChild(child, AbstractNodePayload.SinglePayload(child.antlrRule))
   }
 
   fun generateRandomNonEOFToken(random: Random): Token {
@@ -178,12 +188,15 @@ abstract class AbstractSparTreeGenerator(
   }
 
   // TODO: Try to generate PersesToken with more information (e.g. Line Information)
-  fun generatePersesToken(ruleBody: AbstractPersesRuleElement): PersesAntlrToken {
+  fun generatePersesToken(ruleBody: AbstractPersesRuleElement): AbstractPersesToken.AntlrToken {
     var antlrToken = generateAntlrToken(ruleBody)
     if (antlrToken.type == INVALID_TOKEN_TYPE.antlrTokenType) {
       antlrToken = parserFacade.transformLiteralIntoSingleToken(antlrToken.text)
     }
-    return persesTokenFactory.createPersesToken(antlrToken)
+    return PersesTokenFactory.createPersesToken(
+      antlrToken,
+      overridingPosition = null,
+    )
   }
 
   // TODO: Refactor this function
@@ -240,22 +253,26 @@ abstract class AbstractSparTreeGenerator(
             }
           }
         }
+
         is PersesLexerCharSet -> {
           // Stripe the bracket
           val charSet = getCharsetFromLexerCharset(ruleBody.text)
           val index = random.nextInt(charSet.size)
           charSet[index].toString()
         }
+
         is PersesTokenSetAst -> {
           val index = random.nextInt(ruleBody.childCount)
           generateAntlrToken(ruleBody.getChild(index)).text
         }
+
         is PersesRangeAst -> {
           generateRandomChar(
             ruleBody.getChild(0) as PersesTerminalAst,
             ruleBody.getChild(1) as PersesTerminalAst,
           )
         }
+
         is PersesNotAst -> {
           when (val subRuleBody = ruleBody.getChild(0)) {
             is PersesLexerCharSet -> {
@@ -269,9 +286,11 @@ abstract class AbstractSparTreeGenerator(
               val index = random.nextInt(candidateChars.size)
               candidateChars[index].toString()
             }
+
             is PersesRuleReferenceAst -> {
               TODO("It seems that negation can also be followed by a reference")
             }
+
             is PersesTokenSetAst -> {
               val matchedTokens = mutableListOf<String>()
               val candidateTokens = mutableListOf<String>()
@@ -295,6 +314,7 @@ abstract class AbstractSparTreeGenerator(
               }
               random.sample(candidateTokens)
             }
+
             is PersesTerminalAst -> {
               var text = subRuleBody.text
               if (text == "EOF") {
@@ -316,15 +336,18 @@ abstract class AbstractSparTreeGenerator(
                 }
               }
             }
+
             else -> {
               throw AssertionError("Cannot generate token text with the given ruleBody.")
             }
           }
         }
+
         is PersesAlternativeBlockAst -> {
           val alternative = ruleBody.alternatives[random.nextInt(ruleBody.childCount)]
           return generateAntlrToken(alternative)
         }
+
         is PersesSequenceAst -> {
           val textBuilder = StringBuilder()
           for (child in ruleBody.children) {
@@ -332,9 +355,11 @@ abstract class AbstractSparTreeGenerator(
           }
           textBuilder.toString()
         }
+
         is PersesEpsilonAst -> {
           ""
         }
+
         is PersesLexerCommandAst -> {
           // if commands contains "skip", the generator should ignore it
           var isSkip = false
@@ -349,6 +374,7 @@ abstract class AbstractSparTreeGenerator(
             generateAntlrToken(ruleBody.body).text
           }
         }
+
         is AbstractPersesQuantifiedAst -> {
           val times =
             when (ruleBody) {
@@ -362,9 +388,11 @@ abstract class AbstractSparTreeGenerator(
           }
           textBuilder.toString()
         }
+
         is PersesActionAst -> {
           ""
         }
+
         else -> {
           throw AssertionError("Cannot generate token text with the given ruleBody.")
         }
@@ -437,13 +465,18 @@ abstract class AbstractSparTreeGenerator(
         val codePoint = Integer.valueOf(text.substring(hexStartOffset, hexEndOffset), 16)
         return Pair(codePoint.toChar(), hexEndOffset + 1)
       }
+
       'p', 'P' -> {
         TODO("\\p{...} is not supported for now")
       }
+
       in ANTLRLiteralEscapedCharValue.keys -> {
         return Pair(ANTLRLiteralEscapedCharValue[escaped]!!, offset + 2)
       }
-      else -> throw AssertionError("Invalid escaped value")
+
+      else -> {
+        throw AssertionError("Invalid escaped value")
+      }
     }
   }
 

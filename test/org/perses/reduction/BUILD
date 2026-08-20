@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
@@ -7,8 +8,11 @@ kt_jvm_test(
     srcs = ["AbstractReducerContextTest.kt"],
     deps = [
         "//:truth",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:parser_facade",
         "//src/org/perses/reduction:reducer_context_interface",
         "//src/org/perses/reduction:test_script_executor_service",
+        "//test/org/perses:test_util",
         "//test/org/perses/reduction/io:CommonReductionIOManagerData",
     ],
 )
@@ -26,17 +30,20 @@ kt_jvm_test(
 
 kt_jvm_library(
     name = "reducer_functional_test_base",
+    testonly = True,
     srcs = ["ReducerFunctionalTestUtility.kt"],
     associates = [
         "//src/org/perses/reduction:reduction_driver",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//:antlr_tool",
         "//:guava",
         "//:truth",
-        "//src/org/perses:command_options",
+        "//src/org/perses:perses_command_options",
         "//src/org/perses:perses_lib",
         "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/adhoc:language_kind",
         "//src/org/perses/listener:listeners",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/util",
@@ -47,8 +54,8 @@ kt_jvm_library(
     name = "AbstractPersesReducerTest",
     srcs = ["AbstractPersesReducerTest.kt"],
     data = [
-        "//benchmark/gcc-59903:gcc59903",
-        "//benchmark/gcc-71626:gcc71626",
+        "//benchmark_v2/benchmark_c/gcc-59903:files",
+        "//benchmark_v2/benchmark_c/gcc-71626:files",
         "//test_data/child_tree_1",
         "//test_data/child_tree_2",
         "//test_data/child_tree_3",
@@ -95,6 +102,18 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "NodeContainerForListMinimizerTest",
+    srcs = ["NodeContainerForListMinimizerTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/grammar/c:language_kind",
+        "//src/org/perses/program:language_kind",
+        "//src/org/perses/reduction:abstract_reducer",
+        "//test/org/perses:test_util",
+    ],
+)
+
+kt_jvm_test(
     name = "ProfileTest",
     srcs = ["ProfileTest.kt"],
     test_class = "org.perses.reduction.ProfileTest",
@@ -127,9 +146,10 @@ kt_jvm_test(
         "//:truth",
         "//src/org/perses/reduction:reduction_configuration",
         "//src/org/perses/reduction/io",
-        "//src/org/perses/reduction/io:reduction_inputs",
         "//src/org/perses/reduction/io/token:regular_output_manager_factory",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",
+        "//src/org/perses/reduction/reducer:enum_mimir_reduction_algorithm",
+        "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/util",
         "//src/org/perses/util/hashing",
         "//test/org/perses:test_util",
@@ -151,8 +171,11 @@ genrule(
         query_cache_memory_usage_log,
         query_cache_memory_usage_stdout,
     ],
-    cmd = "java -javaagent:$(location //third_party/memory_measurer:object_explorer) " +
+    cmd = "$(JAVABASE)/bin/java -javaagent:$(location //third_party/memory_measurer:object_explorer) " +
           " --add-opens java.base/java.lang.module=ALL-UNNAMED " +  # For java 11 and above. Java 8 is not supported.
+          " --add-opens java.base/java.lang=ALL-UNNAMED " +
+          " --add-opens java.base/java.util=ALL-UNNAMED " +
+          " --add-opens java.base/java.util.concurrent=ALL-UNNAMED " +
           " --add-opens java.base/jdk.internal.reflect=ALL-UNNAMED " +  # For java 11 and above. Java 8 is not supported.
           " --add-opens java.base/jdk.internal.math=ALL-UNNAMED " +  # For java 11 and above. Java 8 is not supported.
           " --add-opens java.base/jdk.internal.misc=ALL-UNNAMED " +  # For java 11 and above. Java 8 is not supported.
@@ -164,6 +187,7 @@ genrule(
           " --input-file test_data/delta_1/t.c " +
           (" --profile-query-cache-memory $(location %s) " % query_cache_memory_usage_log) +
           (" > $(location %s) 2>&1" % query_cache_memory_usage_stdout),
+    toolchains = ["@bazel_tools//tools/jdk:current_java_runtime"],
 )
 
 sh_test(
@@ -181,6 +205,24 @@ kt_jvm_test(
         "//:guava",
         "//:truth",
         "//src/org/perses/reduction:reduction_level_sequence",
+    ],
+)
+
+kt_jvm_test(
+    name = "PerFileReductionDriverTest",
+    srcs = ["PerFileReductionDriverTest.kt"],
+    associates = [
+        "//src/org/perses/reduction:reduction_driver",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//src/org/perses/program",
+        "//src/org/perses/reduction/io",
+        "//src/org/perses/reduction/io:reduction_inputs",
+        "//src/org/perses/util",
     ],
 )
 
@@ -221,7 +263,6 @@ kt_jvm_test(
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction:test_script_executor_service",
-        "//src/org/perses/reduction/io:reduction_inputs",
         "//src/org/perses/reduction/io/token:regular_output_manager_factory",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//test/org/perses:test_util",
@@ -235,13 +276,13 @@ kt_jvm_test(
     deps = [
         "//:guava",
         "//:truth",
+        "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/grammar/c:pnf_c_grammar",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/reduction:test_script",
         "//src/org/perses/reduction/io",
-        "//src/org/perses/reduction/io:reduction_inputs",
         "//src/org/perses/reduction/io/token:regular_output_manager_factory",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",
         "//src/org/perses/util",
@@ -259,12 +300,13 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
-    name = "AbstractProgramReductionDriverTest",
-    srcs = ["AbstractProgramReductionDriverTest.kt"],
-    associates = [
-        "//src/org/perses/reduction:reduction_driver",
-    ],
+    name = "PropertyTestResultTest",
+    srcs = ["PropertyTestResultTest.kt"],
     deps = [
+        "//:jackson",
         "//:truth",
+        "//src/org/perses/reduction:property_test_result",
+        "//src/org/perses/util:Serialization",
+        "//src/org/perses/util/shell:ExitCode",
     ],
 )

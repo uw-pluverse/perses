@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_library")
 
 package(default_visibility = [
     "//visibility:public",
@@ -27,6 +28,7 @@ kt_jvm_library(
         "//:guava",
         "//src/org/perses/program",
         "//src/org/perses/program:language_kind",
+        "//src/org/perses/util:simple_stack_and_queue",
     ],
 )
 
@@ -62,8 +64,6 @@ kt_jvm_library(
         ":abstract_grammar_stub",
         "//:guava",
         "//antlropt/src/org/perses/antlr/ast",
-        "//src/org/perses/antlr/atn/nfa",
-        "//src/org/perses/spartree",
         "//src/org/perses/util",
         "//src/org/perses/util/java",
     ],

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,7 +21,9 @@ import com.google.common.io.Files
 import com.google.protobuf.TextFormat
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.go.PnfGoParserFacade
+import org.perses.grammar.rust.PnfRustParserFacade
 import org.perses.grammar.scala.PnfScalaParserFacade
+import org.perses.grammar.wasm.WebAssemblyParserFacade
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
 import org.perses.util.cmd.CommandLineProcessor
@@ -35,6 +37,8 @@ class GrammarHierarchyDumpMain(
     dumpGrammarHierarchy(cmd.c!!, PnfCParserFacade().ruleHierarchy)
     dumpGrammarHierarchy(cmd.go!!, PnfGoParserFacade().ruleHierarchy)
     dumpGrammarHierarchy(cmd.scala!!, PnfScalaParserFacade().ruleHierarchy)
+    dumpGrammarHierarchy(cmd.wat!!, WebAssemblyParserFacade().ruleHierarchy)
+    dumpGrammarHierarchy(cmd.rust!!, PnfRustParserFacade().ruleHierarchy)
     dumpRuleGraph(cmd.graphC!!, PnfCParserFacade().ruleHierarchy)
     dumpRuleGraph(cmd.graphGo!!, PnfGoParserFacade().ruleHierarchy)
     dumpRuleGraph(cmd.graphScala!!, PnfScalaParserFacade().ruleHierarchy)
@@ -82,6 +86,12 @@ class GrammarHierarchyDumpMain(
     @Parameter(names = ["-scala"], required = true)
     var scala: String? = null
 
+    @Parameter(names = ["-wat"], required = true)
+    var wat: String? = null
+
+    @Parameter(names = ["-rust"], required = true)
+    var rust: String? = null
+
     @Parameter(names = ["-graph-c"])
     var graphC: String? = null
 
@@ -95,6 +105,7 @@ class GrammarHierarchyDumpMain(
       checkNotNull(c)
       checkNotNull(go)
       checkNotNull(scala)
+      checkNotNull(wat)
       checkNotNull(graphC)
       checkNotNull(graphGo)
       checkNotNull(graphScala)

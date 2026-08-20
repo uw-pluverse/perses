@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,21 +17,19 @@
 package org.perses.antlr.reducer.io
 
 import org.perses.antlr.ast.PersesGrammar
-import org.perses.program.LanguageKind
 import org.perses.reduction.io.AbstractReductionIOManager
+import org.perses.reduction.io.ReductionFolder
 import java.nio.file.Path
 
 class GrammarReductionIOManager(
   workingDir: Path,
-  reductionInputs: SeparateGrammarReductionInput,
-  outputManagerFactory: GrammarOutputManagerFactory,
-  outputDirectory: Path?,
-) : AbstractReductionIOManager<PersesGrammar, LanguageKind, GrammarReductionIOManager>(
+  originalReductionInputs: SeparateGrammarOriginalReductionInput,
+  resultFolder: ReductionFolder,
+) : AbstractReductionIOManager<PersesGrammar, GrammarReductionIOManager>(
     workingDir,
-    reductionInputs,
-    outputManagerFactory,
-    outputDirectory,
+    originalReductionInputs,
+    resultFolder,
   ) {
-  override fun getConcreteReductionInputs(): SeparateGrammarReductionInput =
-    reductionInputs as SeparateGrammarReductionInput
+  val concreteReductionInputs: SeparateGrammarOriginalReductionInput
+    get() = originalReductionInputs as SeparateGrammarOriginalReductionInput
 }

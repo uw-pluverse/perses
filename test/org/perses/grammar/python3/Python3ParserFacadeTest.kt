@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.antlr.toTokenType
+import org.perses.grammar.ParseErrorHandling
 import org.perses.program.printer.PrinterRegistry
 
 @RunWith(JUnit4::class)
@@ -46,7 +47,7 @@ class Python3ParserFacadeTest {
       |    pass    
       """.trimMargin()
 
-    val origParseTree = facade.parseString(program)
+    val origParseTree = facade.parseString(program, errorMode = ParseErrorHandling.STRICT)
     val antlrTokens = TestUtility.extractTokens(origParseTree.tree)
     assertThat(antlrTokens).isNotEmpty()
     antlrTokens.forEach {
@@ -58,7 +59,7 @@ class Python3ParserFacadeTest {
     }
 
     val sparTree = TestUtility.createSparTreeFromString(program, LanguagePython3)
-    val tokenProgram = sparTree.programSnapshot
+    val tokenProgram = sparTree.programSnapshot.payload
     val code = PrinterRegistry.printToStringInPythonFormat(tokenProgram)
     assertThat(code.trim()).isEqualTo(program.trim())
   }

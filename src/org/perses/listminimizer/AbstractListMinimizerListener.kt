@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -25,6 +25,7 @@ abstract class AbstractListMinimizerListener : Closeable {
   abstract fun startReduction(
     originalInput: List<ElementWrapper<*>>,
     listMinimizerClass: KClass<out AbstractListMinimizer<*, *>>,
+    descriptionPrefix: String,
   )
 
   abstract fun endReduction(
@@ -37,7 +38,7 @@ abstract class AbstractListMinimizerListener : Closeable {
 
   abstract fun onPropertyTest(
     configuration: Candidate<*>,
-    result: LMPropertyTestResult<*, *>,
+    result: ListMinimizerPropertyTestResult<*, *>,
     sizeOfOriginalList: Int,
     sizeOfCurrentMinimizationResult: Int,
   )

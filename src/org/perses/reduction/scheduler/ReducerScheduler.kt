@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,10 +16,12 @@
  */
 package org.perses.reduction.scheduler
 
+import com.google.common.annotations.VisibleForTesting
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.program.ProgramSize
+import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerAnnotation.ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE
-import org.perses.reduction.ReducerContext
+import org.perses.reduction.ReducerResult
 import org.perses.reduction.StatsOfFilesBeingReduced
 import org.perses.reduction.scheduler.AbstractSchedulerEvent.ReducerCallEvent
 import org.perses.reduction.scheduler.AbstractSchedulerEvent.StatsSnapshotEvent
@@ -27,27 +29,33 @@ import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.Con
 import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.ContinueOnSmallSize
 import org.perses.spartree.SparTree
 import org.perses.util.Util
-import org.perses.util.toImmutableList
 
-// TODO(cnsun): needs testing.
-class ReducerScheduler(
-  private val reducerContext: ReducerContext,
+/**
+ * Generic over the reducer, because the scheduler never reduces anything itself: it hands a reducer
+ * to [reducerRunner] and reads its annotation for the event history, so the concrete type is
+ * incidental. Production instantiates it with `AbstractSparTreeReducer`, whose construction needs a
+ * whole `ReducerContext`; a test instantiates it with a stand-in and drives the loops through
+ * [computeStatistics] alone.
+ */
+class ReducerScheduler<ReducerType : Any>(
   private val reducerExecutionPlan: ReducerExecutionPlan,
+  private val createReducers: (ReducerAnnotation) -> ImmutableList<ReducerType>,
+  private val reducerAnnotationOf: (ReducerType) -> ReducerAnnotation,
   private val computeStatistics: () -> StatsOfFilesBeingReduced,
-  reducerRunner: (AbstractTokenReducer) -> Pair<SparTree, Exception?>,
+  reducerRunner: (ReducerType) -> ReducerResult,
 ) {
   private val schedulerEvents = SchedulerEventHistory()
 
   /**
-   * @return the minimal spartree if the minimal spartree is smaller than the current best spartree
+   * @return the minimal program size if the minimal tree is smaller than the current best tree
    *          that is being reduced.
    */
-  fun runAndGetGlobalMinimalSparTree(): SparTree? {
+  fun runAndGetGlobalMinimalProgramSize(): ProgramSize<SparTree>? {
     // Always run the main reducers first, continuously if fixpoint is enabled.
     executePlan(reducerExecutionPlan.steps)
 
-    val minSparTree = schedulerEvents.findTreeWithMinimalProgramSizeFromHistory()
-    return minSparTree
+    val minProgramSize = schedulerEvents.findTreeWithMinimalProgramSizeFromHistory()
+    return minProgramSize
   }
 
   private data class PlanExecutionBeforeAndAfterStats(
@@ -84,40 +92,27 @@ class ReducerScheduler(
 
     while (true) {
       val result = executePlan(fixpointLoop.body)
-      when (computeFixpointDecision(result.before, result.after)) {
-        FixpointDecision.CONTINUE_SMALLER_RESULT -> {
-          countOfNonDeletions = 0
-          continue
-        }
-
-        FixpointDecision.CONTINUE_CHANGE_IN_RESULT_BUT_NOT_SMALLER -> {
-          ++countOfNonDeletions
-          if (fixpointLoop.continueCondition is ContinueOnSmallSize) {
-            // TODO(cnsun): needs tests.
-            break
-          }
-          check(
-            fixpointLoop.continueCondition is ContinueOnChange,
-          ) {
-            """
-              |Expecting ${ContinueOnChange::class.simpleName} but got 
-              |${fixpointLoop.continueCondition::class.simpleName}
-              |
-              |The fixpoint loop is defined as follows.
-              |${fixpointLoop.toDefinition().toYamlString()}
-              |
-              |Before: ${result.before.stats}
-              |   ${result.before.stats.fileContents}
-              |After:  ${result.after.stats}
-              |   ${result.after.stats.fileContents}
-            """.trimMargin()
-          }
-          if (countOfNonDeletions >= fixpointLoop.continueCondition.maxCountOfAllowedChanges) {
+      val decision = computeFixpointDecision(result.before, result.after)
+      if (!decision.continueFixpoint) {
+        break
+      }
+      if (decision.refreshesNonDeletionBudget) {
+        countOfNonDeletions = 0
+        continue
+      }
+      ++countOfNonDeletions
+      when (val continueCondition = fixpointLoop.continueCondition) {
+        is ContinueOnSmallSize -> {
+          if (!decision.isSmaller) {
             break
           }
         }
 
-        else -> break
+        is ContinueOnChange -> {
+          if (countOfNonDeletions >= continueCondition.maxCountOfAllowedChanges) {
+            break
+          }
+        }
       }
     }
     val after = recordStatsSnapshotIfNotYet()
@@ -137,8 +132,7 @@ class ReducerScheduler(
     atomicReducer: ReducerExecutionPlan.AtomicReducerStep,
   ): PlanExecutionBeforeAndAfterStats {
     val before = recordStatsSnapshotIfNotYet()
-    atomicReducer.actionBefore.invoke()
-    atomicReducer.reducer.create(reducerContext).forEach { callReducer(it) }
+    createReducers(atomicReducer.reducer).forEach { callReducer(it) }
     val after = recordStatsSnapshotIfNotYet()
     return PlanExecutionBeforeAndAfterStats(before = before, after = after)
   }
@@ -155,9 +149,6 @@ class ReducerScheduler(
     return PlanExecutionBeforeAndAfterStats(before = before, after = after)
   }
 
-  fun readSchedulerEvents() =
-    ReducerHistoryAndStatistics(schedulerEvents.asList().toImmutableList())
-
   private fun recordStatsSnapshotIfNotYet(): StatsSnapshotEvent {
     if (schedulerEvents.isLastEvent { it == null || it !is StatsSnapshotEvent }) {
       val currentStats = computeStatistics()
@@ -169,7 +160,10 @@ class ReducerScheduler(
           } else {
             val beforeStats = lastStats.stats
             when {
-              beforeStats.tokenCount > currentStats.tokenCount -> Pair(0, true)
+              beforeStats.size.canonicalTokenCount > currentStats.size.canonicalTokenCount -> {
+                Pair(0, true)
+              }
+
               beforeStats.fileContents == currentStats.fileContents -> {
                 Pair(lastStats.numberOfNonDeletionIterations, false)
               }
@@ -197,21 +191,27 @@ class ReducerScheduler(
     return last
   }
 
-  private val callReducer: (AbstractTokenReducer) -> Unit = { reducer: AbstractTokenReducer ->
-    val result =
+  private val callReducer: (ReducerType) -> Unit = { reducer: ReducerType ->
+    var thrownException: Exception? = null
+    val result: ReducerResult? =
       try {
         reducerRunner(reducer)
       } catch (e: Exception) {
         // TODO(cnsun): need to write the exception to a file so that we get notified of the error.
         e.printStackTrace()
-        null to e
+        thrownException = e
+        null
       }
-    val reducerEvent =
-      ReducerCallEvent(
-        reducer.reducerAnnotation,
-        exceptionStackTrace = result.second?.stackTraceToString(),
-      )
-    schedulerEvents.addReducerCallEvent(reducerEvent, result.first)
+    val (exceptionStackTrace, programSizeAfterReduction) =
+      when (result) {
+        is ReducerResult.Reduced -> result.exception?.stackTraceToString() to result.tree
+        is ReducerResult.Skipped -> null to null
+        null -> thrownException?.stackTraceToString() to null
+      }
+    schedulerEvents.addReducerCallEvent(
+      ReducerCallEvent(reducerAnnotationOf(reducer), exceptionStackTrace),
+      programSizeAfterReduction = programSizeAfterReduction,
+    )
     recordStatsSnapshotIfNotYet()
   }
 
@@ -226,45 +226,62 @@ class ReducerScheduler(
   private fun computeFixpointDecision(
     before: StatsSnapshotEvent,
     after: StatsSnapshotEvent,
-  ): FixpointDecision {
-    /*
-      Every time the tokenCount is not reduced but the program is modified
-      numOfNonDeletionTransformationAttempt will increment by 1. When the token
-      number is not decreasing and the attempt times reach the pre-configured
-      limit, the reduction process will be terminated. Every time the token
-      number is reduced, numOfNonDeletionTransformationAttempt will be reset.
-     */
-    return if (before.stats.fileContents == after.stats.fileContents) {
-      FixpointDecision.STOP_NO_CHANGE_IN_RESULT
-    } else if (before.stats.tokenCount > after.stats.tokenCount ||
-      before.stats.characterCount > after.stats.characterCount
-    ) {
-      FixpointDecision.CONTINUE_SMALLER_RESULT
-    } else {
-      FixpointDecision.CONTINUE_CHANGE_IN_RESULT_BUT_NOT_SMALLER
-    }
-  }
+  ): FixpointDecision = computeFixpointDecision(before.stats, after.stats)
 
-  private enum class FixpointDecision(
+  enum class FixpointDecision(
     val continueFixpoint: Boolean,
+    /**
+     * Whether the program shrank. Both a token decrease and a character-only decrease count, so a
+     * [ContinueOnSmallSize] loop keeps running on either.
+     */
+    val isSmaller: Boolean,
+    /**
+     * Whether this iteration refreshes the budget a [ContinueOnChange] loop terminates on, i.e.
+     * `--non-deletion-iteration-limit`.
+     *
+     * Only a token decrease does. That budget is the *only* thing that stops a loop over reducers
+     * annotated `BEST_RESULT_SIZE_REMAIN` -- Vulcan's identifier and subtree replacement, which by
+     * definition never shrink the token count -- so whatever refreshes it has to be a quantity that
+     * cannot come back up, or the loop has no termination argument left.
+     *
+     * The character count is not such a quantity. Those reducers rewrite the program at a fixed
+     * token count, and the program they rewrite is free to grow again: the reduction result is
+     * tracked separately, as a running minimum in [SchedulerEventHistory], precisely because the
+     * program being reduced is not monotone. Refreshing on a character decrease therefore let an
+     * iteration that shortens an identifier cancel the budget spent by every iteration before it,
+     * and a loop bounded at ten non-deletion iterations ran unbounded.
+     */
+    val refreshesNonDeletionBudget: Boolean,
     val reason: String,
   ) {
     STOP_NO_CHANGE_IN_RESULT(
       continueFixpoint = false,
+      isSmaller = false,
+      refreshesNonDeletionBudget = false,
       reason = "No change in the program.",
     ),
-    CONTINUE_SMALLER_RESULT(
+    CONTINUE_FEWER_TOKENS(
       continueFixpoint = true,
-      reason = "The source file is smaller.",
+      isSmaller = true,
+      refreshesNonDeletionBudget = true,
+      reason = "The source file has fewer tokens.",
+    ),
+    CONTINUE_FEWER_CHARACTERS_ONLY(
+      continueFixpoint = true,
+      isSmaller = true,
+      refreshesNonDeletionBudget = false,
+      reason = "The source file has the same number of tokens, but fewer characters.",
     ),
     CONTINUE_CHANGE_IN_RESULT_BUT_NOT_SMALLER(
       continueFixpoint = true,
+      isSmaller = false,
+      refreshesNonDeletionBudget = false,
       reason = "The program is changed, but its size remains the same.",
     ),
   }
 
   class SchedulerEventHistory {
-    private var minimalSparTree: SparTree? = null
+    private var minimalProgramSize: ProgramSize<SparTree>? = null
 
     private val history = mutableListOf<AbstractSchedulerEvent>()
 
@@ -276,21 +293,16 @@ class ReducerScheduler(
     /**
      * TODO(cnsun): need to be unit-tested.
      */
-    fun findTreeWithMinimalProgramSizeFromHistory(): SparTree? = minimalSparTree
+    fun findTreeWithMinimalProgramSizeFromHistory(): ProgramSize<SparTree>? = minimalProgramSize
 
-    private fun updateMinimalSparTree(newSparTree: SparTree?) {
-      if (newSparTree == null) {
+    private fun updateMinimalProgramSize(newProgramSize: ProgramSize<SparTree>?) {
+      if (newProgramSize == null) {
         return
       }
-      val localMinTree = minimalSparTree
-      minimalSparTree =
-        when {
-          localMinTree == null -> newSparTree
-          localMinTree.tokenCount > newSparTree.tokenCount -> newSparTree
-          localMinTree.tokenCount == newSparTree.tokenCount &&
-            localMinTree.totalCharacterCount > newSparTree.totalCharacterCount -> newSparTree
-          else -> localMinTree
-        }
+      val localMin = minimalProgramSize
+      if (localMin == null || newProgramSize < localMin) {
+        minimalProgramSize = newProgramSize
+      }
     }
 
     fun addStatsEvent(event: StatsSnapshotEvent) {
@@ -299,10 +311,10 @@ class ReducerScheduler(
 
     fun addReducerCallEvent(
       event: ReducerCallEvent,
-      treeAfterReduction: SparTree?,
+      programSizeAfterReduction: ProgramSize<SparTree>?,
     ) {
       add(event)
-      updateMinimalSparTree(treeAfterReduction)
+      updateMinimalProgramSize(programSizeAfterReduction)
     }
 
     private fun add(event: AbstractSchedulerEvent): AbstractSchedulerEvent {
@@ -319,7 +331,10 @@ class ReducerScheduler(
           val eventBeforeLast = history[history.size - 2]
           check(eventBeforeLast is StatsSnapshotEvent)
           if (last.reducer.reductionResultSizeTrend != BEST_RESULT_SIZE_INCREASE) {
-            check(eventBeforeLast.stats.tokenCount >= event.stats.tokenCount) {
+            check(
+              eventBeforeLast.stats.size.canonicalTokenCount >=
+                event.stats.size.canonicalTokenCount,
+            ) {
               """The reducer cannot increase the token count, but the token count increases.
                 |last: $last
                 |event: $event
@@ -381,5 +396,23 @@ class ReducerScheduler(
           prev::class.java == curr::class.java
         }
     }
+  }
+
+  companion object {
+    @VisibleForTesting
+    fun computeFixpointDecision(
+      before: StatsOfFilesBeingReduced,
+      after: StatsOfFilesBeingReduced,
+    ): FixpointDecision =
+      when {
+        before.fileContents == after.fileContents -> FixpointDecision.STOP_NO_CHANGE_IN_RESULT
+        after.size.canonicalTokenCount < before.size.canonicalTokenCount ->
+          FixpointDecision.CONTINUE_FEWER_TOKENS
+        // The reducers' own ordering, so "smaller" here means what it means when the reduction
+        // result is chosen. The token counts are known equal or larger by now, so this can only
+        // fire on the character counts.
+        after.size < before.size -> FixpointDecision.CONTINUE_FEWER_CHARACTERS_ONLY
+        else -> FixpointDecision.CONTINUE_CHANGE_IN_RESULT_BUT_NOT_SMALLER
+      }
   }
 }

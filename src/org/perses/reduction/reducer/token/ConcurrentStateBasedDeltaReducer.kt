@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.spartree.LexerRuleSparTreeNode
@@ -37,12 +37,13 @@ class ConcurrentStateBasedDeltaReducer(
     tree.remainingLexerRuleNodes
 
   override fun createInitialState(tree: SparTree): ConcurrentDeltaDebuggingState? =
-    ConcurrentDeltaDebuggingState.create(tree.tokenCount)
+    ConcurrentDeltaDebuggingState.create(tree.programSnapshot.surrogateTokenCount)
 
   override fun getStateOnSuccess(
     tree: SparTree,
     state: ConcurrentDeltaDebuggingState,
-  ): ConcurrentDeltaDebuggingState? = state.advanceOnSuccess(tree.tokenCount)
+  ): ConcurrentDeltaDebuggingState? =
+    state.advanceOnSuccess(tree.programSnapshot.surrogateTokenCount)
 
   override fun computeNodeActionSet(
     state: ConcurrentDeltaDebuggingState,
@@ -61,7 +62,7 @@ class ConcurrentStateBasedDeltaReducer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(ConcurrentStateBasedDeltaReducer(reducerContext))
   }
 

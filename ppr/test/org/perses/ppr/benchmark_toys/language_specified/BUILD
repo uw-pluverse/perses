@@ -1,4 +1,3 @@
-load("//benchmark:benchmark.bzl", "sanity_test")
 load("//ppr/test/org/perses/ppr:ppr_reduction.bzl", "ppr_reduction_golden_test")
 
 PPR_REDUCER_BIN = "//ppr/src/org/perses/ppr:main"
@@ -20,7 +19,7 @@ ppr_reduction_golden_test(
         "--lang": "c",
     },
     perses_bin = PPR_REDUCER_BIN,
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     seed_file = "seed.unknown_language",
     test_script = "r.sh",
     thread_count = 1,

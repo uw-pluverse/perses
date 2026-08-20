@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -360,10 +360,12 @@ class CommandOptions : AbstractCommandOptions() {
     var enableInsertingChildrenOfKleeneNode = false
 
     override fun validate() {
-      Preconditions.checkState(
+      check(
         (
-          generatorType !== SparTreeGeneratorType.NULL_GENERATOR &&
-            enableReplacingWithGeneratedNode ||
+          (
+            generatorType !== SparTreeGeneratorType.NULL_GENERATOR &&
+              enableReplacingWithGeneratedNode
+          ) ||
             enableReplacingIdentifier ||
             enableSplicing ||
             maxRecursionDepth > 0
@@ -380,8 +382,7 @@ class CommandOptions : AbstractCommandOptions() {
             generatorType !== SparTreeGeneratorType.NULL_GENERATOR &&
               enableInsertingChildrenOfKleeneNode
           ),
-        "At least one mutation need to be enabled.",
-      )
+      ) { "At least one mutation need to be enabled." }
     }
   }
 
@@ -441,7 +442,7 @@ class CommandOptions : AbstractCommandOptions() {
     private var coverageResultFile: Path? = null
 
     fun getCoverageResultFile(): Path? {
-      if (coverageInfoPath != null && compilerSourcePath != null || aflCoverageMode) {
+      if ((coverageInfoPath != null && compilerSourcePath != null) || aflCoverageMode) {
         if (coverageResultFile == null) {
           coverageResultFile = Paths.get("kitten/temp_coverage")
         }

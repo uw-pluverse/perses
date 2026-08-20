@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,6 +21,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
+import org.perses.grammar.ParseErrorHandling
 import java.nio.file.Path
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.readText
@@ -55,7 +56,12 @@ class PnfGoParserFacadeTest {
     val parseTreeFromOrigParser = facade.parseWithOrigGoParser(program, name)
     val tokensByOrigParser = TestUtility.extractTokenTexts(parseTreeFromOrigParser.tree)
 
-    val parseTreeWithPnfParser = facade.parseString(program, name)
+    val parseTreeWithPnfParser =
+      facade.parseString(
+        program,
+        name,
+        errorMode = ParseErrorHandling.STRICT,
+      )
     val tokensByPnfParser = TestUtility.extractTokenTexts(parseTreeWithPnfParser.tree)
 
     Truth.assertThat(tokensByPnfParser).containsExactlyElementsIn(tokensByOrigParser).inOrder()

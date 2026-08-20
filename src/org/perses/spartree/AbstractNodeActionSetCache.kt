@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.spartree
 
 abstract class AbstractNodeActionSetCache {
-  abstract fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): Boolean
+  abstract fun isCachedOrCacheIt(actionSet: AbstractActionSet<*>): NodeActionSetCacheResult
 
   abstract fun clear()
 

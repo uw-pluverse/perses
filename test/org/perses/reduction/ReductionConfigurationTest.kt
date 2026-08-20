@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -24,17 +24,17 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
-import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.c.LanguageC
-import org.perses.grammar.c.PnfCLexer
 import org.perses.listminimizer.EnumListMinimizerType
-import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
-import org.perses.reduction.io.RegularReductionInputs
-import org.perses.reduction.io.token.RegularOutputManagerFactory
+import org.perses.reduction.io.AbstractReductionIOManager
+import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.token.TokenReductionIOManager
+import org.perses.reduction.reducer.EnumMimirReductionAlgorithm
+import org.perses.reduction.reducer.PersesNodeReducerAnnotations
+import org.perses.util.Util
 import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -50,16 +50,15 @@ class ReductionConfigurationTest {
   private val workingDirectory =
     TestUtility.createCleanWorkingDirectory(ReductionConfigurationTest::class.java)
   private val sourceFile = SourceFile(Paths.get(FOLDER, "t.c"), LanguageC)
-  private val outputDir = workingDirectory.resolve("perses_output_dir")
-  private val lexerAtnWrapper =
-    LexerAtnWrapper.createLexerWrapperFromLexerClass(
-      PnfCLexer::class.java,
-    )
-  private val reductionInputs =
-    RegularReductionInputs(
+  private val outputDir =
+    workingDirectory.resolve("perses_output_dir").apply {
+      Util.ensureDirExists(this)
+    }
+  private val originalReductionInputs =
+    DefaultLanguageOriginalReductionInputs(
       testScript = testScript,
-      mainFile = sourceFile,
-      dependencyFiles = ImmutableList.of(),
+      mutableFiles = ImmutableList.of(sourceFile),
+      immutableDependencyFiles = ImmutableList.of(),
     )
 
   @OptIn(ExperimentalPathApi::class)
@@ -75,17 +74,15 @@ class ReductionConfigurationTest {
     val ioManager =
       TokenReductionIOManager(
         workingDirectory,
-        reductionInputs,
-        outputManagerFactory =
-          RegularOutputManagerFactory(
-            reductionInputs,
-            ORIG_FORMAT,
-            lexerAtnWrapper,
+        originalReductionInputs,
+        resultFolder =
+          AbstractReductionIOManager.createPopulatedResultFolder(
+            originalReductionInputs,
             hashAlgorithm,
+            outputDir,
           ),
-        outputDirectory = outputDir,
       )
-    val languageKind = ioManager.reductionInputs.initiallyDeterminedMainDataKind
+    val languageKind = ioManager.originalReductionInputs.initiallyDeterminedMainDataKind
     val parserFacade =
       SingleParserFacadeFactory
         .builderWithBuiltinLanguages()
@@ -96,21 +93,28 @@ class ReductionConfigurationTest {
     val configuration =
       ReductionConfiguration(
         globalFixpoint = false,
+        mainReducerAnnotation = PersesNodeReducerAnnotations.PrioritizedDfs,
+        cleanupReducerAnnotation = PersesNodeReducerAnnotations.Dfs,
         fixpointReductionForMainReducer = true,
         enableDeprecatedQueryCaching = true,
         fullyDeterministicMode = false,
         numOfReductionThreads = numOfReductionThreads,
-        parserFacade = parserFacade,
-        persesNodeReducerConfig =
-          ReductionConfiguration.PersesNodeReducerConfiguration(
+        canonicalParserFacade = parserFacade,
+        persesConfig =
+          ReductionConfiguration.PersesConfig(
+            enableTopDownReduction = true,
+            enableReducingRegularRuleNode = true,
+            enableReducingKleeneOptionalNode = true,
             maxEditCountForRegularRuleNode = 100,
             maxBfsDepthForRegularRuleNode = 5,
             stopAtFirstCompatibleChildren = true,
+            enableLiteralReplacementForListMinimizer = false,
+            enableLiteralReplacementForRegularRuleNode = false,
+            listMinimizerTypeForKleene = EnumListMinimizerType.DFS,
+            anticipatedFinalTokenCount = 20,
           ),
         listMinimizerConfig =
           ReductionConfiguration.ListMinimizerConfig(
-            defaultListMinimizerTypeForKleene = EnumListMinimizerType.DFS,
-            defaultListMinimizerTypeForHdd = EnumListMinimizerType.CDD,
             minSlidingWindowSize = 1,
             maxSlidingWindowSize = 5,
           ),
@@ -129,20 +133,27 @@ class ReductionConfigurationTest {
           ReductionConfiguration.LatraConfig(
             listMinimizerForTransformations = EnumListMinimizerType.WPROBDD,
           ),
+        levelBasedReducerConfig =
+          ReductionConfiguration.LevelBasedReducerConfig(
+            defaultListMinimizerType = EnumListMinimizerType.CDD,
+          ),
+        mimirConfig =
+          ReductionConfiguration.MimirConfig(
+            semanticsProviderCreator = null,
+            nodeCountThresholdToUseOneByOne = 10,
+            enableBottomUpReductionAfterMainReductionLoop = true,
+            bottomUpReductionMaxDepth = 5,
+            mimirReductionAlgorithm = EnumMimirReductionAlgorithm.LAYER_BY_LAYER_TOP_DOWN,
+            enableMimirForRegularRuleNodes = true,
+            deleteDefWithAllItsConcreteUses = false,
+          ),
         shaHashAlgorithm = EnumShaAlgorithm.SHA256,
       )
-    val mainFile = (ioManager.reductionInputs as RegularReductionInputs).mainFile
+    val mainFile = ioManager.originalReductionInputs.mutableFiles.single() as SourceFile
     assertThat(mainFile.file).isEqualTo(sourceFile.file)
     assertThat(mainFile.textualFileContent)
       .isEqualTo(MoreFiles.asCharSource(sourceFile.file, StandardCharsets.UTF_8).read())
     assertThat(configuration.numOfReductionThreads).isEqualTo(numOfReductionThreads)
-    val profileFile = ioManager.getProfileFile()
-    assertThat(profileFile.parent.toRealPath()).isEqualTo(workingDirectory.toRealPath())
-    run {
-      val tempRootFolder = ioManager.tempRootFolder
-      assertThat(tempRootFolder.parent).isEqualTo(workingDirectory)
-      assertThat(tempRootFolder.fileName.toString()).startsWith("PersesTempRoot_t.c_r.sh_")
-    }
     assertThat(configuration.fixpointReductionForMainReducer).isTrue()
   }
 

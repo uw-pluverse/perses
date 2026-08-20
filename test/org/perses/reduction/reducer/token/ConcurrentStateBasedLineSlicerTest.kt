@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -33,9 +33,10 @@ class ConcurrentStateBasedLineSlicerTest {
       reducerAnnotation = ConcurrentStateBasedLineSlicer.CompositeReducerAnnotation,
       cmdCustomizer = {},
     ).use {
-      // It is not possible to get only the string literal, because our token slicer
-      // checks syntactical validity before each property test.
-      it.runReducerAndTest(expected = """main{("world\n");}""".trim())
+      // The line slicer parses with the line grammar and does not require the result to be parsable
+      // by the canonical (C) facade, so it deletes the surrounding function and keeps only the
+      // single line needed to satisfy the property, even though that line is not valid C on its own.
+      it.runReducerAndTest(expected = """printf("world\n");""".trim())
     }
   }
 

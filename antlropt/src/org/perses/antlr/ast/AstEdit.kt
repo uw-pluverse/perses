@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -39,10 +39,14 @@ abstract class AstEdit {
           childrenChanged = true
           newChildren.add(decision.newValue)
         }
+
         is TransformDecision.Keep -> {
           newChildren.add(decision.oldValue)
         }
-        else -> TODO("$decision")
+
+        else -> {
+          TODO("$decision")
+        }
       }.exhaustive
     }
     return if (childrenChanged) {
@@ -70,10 +74,14 @@ abstract class AstEdit {
       is TransformDecision.Keep -> {
         newElement
       }
+
       is TransformDecision.Replace -> {
         decision.newValue
       }
-      else -> TODO(decision.toString())
+
+      else -> {
+        TODO(decision.toString())
+      }
     }
   }
 }

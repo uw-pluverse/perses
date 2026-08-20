@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -41,11 +41,11 @@ class TokenCanonicalizerTest {
           .single() as TokenCanonicalizer
       assertThat(reducer.reducerAnnotation).isSameInstanceAs(TokenCanonicalizer.META)
       val floatToken =
-        it.reducerContext.configuration.parserFacade.transformLiteralIntoSingleToken(
+        it.reducerContext.configuration.canonicalParserFacade.transformLiteralIntoSingleToken(
           "0.9",
         )
       val intToken =
-        it.reducerContext.configuration.parserFacade.transformLiteralIntoSingleToken(
+        it.reducerContext.configuration.canonicalParserFacade.transformLiteralIntoSingleToken(
           "0",
         )
       assertThat(floatToken.type).isNotEqualTo(intToken.type)
@@ -53,6 +53,7 @@ class TokenCanonicalizerTest {
         reducer.buildTDTree(
           it.sparTree.sparTreeNodeFactory.createLexerRuleSparTreeNodeForAntlrToken(
             CommonToken(floatToken.type, intToken.text),
+            overridingPosition = null,
           ),
         )
       assertThat(tdTree.toLexeme()).isEqualTo(intToken.text)
@@ -62,21 +63,36 @@ class TokenCanonicalizerTest {
   @Test
   fun testConversionBetweenIndexAndId0() {
     val index = 0
-    val id = TokenCanonicalizer.convertIndexToId(index)
+    val id = TokenCanonicalizer.convertIndexToId(index, baseChar = 'a')
     assertThat(id).isEqualTo("a")
   }
 
   @Test
   fun testConversionBetweenIndexAndId1() {
     val index = 10
-    val id = TokenCanonicalizer.convertIndexToId(index)
+    val id = TokenCanonicalizer.convertIndexToId(index, baseChar = 'a')
     assertThat(id).isEqualTo("k")
   }
 
   @Test
   fun testConversionBetweenIndexAndId2() {
     val index = 100
-    val id = TokenCanonicalizer.convertIndexToId(index)
+    val id = TokenCanonicalizer.convertIndexToId(index, baseChar = 'a')
     assertThat(id).isEqualTo("dw")
+  }
+
+  @Test
+  fun testConversionBetweenIndexAndUpperCaseId0() {
+    assertThat(TokenCanonicalizer.convertIndexToId(index = 0, baseChar = 'A')).isEqualTo("A")
+  }
+
+  @Test
+  fun testConversionBetweenIndexAndUpperCaseId1() {
+    assertThat(TokenCanonicalizer.convertIndexToId(index = 10, baseChar = 'A')).isEqualTo("K")
+  }
+
+  @Test
+  fun testConversionBetweenIndexAndUpperCaseId2() {
+    assertThat(TokenCanonicalizer.convertIndexToId(index = 100, baseChar = 'A')).isEqualTo("DW")
   }
 }

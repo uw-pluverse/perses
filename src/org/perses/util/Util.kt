@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -43,6 +43,7 @@ import java.util.IdentityHashMap
 import java.util.LinkedList
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicReference
 import java.util.function.Predicate
 import java.util.zip.Deflater
 import java.util.zip.DeflaterOutputStream
@@ -208,7 +209,7 @@ object Util {
     list: ArrayList<T>,
     index: Int,
   ) {
-    require(list.size > 0)
+    require(list.isNotEmpty())
     val last = list.size - 1
     if (index != last) {
       swap(list, index, last)
@@ -218,8 +219,8 @@ object Util {
 
   @JvmStatic
   inline fun <T> removeElementsFromList(
-    list: ArrayList<T>,
-    criterion: (index: Int, value: T) -> Boolean,
+    list: MutableList<T>,
+    criterionToKeep: (index: Int, value: T) -> Boolean,
   ) {
     if (list.isEmpty()) {
       return
@@ -228,7 +229,7 @@ object Util {
     val size = list.size
     for (i in 0 until size) {
       val element = list[i]
-      if (criterion(i, element)) {
+      if (criterionToKeep(i, element)) {
         continue
       }
       if (start != i) list[start] = element
@@ -344,7 +345,7 @@ object Util {
   @JvmStatic
   fun ensureDirExists(dir: Path): Path {
     if (!Files.isDirectory(dir)) {
-      /**
+      /*
        * Multiple instances of Perses might be creating the same folder at the same time.
        * Despite data races, better to only check the folder is created successfully.
        * In case of a file with same name, a `java.nio.file.FileAlreadyExistsException` will be
@@ -408,6 +409,12 @@ object Util {
     require(Files.isDirectory(directory))
     directory.deleteRecursively()
     Files.createDirectory(directory)
+  }
+
+  @OptIn(ExperimentalPathApi::class)
+  @JvmStatic
+  fun deleteRecursively(path: Path) {
+    path.deleteRecursively()
   }
 
   // TODO: test
@@ -510,18 +517,33 @@ object Util {
     }
   }
 
-  private fun globWithFilter(
+  /**
+   * Recursively lists the regular files under [dir] that satisfy [regularFileFilter]. The result is
+   * sorted by normalized absolute path so the order is deterministic across runs and platforms
+   * (`Files.walk` itself makes no ordering guarantee). Pass `{ true }` to list every regular file.
+   */
+  @JvmStatic
+  fun globWithFilter(
     dir: Path,
-    regualrFileFilter: (Path) -> Boolean,
-  ): ImmutableList<Path> =
-    Files
-      .walk(dir)
-      .use { stream ->
-        stream
-          .filter { file ->
-            Files.isRegularFile(file) && regualrFileFilter(file)
-          }.collect(ImmutableList.toImmutableList())
-      }
+    regularFileFilter: (Path) -> Boolean,
+  ): ImmutableList<Path> {
+    val matches =
+      Files
+        .walk(dir)
+        .use { stream ->
+          stream
+            .filter { file ->
+              Files.isRegularFile(file) && regularFileFilter(file)
+            }.collect(ImmutableList.toImmutableList())
+        }
+    // Sort by normalized absolute path, computing each key once (decorate-sort-undecorate);
+    // sorting with a comparator would re-run the key selector on every comparison.
+    return matches
+      .map { it.toAbsolutePath().normalize().toString() to it }
+      .sortedBy { it.first }
+      .map { it.second }
+      .let { ImmutableList.copyOf(it) }
+  }
 
   @JvmStatic
   fun <T : Any> computeDifference(
@@ -713,7 +735,9 @@ object Util {
       } catch (t: Throwable) {
         throw IllegalStateException(message().toString(), t)
       }
-      check(result) { message() ?: "null" }
+      check(result) {
+        message() ?: "null"
+      }
     }
   }
 
@@ -751,19 +775,6 @@ object Util {
     return current
   }
 
-  class AtomicSequenceGenerator(
-    start: Int = 1,
-    private val minLengthForPadding: Int,
-  ) {
-    init {
-      require(minLengthForPadding > 0)
-    }
-
-    private val generator = AtomicInteger(start)
-
-    fun next(): String =
-      Strings.padStart(generator.getAndIncrement().toString(), minLengthForPadding, '0')
-  }
 
   data class SpaceSize(
     val bytes: Long,
@@ -784,9 +795,6 @@ object Util {
   fun createTempDirForObject(ownerObject: Any): Path =
     Files.createTempDirectory(ownerObject::class.java.canonicalName)
 
-  /**
-   * TODO(cnsun): needs tests.
-   */
   inline fun <T> clusterIdsIntoRanges(
     list: List<T>,
     idExtractor: (T) -> Int,
@@ -813,4 +821,86 @@ object Util {
     }
     return result
   }
+
+  fun extractNonBlankLinesAndTrim(string: String): List<String> =
+    string
+      .lines()
+      .map {
+        it.trim()
+      }.filter { it.isNotBlank() }
+
+  /**
+   * Named-parameter factory for a **daemon** worker [Thread] (the [Thread] constructor is Java and so
+   * cannot take Kotlin named arguments). Daemon is baked in rather than offered as an opt-in flag so a
+   * stray or wedged worker can never hold up JVM shutdown -- the safe default every ad-hoc worker
+   * should use, matching the codebase's pooled threads (see [DaemonThreadPool]). [stackSizeBytes] is
+   * the requested native stack size; 0 (the default) lets the JVM pick, matching
+   * `Thread(group, target, name, 0)`. The thread is created but not started.
+   */
+  fun createDaemonThread(
+    name: String,
+    stackSizeBytes: Long = 0L,
+    threadGroup: ThreadGroup? = null,
+    task: () -> Unit,
+  ): Thread =
+    Thread(threadGroup, Runnable { task() }, name, stackSizeBytes).apply {
+      isDaemon = true
+    }
+
+  // Native stack for the parse retry thread (the default for [callWithLargeStackOnStackOverflow]).
+  // Off-heap and lazily committed, so this generous ceiling costs only the nesting depth actually used
+  // (a few MB) and does not draw from -Xmx. 512 MB clears any realistic center-embedded nesting; a
+  // deeper input still overflows and is reported by the caller as unparsable.
+  val DEFAULT_LARGE_RETRY_STACK_SIZE: SpaceSize = SpaceSize.megaBytes(512)
+
+  /**
+   * Runs [supplier] on the calling thread; if it overflows the stack, retries it exactly once on a
+   * dedicated thread whose native stack is [largeStackSize]. A deeply nested input (e.g. an
+   * s-expression nested thousands deep) makes a recursive-descent parse -- and the recursive tree
+   * walk that follows -- exhaust the default thread stack; the retry raises the ceiling only for the
+   * one thread that needs it, instead of enlarging every thread's stack via a global -Xss. The large
+   * stack is native, off-heap memory committed lazily page by page, so a generous size costs only the
+   * depth actually used and never draws from -Xmx.
+   *
+   * [supplier] MUST be re-runnable from scratch: a StackOverflowError can unwind mid-computation with
+   * the partial result already discarded, so the retry rebuilds a fresh result rather than resuming.
+   * The retry only raises the ceiling -- a pathologically deeper input can still overflow
+   * [largeStackSize], and that StackOverflowError propagates to the caller as the honest
+   * "too deep" signal. Only [StackOverflowError] triggers the retry; every other throwable from the
+   * first attempt propagates unchanged.
+   */
+  fun <T> callWithLargeStackOnStackOverflow(
+    largeStackSize: SpaceSize = DEFAULT_LARGE_RETRY_STACK_SIZE,
+    supplier: () -> T,
+  ): T =
+    try {
+      supplier()
+    } catch (_: StackOverflowError) {
+      val resultHolder = AtomicReference<T>()
+      val throwableHolder = AtomicReference<Throwable>()
+      // A one-off worker for a rare retry, not pooled: a pool would pin the large stack reservation
+      // for its whole lifetime, whereas this thread releases it on exit. createDaemonThread makes it a
+      // daemon so a wedged retry can never hold up JVM shutdown; we still join() it on the normal path.
+      val thread =
+        createDaemonThread(
+          name = "large-stack-retry",
+          stackSizeBytes = largeStackSize.bytes,
+        ) {
+          try {
+            resultHolder.set(supplier())
+          } catch (t: Throwable) {
+            throwableHolder.set(t)
+          }
+        }
+      thread.start()
+      try {
+        thread.join()
+      } catch (e: InterruptedException) {
+        thread.interrupt()
+        Thread.currentThread().interrupt()
+        throw e
+      }
+      throwableHolder.get()?.let { throw it }
+      resultHolder.get()
+    }
 }

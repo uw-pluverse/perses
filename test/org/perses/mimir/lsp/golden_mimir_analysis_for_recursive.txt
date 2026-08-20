@@ -1,0 +1,10 @@
+DEF: f1@[5:5]: void f1() {
+  USE: f1@[10:4]: f1();//call
+  USE: f1@[14:11]: return f1() + f2();
+
+DEF: f2@[9:5]: void f2() {
+  USE: f2@[6:4]: f2 ();//call
+  USE: f2@[14:18]: return f1() + f2();
+
+DEF: f3@[13:4]: int f3() {
+

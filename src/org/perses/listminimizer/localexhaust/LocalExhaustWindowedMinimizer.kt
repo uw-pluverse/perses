@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,19 +16,13 @@
  */
 package org.perses.listminimizer.localexhaust
 
-import com.google.common.collect.ImmutableList
-import org.perses.listminimizer.AbstractListMinimizer
-import org.perses.listminimizer.BackwardWindowSlider
-import org.perses.listminimizer.Candidate.DeletionsFromOriginal
-import org.perses.listminimizer.ElementWrapper
-import org.perses.listminimizer.LMPropertyTestResult
+import org.perses.listminimizer.AbstractCursorDrivenMinimizer
+import org.perses.listminimizer.DeletionCandidateCursor
 import org.perses.listminimizer.ListMinimizerArguments
-import org.perses.util.Util
 
-// TODO(cnsun): needs tests.
 class LocalExhaustWindowedMinimizer<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
-) : AbstractListMinimizer<T, PropertyPayload>(arguments) {
+) : AbstractCursorDrivenMinimizer<T, PropertyPayload>(arguments) {
   val extraArguments =
     arguments.localExhaustMinimizerArguments
       ?: error("Arguments must be non-null in ${this::class}")
@@ -36,49 +30,6 @@ class LocalExhaustWindowedMinimizer<T : Any, PropertyPayload>(
   val windowSize: Int
     get() = extraArguments.windowSize
 
-  override fun reduceNonEmptyInput() {
-    val slider =
-      BackwardWindowSlider(expectedWindowSize = windowSize, list = best) {
-        it.deleted
-      }
-    val visited = mutableSetOf<ImmutableList<ElementWrapper<T>>>()
-    while (true) {
-      val window = slider.slideBackByOnePosition()
-      if (window.isEmpty()) {
-        break
-      }
-      if (!visited.add(window)) {
-        // The window has been processed before, thus skipping this window.
-        continue
-      }
-      val actualWindowSize = window.size
-      val patternSet =
-        CachedUniformLengthDeletionPatternSets
-          .getDeletionPatternSet(actualWindowSize)
-          .interestingPatternsInDescendingOfNumOfDeletes
-      for (patternSet in patternSet) {
-        val deletedElements = patternSet.getDeletedElements(input = window)
-        Util.lazyAssert({ best.containsAll(deletedElements) }) {
-          """$best
-            |$deletedElements
-          """.trimMargin()
-        }
-        val configuration =
-          DeletionsFromOriginal(
-            original = best,
-            deleted_ = deletedElements,
-          )
-        val testResult = testProperty(configuration)
-        if (testResult !is LMPropertyTestResult.Completed) {
-          continue
-        }
-        if (testResult.result.isInteresting) {
-          visited.clear()
-          configuration.deletedWrappers.forEach { it.markAsDeleted() }
-          updateBest(configuration.candidateWrappers, testResult.payload)
-          break
-        }
-      }
-    }
-  }
+  override fun createCursor(): DeletionCandidateCursor<T> =
+    LocalExhaustCursor(windowSize = windowSize, initialBest = best, currentBest = { best })
 }

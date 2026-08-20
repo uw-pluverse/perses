@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,15 +23,13 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
-import org.perses.grammar.c.PnfCLexer
-import org.perses.program.EnumFormatControl
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
+import org.perses.reduction.io.AbstractReductionIOManager
+import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.ReductionFolder
-import org.perses.reduction.io.RegularReductionInputs
-import org.perses.reduction.io.token.RegularOutputManagerFactory
+import org.perses.reduction.io.ReductionFolderManager
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.AutoDeletableFolder
 import org.perses.util.Util
@@ -46,32 +44,32 @@ class ReductionFolderManagerTest {
 
   private val testScript = ScriptFile(Paths.get("test_data/delta_1/r.sh"))
   private val sourceFile = SourceFile(Paths.get("test_data/delta_1/t.c"), LanguageC)
-  private val lexerAtnWrapper =
-    LexerAtnWrapper.createLexerWrapperFromLexerClass(
-      PnfCLexer::class.java,
-    )
-  val reductionInputs =
-    RegularReductionInputs(
+  val originalReductionInputs =
+    DefaultLanguageOriginalReductionInputs(
       testScript,
-      sourceFile,
-      dependencyFiles = ImmutableList.of(),
+      mutableFiles = ImmutableList.of(sourceFile),
+      immutableDependencyFiles = ImmutableList.of(),
     )
-  val outputManagerFactory =
-    RegularOutputManagerFactory(
-      reductionInputs,
-      EnumFormatControl.COMPACT_ORIG_FORMAT,
-      lexerAtnWrapper,
-      shaAlgorithm = EnumShaAlgorithm.SHA512,
-    )
-  private val outputDir = tempDir.file.resolve("perses_output_dir")
+  private val outputDir =
+    tempDir.file.resolve("perses_output_dir").apply {
+      Util.ensureDirExists(this)
+    }
   val ioManager =
     TokenReductionIOManager(
       workingFolder = tempDir.file,
-      reductionInputs = reductionInputs,
-      outputManagerFactory = outputManagerFactory,
-      outputDirectory = outputDir,
+      originalReductionInputs = originalReductionInputs,
+      resultFolder =
+        AbstractReductionIOManager.createPopulatedResultFolder(
+          originalReductionInputs,
+          EnumShaAlgorithm.SHA512,
+          outputDir,
+        ),
     )
-  private val manager = ioManager.lazilyInitializedReductionFolderManager
+  private val manager =
+    ReductionFolderManager(
+      originalReductionInputs,
+      Files.createTempDirectory(tempDir.file, "PersesTempRoot_"),
+    )
 
   @After
   fun teardown() {
@@ -96,26 +94,23 @@ class ReductionFolderManagerTest {
 
   @Test
   fun test() {
-    val rootFolder = manager.rootFolder
-    assertThat(rootFolder.fileName.toString()).startsWith("PersesTempRoot_t.c_r.sh_")
-
     val firstFolder = manager.createNextFolder()
-    assertThat(firstFolder.folder.fileName.toString()).isEqualTo("000000")
+    assertThat(firstFolder.path.fileName.toString()).isEqualTo("000000")
     testFolder(firstFolder)
     val secondFolder = manager.createNextFolder()
     testFolder(secondFolder)
-    assertThat(secondFolder.folder.fileName.toString()).isEqualTo("000001")
+    assertThat(secondFolder.path.fileName.toString()).isEqualTo("000001")
   }
 
   @Test
   fun testDeleteAllOtherFiles() {
     val folder = manager.createNextFolder()
-    Files.createFile(folder.folder.resolve(sourceFile.baseName))
-    Files.createFile(folder.folder.resolve("extra"))
-    assertThat(folder.folder.toFile().listFiles()!!).hasLength(3)
+    Files.createFile(folder.path.resolve(sourceFile.baseName))
+    Files.createFile(folder.path.resolve("extra"))
+    assertThat(folder.path.toFile().listFiles()!!).hasLength(3)
     folder.deleteAllOtherFiles()
     assertThat(
-      folder.folder
+      folder.path
         .toFile()
         .listFiles()!!
         .map { it.name },
@@ -129,7 +124,7 @@ class ReductionFolderManagerTest {
   fun testComputeAbsPathForOrigFile() {
     val folder = manager.createNextFolder()
     val path = folder.computeAbsPathForOrigFile(sourceFile)
-    assertThat(path).isEqualTo(folder.folder.resolve("t.c"))
+    assertThat(path).isEqualTo(folder.path.resolve("t.c"))
 
     Assert.assertThrows(Exception::class.java) {
       folder.computeAbsPathForOrigFile(SourceFile(Paths.get("t.c"), LanguageC))
@@ -137,13 +132,13 @@ class ReductionFolderManagerTest {
   }
 
   private fun testFolder(folder: ReductionFolder) {
-    assertThat(folder.folder.parent.toAbsolutePath())
+    assertThat(folder.path.parent.toAbsolutePath())
       .isEqualTo(manager.rootFolder)
 
     assertThat(
       folder.testScript.scriptFile.parent
         .toAbsolutePath(),
-    ).isEqualTo(folder.folder.toAbsolutePath())
+    ).isEqualTo(folder.path.toAbsolutePath())
     assertThat(
       folder.testScript.scriptFile.fileName
         .toString(),

@@ -1,11 +1,8 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
+
 package(default_visibility = [
     "//visibility:public",
 ])
-
-filegroup(
-    name = "sanity_test",
-    srcs = ["sanity_test.sh"],
-)
 
 py_library(
     name = "run_benchmark",
@@ -20,6 +17,17 @@ py_binary(
 py_binary(
     name = "convert_time_query_to_csv",
     srcs = ["convert_time_query_to_csv.py"],
+)
+
+py_library(
+    name = "plot_program_trend",
+    srcs = ["plot_program_trend.py"],
+)
+
+py_test(
+    name = "plot_program_trend_test",
+    srcs = ["plot_program_trend_test.py"],
+    deps = [":plot_program_trend"],
 )
 
 py_test(

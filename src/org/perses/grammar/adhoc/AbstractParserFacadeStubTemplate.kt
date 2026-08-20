@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -29,6 +29,7 @@ abstract class AbstractParserFacadeStubTemplate(
   val lexerFile: Path?,
   val parserFacadeClassSimpleName: String,
   tokenNamesOfIdentifiers: List<String>,
+  private val includeAutoDetectedIdentifierTokenTypes: Boolean,
 ) : AbstractGrammarStub(
     packageName,
     parserClassSimpleName,
@@ -83,6 +84,7 @@ public final class ${classSimpleName()}
         LANGUAGE,
         $createAntlrGrammar,
         $identifierTokens,
+        $includeAutoDetectedIdentifierTokenTypes,
         CLASS_LEXER,
         CLASS_PARSER);
   }

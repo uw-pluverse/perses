@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,23 +18,22 @@ package org.perses.reduction.reducer.token
 
 import com.google.common.base.Objects
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.line.LineParserFacade
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
-import org.perses.util.Util
 import org.perses.util.toImmutableList
-
-typealias Line = ImmutableList<LexerRuleSparTreeNode>
 
 class ConcurrentStateBasedLineSlicer(
   reducerContext: ReducerContext,
   private val slicerAnnotation: ConcurrentStateLineSlicerAnnotation,
 ) : AbstractStateBasedConcurrentReducer<
     ConcurrentLineSlicingState,
-    Line,
+    LexerRuleSparTreeNode,
   >(
     slicerAnnotation,
     reducerContext,
@@ -43,30 +42,30 @@ class ConcurrentStateBasedLineSlicer(
     require(slicerAnnotation.granularity > 0) { "$slicerAnnotation" }
   }
 
+  // The line grammar can lex any program, so this slicer does not require the canonical facade to
+  // be able to parse the candidate program.
   override val parseCheckNeeded: Boolean
-    get() = true
+    get() = false
 
-  override fun createInputSequence(tree: SparTree): ImmutableList<Line> =
-    computeLines(tree.remainingLexerRuleNodes)
+  override fun getPreferredParserFacade(): AbstractParserFacade = LineParserFacade()
 
-  // todo : improve efficiency. should avoid computeLines here.
+  override fun createInputSequence(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> =
+    tree.remainingLexerRuleNodes
+
   override fun getStateOnSuccess(
     tree: SparTree,
     state: ConcurrentLineSlicingState,
-  ): ConcurrentLineSlicingState? {
-    val lineSequenceSize = computeLines(tree.remainingLexerRuleNodes).size
-    return state.advanceOnSuccess(lineSequenceSize)
-  }
+  ): ConcurrentLineSlicingState? = state.advanceOnSuccess(tree.remainingLexerRuleNodes.size)
 
-  // todo : improve efficiency. should avoid computeLines here.
-  override fun createInitialState(tree: SparTree): ConcurrentLineSlicingState? {
-    val lineSequenceSize = computeLines(tree.remainingLexerRuleNodes).size
-    return ConcurrentLineSlicingState.create(slicerAnnotation.granularity, lineSequenceSize)
-  }
+  override fun createInitialState(tree: SparTree): ConcurrentLineSlicingState? =
+    ConcurrentLineSlicingState.create(
+      slicerAnnotation.granularity,
+      tree.remainingLexerRuleNodes.size,
+    )
 
   override fun computeNodeActionSet(
     state: ConcurrentLineSlicingState,
-    sequence: ImmutableList<Line>,
+    sequence: ImmutableList<LexerRuleSparTreeNode>,
   ): NodeDeletionActionSet {
     val nodesToDelete =
       sequence
@@ -74,7 +73,6 @@ class ConcurrentStateBasedLineSlicer(
         .asSequence()
         .filter { it.index in state.startInclusive until state.endExclusive }
         .map { it.value }
-        .flatMap { it.asSequence() }
         .toList()
     return NodeDeletionActionSet.createByDeletingNodes(
       nodesToDelete,
@@ -88,7 +86,7 @@ class ConcurrentStateBasedLineSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       REDUCER_ANNOTATIONS
         .asSequence()
         .flatMap { it.create(reducerContext) }
@@ -97,16 +95,6 @@ class ConcurrentStateBasedLineSlicer(
 
   companion object {
     private const val NAME_PREFIX = "concurrent_state_line_slicer"
-
-    fun computeLines(tokens: ImmutableList<LexerRuleSparTreeNode>): ImmutableList<Line> =
-      Util.mergeContinuousElementsIntoRegions(tokens) { a, b ->
-        a.token
-          .asAntlrToken()
-          .position.line ==
-          b.token
-            .asAntlrToken()
-            .position.line
-      }
 
     val REDUCER_ANNOTATIONS =
       IntRange(start = 1, endInclusive = 14)
@@ -127,7 +115,7 @@ class ConcurrentStateBasedLineSlicer(
         require(granularity > 0)
       }
 
-      override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+      override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
         ImmutableList.of(ConcurrentStateBasedLineSlicer(reducerContext, this))
 
       override fun hashCode(): Int = Objects.hashCode(this::class.java, namePrefix, granularity)

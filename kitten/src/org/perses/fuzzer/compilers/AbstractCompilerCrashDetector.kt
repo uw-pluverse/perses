@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -132,11 +132,15 @@ abstract class AbstractCompilerCrashDetector : ICompilerCrashDetector {
             counter.set(0)
             true
           }
+
           is StackTraceLine -> {
             val currentCount = counter.incrementAndGet()
             currentCount <= limit
           }
-          else -> TODO(it.toString())
+
+          else -> {
+            TODO(it.toString())
+          }
         }
       }
     }

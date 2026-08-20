@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -39,7 +39,9 @@ class PnfSolidityParserFacade :
         antlrLexerGrammarFileName = "SolidityLexer.g4",
         PnfSolidityParserFacade::class.java,
       ),
-    identifierTokenTypes = ImmutableIntArray.of(SolidityLexer.Identifier),
+    identifierTokenTypes =
+      ImmutableIntArray.of(SolidityLexer.Identifier, SolidityLexer.YulIdentifier),
+    includeAutoDetectedIdentifierTokenTypes = false,
     lexerClass = SolidityLexer::class.java,
     parserClass = PnfSolidityParser::class.java,
   ) {
@@ -71,7 +73,6 @@ class PnfSolidityParserFacade :
       fileName: String,
     ): ParseTreeWithParser =
       parseReader(
-        fileName,
         reader,
         { input: CharStream? -> SolidityLexer(input) },
         { input: CommonTokenStream? -> SolidityParser(input) },

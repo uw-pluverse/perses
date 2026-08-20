@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,11 +27,13 @@ import org.perses.antlr.pnf.MutableGrammar
 import org.perses.antlr.reducer.io.GrammarReductionIOManager
 import org.perses.reduction.AbstractReducerNameAndDesc
 import org.perses.reduction.TestScriptExecutorService
+import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.util.ktInfo
 
 class RuleElementLabelReducer(
   ioManager: GrammarReductionIOManager,
   testScriptExecutorService: TestScriptExecutorService,
+  outputManagerFactory: AbstractOutputManagerFactory<PersesGrammar>,
 ) : AbstractRuleElementReducer(
     nameAndDesc =
       object : AbstractReducerNameAndDesc(
@@ -40,6 +42,7 @@ class RuleElementLabelReducer(
       ) {},
     ioManager,
     testScriptExecutorService,
+    outputManagerFactory,
   ) {
   // TODO: this can be merged with ActionReducer.
   override fun reduceRuleDef(

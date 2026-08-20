@@ -1,6 +1,7 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
-The initial program size is 31
+The initial program size is 54
 The command line options are:
 ---
 helpFlags:
@@ -10,21 +11,21 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_tree_diff_reduction_golden_test_delete_two_stmts_node_priority_seed.c_variant.c"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "seed.c"
+  inputFiles:
+  - "seed.c"
   deps: []
   variantFile: "variant.c"
-  sourceFile: "seed.c"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_tree_diff_reduction_golden_test_delete_two_stmts_node_priority-dfs_seed.c_variant.c"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -41,19 +42,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -62,6 +60,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -74,31 +84,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "reduction_progress.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: false
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -109,22 +131,29 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 treeDiffInputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "seed.c"
+  inputFiles:
+  - "seed.c"
   deps: []
   variantFile: "variant.c"
-  sourceFile: "seed.c"
 
-Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=false, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 20
-(31/31)  The reducer execution plan is listed below.
+(31/54)  The reducer execution plan is listed below.
     fixpoint (smaller) {
         customized_tree_diff_node_reducer
     }
@@ -132,205 +161,128 @@ The number of lexemes in PersesTokenFactory is 20
 
 =Fixpoint iteration 1. Reducer: customized_tree_diff_node_reducer
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=1,slot_type=translationUnit}
-|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___Token:#include <stdio.h> {id=241,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
-    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=236,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=240,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=218,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=235,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=220,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=222,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=223,slot_type=LeftParen}
-        |           |___(+) {id=229,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
-        |           |   |___Token:void {id=234,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
-        |           |___Token:) {id=225,slot_type=RightParen}
-        |___compoundStatement {id=8,slot_type=compoundStatement}
-            |___Token:{ {id=9,slot_type=LeftBrace}
-            |___(?) {id=10,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=182,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=183,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=217,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=184,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=187,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=213,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=189,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=190,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=191,slot_type=Assign}
-            |       |   |               |___Token:1 {id=210,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=185,slot_type=Semi}
-            |       |___expressionStatement {id=156,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=157,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=175,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:a {id=180,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=177,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___Token:++ {id=179,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
-            |       |   |___Token:; {id=158,slot_type=Semi}
-            |       |___aux_rule__declaration_3 {id=118,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=119,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=153,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=120,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=123,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:b {id=149,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=125,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=126,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=127,slot_type=Assign}
-            |       |   |               |___Token:3 {id=146,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=121,slot_type=Semi}
-            |       |___expressionStatement {id=48,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=49,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=67,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:printf {id=116,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=69,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=71,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=72,slot_type=LeftParen}
-            |       |   |               |___(?) {id=73,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___expression {id=75,slot_type=expression}
-            |       |   |               |       |___(+) {id=114,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |   |___Token:"%d" {id=115,slot_type=StringLiteral}
-            |       |   |               |       |___(*) {id=77,slot_type=kleene_star__expression_1}
-            |       |   |               |           |___aux_rule__expression_2 {id=78,slot_type=aux_rule__expression_2}
-            |       |   |               |               |___Token:, {id=79,slot_type=Comma}
-            |       |   |               |               |___Token:a {id=97,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |               |___Token:) {id=74,slot_type=RightParen}
-            |       |   |___Token:; {id=50,slot_type=Semi}
-            |       |___jumpStatement {id=21,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=25,slot_type=Return}
-            |           |   |___(?) {id=26,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0 {id=45,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=23,slot_type=Semi}
-            |___Token:} {id=11,slot_type=RightBrace}
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=243,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___functionDefinition{id=7,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=8,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=238,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=242,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=220,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=237,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=222,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=224,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=225,slot_type=LeftParen}
+            |           |___(+){id=231,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |   |___Token:void{id=236,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+            |           |___Token:){id=227,slot_type=RightParen}
+            |___compoundStatement{id=10,slot_type=compoundStatement}
+                |___Token:{{id=11,slot_type=LeftBrace}
+                |___(?){id=12,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=184,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=185,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=219,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=186,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=189,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=215,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=191,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=192,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=193,slot_type=Assign}
+                |       |   |               |___Token:1{id=212,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=187,slot_type=Semi}
+                |       |___expressionStatement{id=158,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=159,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=177,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:a{id=182,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=179,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___Token:++{id=181,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
+                |       |   |___Token:;{id=160,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=120,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=121,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=155,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=122,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=125,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:b{id=151,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=127,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=128,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=129,slot_type=Assign}
+                |       |   |               |___Token:3{id=148,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=123,slot_type=Semi}
+                |       |___expressionStatement{id=50,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=51,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=69,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=118,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=71,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=73,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=74,slot_type=LeftParen}
+                |       |   |               |___(?){id=75,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=77,slot_type=expression}
+                |       |   |               |       |___(+){id=116,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |   |___Token:"%d"{id=117,slot_type=StringLiteral}
+                |       |   |               |       |___(*){id=79,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=80,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=81,slot_type=Comma}
+                |       |   |               |               |___Token:a{id=99,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |___Token:){id=76,slot_type=RightParen}
+                |       |   |___Token:;{id=52,slot_type=Semi}
+                |       |___jumpStatement{id=23,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=26,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=27,slot_type=Return}
+                |           |   |___(?){id=28,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:0{id=47,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=25,slot_type=Semi}
+                |___Token:}{id=13,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 118, size=31=================
+FixPt[1][customized_tree_diff_node_reducer](31/54)  Starting to retrieve the semantics provider
+FixPt[1][customized_tree_diff_node_reducer](31/54)  Retrieved semantics provider null
+=================Reducing node 120, size=31=================
 
 The current best program is the following
 
     --file: seed.c--
     #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
+    int main(void)
     {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    int
-    b
-    =
-    3
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
+        int a = 1;
+        a++;
+        int b = 3;
+        printf("%d", a);
+        return 0;
     }
     --file: variant.c--
     #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
+    int main(void)
     {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
+        int a = 1;
+        printf("%d", a);
+        return 0;
     }
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (0): pass===========
 
 // edit action set type: [regular_node]can be epsilon
     --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     #include <stdio.h>
     int main(void)
     {
         int a = 1;
         a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
         printf("%d", a);
         return 0;
     }
@@ -341,68 +293,6 @@ The current best program is the following
 
 It took less than 1 second to cancel the task.
 
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main(void)
-    {
-        int a = 1;
-        a++;
-                 ;
-        printf("%d", a);
-        return 0;
-    }
 ------------------------------------------------------------
 
 
@@ -421,730 +311,13 @@ It took less than 1 second to cancel the task.
 ================The best program is updated.================
 
 token count change 31 -> 26
+Edit: [delete_120]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 118 from 31 to 26
-------------------------------------------------------------
-
-
-=================Reducing node 156, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular_node]can be epsilon
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main(void)
-    {
-        int a = 1;
-        printf("%d", a);
-        return 0;
-    }
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main(void)
-    {
-        int a = 1;
-           ;
-        printf("%d", a);
-        return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 156
-------------------------------------------------------------
-
-
-=================Reducing node 157, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:26/31=83.87%
-FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Testing the empty input. Global ratio:26/31=83.87%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.ppr.diff.tree.CustomizedTreeNodesReducer[kleene_star:optional__postfixExpression_1]dd@1
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main(void)
-    {
-        int a = 1;
-           ;
-        printf("%d", a);
-        return 0;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
-FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
-===================Node reduction is done===================
-
-Failed to reduce node 157
-------------------------------------------------------------
-
-
-=================Reducing node 175, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=175}
-------------------------------------------------------------
-
-
-============Testing the following program: fail=============
-
-// edit action set type: [regular node]compatible replacement
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main(void)
-    {
-        int a = 1;
-        a  ;
-        printf("%d", a);
-        return 0;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 175
-------------------------------------------------------------
-
-
-=================Reducing node 180, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 180
-------------------------------------------------------------
-
-
-=================Reducing node 177, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:26/31=83.87%
-FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Testing the empty input. Global ratio:26/31=83.87%
-============Testing the following program: fail=============
-
-// edit action set type: DFS in org.perses.ppr.diff.tree.CustomizedTreeNodesReducer[kleene_star:kleene_star__postfixExpression_2]dd@1
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    #include <stdio.h>
-    int main(void)
-    {
-        int a = 1;
-        a  ;
-        printf("%d", a);
-        return 0;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
-FixPt[1][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
-===================Node reduction is done===================
-
-Failed to reduce node 177
-------------------------------------------------------------
-
-
-=================Reducing node 179, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 179
+Succeeded to reduce node 120 from 31 to 26
 ------------------------------------------------------------
 
 
@@ -1154,54 +327,65 @@ The current best program is the following
 
     --file: seed.c--
     #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
+    int main(void)
     {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
     }
     --file: variant.c--
     #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
+    int main(void)
     {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (1): fail===========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (2): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+           ;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
     }
 ------------------------------------------------------------
 
@@ -1209,559 +393,381 @@ The current best program is the following
 ===================Node reduction is done===================
 
 Failed to reduce node 158
+------------------------------------------------------------
+
+
+=================Reducing node 159, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:26/54=48.15%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  Testing the empty input. Global ratio:26/54=48.15%
+==========Testing the following program (3): fail===========
+
+// edit action set type: DFS in customized_tree_diff_node_reducer(CustomizedTreeNodesReducer)[optional:optional__postfixExpression_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+           ;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:26/54=48.15%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  There is only one element in the input, and the empty input has been tested. Global ratio:26/54=48.15%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/54=48.15%
+===================Node reduction is done===================
+
+Failed to reduce node 159
+------------------------------------------------------------
+
+
+=================Reducing node 177, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_177]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (4): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a  ;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 177
+------------------------------------------------------------
+
+
+=================Reducing node 182, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 182
+------------------------------------------------------------
+
+
+=================Reducing node 179, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:26/54=48.15%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  Testing the empty input. Global ratio:26/54=48.15%
+==========Testing the following program (5): fail===========
+
+// edit action set type: DFS in customized_tree_diff_node_reducer(CustomizedTreeNodesReducer)[kleene_star:kleene_star__postfixExpression_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a  ;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:26/54=48.15%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  There is only one element in the input, and the empty input has been tested. Global ratio:26/54=48.15%
+FixPt[1][customized_tree_diff_node_reducer][DFS](26/54)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/54=48.15%
+===================Node reduction is done===================
+
+Failed to reduce node 179
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 181
+------------------------------------------------------------
+
+
+=================Reducing node 160, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 160
 ------------------------------------------------------------
 
 
 =Fixpoint iteration 2. Reducer: customized_tree_diff_node_reducer
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=1,slot_type=translationUnit}
-|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___Token:#include <stdio.h> {id=241,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
-    |___functionDefinition {id=5,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=6,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=236,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=240,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=218,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=235,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=220,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=222,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=223,slot_type=LeftParen}
-        |           |___(+) {id=229,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
-        |           |   |___Token:void {id=234,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
-        |           |___Token:) {id=225,slot_type=RightParen}
-        |___compoundStatement {id=8,slot_type=compoundStatement}
-            |___Token:{ {id=9,slot_type=LeftBrace}
-            |___(?) {id=10,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=13,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=182,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=183,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=217,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=184,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=187,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=213,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=189,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=190,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=191,slot_type=Assign}
-            |       |   |               |___Token:1 {id=210,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=185,slot_type=Semi}
-            |       |___expressionStatement {id=156,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=157,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=175,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:a {id=180,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=177,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___Token:++ {id=179,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
-            |       |   |___Token:; {id=158,slot_type=Semi}
-            |       |___expressionStatement {id=48,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-            |       |   |___(?) {id=49,slot_type=optional__postfixExpression_1}
-            |       |   |   |___postfixExpression {id=67,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-            |       |   |       |___Token:printf {id=116,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-            |       |   |       |___(*) {id=69,slot_type=kleene_star__postfixExpression_2}
-            |       |   |           |___aux_rule__postfixExpression_11 {id=71,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-            |       |   |               |___Token:( {id=72,slot_type=LeftParen}
-            |       |   |               |___(?) {id=73,slot_type=optional__postfixExpression_1}
-            |       |   |               |   |___expression {id=75,slot_type=expression}
-            |       |   |               |       |___(+) {id=114,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-            |       |   |               |       |   |___Token:"%d" {id=115,slot_type=StringLiteral}
-            |       |   |               |       |___(*) {id=77,slot_type=kleene_star__expression_1}
-            |       |   |               |           |___aux_rule__expression_2 {id=78,slot_type=aux_rule__expression_2}
-            |       |   |               |               |___Token:, {id=79,slot_type=Comma}
-            |       |   |               |               |___Token:a {id=97,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |       |   |               |___Token:) {id=74,slot_type=RightParen}
-            |       |   |___Token:; {id=50,slot_type=Semi}
-            |       |___jumpStatement {id=21,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=25,slot_type=Return}
-            |           |   |___(?) {id=26,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:0 {id=45,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=23,slot_type=Semi}
-            |___Token:} {id=11,slot_type=RightBrace}
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___Token:#include <stdio.h>{id=243,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___functionDefinition{id=7,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=8,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=238,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=242,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=220,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=237,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=222,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=224,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=225,slot_type=LeftParen}
+            |           |___(+){id=231,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |   |___Token:void{id=236,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+            |           |___Token:){id=227,slot_type=RightParen}
+            |___compoundStatement{id=10,slot_type=compoundStatement}
+                |___Token:{{id=11,slot_type=LeftBrace}
+                |___(?){id=12,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=184,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=185,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=219,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=186,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=189,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=215,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=191,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=192,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=193,slot_type=Assign}
+                |       |   |               |___Token:1{id=212,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=187,slot_type=Semi}
+                |       |___expressionStatement{id=158,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=159,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=177,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:a{id=182,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=179,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___Token:++{id=181,slot_type=[aux_rule__postfixExpression_3,PlusPlus]}
+                |       |   |___Token:;{id=160,slot_type=Semi}
+                |       |___expressionStatement{id=50,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=51,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=69,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=118,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=71,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=73,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=74,slot_type=LeftParen}
+                |       |   |               |___(?){id=75,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___expression{id=77,slot_type=expression}
+                |       |   |               |       |___(+){id=116,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |   |___Token:"%d"{id=117,slot_type=StringLiteral}
+                |       |   |               |       |___(*){id=79,slot_type=kleene_star__expression_1}
+                |       |   |               |           |___aux_rule__expression_2{id=80,slot_type=aux_rule__expression_2}
+                |       |   |               |               |___Token:,{id=81,slot_type=Comma}
+                |       |   |               |               |___Token:a{id=99,slot_type=[assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |               |___Token:){id=76,slot_type=RightParen}
+                |       |   |___Token:;{id=52,slot_type=Semi}
+                |       |___jumpStatement{id=23,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=26,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=27,slot_type=Return}
+                |           |   |___(?){id=28,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:0{id=47,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=25,slot_type=Semi}
+                |___Token:}{id=13,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
-=================Reducing node 156, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=156}
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeReplacementAction{target_node=156, replacement=158}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 156
-------------------------------------------------------------
-
-
-=================Reducing node 157, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:26/31=83.87%
-FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Testing the empty input. Global ratio:26/31=83.87%
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=175}
-------------------------------------------------------------
-
-
-FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
-FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
-===================Node reduction is done===================
-
-Failed to reduce node 157
-------------------------------------------------------------
-
-
-=================Reducing node 175, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=175}
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    NodeReplacementAction{target_node=175, replacement=180}
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 175
-------------------------------------------------------------
-
-
-=================Reducing node 180, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 180
-------------------------------------------------------------
-
-
-=================Reducing node 177, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:26/31=83.87%
-FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Testing the empty input. Global ratio:26/31=83.87%
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=179}
-------------------------------------------------------------
-
-
-FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
-FixPt[2][customized_tree_diff_node_reducer][DFS](26/31)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/31=83.87%
-===================Node reduction is done===================
-
-Failed to reduce node 177
-------------------------------------------------------------
-
-
-=================Reducing node 179, size=26=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
-    {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 179
-------------------------------------------------------------
-
-
+FixPt[2][customized_tree_diff_node_reducer](26/54)  Starting to retrieve the semantics provider
+FixPt[2][customized_tree_diff_node_reducer](26/54)  Retrieved semantics provider null
 =================Reducing node 158, size=26=================
 
 The current best program is the following
 
     --file: seed.c--
     #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
+    int main(void)
     {
-    int
-    a
-    =
-    1
-    ;
-    a
-    ++
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
     }
     --file: variant.c--
     #include <stdio.h>
-    int
-    main
-    (
-    void
-    )
+    int main(void)
     {
-    int
-    a
-    =
-    1
-    ;
-    printf
-    (
-    "%d"
-    ,
-    a
-    )
-    ;
-    return
-    0
-    ;
+        int a = 1;
+        printf("%d", a);
+        return 0;
     }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_158]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [replace_158_with_160]
+    context: [regular node]compatible replacement
 ------------------------------------------------------------
 
 
@@ -1771,167 +777,245 @@ Failed to reduce node 158
 ------------------------------------------------------------
 
 
-(26/31)  The history of the reducer invocation.
------------------------ Reduction History and Statistics -----------------------
------------------------------------ History ------------------------------------
-ID                           Reducer #Tokens #Chars #NonDeletions
- 0 customized_tree_diff_node_reducer      -5     -7             0
- 1 customized_tree_diff_node_reducer       0      0             0
+=================Reducing node 159, size=26=================
 
------------------------------------ Summary ------------------------------------
-                          Reducer Times #Tokens #Chars
-customized_tree_diff_node_reducer     2      -5     -7
-------------------------------------- End --------------------------------------
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
 
 
-#test success = 1
-#test failure = 5
-#test result cache hits = 0
-#test execution cancelled = 1
-#node edit action set cache hits = 7
-#external test execution cache hits = 0
-=====================Reduction starts.======================
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:26/54=48.15%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  Testing the empty input. Global ratio:26/54=48.15%
+==============Node edit action set cache hit.===============
 
-The initial program size is 23
-The command line options are:
----
-helpFlags:
-  groupName: "Help"
-  help: false
-verbosityFlags:
-  groupName: "Verbosity"
-  verbosity: "INFO"
-  listVerbosity: false
-  hideTimestamps: false
-  fullyDeterministicMode: false
-versionFlags:
-  groupName: "Version"
-  version: false
-inputFlags:
-  groupName: "Inputs"
-  testScript: "r.sh"
-  inputFile: "seed.c"
-  deps: []
-  variantFile: "variant.c"
-  sourceFile: "seed.c"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_tree_diff_reduction_golden_test_delete_two_stmts_node_priority-dfs_seed.c_variant.c"
-reductionControlFlags:
-  groupName: "General Reduction Control"
-  globalFixpoint: false
-  fixpointForMainReducer: true
-  numOfThreads: 1
-  codeFormat: null
-  testScriptExecutionTimeoutInSeconds: 600
-  testScriptExecutionKeepWaitingAfterTimeout: true
-outputRefiningFlags:
-  groupName: "Output Refining Control"
-  callFormatter: false
-  formatCmd: ""
-  callCReduce: false
-  creduceCmd: "creduce"
-algorithmControlFlags:
-  groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
-  listAllReductionAlgorithms: false
-  rebuildParseTreeEachIteration: false
-  enableTokenSlicer: false
-  enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
-  defaultListMinimizerTypeForHDD: "CDD"
-  minSlicingWindowSize: 1
-  maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
-languageControlFlags:
-  groupName: "Language Control"
-  languageName: ""
-  listLangs: false
-  designatedParserFacadeClassName: ""
-  listParserFacades: false
-  languageJarFiles: []
-  underlyingLexerClassForDyckParser: ""
-vulcanFlags:
-  groupName: "Vulcan Reducer Control"
-  enableVulcan: false
-  nonDeletionIterationLimit: 10
-  windowSize: 4
-  vulcanFixpoint: false
-trecFlags:
-  groupName: "T-Rec Reducer Control"
-  enableTRec: false
-profilingFlags:
-  groupName: "Profiling"
-  progressDumpFile: "reduction_progress.txt"
-  appendToProgressDumpFile: true
-  statDumpFile: null
-  profileQueryCacheTime: null
-  profileQueryCacheTimeCSV: null
-  profileQueryCacheMemory: null
-  actionSetProfiler: null
-  profileListMinimizer: null
-cacheControlFlags:
-  groupName: "Cache Control"
-  queryCaching: "FALSE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
-  nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
-  enablePassCache: true
-  enableGlobalCache: false
-  globalCacheFile: null
-  pathToSaveUpdatedGlobalCache: null
-  defaultShaAlgorithm: "SHA256"
-experimentFlags:
-  groupName: "Experiment Control"
-  onDemandFineGritReducerAnnotationClasses: []
-  onDemandMediumGritReducerAnnotationClasses: []
-  onDemandCoarseGritReducerAnnotationClasses: []
-  keepReductionHistory: false
-lprFlags:
-  groupName: "LPR Reducer Control"
-  enableLPR: false
-  lprFixpoint: false
-  llmClientPath: null
-latraFlags:
-  groupName: "Latra Reducer Control"
-  enableLatra: false
-  enableFixpoint: true
-  transformationListMinimizer: "WPROBDD"
-treeDiffInputFlags:
-  groupName: "Inputs"
-  testScript: "r.sh"
-  inputFile: "seed.c"
-  deps: []
-  variantFile: "variant.c"
-  sourceFile: "seed.c"
+    structure: [delete_177]
+    context: DFS in customized_tree_diff_node_reducer(CustomizedTreeNodesReducer)[optional:optional__postfixExpression_1]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
 
-Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:26/54=48.15%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  There is only one element in the input, and the empty input has been tested. Global ratio:26/54=48.15%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/54=48.15%
+===================Node reduction is done===================
+
+Failed to reduce node 159
+------------------------------------------------------------
+
+
+=================Reducing node 177, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_177]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [replace_177_with_182]
+    context: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 177
+------------------------------------------------------------
+
+
+=================Reducing node 182, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 182
+------------------------------------------------------------
+
+
+=================Reducing node 179, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:26/54=48.15%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  Testing the empty input. Global ratio:26/54=48.15%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_181]
+    context: DFS in customized_tree_diff_node_reducer(CustomizedTreeNodesReducer)[kleene_star:kleene_star__postfixExpression_2]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:26/54=48.15%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  There is only one element in the input, and the empty input has been tested. Global ratio:26/54=48.15%
+FixPt[2][customized_tree_diff_node_reducer][DFS](26/54)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:26/54=48.15%
+===================Node reduction is done===================
+
+Failed to reduce node 179
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 181
+------------------------------------------------------------
+
+
+=================Reducing node 160, size=26=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        a++;
+        printf("%d", a);
+        return 0;
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(void)
+    {
+        int a = 1;
+        printf("%d", a);
+        return 0;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 160
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=false, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 17
-(23/23)  The reducer execution plan is listed below.
+(23/54)  The reducer execution plan is listed below.
     fixpoint (smaller) {
         customized_tree_diff_node_reducer
     }
 
 
-(23/23)  The history of the reducer invocation.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID Reducer #Tokens #Chars #NonDeletions
+ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0 customized_tree_diff_node_reducer      1             0      -5             -7       6   time-hidden
+ 1 customized_tree_diff_node_reducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-Reducer Times #Tokens #Chars
+                          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+customized_tree_diff_node_reducer     2      1             0      -5             -7       6   time-hidden
+
+------------------------------- Transformations --------------------------------
+                            Transformation Worked #NonDeletions #Tokens #NonBlankChars
+customized_tree_diff_node_reducer.Deletion      1             0      -5             -7
 ------------------------------------- End --------------------------------------
-
-
 #test success = 1
 #test failure = 5
 #test result cache hits = 0

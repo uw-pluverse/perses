@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//:perses.bzl", "copy")
 
 package(default_visibility = [

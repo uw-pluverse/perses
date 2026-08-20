@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.ParseTreeUtil
 import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.ParseErrorHandling
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
@@ -32,6 +33,7 @@ class WasmParserFacadeTest {
   fun testParseFile() {
     facade.parseFile(Paths.get("test_data/wat_programs/small.wat"))
     facade.parseFile(Paths.get("test_data/wat_programs/conversions.wat"))
+    facade.parseFile(Paths.get("test_data/wat_programs/structure_print.wat"))
   }
 
   @Test
@@ -88,7 +90,7 @@ class WasmParserFacadeTest {
         ) 
       """.trimIndent()
     // The following should not throw an exception
-    val result = facade.parseString(program)
+    val result = facade.parseString(program, errorMode = ParseErrorHandling.STRICT)
     Truth.assertThat(ParseTreeUtil.getTokens(result.tree)).isNotEmpty()
   }
 }

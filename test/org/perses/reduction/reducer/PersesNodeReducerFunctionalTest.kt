@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,6 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.reduction.ReducerFunctionalTestUtility
+import org.perses.reduction.reducer.PersesNodeReducerAnnotations
 import java.nio.file.Paths
 
 @RunWith(JUnit4::class)
@@ -41,7 +42,7 @@ class PersesNodeReducerFunctionalTest {
   fun testFunctionalTestOnCreduceExample() {
     ReducerFunctionalTestUtility.runCTestSubject(
       reductionFolder = "test_data/creduce_example",
-      reducerAnnotation = PersesNodePrioritizedDfsReducer.META,
+      reducerAnnotation = PersesNodeReducerAnnotations.PrioritizedDfs,
       cmdCustomizer = { cmd ->
         cmd.outputRefiningFlags.callCReduce = true
         cmd.outputRefiningFlags.creduceCmd =
@@ -60,10 +61,35 @@ class PersesNodeReducerFunctionalTest {
     )
   }
 
+  @Test
+  fun testFunctionalTestOnCreduceFailureSalvagesInterestingPartialResult() {
+    ReducerFunctionalTestUtility.runCTestSubject(
+      reductionFolder = "test_data/creduce_example",
+      reducerAnnotation = PersesNodeReducerAnnotations.PrioritizedDfs,
+      cmdCustomizer = { cmd ->
+        cmd.outputRefiningFlags.callCReduce = true
+        cmd.outputRefiningFlags.creduceCmd =
+          Paths
+            .get("test/org/perses/reduction/reducer/dummy-creduce-fail.sh")
+            .toAbsolutePath()
+            .toString()
+      },
+      // C-Reduce exits non-zero, but the partial result it left behind is interesting and so it
+      // is still applied.
+      expected =
+        """
+              | int printf(const char*, ...);
+              | int main() {
+              |     printf("world\n");
+              | }
+        """.trimMargin(),
+    )
+  }
+
   fun debug() {
     ReducerFunctionalTestUtility.runBenchmarkSubject(
-      reductionFolder = "benchmark/gcc-71626",
-      reducerAnnotation = PersesNodePrioritizedDfsReducer.META,
+      reductionFolder = "benchmark_v2/benchmark_c/gcc-71626",
+      reducerAnnotation = PersesNodeReducerAnnotations.PrioritizedDfs,
       cmdCustomizer = {},
       expected =
         "typedeflongllong;test1char8(c){}" +
@@ -78,7 +104,7 @@ class PersesNodeReducerFunctionalTest {
   ) {
     ReducerFunctionalTestUtility.runCTestSubject(
       reductionFolder = "test_data/$folder",
-      reducerAnnotation = PersesNodeDfsReducer.META,
+      reducerAnnotation = PersesNodeReducerAnnotations.Dfs,
       expected = expected,
     )
   }

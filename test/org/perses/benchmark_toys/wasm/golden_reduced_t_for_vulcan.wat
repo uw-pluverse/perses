@@ -9,7 +9,7 @@
 memory.size
     i32.const 8
 memory.size
-    i32.const 0
+memory.size
     call $fd_write
 drop
   )

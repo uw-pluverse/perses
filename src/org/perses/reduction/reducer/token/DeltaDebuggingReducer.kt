@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,25 +18,28 @@ package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
 import org.perses.listminimizer.EnumListMinimizerType
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
+import org.perses.spartree.ContextDescription
 
 class DeltaDebuggingReducer(
   reducerContext: ReducerContext,
-) : AbstractTokenReducer(META, reducerContext) {
-  override fun computeListMinimizerType(): EnumListMinimizerType =
+) : AbstractSparTreeReducer(META, reducerContext) {
+  override fun computeDefaultListMinimizerType(): EnumListMinimizerType =
     EnumListMinimizerType.PRISTINE_DDMIN
 
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
     runListMinimizerOverNodes(
-      tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability(),
+      needToTestEmpty = true,
+      tree = fixpointReductionState.inputRepresentation.tree,
       fixpointReductionState = fixpointReductionState,
       input =
-        fixpointReductionState.sparTree
-          .getTreeRegardlessOfParsability()
+        fixpointReductionState.inputRepresentation
+          .tree
           .remainingLexerRuleNodes,
+      actionsDescriptionPostfix = ContextDescription.of("ReduceAllTokens"),
     )
   }
 
@@ -46,7 +49,7 @@ class DeltaDebuggingReducer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(
         DeltaDebuggingReducer(
           reducerContext,

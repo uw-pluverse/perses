@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -54,14 +54,17 @@ class CommandLineProcessor<Cmd : AbstractCommandOptions>(
         commander.printUsage()
         return HelpRequestProcessingDecision.EXIT
       }
+
       cmd.verbosityFlags.listVerbosity -> {
         cmd.verbosityFlags.printAllAllowedLoggingLevels()
         return HelpRequestProcessingDecision.EXIT
       }
+
       cmd.versionFlags.version -> {
         cmd.versionFlags.printVersionInfo(programName, System.out)
         return HelpRequestProcessingDecision.EXIT
       }
+
       else -> {
         return HelpRequestProcessingDecision.NO_EXIT
       }

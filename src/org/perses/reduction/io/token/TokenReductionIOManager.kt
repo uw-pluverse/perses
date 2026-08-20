@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,76 +17,49 @@
 package org.perses.reduction.io.token
 
 import com.google.common.collect.ImmutableList
-import org.perses.program.LanguageKind
-import org.perses.program.SourceFile
 import org.perses.program.TokenizedProgram
 import org.perses.reduction.io.AbstractReductionIOManager
-import org.perses.reduction.io.AbstractSingleFileReductionInputs
+import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.ReductionFolder
 import org.perses.util.FileNameContentLinesPair
-import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
 import java.nio.file.Path
-import kotlin.io.path.readText
 
+/**
+ * Precondition: [resultFolder] is already populated with the original inputs (test script, mutable
+ * files, dependency files). This manager treats it as the single source of truth -- it reads the
+ * initial spar-tree and the sibling-file content from there -- so the caller must populate it before
+ * constructing this manager (e.g. via
+ * [org.perses.reduction.io.AbstractReductionIOManager.createPopulatedResultFolder]). The `init`
+ * block enforces this precondition.
+ */
 class TokenReductionIOManager(
   workingFolder: Path,
-  reductionInputs: AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>,
-  outputManagerFactory: AbstractTokenOutputManagerFactory,
-  outputDirectory: Path?,
-) : AbstractReductionIOManager<TokenizedProgram, LanguageKind, TokenReductionIOManager>(
+  originalReductionInputs: DefaultLanguageOriginalReductionInputs,
+  resultFolder: ReductionFolder,
+) : AbstractReductionIOManager<TokenizedProgram, TokenReductionIOManager>(
     workingFolder,
-    reductionInputs,
-    outputManagerFactory,
-    outputDirectory,
+    originalReductionInputs,
+    resultFolder,
   ) {
-  private val concreteOutputManagerFactory: AbstractTokenOutputManagerFactory
-    get() = outputManagerFactory as AbstractTokenOutputManagerFactory
-
-  fun updateBestResultInOrigFormat(program: TokenizedProgram) {
-    concreteOutputManagerFactory
-      .createManagerFor(
-        program,
-        reductionInputs.initiallyDeterminedMainDataKind.origCodeFormatControl,
-      ).write(resultFolder)
-  }
-
   fun readAndTrimAllBestFiles(): ImmutableList<FileNameContentLinesPair> =
     readAndTrimOutputFiles(resultFolder)
 
   fun readAndTrimOutputFiles(
     reductionFolder: ReductionFolder,
   ): ImmutableList<FileNameContentLinesPair> =
-    reductionInputs
-      .sequenceOfMutableFiles()
-      .map {
-        FileNameContentLinesPair.createFromFile(
-          file = reductionFolder.folder.resolve(it.relativePath),
-        )
-      }.toImmutableList()
-      .also { check(it.isNotEmpty()) }
-
-  fun readBestMainFile(): String {
-    val concreteInputs = getConcreteReductionInputs()
-    return resultFolder.folder.resolve(concreteInputs.relativePathForMainFile).readText()
-  }
-
-  fun getDefaultProgramFormat() = concreteOutputManagerFactory.defaultCodeFormatControl
+    reductionFolder
+      .sequenceOfLiveMutableFiles()
+      .transformToImmutableList { (_, absPath) -> FileNameContentLinesPair.createFromFile(absPath) }
 
   init {
-    val languageKind = reductionInputs.initiallyDeterminedMainDataKind
-    require(languageKind.isCodeFormatAllowed(getDefaultProgramFormat())) {
-      "The language $languageKind requires format sensitivity, " +
-        "but the reducer is not told to keep its original format. " +
-        "${getDefaultProgramFormat()}"
-    }
-  }
-
-  override fun getConcreteReductionInputs(): AbstractSingleFileReductionInputs<
-    LanguageKind,
-    SourceFile,
-    *,
-  > {
-    @Suppress("UNCHECKED_CAST")
-    return reductionInputs as AbstractSingleFileReductionInputs<LanguageKind, SourceFile, *>
+    // Precondition: this manager reads the program being reduced (and its sibling files) from the
+    // result folder, so the caller must populate it first (e.g. via
+    // AbstractReductionIOManager.createPopulatedResultFolder). It is built only during the content
+    // phase, before the strictly-terminal file-deletion stage, so the folder still holds the full
+    // original input set and the populated-everything precondition is the right check. The
+    // code-format validation that once lived here moved to AbstractProgramReductionDriver, which now
+    // owns the format.
+    resultFolder.checkAllInputFilesPopulated()
   }
 }

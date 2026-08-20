@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,29 +17,73 @@
 package org.perses.listminimizer
 
 import org.perses.listminimizer.localexhaust.LocalExhaustWindowedMinimizer
-import org.perses.listminimizer.xfs.BfsListMinimizer
 import org.perses.listminimizer.xfs.DeltaDebugger
-import org.perses.listminimizer.xfs.DfsListMinimizer
+import org.perses.listminimizer.xfs.UnweightedBfsListMinimizer
+import org.perses.listminimizer.xfs.UnweightedDfsListMinimizer
+import org.perses.listminimizer.xfs.WeightedBfsListMinimizer
+import org.perses.listminimizer.xfs.WeightedDfsListMinimizer
 
 object ListMinimizerFactory {
   fun <T : Any, Payload> create(
     type: EnumListMinimizerType,
-    args: ListMinimizerArguments<T, Payload>,
+    arguments: ListMinimizerArguments<T, Payload>,
   ): AbstractListMinimizer<T, Payload> =
     when (type) {
-      EnumListMinimizerType.BFS -> BfsListMinimizer(args)
-      EnumListMinimizerType.PRISTINE_DDMIN -> PristineDeltaDebugger(args)
-      EnumListMinimizerType.DFS -> DfsListMinimizer(args)
-      EnumListMinimizerType.PERSES_VARIANT_OF_PRISTINE -> DeltaDebugger(args)
-      EnumListMinimizerType.PROBDD -> PristineProbabilisticDeltaDebugger(args)
-      EnumListMinimizerType.CDD -> CounterBasedDeltaDebugger(args)
-      EnumListMinimizerType.WDD -> WeightedDeltaDebugger(args)
-      EnumListMinimizerType.WPROBDD -> WeightedProbabilisticDeltaDebugger(args)
-      EnumListMinimizerType.WINDOWED_SLICER -> WindowedSlicer(args)
-      EnumListMinimizerType.LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION ->
-        LocalExhaustWindowedMinimizer(
-          args,
-        )
+      EnumListMinimizerType.BFS -> {
+        UnweightedBfsListMinimizer(arguments)
+      }
+
+      EnumListMinimizerType.WEIGHTED_BFS -> {
+        WeightedBfsListMinimizer(arguments)
+      }
+
+      EnumListMinimizerType.PRISTINE_DDMIN -> {
+        PristineDeltaDebugger(arguments)
+      }
+
+      EnumListMinimizerType.DFS -> {
+        UnweightedDfsListMinimizer(arguments)
+      }
+
+      EnumListMinimizerType.WEIGHTED_DFS -> {
+        WeightedDfsListMinimizer(arguments)
+      }
+
+      EnumListMinimizerType.PERSES_VARIANT_OF_PRISTINE -> {
+        DeltaDebugger(arguments)
+      }
+
+      EnumListMinimizerType.PROBDD -> {
+        PristineProbabilisticDeltaDebugger(arguments)
+      }
+
+      EnumListMinimizerType.CDD -> {
+        CounterBasedDeltaDebugger(arguments)
+      }
+
+      EnumListMinimizerType.WDD -> {
+        WeightedDeltaDebugger(arguments)
+      }
+
+      EnumListMinimizerType.WPROBDD -> {
+        WeightedProbabilisticDeltaDebugger(arguments)
+      }
+
+      EnumListMinimizerType.WINDOWED_SLICER -> {
+        WindowedSlicer(arguments)
+      }
+
+      EnumListMinimizerType.LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION -> {
+        LocalExhaustWindowedMinimizer(arguments)
+      }
+
+      EnumListMinimizerType.ONE_BY_ONE -> {
+        OneByOneMinimizer(arguments)
+      }
+
+      EnumListMinimizerType.ADAPTIVE_GAIN_DRIVEN -> {
+        AdaptiveGainDrivenListMinimizer(arguments)
+      }
     }
 
   fun <T : Any, Payload> create(

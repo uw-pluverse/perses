@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -102,10 +102,11 @@ class GrammarHierarchyBuilder(
     literalCollector: HashSet<String>,
   ) {
     when (ruleBody.tag) {
-      AstTag.ALTERNATIVE_BLOCK ->
+      AstTag.ALTERNATIVE_BLOCK -> {
         (ruleBody as PersesAlternativeBlockAst).foreachChildRuleElement {
           extractImmediateSubrulesFromBlockAST(it, ruleNameCollector, literalCollector)
         }
+      }
 
       AstTag.TERMINAL -> {
         val terminal = ruleBody as PersesTerminalAst
@@ -137,7 +138,7 @@ class GrammarHierarchyBuilder(
             .filter { !epsilonInfo.canBeEpsilon(it) }
             .toImmutableList()
         when (unremovableChildren.size) {
-          0 ->
+          0 -> {
             seq.foreachChildRuleElement {
               extractImmediateSubrulesFromBlockAST(
                 it,
@@ -145,13 +146,15 @@ class GrammarHierarchyBuilder(
                 literalCollector,
               )
             }
+          }
 
-          1 ->
+          1 -> {
             extractImmediateSubrulesFromBlockAST(
               unremovableChildren.single(),
               ruleNameCollector,
               literalCollector,
             )
+          }
 
           else -> {}
         }

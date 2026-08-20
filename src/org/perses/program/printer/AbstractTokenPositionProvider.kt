@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,26 +15,24 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.program.printer
-
-import org.perses.program.PersesTokenFactory
+import org.perses.program.AbstractPersesToken
 
 abstract class AbstractTokenPositionProvider {
-  abstract fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int
+  abstract fun getLine(token: AbstractPersesToken): Int
 
   abstract fun getCharPositionInLine(
-    token: PersesTokenFactory.AbstractPersesToken,
+    token: AbstractPersesToken,
     currentCursorPositionInLine: Int,
-    previousToken: PersesTokenFactory.AbstractPersesToken?,
+    previousToken: AbstractPersesToken?,
   ): Int
 
   companion object DefaultProvider : AbstractTokenPositionProvider() {
-    override fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int =
-      token.asAntlrToken().position.line
+    override fun getLine(token: AbstractPersesToken): Int = token.asAntlrToken().position.line
 
     override fun getCharPositionInLine(
-      token: PersesTokenFactory.AbstractPersesToken,
+      token: AbstractPersesToken,
       currentCursorPositionInLine: Int,
-      previousToken: PersesTokenFactory.AbstractPersesToken?,
+      previousToken: AbstractPersesToken?,
     ): Int = token.asAntlrToken().position.charPositionInLine
   }
 }

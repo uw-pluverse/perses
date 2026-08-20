@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,7 +18,6 @@ package org.perses.util
 
 import com.google.common.base.Strings
 
-// TODO(cnsun): needs testing
 class TableForTextPrinting(
   val data: List<List<String>>,
   val columnSeparator: String = " ",
@@ -35,11 +34,10 @@ class TableForTextPrinting(
     }
 
   fun print(): String =
-    data
-      .map { row ->
-        row.withIndex().joinToString(separator = columnSeparator) { (columnIndex, cell) ->
-          val maxColumnLength = maxLengthPerColumn[columnIndex]
-          Strings.padStart(cell, maxColumnLength, ' ')
-        }
-      }.joinToString(separator = "\n")
+    data.joinToString(separator = "\n") { row ->
+      row.withIndex().joinToString(separator = columnSeparator) { (columnIndex, cell) ->
+        val maxColumnLength = maxLengthPerColumn[columnIndex]
+        Strings.padStart(cell, maxColumnLength, ' ')
+      }
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,47 +18,77 @@ package org.perses.ppr.seed
 
 import org.antlr.v4.runtime.Token
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.cmd.OutputFlagGroup
 import org.perses.cmd.ReductionControlFlagGroup
 import org.perses.grammar.AbstractParserFacade
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.ppr.diff.PPRDiffUtils
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
-import org.perses.program.TokenizedProgramFactory
+import org.perses.program.AbstractPersesToken
+import org.perses.program.AbstractReductionFile
+import org.perses.program.TokenizedProgram
 import org.perses.reduction.AbstractProgramReductionDriver
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
+import org.perses.reduction.InputRepresentation
+import org.perses.reduction.LanguageProfile
+import org.perses.reduction.ReducerFactory
 import org.perses.reduction.ReductionConfiguration
-import org.perses.reduction.SparTreeWithParsability
+import org.perses.reduction.TestScriptExecutorService
+import org.perses.reduction.cache.AbstractQueryCache
+import org.perses.reduction.event.ReductionStartEvent
+import org.perses.reduction.io.ReductionFolder
+import org.perses.reduction.io.token.AbstractTokenOutputManagerFactory
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.ListAlignment
 import org.perses.util.hashing.EnumShaAlgorithm
+import java.nio.file.Path
 
 class SeedReductionDriver private constructor(
   globalContext: GlobalContext,
   cmd: SeedCmdOptions,
   ioManager: TokenReductionIOManager,
-  tree: SparTreeWithParsability,
+  mainFile: AbstractReductionFile<*, *>,
+  override var inputRepresentation: InputRepresentation,
   configuration: ReductionConfiguration,
   listenerManager: AsyncReductionListenerManager,
+  queryCache: AbstractQueryCache,
+  outputManagerFactory: AbstractTokenOutputManagerFactory,
+  reductionStartEvent: ReductionStartEvent,
+  executorService: TestScriptExecutorService,
 ) : AbstractProgramReductionDriver(
-    globalContext,
-    cmd,
-    ioManager,
-    tree,
-    configuration,
-    listenerManager,
+    globalContext = globalContext,
+    cmd = cmd,
+    ioManager = ioManager,
+    mainFile = mainFile,
+    configuration = configuration,
+    listenerManager = listenerManager,
+    languageProfile = LanguageProfile.DEFAULT,
+    reducerFactory = ReducerFactory.DEFAULT,
+    queryCache = queryCache,
+    outputManagerFactory = outputManagerFactory,
+    reductionStartEvent = reductionStartEvent,
+    executorService = executorService,
   ) {
   companion object {
     private fun createIOManager(
-      reductionInputs: SeedReductionInputs,
+      workingDirectory: Path,
+      originalReductionInputs: DiffOriginalReductionInputs,
+      resultFolder: ReductionFolder,
+    ): TokenReductionIOManager =
+      TokenReductionIOManager(
+        workingDirectory,
+        originalReductionInputs,
+        // The result folder is already populated with the original inputs by the caller.
+        resultFolder = resultFolder,
+      )
+
+    private fun createOutputManagerFactory(
+      originalReductionInputs: DiffOriginalReductionInputs,
       reductionControlFlags: ReductionControlFlagGroup,
-      outputFlags: OutputFlagGroup,
       listAlignment: ListAlignment<AbstractPersesToken>,
       lexerAtnWrapper: LexerAtnWrapper,
       shaAlgorithm: EnumShaAlgorithm,
-    ): TokenReductionIOManager {
-      val workingDirectory = reductionInputs.seedFile.parentFile
-      val languageKind = reductionInputs.initiallyDeterminedMainDataKind
+    ): SeedOutputManagerFactory {
+      val languageKind = originalReductionInputs.initiallyDeterminedMainDataKind
       val programFormatControl =
         reductionControlFlags.codeFormat.let { codeFormat ->
           if (codeFormat != null) {
@@ -70,18 +100,12 @@ class SeedReductionDriver private constructor(
             languageKind.defaultCodeFormatControl
           }
         }
-      return TokenReductionIOManager(
-        workingDirectory,
-        reductionInputs,
-        outputManagerFactory =
-          SeedOutputManagerFactory(
-            reductionInputs,
-            programFormatControl,
-            listAlignment,
-            lexerAtnWrapper,
-            shaAlgorithm,
-          ),
-        outputDirectory = outputFlags.outputDir,
+      return SeedOutputManagerFactory(
+        originalReductionInputs,
+        programFormatControl,
+        listAlignment,
+        lexerAtnWrapper,
+        shaAlgorithm,
       )
     }
 
@@ -89,30 +113,37 @@ class SeedReductionDriver private constructor(
     fun create(
       globalContext: GlobalContext,
       cmd: SeedCmdOptions,
+      workingDirectory: Path,
+      resultFolder: ReductionFolder,
       parserFacade: AbstractParserFacade,
-      reductionInputs: SeedReductionInputs,
+      originalReductionInputs: DiffOriginalReductionInputs,
       listenerManager: AsyncReductionListenerManager,
+      queryCache: AbstractQueryCache,
+      reductionStartEvent: ReductionStartEvent,
+      executorService: TestScriptExecutorService,
     ): SeedReductionDriver {
       // create a parserFacade to create the SparTree
-      val languageKind = reductionInputs.initiallyDeterminedMainDataKind
-
       val seedTree =
-        createSparTree(
-          fileToReduce = reductionInputs.seedFile,
+        createInputRepresentation(
+          fileToReduce = originalReductionInputs.seedFile,
           parserFacade = parserFacade,
           hideTimeStampsInLog = cmd.verbosityFlags.hideTimestamps,
+          // TODO(cnsun): need to enable semantics for PPR.
+          semanticsProviderCreator = null,
+          enableNodeActionSetCache = cmd.cacheControlFlags.nodeActionSetCaching,
+          originalReductionInputs = originalReductionInputs,
         )
-      val seedPersesTokens = seedTree.programSnapshot.tokens
+      val seedPersesTokens = seedTree.tree.programSnapshot.payload.tokens
 
       // parse variant file into tokens
       val variantTokens =
         parserFacade
           .tokenizeFile(cmd.seedInputFlags.variantFile!!)
           .filter { it.channel == Token.DEFAULT_CHANNEL }
-      val variantTokenizedProgramFactory =
-        TokenizedProgramFactory
-          .createFactory(variantTokens, languageKind)
-      val variantPersesTokens = variantTokenizedProgramFactory.create(variantTokens).tokens
+      val variantPersesTokens =
+        TokenizedProgram
+          .createForFreshAntlrLexemes(variantTokens)
+          .tokens
 
       val listAlignment =
         ListAlignment.create(
@@ -120,30 +151,40 @@ class SeedReductionDriver private constructor(
           variantPersesTokens,
           PPRDiffUtils.EQUALIZER_PERSES_TOKEN,
         )
-      // pass listAlignment to IOManager
       val ioManager =
         createIOManager(
-          reductionInputs,
-          cmd.reductionControlFlags,
-          cmd.resultOutputFlags,
-          listAlignment,
-          parserFacade.lexerAtnWrapper,
+          workingDirectory = workingDirectory,
+          originalReductionInputs = originalReductionInputs,
+          resultFolder = resultFolder,
+        )
+      // pass listAlignment to the renderer factory
+      val outputManagerFactory =
+        createOutputManagerFactory(
+          originalReductionInputs = originalReductionInputs,
+          reductionControlFlags = cmd.reductionControlFlags,
+          listAlignment = listAlignment,
+          lexerAtnWrapper = parserFacade.lexerAtnWrapper,
           shaAlgorithm = cmd.cacheControlFlags.defaultShaAlgorithm,
         )
       val reductionConfiguration =
         createConfiguration(
           cmd,
           parserFacade,
-          ioManager.getDefaultProgramFormat(),
+          outputManagerFactory.defaultCodeFormatControl,
         )
 
       return SeedReductionDriver(
         globalContext,
         cmd,
         ioManager,
+        mainFile = originalReductionInputs.seedFile,
         seedTree,
         reductionConfiguration,
         listenerManager,
+        queryCache = queryCache,
+        outputManagerFactory = outputManagerFactory,
+        reductionStartEvent = reductionStartEvent,
+        executorService = executorService,
       )
     }
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,16 +15,14 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.reduction.cache
-
 import com.google.common.collect.ImmutableList
-import org.perses.program.PersesTokenFactory
+import org.perses.program.AbstractPersesToken
 import org.perses.util.FileStreamPool
 
 class QueryCacheTimeCsvProfiler(
   writer: FileStreamPool.ManagedPrintStream,
 ) : AbstractQueryCacheProfiler(writer) {
   private val createEncoderNanoTime = mutableListOf<Long>()
-  private val decodeProgramNanoTime = mutableListOf<Long>()
   private val getCachedResultNanoTime = mutableListOf<Long>()
   private val cacheEvictionNanoTime = mutableListOf<Long>()
   private val cacheProgramAndResultNanoTime = mutableListOf<Long>()
@@ -52,8 +50,8 @@ class QueryCacheTimeCsvProfiler(
   }
 
   override fun afterHeavyweightCacheRefreshing(
-    oldBestProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
-    newBestProgram: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
+    oldBestProgram: ImmutableList<out AbstractPersesToken>,
+    newBestProgram: ImmutableList<out AbstractPersesToken>,
     numOfEntriesInCacheBefore: Int,
     numOfEntriesInCacheAfter: Int,
     nanoDuration: Long,
@@ -62,25 +60,16 @@ class QueryCacheTimeCsvProfiler(
   }
 
   override fun onCreatingEncoder(
-    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
+    tokensInOrigin: ImmutableList<out AbstractPersesToken>,
     nanoDuration: Long,
   ) {
     createEncoderNanoTime.add(nanoDuration)
-  }
-
-  override fun onDecodingProgram(
-    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
-    encoding: RccProgramEncoding,
-    nanoDuration: Long,
-  ) {
-    decodeProgramNanoTime.add(nanoDuration)
   }
 
   override fun close() {
     val fields =
       listOf(
         ::createEncoderNanoTime,
-        ::decodeProgramNanoTime,
         ::getCachedResultNanoTime,
         ::cacheEvictionNanoTime,
         ::cacheProgramAndResultNanoTime,

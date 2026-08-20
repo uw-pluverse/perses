@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -62,6 +62,32 @@ class ExperimentFlagGroup : AbstractCommandLineFlagGroup(groupName = "Experiment
     arity = 1,
   )
   var keepReductionHistory = false
+
+  @JvmField
+  @Parameter(
+    names = ["--enable-error-tolerant-grammar"],
+    description =
+      "when a file does not parse under its real grammar, first try an error-tolerant parse of " +
+        "that grammar (keeping its structure, with unparseable fragments as leaf tokens) before " +
+        "falling back to the Dyck/Line tolerant grammars",
+    hidden = false,
+    order = 600,
+    arity = 1,
+  )
+  var enableErrorTolerantGrammar = true
+
+  @JvmField
+  @Parameter(
+    names = ["--dyck-node-reducer"],
+    description =
+      "whether to run the Dyck node reducer as an extra pass that reparses each file under a Dyck " +
+        "grammar and deletes balanced delimiter groups the real grammar cannot place: auto (only " +
+        "for files that do not parse under their real grammar), on (every file), or off",
+    hidden = false,
+    order = 700,
+    arity = 1,
+  )
+  var dyckNodeReducer: EnumPassMode = EnumPassMode.AUTO
 
   class ClassConverter : IStringConverter<Class<*>> {
     override fun convert(className: String?): Class<*> {

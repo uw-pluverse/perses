@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,18 +16,20 @@
  */
 package org.perses.reduction
 
-import org.perses.program.AbstractDataKind
+import org.perses.program.AbstractReductionFile
 import org.perses.reduction.io.AbstractReductionIOManager
 
 // Cannot use the full name, e.g., Program, IOManager, or Self due to kotlin's bug.
 abstract class AbstractReducerContext<
   P,
-  K : AbstractDataKind,
-  M : AbstractReductionIOManager<P, K, M>,
-  I : AbstractReducerContext<P, K, M, I>,
+  M : AbstractReductionIOManager<P, M>,
+  I : AbstractReducerContext<P, M, I>,
 >(
   val ioManager: M,
   val executorService: TestScriptExecutorService,
+  /** The mutable file this reduction reduces; its reduced content is the program the reducers
+   * pass to [AbstractReductionIOManager.createOutputManager]. */
+  val fileUnderReduction: AbstractReductionFile<*, *>,
 ) {
   private val piggybackPayload = HashMap<Any, Any>()
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -21,19 +21,12 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.PropertyTestResult.Companion.INTERESTING_RESULT
-import org.perses.reduction.PropertyTestResult.Companion.NON_INTERESTING_RESULT
+import org.perses.util.toImmutableList
 import kotlin.collections.HashMap
 
 @RunWith(JUnit4::class)
-class PristineDeltaDebuggerTest {
+class PristineDeltaDebuggerTest : AbstractListMinimizerTest<String>() {
   val input = ImmutableList.of("a", "b", "c", "d", "e")
-
-  val dummyHandler = {
-    _: ImmutableList<ElementWrapper<String>>,
-    _: String,
-    ->
-  }
 
   @Test
   fun test_a() {
@@ -80,35 +73,14 @@ class PristineDeltaDebuggerTest {
     property: List<String>,
     expected: List<String>,
     enableCache: Boolean = false,
-  ): ImmutableList<String>? {
-    val testHistory = ArrayList<String>()
-
-    val propertyTest =
-      IPropertyTester<String, String> { configuration ->
-        val candidate = configuration.getCandidateOrFail()
-        testHistory.add(candidate.joinToString(separator = ""))
-        if (candidate.containsAll(property)) {
-          LMPropertyTestResult.Completed(INTERESTING_RESULT, "payload")
-        } else {
-          LMPropertyTestResult.Completed(NON_INTERESTING_RESULT, "payload")
-        }
-      }
-
-    val debugger =
-      PristineDeltaDebugger<String, String>(
-        ListMinimizerArguments(
-          needToTestEmpty = true,
-          input,
-          propertyTest,
-          dummyHandler,
-          descriptionPrefix = "",
-        ),
-        enableCache,
-      )
-    val result = debugger.reduce()
-    assertThat(result).isEqualTo(expected)
-    return ImmutableList.copyOf(testHistory)
-  }
+  ): List<String> =
+    runMinimizerTest(
+      input = input,
+      property = property,
+      expected = expected,
+    ) { args ->
+      PristineDeltaDebugger(args, enableCache)
+    }
 
   @Test
   fun testConfigCache() {
@@ -149,21 +121,19 @@ class PristineDeltaDebuggerTest {
       }
   }
 
+  private fun createWrapperList(vararg elements: String): ImmutableList<ElementWrapper<String>> =
+    elements.mapIndexed { index, s -> ElementWrapper(index, s, "") }.toImmutableList()
+
   @Test
   fun testConfigCacheRefresh() {
     // refresh 0%; refresh on every update
     val configCache =
-      ConfigCache<String>(
-        enableRefresh = true,
-      )
-    val config5 =
-      ConfigurationBasedOnElementSystemIdentity(
-        ImmutableList.of("a", "b", "c", "d", "e"),
-      )
-    val config4 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a", "b", "c", "d"))
-    val config3 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a", "b", "c"))
-    val config2 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a", "b"))
-    val config1 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of("a"))
+      ConfigCache<String>()
+    val config5 = createWrapperList("a", "b", "c", "d", "e")
+    val config4 = createWrapperList("a", "b", "c", "d")
+    val config3 = createWrapperList("a", "b", "c")
+    val config2 = createWrapperList("a", "b")
+    val config1 = createWrapperList("a")
     configCache.add(config5)
     configCache.add(config4)
     configCache.add(config3)
@@ -171,20 +141,20 @@ class PristineDeltaDebuggerTest {
     configCache.add(config1)
     assertThat(configCache.size).isEqualTo(5)
 
-    configCache.deleteStaleConfigs(newSize = 4)
+    configCache.refreshAndUpdateBest(newBest = config4)
     assertThat(configCache.size).isEqualTo(3)
     assertThat(configCache.contains(config4)).isFalse()
     assertThat(configCache.contains(config3)).isTrue()
     assertThat(configCache.contains(config2)).isTrue()
     assertThat(configCache.contains(config1)).isTrue()
 
-    configCache.deleteStaleConfigs(newSize = 3)
+    configCache.refreshAndUpdateBest(newBest = config3)
     assertThat(configCache.size).isEqualTo(2)
     assertThat(configCache.contains(config3)).isFalse()
     assertThat(configCache.contains(config2)).isTrue()
     assertThat(configCache.contains(config1)).isTrue()
 
-    configCache.deleteStaleConfigs(newSize = 2)
+    configCache.refreshAndUpdateBest(newBest = config2)
     assertThat(configCache.size).isEqualTo(1)
     assertThat(configCache.contains(config2)).isFalse()
     assertThat(configCache.contains(config1)).isTrue()
@@ -211,30 +181,34 @@ class PristineDeltaDebuggerTest {
       .isNotEqualTo(System.identityHashCode(token2))
 
     // compare configs with the same content but different token objects
-    val config1 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(token1, token3))
-    val config2 = ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(token2, token3))
+    val wrapper1 = ElementWrapper(0, token1, "")
+    val wrapper2 = ElementWrapper(0, token2, "")
+    val wrapper3 = ElementWrapper(1, token3, "")
+
+    val config1 = ImmutableList.of(wrapper1, wrapper3)
+    val config2 = ImmutableList.of(wrapper2, wrapper3)
 
     assertThat(config1.hashCode() != config2.hashCode()).isTrue()
     assertThat(config1 != config2).isTrue()
     assertThat(config1.hashCode())
       .isEqualTo(
-        ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(token1, token3)).hashCode(),
+        ImmutableList.of(wrapper1, wrapper3).hashCode(),
       )
 
     // test behavior in HashMap
-    val cache = HashMap<ConfigurationBasedOnElementSystemIdentity, Int>()
-    cache.put(config1, 1001)
+    val cache = HashMap<ImmutableList<ElementWrapper<Token>>, Int>()
+    cache[config1] = 1001
 
     assertThat(cache.get(config1)).isEqualTo(1001)
     assertThat(
-      cache.get(ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(token1, token3))),
+      cache.get(ImmutableList.of(wrapper1, wrapper3)),
     ).isEqualTo(1001)
     assertThat(cache.get(config2)).isNull()
 
-    cache.put(config2, 1002)
+    cache[config2] = 1002
 
     assertThat(
-      cache.get(ConfigurationBasedOnElementSystemIdentity(ImmutableList.of(token2, token3))),
+      cache[ImmutableList.of(wrapper2, wrapper3)],
     ).isEqualTo(1002)
   }
 }

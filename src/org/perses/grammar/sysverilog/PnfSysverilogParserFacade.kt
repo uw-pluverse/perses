@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -34,6 +34,7 @@ class PnfSysverilogParserFacade :
         SV3_1aLexer.Escaped_identifier,
         SV3_1aLexer.Simple_identifier,
       ),
+    includeAutoDetectedIdentifierTokenTypes = false,
     lexerClass = SV3_1aLexer::class.java,
     parserClass = PnfSysVerilogHDL::class.java,
   )

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,13 +16,15 @@
  */
 package org.perses.reduction.event
 
+import org.perses.reduction.io.PerFileSizeMetrics
+
 class LevelReductionStartEvent internal constructor(
   val currentFixpointIteration: FixpointIterationStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
+  perFileSizeMetrics: PerFileSizeMetrics,
   val level: Int,
   val nodeCountOnLevel: Int,
-) : AbstractStartEvent(currentTimeMillis, programSize) {
+) : AbstractStartEvent(currentTimeMillis, perFileSizeMetrics) {
   val iteration = currentFixpointIteration.iteration
 
   override val prefixLabelFromRootToHere: String
@@ -30,29 +32,30 @@ class LevelReductionStartEvent internal constructor(
 
   fun createEndEvent(
     currentTimeMillis: Long,
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
   ): LevelReductionEndEvent {
     check(!ended)
     ended = true
     return LevelReductionEndEvent(
       startEvent = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       level = level,
     )
   }
 
   fun createGranularityReductionStartEvent(
     currentTimeMillis: Long,
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     maxNumOfNodesPerPartition: Int,
   ): LevelGranularityReductionStartEvent =
     LevelGranularityReductionStartEvent(
       levelReductionStartEvent = this,
       currentTimeMillis = currentTimeMillis,
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       maxNumOfNodesPerPartition = maxNumOfNodesPerPartition,
     )
 
-  override fun initialProgramSize(): Int = currentFixpointIteration.initialProgramSize()
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    currentFixpointIteration.initialPerFileSizeMetrics()
 }

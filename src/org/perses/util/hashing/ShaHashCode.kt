@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -31,7 +31,30 @@ sealed class ShaHashCode(
 
   abstract override fun hashCode(): Int
 
-  class ShaHashCodeForMultiStrings(
+  /**
+   * The hash of a content set with **no strings at all** (not one empty string -- that is a
+   * [ForSingleString] of length 0). This is a legitimate state: a reduction's
+   * interestingness test (an arbitrary shell script) can require no input files, so the rendered file
+   * set can be driven all the way to empty (e.g. by the cross-file empty-file-deletion reducer).
+   *
+   * It is a singleton because it is stateless -- there is exactly one no-string identity, the hash of
+   * nothing, which the query cache treats as one program. (The digest is the same regardless of which
+   * algorithm a particular reduction configures, so it can be a fixed constant.)
+   */
+  object ForNoStrings :
+    ShaHashCode(EnumShaAlgorithm.SHA512.hashBytes(ByteArray(0))) {
+    override val numOfStrings: Int
+      get() = 0
+
+    override fun getLengthOfString(indexOfString: Int): Int =
+      throw IndexOutOfBoundsException("There are no strings: $indexOfString")
+
+    override fun equals(other: Any?): Boolean = other === this
+
+    override fun hashCode(): Int = digest.hashCode()
+  }
+
+  class ForMultiStrings(
     private val stringLengths: ImmutableIntArray,
     digest: HashCode,
   ) : ShaHashCode(digest) {
@@ -53,7 +76,7 @@ sealed class ShaHashCode(
       if (this === other) {
         return true
       }
-      if (other !is ShaHashCodeForMultiStrings) {
+      if (other !is ForMultiStrings) {
         return false
       }
       return stringLengths == other.stringLengths && digest == other.digest
@@ -62,7 +85,7 @@ sealed class ShaHashCode(
     override fun hashCode(): Int = stringLengths.hashCode() * 31 + digest.hashCode()
   }
 
-  class ShaHashCodeForSingleString(
+  class ForSingleString(
     val stringLength: Int,
     digest: HashCode,
   ) : ShaHashCode(digest) {
@@ -83,7 +106,7 @@ sealed class ShaHashCode(
       if (this === other) {
         return true
       }
-      if (other !is ShaHashCodeForSingleString) {
+      if (other !is ForSingleString) {
         return false
       }
       return stringLength == other.stringLength && digest == other.digest

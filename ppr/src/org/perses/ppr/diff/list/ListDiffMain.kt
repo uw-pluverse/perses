@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -20,43 +20,49 @@ import org.perses.AbstractMain
 import org.perses.HelperForPersesMain
 import org.perses.PersesListenerManagerCreator
 import org.perses.grammar.AbstractParserFacadeFactory
+import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.program.AbstractDataKind
 import org.perses.program.BinaryReductionFile
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
+import org.perses.reduction.event.ReductionStartEvent
 import org.perses.util.Util
 import org.perses.util.cmd.CommandLineProcessor
 import org.perses.util.transformToImmutableList
+import java.nio.file.Path
 
 class ListDiffMain(
   cmd: ListDiffCmdOptions,
   globalContext: GlobalContext,
-) : AbstractMain<ListDiffCmdOptions, ListDiffReductionDriver, ListDiffReductionInputs>(
+) : AbstractMain<ListDiffCmdOptions, ListDiffReductionDriver, DiffOriginalReductionInputs>(
     cmd,
     globalContext,
   ) {
-  override fun createSequenceOfReductionDriverCreators(
-    reductionInputs: ListDiffReductionInputs,
-  ): Sequence<ReductionDriverCreator<ListDiffReductionDriver>> {
-    val parserFacadeLists = computePlausibleParserFacades()
+  // ppr reduces the seed in place in the test-script directory; see AbstractMain.allowsInPlaceReduction.
+  override val allowsInPlaceReduction: Boolean = true
 
-    return parserFacadeLists
-      .sequenceOfCreators()
-      .map { facadeCreator ->
-        val parserFacade = facadeCreator.create()
-        ReductionDriverCreator(
-          creator = {
-            ListDiffReductionDriver.create(
-              globalContent = globalContext,
-              cmd = cmd,
-              reductionInputs = reductionInputs,
-              parserFacade = parserFacade,
-              listenerManager = listenerManager,
-            )
-          },
-          descriptor = { "${parserFacade::class}" },
+  override fun createReductionDriver(
+    originalReductionInputs: DiffOriginalReductionInputs,
+    reductionStartEvent: ReductionStartEvent,
+  ): ListDiffReductionDriver {
+    val parserFacade =
+      computePlausibleParserFacades(originalReductionInputs.initiallyDeterminedMainDataKind)
+        .resolveParserFacadeByProbing(
+          originalReductionInputs.seedFile.textualFileContent,
+          originalReductionInputs.seedFile.file.fileName
+            .toString(),
         )
-      }
+    return ListDiffReductionDriver.create(
+      globalContent = globalContext,
+      cmd = cmd,
+      workingDirectory = workingDirectory,
+      resultFolder = resultFolder,
+      originalReductionInputs = originalReductionInputs,
+      parserFacade = parserFacade,
+      listenerManager = listenerManager,
+      reductionStartEvent = reductionStartEvent,
+      executorService = testScriptExecutorService,
+    )
   }
 
   override fun computeLanguageAndParserConfiguration(
@@ -67,22 +73,25 @@ class ListDiffMain(
       cmd.languageControlFlags,
     )
 
+  override fun computeWorkingDirectory(): Path = originalReductionInputs.seedFile.parentFile
+
   override fun createAsyncReductionListenerManager(): AsyncReductionListenerManager =
     PersesListenerManagerCreator.createAsyncReductionListenerManager(
-      cmd,
-      globalContext.fileStreamPool,
+      cmd = cmd,
+      fileStreamPool = globalContext.fileStreamPool,
+      outputDirectory = outputDirectory,
     )
 
-  override fun createReductionInputs(
+  override fun createOriginalReductionInputs(
     parserFacadeFactory: AbstractParserFacadeFactory,
-  ): ListDiffReductionInputs {
+  ): DiffOriginalReductionInputs {
     val inputFlags = cmd.listDiffInputFlags
-    return ListDiffReductionInputs.create(
-      seedPath = inputFlags.getSourceFile(),
-      variantPath = inputFlags.getVariantFile(),
+    return DiffOriginalReductionInputs.create(
+      seedPath = inputFlags.computeInputFiles().single(),
+      variantPath = inputFlags.variantFile!!,
       testScriptPath = inputFlags.getTestScript(),
       immutableDependencyFiles =
-        inputFlags.deps.transformToImmutableList { path ->
+        inputFlags.computeDeps().transformToImmutableList { path ->
           BinaryReductionFile(path, AbstractDataKind.UnknownDataKind)
         },
       languageKindComputer = { sourceFileAbsPath ->

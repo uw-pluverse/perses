@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_library")
 load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
 load(
     "//src/org/perses/grammar:antlr_util.bzl",

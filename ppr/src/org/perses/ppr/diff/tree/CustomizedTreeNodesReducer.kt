@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,7 +17,7 @@
 package org.perses.ppr.diff.tree
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.reducer.PersesNodeReducer
@@ -61,7 +61,7 @@ class CustomizedTreeNodesReducer(
       deterministic = true,
       reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
     ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> {
       val nonDeletedStartNodes = startNodes.filter { !it.isPermanentlyDeleted }
       return if (nonDeletedStartNodes.isEmpty()) {
         ImmutableList.of()

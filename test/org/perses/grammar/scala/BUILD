@@ -1,4 +1,4 @@
-load("//test/org/perses:test.bzl", "cross_folder_golden_test")
+load("//test:test.bzl", "cross_folder_golden_test")
 
 cross_folder_golden_test(
     name = "test_pnf_scala_grammar",

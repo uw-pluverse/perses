@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -27,9 +27,12 @@ import org.junit.runners.JUnit4
 import org.perses.util.Util.EnumStopCriterion
 import org.perses.util.Util.NonEmptyInternal
 import org.perses.util.Util.SpaceSize
+import org.perses.util.Util.callWithLargeStackOnStackOverflow
+import org.perses.util.Util.clusterIdsIntoRanges
 import org.perses.util.Util.computeDifference
 import org.perses.util.Util.computePercentage
 import org.perses.util.Util.createAppendablePrintStream
+import org.perses.util.Util.createDaemonThread
 import org.perses.util.Util.createNonAppendablePrintStream
 import org.perses.util.Util.ensureDirExists
 import org.perses.util.Util.fixpoint
@@ -49,6 +52,9 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.LinkedList
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicReference
 import java.util.function.Predicate
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
@@ -508,6 +514,37 @@ class UtilTest {
   }
 
   @Test
+  fun testGlobWithFilterListsAllRegularFilesRecursively() {
+    Files.createFile(tempDir.resolve("b.txt"))
+    Files.createFile(tempDir.resolve("a.txt"))
+    val sub = Files.createDirectories(tempDir.resolve("sub").resolve("nested"))
+    Files.createFile(sub.resolve("c.txt"))
+
+    val result = Util.globWithFilter(tempDir) { true }
+    // Recursive: every regular file under the directory tree, no directories.
+    assertThat(result.map { tempDir.relativize(it).toString() })
+      .containsExactly("a.txt", "b.txt", "sub/nested/c.txt")
+  }
+
+  @Test
+  fun testGlobWithFilterIsDeterministicallySorted() {
+    // Create files in a non-sorted creation order; the result must be sorted by path.
+    for (name in listOf("zeta.txt", "alpha.txt", "mid.txt", "beta.txt")) {
+      Files.createFile(tempDir.resolve(name))
+    }
+    val result = Util.globWithFilter(tempDir) { true }
+    assertThat(result).isEqualTo(result.sortedBy { it.toAbsolutePath().normalize().toString() })
+    assertThat(result.map { it.fileName.toString() })
+      .containsExactly("alpha.txt", "beta.txt", "mid.txt", "zeta.txt")
+      .inOrder()
+  }
+
+  @Test
+  fun testGlobWithFilterOnEmptyDirectory() {
+    assertThat(Util.globWithFilter(tempDir) { true }).isEmpty()
+  }
+
+  @Test
   fun testReplaceFileExtSingleFileName() {
     val orig = "a.txt"
     val new = Util.replaceFileExtension(orig, "exe")
@@ -696,7 +733,8 @@ class UtilTest {
     val text = DummyClassWithResource.read()
     assertThat(text).isEqualTo("test")
     val dest = tempDir.resolve("dest.txt")
-    Util.copyResource("test_data.txt", DummyClassWithResource::class.java, dest)
+    // Load from the JAR root; see DummyClassWithResource for the reasoning.
+    Util.copyResource("/test_data.txt", DummyClassWithResource::class.java, dest)
     assertThat(Files.isRegularFile(dest)).isTrue()
     assertThat(dest.readText()).isEqualTo("test")
   }
@@ -807,16 +845,6 @@ class UtilTest {
   }
 
   @Test
-  fun testAtomicSequenceGenerator() {
-    val g = Util.AtomicSequenceGenerator(minLengthForPadding = 2)
-    (1..9).forEach {
-      assertThat(g.next()).isEqualTo("0$it")
-    }
-    assertThat(g.next()).isEqualTo("10")
-    assertThat(g.next()).isEqualTo("11")
-  }
-
-  @Test
   fun testSpaceSize() {
     SpaceSize(bytes = 1000).let {
       assertThat(it.bytes).isEqualTo(1000)
@@ -912,5 +940,106 @@ class UtilTest {
     assertThat(Util.hasWhitespace(" ")).isTrue()
     assertThat(Util.hasWhitespace("ab \nc")).isTrue()
     assertThat(Util.hasWhitespace("ab")).isFalse()
+  }
+
+  @Test
+  fun testClusterIdsIntoRange() {
+    val idExtractor = { id: Int -> id }
+    clusterIdsIntoRanges(listOf(1), idExtractor).let {
+      assertThat(it).containsExactly("1")
+    }
+    clusterIdsIntoRanges(listOf(1, 2), idExtractor).let {
+      assertThat(it).containsExactly("1-2")
+    }
+    clusterIdsIntoRanges(listOf(1, 2, 3), idExtractor).let {
+      assertThat(it).containsExactly("1-3")
+    }
+    clusterIdsIntoRanges(listOf(1, 3, 4, 5), idExtractor).let {
+      assertThat(it).containsExactly("1", "3-5")
+    }
+  }
+
+  @Test
+  fun testCallWithLargeStackOnStackOverflow_noOverflowRunsOnCallingThreadWithoutRetry() {
+    val invocationCount = AtomicInteger(0)
+    val runThread = AtomicReference<Thread>()
+    val result =
+      callWithLargeStackOnStackOverflow(largeStackSize = RETRY_STACK_SIZE) {
+        invocationCount.incrementAndGet()
+        runThread.set(Thread.currentThread())
+        42
+      }
+    assertThat(result).isEqualTo(42)
+    assertThat(invocationCount.get()).isEqualTo(1)
+    assertThat(runThread.get()).isSameInstanceAs(Thread.currentThread())
+  }
+
+  @Test
+  fun testCallWithLargeStackOnStackOverflow_overflowThenSuccessRetriesOnDifferentThread() {
+    val invocationCount = AtomicInteger(0)
+    val firstThread = AtomicReference<Thread>()
+    val retryThread = AtomicReference<Thread>()
+    val result =
+      callWithLargeStackOnStackOverflow(largeStackSize = RETRY_STACK_SIZE) {
+        if (invocationCount.getAndIncrement() == 0) {
+          firstThread.set(Thread.currentThread())
+          throw StackOverflowError("simulated")
+        }
+        retryThread.set(Thread.currentThread())
+        99
+      }
+    assertThat(result).isEqualTo(99)
+    assertThat(invocationCount.get()).isEqualTo(2)
+    assertThat(firstThread.get()).isSameInstanceAs(Thread.currentThread())
+    assertThat(retryThread.get()).isNotSameInstanceAs(Thread.currentThread())
+    assertThat(retryThread.get().name).isEqualTo("large-stack-retry")
+  }
+
+  @Test
+  fun testCallWithLargeStackOnStackOverflow_nonStackOverflowPropagatesWithoutRetry() {
+    val invocationCount = AtomicInteger(0)
+    val thrown =
+      assertThrows(IllegalStateException::class.java) {
+        callWithLargeStackOnStackOverflow<Unit>(largeStackSize = RETRY_STACK_SIZE) {
+          invocationCount.incrementAndGet()
+          throw IllegalStateException("boom")
+        }
+      }
+    assertThat(thrown).hasMessageThat().isEqualTo("boom")
+    assertThat(invocationCount.get()).isEqualTo(1)
+  }
+
+  @Test
+  fun testCreateDaemonThread() {
+    val ran = AtomicBoolean(false)
+    val thread = createDaemonThread(name = "test-daemon") { ran.set(true) }
+    assertThat(thread.isDaemon).isTrue()
+    assertThat(thread.name).isEqualTo("test-daemon")
+    assertThat(thread.isAlive).isFalse()
+    assertThat(ran.get()).isFalse()
+    thread.start()
+    thread.join()
+    assertThat(ran.get()).isTrue()
+  }
+
+  @Test
+  fun testCallWithLargeStackOnStackOverflow_realDeepRecursionCompletesOnLargeStack() {
+    // Deep enough to overflow a default thread stack; the large-stack retry completes it. If the
+    // ambient -Xss is already large enough that the first attempt does not overflow, the result is
+    // still correct -- the test asserts the value either way.
+    val depth = 200_000
+    val result = callWithLargeStackOnStackOverflow(largeStackSize = RETRY_STACK_SIZE) { sumToDepth(depth) }
+    assertThat(result).isEqualTo(depth)
+  }
+
+  // Non-tail recursion (the `1 +` runs after the call), so Kotlin cannot turn it into a loop -- it
+  // genuinely consumes one stack frame per level.
+  private fun sumToDepth(n: Int): Int = if (n == 0) 0 else 1 + sumToDepth(n - 1)
+
+  companion object {
+    // Comfortably holds the deepest test recursion (~200k trivial frames, ~20 MB) with margin, while
+    // staying far below the production default so the test does not reserve a large virtual stack in a
+    // constrained CI/sandbox.
+    private val RETRY_STACK_SIZE = SpaceSize.megaBytes(64)
   }
 }

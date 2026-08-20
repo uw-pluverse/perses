@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -28,27 +28,21 @@ import org.perses.antlr.ast.PersesAlternativeBlockAst
 import org.perses.antlr.ast.PersesRuleReferenceAst
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.program.PersesTokenFactory
-import org.perses.program.TokenizedProgramFactory
 
 @RunWith(JUnit4::class)
 class MinimalSparTreeGeneratorTest {
   private val parserFacade = PnfCParserFacade()
   private val sparTreeNodeFactory =
-    SparTreeNodeFactory(
-      metaTokenInfoDb = parserFacade.metaTokenInfoDb,
-      TokenizedProgramFactory.createEmptyFactory(
-        languageKind = parserFacade.language,
-      ),
-      grammarHierarchy = parserFacade.ruleHierarchy,
-    )
+    SparTreeNodeFactory(parserFacade)
   private val generator = MinimalSparTreeGenerator(parserFacade, sparTreeNodeFactory)
 
   private val nonEmptyOriginalLexerRuleNodeList =
     ImmutableList.of(
       LexerRuleSparTreeNode(
         nodeId = 0,
-        PersesTokenFactory().createPersesToken(
+        PersesTokenFactory.createPersesToken(
           parserFacade.transformLiteralIntoSingleToken("if"),
+          overridingPosition = null,
         ),
         parserFacade.ruleHierarchy.getRuleHierarchyEntryWithNameOrThrow("If"),
       ),
@@ -221,11 +215,12 @@ class MinimalSparTreeGeneratorTest {
         ImmutableList.of(
           LexerRuleSparTreeNode(
             nodeId = 0,
-            PersesTokenFactory().createPersesToken(
+            PersesTokenFactory.createPersesToken(
               CommonTokenFactory().create(
-                parserFacade.identifierTokenTypes[0].antlrTokenType,
+                parserFacade.fusedIdentifierTokenTypes[0].antlrTokenType,
                 "test",
               ),
+              overridingPosition = null,
             ),
             parserFacade.ruleHierarchy.getRuleHierarchyEntryWithNameOrThrow("Identifier"),
           ),

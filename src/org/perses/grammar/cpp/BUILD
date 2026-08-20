@@ -41,6 +41,7 @@ antlr_codegen_parser(
 
 pnf_parser_facade_library(
     name = "parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.grammar.cpp",
     language_kind_full_name = "org.perses.grammar.cpp.LanguageCpp",
     lexer_file_name = "CPP14Lexer.g4",

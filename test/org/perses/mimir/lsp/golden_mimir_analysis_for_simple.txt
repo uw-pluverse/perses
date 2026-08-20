@@ -1,0 +1,32 @@
+DEF: ga@[1:4]: int ga = 1;
+  USE: ga@[10:26]: return a2 + b2 + f1() + ga;
+
+DEF: f1@[2:4]: int f1() {
+  USE: f1@[10:19]: return a2 + b2 + f1() + ga;
+  USE: f1@[15:7]: return f1() + f2() + a + b3;
+
+DEF: a@[3:8]: float a = 0;
+  USE: a@[4:15]: int b = (int)a + 1;
+  USE: a@[5:14]: return (int)a + b;
+
+DEF: b@[4:6]: int b = (int)a + 1;
+  USE: b@[5:18]: return (int)a + b;
+
+DEF: f2@[7:4]: int f2() {
+  USE: f2@[15:14]: return f1() + f2() + a + b3;
+
+DEF: a2@[8:6]: int a2 = 0;
+  USE: a2@[9:11]: int b2 = a2 + 2;
+  USE: a2@[10:9]: return a2 + b2 + f1() + ga;
+
+DEF: b2@[9:6]: int b2 = a2 + 2;
+  USE: b2@[10:14]: return a2 + b2 + f1() + ga;
+
+DEF: f3@[12:4]: int f3() {
+
+DEF: a@[13:6]: int a = 0;
+  USE: a@[15:21]: return f1() + f2() + a + b3;
+
+DEF: b3@[14:6]: int b3 = 0;
+  USE: b3@[15:25]: return f1() + f2() + a + b3;
+

@@ -1,6 +1,7 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("@rules_java//java:defs.bzl", "java_binary")
 load(
-    "//test/org/perses:test.bzl",
+    "//test:test.bzl",
     "golden_test",
 )
 
@@ -9,9 +10,9 @@ package(default_visibility = [
 ])
 
 kt_jvm_test(
-    name = "NFATest",
+    name = "NfaTest",
     srcs = [
-        "NFATest.kt",
+        "NfaTest.kt",
     ],
     deps = [
         "//:antlr_runtime",
@@ -27,10 +28,22 @@ kt_jvm_test(
     ],
 )
 
-kt_jvm_library(
-    name = "NFADumpMain",
+kt_jvm_test(
+    name = "ConcatenatedNfaViewTest",
     srcs = [
-        "NFADumpMain.kt",
+        "ConcatenatedNfaViewTest.kt",
+    ],
+    deps = [
+        "//:antlr_runtime",
+        "//:truth",
+        "//src/org/perses/antlr/atn/nfa",
+    ],
+)
+
+kt_jvm_library(
+    name = "NfaDumpMain",
+    srcs = [
+        "NfaDumpMain.kt",
     ],
     deps = [
         "//:antlr_runtime",
@@ -47,9 +60,9 @@ BIN_NAME = "dump_nfa_or_OrigCLexer_BIN"
 
 java_binary(
     name = BIN_NAME,
-    main_class = "org.perses.antlr.atn.nfa.NFADumpMain",
+    main_class = "org.perses.antlr.atn.nfa.NfaDumpMain",
     runtime_deps = [
-        ":NFADumpMain",
+        ":NfaDumpMain",
     ],
 )
 

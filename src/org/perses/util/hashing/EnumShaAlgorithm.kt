@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -39,7 +39,7 @@ enum class EnumShaAlgorithm(
   fun hashBytes(bytes: ByteArray) = function.hashBytes(bytes)
 
   fun createFromString(string: String): ShaHashCode =
-    ShaHashCode.ShaHashCodeForSingleString(
+    ShaHashCode.ForSingleString(
       stringLength = string.length,
       digest = hashString(string),
     )
@@ -47,10 +47,16 @@ enum class EnumShaAlgorithm(
   fun createFromListOfStrings(strings: List<String>): ShaHashCode {
     require(strings.isNotEmpty()) { "The list of strings cannot be empty." }
     return when (strings.size) {
-      0 -> error("The list of strings cannot be empty.")
-      1 -> createFromString(strings.single())
-      else ->
-        ShaHashCode.ShaHashCodeForMultiStrings(
+      0 -> {
+        error("The list of strings cannot be empty.")
+      }
+
+      1 -> {
+        createFromString(strings.single())
+      }
+
+      else -> {
+        ShaHashCode.ForMultiStrings(
           stringLengths =
             ImmutableIntArray
               .builder(strings.size)
@@ -59,6 +65,7 @@ enum class EnumShaAlgorithm(
               }.build(),
           digest = hashListOfStrings(list = strings),
         )
+      }
     }
   }
 }

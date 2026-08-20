@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,6 +18,7 @@ package org.perses.reduction
 
 import com.google.common.base.Stopwatch
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableMap
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
@@ -27,15 +28,17 @@ import org.perses.TestUtility
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
+import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl.ORIG_FORMAT
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
+import org.perses.program.TokenizedProgram
 import org.perses.reduction.AbstractGlobalExecutionCache.NullCache
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
-import org.perses.reduction.io.RegularReductionInputs
+import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
+import org.perses.reduction.io.ReductionFolderManager
 import org.perses.reduction.io.token.RegularOutputManagerFactory
-import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.ExitCode
 import java.io.ByteArrayOutputStream
@@ -58,30 +61,34 @@ class TestScriptExecutorServiceTest {
   private val invalidSourceFile = SourceFile(Paths.get("test_data/misc/t1.c"), LanguageC)
   private val testScript = ScriptFile(Paths.get(FOLDER, "r.sh"))
   private val slowTestScript = ScriptFile(Paths.get(FOLDER, "slow_r.sh"))
-  private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot
+  private val program = TestUtility.createSparTreeFromFile(sourceFile.file).programSnapshot.payload
   private val dummyPayload = "dummy payload"
   private val lexerAtnWrapper =
     LexerAtnWrapper.createLexerWrapperFromLexerClass(
       PnfCLexer::class.java,
     )
-  private val reductionInputs =
-    RegularReductionInputs(
+  private val originalReductionInputs =
+    DefaultLanguageOriginalReductionInputs(
       testScript,
-      sourceFile,
-      dependencyFiles = ImmutableList.of(),
+      mutableFiles = ImmutableList.of(sourceFile),
+      immutableDependencyFiles = ImmutableList.of(),
     )
 
   private val workingDirectory =
     TestUtility.createCleanWorkingDirectory(TestScriptExecutorServiceTest::class.java)
   private val outputManagerFactory =
     RegularOutputManagerFactory(
-      reductionInputs,
+      originalReductionInputs,
       ORIG_FORMAT,
       lexerAtnWrapper,
       shaAlgorithm = EnumShaAlgorithm.SHA256,
+      fileRepresentedByProgram = sourceFile,
+      // Single-file reduction has no siblings.
+      otherMutableFileContents = ImmutableMap.of<AbstractReductionFile<*, *>, String>(),
     )
 
-  private val outputDir = workingDirectory.resolve("perses_output_dir")
+  private fun outputManagerFor(program: TokenizedProgram) =
+    outputManagerFactory.createManagerFor(program)
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -117,21 +124,17 @@ class TestScriptExecutorServiceTest {
     System.setOut(newOut)
     System.setErr(newOut)
     try {
-      val reductionInputs =
-        RegularReductionInputs(
+      val originalReductionInputs =
+        DefaultLanguageOriginalReductionInputs(
           slowTestScript,
-          sourceFile,
-          dependencyFiles = ImmutableList.of(),
-        )
-      val ioManager =
-        TokenReductionIOManager(
-          workingFolder = workingDirectory,
-          reductionInputs = reductionInputs,
-          outputManagerFactory = outputManagerFactory,
-          outputDirectory = outputDir,
+          mutableFiles = ImmutableList.of(sourceFile),
+          immutableDependencyFiles = ImmutableList.of(),
         )
       TestScriptExecutorService(
-        ioManager.lazilyInitializedReductionFolderManager,
+        ReductionFolderManager(
+          originalReductionInputs,
+          Files.createTempDirectory(workingDirectory, "PersesTempRoot_"),
+        ),
         1,
         scriptExecutionTimeoutInSeconds = 1L,
         globalExecutionCache = NullCache(),
@@ -140,7 +143,7 @@ class TestScriptExecutorServiceTest {
           .testProgramAsync(
             ALWAYS_TRUE_PRECHECK,
             IDENTITY_POST_CHECK,
-            outputManagerFactory.createManagerFor(program),
+            outputManagerFor(program),
             dummyPayload,
           ).getWithTimeoutWarnings()
       }
@@ -155,21 +158,11 @@ class TestScriptExecutorServiceTest {
 
   private fun testTestScriptExecutor(threadCount: Int) {
     val stopwatch = Stopwatch.createStarted()
-    val ioManager =
-      TokenReductionIOManager(
-        workingDirectory,
-        reductionInputs,
-        outputManagerFactory =
-          RegularOutputManagerFactory(
-            reductionInputs,
-            ORIG_FORMAT,
-            lexerAtnWrapper,
-            shaAlgorithm = EnumShaAlgorithm.SHA256,
-          ),
-        outputDirectory = outputDir,
-      )
     TestScriptExecutorService(
-      ioManager.lazilyInitializedReductionFolderManager,
+      ReductionFolderManager(
+        originalReductionInputs,
+        Files.createTempDirectory(workingDirectory, "PersesTempRoot_"),
+      ),
       threadCount,
       scriptExecutionTimeoutInSeconds = 4 * 60L,
       globalExecutionCache = NullCache(),
@@ -190,14 +183,14 @@ class TestScriptExecutorServiceTest {
     val invalidProgram =
       TestUtility
         .createSparTreeFromFile(invalidSourceFile.file)
-        .programSnapshot
+        .programSnapshot.payload
     val futureList: MutableList<TestScriptExecResult<String>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
         service.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
           { _, _ -> PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMillis = 1) },
-          outputManagerFactory.createManagerFor(invalidProgram),
+          outputManagerFor(invalidProgram),
           dummyPayload,
         ),
       )
@@ -211,14 +204,14 @@ class TestScriptExecutorServiceTest {
     val invalidProgram =
       TestUtility
         .createSparTreeFromFile(invalidSourceFile.file)
-        .programSnapshot
+        .programSnapshot.payload
     val futureList: MutableList<TestScriptExecResult<String>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
         service.testProgramAsync(
           { PropertyTestResult(exitCode = ExitCode.ONE, elapsedMillis = 1) },
           IDENTITY_POST_CHECK,
-          outputManagerFactory.createManagerFor(invalidProgram),
+          outputManagerFor(invalidProgram),
           dummyPayload,
         ),
       )
@@ -232,14 +225,14 @@ class TestScriptExecutorServiceTest {
     val invalidProgram =
       TestUtility
         .createSparTreeFromFile(invalidSourceFile.file)
-        .programSnapshot
+        .programSnapshot.payload
     val futureList: MutableList<TestScriptExecResult<String>> = ArrayList()
     for (i in 0..49) {
       futureList.add(
         it.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
           IDENTITY_POST_CHECK,
-          outputManagerFactory.createManagerFor(invalidProgram),
+          outputManagerFor(invalidProgram),
           dummyPayload,
         ),
       )
@@ -260,7 +253,7 @@ class TestScriptExecutorServiceTest {
         service.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
           IDENTITY_POST_CHECK,
-          outputManagerFactory.createManagerFor(program),
+          outputManagerFor(program),
           dummyPayload,
         ),
       )

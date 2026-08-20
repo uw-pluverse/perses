@@ -4,15 +4,26 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
-if [[ "$#" != 4 ]]; then
-  echo "${0} <adhoc generator> <grammar file> <yaml config> <perses bin>"
+if [[ "$#" != 5 ]]; then
+  echo "${0} <java path> <adhoc generator> <grammar file> <yaml config> <perses bin>"
   exit 1
 fi
 
-readonly BIN_ADHOC=${1}
-readonly FILE_GRAMMAR=${2}
-readonly FILE_YAML=${3}
-readonly BIN_PERSES="$(realpath "${4}")"
+readonly JAVA_PATH_ARG=${1}
+
+# Resolve the Java binary path from the Bazel toolchain
+if [[ -f "${JAVA_PATH_ARG}" ]]; then
+    readonly JAVA=$(realpath "${JAVA_PATH_ARG}")
+else
+    # Strip 'external/' prefix and look in the parent (runfiles root) directory
+    readonly JAVA=$(realpath "../${JAVA_PATH_ARG#external/}")
+fi
+
+readonly BIN_ADHOC=${2}
+readonly FILE_GRAMMAR=${3}
+readonly FILE_YAML=${4}
+readonly BIN_PERSES="$(realpath "${5}")"
+
 
 readonly ROOT=$(mktemp -d)
 trap 'rm -rf ${ROOT}' EXIT
@@ -20,7 +31,7 @@ trap 'rm -rf ${ROOT}' EXIT
 readonly FILE_JAR="${ROOT}/ext_language.jar"
 # generate the language jar file
 
-java -jar "${BIN_ADHOC}" \
+"${JAVA}" -jar "${BIN_ADHOC}" \
   --parser-grammar "${FILE_GRAMMAR}" \
   --start-rule "translationUnit" \
   --token-names-of-identifiers "Identifier" \
@@ -42,7 +53,7 @@ EOF
 chmod +x "${FILE_SCRIPT}"
 
 cd "${ROOT}" || exit 1
-java -jar "${BIN_PERSES}" \
+"${JAVA}" -jar "${BIN_PERSES}" \
   --test-script "${FILE_SCRIPT}" \
   --input-file "${FILE_SOURCE}" \
   --language-ext-jars "${FILE_JAR}" || exit 1

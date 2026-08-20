@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,23 +16,32 @@
  */
 package org.perses.reduction.event
 
-import org.perses.program.TokenizedProgram
+import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.spartree.AbstractSparTreeNode
+import org.perses.spartree.ParserRuleSparTreeNode
+import org.perses.util.transformToImmutableList
 
 class NodeReductionEndEvent internal constructor(
   startEvent: NodeReductionStartEvent,
   currentTimeMillis: Long,
-  program: TokenizedProgram,
+  perFileSizeMetrics: PerFileSizeMetrics,
+  // Do not make the node a property, as the event is usually used asynchronously.
   node: AbstractSparTreeNode,
   val remainingQueueSize: Int,
-) : AbstractEndEvent<NodeReductionStartEvent>(startEvent, currentTimeMillis, program.tokenCount) {
+) : AbstractEndEvent<NodeReductionStartEvent>(startEvent, currentTimeMillis, perFileSizeMetrics) {
   val iteration = startEvent.iteration
 
   val nodeInfo =
     NodeReductionStartEvent.NodeInfo(
       nodeId = node.nodeId,
       antlrRuleName = node.ruleName,
-      childCount = node.childCount,
+      ruleType =
+        if (node is ParserRuleSparTreeNode) {
+          node.ruleType
+        } else {
+          null
+        },
+      childNodeIds = node.immutableChildView.transformToImmutableList { it.nodeId },
       tokenCount =
         if (node.isPermanentlyDeleted) {
           0
@@ -41,5 +50,6 @@ class NodeReductionEndEvent internal constructor(
         },
     )
 
-  override fun initialProgramSize(): Int = startEvent.initialProgramSize()
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    startEvent.initialPerFileSizeMetrics()
 }

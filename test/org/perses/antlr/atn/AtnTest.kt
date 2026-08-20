@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -31,7 +31,7 @@ import org.junit.runners.JUnit4
 import org.perses.antlr.TokenType
 import org.perses.antlr.atn.LexerAtnWrapper.TokenTypePair
 import org.perses.antlr.atn.LexerAtnWrapper.TokenTypePair.Companion.toTokenTypePair
-import org.perses.antlr.atn.nfa.MutableNFA
+import org.perses.antlr.atn.nfa.MutableNfa
 import org.perses.antlr.atn.simulator.ast.AbstractASTSimulator
 import org.perses.antlr.atn.simulator.transition.PrintableCharacters
 import org.perses.antlr.atn.tdtree.AbstractTDTreeNode
@@ -54,7 +54,7 @@ class AtnTest {
   val atnC = LexerAtnWrapper.createLexerWrapperFromLexerClass(OrigCLexer::class.java)
 
   @Test
-  fun testIdentifierNFAShouldRejectInvalidIdentiers() {
+  fun testIdentifierNfaShouldRejectInvalidIdentiers() {
     val path =
       atnC.findATNPathForLexeme(
         ruleType = OrigCLexer.Identifier.toTokenType(),
@@ -64,7 +64,7 @@ class AtnTest {
   }
 
   @Test
-  fun testStringLiteralNFAShouldAcceptUnicode() {
+  fun testStringLiteralNfaShouldAcceptUnicode() {
     val path =
       atnC.findATNPathForLexeme(
         ruleType = OrigCLexer.StringLiteral.toTokenType(),
@@ -361,7 +361,12 @@ class AtnTest {
 
   @Test
   fun testAllRulesOfTestLexer() {
-    testAtnWithAllItsLexerRules(testAtn)
+    // OverlappingId and AmbiguousSplit are intentionally ambiguous fixtures (see
+    // TestLexer.g4): a lexeme has several derivations, so reconstructing the
+    // TD-tree picks the canonical one, which need not be isomorphic to the
+    // randomly-simulated tree. The simulate/reconstruct isomorphism this test
+    // checks only holds for unambiguous rules.
+    testAtnWithAllItsLexerRules(testAtn, setOf("OverlappingId", "AmbiguousSplit"))
   }
 
   @Ignore("cannot pass now")
@@ -557,12 +562,12 @@ class AtnTest {
     val epsilonToEnd = EpsilonTransition(end)
     state1.addTransition(epsilonToEnd)
 
-    val nfa = MutableNFA.copyOf(start)
+    val nfa = MutableNfa.copyOf(start)
 
     val result =
       LexerAtnWrapper
         .getReachableStatesWithNonEpsilonOutgoingTransition(
-          nfa.createNFAState { it.startState },
+          nfa.createNfaState { it.startState },
         ).map {
           it.state.stateNumber
         }

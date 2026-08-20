@@ -5,5 +5,6 @@ filegroup(
     srcs = [
         "conversions.wat",
         "small.wat",
+        "structure_print.wat",
     ],
 )

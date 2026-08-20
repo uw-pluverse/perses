@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,29 +18,61 @@ package org.perses.reduction.event
 
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
+import org.perses.program.ProgramSize
+import org.perses.program.ScriptFile
+import org.perses.program.SourceFile
+import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
+import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.reduction.reducer.token.ConcurrentTokenSlicer
-import java.lang.ref.WeakReference
+import org.perses.util.Util
+import java.nio.file.Files
 
 @RunWith(JUnit4::class)
 class EventsTest {
+  private val root = Util.createTempDirForObject(this)
+  private val script = ScriptFile(Files.writeString(root.resolve("r.sh"), "#!/bin/bash\ntrue\n"))
+  private val sourceFile = SourceFile(Files.writeString(root.resolve("a.c"), "int a;"), LanguageC)
+  private val originalReductionInputs =
+    DefaultLanguageOriginalReductionInputs(
+      testScript = script,
+      mutableFiles = ImmutableList.of(sourceFile),
+      immutableDependencyFiles = ImmutableList.of(),
+    )
+
+  private fun metrics(tokenCount: Int): PerFileSizeMetrics =
+    PerFileSizeMetrics(
+      originalReductionInputs,
+      ImmutableList.of(
+        ProgramSize(
+          payload = Unit,
+          canonicalTokenCount = tokenCount,
+          surrogateTokenCount = tokenCount,
+          totalCharacterCount = 0,
+          nonBlankCharacterCount = 0,
+        ),
+      ),
+    )
+
+  private val initialMetrics = metrics(3)
+
   private val tree = TestUtility.createSparTreeFromString("int a;", LanguageC)
 
   private val reductionStartEvent =
     ReductionStartEvent(
       currentTimeMillis = System.currentTimeMillis(),
-      tree = WeakReference(tree),
-      programSize = INITIAL_PROGRAM_SIZE,
+      perFileSizeMetrics = initialMetrics,
       commandLineOptions = "<cmd>",
     )
 
   val firstIterationStart =
     reductionStartEvent.nextFixpointIteration(
-      programSize = 2,
+      perFileSizeMetrics = metrics(2),
       reducerClass = ConcurrentTokenSlicer.getAnnotationForGranularity(granularity = 1),
       treeStructureDumper = { tree.printTreeStructure() },
       TestScriptExecutorServiceStatisticsSnapshot(
@@ -52,6 +84,7 @@ class EventsTest {
   val nodeReductionStartEvent =
     firstIterationStart.createNodeReductionStartEvent(
       currentTimeMillis = System.currentTimeMillis(),
+      perFileSizeMetrics = metrics(2),
       program = tree.programSnapshot,
       node = tree.realRoot,
       outputCreator = { ImmutableList.of() },
@@ -60,14 +93,14 @@ class EventsTest {
   val nodeReductionEndEvent =
     nodeReductionStartEvent.createEndEvent(
       currentTimeMillis = System.currentTimeMillis(),
-      program = tree.programSnapshot,
+      perFileSizeMetrics = metrics(2),
       remainingQueueSize = 1000,
     )
 
   val firstIterationEnd =
     firstIterationStart.createEndEvent(
       currentTimeMillis = System.currentTimeMillis(),
-      programSize = 2,
+      perFileSizeMetrics = metrics(2),
       testScriptStatistics =
         TestScriptExecutorServiceStatisticsSnapshot(
           scriptExecutionNumber = 2,
@@ -77,7 +110,7 @@ class EventsTest {
 
   val reductionEndEvent =
     reductionStartEvent.createEndEvent(
-      programSize = 1,
+      perFileSizeMetrics = metrics(1),
       testScriptStatistics =
         TestScriptExecutorServiceStatisticsSnapshot(
           scriptExecutionNumber = 100 + 2,
@@ -85,25 +118,31 @@ class EventsTest {
         ),
     )
 
+  @After
+  fun cleanup() {
+    root.toFile().deleteRecursively()
+  }
+
   @Test
   fun testReductionStartEvent() {
-    assertThat(reductionStartEvent.initialProgramSize()).isEqualTo(INITIAL_PROGRAM_SIZE)
-    assertThat(reductionStartEvent.programSize).isEqualTo(reductionStartEvent.initialProgramSize())
+    assertThat(reductionStartEvent.initialPerFileSizeMetrics()).isSameInstanceAs(initialMetrics)
+    assertThat(reductionStartEvent.perFileSizeMetrics)
+      .isSameInstanceAs(reductionStartEvent.initialPerFileSizeMetrics())
   }
 
   @Test
   fun testNodeReductionStartEvent() {
-    assertThat(nodeReductionStartEvent.initialProgramSize()).isEqualTo(INITIAL_PROGRAM_SIZE)
+    assertThat(nodeReductionStartEvent.initialPerFileSizeMetrics()).isSameInstanceAs(initialMetrics)
   }
 
   @Test
   fun testNodeReductionEndEvent() {
-    assertThat(nodeReductionEndEvent.initialProgramSize()).isEqualTo(INITIAL_PROGRAM_SIZE)
+    assertThat(nodeReductionEndEvent.initialPerFileSizeMetrics()).isSameInstanceAs(initialMetrics)
   }
 
   @Test
   fun testReductionEndEvent() {
-    assertThat(reductionEndEvent.initialProgramSize()).isEqualTo(INITIAL_PROGRAM_SIZE)
+    assertThat(reductionEndEvent.initialPerFileSizeMetrics()).isSameInstanceAs(initialMetrics)
     assertThat(
       reductionEndEvent.testScriptExecutorServiceStatistics.scriptExecutionNumber,
     ).isEqualTo(102)
@@ -112,15 +151,11 @@ class EventsTest {
 
   @Test
   fun testFixpointIterationStartEvent() {
-    assertThat(firstIterationStart.initialProgramSize()).isEqualTo(INITIAL_PROGRAM_SIZE)
+    assertThat(firstIterationStart.initialPerFileSizeMetrics()).isSameInstanceAs(initialMetrics)
   }
 
   @Test
   fun testFixpointIterationEndEvent() {
-    assertThat(firstIterationEnd.initialProgramSize()).isEqualTo(INITIAL_PROGRAM_SIZE)
-  }
-
-  companion object {
-    private val INITIAL_PROGRAM_SIZE = 3
+    assertThat(firstIterationEnd.initialPerFileSizeMetrics()).isSameInstanceAs(initialMetrics)
   }
 }

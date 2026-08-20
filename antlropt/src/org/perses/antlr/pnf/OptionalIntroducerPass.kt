@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -63,7 +63,11 @@ class OptionalIntroducerPass : AbstractPnfPass() {
       }
     val gapAstReplacement =
       when (processedGapAst.tag) {
-        AstTag.STAR, AstTag.OPTIONAL -> return // Do nothing, to let other passes take care of this.
+        AstTag.STAR, AstTag.OPTIONAL -> {
+          return
+        }
+
+        // Do nothing, to let other passes take care of this.
         AstTag.PLUS -> {
           val starRuleName = ruleName.createAuxiliaryRuleName(RuleType.KLEENE_STAR)
           mutable.getAltBlock(starRuleName).addIfNotEquivalent(
@@ -71,6 +75,7 @@ class OptionalIntroducerPass : AbstractPnfPass() {
           )
           starRuleName
         }
+
         AstTag.TERMINAL, AstTag.RULE_REF -> {
           val optionalRuleName =
             ruleName
@@ -80,6 +85,7 @@ class OptionalIntroducerPass : AbstractPnfPass() {
           )
           optionalRuleName
         }
+
         else -> {
           val wrapperRuleName = ruleName.createAuxiliaryRuleName(RuleType.OTHER_RULE)
           mutable.getAltBlock(wrapperRuleName).addIfNotEquivalent(processedGapAst)

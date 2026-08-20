@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
@@ -15,7 +15,7 @@ reduction_golden_test(
     golden_progress_file = "golden_reduction_progress.txt",
     golden_reduced_file = "golden_reduced_t.c",
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "t.c",
     test_script = "r.sh",
 )

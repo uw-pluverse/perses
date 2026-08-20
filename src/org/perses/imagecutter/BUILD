@@ -21,12 +21,12 @@ kt_jvm_library(
     srcs = [
         "CommandOptions.kt",
         "ImageDataKind.kt",
-        "ImageReductionInput.kt",
+        "ImageOriginalReductionInput.kt",
     ],
     deps = [
         "//src/org/perses/cmd:reduction_flags",
         "//src/org/perses/program:source_file",
-        "//src/org/perses/reduction/io:reduction_inputs_interface",
+        "//src/org/perses/reduction/io:reduction_inputs",
         "//src/org/perses/util/cmd",
     ],
 )

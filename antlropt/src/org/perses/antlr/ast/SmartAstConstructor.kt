@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -105,12 +105,17 @@ object SmartAstConstructor {
       AstTag.STAR to AstTag.STAR,
       AstTag.STAR to AstTag.OPTIONAL,
       -> first as PersesStarAst
+
       AstTag.STAR to AstTag.PLUS -> second as PersesPlusAst
+
       AstTag.PLUS to AstTag.STAR,
       AstTag.PLUS to AstTag.OPTIONAL,
       -> first as PersesPlusAst
+
       AstTag.OPTIONAL to AstTag.STAR -> second as PersesStarAst
+
       AstTag.OPTIONAL to AstTag.PLUS -> second as PersesPlusAst
+
       else -> null
     }
   }
@@ -120,16 +125,23 @@ object SmartAstConstructor {
     isGreedy: Boolean,
   ): AbstractPersesRuleElement =
     when (body.tag) {
-      AstTag.STAR -> body
+      AstTag.STAR -> {
+        body
+      }
+
       AstTag.PLUS -> {
         val plus = body as PersesPlusAst
         PersesStarAst(plus.body, plus.isGreedy)
       }
+
       AstTag.OPTIONAL -> {
         val optional = body as PersesOptionalAst
         PersesStarAst(optional.body, optional.isGreedy)
       }
-      else -> PersesStarAst(body, isGreedy)
+
+      else -> {
+        PersesStarAst(body, isGreedy)
+      }
     }
 
   fun createForOptional(
@@ -137,13 +149,23 @@ object SmartAstConstructor {
     isGreedy: Boolean,
   ): AbstractPersesRuleElement =
     when (optionalBody.tag) {
-      AstTag.STAR, AstTag.OPTIONAL -> optionalBody
-      AstTag.PLUS ->
+      AstTag.STAR, AstTag.OPTIONAL -> {
+        optionalBody
+      }
+
+      AstTag.PLUS -> {
         (optionalBody as PersesPlusAst).let {
           PersesStarAst(it.body, it.isGreedy)
         }
-      AstTag.EPSILON -> optionalBody
-      else -> PersesOptionalAst(optionalBody, isGreedy)
+      }
+
+      AstTag.EPSILON -> {
+        optionalBody
+      }
+
+      else -> {
+        PersesOptionalAst(optionalBody, isGreedy)
+      }
     }
 
   fun createPlusFromStarByCopyingBody(star: PersesStarAst): PersesPlusAst =

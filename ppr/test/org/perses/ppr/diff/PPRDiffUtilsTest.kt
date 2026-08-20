@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,7 +15,6 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.ppr.diff
-
 import com.github.gumtreediff.actions.SimplifiedChawatheScriptGenerator
 import com.github.gumtreediff.matchers.ConfigurationOptions
 import com.github.gumtreediff.matchers.GumtreeProperties
@@ -29,8 +28,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.c.LanguageC
-import org.perses.program.PersesTokenFactory
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
+import org.perses.program.AbstractPersesToken
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.util.ListAlignment
 import org.perses.util.SimpleQueue
@@ -320,7 +318,7 @@ class PPRDiffUtilsTest {
         seedUnmappedNodes.single(),
         nodeMapping,
       )
-    assertThat(seedUnmappedSparTreeNode.updateLeafTokenCount()).isEqualTo(5)
+    assertThat(seedUnmappedSparTreeNode.leafTokenCount).isEqualTo(5)
   }
 
   @Test
@@ -331,10 +329,10 @@ class PPRDiffUtilsTest {
         tokensStr,
         LanguageC,
       )
-    val tokenList = sparTree.programSnapshot.tokens
+    val tokenList = sparTree.programSnapshot.payload.tokens
 
     // let's assume "int" is classified as diff
-    val tokenDiffSetBuilder = ImmutableSet.builder<PersesTokenFactory.PersesAntlrToken>()
+    val tokenDiffSetBuilder = ImmutableSet.builder<AbstractPersesToken.AntlrToken>()
     tokenDiffSetBuilder.add(tokenList[0].asAntlrToken())
 
     // build the map
@@ -343,7 +341,7 @@ class PPRDiffUtilsTest {
 
     // check diff flag of each node
     node2Diff.forEach { (node, isDiff) ->
-      if (node.updateLeafTokenCount() == 1 &&
+      if (node.leafTokenCount == 1 &&
         node.beginToken
           ?.token
           ?.lexemeText
@@ -369,7 +367,7 @@ class PPRDiffUtilsTest {
         tokensStr,
         LanguageC,
       )
-    val tokenList = sparTree.programSnapshot.tokens
+    val tokenList = sparTree.programSnapshot.payload.tokens
 
     // let's assume "a = 1" and "b" are classified as diff by line-diff
     val tokenDiffSetBuilder = ImmutableSet.builder<AbstractPersesToken>()
@@ -385,8 +383,8 @@ class PPRDiffUtilsTest {
       )
 
     assertThat(realDiffNodes).hasSize(2)
-    assertThat(realDiffNodes[0].updateLeafTokenCount()).isEqualTo(3)
-    assertThat(realDiffNodes[1].updateLeafTokenCount()).isEqualTo(1)
+    assertThat(realDiffNodes[0].leafTokenCount).isEqualTo(3)
+    assertThat(realDiffNodes[1].leafTokenCount).isEqualTo(1)
   }
 
   @Test
@@ -472,10 +470,10 @@ class PPRDiffUtilsTest {
     assertThat(realDiffNodesOnVariant).hasSize(1)
 
     val diffNodeOnSeed = realDiffNodesOnSeed.single()
-    assertThat(diffNodeOnSeed.updateLeafTokenCount()).isEqualTo(7)
+    assertThat(diffNodeOnSeed.leafTokenCount).isEqualTo(7)
 
     val diffNodeOnVariant = realDiffNodesOnVariant.single()
-    assertThat(diffNodeOnVariant.updateLeafTokenCount()).isEqualTo(5)
+    assertThat(diffNodeOnVariant.leafTokenCount).isEqualTo(5)
 
     val resultListOnSeed = mutableListOf<String>()
     diffNodeOnSeed.postOrderVisit { node ->

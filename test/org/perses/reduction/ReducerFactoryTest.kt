@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -19,16 +19,13 @@ package org.perses.reduction
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.ReducerFactory.isValidReducerName
 import org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducer
-import org.perses.reduction.reducer.PersesNodeBfsReducer
-import org.perses.reduction.reducer.PersesNodeDfsReducer
-import org.perses.reduction.reducer.PersesNodePrioritizedBfsReducer
-import org.perses.reduction.reducer.PersesNodePrioritizedDfsReducer
-import org.perses.reduction.reducer.hdd.HDDReducer
+import org.perses.reduction.reducer.PersesNodeReducerAnnotations
+import org.perses.reduction.reducer.hdd.HDDReducerAnnotations
 import org.perses.reduction.reducer.hdd.PristineHDDReducer
 import org.perses.reduction.reducer.token.ConcurrentStateBasedDeltaReducer
 import org.perses.reduction.reducer.token.ConcurrentStateBasedLineSlicer
@@ -51,7 +48,7 @@ class ReducerFactoryTest {
       deterministic = true,
       reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
     ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> {
       TODO("not meant to be called.")
     }
   }
@@ -63,7 +60,7 @@ class ReducerFactoryTest {
       deterministic = true,
       reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_INCREASE,
     ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> {
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> {
       TODO("not meant to be called.")
     }
   }
@@ -88,57 +85,57 @@ class ReducerFactoryTest {
 
   @Test
   fun testGetAnnotationWithSimpleName() {
-    testGetAnnotationWithName(HDDReducer.NAME)
-    testGetAnnotationWithName(PersesNodeBfsReducer.NAME)
-    testGetAnnotationWithName(PersesNodeDfsReducer.NAME)
-    testGetAnnotationWithName(PersesNodePrioritizedBfsReducer.NAME)
-    testGetAnnotationWithName(PersesNodePrioritizedDfsReducer.NAME)
+    testGetAnnotationWithName(HDDReducerAnnotations.Hdd.shortName)
+    testGetAnnotationWithName(PersesNodeReducerAnnotations.Bfs.shortName)
+    testGetAnnotationWithName(PersesNodeReducerAnnotations.Dfs.shortName)
+    testGetAnnotationWithName(PersesNodeReducerAnnotations.PrioritizedBfs.shortName)
+    testGetAnnotationWithName(PersesNodeReducerAnnotations.PrioritizedDfs.shortName)
   }
 
   @Test
   fun testGetAnnotationWithAnnotationClassName() {
-    val klass = PersesNodeBfsReducer.META::class
-    val result = ReducerFactory.getReductionAlgorithm(klass.java.name)
-    assertThat(result).isSameInstanceAs(PersesNodeBfsReducer.META)
+    val klass = PersesNodeReducerAnnotations.Bfs::class
+    val result = ReducerFactory.DEFAULT.getReductionAlgorithm(klass.java.name)
+    assertThat(result).isSameInstanceAs(PersesNodeReducerAnnotations.Bfs)
   }
 
   @Test
   fun testAllReducerAnnotationsCanBeLoadedWithClassNames() {
-    ReducerFactory.registeredReductionAlgorithms.values.forEach { alg ->
+    ReducerFactory.DEFAULT.registeredReductionAlgorithms.values.forEach { alg ->
       assertWithMessage(alg::class.toString()).that(alg::class.qualifiedName).isNotNull()
     }
   }
 
   @Test
   fun testIsValidReducerName() {
-    assertThat(isValidReducerName("dd")).isFalse()
-    assertThat(isValidReducerName(HDDReducer.NAME))
+    assertThat(ReducerFactory.DEFAULT.isValidReducerName("dd")).isFalse()
+    assertThat(ReducerFactory.DEFAULT.isValidReducerName(HDDReducerAnnotations.Hdd.shortName))
       .isTrue()
   }
 
   @Test
   fun testGetReductionAlgorithm() {
-    val hdd = ReducerFactory.getReductionAlgorithm(HDDReducer.NAME)
-    assertThat(hdd).isEqualTo(HDDReducer.META)
+    val hdd = ReducerFactory.DEFAULT.getReductionAlgorithm(HDDReducerAnnotations.Hdd.shortName)
+    assertThat(hdd).isEqualTo(HDDReducerAnnotations.Hdd)
   }
 
   @Test
   fun testGetAllReducerAlgorithms() {
     val names =
-      ReducerFactory.registeredReductionAlgorithms.values
+      ReducerFactory.DEFAULT.registeredReductionAlgorithms.values
         .map { it.shortName }
         .toImmutableList()
     assertThat(names)
       .containsAtLeast(
         DeltaDebuggingReducer.NAME,
-        HDDReducer.NAME,
+        HDDReducerAnnotations.Hdd.shortName,
         PristineHDDReducer.NAME,
         TokenSlicer.NAME,
         NonSyntacticSingleTreeNodeReducer.NAME,
-        PersesNodeBfsReducer.NAME,
-        PersesNodeDfsReducer.NAME,
-        PersesNodePrioritizedBfsReducer.NAME,
-        PersesNodePrioritizedDfsReducer.NAME,
+        PersesNodeReducerAnnotations.Bfs.shortName,
+        PersesNodeReducerAnnotations.Dfs.shortName,
+        PersesNodeReducerAnnotations.PrioritizedBfs.shortName,
+        PersesNodeReducerAnnotations.PrioritizedDfs.shortName,
         ConcurrentStateBasedDeltaReducer.NAME,
       )
     assertThat(names).containsAtLeastElementsIn(
@@ -155,9 +152,54 @@ class ReducerFactoryTest {
     )
   }
 
+  @Test
+  fun testCreateThrowsOnDuplicateAnnotation() {
+    val duplicateBuiltin =
+      object : ReducerAnnotation(
+        shortName = "hdd",
+        description = "Duplicate HDD",
+        deterministic = true,
+        reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+      ) {
+        override fun create(
+          reducerContext: ReducerContext,
+        ): ImmutableList<AbstractSparTreeReducer> {
+          TODO("Not yet implemented")
+        }
+      }
+
+    val exception =
+      assertThrows(IllegalStateException::class.java) {
+        ReducerFactory.createWithExtra(listOf(duplicateBuiltin))
+      }
+    assertThat(exception.message).contains("Duplicate reduction algorithm registration: hdd")
+  }
+
+  @Test
+  fun testCopyWithExtra() {
+    val newAnnotation =
+      object : ReducerAnnotation(
+        shortName = "custom_test_reducer",
+        description = "Custom test reducer",
+        deterministic = true,
+        reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
+      ) {
+        override fun create(
+          reducerContext: ReducerContext,
+        ): ImmutableList<AbstractSparTreeReducer> {
+          TODO("Not yet implemented")
+        }
+      }
+    val originalFactory = ReducerFactory.DEFAULT
+    val extendedFactory = originalFactory.copyWithExtra(listOf(newAnnotation))
+
+    assertThat(extendedFactory.isValidReducerName("custom_test_reducer")).isTrue()
+    assertThat(originalFactory.isValidReducerName("custom_test_reducer")).isFalse()
+  }
+
   companion object {
     private fun testGetAnnotationWithName(name: String) {
-      val annotation = ReducerFactory.registeredReductionAlgorithms[name]!!
+      val annotation = ReducerFactory.DEFAULT.registeredReductionAlgorithms[name]!!
       assertThat(annotation.shortName).isEqualTo(name)
     }
   }

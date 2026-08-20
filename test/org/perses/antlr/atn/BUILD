@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("@rules_java//java:defs.bzl", "java_binary")
 load(
     "//src/org/perses/grammar:antlr_util.bzl",
     "antlr_codegen_combined",
@@ -32,17 +33,18 @@ kt_jvm_library(
 kt_jvm_test(
     name = "LexerAtnWrapperTest",
     srcs = ["LexerAtnWrapperTest.kt"],
+    # associates (not deps) for lexer_wrapper so the test can reach the
+    # `internal` getAllReachablePaths helper exercised by the Bug 2 white-box test.
+    associates = ["//src/org/perses/antlr/atn:lexer_wrapper"],
     jvm_flags = ["-javaagent:$(location //third_party/memory_measurer:object_explorer)"],
     deps = [
         ":TestJavaScriptLexer",
         ":TestLexer",
+        "//:antlr_runtime",
         "//:guava",
         "//:truth",
-        "//src/org/perses/antlr/atn:lexer_wrapper",
+        "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:parser_facade_interface",
-        "//src/org/perses/grammar/jackson:parser_facade",
-        "//src/org/perses/grammar/python3:python3_lexer",
-        "//src/org/perses/grammar/rust:parser_facade",
         "//src/org/perses/util",
         "//test/org/perses/antlr/atn:OrigC",
         "//third_party/memory_measurer:object_explorer",

@@ -48,3 +48,21 @@ kt_jvm_test(
         "//src/org/perses/util/shell:ExitCode",
     ],
 )
+
+kt_jvm_test(
+    name = "JDKShellExecutionPolicyTest",
+    srcs = ["JDKShellExecutionPolicyTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/util/shell",
+    ],
+)
+
+kt_jvm_test(
+    name = "ProcessUtilTest",
+    srcs = ["ProcessUtilTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/util/shell",
+    ],
+)

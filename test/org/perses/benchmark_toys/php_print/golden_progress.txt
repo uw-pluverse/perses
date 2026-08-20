@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 43
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_node_priority_hello.php"
 inputFlags:
   groupName: "Inputs"
   testScript: "r.sh"
-  inputFile: "hello.php"
+  inputFiles:
+  - "hello.php"
   deps: []
-  sourceFile: "hello.php"
-resultOutputFlags:
-  groupName: "Outputs"
-  outputDir: "result_reduction_golden_test_node_priority-dfs_hello.php"
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "node_priority-dfs"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "_reduction_golden_test_by_default_progress.txt"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: null
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: true
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,105 +130,117 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.php.PhpParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 16
 (43/43)  The reducer execution plan is listed below.
     fixpoint (smaller) {
-        node_priority-dfs
+        node_priority
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            node_priority-dfs
+            fixpoint (smaller) {
+                node_priority
+            }
         }
     }
 
 
 (43/43)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-======Fixpoint iteration 1. Reducer: node_priority-dfs======
+========Fixpoint iteration 1. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.php.PhpParserFacade
 The spar-tree is the following.
-htmlDocument {id=1,slot_type=htmlDocument}
-|___(*) {id=2,slot_type=kleene_star__htmlDocument_3}
-    |___(+) {id=111,slot_type=[aux_rule__htmlDocument_2,kleene_plus__inlineHtml_1]}
-    |   |___Token:< {id=123,slot_type=[htmlElement,HtmlOpen]}
-    |   |___Token:html {id=122,slot_type=[htmlElement,HtmlName]}
-    |   |___Token:> {id=121,slot_type=[htmlElement,HtmlClose]}
-    |   |___Token:< {id=120,slot_type=[htmlElement,HtmlOpen]}
-    |   |___Token:body {id=119,slot_type=[htmlElement,HtmlName]}
-    |   |___Token:> {id=118,slot_type=[htmlElement,HtmlClose]}
-    |___phpBlock {id=23,slot_type=[aux_rule__htmlDocument_2,phpBlock]}
-    |   |___Token:<?php {id=24,slot_type=PHPStart}
-    |   |___(*) {id=25,slot_type=kleene_star__phpBlock_2}
-    |       |___echoStatement {id=86,slot_type=[topStatement,statement,echoStatement]}
-    |       |   |___Token:echo {id=87,slot_type=Echo}
-    |       |   |___expressionList {id=88,slot_type=expressionList}
-    |       |   |   |___aux_rule__string_5 {id=105,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
-    |       |   |   |   |___Token:" {id=106,slot_type=DoubleQuote}
-    |       |   |   |   |___(*) {id=107,slot_type=kleene_star__string_3}
-    |       |   |   |   |   |___Token:start {id=110,slot_type=[interpolatedStringPart,StringPart]}
-    |       |   |   |   |___Token:" {id=108,slot_type=DoubleQuote}
-    |       |   |   |___(*) {id=91,slot_type=kleene_star__expressionList_2}
-    |       |   |       |___aux_rule__expressionList_1 {id=92,slot_type=aux_rule__expressionList_1}
-    |       |   |           |___Token:, {id=93,slot_type=Comma}
-    |       |   |           |___aux_rule__string_5 {id=97,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
-    |       |   |               |___Token:" {id=98,slot_type=DoubleQuote}
-    |       |   |               |___(*) {id=99,slot_type=kleene_star__string_3}
-    |       |   |               |   |___Token:\n {id=102,slot_type=[interpolatedStringPart,StringPart]}
-    |       |   |               |___Token:" {id=100,slot_type=DoubleQuote}
-    |       |   |___Token:; {id=89,slot_type=SemiColon}
-    |       |___echoStatement {id=60,slot_type=[topStatement,statement,echoStatement]}
-    |       |   |___Token:echo {id=61,slot_type=Echo}
-    |       |   |___expressionList {id=62,slot_type=expressionList}
-    |       |   |   |___aux_rule__string_5 {id=79,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
-    |       |   |   |   |___Token:" {id=80,slot_type=DoubleQuote}
-    |       |   |   |   |___(*) {id=81,slot_type=kleene_star__string_3}
-    |       |   |   |   |   |___Token:hello world {id=84,slot_type=[interpolatedStringPart,StringPart]}
-    |       |   |   |   |___Token:" {id=82,slot_type=DoubleQuote}
-    |       |   |   |___(*) {id=65,slot_type=kleene_star__expressionList_2}
-    |       |   |       |___aux_rule__expressionList_1 {id=66,slot_type=aux_rule__expressionList_1}
-    |       |   |           |___Token:, {id=67,slot_type=Comma}
-    |       |   |           |___aux_rule__string_5 {id=71,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
-    |       |   |               |___Token:" {id=72,slot_type=DoubleQuote}
-    |       |   |               |___(*) {id=73,slot_type=kleene_star__string_3}
-    |       |   |               |   |___Token:\n {id=76,slot_type=[interpolatedStringPart,StringPart]}
-    |       |   |               |___Token:" {id=74,slot_type=DoubleQuote}
-    |       |   |___Token:; {id=63,slot_type=SemiColon}
-    |       |___echoStatement {id=34,slot_type=[topStatement,statement,echoStatement]}
-    |       |   |___Token:echo {id=35,slot_type=Echo}
-    |       |   |___expressionList {id=36,slot_type=expressionList}
-    |       |   |   |___aux_rule__string_5 {id=53,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
-    |       |   |   |   |___Token:" {id=54,slot_type=DoubleQuote}
-    |       |   |   |   |___(*) {id=55,slot_type=kleene_star__string_3}
-    |       |   |   |   |   |___Token:finish {id=58,slot_type=[interpolatedStringPart,StringPart]}
-    |       |   |   |   |___Token:" {id=56,slot_type=DoubleQuote}
-    |       |   |   |___(*) {id=39,slot_type=kleene_star__expressionList_2}
-    |       |   |       |___aux_rule__expressionList_1 {id=40,slot_type=aux_rule__expressionList_1}
-    |       |   |           |___Token:, {id=41,slot_type=Comma}
-    |       |   |           |___aux_rule__string_5 {id=45,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
-    |       |   |               |___Token:" {id=46,slot_type=DoubleQuote}
-    |       |   |               |___(*) {id=47,slot_type=kleene_star__string_3}
-    |       |   |               |   |___Token:\n {id=50,slot_type=[interpolatedStringPart,StringPart]}
-    |       |   |               |___Token:" {id=48,slot_type=DoubleQuote}
-    |       |   |___Token:; {id=37,slot_type=SemiColon}
-    |       |___Token:?> {id=32,slot_type=[topStatement,statement,emptyStatement_,SemiColon]}
-    |___(+) {id=6,slot_type=[aux_rule__htmlDocument_2,kleene_plus__inlineHtml_1]}
-        |___Token:< {id=22,slot_type=[htmlElement,HtmlOpen]}
-        |___Token:/ {id=21,slot_type=[htmlElement,HtmlSlash]}
-        |___Token:body {id=20,slot_type=[htmlElement,HtmlName]}
-        |___Token:> {id=19,slot_type=[htmlElement,HtmlClose]}
-        |___Token:< {id=18,slot_type=[htmlElement,HtmlOpen]}
-        |___Token:/ {id=17,slot_type=[htmlElement,HtmlSlash]}
-        |___Token:html {id=16,slot_type=[htmlElement,HtmlName]}
-        |___Token:> {id=15,slot_type=[htmlElement,HtmlClose]}
+htmlDocument{id=1,slot_type=htmlDocument}
+|___(*){id=2,slot_type=kleene_star__htmlDocument_3}
+    |___(+){id=111,slot_type=[aux_rule__htmlDocument_2,kleene_plus__inlineHtml_1]}
+    |   |___Token:<{id=123,slot_type=[htmlElement,HtmlOpen]}
+    |   |___Token:html{id=122,slot_type=[htmlElement,HtmlName]}
+    |   |___Token:>{id=121,slot_type=[htmlElement,HtmlClose]}
+    |   |___Token:<{id=120,slot_type=[htmlElement,HtmlOpen]}
+    |   |___Token:body{id=119,slot_type=[htmlElement,HtmlName]}
+    |   |___Token:>{id=118,slot_type=[htmlElement,HtmlClose]}
+    |___phpBlock{id=23,slot_type=[aux_rule__htmlDocument_2,phpBlock]}
+    |   |___Token:<?php{id=24,slot_type=PHPStart}
+    |   |___(*){id=25,slot_type=kleene_star__phpBlock_2}
+    |       |___echoStatement{id=86,slot_type=[topStatement,statement,echoStatement]}
+    |       |   |___Token:echo{id=87,slot_type=Echo}
+    |       |   |___expressionList{id=88,slot_type=expressionList}
+    |       |   |   |___aux_rule__string_5{id=105,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
+    |       |   |   |   |___Token:"{id=106,slot_type=DoubleQuote}
+    |       |   |   |   |___(*){id=107,slot_type=kleene_star__string_3}
+    |       |   |   |   |   |___Token:start{id=110,slot_type=[interpolatedStringPart,StringPart]}
+    |       |   |   |   |___Token:"{id=108,slot_type=DoubleQuote}
+    |       |   |   |___(*){id=91,slot_type=kleene_star__expressionList_2}
+    |       |   |       |___aux_rule__expressionList_1{id=92,slot_type=aux_rule__expressionList_1}
+    |       |   |           |___Token:,{id=93,slot_type=Comma}
+    |       |   |           |___aux_rule__string_5{id=97,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
+    |       |   |               |___Token:"{id=98,slot_type=DoubleQuote}
+    |       |   |               |___(*){id=99,slot_type=kleene_star__string_3}
+    |       |   |               |   |___Token:\n{id=102,slot_type=[interpolatedStringPart,StringPart]}
+    |       |   |               |___Token:"{id=100,slot_type=DoubleQuote}
+    |       |   |___Token:;{id=89,slot_type=SemiColon}
+    |       |___echoStatement{id=60,slot_type=[topStatement,statement,echoStatement]}
+    |       |   |___Token:echo{id=61,slot_type=Echo}
+    |       |   |___expressionList{id=62,slot_type=expressionList}
+    |       |   |   |___aux_rule__string_5{id=79,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
+    |       |   |   |   |___Token:"{id=80,slot_type=DoubleQuote}
+    |       |   |   |   |___(*){id=81,slot_type=kleene_star__string_3}
+    |       |   |   |   |   |___Token:hello world{id=84,slot_type=[interpolatedStringPart,StringPart]}
+    |       |   |   |   |___Token:"{id=82,slot_type=DoubleQuote}
+    |       |   |   |___(*){id=65,slot_type=kleene_star__expressionList_2}
+    |       |   |       |___aux_rule__expressionList_1{id=66,slot_type=aux_rule__expressionList_1}
+    |       |   |           |___Token:,{id=67,slot_type=Comma}
+    |       |   |           |___aux_rule__string_5{id=71,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
+    |       |   |               |___Token:"{id=72,slot_type=DoubleQuote}
+    |       |   |               |___(*){id=73,slot_type=kleene_star__string_3}
+    |       |   |               |   |___Token:\n{id=76,slot_type=[interpolatedStringPart,StringPart]}
+    |       |   |               |___Token:"{id=74,slot_type=DoubleQuote}
+    |       |   |___Token:;{id=63,slot_type=SemiColon}
+    |       |___echoStatement{id=34,slot_type=[topStatement,statement,echoStatement]}
+    |       |   |___Token:echo{id=35,slot_type=Echo}
+    |       |   |___expressionList{id=36,slot_type=expressionList}
+    |       |   |   |___aux_rule__string_5{id=53,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
+    |       |   |   |   |___Token:"{id=54,slot_type=DoubleQuote}
+    |       |   |   |   |___(*){id=55,slot_type=kleene_star__string_3}
+    |       |   |   |   |   |___Token:finish{id=58,slot_type=[interpolatedStringPart,StringPart]}
+    |       |   |   |   |___Token:"{id=56,slot_type=DoubleQuote}
+    |       |   |   |___(*){id=39,slot_type=kleene_star__expressionList_2}
+    |       |   |       |___aux_rule__expressionList_1{id=40,slot_type=aux_rule__expressionList_1}
+    |       |   |           |___Token:,{id=41,slot_type=Comma}
+    |       |   |           |___aux_rule__string_5{id=45,slot_type=[expression,aux_rule__expression_8,string,aux_rule__string_5]}
+    |       |   |               |___Token:"{id=46,slot_type=DoubleQuote}
+    |       |   |               |___(*){id=47,slot_type=kleene_star__string_3}
+    |       |   |               |   |___Token:\n{id=50,slot_type=[interpolatedStringPart,StringPart]}
+    |       |   |               |___Token:"{id=48,slot_type=DoubleQuote}
+    |       |   |___Token:;{id=37,slot_type=SemiColon}
+    |       |___Token:?>{id=32,slot_type=[topStatement,statement,emptyStatement_,SemiColon]}
+    |___(+){id=6,slot_type=[aux_rule__htmlDocument_2,kleene_plus__inlineHtml_1]}
+        |___Token:<{id=22,slot_type=[htmlElement,HtmlOpen]}
+        |___Token:/{id=21,slot_type=[htmlElement,HtmlSlash]}
+        |___Token:body{id=20,slot_type=[htmlElement,HtmlName]}
+        |___Token:>{id=19,slot_type=[htmlElement,HtmlClose]}
+        |___Token:<{id=18,slot_type=[htmlElement,HtmlOpen]}
+        |___Token:/{id=17,slot_type=[htmlElement,HtmlSlash]}
+        |___Token:html{id=16,slot_type=[htmlElement,HtmlName]}
+        |___Token:>{id=15,slot_type=[htmlElement,HtmlClose]}
 ------------------------------------------------------------
 
 
+FixPt[1][node_priority](43/43)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](43/43)  Retrieved semantics provider null
 ==================Reducing node 2, size=43==================
 
 The current best program is the following
@@ -224,29 +258,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](43/43)  Minimizer DfsListMinimizer starts. Input=[0-2]#3. Global ratio:43/43=100.00%
-FixPt[1][node_priority-dfs][DFS](43/43)  Testing the empty input. Global ratio:43/43=100.00%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](43/43)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:43/43=100.00%
+FixPt[1][node_priority][DFS](43/43)  Testing the empty input. Global ratio:43/43=100.00%
+==========Testing the following program (0): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__htmlDocument_3]dd@3
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__htmlDocument_3]dd@#nodes=3,#parts=3#total-parts=3
     --file: hello.php--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](43/43)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:43/43=100.00%
-============Testing the following program: pass=============
+FixPt[1][node_priority][DFS](43/43)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:43/43=100.00%
+==========Testing the following program (1): pass===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__htmlDocument_3]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__htmlDocument_3]dd@#nodes=1,#parts=1#total-parts=3
     --file: hello.php--
-    <html>
-    <body>
-    <?php
-    echo "start", "\n";
-    echo "hello world", "\n";
-    echo "finish", "\n";
-    ?>
-    --file: <formatted tokenized program in its original format>--
     <html>
     <body>
     <?php
@@ -257,7 +282,7 @@ FixPt[1][node_priority-dfs][DFS](43/43)  Try deleting [0-2]#3: Uninteresting. Lo
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](43/43)  Try deleting [2]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:43/43=100.00%
+FixPt[1][node_priority][DFS](43/43)  Try deleting [2]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:43/43=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 1 --> 1.
@@ -273,49 +298,40 @@ FixPt[1][node_priority-dfs][DFS](43/43)  Try deleting [2]#1: Interesting. Local 
 ================The best program is updated.================
 
 token count change 43 -> 35
+Edit: [delete_6]
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](35/43)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/3=66.67%. Global ratio:35/43=81.40%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](35/43)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/3=66.67%. Global ratio:35/43=81.40%
+==========Testing the following program (2): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__htmlDocument_3]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__htmlDocument_3]dd@#nodes=1,#parts=1#total-parts=2
     --file: hello.php--
     <html>
     <body>
-    --file: <formatted tokenized program in its original format>--
-    <html>
-    <body>
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](35/43)  Try deleting [1]#1: Uninteresting. Local ratio: 2/3=66.67%. Global ratio:35/43=81.40%
-============Testing the following program: pass=============
+FixPt[1][node_priority][DFS](35/43)  Try deleting [1]#1: Uninteresting. Local ratio: 2/3=66.67%. Global ratio:35/43=81.40%
+==========Testing the following program (3): pass===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__htmlDocument_3]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__htmlDocument_3]dd@#nodes=1,#parts=1#total-parts=2
     --file: hello.php--
     <?php
     echo "start", "\n";
     echo "hello world", "\n";
     echo "finish", "\n";
     ?>
-    --file: <formatted tokenized program in its original format>--
-    <?php
-    echo "start", "\n";
-    echo "hello world", "\n";
-    echo "finish", "\n";
-    ?>
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](35/43)  Try deleting [0]#1: Interesting. Local ratio: 2/3=66.67%. Global ratio:35/43=81.40%
+FixPt[1][node_priority][DFS](35/43)  Try deleting [0]#1: Interesting. Local ratio: 2/3=66.67%. Global ratio:35/43=81.40%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 2 --> 2.
@@ -331,10 +347,11 @@ FixPt[1][node_priority-dfs][DFS](35/43)  Try deleting [0]#1: Interesting. Local 
 ================The best program is updated.================
 
 token count change 35 -> 29
+Edit: [delete_111]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](29/43)  Minimizer DfsListMinimizer ends. Result=[1]#1. Local ratio: 1/3=33.33%. Global ratio:29/43=67.44%
+FixPt[1][node_priority][DFS](29/43)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/3=33.33%. Global ratio:29/43=67.44%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 2 from 43 to 29
@@ -357,16 +374,13 @@ The current best program is the following
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (4): fail===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.php--
-    <?php
-    --file: <formatted tokenized program in its original format>--
     <?php
 ------------------------------------------------------------
 
@@ -390,59 +404,43 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](29/43)  Minimizer DfsListMinimizer starts. Input=[0-3]#4. Global ratio:29/43=67.44%
-FixPt[1][node_priority-dfs][DFS](29/43)  Testing the empty input. Global ratio:29/43=67.44%
+FixPt[1][node_priority][DFS](29/43)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-3]#4. Global ratio:29/43=67.44%
+FixPt[1][node_priority][DFS](29/43)  Testing the empty input. Global ratio:29/43=67.44%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
     <?php
-    --file: <formatted tokenized program in its original format>--
-    <?php
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](29/43)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/43=67.44%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](29/43)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/43=67.44%
+==========Testing the following program (5): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__phpBlock_2]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__phpBlock_2]dd@#nodes=2,#parts=2#total-parts=4
     --file: hello.php--
     <?php
     echo "start", "\n";
     echo "hello world", "\n";
-    --file: <formatted tokenized program in its original format>--
-    <?php
-    echo "start", "\n";
-    echo "hello world", "\n";
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](29/43)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/43=67.44%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](29/43)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/43=67.44%
+==========Testing the following program (6): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__phpBlock_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__phpBlock_2]dd@#nodes=1,#parts=1#total-parts=4
     --file: hello.php--
     <?php
     echo "start", "\n";
     echo "hello world", "\n";
     echo "finish", "\n";
-    --file: <formatted tokenized program in its original format>--
-    <?php
-    echo "start", "\n";
-    echo "hello world", "\n";
-    echo "finish", "\n";
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](29/43)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/43=67.44%
-============Testing the following program: pass=============
+FixPt[1][node_priority][DFS](29/43)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:29/43=67.44%
+==========Testing the following program (7): pass===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__phpBlock_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__phpBlock_2]dd@#nodes=1,#parts=1#total-parts=4
     --file: hello.php--
-    <?php
-    echo "start", "\n";
-    echo "hello world", "\n";
-    ?>
-    --file: <formatted tokenized program in its original format>--
     <?php
     echo "start", "\n";
     echo "hello world", "\n";
@@ -450,7 +448,7 @@ FixPt[1][node_priority-dfs][DFS](29/43)  Try deleting [3]#1: Uninteresting. Loca
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](29/43)  Try deleting [2]#1: Interesting. Local ratio: 4/4=100.00%. Global ratio:29/43=67.44%
+FixPt[1][node_priority][DFS](29/43)  Try deleting [2]#1: Interesting. Local ratio: 4/4=100.00%. Global ratio:29/43=67.44%
 ===========TestScriptExecutionCacheEntryEviction============
 
 1 entries are removed: 5 --> 4.
@@ -466,55 +464,45 @@ FixPt[1][node_priority-dfs][DFS](29/43)  Try deleting [2]#1: Interesting. Local 
 ================The best program is updated.================
 
 token count change 29 -> 20
+Edit: [delete_34]
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (8): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__phpBlock_2]dd@2
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__phpBlock_2]dd@#nodes=2,#parts=2#total-parts=3
     --file: hello.php--
-    <?php
-    ?>
-    --file: <formatted tokenized program in its original format>--
     <?php
     ?>
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](20/43)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:20/43=46.51%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](20/43)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:20/43=46.51%
+==========Testing the following program (9): fail===========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__phpBlock_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__phpBlock_2]dd@#nodes=1,#parts=1#total-parts=3
     --file: hello.php--
-    <?php
-    echo "start", "\n";
-    ?>
-    --file: <formatted tokenized program in its original format>--
     <?php
     echo "start", "\n";
     ?>
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](20/43)  Try deleting [1]#1: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:20/43=46.51%
-============Testing the following program: pass=============
+FixPt[1][node_priority][DFS](20/43)  Try deleting [1]#1: Uninteresting. Local ratio: 3/4=75.00%. Global ratio:20/43=46.51%
+==========Testing the following program (10): pass==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__phpBlock_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__phpBlock_2]dd@#nodes=1,#parts=1#total-parts=3
     --file: hello.php--
-    <?php
-    echo "hello world", "\n";
-    ?>
-    --file: <formatted tokenized program in its original format>--
     <?php
     echo "hello world", "\n";
     ?>
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](20/43)  Try deleting [0]#1: Interesting. Local ratio: 3/4=75.00%. Global ratio:20/43=46.51%
+FixPt[1][node_priority][DFS](20/43)  Try deleting [0]#1: Interesting. Local ratio: 3/4=75.00%. Global ratio:20/43=46.51%
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 6 --> 4.
+1 entries are removed: 6 --> 5.
 ------------------------------------------------------------
 
 
@@ -527,10 +515,11 @@ FixPt[1][node_priority-dfs][DFS](20/43)  Try deleting [0]#1: Interesting. Local 
 ================The best program is updated.================
 
 token count change 20 -> 11
+Edit: [delete_86]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](11/43)  Minimizer DfsListMinimizer ends. Result=[1,3]#2. Local ratio: 2/4=50.00%. Global ratio:11/43=25.58%
+FixPt[1][node_priority][DFS](11/43)  Minimizer UnweightedDfsListMinimizer ends. Result=[1,3]#2. Local ratio: 2/4=50.00%. Global ratio:11/43=25.58%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 25 from 29 to 11
@@ -553,20 +542,13 @@ The current best program is the following
     --file: hello.php--
     <?php
     ?>
-    --file: <formatted tokenized program in its original format>--
-    <?php
-    ?>
 ------------------------------------------------------------
 
 
-============Testing the following program: fail=============
+==========Testing the following program (11): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.php--
-    <?php
-                            ;
-    ?>
-    --file: <formatted tokenized program in its original format>--
     <?php
                             ;
     ?>
@@ -590,38 +572,29 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-============Testing the following program: pass=============
+==========Testing the following program (12): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: hello.php--
+    <?php
+    echo                "\n";
+    ?>
+------------------------------------------------------------
+
+
+==========Testing the following program (13): pass==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.php--
     <?php
     echo "hello world"      ;
     ?>
-    --file: <formatted tokenized program in its original format>--
-    <?php
-    echo "hello world"      ;
-    ?>
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-    --file: hello.php--
-    <?php
-    echo                "\n";
-    ?>
-    --file: <formatted tokenized program in its original format>--
-    <?php
-    echo                "\n";
-    ?>
 ------------------------------------------------------------
 
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 5 --> 5.
+1 entries are removed: 7 --> 6.
 ------------------------------------------------------------
 
 
@@ -634,6 +607,7 @@ It took less than 1 second to cancel the task.
 ================The best program is updated.================
 
 token count change 11 -> 7
+Edit: HoistEdit:[replace_62_with_79]
 ------------------------------------------------------------
 
 
@@ -688,24 +662,21 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](7/43)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:7/43=16.28%
-FixPt[1][node_priority-dfs][DFS](7/43)  Testing the empty input. Global ratio:7/43=16.28%
-============Testing the following program: fail=============
+FixPt[1][node_priority][DFS](7/43)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:7/43=16.28%
+FixPt[1][node_priority][DFS](7/43)  Testing the empty input. Global ratio:7/43=16.28%
+==========Testing the following program (14): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__string_3]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__string_3]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.php--
-    <?php
-    echo "           "      ;
-    ?>
-    --file: <formatted tokenized program in its original format>--
     <?php
     echo "           "      ;
     ?>
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority-dfs][DFS](7/43)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
-FixPt[1][node_priority-dfs][DFS](7/43)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
+FixPt[1][node_priority][DFS](7/43)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
+FixPt[1][node_priority][DFS](7/43)  There is only one element in the input, and the empty input has been tested. Global ratio:7/43=16.28%
+FixPt[1][node_priority][DFS](7/43)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 81
@@ -815,26 +786,29 @@ Failed to reduce node 24
 
 
 (7/43)  Rebuilding spar-tree: The spartree is rebuilt.
-======Fixpoint iteration 2. Reducer: node_priority-dfs======
+========Fixpoint iteration 2. Reducer: node_priority========
 
+Parser Facade: class org.perses.grammar.php.PhpParserFacade
 The spar-tree is the following.
-htmlDocument {id=125,slot_type=htmlDocument}
-|___(*) {id=126,slot_type=kleene_star__htmlDocument_3}
-    |___phpBlock {id=128,slot_type=[aux_rule__htmlDocument_2,phpBlock]}
-        |___Token:<?php {id=129,slot_type=PHPStart}
-        |___(*) {id=130,slot_type=kleene_star__phpBlock_2}
-            |___echoStatement {id=137,slot_type=[topStatement,statement,echoStatement]}
-            |   |___Token:echo {id=138,slot_type=Echo}
-            |   |___aux_rule__string_5 {id=144,slot_type=[expressionList,expression,aux_rule__expression_8,string,aux_rule__string_5]}
-            |   |   |___Token:" {id=145,slot_type=DoubleQuote}
-            |   |   |___(*) {id=146,slot_type=kleene_star__string_3}
-            |   |   |   |___Token:hello world {id=149,slot_type=[interpolatedStringPart,StringPart]}
-            |   |   |___Token:" {id=147,slot_type=DoubleQuote}
-            |   |___Token:; {id=140,slot_type=SemiColon}
-            |___Token:?> {id=135,slot_type=[topStatement,statement,emptyStatement_,SemiColon]}
+htmlDocument{id=125,slot_type=htmlDocument}
+|___(*){id=126,slot_type=kleene_star__htmlDocument_3}
+    |___phpBlock{id=128,slot_type=[aux_rule__htmlDocument_2,phpBlock]}
+        |___Token:<?php{id=129,slot_type=PHPStart}
+        |___(*){id=130,slot_type=kleene_star__phpBlock_2}
+            |___echoStatement{id=137,slot_type=[topStatement,statement,echoStatement]}
+            |   |___Token:echo{id=138,slot_type=Echo}
+            |   |___aux_rule__string_5{id=144,slot_type=[expressionList,expression,aux_rule__expression_8,string,aux_rule__string_5]}
+            |   |   |___Token:"{id=145,slot_type=DoubleQuote}
+            |   |   |___(*){id=146,slot_type=kleene_star__string_3}
+            |   |   |   |___Token:hello world{id=149,slot_type=[interpolatedStringPart,StringPart]}
+            |   |   |___Token:"{id=147,slot_type=DoubleQuote}
+            |   |___Token:;{id=140,slot_type=SemiColon}
+            |___Token:?>{id=135,slot_type=[topStatement,statement,emptyStatement_,SemiColon]}
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority](7/43)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](7/43)  Retrieved semantics provider null
 =================Reducing node 126, size=7==================
 
 The current best program is the following
@@ -846,17 +820,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](7/43)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:7/43=16.28%
-FixPt[2][node_priority-dfs][DFS](7/43)  Testing the empty input. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Testing the empty input. Global ratio:7/43=16.28%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](7/43)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
-FixPt[2][node_priority-dfs][DFS](7/43)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  There is only one element in the input, and the empty input has been tested. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 126
@@ -876,15 +850,14 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=128}
+    structure: [delete_128]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
-    <?php
-    --file: <formatted tokenized program in its original format>--
     <?php
 ------------------------------------------------------------
 
@@ -906,44 +879,36 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](7/43)  Minimizer DfsListMinimizer starts. Input=[0-1]#2. Global ratio:7/43=16.28%
-FixPt[2][node_priority-dfs][DFS](7/43)  Testing the empty input. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Testing the empty input. Global ratio:7/43=16.28%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
     <?php
-    --file: <formatted tokenized program in its original format>--
-    <?php
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](7/43)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:7/43=16.28%
-============Testing the following program: fail=============
+FixPt[2][node_priority][DFS](7/43)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:7/43=16.28%
+==========Testing the following program (15): fail==========
 
-// edit action set type: DFS in org.perses.reduction.reducer.PersesNodeReducer[kleene_star:kleene_star__phpBlock_2]dd@1
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__phpBlock_2]dd@#nodes=1,#parts=1#total-parts=2
     --file: hello.php--
-    <?php
-    echo "hello world"      ;
-    --file: <formatted tokenized program in its original format>--
     <?php
     echo "hello world"      ;
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](7/43)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:7/43=16.28%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
     <?php
     ?>
-    --file: <formatted tokenized program in its original format>--
-    <?php
-    ?>
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](7/43)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:7/43=16.28%
-FixPt[2][node_priority-dfs][DFS](7/43)  Minimizer DfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:7/43=16.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 130
@@ -963,17 +928,14 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=137}
+    structure: [delete_137]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
-    <?php
-                            ;
-    ?>
-    --file: <formatted tokenized program in its original format>--
     <?php
                             ;
     ?>
@@ -1031,23 +993,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](7/43)  Minimizer DfsListMinimizer starts. Input=[0]#1. Global ratio:7/43=16.28%
-FixPt[2][node_priority-dfs][DFS](7/43)  Testing the empty input. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Testing the empty input. Global ratio:7/43=16.28%
 =====Cache hit for the following uninteresting program:=====
 
     --file: hello.php--
     <?php
     echo "           "      ;
     ?>
-    --file: <formatted tokenized program in its original format>--
-    <?php
-    echo "           "      ;
-    ?>
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority-dfs][DFS](7/43)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
-FixPt[2][node_priority-dfs][DFS](7/43)  Minimizer DfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  There is only one element in the input, and the empty input has been tested. Global ratio:7/43=16.28%
+FixPt[2][node_priority][DFS](7/43)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/43=16.28%
 ===================Node reduction is done===================
 
 Failed to reduce node 146
@@ -1156,45 +1115,49 @@ Failed to reduce node 129
 ------------------------------------------------------------
 
 
+(7/43)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.php.PhpParserFacade
 The spar-tree is the following.
-htmlDocument {id=125,slot_type=htmlDocument}
-|___(*) {id=126,slot_type=kleene_star__htmlDocument_3}
-    |___phpBlock {id=128,slot_type=[aux_rule__htmlDocument_2,phpBlock]}
-        |___Token:<?php {id=129,slot_type=PHPStart}
-        |___(*) {id=130,slot_type=kleene_star__phpBlock_2}
-            |___echoStatement {id=137,slot_type=[topStatement,statement,echoStatement]}
-            |   |___Token:echo {id=138,slot_type=Echo}
-            |   |___aux_rule__string_5 {id=144,slot_type=[expressionList,expression,aux_rule__expression_8,string,aux_rule__string_5]}
-            |   |   |___Token:" {id=145,slot_type=DoubleQuote}
-            |   |   |___(*) {id=146,slot_type=kleene_star__string_3}
-            |   |   |   |___Token:hello world {id=149,slot_type=[interpolatedStringPart,StringPart]}
-            |   |   |___Token:" {id=147,slot_type=DoubleQuote}
-            |   |___Token:; {id=140,slot_type=SemiColon}
-            |___Token:?> {id=135,slot_type=[topStatement,statement,emptyStatement_,SemiColon]}
+htmlDocument{id=125,slot_type=htmlDocument}
+|___(*){id=126,slot_type=kleene_star__htmlDocument_3}
+    |___phpBlock{id=128,slot_type=[aux_rule__htmlDocument_2,phpBlock]}
+        |___Token:<?php{id=129,slot_type=PHPStart}
+        |___(*){id=130,slot_type=kleene_star__phpBlock_2}
+            |___echoStatement{id=137,slot_type=[topStatement,statement,echoStatement]}
+            |   |___Token:echo{id=138,slot_type=Echo}
+            |   |___aux_rule__string_5{id=144,slot_type=[expressionList,expression,aux_rule__expression_8,string,aux_rule__string_5]}
+            |   |   |___Token:"{id=145,slot_type=DoubleQuote}
+            |   |   |___(*){id=146,slot_type=kleene_star__string_3}
+            |   |   |   |___Token:hello world{id=149,slot_type=[interpolatedStringPart,StringPart]}
+            |   |   |___Token:"{id=147,slot_type=DoubleQuote}
+            |   |___Token:;{id=140,slot_type=SemiColon}
+            |___Token:?>{id=135,slot_type=[topStatement,statement,emptyStatement_,SemiColon]}
 ------------------------------------------------------------
 
 
 FixPt[3][FineGritLatraReducer](7/43)  Latra does not support LanguagePhp{name=php, extensions=[php], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
-(7/43)  The history of the reducer invocation.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0    node_priority-dfs     -36    -66             0
- 1    node_priority-dfs       0      0             0
- 2 FineGritLatraReducer       0      0             0
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      5             0     -36            -66      15   time-hidden
+ 1        node_priority      0             0       0              0       1   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-   node_priority-dfs     2     -36    -66
-FineGritLatraReducer     1       0      0
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      5             0     -36            -66      16   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+           Transformation Worked #NonDeletions #Tokens #NonBlankChars
+   node_priority.Deletion      4             0     -32            -61
+node_priority.Replacement      1             0      -4             -5
 ------------------------------------- End --------------------------------------
-
-
 #test success = 5
-#test failure = 10
+#test failure = 11
 #test result cache hits = 10
-#test execution cancelled = 1
+#test execution cancelled = 0
 #node edit action set cache hits = 2
 #external test execution cache hits = 0

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -35,24 +35,11 @@ sealed class Candidate<T : Any> {
 
   protected abstract fun computeDeletedWrappers(): ImmutableList<ElementWrapper<T>>
 
+  abstract val candidateWrappers: ImmutableList<ElementWrapper<T>>
+
   abstract fun getCandidateOrFail(): ImmutableList<T>
 
-  class DeletionOnly<T : Any>(
-    private val deleted_: ImmutableList<ElementWrapper<T>>,
-  ) : Candidate<T>() {
-    init {
-      require(deleted_.isNotEmpty()) {
-        "There is no deletion set in $this"
-      }
-      lazyAssert { deleted_.isSortedAscendinglyBy { it.index } }
-    }
-
-    override fun computeDeletedWrappers(): ImmutableList<ElementWrapper<T>> = deleted_
-
-    override fun getCandidateOrFail(): ImmutableList<T> {
-      error("This configuration does not have a candidate.")
-    }
-  }
+  abstract fun getOriginalOrNull(): ImmutableList<ElementWrapper<T>>?
 
   class DeletionsFromOriginal<T : Any>(
     private val original: ImmutableList<ElementWrapper<T>>,
@@ -73,13 +60,15 @@ sealed class Candidate<T : Any> {
       }
     }
 
+    override fun getOriginalOrNull(): ImmutableList<ElementWrapper<T>> = original
+
     override fun computeDeletedWrappers(): ImmutableList<ElementWrapper<T>> = deleted_
 
     val candidateElements: ImmutableList<T> by lazy {
       candidateWrappers.transformToImmutableList { it.element }
     }
 
-    val candidateWrappers: ImmutableList<ElementWrapper<T>> by lazy {
+    override val candidateWrappers: ImmutableList<ElementWrapper<T>> by lazy {
       Util.computeDifference(superList = original, subList = deleted_)
     }
 
@@ -108,27 +97,51 @@ sealed class Candidate<T : Any> {
         subList = candidate_,
       )
 
+    override val candidateWrappers: ImmutableList<ElementWrapper<T>>
+      get() = candidate_
+
     val candidate: ImmutableList<T> by lazy {
       candidate_.transformToImmutableList { it.element }
     }
 
     override fun getCandidateOrFail(): ImmutableList<T> = candidate
+
+    override fun getOriginalOrNull(): ImmutableList<ElementWrapper<T>> = original
   }
 }
 
 fun interface IPropertyTester<T : Any, Payload> {
-  fun testProperty(configuration: Candidate<T>): LMPropertyTestResult<T, Payload>
+  /**
+   * Submits [configuration] for testing and returns a handle whose [PropertyTestHandle.get] yields
+   * the result. A synchronous tester returns the [ListMinimizerPropertyTestResult] directly (it is its own
+   * handle); a concurrency-capable tester runs the test off-thread so [SpeculativeGreedyDriver] can
+   * keep several in flight. Submission runs on the minimizer's single orchestration thread.
+   */
+  fun testProperty(configuration: Candidate<T>): PropertyTestHandle<T, Payload>
 }
 
-sealed class LMPropertyTestResult<T : Any, Payload>(
+/** A handle to a (possibly speculative) property test that has been submitted for a candidate. */
+interface PropertyTestHandle<T : Any, Payload> {
+  fun get(): ListMinimizerPropertyTestResult<T, Payload>
+
+  fun requestToCancel()
+}
+
+sealed class ListMinimizerPropertyTestResult<T : Any, Payload>(
   val staleElementsToRemove: ImmutableList<ElementWrapper<T>>,
-) {
+) : PropertyTestHandle<T, Payload> {
+  // A completed result is its own handle: a synchronous tester returns the result directly.
+  final override fun get(): ListMinimizerPropertyTestResult<T, Payload> = this
+
+  final override fun requestToCancel() {
+  }
+
   abstract fun toShortString(): String
 
   class Skipped<T : Any, Payload>(
     private val result: String,
     staleElementsToRemove: ImmutableList<ElementWrapper<T>> = ImmutableList.of(),
-  ) : LMPropertyTestResult<T, Payload>(staleElementsToRemove) {
+  ) : ListMinimizerPropertyTestResult<T, Payload>(staleElementsToRemove) {
     override fun toShortString(): String = result
 
     override fun toString(): String = MoreObjects.toStringHelper(this).addValue(result).toString()
@@ -138,7 +151,7 @@ sealed class LMPropertyTestResult<T : Any, Payload>(
     val result: PropertyTestResult,
     val payload: Payload,
     staleElementsToRemove: ImmutableList<ElementWrapper<T>> = ImmutableList.of(),
-  ) : LMPropertyTestResult<T, Payload>(
+  ) : ListMinimizerPropertyTestResult<T, Payload>(
       staleElementsToRemove,
     ) {
     override fun toShortString(): String =

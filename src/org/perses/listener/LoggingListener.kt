@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -36,6 +36,7 @@ import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TokenSlicingEndEvent
 import org.perses.reduction.event.TokenSlicingStartEvent
+import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.util.TimeSpan.Builder.Companion.start
 import org.perses.util.TimeUtil.formatDateForDisplay
 import org.perses.util.Util.computePercentage
@@ -47,12 +48,13 @@ class LoggingListener(
 ) : AbstractReductionListener() {
   override fun onReductionStart(event: ReductionStartEvent) {
     logger.ktInfo {
-      "Reduction Started. #tokens=${event.programSize} extraData=${event.extraData}"
+      "Reduction Started. #tokens=${event.perFileSizeMetrics.totalCanonicalTokenCount} " +
+        "extraData=${event.extraData}"
     }
   }
 
   override fun onReductionEnd(event: ReductionEndEvent) {
-    val finalProgramSize = event.programSize
+    val finalProgramSize = event.perFileSizeMetrics
     if (!hideTimestamps) {
       val timeSpan =
         start(event.startEvent.currentTimeMillis)
@@ -62,22 +64,20 @@ class LoggingListener(
       }
       logger.ktInfo { "Elapsed time is ${timeSpan.formattedElapsedTime}" }
     }
-    val initialProgramSize = event.startEvent.programSize
+    val initialProgramSize = event.startEvent.perFileSizeMetrics
     logger.ktInfo {
-      "Removed ${initialProgramSize - finalProgramSize} token(s). Reduction ratio is " +
+      val deletedTokens =
+        initialProgramSize.totalCanonicalTokenCount - finalProgramSize.totalCanonicalTokenCount
+      "Removed $deletedTokens token(s). Reduction ratio is " +
         computePercentage(
-          finalProgramSize,
-          initialProgramSize,
+          finalProgramSize.totalCanonicalTokenCount,
+          initialProgramSize.totalCanonicalTokenCount,
         )
     }
     logger.ktInfo {
       "Test script execution count: " +
         event.testScriptExecutorServiceStatistics.scriptExecutionNumber
     }
-  }
-
-  override fun notifyNumOfLexemesInPersesTokenFactory(numOfLexemes: Int) {
-    logger.ktInfo { "The number of lexemes in PersesTokenFactory is $numOfLexemes" }
   }
 
   override fun onSanityCheck(event: SanityCheckEvent) {
@@ -105,7 +105,10 @@ class LoggingListener(
       return
     }
     val builder = StringBuilder().append(event.prefixLabelFromRootToHere)
-    builder.append(" New fixpoint iteration started. #Tokens=").append(event.programSize)
+    builder
+      .append(
+        " New fixpoint iteration started. #Tokens=",
+      ).append(event.perFileSizeMetrics.totalCanonicalTokenCount)
     info.log(builder.toString())
   }
 
@@ -224,9 +227,15 @@ class LoggingListener(
     }
     val builder = StringBuilder().append(event.prefixLabelFromRootToHere)
     builder.append(" New minimal, ")
-    printNumOfDeletedTokens(builder, event.programSizeBefore, event.programSize)
+    // The edit changed only the file under reduction, so its deleted-token count is the
+    // single-file delta; the ratio is over the whole mutable-file set.
+    builder
+      .append("delete ")
+      .append(
+        event.programSizeBefore.canonicalTokenCount - event.programSizeAfter.canonicalTokenCount,
+      ).append(" tokens")
     builder.append(", ")
-    printReductionSizeRatio(builder, event.initialProgramSize(), event.programSize)
+    printReductionSizeRatio(builder, event.initialPerFileSizeMetrics(), event.perFileSizeMetrics)
     info.log(builder.toString())
   }
 
@@ -250,35 +259,43 @@ class LoggingListener(
     builder: StringBuilder,
     endEvent: AbstractEndEvent<out AbstractStartEvent>,
   ): StringBuilder {
-    val programSizeBefore = endEvent.startEvent.programSize
-    val programSizeAfter = endEvent.programSize
-    return printNumOfDeletedTokens(builder, programSizeBefore, programSizeAfter)
+    val before = endEvent.startEvent.perFileSizeMetrics
+    val after = endEvent.perFileSizeMetrics
+    return printNumOfDeletedTokens(builder, before, after)
   }
 
   private fun printNumOfDeletedTokens(
     builder: StringBuilder,
-    programSizeBefore: Int,
-    programSizeAfter: Int,
+    before: PerFileSizeMetrics,
+    after: PerFileSizeMetrics,
   ): StringBuilder =
-    builder.append("delete ").append(programSizeBefore - programSizeAfter).append(" tokens")
+    builder
+      .append("delete ")
+      .append(before.totalCanonicalTokenCount - after.totalCanonicalTokenCount)
+      .append(" tokens")
 
   private fun printReductionSizeRatio(
     builder: StringBuilder,
     endEvent: AbstractEndEvent<out AbstractStartEvent>,
   ): StringBuilder {
-    val newProgramSize = endEvent.programSize
-    val initialProgramSize = endEvent.initialProgramSize()
-    return printReductionSizeRatio(builder, initialProgramSize, newProgramSize)
+    val newSize = endEvent.perFileSizeMetrics
+    val initialSize = endEvent.initialPerFileSizeMetrics()
+    return printReductionSizeRatio(builder, initialSize, newSize)
   }
 
   private fun printReductionSizeRatio(
     builder: StringBuilder,
-    initialProgramSize: Int,
-    newProgramSize: Int,
+    initialSize: PerFileSizeMetrics,
+    newSize: PerFileSizeMetrics,
   ): StringBuilder =
     builder
       .append("ratio=")
-      .append(computePercentage(newProgramSize, initialProgramSize))
+      .append(
+        computePercentage(
+          newSize.totalCanonicalTokenCount,
+          initialSize.totalCanonicalTokenCount,
+        ),
+      )
 
   override fun close() {
     // Do nothing.

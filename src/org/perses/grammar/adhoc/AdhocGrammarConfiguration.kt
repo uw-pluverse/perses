@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -44,6 +44,7 @@ class AdhocGrammarConfiguration(
   val existingLanguageKindClassFullName: String?,
   val startRuleName: String,
   tokenNamesOfIdentifiers: List<String>,
+  val includeAutoDetectedIdentifierTokenTypes: Boolean,
   val shaAlgorithm: EnumShaAlgorithm,
 ) {
   val parserGrammar = readAntlrGrammar(parserFile)
@@ -109,6 +110,9 @@ class AdhocGrammarConfiguration(
           .append("\n")
         append("token-names-of-identifiers:")
           .append(sortedDistinctTokenNamesOfIdentifiers)
+          .append("\n")
+        append("include-auto-detected-identifier-token-types:")
+          .append(includeAutoDetectedIdentifierTokenTypes)
           .append("\n")
       }
     return shaAlgorithm.hashString(combinedParserLexer).toString()

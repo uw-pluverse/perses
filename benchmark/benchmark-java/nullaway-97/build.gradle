@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'net.ltgt.errorprone' version '4.0.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'com.uber.nullaway:nullaway:0.3.0'
+    annotationProcessor 'com.uber.nullaway:nullaway:0.3.0'
+    compileOnly 'com.google.errorprone:error_prone_core:2.29.0'
+    annotationProcessor 'com.google.errorprone:error_prone_core:2.29.0'
+}
+
+import net.ltgt.gradle.errorprone.CheckSeverity
+
+// Gives "error: package exists in another module: java.base" on later versions
+sourceCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['--patch-module', 'java.base=src']
+    options.errorprone {
+        disableAllChecks=true
+        check('NullAway', CheckSeverity.ERROR)
+        option('NullAway:AnnotatedPackages', 'java.util')
+    }
+}

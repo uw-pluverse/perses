@@ -1,5 +1,5 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
 load("//src/org/perses/grammar/adhoc:adhoc_grammar.bzl", "pnf_parser_facade_library")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 sanity_test(
     name = "sanity_test",
@@ -11,6 +11,7 @@ sanity_test(
 
 pnf_parser_facade_library(
     name = "parser_facade",
+    include_auto_detected_identifier_token_types = False,
     java_package_name = "org.perses.test.grammar.adhoc.c",
     language_kind_yaml_file = "language_kind.yaml",
     output_jar_file_name = "parser_facade.jar",
@@ -28,7 +29,7 @@ reduction_golden_test(
     other_flags = {
         "--language-ext-jars": "$(location parser_facade.jar)",
     },
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "t.unique",
     test_script = "r.sh",
     deps = ["parser_facade.jar"],

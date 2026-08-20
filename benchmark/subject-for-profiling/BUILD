@@ -1,6 +1,8 @@
+load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
+
 package(default_visibility = ["//visibility:public"])
 
-load("//benchmark:benchmark.bzl", "sanity_test")
+load("//test:test.bzl", "sanity_test")
 
 sanity_test(
     name = "sanity_test",
@@ -15,8 +17,6 @@ java_binary(
         "$(location r.sh)",
         "--input-file",
         "$(location small.c)",
-        "--query-cache-type",
-        "COMPACT_QUERY_CACHE",
         "--threads",
         "1",
     ],

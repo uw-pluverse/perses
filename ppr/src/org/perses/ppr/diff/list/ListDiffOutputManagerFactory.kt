@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -18,10 +18,10 @@ package org.perses.ppr.diff.list
 
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.atn.LexerAtnWrapper
+import org.perses.ppr.diff.DiffOriginalReductionInputs
+import org.perses.program.AbstractPersesToken
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
-import org.perses.program.PersesTokenFactory.PersesAntlrToken
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.program.printer.PrinterRegistry
@@ -32,16 +32,16 @@ import org.perses.util.ListAlignment
 import org.perses.util.hashing.EnumShaAlgorithm
 
 class ListDiffOutputManagerFactory(
-  private val reductionInputs: ListDiffReductionInputs,
+  override val originalReductionInputs: DiffOriginalReductionInputs,
   private val seedProgram: TokenizedProgram,
   val originalListAlignment: ListAlignment<AbstractPersesToken>,
   val originalDiff: List<AbstractEditOperation<AbstractPersesToken>>,
   programFormatControl: EnumFormatControl,
   lexerAtnWrapper: LexerAtnWrapper,
-  val shaAlgorithm: EnumShaAlgorithm,
+  shaAlgorithm: EnumShaAlgorithm,
 ) : AbstractOutputManagerFactory<
     ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
-  >() {
+  >(originalReductionInputs, shaAlgorithm) {
   protected val defaultProgramPrinter =
     PrinterRegistry.getPrinter(programFormatControl, lexerAtnWrapper)
 
@@ -53,15 +53,16 @@ class ListDiffOutputManagerFactory(
     private val diff: ImmutableList<AbstractEditOperation<AbstractPersesToken>>,
     private val printer: AbstractTokenizedProgramPrinter,
     private val seedProgram: TokenizedProgram,
-  ) : AbstractOutputManager(reductionInputs, shaAlgorithm) {
+  ) : AbstractOutputManager(originalReductionInputs, shaAlgorithm) {
     override fun internalComputeContentForFile(
       origReductionFile: AbstractReductionFile<*, *>,
     ): String =
       when (origReductionFile) {
-        reductionInputs.seedFile -> {
+        originalReductionInputs.seedFile -> {
           printer.print(seedProgram).sourceCode
         }
-        reductionInputs.variantFile -> {
+
+        originalReductionInputs.variantFile -> {
           // only Insert and Replace are considered as diff, Delete is not considered because
           // deletion of Delete is equivalent to inserting new tokens to variant,
           // which violates monotonicity of program size.
@@ -73,14 +74,17 @@ class ListDiffOutputManagerFactory(
           // compute the variant program
           val variantTokens =
             newListAlignmentWithoutReplace.computeRevision(
-              seedProgram.tokens.map { it as PersesAntlrToken },
+              seedProgram.tokens.map { it as AbstractPersesToken.AntlrToken },
             )
-          val variantTokenizedProgram = TokenizedProgram(variantTokens, seedProgram.factory)
+          val variantTokenizedProgram = TokenizedProgram(variantTokens)
 
           // write variant program to given folder
           printer.print(variantTokenizedProgram).sourceCode
         }
-        else -> error("unhandled file $origReductionFile")
+
+        else -> {
+          error("unhandled file $origReductionFile")
+        }
       }
 
     // remove deleted operations to derive a new listAlignment

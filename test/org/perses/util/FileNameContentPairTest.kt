@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.util
 
+import com.google.common.collect.ImmutableList
 import com.google.common.collect.Interners
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
@@ -118,5 +119,69 @@ class FileNameContentPairTest {
     val pair = FileNameContentLinesPair.createFromFile(file)
     assertThat(pair.fileName).isEqualTo("a.txt")
     assertThat(pair.lines).containsExactly("b").inOrder()
+  }
+
+  @Test
+  fun testFileNameContentPairList() {
+    val p1 = FileNameContentPair("test1.txt", AbstractFileContent.TextFileContent("hello"))
+    val p2 = FileNameContentPair("test2.txt", AbstractFileContent.TextFileContent("world"))
+    val list =
+      FileNameContentPairList(
+        ImmutableList.of(p1, p2),
+        fileNameExtractor = { it },
+      )
+
+    val expected =
+      """
+      --file: test1.txt--
+      hello
+      --file: test2.txt--
+      world
+      """.trimIndent()
+
+    assertThat(list.textualContent).isEqualTo(expected)
+  }
+
+  @Test
+  fun testFileNameContentPairListCaching() {
+    val p1 = FileNameContentPair("test1.txt", AbstractFileContent.TextFileContent("hello"))
+    val wrapper =
+      FileNameContentPairList(
+        ImmutableList.of(p1),
+        fileNameExtractor = { it },
+      )
+
+    val content1 = wrapper.textualContent
+    val content2 = wrapper.textualContent
+
+    // Verify referential equality to ensure the lazy caching actually works on the same instance
+    assertThat(content1).isSameInstanceAs(content2)
+  }
+
+  @Test
+  fun testPairsProperty() {
+    val p1 = FileNameContentPair("test1.txt", AbstractFileContent.TextFileContent("hello"))
+    val pairsList = ImmutableList.of(p1)
+    val list =
+      FileNameContentPairList(
+        pairsList,
+        fileNameExtractor = { it },
+      )
+    assertThat(list.pairs).isSameInstanceAs(pairsList)
+  }
+
+  @Test
+  fun testSizeProperty() {
+    val p1 = FileNameContentPair("test1.txt", AbstractFileContent.TextFileContent("hello"))
+    val p2 = FileNameContentPair("test2.txt", AbstractFileContent.TextFileContent("world"))
+    val emptyList =
+      FileNameContentPairList<String>(
+        ImmutableList.of(),
+        fileNameExtractor = { it },
+      )
+    val list = FileNameContentPairList(ImmutableList.of(p1, p2), fileNameExtractor = { it })
+
+    assertThat(emptyList.size).isEqualTo(0)
+    assertThat(list.size).isEqualTo(2)
   }
 }

@@ -1,4 +1,5 @@
 load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 
 package(default_visibility = [
     "//visibility:public",
@@ -38,6 +39,7 @@ kt_jvm_library(
         "//antlropt/src/org/perses/antlr:enum_rule_type",
         "//antlropt/src/org/perses/antlr/ast",
         "//kitten/src/org/perses/fuzzer/compilers:compiler_configuration",
+        "//kitten/src/org/perses/fuzzer/compilers/php",
         "//kitten/src/org/perses/fuzzer/compilers/rust",
         "//kitten/src/org/perses/fuzzer/coveragecollector:coverage_collector",
         "//kitten/src/org/perses/fuzzer/languagemodel:language_model_type",
@@ -94,6 +96,7 @@ kt_jvm_library(
         "//kitten/src/org/perses/fuzzer/languagemodel:language_model_type",
         "//kitten/src/org/perses/spartree:generator_type",
         "//src/org/perses/cmd:LanguageControlFlagGroup",
+        "//src/org/perses/grammar/c:language_kind",
         "//src/org/perses/util/cmd",
     ],
 )

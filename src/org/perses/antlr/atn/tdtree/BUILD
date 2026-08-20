@@ -10,7 +10,8 @@ kt_jvm_library(
     deps = [
         "//:antlr_runtime",
         "//:antlr_tool",
-        "//src/org/perses/spartree",
+        "//src/org/perses/spartree:tree_node",
+        "//src/org/perses/spartree:tree_node_filter_result",
         "//src/org/perses/util",
     ],
 )

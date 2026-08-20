@@ -13,3 +13,13 @@ kt_jvm_library(
         "//src/org/perses/util:perses_diffutil",
     ],
 )
+
+kt_jvm_library(
+    name = "reduction_inputs",
+    srcs = [
+        "DiffOriginalReductionInputs.kt",
+    ],
+    deps = [
+        "//src/org/perses/reduction/io:reduction_inputs",
+    ],
+)

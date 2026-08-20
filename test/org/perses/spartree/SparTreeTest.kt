@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -135,7 +135,7 @@ class SparTreeTest {
   @Test
   fun testReplaceRootNode() {
     assertThat(
-      tree.programSnapshot.tokens.joinToString(separator = "") {
+      tree.programSnapshot.payload.tokens.joinToString(separator = "") {
         it.lexemeText
       },
     ).isNotEqualTo("inta;")
@@ -154,10 +154,11 @@ class SparTreeTest {
           "replacement",
         ),
       ).let {
-        tree.applyEdit(it)
+        tree.applyEdit(it, canonicalTokenCount = null)
       }
     assertThat(
-      tree.programSnapshot.tokens.map { it.lexemeText },
+      tree.programSnapshot.payload.tokens
+        .map { it.lexemeText },
     ).containsExactly("int", "a", ";").inOrder()
   }
 
@@ -198,7 +199,7 @@ class SparTreeTest {
       )
     val node2 = nodeToTokensMap.getNode(node2Key, "compoundStatement")
     val edit =
-      tree.createNodeReplacementEdit(
+      tree.createDescendantHoistingEdit(
         NodeReplacementActionSet.createByReplacingSingleNode(
           node1,
           node2,
@@ -209,8 +210,8 @@ class SparTreeTest {
     assertThat(
       PrinterRegistry.printToStringInOrigFormat(programByEdit).replace("\\s+".toRegex(), ""),
     ).isEqualTo("intmain(){printf((\"helloworld\\n\"));}")
-    tree.applyEdit(edit)
-    val programByTree = tree.programSnapshot
+    tree.applyEdit(edit, canonicalTokenCount = null)
+    val programByTree = tree.programSnapshot.payload
     assertThat(programByEdit.tokens)
       .containsExactlyElementsIn(programByTree.tokens)
       .inOrder()
@@ -268,7 +269,7 @@ class SparTreeTest {
     builder.deleteNode(node2)
     val actionSet = builder.build()
     val edit1 = tree.createNodeDeletionEdit(actionSet)
-    tree.applyEdit(edit1)
+    tree.applyEdit(edit1, canonicalTokenCount = null)
 
     val edit =
       tree.createAnyNodeReplacementEdit(
@@ -282,8 +283,8 @@ class SparTreeTest {
     assertThat(
       PrinterRegistry.printToStringInOrigFormat(programByEdit).replace("\\s+".toRegex(), ""),
     ).isEqualTo(expectedInput)
-    tree.applyEdit(edit)
-    val programByTree = tree.programSnapshot
+    tree.applyEdit(edit, canonicalTokenCount = null)
+    val programByTree = tree.programSnapshot.payload
     assertThat(programByEdit.tokens)
       .containsExactlyElementsIn(programByTree.tokens)
       .inOrder()
@@ -327,9 +328,10 @@ class SparTreeTest {
     val edit =
       tree.createRootReplacementEdit(
         copy.result.detachRootFromTree(),
-        actionsDescription = "test",
+        contextDescription = "test",
+        transformationName = "test",
       )
-    tree.applyEdit(edit)
+    tree.applyEdit(edit, canonicalTokenCount = null)
     assertThat(tree.printTreeStructure()).isEqualTo(origTreeDump)
     assertThat(tree.realRoot).isNotSameInstanceAs(origRoot)
   }

@@ -1,0 +1,1307 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 15
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: true
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "reduced"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "input"
+  deps:
+  - "deps"
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(15/15)  The reducer execution plan is listed below.
+    node_priority
+
+
+(15/15)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 1. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=35,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=36,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=46,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:KEEP_A{id=43,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=37,slot_type=Semi}
+        |___aux_rule__declaration_3{id=22,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=23,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=33,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:junk_a_one{id=30,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=24,slot_type=Semi}
+        |___aux_rule__declaration_3{id=9,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=10,slot_type=declarationSpecifiers}
+            |   |___Token:int{id=20,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |   |___Token:junk_a_two{id=17,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=11,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority](15/15)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](15/15)  Retrieved semantics provider null
+==================Reducing node 2, size=15==================
+
+The current best program is the following
+
+    --file: a.c--
+    int KEEP_A;
+    int junk_a_one;
+    int junk_a_two;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](15/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:15/15=100.00%
+FixPt[1][node_priority][DFS](15/15)  Testing the empty input. Global ratio:15/15=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: a.c--
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](15/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:15/15=100.00%
+FixPt[1][node_priority][DFS](15/15)  There is only one element in the input, and the empty input has been tested. Global ratio:15/15=100.00%
+FixPt[1][node_priority][DFS](15/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:15/15=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=15==================
+
+The current best program is the following
+
+    --file: a.c--
+    int KEEP_A;
+    int junk_a_one;
+    int junk_a_two;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (1): pass===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove all except first
+    --file: a.c--
+    int KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 1 --> 1.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 9 -> 3
+Edit: [delete: 9,22]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](9/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:9/15=60.00%
+FixPt[1][node_priority][DFS](9/15)  Testing the empty input. Global ratio:9/15=60.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](9/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:9/15=60.00%
+FixPt[1][node_priority][DFS](9/15)  There is only one element in the input, and the empty input has been tested. Global ratio:9/15=60.00%
+FixPt[1][node_priority][DFS](9/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:9/15=60.00%
+===================Node reduction is done===================
+
+Succeeded to reduce node 4 from 15 to 9
+------------------------------------------------------------
+
+
+==================Reducing node 35, size=9==================
+
+The current best program is the following
+
+    --file: a.c--
+    int KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_35]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (2): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: a.c--
+              ;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 35
+------------------------------------------------------------
+
+
+==================Reducing node 36, size=9==================
+
+The current best program is the following
+
+    --file: a.c--
+    int KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+==========Testing the following program (3): fail===========
+
+// edit action set type: [kleene_plus:declarationSpecifiers]remove all except first
+    --file: a.c--
+    int       ;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](9/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:9/15=60.00%
+FixPt[1][node_priority][DFS](9/15)  Testing the empty input. Global ratio:9/15=60.00%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+              ;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](9/15)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:9/15=60.00%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_43]
+    context: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](9/15)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:9/15=60.00%
+==========Testing the following program (4): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=2
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](9/15)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:9/15=60.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 3 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 3 -> 2
+Edit: [delete_46]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](8/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:8/15=53.33%
+===================Node reduction is done===================
+
+Succeeded to reduce node 36 from 9 to 8
+------------------------------------------------------------
+
+
+==================Reducing node 43, size=8==================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 43
+------------------------------------------------------------
+
+
+==================Reducing node 37, size=8==================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 37
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(8/15)  The reducer execution plan is listed below.
+    node_priority
+
+
+(8/15)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 2. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=21,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=22,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=32,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:KEEP_B{id=29,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=23,slot_type=Semi}
+        |___aux_rule__declaration_3{id=8,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=9,slot_type=declarationSpecifiers}
+            |   |___Token:int{id=19,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |   |___Token:junk_b{id=16,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=10,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority](8/15)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](8/15)  Retrieved semantics provider null
+==================Reducing node 2, size=8===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](8/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:8/15=53.33%
+FixPt[2][node_priority][DFS](8/15)  Testing the empty input. Global ratio:8/15=53.33%
+==========Testing the following program (5): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](8/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:8/15=53.33%
+FixPt[2][node_priority][DFS](8/15)  There is only one element in the input, and the empty input has been tested. Global ratio:8/15=53.33%
+FixPt[2][node_priority][DFS](8/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:8/15=53.33%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=8===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+    int junk_b;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (6): pass===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove all except first
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 4 --> 4.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 6 -> 3
+Edit: [delete_8]
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](5/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/15=33.33%
+FixPt[2][node_priority][DFS](5/15)  Testing the empty input. Global ratio:5/15=33.33%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](5/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/15=33.33%
+FixPt[2][node_priority][DFS](5/15)  There is only one element in the input, and the empty input has been tested. Global ratio:5/15=33.33%
+FixPt[2][node_priority][DFS](5/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/15=33.33%
+===================Node reduction is done===================
+
+Succeeded to reduce node 4 from 8 to 5
+------------------------------------------------------------
+
+
+==================Reducing node 21, size=5==================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_21]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (7): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+              ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+==================Reducing node 22, size=5==================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int KEEP_B;
+------------------------------------------------------------
+
+
+==========Testing the following program (8): fail===========
+
+// edit action set type: [kleene_plus:declarationSpecifiers]remove all except first
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+    int       ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](5/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:5/15=33.33%
+FixPt[2][node_priority][DFS](5/15)  Testing the empty input. Global ratio:5/15=33.33%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+              ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](5/15)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:5/15=33.33%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_29]
+    context: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=2
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](5/15)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:5/15=33.33%
+==========Testing the following program (9): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=2
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](5/15)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:5/15=33.33%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 6 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 5
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 3 -> 2
+Edit: [delete_32]
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:4/15=26.67%
+===================Node reduction is done===================
+
+Succeeded to reduce node 22 from 5 to 4
+------------------------------------------------------------
+
+
+==================Reducing node 29, size=4==================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 29
+------------------------------------------------------------
+
+
+==================Reducing node 23, size=4==================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 23
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(4/15)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(4/15)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 3. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=7,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=8,slot_type=declarationSpecifiers}
+            |   |___Token:KEEP_A{id=14,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=9,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[3][node_priority](4/15)  Starting to retrieve the semantics provider
+FixPt[3][node_priority](4/15)  Retrieved semantics provider null
+==================Reducing node 2, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  Testing the empty input. Global ratio:4/15=26.67%
+==========Testing the following program (10): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: a.c--
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](4/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  There is only one element in the input, and the empty input has been tested. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  Testing the empty input. Global ratio:4/15=26.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](4/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  There is only one element in the input, and the empty input has been tested. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_7]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (11): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: a.c--
+              ;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  Testing the empty input. Global ratio:4/15=26.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+              ;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](4/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  There is only one element in the input, and the empty input has been tested. Global ratio:4/15=26.67%
+FixPt[3][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 14, size=4==================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+(4/15)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 4. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=7,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=8,slot_type=declarationSpecifiers}
+            |   |___Token:KEEP_A{id=14,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=9,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[4][FineGritLatraReducer](4/15)  For c, there are 46 transformations.
+FixPt[4][FineGritLatraReducer](4/15)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 8 --> 8.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 2 -> 2
+Edit: AnyNodeReplace:[replace_1_with_16]
+------------------------------------------------------------
+
+
+FixPt[4][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](4/15)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[4][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](4/15)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[4][FineGritLatraReducer][DivideOperationSimplification](4/15)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[4][FineGritLatraReducer][MultiplyOperationSimplification](4/15)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[4][FineGritLatraReducer][MinusOperationSimplification](4/15)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[4][FineGritLatraReducer][PlusOperationSimplification](4/15)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[4][FineGritLatraReducer][LocalToGlobalTransformation](4/15)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[4][FineGritLatraReducer][UnionToStruct](4/15)  Found matches: 0 in transformation UnionToStruct
+FixPt[4][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](4/15)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[4][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](4/15)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[4][FineGritLatraReducer][FunctionInlining4Args](4/15)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[4][FineGritLatraReducer][FunctionInlining4ArgsNoType](4/15)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[4][FineGritLatraReducer][FunctionInliningLatraTransformation](4/15)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[4][FineGritLatraReducer][FunctionInlining3ArgsNoType](4/15)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[4][FineGritLatraReducer][FunctionInlining2Args](4/15)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[4][FineGritLatraReducer][FunctionInlining2ArgsNoType](4/15)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[4][FineGritLatraReducer][FunctionInlining1Arg](4/15)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[4][FineGritLatraReducer][FunctionInlining1ArgNoType](4/15)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[4][FineGritLatraReducer][FunctionInliningNoArg](4/15)  Found matches: 0 in transformation FunctionInliningNoArg
+FixPt[4][FineGritLatraReducer][LiftAssignmentExpr](4/15)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[4][FineGritLatraReducer][CopyPropagation](4/15)  Found matches: 0 in transformation CopyPropagation
+FixPt[4][FineGritLatraReducer][CallExprToValue](4/15)  Found matches: 0 in transformation CallExprToValue
+FixPt[4][FineGritLatraReducer][ReplaceCallExpr1Arg](4/15)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[4][FineGritLatraReducer][ReplaceCallExpr2Arg](4/15)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[4][FineGritLatraReducer][ReplaceCallExpr3Arg](4/15)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[4][FineGritLatraReducer][SimplifyCallExpr](4/15)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[4][FineGritLatraReducer][SimplifyIf](4/15)  Found matches: 0 in transformation SimplifyIf
+FixPt[4][FineGritLatraReducer][SimplifyIf2](4/15)  Found matches: 0 in transformation SimplifyIf2
+FixPt[4][FineGritLatraReducer][ReduceArrayDim3](4/15)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[4][FineGritLatraReducer][ReduceArrayDim2](4/15)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[4][FineGritLatraReducer][ReduceArrayDim](4/15)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDecl](4/15)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDecl2](4/15)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDeclNoParam](4/15)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
+FixPt[4][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](4/15)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
+FixPt[4][FineGritLatraReducer][SimplifyComma](4/15)  Found matches: 0 in transformation SimplifyComma
+FixPt[4][FineGritLatraReducer][TypeDefTransform](4/15)  Found matches: 0 in transformation TypeDefTransform
+FixPt[4][FineGritLatraReducer][EmptyStructToInt](4/15)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[4][FineGritLatraReducer][RemoveAssignment](4/15)  Found matches: 0 in transformation RemoveAssignment
+FixPt[4][FineGritLatraReducer][RemoveAddrTaken](4/15)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[4][FineGritLatraReducer][ReplaceArrayAccessWithIndex](4/15)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[4][FineGritLatraReducer][SimplifyUnionDecl](4/15)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[4][FineGritLatraReducer][SimplifyStructDecl](4/15)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[4][FineGritLatraReducer][ReplaceDefByDecl](4/15)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[4][FineGritLatraReducer][CombineLocalVarDecl](4/15)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[4][FineGritLatraReducer][UnifyFunctionDecl](4/15)  Found matches: 0 in transformation UnifyFunctionDecl
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(4/15)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(4/15)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 5. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=7,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=8,slot_type=declarationSpecifiers}
+            |   |___Token:KEEP_B{id=14,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=9,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[5][node_priority](4/15)  Starting to retrieve the semantics provider
+FixPt[5][node_priority](4/15)  Retrieved semantics provider null
+==================Reducing node 2, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  Testing the empty input. Global ratio:4/15=26.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](4/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  There is only one element in the input, and the empty input has been tested. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  Testing the empty input. Global ratio:4/15=26.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](4/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  There is only one element in the input, and the empty input has been tested. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_7]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+              ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=4===================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  Testing the empty input. Global ratio:4/15=26.67%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+              ;
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](4/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  There is only one element in the input, and the empty input has been tested. Global ratio:4/15=26.67%
+FixPt[5][node_priority][DFS](4/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/15=26.67%
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 14, size=4==================
+
+The current best program is the following
+
+    --file: a.c--
+        KEEP_A;
+    --file: b.c--
+        KEEP_B;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+(4/15)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 6. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=7,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=8,slot_type=declarationSpecifiers}
+            |   |___Token:KEEP_B{id=14,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=9,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[6][FineGritLatraReducer](4/15)  For c, there are 46 transformations.
+FixPt[6][FineGritLatraReducer](4/15)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 8 --> 8.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 2 -> 2
+Edit: AnyNodeReplace:[replace_1_with_16]
+------------------------------------------------------------
+
+
+FixPt[6][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](4/15)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[6][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](4/15)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[6][FineGritLatraReducer][DivideOperationSimplification](4/15)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[6][FineGritLatraReducer][MultiplyOperationSimplification](4/15)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[6][FineGritLatraReducer][MinusOperationSimplification](4/15)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[6][FineGritLatraReducer][PlusOperationSimplification](4/15)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[6][FineGritLatraReducer][LocalToGlobalTransformation](4/15)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[6][FineGritLatraReducer][UnionToStruct](4/15)  Found matches: 0 in transformation UnionToStruct
+FixPt[6][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](4/15)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[6][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](4/15)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[6][FineGritLatraReducer][FunctionInlining4Args](4/15)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[6][FineGritLatraReducer][FunctionInlining4ArgsNoType](4/15)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[6][FineGritLatraReducer][FunctionInliningLatraTransformation](4/15)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[6][FineGritLatraReducer][FunctionInlining3ArgsNoType](4/15)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[6][FineGritLatraReducer][FunctionInlining2Args](4/15)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[6][FineGritLatraReducer][FunctionInlining2ArgsNoType](4/15)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[6][FineGritLatraReducer][FunctionInlining1Arg](4/15)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[6][FineGritLatraReducer][FunctionInlining1ArgNoType](4/15)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[6][FineGritLatraReducer][FunctionInliningNoArg](4/15)  Found matches: 0 in transformation FunctionInliningNoArg
+FixPt[6][FineGritLatraReducer][LiftAssignmentExpr](4/15)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[6][FineGritLatraReducer][CopyPropagation](4/15)  Found matches: 0 in transformation CopyPropagation
+FixPt[6][FineGritLatraReducer][CallExprToValue](4/15)  Found matches: 0 in transformation CallExprToValue
+FixPt[6][FineGritLatraReducer][ReplaceCallExpr1Arg](4/15)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[6][FineGritLatraReducer][ReplaceCallExpr2Arg](4/15)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[6][FineGritLatraReducer][ReplaceCallExpr3Arg](4/15)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[6][FineGritLatraReducer][SimplifyCallExpr](4/15)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[6][FineGritLatraReducer][SimplifyIf](4/15)  Found matches: 0 in transformation SimplifyIf
+FixPt[6][FineGritLatraReducer][SimplifyIf2](4/15)  Found matches: 0 in transformation SimplifyIf2
+FixPt[6][FineGritLatraReducer][ReduceArrayDim3](4/15)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[6][FineGritLatraReducer][ReduceArrayDim2](4/15)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[6][FineGritLatraReducer][ReduceArrayDim](4/15)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[6][FineGritLatraReducer][MoveFuncDefToDecl](4/15)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[6][FineGritLatraReducer][MoveFuncDefToDecl2](4/15)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[6][FineGritLatraReducer][MoveFuncDefToDeclNoParam](4/15)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
+FixPt[6][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](4/15)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
+FixPt[6][FineGritLatraReducer][SimplifyComma](4/15)  Found matches: 0 in transformation SimplifyComma
+FixPt[6][FineGritLatraReducer][TypeDefTransform](4/15)  Found matches: 0 in transformation TypeDefTransform
+FixPt[6][FineGritLatraReducer][EmptyStructToInt](4/15)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[6][FineGritLatraReducer][RemoveAssignment](4/15)  Found matches: 0 in transformation RemoveAssignment
+FixPt[6][FineGritLatraReducer][RemoveAddrTaken](4/15)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[6][FineGritLatraReducer][ReplaceArrayAccessWithIndex](4/15)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[6][FineGritLatraReducer][SimplifyUnionDecl](4/15)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[6][FineGritLatraReducer][SimplifyStructDecl](4/15)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[6][FineGritLatraReducer][ReplaceDefByDecl](4/15)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[6][FineGritLatraReducer][CombineLocalVarDecl](4/15)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[6][FineGritLatraReducer][UnifyFunctionDecl](4/15)  Found matches: 0 in transformation UnifyFunctionDecl
+=====Fixpoint iteration 7. Reducer: multi-file-deletion=====
+
+The spar-tree is the following.
+a.c: 12 characters
+b.c: 12 characters
+------------------------------------------------------------
+
+
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      2             0      -7            -31       5   time-hidden
+ 1        node_priority      2             0      -4            -13       5   time-hidden
+ 2        node_priority      0             0       0              0       2   time-hidden
+ 3 FineGritLatraReducer      1             1       0              0       0   time-hidden
+ 4        node_priority      0             0       0              0       0   time-hidden
+ 5 FineGritLatraReducer      1             1       0              0       0   time-hidden
+ 6  multi-file-deletion      0             0       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     4      4             0     -11            -44      12   time-hidden
+FineGritLatraReducer     2      2             2       0              0       0   time-hidden
+ multi-file-deletion     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+              Transformation Worked #NonDeletions #Tokens #NonBlankChars
+      node_priority.Deletion      4             0     -11            -44
+FineGritLatraReducer.Reparse      2             2       0              0
+------------------------------------- End --------------------------------------
+#test success = 4
+#test failure = 8
+#test result cache hits = 10
+#test execution cancelled = 0
+#node edit action set cache hits = 10
+#external test execution cache hits = 0

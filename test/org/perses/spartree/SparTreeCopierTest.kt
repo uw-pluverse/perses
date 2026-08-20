@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -41,8 +41,8 @@ class SparTreeCopierTest {
 
   @Test
   fun testOutputtingProgramInOrigFormat() {
-    val origProgram = PrinterRegistry.printToStringInOrigFormat(original.programSnapshot)
-    val copyProgram = PrinterRegistry.printToStringInOrigFormat(copy.programSnapshot)
+    val origProgram = PrinterRegistry.printToStringInOrigFormat(original.programSnapshot.payload)
+    val copyProgram = PrinterRegistry.printToStringInOrigFormat(copy.programSnapshot.payload)
     assertThat(origProgram).isEqualTo(copyProgram)
   }
 

@@ -1,0 +1,2139 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 34
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: true
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_node_priority"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "prog.c"
+  - "App.java"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "_reduction_golden_test_by_default_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(34/34)  The reducer execution plan is listed below.
+    node_priority
+
+
+(34/34)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 1. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(*){id=2,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=6,slot_type=CLASS}
+        |___Token:App{id=7,slot_type=Identifier}
+        |___classBody{id=8,slot_type=classBody}
+            |___Token:{{id=9,slot_type=LBRACE}
+            |___(*){id=10,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=13,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___(*){id=14,slot_type=kleene_star__methodDeclaration_1}
+            |       |   |___Token:static{id=95,slot_type=[methodModifier,STATIC]}
+            |       |___methodHeader{id=15,slot_type=methodHeader}
+            |       |   |___Token:int{id=93,slot_type=[result,unannType,altnt_block__primitiveType_3,INT]}
+            |       |   |___methodDeclarator{id=87,slot_type=methodDeclarator}
+            |       |       |___Token:keep_java{id=88,slot_type=Identifier}
+            |       |       |___Token:({id=89,slot_type=LPAREN}
+            |       |       |___Token:){id=90,slot_type=RPAREN}
+            |       |___block{id=17,slot_type=[methodBody,block]}
+            |           |___Token:{{id=18,slot_type=LBRACE}
+            |           |___(?){id=19,slot_type=optional__block_1}
+            |           |   |___(+){id=21,slot_type=blockStatements}
+            |           |       |___localVariableDeclarationStatement{id=51,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=52,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:int{id=85,slot_type=[unannType,altnt_block__primitiveType_3,INT]}
+            |           |       |   |   |___variableDeclarator{id=56,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |       |___Token:unused_java{id=83,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |       |___(?){id=58,slot_type=optional__variableDeclarator_2}
+            |           |       |   |           |___aux_rule__variableDeclarator_1{id=59,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |               |___Token:={id=60,slot_type=ASSIGN}
+            |           |       |   |               |___Token:222{id=82,slot_type=[variableInitializer,expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |       |   |___Token:;{id=53,slot_type=SEMI}
+            |           |       |___returnStatement{id=26,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,returnStatement]}
+            |           |           |___Token:return{id=27,slot_type=RETURN}
+            |           |           |___(?){id=28,slot_type=optional__returnStatement_1}
+            |           |           |   |___Token:42{id=50,slot_type=[expression,conditionalExpression,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,altnt_block__primary_2,literal,IntegerLiteral]}
+            |           |           |___Token:;{id=29,slot_type=SEMI}
+            |           |___Token:}{id=20,slot_type=RBRACE}
+            |___Token:}{id=11,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority](34/34)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](34/34)  Retrieved semantics provider null
+==================Reducing node 2, size=34==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+        int unused_java = 222;
+        return 42;
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](34/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:34/34=100.00%
+FixPt[1][node_priority][DFS](34/34)  Testing the empty input. Global ratio:34/34=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__compilationUnit_3]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](34/34)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:34/34=100.00%
+FixPt[1][node_priority][DFS](34/34)  There is only one element in the input, and the empty input has been tested. Global ratio:34/34=100.00%
+FixPt[1][node_priority][DFS](34/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:34/34=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=34==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+        int unused_java = 222;
+        return 42;
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_5]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=34==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+        int unused_java = 222;
+        return 42;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=34==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+        int unused_java = 222;
+        return 42;
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](34/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:34/34=100.00%
+FixPt[1][node_priority][DFS](34/34)  Testing the empty input. Global ratio:34/34=100.00%
+==========Testing the following program (1): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__classBody_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](34/34)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:34/34=100.00%
+FixPt[1][node_priority][DFS](34/34)  There is only one element in the input, and the empty input has been tested. Global ratio:34/34=100.00%
+FixPt[1][node_priority][DFS](34/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:34/34=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=34==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+        int unused_java = 222;
+        return 42;
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_13]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (2): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+                             {
+        int unused_java = 222;
+        return 42;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=34==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+        int unused_java = 222;
+        return 42;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=34==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+        int unused_java = 222;
+        return 42;
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](34/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:34/34=100.00%
+FixPt[1][node_priority][DFS](34/34)  Testing the empty input. Global ratio:34/34=100.00%
+==========Testing the following program (3): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__block_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](34/34)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:34/34=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 3 --> 2.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 19 -> 11
+Edit: [delete_21]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](26/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:26/34=76.47%
+===================Node reduction is done===================
+
+Succeeded to reduce node 19 from 34 to 26
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 87, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 87
+------------------------------------------------------------
+
+
+=================Reducing node 93, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 93
+------------------------------------------------------------
+
+
+=================Reducing node 90, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 90
+------------------------------------------------------------
+
+
+=================Reducing node 89, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 89
+------------------------------------------------------------
+
+
+=================Reducing node 88, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 88
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 18, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=26==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+      static int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](26/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:26/34=76.47%
+FixPt[1][node_priority][DFS](26/34)  Testing the empty input. Global ratio:26/34=76.47%
+==========Testing the following program (4): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__methodDeclaration_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](26/34)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:26/34=76.47%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 2 --> 2.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 11 -> 10
+Edit: [delete_95]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](25/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:25/34=73.53%
+===================Node reduction is done===================
+
+Succeeded to reduce node 14 from 26 to 25
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(25/34)  The reducer execution plan is listed below.
+    node_priority
+
+
+(25/34)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 2. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=6,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=7,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=99,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=103,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=81,slot_type=[declarator,directDeclarator]}
+            |   |___Token:keep_c{id=98,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=83,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=85,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=86,slot_type=LeftParen}
+            |           |___(+){id=92,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |   |___Token:void{id=97,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+            |           |___Token:){id=88,slot_type=RightParen}
+            |___compoundStatement{id=9,slot_type=compoundStatement}
+                |___Token:{{id=10,slot_type=LeftBrace}
+                |___(?){id=11,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=45,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=46,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=80,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=47,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=50,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:unused_c{id=76,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=52,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=53,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=54,slot_type=Assign}
+                |       |   |               |___Token:111{id=73,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=48,slot_type=Semi}
+                |       |___jumpStatement{id=19,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=22,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=23,slot_type=Return}
+                |           |   |___(?){id=24,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:42{id=43,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=21,slot_type=Semi}
+                |___Token:}{id=12,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority](25/34)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](25/34)  Retrieved semantics provider null
+==================Reducing node 2, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](25/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:25/34=73.53%
+FixPt[2][node_priority][DFS](25/34)  Testing the empty input. Global ratio:25/34=73.53%
+==========Testing the following program (5): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](25/34)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:25/34=73.53%
+FixPt[2][node_priority][DFS](25/34)  There is only one element in the input, and the empty input has been tested. Global ratio:25/34=73.53%
+FixPt[2][node_priority][DFS](25/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:25/34=73.53%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](25/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:25/34=73.53%
+FixPt[2][node_priority][DFS](25/34)  Testing the empty input. Global ratio:25/34=73.53%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: prog.c--
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](25/34)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:25/34=73.53%
+FixPt[2][node_priority][DFS](25/34)  There is only one element in the input, and the empty input has been tested. Global ratio:25/34=73.53%
+FixPt[2][node_priority][DFS](25/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:25/34=73.53%
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_6]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (6): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: prog.c--
+                        ;
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (7): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: prog.c--
+               ;
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (8): fail===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: prog.c--
+      int unused_c = 111;
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=25==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+      int unused_c = 111;
+      return 42;
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](25/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:25/34=73.53%
+FixPt[2][node_priority][DFS](25/34)  Testing the empty input. Global ratio:25/34=73.53%
+==========Testing the following program (9): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compoundStatement_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+    int keep_c(void) {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](25/34)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:25/34=73.53%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 6 --> 6.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 6
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 15 -> 7
+Edit: [delete_14]
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](17/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:17/34=50.00%
+===================Node reduction is done===================
+
+Succeeded to reduce node 11 from 25 to 17
+------------------------------------------------------------
+
+
+=================Reducing node 81, size=17==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c(void) {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (10): pass==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: prog.c--
+    int keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+1 entries are removed: 6 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 7 -> 4
+Edit: HoistEdit:[replace_81_with_98]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 81 from 17 to 14
+------------------------------------------------------------
+
+
+=================Reducing node 98, size=14==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 98
+------------------------------------------------------------
+
+
+=================Reducing node 12, size=14==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 12
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=14==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=14==================
+
+The current best program is the following
+
+    --file: prog.c--
+    int keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](14/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:14/34=41.18%
+FixPt[2][node_priority][DFS](14/34)  Testing the empty input. Global ratio:14/34=41.18%
+==========Testing the following program (11): pass==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](14/34)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:14/34=41.18%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 5 --> 5.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 4 -> 3
+Edit: [delete_99]
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:13/34=38.24%
+===================Node reduction is done===================
+
+Succeeded to reduce node 7 from 14 to 13
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(13/34)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(13/34)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 3. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(*){id=2,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=6,slot_type=CLASS}
+        |___Token:App{id=7,slot_type=Identifier}
+        |___classBody{id=8,slot_type=classBody}
+            |___Token:{{id=9,slot_type=LBRACE}
+            |___(*){id=10,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=13,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___methodHeader{id=14,slot_type=methodHeader}
+            |       |   |___Token:int{id=26,slot_type=[result,unannType,altnt_block__primitiveType_3,INT]}
+            |       |   |___methodDeclarator{id=20,slot_type=methodDeclarator}
+            |       |       |___Token:keep_java{id=21,slot_type=Identifier}
+            |       |       |___Token:({id=22,slot_type=LPAREN}
+            |       |       |___Token:){id=23,slot_type=RPAREN}
+            |       |___block{id=16,slot_type=[methodBody,block]}
+            |           |___Token:{{id=17,slot_type=LBRACE}
+            |           |___Token:}{id=18,slot_type=RBRACE}
+            |___Token:}{id=11,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+FixPt[3][node_priority](13/34)  Starting to retrieve the semantics provider
+FixPt[3][node_priority](13/34)  Retrieved semantics provider null
+==================Reducing node 2, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/34=38.24%
+FixPt[3][node_priority][DFS](13/34)  Testing the empty input. Global ratio:13/34=38.24%
+==========Testing the following program (12): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__compilationUnit_3]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/34)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/34=38.24%
+FixPt[3][node_priority][DFS](13/34)  There is only one element in the input, and the empty input has been tested. Global ratio:13/34=38.24%
+FixPt[3][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/34=38.24%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_5]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/34=38.24%
+FixPt[3][node_priority][DFS](13/34)  Testing the empty input. Global ratio:13/34=38.24%
+==========Testing the following program (13): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__classBody_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+    }
+------------------------------------------------------------
+
+
+FixPt[3][node_priority][DFS](13/34)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/34=38.24%
+FixPt[3][node_priority][DFS](13/34)  There is only one element in the input, and the empty input has been tested. Global ratio:13/34=38.24%
+FixPt[3][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/34=38.24%
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_13]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (14): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+                             {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 14, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 14
+------------------------------------------------------------
+
+
+=================Reducing node 20, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 20
+------------------------------------------------------------
+
+
+=================Reducing node 16, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+=================Reducing node 26, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 26
+------------------------------------------------------------
+
+
+=================Reducing node 23, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 23
+------------------------------------------------------------
+
+
+=================Reducing node 22, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 22
+------------------------------------------------------------
+
+
+=================Reducing node 21, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 21
+------------------------------------------------------------
+
+
+=================Reducing node 18, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 18
+------------------------------------------------------------
+
+
+=================Reducing node 17, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+=================Reducing node 11, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 11
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+==================Reducing node 7, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 7
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+(13/34)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 4. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.java.Java8ParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(*){id=2,slot_type=kleene_star__compilationUnit_3}
+    |___normalClassDeclaration{id=5,slot_type=[typeDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=6,slot_type=CLASS}
+        |___Token:App{id=7,slot_type=Identifier}
+        |___classBody{id=8,slot_type=classBody}
+            |___Token:{{id=9,slot_type=LBRACE}
+            |___(*){id=10,slot_type=kleene_star__classBody_1}
+            |   |___methodDeclaration{id=13,slot_type=[classBodyDeclaration,methodDeclaration]}
+            |       |___methodHeader{id=14,slot_type=methodHeader}
+            |       |   |___Token:int{id=26,slot_type=[result,unannType,altnt_block__primitiveType_3,INT]}
+            |       |   |___methodDeclarator{id=20,slot_type=methodDeclarator}
+            |       |       |___Token:keep_java{id=21,slot_type=Identifier}
+            |       |       |___Token:({id=22,slot_type=LPAREN}
+            |       |       |___Token:){id=23,slot_type=RPAREN}
+            |       |___block{id=16,slot_type=[methodBody,block]}
+            |           |___Token:{{id=17,slot_type=LBRACE}
+            |           |___Token:}{id=18,slot_type=RBRACE}
+            |___Token:}{id=11,slot_type=RBRACE}
+------------------------------------------------------------
+
+
+FixPt[4][FineGritLatraReducer](13/34)  Latra does not support LanguageJava{name=java, extensions=[java], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(13/34)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(13/34)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 5. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=6,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___Token:keep_c{id=13,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |___compoundStatement{id=8,slot_type=compoundStatement}
+                |___Token:{{id=9,slot_type=LeftBrace}
+                |___Token:}{id=10,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[5][node_priority](13/34)  Starting to retrieve the semantics provider
+FixPt[5][node_priority](13/34)  Retrieved semantics provider null
+==================Reducing node 2, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/34=38.24%
+FixPt[5][node_priority][DFS](13/34)  Testing the empty input. Global ratio:13/34=38.24%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: prog.c--
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](13/34)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/34=38.24%
+FixPt[5][node_priority][DFS](13/34)  There is only one element in the input, and the empty input has been tested. Global ratio:13/34=38.24%
+FixPt[5][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/34=38.24%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:13/34=38.24%
+FixPt[5][node_priority][DFS](13/34)  Testing the empty input. Global ratio:13/34=38.24%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: prog.c--
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+FixPt[5][node_priority][DFS](13/34)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:13/34=38.24%
+FixPt[5][node_priority][DFS](13/34)  There is only one element in the input, and the empty input has been tested. Global ratio:13/34=38.24%
+FixPt[5][node_priority][DFS](13/34)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:13/34=38.24%
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_6]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 10, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 10
+------------------------------------------------------------
+
+
+==================Reducing node 9, size=13==================
+
+The current best program is the following
+
+    --file: prog.c--
+        keep_c       {
+    }
+    --file: App.java--
+    class App {
+             int keep_java() {
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 9
+------------------------------------------------------------
+
+
+(13/34)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+====Fixpoint iteration 6. Reducer: FineGritLatraReducer=====
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=6,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___Token:keep_c{id=13,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+            |___compoundStatement{id=8,slot_type=compoundStatement}
+                |___Token:{{id=9,slot_type=LeftBrace}
+                |___Token:}{id=10,slot_type=RightBrace}
+------------------------------------------------------------
+
+
+FixPt[6][FineGritLatraReducer](13/34)  For c, there are 46 transformations.
+FixPt[6][FineGritLatraReducer](13/34)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 8 --> 8.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 3 -> 3
+Edit: AnyNodeReplace:[replace_1_with_15]
+------------------------------------------------------------
+
+
+FixPt[6][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](13/34)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[6][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](13/34)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[6][FineGritLatraReducer][DivideOperationSimplification](13/34)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[6][FineGritLatraReducer][MultiplyOperationSimplification](13/34)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[6][FineGritLatraReducer][MinusOperationSimplification](13/34)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[6][FineGritLatraReducer][PlusOperationSimplification](13/34)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[6][FineGritLatraReducer][LocalToGlobalTransformation](13/34)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[6][FineGritLatraReducer][UnionToStruct](13/34)  Found matches: 0 in transformation UnionToStruct
+FixPt[6][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](13/34)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[6][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](13/34)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[6][FineGritLatraReducer][FunctionInlining4Args](13/34)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[6][FineGritLatraReducer][FunctionInlining4ArgsNoType](13/34)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[6][FineGritLatraReducer][FunctionInliningLatraTransformation](13/34)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[6][FineGritLatraReducer][FunctionInlining3ArgsNoType](13/34)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[6][FineGritLatraReducer][FunctionInlining2Args](13/34)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[6][FineGritLatraReducer][FunctionInlining2ArgsNoType](13/34)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[6][FineGritLatraReducer][FunctionInlining1Arg](13/34)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[6][FineGritLatraReducer][FunctionInlining1ArgNoType](13/34)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[6][FineGritLatraReducer][FunctionInliningNoArg](13/34)  Found matches: 0 in transformation FunctionInliningNoArg
+FixPt[6][FineGritLatraReducer][LiftAssignmentExpr](13/34)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[6][FineGritLatraReducer][CopyPropagation](13/34)  Found matches: 0 in transformation CopyPropagation
+FixPt[6][FineGritLatraReducer][CallExprToValue](13/34)  Found matches: 0 in transformation CallExprToValue
+FixPt[6][FineGritLatraReducer][ReplaceCallExpr1Arg](13/34)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[6][FineGritLatraReducer][ReplaceCallExpr2Arg](13/34)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[6][FineGritLatraReducer][ReplaceCallExpr3Arg](13/34)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[6][FineGritLatraReducer][SimplifyCallExpr](13/34)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[6][FineGritLatraReducer][SimplifyIf](13/34)  Found matches: 0 in transformation SimplifyIf
+FixPt[6][FineGritLatraReducer][SimplifyIf2](13/34)  Found matches: 0 in transformation SimplifyIf2
+FixPt[6][FineGritLatraReducer][ReduceArrayDim3](13/34)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[6][FineGritLatraReducer][ReduceArrayDim2](13/34)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[6][FineGritLatraReducer][ReduceArrayDim](13/34)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[6][FineGritLatraReducer][MoveFuncDefToDecl](13/34)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[6][FineGritLatraReducer][MoveFuncDefToDecl2](13/34)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[6][FineGritLatraReducer][MoveFuncDefToDeclNoParam](13/34)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
+FixPt[6][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](13/34)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
+FixPt[6][FineGritLatraReducer][SimplifyComma](13/34)  Found matches: 0 in transformation SimplifyComma
+FixPt[6][FineGritLatraReducer][TypeDefTransform](13/34)  Found matches: 0 in transformation TypeDefTransform
+FixPt[6][FineGritLatraReducer][EmptyStructToInt](13/34)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[6][FineGritLatraReducer][RemoveAssignment](13/34)  Found matches: 0 in transformation RemoveAssignment
+FixPt[6][FineGritLatraReducer][RemoveAddrTaken](13/34)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[6][FineGritLatraReducer][ReplaceArrayAccessWithIndex](13/34)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[6][FineGritLatraReducer][SimplifyUnionDecl](13/34)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[6][FineGritLatraReducer][SimplifyStructDecl](13/34)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[6][FineGritLatraReducer][ReplaceDefByDecl](13/34)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[6][FineGritLatraReducer][CombineLocalVarDecl](13/34)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[6][FineGritLatraReducer][UnifyFunctionDecl](13/34)  Found matches: 0 in transformation UnifyFunctionDecl
+=====Fixpoint iteration 7. Reducer: multi-file-deletion=====
+
+The spar-tree is the following.
+prog.c: 21 characters
+App.java: 45 characters
+------------------------------------------------------------
+
+
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      2             0      -9            -34       5   time-hidden
+ 1        node_priority      3             0     -12            -34       7   time-hidden
+ 2        node_priority      0             0       0              0       3   time-hidden
+ 3 FineGritLatraReducer      0             0       0              0       0   time-hidden
+ 4        node_priority      0             0       0              0       0   time-hidden
+ 5 FineGritLatraReducer      1             1       0              0       0   time-hidden
+ 6  multi-file-deletion      0             0       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     4      5             0     -21            -68      15   time-hidden
+FineGritLatraReducer     2      1             1       0              0       0   time-hidden
+ multi-file-deletion     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+              Transformation Worked #NonDeletions #Tokens #NonBlankChars
+      node_priority.Deletion      4             0     -18            -62
+   node_priority.Replacement      1             0      -3             -6
+FineGritLatraReducer.Reparse      1             1       0              0
+------------------------------------- End --------------------------------------
+#test success = 5
+#test failure = 10
+#test result cache hits = 3
+#test execution cancelled = 0
+#node edit action set cache hits = 8
+#external test execution cache hits = 0

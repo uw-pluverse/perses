@@ -58,10 +58,11 @@ kt_jvm_library(
     name = "program",
     srcs = [
         "AbstractLazySourceCode.kt",
+        "AbstractPersesToken.kt",
         "PersesTokenFactory.kt",
+        "ProgramSize.kt",
         "TokenPosition.kt",
         "TokenizedProgram.kt",
-        "TokenizedProgramFactory.kt",
     ],
     exports = [
         "source_file",

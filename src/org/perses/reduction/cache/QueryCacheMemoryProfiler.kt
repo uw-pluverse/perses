@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -89,10 +89,8 @@ class QueryCacheMemoryProfiler(
     private val CLASS_EXCLUSION_FILTER: ImmutableList<(Any) -> Boolean> =
       ImmutableList.of(
         { klass -> klass is AbstractQueryCacheProfiler },
-        { klass -> klass is QueryCacheConfiguration },
         { klass -> klass is PropertyTestResult },
-        { klass -> klass is AbstractTokenizedProgramEncoder<*> },
-        { klass -> klass.javaClass === Object::class.java },
+        { klass -> klass.javaClass === Any::class.java },
       )
 
     private val CLASS_NAME_EXCLUSION_FILTER: ImmutableList<(String) -> Boolean> =

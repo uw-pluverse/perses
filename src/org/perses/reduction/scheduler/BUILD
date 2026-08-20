@@ -10,7 +10,6 @@ kt_jvm_library(
         "AbstractSchedulerEvent.kt",
         "ExecutionPlanYamlDefinition.kt",
         "ReducerExecutionPlan.kt",
-        "ReducerHistoryAndStatistics.kt",
         "ReducerScheduler.kt",
     ],
     deps = [

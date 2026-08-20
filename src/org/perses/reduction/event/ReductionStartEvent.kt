@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,59 +17,59 @@
 package org.perses.reduction.event
 
 import org.perses.reduction.AbstractReducerNameAndDesc
-import org.perses.spartree.AbstractUnmodifiableSparTree
-import java.lang.ref.WeakReference
+import org.perses.reduction.io.PerFileSizeMetrics
 
 class ReductionStartEvent(
   currentTimeMillis: Long,
-  val tree: WeakReference<AbstractUnmodifiableSparTree>,
-  programSize: Int,
+  perFileSizeMetrics: PerFileSizeMetrics,
   val commandLineOptions: String,
   val extraData: String? = null,
 ) : AbstractStartEvent(
     currentTimeMillis,
-    programSize,
+    perFileSizeMetrics,
   ) {
   private var currentIteration = 0
 
-  override fun initialProgramSize() = programSize
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics = perFileSizeMetrics
 
   override val prefixLabelFromRootToHere: String
     get() = ""
 
   fun nextFixpointIteration(
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     reducerClass: AbstractReducerNameAndDesc,
     treeStructureDumper: () -> String,
     testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
+    extraData: String? = null,
   ): FixpointIterationStartEvent {
     check(!ended)
     return FixpointIterationStartEvent(
       reductionStartEvent = this,
       currentTimeMillis = System.currentTimeMillis(),
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       iteration = ++currentIteration,
       reducerClass = reducerClass,
       treeStructureDumper = treeStructureDumper,
       testScriptStatistics = testScriptStatistics,
+      extraData = extraData,
     )
   }
 
   fun createAdHocMessageEvent(
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     prefixLabelFromRootToHere: String,
     messageComputer: () -> Any,
   ): AdHocMessageEvent =
     AdHocMessageEvent(
       reductionStartEvent = this,
       currentTimeMillis = System.currentTimeMillis(),
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       prefixLabelFromRootToHere = prefixLabelFromRootToHere,
       messageComputer = messageComputer,
     )
 
   fun createEndEvent(
-    programSize: Int,
+    perFileSizeMetrics: PerFileSizeMetrics,
     testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
     extraData: String? = null,
   ): ReductionEndEvent {
@@ -78,7 +78,7 @@ class ReductionStartEvent(
     return ReductionEndEvent(
       startEvent = this,
       currentTimeMillis = System.currentTimeMillis(),
-      programSize = programSize,
+      perFileSizeMetrics = perFileSizeMetrics,
       testScriptExecutorServiceStatistics = testScriptStatistics,
       extraData = extraData,
     )

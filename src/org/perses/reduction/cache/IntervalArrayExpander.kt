@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,10 +15,9 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.reduction.cache
-
 import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.IntIterator
-import org.perses.program.PersesTokenFactory
+import org.perses.program.AbstractPersesToken
 import org.perses.util.Util.lazyAssert
 
 object IntervalArrayExpander {
@@ -90,14 +89,13 @@ object IntervalArrayExpander {
   @JvmStatic
   fun expand(
     intervals: IntArray,
-    tokensInOrigin: ImmutableList<out PersesTokenFactory.AbstractPersesToken>,
-  ): Iterator<PersesTokenFactory.AbstractPersesToken> =
-    object : Iterator<PersesTokenFactory.AbstractPersesToken> {
+    tokensInOrigin: ImmutableList<out AbstractPersesToken>,
+  ): Iterator<AbstractPersesToken> =
+    object : Iterator<AbstractPersesToken> {
       private val iterator = expand(intervals)
 
       override fun hasNext(): Boolean = iterator.hasNext()
 
-      override fun next(): PersesTokenFactory.AbstractPersesToken =
-        tokensInOrigin[iterator.nextInt()]
+      override fun next(): AbstractPersesToken = tokensInOrigin[iterator.nextInt()]
     }
 }

@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Longest per-process wall cap in this script is 20s (enforced by `timeout`);
+# set the CPU limit to 2x=40s so real runs finish, but a process that outlives
+# `timeout` (e.g. a compiler grandchild orphaned when its driver was SIGKILLed) is
+# reaped by the kernel via RLIMIT_CPU, which `timeout` cannot reach across reparenting.
+# The value below is in CPU seconds (ulimit -t sets RLIMIT_CPU).
+ulimit -t 40
+
 readonly REDUCTION_STAT_FILE=${REDUCTION_STAT_FILE:-""}
 if [[ -n "${REDUCTION_STAT_FILE}" ]]; then
   #  echo "------------------------------------------------------------------------------" >> "/tmp/reductionstatfile.txt"
@@ -27,7 +34,6 @@ readonly USE_COMPCERT=false
 readonly CFILE=small.c
 readonly CFLAG="-o t"
 readonly CLANGFC="clang-7.1.0 -w -m64 -O0 -Wall -fwrapv -ftrapv -fsanitize=undefined,address"
-readonly CLANG_MEM_SANITIZER="clang-7.1.0 -w -O0 -m64 -fsanitize=memory"
 
 #################################################################################
 
@@ -92,26 +98,13 @@ if $USE_COMPCERT; then
     exit 1
   fi
 fi
-###################################################
-# clang-7.1.0 memory sanitizer
-###################################################
-readonly TEMP_EXE="temp.exe"
-timeout -s 9 $TIMEOUTCC $CLANG_MEM_SANITIZER $CFILE -o $TEMP_EXE > /dev/null
-if [[ $? != 0 ]]; then
-  exit 1
-fi
-
-readonly MEM_SANITIZER_OUTPUT="mem-sanitizer.output"
-(timeout -s 9 $TIMEOUTEXE ./$TEMP_EXE &> $MEM_SANITIZER_OUTPUT) &> /dev/null
-if [[ $? != 0 ]]; then
-  exit 1
-fi
-
-if grep -q "MemorySanitizer" $MEM_SANITIZER_OUTPUT; then
-  exit 1
-fi
-
-rm $MEM_SANITIZER_OUTPUT $TEMP_EXE
+# The MemorySanitizer stage that used to sit here was dropped: its runtime fails to map
+# its shadow memory under ASLR at random, which made this oracle non-deterministic (see
+# internal_doc/taotie_c_benchmark_determinism.md). Note that `ccomp -interp` does not
+# back-stop it here: USE_COMPCERT is false because CompCert cannot compile this file
+# (it uses __PRETTY_FUNCTION__), so this test has no uninitialized-read check. That is
+# acceptable because the bug is an ICE in the buggy compiler, which UB in the test
+# program cannot fabricate; the UBSan/ASan and warning filters still apply.
 
 ###################################################
 # @ clangtkfc @ -O0 to check for undefined behavior

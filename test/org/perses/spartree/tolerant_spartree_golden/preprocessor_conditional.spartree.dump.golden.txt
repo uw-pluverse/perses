@@ -1,0 +1,34 @@
+compilationUnit{id=1,slot_type=compilationUnit}
+|___Token:#ifdef DEBUG{id=2,slot_type=PreprocessingDirective}
+|___Token:int{id=3,slot_type=Int}
+|___Token:level{id=4,slot_type=Identifier}
+|___Token:={id=5,slot_type=Assign}
+|___Token:2{id=6,slot_type=Constant}
+|___Token:;{id=7,slot_type=Semi}
+|___Token:#else{id=8,slot_type=PreprocessingDirective}
+|___Token:int{id=9,slot_type=Int}
+|___Token:level{id=10,slot_type=Identifier}
+|___Token:={id=11,slot_type=Assign}
+|___Token:0{id=12,slot_type=Constant}
+|___Token:;{id=13,slot_type=Semi}
+|___Token:#endif{id=14,slot_type=PreprocessingDirective}
+|___Token:int{id=15,slot_type=Int}
+|___Token:main{id=16,slot_type=Identifier}
+|___Token:({id=17,slot_type=LeftParen}
+|___Token:void{id=18,slot_type=Void}
+|___Token:){id=19,slot_type=RightParen}
+|___Token:{{id=20,slot_type=LeftBrace}
+|___Token:#if defined(A) && !defined(B){id=21,slot_type=PreprocessingDirective}
+|___Token:return{id=22,slot_type=Return}
+|___Token:level{id=23,slot_type=Identifier}
+|___Token:;{id=24,slot_type=Semi}
+|___Token:#elif defined(C){id=25,slot_type=PreprocessingDirective}
+|___Token:return{id=26,slot_type=Return}
+|___Token:1{id=27,slot_type=Constant}
+|___Token:;{id=28,slot_type=Semi}
+|___Token:#else{id=29,slot_type=PreprocessingDirective}
+|___Token:return{id=30,slot_type=Return}
+|___Token:0{id=31,slot_type=Constant}
+|___Token:;{id=32,slot_type=Semi}
+|___Token:#endif{id=33,slot_type=PreprocessingDirective}
+|___Token:}{id=34,slot_type=RightBrace}

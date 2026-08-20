@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -31,9 +31,9 @@ import org.perses.grammar.rust.LanguageRust
 import org.perses.grammar.rust.PnfRustLexer
 import org.perses.grammar.smtlibv2.LanguageSmtLibV2
 import org.perses.grammar.smtlibv2.PnfSMTLIBv2Lexer
+import org.perses.program.AbstractPersesToken
 import org.perses.program.EnumFormatControl
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
-import org.perses.program.TokenPosition
+import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenizedProgram
 import org.perses.util.transformToImmutableList
 import java.nio.charset.StandardCharsets
@@ -122,7 +122,6 @@ class TokenizedProgramPrinterTest {
         tokenFirstSemicolon,
         tokenSecondSemicolon,
       ),
-      program.factory,
     ).let {
       val printedCode =
         PrinterRegistry
@@ -138,7 +137,7 @@ class TokenizedProgramPrinterTest {
         """.trimMargin(),
       )
     }
-    val spaceToken = program.factory.tokenFactory.createPlainTextToken(" ")
+    val spaceToken = PersesTokenFactory.createPlainTextToken(" ")
     TokenizedProgram(
       ImmutableList.of(
         tokenInt,
@@ -156,7 +155,6 @@ class TokenizedProgramPrinterTest {
         tokenFirstSemicolon,
         tokenSecondSemicolon,
       ),
-      program.factory,
     ).let {
       val printedCode =
         PrinterRegistry
@@ -176,6 +174,7 @@ class TokenizedProgramPrinterTest {
 
   @Test
   fun testDeducedPositionProviderWithRustCode() {
+    val tokenPlacementRecorder = TokenPlacementRecorder()
     val sourceCode =
       """
       fn main() {
@@ -220,14 +219,15 @@ class TokenizedProgramPrinterTest {
           tokenSemicolon,
           tokenRightBrace,
         ),
-        program.factory,
       )
-    assertThat(
+    val printedSourceCode =
       PrinterRegistry
         .getPrinter(EnumFormatControl.ORIG_FORMAT, lexerAtnWrapperForRust)
-        .print(newProgram)
+        .print(newProgram, tokenPlacementRecorder)
         .sourceCode
-        .trim(),
+        .trim()
+    assertThat(
+      printedSourceCode,
     ).isEqualTo(
       """
       fn main() {
@@ -235,10 +235,32 @@ class TokenizedProgramPrinterTest {
       }
       """.trimIndent(),
     )
+    val printedProgram = createTokenizedProgramFromString(printedSourceCode, LanguageRust)
+    validateTokenPlacementRecorder(
+      originalProgram = newProgram,
+      printedProgram = printedProgram,
+      tokenPlacementRecorder,
+    )
+  }
+
+  private fun validateTokenPlacementRecorder(
+    originalProgram: TokenizedProgram,
+    printedProgram: TokenizedProgram,
+    tokenPlacementRecorder: TokenPlacementRecorder,
+  ) {
+    assertThat(originalProgram.tokens).hasSize(printedProgram.tokens.size)
+    assertThat(originalProgram.tokens).isNotEmpty()
+    originalProgram.tokens.zip(printedProgram.tokens).forEach { (original, new) ->
+      assertThat(original.asAntlrToken().lexemeText).isEqualTo(new.asAntlrToken().lexemeText)
+      assertThat(original).isNotSameInstanceAs(new)
+      val originalPosition = tokenPlacementRecorder.getPositionOrNull(original)!!
+      assertThat(originalPosition).isEqualTo(new.asAntlrToken().position)
+    }
   }
 
   @Test
   fun testDeducedPositionProviderWithSmtCode() {
+    val tokenPlacementRecorder = TokenPlacementRecorder()
     val sourceCode =
       """
       (declare-fun val () Int) (declare-fun long_val () Int)
@@ -277,17 +299,23 @@ class TokenizedProgramPrinterTest {
           tokenInt2,
           tokenRightParen3,
         ),
-        program.factory,
       )
-    assertThat(
+    val printedSourceCode =
       PrinterRegistry
         .getPrinter(EnumFormatControl.ORIG_FORMAT, lexerAtnWrapperForSmtLibV2)
-        .print(newProgram)
+        .print(newProgram, tokenPlacementRecorder)
         .sourceCode
-        .trim(),
+        .trim()
+    assertThat(
+      printedSourceCode,
     ).isEqualTo(
       "(declare-fun                          long_val() Int) " +
         "(declare-fun val                               () Int)",
+    )
+    validateTokenPlacementRecorder(
+      originalProgram = newProgram,
+      printedProgram = createTokenizedProgramFromString(printedSourceCode, LanguageSmtLibV2),
+      tokenPlacementRecorder,
     )
   }
 
@@ -313,24 +341,8 @@ class TokenizedProgramPrinterTest {
           ): Int = 2
         },
       )
-    val map = HashMap<String, TokenPosition>()
-    val listener =
-      object : AbstractTokenPlacementListener() {
-        override fun onTokenPlacement(
-          token: AbstractPersesToken,
-          line: Int,
-          charPositionInLine: Int,
-        ) {
-          assertThat(map.containsKey(token.lexemeText)).isFalse()
-          map[token.lexemeText] = TokenPosition(line, charPositionInLine)
-        }
-      }
-    val printedSourceCode =
-      printer
-        .print(
-          program,
-          listener,
-        ).sourceCode
+    val listener = TokenPlacementRecorder()
+    val printedSourceCode = printer.print(program, listener).sourceCode
     val goldenString =
       """
      |
@@ -345,13 +357,14 @@ class TokenizedProgramPrinterTest {
       PrinterRegistry.getPrinter(
         EnumFormatControl.ORIG_FORMAT,
         object : AbstractTokenPositionProvider() {
-          override fun getLine(token: AbstractPersesToken): Int = map[token.lexemeText]!!.line
+          override fun getLine(token: AbstractPersesToken): Int =
+            listener.getPositionOrNull(token)!!.line
 
           override fun getCharPositionInLine(
             token: AbstractPersesToken,
             currentCursorPositionInLine: Int,
             previousToken: AbstractPersesToken?,
-          ): Int = map[token.lexemeText]!!.charPositionInLine
+          ): Int = listener.getPositionOrNull(token)!!.charPositionInLine
         },
       )
     val secondPrintedSourceCode =
@@ -408,7 +421,6 @@ class TokenizedProgramPrinterTest {
     val newProgram =
       TokenizedProgram(
         ImmutableList.of(first, fourth, third, fourth),
-        program.factory,
       )
     PrinterRegistry
       .getPrinter(EnumFormatControl.COMPACT_ORIG_FORMAT)
@@ -442,7 +454,6 @@ class TokenizedProgramPrinterTest {
           tokens[3],
           tokens[6],
         ),
-        program.factory,
       )
     assertThat(
       PrinterRegistry

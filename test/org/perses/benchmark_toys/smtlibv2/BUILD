@@ -1,4 +1,4 @@
-load("//benchmark:benchmark.bzl", "reduction_golden_test", "sanity_test")
+load("//test:test.bzl", "reduction_golden_test", "sanity_test")
 
 package(default_visibility = ["//test/org/perses:__subpackages__"])
 
@@ -14,7 +14,7 @@ reduction_golden_test(
     enable_query_caching = True,
     enable_token_reducer = True,
     golden_reduced_file = "golden.smt2",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "hello.smt2",
     statistics_file = "statistics.txt",
     test_script = "r.sh",
@@ -27,7 +27,7 @@ reduction_golden_test(
     enable_token_reducer = True,
     enable_vulcan = True,
     golden_reduced_file = "vulcan_golden.smt2",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     source_file = "hello.smt2",
     test_script = "r.sh",
 )

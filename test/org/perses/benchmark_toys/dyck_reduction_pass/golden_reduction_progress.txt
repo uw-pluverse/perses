@@ -1,0 +1,1441 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 11
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: true
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_reduction_golden_test_node_priority_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "reduction_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+(11/11)  WARNING: t.c does not parse under its c grammar; reducing an error-tolerant parse of that grammar. The reduced output may not be valid c.
+(11/11)  WARNING: t.c does not parse under its c grammar; reducing an error-tolerant parse of that grammar. The reduced output may not be valid c.
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(11/11)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+    fixpoint (smaller) {
+        if (dyck_node_reducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+    fixpoint (smaller) {
+        if (line_based_concurrent_token_slicer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+    fixpoint (10) {
+        if (FineGritLatraReducer) {
+            fixpoint (smaller) {
+                node_priority
+            }
+        }
+    }
+
+
+(11/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 1. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+|   |___(+){id=8,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+|       |___aux_rule__declaration_3{id=13,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+|       |   |___(+){id=14,slot_type=declarationSpecifiers}
+|       |   |   |___Token:int{id=49,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+|       |   |___(?){id=15,slot_type=optional__declaration_2}
+|       |   |   |___initDeclarator{id=19,slot_type=[initDeclaratorList,initDeclarator]}
+|       |   |       |___Token:keep{id=45,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+|       |   |       |___(?){id=21,slot_type=optional__initDeclarator_2}
+|       |   |           |___aux_rule__initDeclarator_1{id=22,slot_type=aux_rule__initDeclarator_1}
+|       |   |               |___Token:={id=23,slot_type=Assign}
+|       |   |               |___Token:3{id=42,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+|       |   |___Token:{{id=16,slot_type=LeftBrace}
+|       |   |___Token:4{id=17,slot_type=Constant}
+|       |___Token:;{id=11,slot_type=[aux_rule__translationUnit_2,Semi]}
+|___Token:5{id=3,slot_type=Constant}
+|___Token:;{id=4,slot_type=Semi}
+|___Token:}{id=5,slot_type=RightBrace}
+|___Token:;{id=6,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority](11/11)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](11/11)  Retrieved semantics provider null
+==================Reducing node 2, size=11==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep = 3 { 4 ; 5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](11/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  Testing the empty input. Global ratio:11/11=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+                       5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](11/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  There is only one element in the input, and the empty input has been tested. Global ratio:11/11=100.00%
+FixPt[1][node_priority][DFS](11/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:11/11=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=11==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep = 3 { 4 ; 5 ; } ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_8]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (1): pass===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove all except first
+    --file: t.c--
+    int keep = 3 { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 1 --> 1.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 11 -> 10
+Edit: [delete_11]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](10/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:10/11=90.91%
+FixPt[1][node_priority][DFS](10/11)  Testing the empty input. Global ratio:10/11=90.91%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+                       5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](10/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:10/11=90.91%
+FixPt[1][node_priority][DFS](10/11)  There is only one element in the input, and the empty input has been tested. Global ratio:10/11=90.91%
+FixPt[1][node_priority][DFS](10/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/11=90.91%
+===================Node reduction is done===================
+
+Succeeded to reduce node 8 from 11 to 10
+------------------------------------------------------------
+
+
+=================Reducing node 13, size=10==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep = 3 { 4   5 ; } ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_13]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+=================Reducing node 15, size=10==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep = 3 { 4   5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](10/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:10/11=90.91%
+FixPt[1][node_priority][DFS](10/11)  Testing the empty input. Global ratio:10/11=90.91%
+==========Testing the following program (2): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__declaration_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    int          { 4   5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](10/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:10/11=90.91%
+FixPt[1][node_priority][DFS](10/11)  There is only one element in the input, and the empty input has been tested. Global ratio:10/11=90.91%
+FixPt[1][node_priority][DFS](10/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/11=90.91%
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+=================Reducing node 19, size=10==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep = 3 { 4   5 ; } ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_19]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (3): pass===========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 2 --> 2.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 10 -> 8
+Edit: HoistEdit:[replace_19_with_45]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 19 from 10 to 8
+------------------------------------------------------------
+
+
+==================Reducing node 45, size=8==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+==================Reducing node 17, size=8==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+==================Reducing node 16, size=8==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+==================Reducing node 14, size=8==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](8/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:8/11=72.73%
+FixPt[1][node_priority][DFS](8/11)  Testing the empty input. Global ratio:8/11=72.73%
+==========Testing the following program (4): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](8/11)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:8/11=72.73%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 2 --> 2.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 1
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 8 -> 7
+Edit: [delete_49]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](7/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:7/11=63.64%
+===================Node reduction is done===================
+
+Succeeded to reduce node 14 from 8 to 7
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 3, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 3
+------------------------------------------------------------
+
+
+(7/11)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
+========Fixpoint iteration 2. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+|   |___(+){id=8,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+|       |___aux_rule__declaration_3{id=13,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+|           |___(?){id=15,slot_type=optional__declaration_2}
+|           |   |___Token:keep{id=45,slot_type=[initDeclaratorList,initDeclarator,Identifier]}
+|           |___Token:{{id=16,slot_type=LeftBrace}
+|           |___Token:4{id=17,slot_type=Constant}
+|___Token:5{id=3,slot_type=Constant}
+|___Token:;{id=4,slot_type=Semi}
+|___Token:}{id=5,slot_type=RightBrace}
+|___Token:;{id=6,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[2][node_priority](7/11)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](7/11)  Retrieved semantics provider null
+==================Reducing node 2, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](7/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  Testing the empty input. Global ratio:7/11=63.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+                       5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](7/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  There is only one element in the input, and the empty input has been tested. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/11=63.64%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 8, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_8]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](7/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  Testing the empty input. Global ratio:7/11=63.64%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+                       5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](7/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  There is only one element in the input, and the empty input has been tested. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/11=63.64%
+===================Node reduction is done===================
+
+Failed to reduce node 8
+------------------------------------------------------------
+
+
+==================Reducing node 13, size=7==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_13]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 13
+------------------------------------------------------------
+
+
+==================Reducing node 17, size=7==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 17
+------------------------------------------------------------
+
+
+==================Reducing node 16, size=7==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 16
+------------------------------------------------------------
+
+
+==================Reducing node 15, size=7==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](7/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  Testing the empty input. Global ratio:7/11=63.64%
+==========Testing the following program (5): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__declaration_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+                 { 4   5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](7/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  There is only one element in the input, and the empty input has been tested. Global ratio:7/11=63.64%
+FixPt[2][node_priority][DFS](7/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/11=63.64%
+===================Node reduction is done===================
+
+Failed to reduce node 15
+------------------------------------------------------------
+
+
+==================Reducing node 45, size=7==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 45
+------------------------------------------------------------
+
+
+==================Reducing node 6, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 6
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 5
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 4
+------------------------------------------------------------
+
+
+==================Reducing node 3, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 3
+------------------------------------------------------------
+
+
+======Fixpoint iteration 3. Reducer: dyck_node_reducer======
+
+Parser Facade: class org.perses.grammar.dyck.AdaptiveDyckParserFacade
+The spar-tree is the following.
+start{id=1,slot_type=start}
+|___(*){id=2,slot_type=lines}
+    |___(+){id=5,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+        |___(+){id=23,slot_type=[node,text]}
+        |   |___Token:keep{id=24,slot_type=OTHER}
+        |___aux_rule__node_1{id=11,slot_type=[node,aux_rule__node_1]}
+        |   |___Token:{{id=12,slot_type=OPEN_BRACE}
+        |   |___(*){id=13,slot_type=lines}
+        |   |   |___(+){id=17,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+        |   |       |___(+){id=19,slot_type=[node,text]}
+        |   |           |___Token:4{id=20,slot_type=OTHER}
+        |   |           |___Token:5{id=21,slot_type=OTHER}
+        |   |           |___Token:;{id=22,slot_type=OTHER}
+        |   |___Token:}{id=14,slot_type=CLOSE_BRACE}
+        |___(+){id=9,slot_type=[node,text]}
+            |___Token:;{id=10,slot_type=OTHER}
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer](7/11)  Starting to retrieve the semantics provider
+FixPt[3][dyck_node_reducer](7/11)  Retrieved semantics provider null
+==================Reducing node 2, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](7/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:7/11=63.64%
+FixPt[3][dyck_node_reducer][DFS](7/11)  Testing the empty input. Global ratio:7/11=63.64%
+==========Testing the following program (6): fail===========
+
+// edit action set type: DFS in dyck_node_reducer(PersesNodeReducer)[kleene_star:lines]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](7/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:7/11=63.64%
+FixPt[3][dyck_node_reducer][DFS](7/11)  There is only one element in the input, and the empty input has been tested. Global ratio:7/11=63.64%
+FixPt[3][dyck_node_reducer][DFS](7/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:7/11=63.64%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 5, size=7===================
+
+The current best program is the following
+
+    --file: t.c--
+        keep     { 4   5 ; } ;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_5]
+    context: [kleene_plus:kleene_plus__line_1]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (7): pass===========
+
+// edit action set type: [kleene_plus:kleene_plus__line_1]remove all except first
+    --file: t.c--
+        keep
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+3 entries are removed: 4 --> 1.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 7 -> 1
+Edit: [delete: 9,11]
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[3][dyck_node_reducer][DFS](1/11)  Testing the empty input. Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[3][dyck_node_reducer][DFS](1/11)  There is only one element in the input, and the empty input has been tested. Global ratio:1/11=9.09%
+FixPt[3][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+===================Node reduction is done===================
+
+Succeeded to reduce node 5 from 7 to 1
+------------------------------------------------------------
+
+
+==================Reducing node 23, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_23]
+    context: [kleene_plus:text]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[3][dyck_node_reducer][DFS](1/11)  Testing the empty input. Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[3][dyck_node_reducer][DFS](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[3][dyck_node_reducer][DFS](1/11)  There is only one element in the input, and the empty input has been tested. Global ratio:1/11=9.09%
+FixPt[3][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+===================Node reduction is done===================
+
+Failed to reduce node 23
+------------------------------------------------------------
+
+
+==================Reducing node 24, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 24
+------------------------------------------------------------
+
+
+(1/11)  The reducer node_priority is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
+(1/11)  Rebuilding spar-tree: The spartree is rebuilt.
+======Fixpoint iteration 4. Reducer: dyck_node_reducer======
+
+Parser Facade: class org.perses.grammar.dyck.AdaptiveDyckParserFacade
+The spar-tree is the following.
+start{id=26,slot_type=start}
+|___(*){id=27,slot_type=lines}
+    |___(+){id=30,slot_type=[line,aux_rule__line_3,kleene_plus__line_1]}
+        |___(+){id=32,slot_type=[node,text]}
+            |___Token:keep{id=33,slot_type=OTHER}
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer](1/11)  Starting to retrieve the semantics provider
+FixPt[4][dyck_node_reducer](1/11)  Retrieved semantics provider null
+==================Reducing node 27, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  Testing the empty input. Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  There is only one element in the input, and the empty input has been tested. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+===================Node reduction is done===================
+
+Failed to reduce node 27
+------------------------------------------------------------
+
+
+==================Reducing node 30, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_30]
+    context: [kleene_plus:kleene_plus__line_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  Testing the empty input. Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  There is only one element in the input, and the empty input has been tested. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+===================Node reduction is done===================
+
+Failed to reduce node 30
+------------------------------------------------------------
+
+
+==================Reducing node 32, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_32]
+    context: [kleene_plus:text]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  Testing the empty input. Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[4][dyck_node_reducer][DFS](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  There is only one element in the input, and the empty input has been tested. Global ratio:1/11=9.09%
+FixPt[4][dyck_node_reducer][DFS](1/11)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+===================Node reduction is done===================
+
+Failed to reduce node 32
+------------------------------------------------------------
+
+
+==================Reducing node 33, size=1==================
+
+The current best program is the following
+
+    --file: t.c--
+        keep
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 33
+------------------------------------------------------------
+
+
+=Fixpoint iteration 5. Reducer: line_based_concurrent_token_slicer@1
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[5][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[5][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[5][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/11)  Window size: 1 Global ratio:1/11=9.09%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[5][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[5][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 6. Reducer: line_based_concurrent_token_slicer@2
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[6][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[6][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[6][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/11)  Window size: 2 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@2(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[6][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[6][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 7. Reducer: line_based_concurrent_token_slicer@3
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[7][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[7][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[7][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/11)  Window size: 3 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@3(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[7][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[7][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 8. Reducer: line_based_concurrent_token_slicer@4
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[8][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[8][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[8][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/11)  Window size: 4 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@4(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[8][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[8][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 9. Reducer: line_based_concurrent_token_slicer@5
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[9][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[9][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[9][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/11)  Window size: 5 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@5(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[9][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[9][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 10. Reducer: line_based_concurrent_token_slicer@6
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[10][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[10][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[10][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/11)  Window size: 6 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@6(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[10][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[10][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 11. Reducer: line_based_concurrent_token_slicer@7
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[11][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[11][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[11][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/11)  Window size: 7 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@7(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[11][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[11][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 12. Reducer: line_based_concurrent_token_slicer@8
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[12][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[12][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[12][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/11)  Window size: 8 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@8(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[12][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[12][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 13. Reducer: line_based_concurrent_token_slicer@9
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[13][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[13][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[13][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/11)  Window size: 9 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@9(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[13][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[13][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 14. Reducer: line_based_concurrent_token_slicer@10
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[14][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[14][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[14][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/11)  Window size: 10 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@10(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[14][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[14][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 15. Reducer: line_based_concurrent_token_slicer@11
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[15][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[15][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[15][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/11)  Window size: 11 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@11(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[15][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[15][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 16. Reducer: line_based_concurrent_token_slicer@12
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[16][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[16][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[16][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/11)  Window size: 12 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@12(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[16][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[16][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 17. Reducer: line_based_concurrent_token_slicer@13
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[17][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[17][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[17][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/11)  Window size: 13 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@13(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[17][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[17][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 18. Reducer: line_based_concurrent_token_slicer@14
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[18][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/11=9.09%
+FixPt[18][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/11)  Testing the empty input is disabled. Global ratio:1/11=9.09%
+FixPt[18][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/11)  Window size: 14 Global ratio:1/11=9.09%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@14(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[18][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/11)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+FixPt[18][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/11)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/11=9.09%
+(1/11)  The reducer FineGritLatraReducer is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
+(1/11)  The reducer spartree_root_replacement_reducer is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                               Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0                         node_priority      3             0      -4             -6       5   time-hidden
+ 1                         node_priority      0             0       0              0       1   time-hidden
+ 2                     dyck_node_reducer      1             0      -6             -6       2   time-hidden
+ 3                     dyck_node_reducer      0             0       0              0       0   time-hidden
+ 4  line_based_concurrent_token_slicer@1      0             0       0              0       0   time-hidden
+ 5  line_based_concurrent_token_slicer@2      0             0       0              0       0   time-hidden
+ 6  line_based_concurrent_token_slicer@3      0             0       0              0       0   time-hidden
+ 7  line_based_concurrent_token_slicer@4      0             0       0              0       0   time-hidden
+ 8  line_based_concurrent_token_slicer@5      0             0       0              0       0   time-hidden
+ 9  line_based_concurrent_token_slicer@6      0             0       0              0       0   time-hidden
+10  line_based_concurrent_token_slicer@7      0             0       0              0       0   time-hidden
+11  line_based_concurrent_token_slicer@8      0             0       0              0       0   time-hidden
+12  line_based_concurrent_token_slicer@9      0             0       0              0       0   time-hidden
+13 line_based_concurrent_token_slicer@10      0             0       0              0       0   time-hidden
+14 line_based_concurrent_token_slicer@11      0             0       0              0       0   time-hidden
+15 line_based_concurrent_token_slicer@12      0             0       0              0       0   time-hidden
+16 line_based_concurrent_token_slicer@13      0             0       0              0       0   time-hidden
+17 line_based_concurrent_token_slicer@14      0             0       0              0       0   time-hidden
+
+----------------------------------- Summary ------------------------------------
+                              Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+                    dyck_node_reducer     2      1             0      -6             -6       2   time-hidden
+                        node_priority     2      3             0      -4             -6       6   time-hidden
+ line_based_concurrent_token_slicer@1     1      0             0       0              0       0   time-hidden
+line_based_concurrent_token_slicer@10     1      0             0       0              0       0   time-hidden
+line_based_concurrent_token_slicer@11     1      0             0       0              0       0   time-hidden
+line_based_concurrent_token_slicer@12     1      0             0       0              0       0   time-hidden
+line_based_concurrent_token_slicer@13     1      0             0       0              0       0   time-hidden
+line_based_concurrent_token_slicer@14     1      0             0       0              0       0   time-hidden
+ line_based_concurrent_token_slicer@2     1      0             0       0              0       0   time-hidden
+ line_based_concurrent_token_slicer@3     1      0             0       0              0       0   time-hidden
+ line_based_concurrent_token_slicer@4     1      0             0       0              0       0   time-hidden
+ line_based_concurrent_token_slicer@5     1      0             0       0              0       0   time-hidden
+ line_based_concurrent_token_slicer@6     1      0             0       0              0       0   time-hidden
+ line_based_concurrent_token_slicer@7     1      0             0       0              0       0   time-hidden
+ line_based_concurrent_token_slicer@8     1      0             0       0              0       0   time-hidden
+ line_based_concurrent_token_slicer@9     1      0             0       0              0       0   time-hidden
+
+------------------------------- Transformations --------------------------------
+            Transformation Worked #NonDeletions #Tokens #NonBlankChars
+dyck_node_reducer.Deletion      1             0      -6             -6
+    node_priority.Deletion      2             0      -2             -4
+ node_priority.Replacement      1             0      -2             -2
+------------------------------------- End --------------------------------------
+#test success = 4
+#test failure = 4
+#test result cache hits = 9
+#test execution cancelled = 0
+#node edit action set cache hits = 22
+#external test execution cache hits = 0

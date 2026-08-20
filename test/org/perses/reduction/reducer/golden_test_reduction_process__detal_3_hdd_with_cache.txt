@@ -1,3 +1,4 @@
+The sanity check has been performed. The result is Passing
 =====================Reduction starts.======================
 
 The initial program size is 16
@@ -10,20 +11,20 @@ verbosityFlags:
   groupName: "Verbosity"
   verbosity: "CONFIG"
   listVerbosity: false
-  hideTimestamps: false
+  hideTimestamps: true
   fullyDeterministicMode: false
 versionFlags:
   groupName: "Version"
   version: false
-inputFlags:
-  groupName: "Inputs"
-  testScript: "r.sh"
-  inputFile: "t.c"
-  deps: []
-  sourceFile: "t.c"
 resultOutputFlags:
   groupName: "Outputs"
   outputDir: null
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
 reductionControlFlags:
   groupName: "General Reduction Control"
   globalFixpoint: false
@@ -40,19 +41,16 @@ outputRefiningFlags:
   creduceCmd: "creduce"
 algorithmControlFlags:
   groupName: "Reduction Algorithm Control"
-  reductionAlgorithm: "hdd"
+  mainReductionAlgorithm: "hdd"
+  cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
-  enableLineSlicer: false
-  defaultListMinimizerTypeForKleene: "DFS"
+  lineSlicer: "AUTO"
   defaultListMinimizerTypeForHDD: "CDD"
   minSlicingWindowSize: 1
   maxSlicingWindowSize: 14
-  maxEditCountForRegularRuleNode: 100
-  maxBfsDepthForRegularRuleNode: 5
-  stopAtFirstCompatibleChildForRegularRuleNode: false
 languageControlFlags:
   groupName: "Language Control"
   languageName: ""
@@ -61,6 +59,18 @@ languageControlFlags:
   listParserFacades: false
   languageJarFiles: []
   underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
 vulcanFlags:
   groupName: "Vulcan Reducer Control"
   enableVulcan: false
@@ -73,31 +83,43 @@ trecFlags:
 profilingFlags:
   groupName: "Profiling"
   progressDumpFile: "progress_dump_t_hdd_with_cache.c"
-  appendToProgressDumpFile: true
+  actionsetEffectProfile: null
   statDumpFile: "stat_hdd_with_caching_t.c"
   profileQueryCacheTime: null
   profileQueryCacheTimeCSV: null
   profileQueryCacheMemory: null
   actionSetProfiler: null
   profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
 cacheControlFlags:
   groupName: "Cache Control"
-  queryCaching: "TRUE"
-  cacheType: "CONTENT_SHA_HASH_FORMAT"
+  queryCaching: true
   nodeActionSetCaching: true
-  queryCacheRefreshThreshold: 0
-  enableLightweightRefreshing: true
   enablePassCache: true
   enableGlobalCache: false
   globalCacheFile: null
   pathToSaveUpdatedGlobalCache: null
   defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: null
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: null
+  minimizerUnderEvaluation: null
+  evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
   onDemandFineGritReducerAnnotationClasses: []
   onDemandMediumGritReducerAnnotationClasses: []
   onDemandCoarseGritReducerAnnotationClasses: []
   keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
 lprFlags:
   groupName: "LPR Reducer Control"
   enableLPR: false
@@ -108,21 +130,30 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
 
-Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 ------------------------------------------------------------
 
 
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
-The sanity check has been performed. The result is Passing
-The number of lexemes in PersesTokenFactory is 13
 (16/16)  The reducer execution plan is listed below.
     fixpoint (smaller) {
         hdd
     }
     fixpoint (10) {
         if (FineGritLatraReducer) {
-            hdd
+            fixpoint (smaller) {
+                hdd
+            }
         }
     }
 
@@ -130,122 +161,106 @@ The number of lexemes in PersesTokenFactory is 13
 (16/16)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 =============Fixpoint iteration 1. Reducer: hdd=============
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=1,slot_type=translationUnit}
-|___(+) {id=2,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=4,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=5,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=99,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=103,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=90,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=98,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=92,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=94,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=95,slot_type=LeftParen}
-        |           |___Token:) {id=97,slot_type=RightParen}
-        |___compoundStatement {id=7,slot_type=compoundStatement}
-            |___Token:{ {id=8,slot_type=LeftBrace}
-            |___(?) {id=9,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=12,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=54,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=55,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=89,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=56,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=59,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=85,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=61,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=62,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=63,slot_type=Assign}
-            |       |   |               |___Token:99 {id=82,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=57,slot_type=Semi}
-            |       |___jumpStatement {id=17,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=20,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=21,slot_type=Return}
-            |           |   |___(?) {id=22,slot_type=optional__postfixExpression_1}
-            |           |       |___additiveExpression {id=34,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
-            |           |           |___Token:a {id=52,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |           |           |___(*) {id=36,slot_type=kleene_star__additiveExpression_1}
-            |           |               |___aux_rule__additiveExpression_2 {id=37,slot_type=aux_rule__additiveExpression_2}
-            |           |                   |___Token:+ {id=46,slot_type=[altnt_block__additiveExpression_3,Plus]}
-            |           |                   |___Token:0 {id=45,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |           |___Token:; {id=19,slot_type=Semi}
-            |___Token:} {id=10,slot_type=RightBrace}
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=6,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=7,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=101,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=105,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=92,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=100,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=94,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=96,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=97,slot_type=LeftParen}
+            |           |___Token:){id=99,slot_type=RightParen}
+            |___compoundStatement{id=9,slot_type=compoundStatement}
+                |___Token:{{id=10,slot_type=LeftBrace}
+                |___(?){id=11,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=56,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=57,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=91,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=58,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=61,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=87,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=63,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=64,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=65,slot_type=Assign}
+                |       |   |               |___Token:99{id=84,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=59,slot_type=Semi}
+                |       |___jumpStatement{id=19,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=22,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=23,slot_type=Return}
+                |           |   |___(?){id=24,slot_type=optional__postfixExpression_1}
+                |           |       |___additiveExpression{id=36,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression]}
+                |           |           |___Token:a{id=54,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |           |___(*){id=38,slot_type=kleene_star__additiveExpression_1}
+                |           |               |___aux_rule__additiveExpression_2{id=39,slot_type=aux_rule__additiveExpression_2}
+                |           |                   |___Token:+{id=48,slot_type=[altnt_block__additiveExpression_3,Plus]}
+                |           |                   |___Token:0{id=47,slot_type=[multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |           |___Token:;{id=21,slot_type=Semi}
+                |___Token:}{id=12,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0]#1. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (0): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level1:1]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=2}
-------------------------------------------------------------
-
-
-FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
+FixPt[1][hdd][CDD](16/16)  There is only one element in the input, and the empty input has been tested. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0]#1. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
-==============Node edit action set cache hit.===============
+FixPt[1][hdd][CDD](16/16)  There is only one element in the input, and the empty input has been tested. Global ratio:16/16=100.00%
+FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
+FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0]#1. Global ratio:16/16=100.00%
+FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=4}
+    --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
+FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
+FixPt[1][hdd][CDD](16/16)  There is only one element in the input, and the empty input has been tested. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0-2]#3. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=5}
-    NodeDeletionAction{target_node=7}
-    NodeDeletionAction{target_node=90}
+    structure: [delete: 7,9,92]
+    context: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=3,#parts=3#total-parts=3
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (1): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
                {
       int a = 99;
       return a + 0;
@@ -254,37 +269,19 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.0
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (2): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    main
-    (
-    )
-    --file: <formatted tokenized program in its original format>--
         main()
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (3): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    int
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int        {
       int a = 99;
       return a + 0;
@@ -293,40 +290,19 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (4): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    --file: <formatted tokenized program in its original format>--
     int main()
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (5): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
         main() {
       int a = 99;
       return a + 0;
@@ -341,27 +317,14 @@ FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (6): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@4
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=4,#parts=4#total-parts=6
     --file: t.c--
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
       int a = 99;
       return a + 0;
     }
@@ -369,37 +332,19 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (7): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@4
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=4,#parts=4#total-parts=6
     --file: t.c--
-    (
-    )
-    {
-    --file: <formatted tokenized program in its original format>--
             () {
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-1,4-5]#4: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (8): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=2,#parts=2#total-parts=6
     --file: t.c--
-    int
-    main
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main
       int a = 99;
       return a + 0;
@@ -408,16 +353,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-1,4-5]#4: Uninteresting. Local ratio:
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (9): fail===========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=2,#parts=2#total-parts=6
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    --file: <formatted tokenized program in its original format>--
     int main() {
 ------------------------------------------------------------
 
@@ -426,22 +365,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [4-5]#2: Uninteresting. Local ratio: 6/6
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
         main() {
       int a = 99;
       return a + 0;
@@ -450,26 +373,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [4-5]#2: Uninteresting. Local ratio: 6/6
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (10): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int     () {
       int a = 99;
       return a + 0;
@@ -478,25 +385,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 6/6=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (11): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main   {
       int a = 99;
       return a + 0;
@@ -505,26 +397,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 6/6=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (12): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    main
-    (
-    )
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main()
       int a = 99;
       return a + 0;
@@ -533,43 +409,20 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 6/6=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (13): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [4]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (14): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return a + 0;
@@ -580,14 +433,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [5]#1: Uninteresting. Local ratio: 6/6=1
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0-5]#6. Local ratio: 6/6=100.00%. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0-2]#3. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (15): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@3
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level6:3]dd@#nodes=3,#parts=3#total-parts=3
     --file: t.c--
-    main
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
         main   {
     }
 ------------------------------------------------------------
@@ -596,31 +445,16 @@ FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=12}
-    NodeDeletionAction{target_node=94}
-    NodeDeletionAction{target_node=103}
+    structure: [delete: 14,96,105]
+    context: CDD in hdd(LevelBasedReducer)[Level6:3]dd@#nodes=3,#parts=3#total-parts=3
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (16): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level6:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
         main   {
       int a = 99;
       return a + 0;
@@ -629,16 +463,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.0
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (17): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level6:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
         main() {
     }
 ------------------------------------------------------------
@@ -648,21 +476,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main   {
       int a = 99;
       return a + 0;
@@ -674,13 +487,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
@@ -690,22 +496,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
         main() {
       int a = 99;
       return a + 0;
@@ -717,15 +507,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=1
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0-3]#4. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (18): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@4
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=4,#parts=4#total-parts=4
     --file: t.c--
-    int
-    main
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
     int main   {
     }
 ------------------------------------------------------------
@@ -734,10 +519,8 @@ FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=17}
-    NodeDeletionAction{target_node=54}
-    NodeDeletionAction{target_node=95}
-    NodeDeletionAction{target_node=97}
+    structure: [delete: 19,56,97,99]
+    context: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=4,#parts=4#total-parts=4
 ------------------------------------------------------------
 
 
@@ -745,21 +528,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.0
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main   {
       int a = 99;
       return a + 0;
@@ -771,39 +539,16 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (19): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main ) {
       int a = 99;
       return a + 0;
@@ -812,26 +557,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (20): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main(  {
       int a = 99;
       return a + 0;
@@ -840,22 +569,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (21): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       return a + 0;
     }
@@ -863,22 +580,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (22): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
     }
@@ -892,31 +597,16 @@ FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
     }
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (23): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@4
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=4,#parts=4#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
                   ;
     }
@@ -924,21 +614,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (24): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@4
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=4,#parts=4#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    +
-    0
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       return a + 0
     }
@@ -949,18 +628,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
     }
@@ -968,26 +635,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (25): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
           a = 99;
       return a + 0;
@@ -996,24 +647,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (26): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
       return a + 0;
@@ -1022,26 +659,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (27): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99
       return a + 0;
@@ -1050,23 +671,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (28): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
                   ;
@@ -1075,26 +683,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (29): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return a + 0
@@ -1106,19 +698,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [4]#1: Uninteresting. Local ratio: 5/5=1
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0-4]#5. Local ratio: 5/5=100.00%. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0-3]#4. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (30): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@4
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level9:4]dd@#nodes=4,#parts=4#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    ;
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
                 ;
                   ;
@@ -1129,31 +712,16 @@ FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=21}
-    NodeDeletionAction{target_node=22}
-    NodeDeletionAction{target_node=59}
-    NodeDeletionAction{target_node=89}
+    structure: [delete: 23,24,61,91]
+    context: CDD in hdd(LevelBasedReducer)[Level9:4]dd@#nodes=4,#parts=4#total-parts=4
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (31): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level9:4]dd@#nodes=2,#parts=2#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
                 ;
       return a + 0;
@@ -1165,19 +733,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
                   ;
@@ -1189,22 +744,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    a
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
           a = 99;
       return a + 0;
@@ -1216,20 +755,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
       return a + 0;
@@ -1238,26 +763,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (32): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level9:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
              a + 0;
@@ -1266,24 +775,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (33): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level9:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return      ;
@@ -1295,21 +790,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [3]#1: Uninteresting. Local ratio: 4/4=1
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0-3]#4. Local ratio: 4/4=100.00%. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0-2]#3. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (34): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@3
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level10:3]dd@#nodes=3,#parts=3#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
       return      ;
@@ -1320,9 +804,8 @@ FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=34}
-    NodeDeletionAction{target_node=61}
-    NodeDeletionAction{target_node=85}
+    structure: [delete: 36,63,87]
+    context: CDD in hdd(LevelBasedReducer)[Level10:3]dd@#nodes=3,#parts=3#total-parts=3
 ------------------------------------------------------------
 
 
@@ -1330,20 +813,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.0
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int       ;
       return a + 0;
@@ -1352,23 +821,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.0
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (35): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level10:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    =
-    99
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int   = 99;
       return      ;
@@ -1377,25 +833,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (36): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level10:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a + 0;
@@ -1407,20 +848,6 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return      ;
@@ -1429,26 +856,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=1
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (37): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level10:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    =
-    99
-    ;
-    return
-    a
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int   = 99;
       return a + 0;
@@ -1460,22 +871,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=1
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0-2]#3. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (38): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@3
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level11:3]dd@#nodes=3,#parts=3#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return      ;
@@ -1486,31 +885,16 @@ FixPt[1][hdd][CDD](16/16)  Testing the empty input. Global ratio:16/16=100.00%
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=36}
-    NodeDeletionAction{target_node=52}
-    NodeDeletionAction{target_node=62}
+    structure: [delete: 38,54,64]
+    context: CDD in hdd(LevelBasedReducer)[Level11:3]dd@#nodes=3,#parts=3#total-parts=3
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (39): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level11:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return   + 0;
@@ -1519,23 +903,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.0
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (40): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level11:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a    ;
@@ -1544,26 +915,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: fail=============
+==========Testing the following program (41): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level11:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    +
-    0
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return   + 0;
@@ -1572,25 +927,10 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3
 
 
 FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
-============Testing the following program: pass=============
+==========Testing the following program (42): pass==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level11:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a = 99;
       return a    ;
@@ -1601,38 +941,26 @@ FixPt[1][hdd][CDD](16/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=1
 FixPt[1][hdd][CDD](16/16)  Try deleting [2]#1: Interesting. Local ratio: 3/3=100.00%. Global ratio:16/16=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
-14 entries are removed: 42 --> 28.
+9 entries are removed: 42 --> 33.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 59
+    size before clearance = 60
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
 token count change 16 -> 14
+Edit: [delete_38]
 ------------------------------------------------------------
 
 
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a    ;
@@ -1647,19 +975,6 @@ FixPt[1][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a     ;
       return a    ;
@@ -1670,30 +985,16 @@ FixPt[1][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 FixPt[1][hdd][CDD](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=63}
-    NodeDeletionAction{target_node=82}
+    structure: [delete: 65,84]
+    context: CDD in hdd(LevelBasedReducer)[Level12:2]dd@#nodes=2,#parts=2#total-parts=2
 ------------------------------------------------------------
 
 
 FixPt[1][hdd][CDD](14/16)  Try deleting [0-1]#2: Skipped. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (43): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level12:2]dd@#nodes=1,#parts=1#total-parts=2
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a   99;
       return a    ;
@@ -1702,24 +1003,10 @@ FixPt[1][hdd][CDD](14/16)  Try deleting [0-1]#2: Skipped. Local ratio: 2/2=100.0
 
 
 FixPt[1][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (44): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level12:2]dd@#nodes=1,#parts=1#total-parts=2
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
     int main() {
       int a =   ;
       return a    ;
@@ -1732,41 +1019,43 @@ FixPt[1][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0-1
 (14/16)  Rebuilding spar-tree: The spartree is rebuilt.
 =============Fixpoint iteration 2. Reducer: hdd=============
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=105,slot_type=translationUnit}
-|___(+) {id=106,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=108,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=109,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=192,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=196,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=183,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=191,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=185,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=187,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=188,slot_type=LeftParen}
-        |           |___Token:) {id=190,slot_type=RightParen}
-        |___compoundStatement {id=111,slot_type=compoundStatement}
-            |___Token:{ {id=112,slot_type=LeftBrace}
-            |___(?) {id=113,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=116,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=147,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=148,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=182,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=149,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=152,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=178,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=154,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=155,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=156,slot_type=Assign}
-            |       |   |               |___Token:99 {id=175,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=150,slot_type=Semi}
-            |       |___jumpStatement {id=121,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=124,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=125,slot_type=Return}
-            |           |   |___(?) {id=126,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:a {id=145,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |           |___Token:; {id=123,slot_type=Semi}
-            |___Token:} {id=114,slot_type=RightBrace}
+compilationUnit{id=107,slot_type=compilationUnit}
+|___(?){id=108,slot_type=optional__compilationUnit_1}
+    |___(+){id=110,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=112,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=113,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=196,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=200,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=187,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=195,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=189,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=191,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=192,slot_type=LeftParen}
+            |           |___Token:){id=194,slot_type=RightParen}
+            |___compoundStatement{id=115,slot_type=compoundStatement}
+                |___Token:{{id=116,slot_type=LeftBrace}
+                |___(?){id=117,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=120,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=151,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=152,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=186,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=153,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=156,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=182,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=158,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=159,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=160,slot_type=Assign}
+                |       |   |               |___Token:99{id=179,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=154,slot_type=Semi}
+                |       |___jumpStatement{id=125,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=128,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=129,slot_type=Return}
+                |           |   |___(?){id=130,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:a{id=149,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=127,slot_type=Semi}
+                |___Token:}{id=118,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
@@ -1775,80 +1064,58 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=106}
-------------------------------------------------------------
-
-
-FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][hdd][CDD](14/16)  There is only one element in the input, and the empty input has been tested. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0]#1. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
-==============Node edit action set cache hit.===============
+FixPt[2][hdd][CDD](14/16)  There is only one element in the input, and the empty input has been tested. Global ratio:14/16=87.50%
+FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0]#1. Global ratio:14/16=87.50%
+FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
+=====Cache hit for the following uninteresting program:=====
 
-    NodeDeletionAction{target_node=108}
+    --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][hdd][CDD](14/16)  There is only one element in the input, and the empty input has been tested. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0-2]#3. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=109}
-    NodeDeletionAction{target_node=111}
-    NodeDeletionAction{target_node=183}
+    structure: [delete: 113,115,187]
+    context: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=3,#parts=3#total-parts=3
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (45): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+               {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -1857,43 +1124,18 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    main
-    (
-    )
-    --file: <formatted tokenized program in its original format>--
-    main
-    (
-    )
+        main()
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (46): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    int
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int        {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -1902,49 +1144,18 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
+    int main()
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (47): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level4:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+        main() {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -1956,33 +1167,16 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    --file: <formatted tokenized program in its original format>--
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (48): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@4
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=4,#parts=4#total-parts=6
     --file: t.c--
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -1991,43 +1185,18 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 6/6
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    (
-    )
-    {
-    --file: <formatted tokenized program in its original format>--
-    (
-    )
-    {
+            () {
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-1,4-5]#4: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (49): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=2,#parts=2#total-parts=6
     --file: t.c--
-    int
-    main
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2036,17 +1205,7 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 6/6
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
+    int main() {
 ------------------------------------------------------------
 
 
@@ -2054,135 +1213,45 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [4-5]#2: Uninteresting. Local ratio: 6/6
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+        main() {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (50): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int     () {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (51): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main   {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (52): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    main
-    (
-    )
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main()
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2191,54 +1260,19 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [3]#1: Uninteresting. Local ratio: 6/6=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
+    int main() {
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [4]#1: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (53): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level5:6]dd@#nodes=1,#parts=1#total-parts=6
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main() {
+      int a = 99;
+      return a    ;
 ------------------------------------------------------------
 
 
@@ -2249,12 +1283,7 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    main
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
-    main
-    {
+        main   {
     }
 ------------------------------------------------------------
 
@@ -2262,39 +1291,19 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=116}
-    NodeDeletionAction{target_node=187}
-    NodeDeletionAction{target_node=196}
+    structure: [delete: 120,191,200]
+    context: CDD in hdd(LevelBasedReducer)[Level6:3]dd@#nodes=3,#parts=3#total-parts=3
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (54): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level6:3]dd@#nodes=2,#parts=2#total-parts=3
     --file: t.c--
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+        main   {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2303,16 +1312,7 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
-    main
-    (
-    )
-    {
+        main() {
     }
 ------------------------------------------------------------
 
@@ -2321,30 +1321,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main   {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2353,18 +1332,7 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
+    int main() {
     }
 ------------------------------------------------------------
 
@@ -2373,32 +1341,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+        main() {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2410,14 +1355,7 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    {
+    int main   {
     }
 ------------------------------------------------------------
 
@@ -2425,10 +1363,8 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=121}
-    NodeDeletionAction{target_node=147}
-    NodeDeletionAction{target_node=188}
-    NodeDeletionAction{target_node=190}
+    structure: [delete: 125,151,192,194]
+    context: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=4,#parts=4#total-parts=4
 ------------------------------------------------------------
 
 
@@ -2436,30 +1372,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.0
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main   {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2468,115 +1383,42 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
+    int main() {
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (55): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main ) {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (56): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main(  {
+      int a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (57): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level7:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    ;
+    int main() {
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2585,28 +1427,8 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
+    int main() {
+      int a = 99;
     }
 ------------------------------------------------------------
 
@@ -2618,18 +1440,7 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
+    int main() {
     }
 ------------------------------------------------------------
 
@@ -2638,45 +1449,19 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    ;
+    int main() {
+                  ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (58): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@4
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=4,#parts=4#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    return
-    a
+    int main() {
+      return a
     }
 ------------------------------------------------------------
 
@@ -2685,129 +1470,44 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-2,4]#4: Uninteresting. Local ratio: 5
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
+    int main() {
+      int a = 99;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [3-4]#2: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (59): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main() {
+          a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (60): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    ;
+    int main() {
+      int       ;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (61): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    return
-    a
-    ;
+    int main() {
+      int a = 99
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2816,65 +1516,21 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 5/5=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
+    int main() {
+      int a = 99;
+                  ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [3]#1: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (62): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level8:5]dd@#nodes=1,#parts=1#total-parts=5
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    a
+    int main() {
+      int a = 99;
+      return a
     }
 ------------------------------------------------------------
 
@@ -2886,22 +1542,9 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    ;
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    ;
-    ;
+    int main() {
+                ;
+                  ;
     }
 ------------------------------------------------------------
 
@@ -2909,38 +1552,19 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=125}
-    NodeDeletionAction{target_node=126}
-    NodeDeletionAction{target_node=152}
-    NodeDeletionAction{target_node=182}
+    structure: [delete: 129,130,156,186]
+    context: CDD in hdd(LevelBasedReducer)[Level9:4]dd@#nodes=4,#parts=4#total-parts=4
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-3]#4: Skipped. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (63): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@2
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level9:4]dd@#nodes=2,#parts=2#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    ;
-    return
-    a
-    ;
+    int main() {
+                ;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -2949,30 +1573,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/4
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    ;
+    int main() {
+      int a = 99;
+                  ;
     }
 ------------------------------------------------------------
 
@@ -2981,32 +1584,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [2-3]#2: Uninteresting. Local ratio: 4/4
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    a
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main() {
+          a = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -3015,63 +1595,21 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 4/4=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    ;
+    int main() {
+      int       ;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 4/4=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (64): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level9:4]dd@#nodes=1,#parts=1#total-parts=4
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    a
-    ;
+    int main() {
+      int a = 99;
+             a    ;
     }
 ------------------------------------------------------------
 
@@ -3080,32 +1618,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 4/4=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    ;
+    int main() {
+      int a = 99;
+      return      ;
     }
 ------------------------------------------------------------
 
@@ -3117,26 +1632,9 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    ;
+    int main() {
+      int       ;
+      return      ;
     }
 ------------------------------------------------------------
 
@@ -3144,9 +1642,8 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=145}
-    NodeDeletionAction{target_node=154}
-    NodeDeletionAction{target_node=178}
+    structure: [delete: 149,158,182]
+    context: CDD in hdd(LevelBasedReducer)[Level10:3]dd@#nodes=3,#parts=3#total-parts=3
 ------------------------------------------------------------
 
 
@@ -3154,28 +1651,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-2]#3: Skipped. Local ratio: 3/3=100.0
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    ;
-    return
-    a
-    ;
+    int main() {
+      int       ;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -3184,30 +1662,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    =
-    99
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    =
-    99
-    ;
-    return
-    ;
+    int main() {
+      int   = 99;
+      return      ;
     }
 ------------------------------------------------------------
 
@@ -3216,30 +1673,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0,2]#2: Uninteresting. Local ratio: 3/3
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
+    int main() {
+      int a     ;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -3248,67 +1684,21 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    return
-    ;
+    int main() {
+      int a = 99;
+      return      ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:14/16=87.50%
-============Testing the following program: fail=============
+==========Testing the following program (65): fail==========
 
-// edit action set type: CDD in org.perses.reduction.reducer.hdd.HDDReducerdd@1
+// edit action set type: CDD in hdd(LevelBasedReducer)[Level10:3]dd@#nodes=1,#parts=1#total-parts=3
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    =
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    =
-    99
-    ;
-    return
-    a
-    ;
+    int main() {
+      int   = 99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -3320,72 +1710,24 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
+    int main() {
+      int a     ;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
-==============Node edit action set cache hit.===============
-
-    NodeDeletionAction{target_node=155}
-------------------------------------------------------------
-
-
-FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
+FixPt[2][hdd][CDD](14/16)  There is only one element in the input, and the empty input has been tested. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger starts. Input=[0-1]#2. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    ;
-    return
-    a
-    ;
+    int main() {
+      int a     ;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -3393,8 +1735,8 @@ FixPt[2][hdd][CDD](14/16)  Testing the empty input. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
 ==============Node edit action set cache hit.===============
 
-    NodeDeletionAction{target_node=156}
-    NodeDeletionAction{target_node=175}
+    structure: [delete: 160,179]
+    context: CDD in hdd(LevelBasedReducer)[Level12:2]dd@#nodes=2,#parts=2#total-parts=2
 ------------------------------------------------------------
 
 
@@ -3402,32 +1744,9 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0-1]#2: Skipped. Local ratio: 2/2=100.0
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    99
-    ;
-    return
-    a
-    ;
+    int main() {
+      int a   99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -3436,75 +1755,55 @@ FixPt[2][hdd][CDD](14/16)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=1
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    ;
-    return
-    a
-    ;
+    int main() {
+      int a =   ;
+      return a    ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][hdd][CDD](14/16)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
 FixPt[2][hdd][CDD](14/16)  Minimizer CounterBasedDeltaDebugger ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:14/16=87.50%
+(14/16)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-translationUnit {id=105,slot_type=translationUnit}
-|___(+) {id=106,slot_type=kleene_plus__translationUnit_3}
-    |___functionDefinition {id=108,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |___(?) {id=109,slot_type=optional__functionDefinition_2}
-        |   |___(+) {id=192,slot_type=declarationSpecifiers}
-        |       |___Token:int {id=196,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |___directDeclarator {id=183,slot_type=[declarator,directDeclarator]}
-        |   |___Token:main {id=191,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |___(*) {id=185,slot_type=kleene_star__directDeclarator_7}
-        |       |___aux_rule__directDeclarator_15 {id=187,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |           |___Token:( {id=188,slot_type=LeftParen}
-        |           |___Token:) {id=190,slot_type=RightParen}
-        |___compoundStatement {id=111,slot_type=compoundStatement}
-            |___Token:{ {id=112,slot_type=LeftBrace}
-            |___(?) {id=113,slot_type=optional__compoundStatement_1}
-            |   |___(+) {id=116,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-            |       |___aux_rule__declaration_3 {id=147,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-            |       |   |___(+) {id=148,slot_type=declarationSpecifiers}
-            |       |   |   |___Token:int {id=182,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |       |   |___(?) {id=149,slot_type=optional__declaration_2}
-            |       |   |   |___initDeclarator {id=152,slot_type=[initDeclaratorList,initDeclarator]}
-            |       |   |       |___Token:a {id=178,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-            |       |   |       |___(?) {id=154,slot_type=optional__initDeclarator_2}
-            |       |   |           |___aux_rule__initDeclarator_1 {id=155,slot_type=aux_rule__initDeclarator_1}
-            |       |   |               |___Token:= {id=156,slot_type=Assign}
-            |       |   |               |___Token:99 {id=175,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-            |       |   |___Token:; {id=150,slot_type=Semi}
-            |       |___jumpStatement {id=121,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-            |           |___aux_rule__jumpStatement_4 {id=124,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-            |           |   |___Token:return {id=125,slot_type=Return}
-            |           |   |___(?) {id=126,slot_type=optional__postfixExpression_1}
-            |           |       |___Token:a {id=145,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-            |           |___Token:; {id=123,slot_type=Semi}
-            |___Token:} {id=114,slot_type=RightBrace}
+compilationUnit{id=107,slot_type=compilationUnit}
+|___(?){id=108,slot_type=optional__compilationUnit_1}
+    |___(+){id=110,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=112,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=113,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=196,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=200,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=187,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=195,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=189,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=191,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=192,slot_type=LeftParen}
+            |           |___Token:){id=194,slot_type=RightParen}
+            |___compoundStatement{id=115,slot_type=compoundStatement}
+                |___Token:{{id=116,slot_type=LeftBrace}
+                |___(?){id=117,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=120,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=151,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=152,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=186,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=153,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=156,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=182,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=158,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=159,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=160,slot_type=Assign}
+                |       |   |               |___Token:99{id=179,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=154,slot_type=Semi}
+                |       |___jumpStatement{id=125,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=128,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=129,slot_type=Return}
+                |           |   |___(?){id=130,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:a{id=149,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=127,slot_type=Semi}
+                |___Token:}{id=118,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
@@ -3512,19 +1811,20 @@ FixPt[3][FineGritLatraReducer](14/16)  For c, there are 46 transformations.
 FixPt[3][FineGritLatraReducer](14/16)  Reparsing the best spartree to faithfully reflect the syntactic structure.
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 51 --> 51.
+0 entries are removed: 56 --> 56.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 62
+    size before clearance = 59
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
 token count change 14 -> 14
+Edit: AnyNodeReplace:[replace_107_with_202]
 ------------------------------------------------------------
 
 
@@ -3535,38 +1835,14 @@ FixPt[3][FineGritLatraReducer][MultiplyOperationSimplification](14/16)  Found ma
 FixPt[3][FineGritLatraReducer][MinusOperationSimplification](14/16)  Found matches: 0 in transformation MinusOperationSimplification
 FixPt[3][FineGritLatraReducer][PlusOperationSimplification](14/16)  Found matches: 0 in transformation PlusOperationSimplification
 FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation](14/16)  Found matches: 1 in transformation LocalToGlobalTransformation
-FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation](14/16)  Built a LatraGeneralActionSet subroot(id=211,#3) in LocalToGlobalTransformation
-============Testing the following program: fail=============
+FixPt[3][FineGritLatraReducer][LocalToGlobalTransformation](14/16)  Built a LatraGeneralActionSet subroot(id=217,#3) in LocalToGlobalTransformation
+==========Testing the following program (66): fail==========
 
 // edit action set type: Latra Transformation LocalToGlobalTransformation created by FullFunctionalLatraRewriterBuilder
     --file: t.c--
-    return
-    a
-    ;
-    int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    return 
-    a
-                    ;int
-    main
-    (
-    )
-    {
-    int
-    a
-    =
-    99
-    ;
+      return  a
+                    ;int main() {
+      int a = 99;
     }
 ------------------------------------------------------------
 
@@ -3606,35 +1882,14 @@ FixPt[3][FineGritLatraReducer][SimplifyComma](14/16)  Found matches: 0 in transf
 FixPt[3][FineGritLatraReducer][TypeDefTransform](14/16)  Found matches: 0 in transformation TypeDefTransform
 FixPt[3][FineGritLatraReducer][EmptyStructToInt](14/16)  Found matches: 0 in transformation EmptyStructToInt
 FixPt[3][FineGritLatraReducer][RemoveAssignment](14/16)  Found matches: 1 in transformation RemoveAssignment
-FixPt[3][FineGritLatraReducer][RemoveAssignment](14/16)  Built a LatraGeneralActionSet subroot(id=244,#3) in RemoveAssignment
-============Testing the following program: fail=============
+FixPt[3][FineGritLatraReducer][RemoveAssignment](14/16)  Built a LatraGeneralActionSet subroot(id=250,#3) in RemoveAssignment
+==========Testing the following program (67): fail==========
 
 // edit action set type: Latra Transformation RemoveAssignment created by LatraRewriterBuilderForSimpleFromToPattern
     --file: t.c--
-    int
-    main
-    (
-    )
-    {
-    int
-    99
-    ;
-    return
-    a
-    ;
-    }
-    --file: <formatted tokenized program in its original format>--
-    int
-    main
-    (
-    )
-    {
-    int
-    99
-    ;
-    return
-    a
-    ;
+    int main() {
+      int     99;
+      return a    ;
     }
 ------------------------------------------------------------
 
@@ -3647,24 +1902,26 @@ FixPt[3][FineGritLatraReducer][ReplaceDefByDecl](14/16)  Found matches: 0 in tra
 FixPt[3][FineGritLatraReducer][CombineLocalVarDecl](14/16)  Found matches: 1 in transformation CombineLocalVarDecl
 FixPt[3][FineGritLatraReducer][CombineLocalVarDecl](14/16)  Exception: There must be at least one match for this transformation CombineLocalVarDecl
 FixPt[3][FineGritLatraReducer][UnifyFunctionDecl](14/16)  Found matches: 0 in transformation UnifyFunctionDecl
-(14/16)  The history of the reducer invocation.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID              Reducer #Tokens #Chars #NonDeletions
- 0                  hdd      -2     -2             0
- 1                  hdd       0      0             0
- 2 FineGritLatraReducer       0      0             0
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0                  hdd      1             0      -2             -2      45   time-hidden
+ 1                  hdd      0             0       0              0      21   time-hidden
+ 2 FineGritLatraReducer      1             1       0              0       2   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-             Reducer Times #Tokens #Chars
-                 hdd     2      -2     -2
-FineGritLatraReducer     1       0      0
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+                 hdd     2      1             0      -2             -2      66   time-hidden
+FineGritLatraReducer     1      1             1       0              0       2   time-hidden
+
+------------------------------- Transformations --------------------------------
+              Transformation Worked #NonDeletions #Tokens #NonBlankChars
+                hdd.Deletion      1             0      -2             -2
+FineGritLatraReducer.Reparse      1             1       0              0
 ------------------------------------- End --------------------------------------
-
-
 #test success = 1
 #test failure = 67
-#test result cache hits = 55
+#test result cache hits = 57
 #test execution cancelled = 0
-#node edit action set cache hits = 18
+#node edit action set cache hits = 13
 #external test execution cache hits = 0

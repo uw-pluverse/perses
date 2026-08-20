@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,15 +16,22 @@
  */
 package org.perses.reduction.event
 
+import org.perses.reduction.io.PerFileSizeMetrics
+
 class FixpointIterationEndEvent internal constructor(
   startEvent: FixpointIterationStartEvent,
   currentTimeMillis: Long,
-  programSize: Int,
+  perFileSizeMetrics: PerFileSizeMetrics,
   val testScriptStatistics: TestScriptExecutorServiceStatisticsSnapshot,
-) : AbstractEndEvent<FixpointIterationStartEvent>(startEvent, currentTimeMillis, programSize) {
+) : AbstractEndEvent<FixpointIterationStartEvent>(
+    startEvent,
+    currentTimeMillis,
+    perFileSizeMetrics,
+  ) {
   val iteration = startEvent.iteration
 
-  override fun initialProgramSize() = startEvent.initialProgramSize()
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics =
+    startEvent.initialPerFileSizeMetrics()
 
   val countOfTestScriptExecutions: Int
     get() =

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -49,7 +49,7 @@ data class ShellCommandOnPath(
     defaultFlags.joinTo(cmd, separator = " ")
     cmd.append(' ')
     extraArguments.joinTo(cmd, separator = " ")
-    return Shells.singleton.run(cmd.toString(), workingDirectory, captureOutput, environment)
+    return Shells.defaultSingleton.run(cmd.toString(), captureOutput, workingDirectory, environment)
   }
 
   fun interface IShellCommandOnPathCreator {

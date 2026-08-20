@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -23,19 +23,19 @@ import org.perses.reduction.event.FixpointIterationStartEvent
 /** This is the information passed between different reduction passes.  */
 class FixpointReductionState(
   val fixpointIterationStartEvent: FixpointIterationStartEvent,
-  val sparTree: SparTreeWithParsability,
+  val inputRepresentation: InputRepresentation,
 ) {
   override fun toString(): String =
     MoreObjects
       .toStringHelper(this)
       .add(
         "tree-id",
-        sparTree.getTreeRegardlessOfParsability().treeId,
+        inputRepresentation.tree.treeId,
       ).toString()
 
   fun createAdHocMessageEvent(messageComputer: () -> Any): AdHocMessageEvent =
     fixpointIterationStartEvent.createAdHocMessageEvent(
-      programSize = sparTree.getTreeRegardlessOfParsability().tokenCount,
+      perFileSizeMetrics = inputRepresentation.computePerFileSizeMetrics(),
       messageComputer = messageComputer,
     )
 }

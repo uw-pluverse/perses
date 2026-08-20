@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,14 +15,13 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.reduction.reducer.vulcan
-
 import com.google.common.collect.ImmutableList
-import org.perses.program.PersesTokenFactory.PersesAntlrToken
+import org.perses.program.AbstractPersesToken
 import org.perses.reduction.AbstractNonDeletionBasedReducer
-import org.perses.reduction.AbstractTokenReducer
+import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerContext
-import org.perses.spartree.AbstractSparTreeEdit
+import org.perses.reduction.TreeEditWithItsResult
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.util.Util.lazyAssert
@@ -33,12 +32,12 @@ class IdentifierReplacementReducer(
   reducerContext: ReducerContext,
 ) : AbstractNonDeletionBasedReducer(META, reducerContext) {
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    val tree = fixpointReductionState.sparTree.getTreeRegardlessOfParsability()
+    val tree = fixpointReductionState.inputRepresentation.tree
     val candidates =
       Candidates.compute(
         tokenSequence = tree.leafNodeSequence(),
-        isIdentifier = { token: PersesAntlrToken ->
-          reducerContext.configuration.parserFacade.identifierTokenTypes
+        isIdentifier = { token: AbstractPersesToken.AntlrToken ->
+          reducerContext.configuration.canonicalParserFacade.fusedIdentifierTokenTypes
             .contains(token.tokenType)
         },
       )
@@ -54,7 +53,7 @@ class IdentifierReplacementReducer(
           "A heuristic edit is found in ${this::class.simpleName}"
         },
       )
-      tree.applyEdit(heuristicEdit)
+      applyEditToTree(heuristicEdit)
       return
     }
     val singleTokenEdit =
@@ -69,7 +68,7 @@ class IdentifierReplacementReducer(
         "A heuristic single-token edit is found in ${this::class.simpleName}"
       },
     )
-    tree.applyEdit(singleTokenEdit)
+    applyEditToTree(singleTokenEdit)
   }
 
   /**
@@ -117,7 +116,7 @@ class IdentifierReplacementReducer(
     fixpointReductionState: FixpointReductionState,
     sequenceOfLexerNodesToBeReplaced: (LexerNodeClusterWithSameLexeme)
     -> Sequence<List<LexerRuleSparTreeNode>>,
-  ): AbstractSparTreeEdit<*>? {
+  ): TreeEditWithItsResult? {
     for (clusterToBeReplaced in candidates.tokenClusterWithSameLexemes) {
       val replacementLexemeCandidates =
         candidates
@@ -169,7 +168,7 @@ class IdentifierReplacementReducer(
     companion object {
       inline fun compute(
         tokenSequence: Sequence<LexerRuleSparTreeNode>,
-        crossinline isIdentifier: (PersesAntlrToken) -> Boolean,
+        crossinline isIdentifier: (AbstractPersesToken.AntlrToken) -> Boolean,
       ): Candidates =
         Candidates(
           tokenSequence
@@ -215,7 +214,7 @@ class IdentifierReplacementReducer(
         "and replace it with another identifier.",
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_REMAIN,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(IdentifierReplacementReducer(reducerContext))
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -17,96 +17,47 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.AbstractTokenReducer
-import org.perses.reduction.EditTestPayload
+import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.line.LineParserFacade
+import org.perses.listminimizer.EnumListMinimizerType
+import org.perses.listminimizer.WindowedSlicerSpecificArguments
+import org.perses.reduction.AbstractSparTreeReducer
+import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.TestScriptExecResult
-import org.perses.spartree.LexerRuleSparTreeNode
-import org.perses.spartree.NodeDeletionActionSet
-import org.perses.spartree.SparTree
-import org.perses.util.Util
+import org.perses.spartree.ContextDescription
 import org.perses.util.toImmutableList
-import org.perses.util.transformToImmutableList
 
+/**
+ * Slices whole lines with a fixed sliding-window size (the annotation's granularity). Under the line
+ * parser facade every remaining lexer node is a whole line, so it delegates to the windowed slicer
+ * in the list-minimizer framework -- which runs concurrently when more than one thread is available
+ * -- and the [CompositeReducerAnnotation] runs one such reducer per granularity.
+ */
 class LineBasedConcurrentTokenSlicer(
   reducerContext: ReducerContext,
-  reducerAnnotation: LineBasedConcurrentTokenSlicerAnnotation,
-) : AbstractConcurrentTokenSlicer(
-    reducerAnnotation,
-    reducerContext,
-  ) {
-  override fun createSequenceOfIndependentSlicingTasks(
-    tokenSlicingGranularity: Int,
-    tree: SparTree,
-  ): Sequence<ListOfIndependentSlicingTasks> {
-    val lines = computeLines(tree.remainingLexerRuleNodes)
-    return sequenceOf(
-      ListOfIndependentSlicingTasks(
-        Util
-          .slideReverseIfSlideable(
-            lines,
-            slidingWindowSize = tokenSlicingGranularity,
-          ).transformToImmutableList { sublist ->
-            LineSlicingTask(sublist.elements, tree)
-          },
-      ),
+  private val slicerAnnotation: LineBasedConcurrentTokenSlicerAnnotation,
+) : AbstractSparTreeReducer(slicerAnnotation, reducerContext) {
+  override fun getPreferredParserFacade(): AbstractParserFacade = LineParserFacade()
+
+  override fun computeDefaultListMinimizerType(): EnumListMinimizerType =
+    EnumListMinimizerType.WINDOWED_SLICER
+
+  override fun computeWindowedSlicerArguments(): WindowedSlicerSpecificArguments =
+    WindowedSlicerSpecificArguments(
+      minSlidingWindowSize = slicerAnnotation.windowSize,
+      maxSlidingWindowSize = slicerAnnotation.windowSize,
     )
-  }
 
-  inner class LineSlicingTask(
-    linesToDelete: ImmutableList<ImmutableList<LexerRuleSparTreeNode>>,
-    tree: SparTree,
-  ) : AbstractSlicingTask(
-      tree,
-      reducerContext,
-      this@LineBasedConcurrentTokenSlicer.executorService::testProgramAsync,
-    ) {
-    private val initialLineCount = linesToDelete.size
-
-    private val linesToDelete =
-      ArrayList<ImmutableList<LexerRuleSparTreeNode>?>().apply {
-        addAll(linesToDelete)
-      }
-
-    override fun tryAsyncRunPreconditionCheck(): Boolean {
-      removeAlreadyDeletedLines()
-      return linesToDelete.isNotEmpty()
-    }
-
-    private fun removeAlreadyDeletedLines() {
-      var hasDeletedLines = false
-      for (index in 0 until linesToDelete.size) {
-        val elements = linesToDelete[index] ?: continue
-        if (elements.first().isPermanentlyDeleted) {
-          hasDeletedLines = true
-          check(elements.all { it.isPermanentlyDeleted }) {
-            """The elements on this line should be all deleted. 
-                  |
-                  |${elements.map { element -> element.printTreeStructure() }}
-            """.trimMargin()
-          }
-          linesToDelete[index] = null
-        }
-      }
-      if (hasDeletedLines) {
-        val oldSize = linesToDelete.size
-        Util.removeNullFromList(linesToDelete)
-        check(linesToDelete.size < oldSize)
-      }
-    }
-
-    override fun createNodeDeletionActionSet(): NodeDeletionActionSet {
-      val nodesToDelete = linesToDelete.filterNotNull().flatten().toImmutableList()
-      return NodeDeletionActionSet.createByDeletingNodes(
-        nodesToDelete,
-        actionsDescription = "line slicer@$initialLineCount",
-      )
-    }
-
-    override fun analyzeResultAndGetBest(futureResult: TestScriptExecResult<EditTestPayload>) =
-      this@LineBasedConcurrentTokenSlicer
-        .analyzeOneTestFutureAndGetBest(futureResult)
+  override fun internalReduce(fixpointReductionState: FixpointReductionState) {
+    val tree = fixpointReductionState.inputRepresentation.tree
+    runListMinimizerOverNodes(
+      needToTestEmpty = false,
+      tree = tree,
+      input = tree.remainingLexerRuleNodes,
+      fixpointReductionState = fixpointReductionState,
+      actionsDescriptionPostfix = ContextDescription.of(NAME_PREFIX),
+    )
   }
 
   object CompositeReducerAnnotation : ReducerAnnotation(
@@ -115,7 +66,7 @@ class LineBasedConcurrentTokenSlicer(
     deterministic = true,
     reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
   ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       REDUCER_ANNOTATIONS
         .asSequence()
         .flatMap { it.create(reducerContext) }
@@ -124,18 +75,6 @@ class LineBasedConcurrentTokenSlicer(
 
   companion object {
     private const val NAME_PREFIX = "line_based_concurrent_token_slicer"
-
-    fun computeLines(
-      tokens: ImmutableList<LexerRuleSparTreeNode>,
-    ): ImmutableList<ImmutableList<LexerRuleSparTreeNode>> =
-      Util.mergeContinuousElementsIntoRegions(tokens) { a, b ->
-        a.token
-          .asAntlrToken()
-          .position.line ==
-          b.token
-            .asAntlrToken()
-            .position.line
-      }
 
     val REDUCER_ANNOTATIONS =
       IntRange(start = 1, endInclusive = 14)
@@ -151,7 +90,7 @@ class LineBasedConcurrentTokenSlicer(
       granularity,
       description = "line-based concurrent token slicer",
     ) {
-    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractTokenReducer> =
+    override fun create(reducerContext: ReducerContext): ImmutableList<AbstractSparTreeReducer> =
       ImmutableList.of(LineBasedConcurrentTokenSlicer(reducerContext, this))
   }
 }

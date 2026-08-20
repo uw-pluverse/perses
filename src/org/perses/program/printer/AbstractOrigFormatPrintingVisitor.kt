@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,10 +15,7 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.program.printer
-
-import org.perses.program.PersesTokenFactory
-import org.perses.program.PersesTokenFactory.AbstractPersesToken
-import org.perses.program.PersesTokenFactory.PersesAntlrToken
+import org.perses.program.AbstractPersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.util.FastStringBuilder
 
@@ -35,7 +32,7 @@ abstract class AbstractOrigFormatPrintingVisitor(
   private var currentLineNumber = 1
 
   private fun getLineNumber(line: List<AbstractPersesToken>): Int? =
-    line.firstOrNull { it is PersesAntlrToken }?.let {
+    line.firstOrNull { it is AbstractPersesToken.AntlrToken }?.let {
       tokenPositionProvider.getLine(it)
     }
 
@@ -75,11 +72,11 @@ abstract class AbstractOrigFormatPrintingVisitor(
       return 0
     }
     val token = line[tokenIndex]
-    if (token !is PersesAntlrToken) {
+    if (token !is AbstractPersesToken.AntlrToken) {
       return 0
     }
     val prev = line[tokenIndex - 1]
-    if (prev !is PersesAntlrToken) {
+    if (prev !is AbstractPersesToken.AntlrToken) {
       return 0
     }
     val prevEndPosition = prev.position.charPositionInLine + prev.text.length
@@ -94,7 +91,7 @@ abstract class AbstractOrigFormatPrintingVisitor(
     var positionInLineCurrent = startPositionInLine
     var previousTokenInLine: AbstractPersesToken? = null
     for ((tokenIndex, token) in line.withIndex()) {
-      if (token is PersesTokenFactory.PersesPlainText) {
+      if (token is AbstractPersesToken.PlainText) {
         tokenPlacementListener?.onTokenPlacement(
           token,
           builder.currentLineNo,

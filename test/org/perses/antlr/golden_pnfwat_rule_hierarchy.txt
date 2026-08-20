@@ -1,0 +1,2190 @@
+entries {
+  ruleName: "LPAR"
+  immediateStringLiterals: "("
+  transitiveStringLiterals: "("
+}
+entries {
+  ruleName: "RPAR"
+  immediateStringLiterals: ")"
+  transitiveStringLiterals: ")"
+}
+entries {
+  ruleName: "NAT"
+}
+entries {
+  ruleName: "INT"
+}
+entries {
+  ruleName: "FLOAT"
+}
+entries {
+  ruleName: "STRING_"
+}
+entries {
+  ruleName: "VALUE_TYPE"
+}
+entries {
+  ruleName: "CONST"
+}
+entries {
+  ruleName: "FUNCREF"
+  immediateStringLiterals: "funcref"
+  transitiveStringLiterals: "funcref"
+}
+entries {
+  ruleName: "MUT"
+  immediateStringLiterals: "mut"
+  transitiveStringLiterals: "mut"
+}
+entries {
+  ruleName: "NOP"
+  immediateStringLiterals: "nop"
+  transitiveStringLiterals: "nop"
+}
+entries {
+  ruleName: "UNREACHABLE"
+  immediateStringLiterals: "unreachable"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "DROP"
+  immediateStringLiterals: "drop"
+  transitiveStringLiterals: "drop"
+}
+entries {
+  ruleName: "BLOCK"
+  immediateStringLiterals: "block"
+  transitiveStringLiterals: "block"
+}
+entries {
+  ruleName: "LOOP"
+  immediateStringLiterals: "loop"
+  transitiveStringLiterals: "loop"
+}
+entries {
+  ruleName: "END"
+  immediateStringLiterals: "end"
+  transitiveStringLiterals: "end"
+}
+entries {
+  ruleName: "BR"
+  immediateStringLiterals: "br"
+  transitiveStringLiterals: "br"
+}
+entries {
+  ruleName: "BR_IF"
+  immediateStringLiterals: "br_if"
+  transitiveStringLiterals: "br_if"
+}
+entries {
+  ruleName: "BR_TABLE"
+  immediateStringLiterals: "br_table"
+  transitiveStringLiterals: "br_table"
+}
+entries {
+  ruleName: "RETURN"
+  immediateStringLiterals: "return"
+  transitiveStringLiterals: "return"
+}
+entries {
+  ruleName: "IF"
+  immediateStringLiterals: "if"
+  transitiveStringLiterals: "if"
+}
+entries {
+  ruleName: "THEN"
+  immediateStringLiterals: "then"
+  transitiveStringLiterals: "then"
+}
+entries {
+  ruleName: "ELSE"
+  immediateStringLiterals: "else"
+  transitiveStringLiterals: "else"
+}
+entries {
+  ruleName: "SELECT"
+  immediateStringLiterals: "select"
+  transitiveStringLiterals: "select"
+}
+entries {
+  ruleName: "CALL"
+  immediateStringLiterals: "call"
+  transitiveStringLiterals: "call"
+}
+entries {
+  ruleName: "CALL_INDIRECT"
+  immediateStringLiterals: "call_indirect"
+  transitiveStringLiterals: "call_indirect"
+}
+entries {
+  ruleName: "LOCAL_GET"
+  immediateStringLiterals: "local.get"
+  transitiveStringLiterals: "local.get"
+}
+entries {
+  ruleName: "LOCAL_SET"
+  immediateStringLiterals: "local.set"
+  transitiveStringLiterals: "local.set"
+}
+entries {
+  ruleName: "LOCAL_TEE"
+  immediateStringLiterals: "local.tee"
+  transitiveStringLiterals: "local.tee"
+}
+entries {
+  ruleName: "GLOBAL_GET"
+  immediateStringLiterals: "global.get"
+  transitiveStringLiterals: "global.get"
+}
+entries {
+  ruleName: "GLOBAL_SET"
+  immediateStringLiterals: "global.set"
+  transitiveStringLiterals: "global.set"
+}
+entries {
+  ruleName: "LOAD"
+}
+entries {
+  ruleName: "STORE"
+}
+entries {
+  ruleName: "OFFSET_EQ_NAT"
+}
+entries {
+  ruleName: "ALIGN_EQ_NAT"
+}
+entries {
+  ruleName: "UNARY"
+}
+entries {
+  ruleName: "BINARY"
+}
+entries {
+  ruleName: "TEST"
+}
+entries {
+  ruleName: "COMPARE"
+}
+entries {
+  ruleName: "CONVERT"
+}
+entries {
+  ruleName: "MEMORY_SIZE"
+  immediateStringLiterals: "memory.size"
+  transitiveStringLiterals: "memory.size"
+}
+entries {
+  ruleName: "MEMORY_GROW"
+  immediateStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.grow"
+}
+entries {
+  ruleName: "MEMORY_COPY"
+  immediateStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.copy"
+}
+entries {
+  ruleName: "MEMORY_FILL"
+  immediateStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.fill"
+}
+entries {
+  ruleName: "TYPE"
+  immediateStringLiterals: "type"
+  transitiveStringLiterals: "type"
+}
+entries {
+  ruleName: "FUNC"
+  immediateStringLiterals: "func"
+  transitiveStringLiterals: "func"
+}
+entries {
+  ruleName: "START_"
+  immediateStringLiterals: "start"
+  transitiveStringLiterals: "start"
+}
+entries {
+  ruleName: "PARAM"
+  immediateStringLiterals: "param"
+  transitiveStringLiterals: "param"
+}
+entries {
+  ruleName: "RESULT"
+  immediateStringLiterals: "result"
+  transitiveStringLiterals: "result"
+}
+entries {
+  ruleName: "LOCAL"
+  immediateStringLiterals: "local"
+  transitiveStringLiterals: "local"
+}
+entries {
+  ruleName: "GLOBAL"
+  immediateStringLiterals: "global"
+  transitiveStringLiterals: "global"
+}
+entries {
+  ruleName: "TABLE"
+  immediateStringLiterals: "table"
+  transitiveStringLiterals: "table"
+}
+entries {
+  ruleName: "MEMORY"
+  immediateStringLiterals: "memory"
+  transitiveStringLiterals: "memory"
+}
+entries {
+  ruleName: "ELEM"
+  immediateStringLiterals: "elem"
+  transitiveStringLiterals: "elem"
+}
+entries {
+  ruleName: "DATA"
+  immediateStringLiterals: "data"
+  transitiveStringLiterals: "data"
+}
+entries {
+  ruleName: "OFFSET"
+  immediateStringLiterals: "offset"
+  transitiveStringLiterals: "offset"
+}
+entries {
+  ruleName: "IMPORT"
+  immediateStringLiterals: "import"
+  transitiveStringLiterals: "import"
+}
+entries {
+  ruleName: "EXPORT"
+  immediateStringLiterals: "export"
+  transitiveStringLiterals: "export"
+}
+entries {
+  ruleName: "MODULE"
+  immediateStringLiterals: "module"
+  transitiveStringLiterals: "module"
+}
+entries {
+  ruleName: "BIN"
+  immediateStringLiterals: "binary"
+  transitiveStringLiterals: "binary"
+}
+entries {
+  ruleName: "QUOTE"
+  immediateStringLiterals: "quote"
+  transitiveStringLiterals: "quote"
+}
+entries {
+  ruleName: "SCRIPT"
+  immediateStringLiterals: "script"
+  transitiveStringLiterals: "script"
+}
+entries {
+  ruleName: "REGISTER"
+  immediateStringLiterals: "register"
+  transitiveStringLiterals: "register"
+}
+entries {
+  ruleName: "INVOKE"
+  immediateStringLiterals: "invoke"
+  transitiveStringLiterals: "invoke"
+}
+entries {
+  ruleName: "GET"
+  immediateStringLiterals: "get"
+  transitiveStringLiterals: "get"
+}
+entries {
+  ruleName: "ASSERT_MALFORMED"
+  immediateStringLiterals: "assert_malformed"
+  transitiveStringLiterals: "assert_malformed"
+}
+entries {
+  ruleName: "ASSERT_INVALID"
+  immediateStringLiterals: "assert_invalid"
+  transitiveStringLiterals: "assert_invalid"
+}
+entries {
+  ruleName: "ASSERT_UNLINKABLE"
+  immediateStringLiterals: "assert_unlinkable"
+  transitiveStringLiterals: "assert_unlinkable"
+}
+entries {
+  ruleName: "ASSERT_RETURN"
+  immediateStringLiterals: "assert_return"
+  transitiveStringLiterals: "assert_return"
+}
+entries {
+  ruleName: "ASSERT_RETURN_CANONICAL_NAN"
+  immediateStringLiterals: "assert_return_canonical_nan"
+  transitiveStringLiterals: "assert_return_canonical_nan"
+}
+entries {
+  ruleName: "ASSERT_RETURN_ARITHMETIC_NAN"
+  immediateStringLiterals: "assert_return_arithmetic_nan"
+  transitiveStringLiterals: "assert_return_arithmetic_nan"
+}
+entries {
+  ruleName: "ASSERT_TRAP"
+  immediateStringLiterals: "assert_trap"
+  transitiveStringLiterals: "assert_trap"
+}
+entries {
+  ruleName: "ASSERT_EXHAUSTION"
+  immediateStringLiterals: "assert_exhaustion"
+  transitiveStringLiterals: "assert_exhaustion"
+}
+entries {
+  ruleName: "INPUT"
+  immediateStringLiterals: "input"
+  transitiveStringLiterals: "input"
+}
+entries {
+  ruleName: "OUTPUT"
+  immediateStringLiterals: "output"
+  transitiveStringLiterals: "output"
+}
+entries {
+  ruleName: "VAR"
+}
+entries {
+  ruleName: "SPACE"
+}
+entries {
+  ruleName: "COMMENT"
+}
+entries {
+  ruleName: "Symbol"
+}
+entries {
+  ruleName: "Num"
+}
+entries {
+  ruleName: "HexNum"
+}
+entries {
+  ruleName: "Sign"
+}
+entries {
+  ruleName: "Digit"
+}
+entries {
+  ruleName: "HexDigit"
+}
+entries {
+  ruleName: "Letter"
+}
+entries {
+  ruleName: "Nat"
+}
+entries {
+  ruleName: "Int"
+}
+entries {
+  ruleName: "Frac"
+}
+entries {
+  ruleName: "HexFrac"
+}
+entries {
+  ruleName: "Float"
+}
+entries {
+  ruleName: "String_"
+}
+entries {
+  ruleName: "Name"
+}
+entries {
+  ruleName: "Escape"
+}
+entries {
+  ruleName: "IXX"
+}
+entries {
+  ruleName: "FXX"
+}
+entries {
+  ruleName: "NXX"
+}
+entries {
+  ruleName: "MIXX"
+}
+entries {
+  ruleName: "MFXX"
+}
+entries {
+  ruleName: "SIGN"
+}
+entries {
+  ruleName: "MEM_SIZE"
+}
+entries {
+  ruleName: "Char"
+}
+entries {
+  ruleName: "Ascii"
+}
+entries {
+  ruleName: "Ascii_no_nl"
+}
+entries {
+  ruleName: "Utf8Cont"
+}
+entries {
+  ruleName: "Utf8"
+}
+entries {
+  ruleName: "Utf8_no_nl"
+}
+entries {
+  ruleName: "Utf8Enc"
+}
+entries {
+  ruleName: "name"
+  immediateSubRuleNames: "STRING_"
+  transitiveSubRuleNames: "STRING_"
+}
+entries {
+  ruleName: "value_type"
+  immediateSubRuleNames: "VALUE_TYPE"
+  transitiveSubRuleNames: "VALUE_TYPE"
+}
+entries {
+  ruleName: "elem_type"
+  immediateSubRuleNames: "FUNCREF"
+  transitiveSubRuleNames: "FUNCREF"
+  transitiveStringLiterals: "funcref"
+}
+entries {
+  ruleName: "global_type"
+  immediateSubRuleNames: "aux_rule__global_type_1"
+  immediateSubRuleNames: "value_type"
+  transitiveSubRuleNames: "VALUE_TYPE"
+  transitiveSubRuleNames: "aux_rule__global_type_1"
+  transitiveSubRuleNames: "value_type"
+}
+entries {
+  ruleName: "def_type"
+}
+entries {
+  ruleName: "func_type"
+  immediateSubRuleNames: "aux_rule__func_type_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__func_type_3"
+}
+entries {
+  ruleName: "table_type"
+}
+entries {
+  ruleName: "memory_type"
+  immediateSubRuleNames: "NAT"
+  transitiveSubRuleNames: "NAT"
+}
+entries {
+  ruleName: "type_use"
+}
+entries {
+  ruleName: "literal"
+  immediateSubRuleNames: "FLOAT"
+  immediateSubRuleNames: "INT"
+  immediateSubRuleNames: "NAT"
+  transitiveSubRuleNames: "FLOAT"
+  transitiveSubRuleNames: "INT"
+  transitiveSubRuleNames: "NAT"
+}
+entries {
+  ruleName: "var_"
+  immediateSubRuleNames: "NAT"
+  immediateSubRuleNames: "VAR"
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "VAR"
+}
+entries {
+  ruleName: "bind_var"
+  immediateSubRuleNames: "VAR"
+  transitiveSubRuleNames: "VAR"
+}
+entries {
+  ruleName: "plain_instr"
+  immediateSubRuleNames: "BINARY"
+  immediateSubRuleNames: "COMPARE"
+  immediateSubRuleNames: "CONVERT"
+  immediateSubRuleNames: "DROP"
+  immediateSubRuleNames: "MEMORY_COPY"
+  immediateSubRuleNames: "MEMORY_FILL"
+  immediateSubRuleNames: "MEMORY_GROW"
+  immediateSubRuleNames: "MEMORY_SIZE"
+  immediateSubRuleNames: "NOP"
+  immediateSubRuleNames: "RETURN"
+  immediateSubRuleNames: "SELECT"
+  immediateSubRuleNames: "TEST"
+  immediateSubRuleNames: "UNARY"
+  immediateSubRuleNames: "UNREACHABLE"
+  immediateSubRuleNames: "aux_rule__plain_instr_10"
+  immediateSubRuleNames: "aux_rule__plain_instr_11"
+  immediateSubRuleNames: "aux_rule__plain_instr_8"
+  immediateSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "call_instr"
+  immediateSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveStringLiterals: "call_indirect"
+}
+entries {
+  ruleName: "call_instr_params"
+  immediateSubRuleNames: "kleene_star__call_instr_params_3"
+  immediateSubRuleNames: "kleene_star__call_instr_params_6"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__call_instr_params_2"
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_3"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+}
+entries {
+  ruleName: "call_instr_instr"
+}
+entries {
+  ruleName: "call_instr_params_instr"
+  immediateSubRuleNames: "call_instr_results_instr"
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "call_instr_results_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "call_instr_results_instr"
+  immediateSubRuleNames: "instr"
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "block_type"
+}
+entries {
+  ruleName: "block"
+  immediateSubRuleNames: "instr_list"
+  immediateSubRuleNames: "optional__block_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "block_type"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "instr_list"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__block_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "expr"
+}
+entries {
+  ruleName: "expr1"
+  immediateSubRuleNames: "aux_rule__expr1_10"
+  immediateSubRuleNames: "aux_rule__expr1_7"
+  immediateSubRuleNames: "aux_rule__expr1_8"
+  immediateSubRuleNames: "aux_rule__expr1_9"
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "BLOCK"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "LOOP"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__expr1_5"
+  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__expr1_10"
+  transitiveSubRuleNames: "aux_rule__expr1_7"
+  transitiveSubRuleNames: "aux_rule__expr1_8"
+  transitiveSubRuleNames: "aux_rule__expr1_9"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "block"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "loop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "call_expr_type"
+  immediateSubRuleNames: "call_expr_params"
+  immediateSubRuleNames: "optional__call_instr_instr_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__call_instr_params_2"
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "call_expr_params"
+  transitiveSubRuleNames: "call_expr_results"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_3"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+  transitiveSubRuleNames: "kleene_star__expr1_1"
+  transitiveSubRuleNames: "optional__call_instr_instr_1"
+  transitiveSubRuleNames: "type_use"
+}
+entries {
+  ruleName: "call_expr_params"
+  immediateSubRuleNames: "call_expr_results"
+  immediateSubRuleNames: "kleene_star__call_instr_params_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__call_instr_params_2"
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "call_expr_results"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_3"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+  transitiveSubRuleNames: "kleene_star__expr1_1"
+}
+entries {
+  ruleName: "call_expr_results"
+  immediateSubRuleNames: "kleene_star__call_instr_params_6"
+  immediateSubRuleNames: "kleene_star__expr1_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+  transitiveSubRuleNames: "kleene_star__expr1_1"
+}
+entries {
+  ruleName: "instr_list"
+  immediateSubRuleNames: "kleene_star__instr_list_1"
+  immediateSubRuleNames: "optional__instr_list_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "const_expr"
+  immediateSubRuleNames: "instr_list"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "instr_list"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "func_"
+}
+entries {
+  ruleName: "func_fields_import"
+  immediateSubRuleNames: "aux_rule__func_fields_body_2"
+  transitiveSubRuleNames: "aux_rule__func_fields_body_2"
+}
+entries {
+  ruleName: "func_fields_body"
+  immediateSubRuleNames: "func_result_body"
+  immediateSubRuleNames: "kleene_star__func_fields_body_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "aux_rule__func_body_2"
+  transitiveSubRuleNames: "aux_rule__func_fields_body_2"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "func_body"
+  transitiveSubRuleNames: "func_result_body"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "instr_list"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+  transitiveSubRuleNames: "kleene_star__func_body_3"
+  transitiveSubRuleNames: "kleene_star__func_fields_body_3"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "func_result_body"
+  immediateSubRuleNames: "func_body"
+  immediateSubRuleNames: "kleene_star__call_instr_params_6"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "aux_rule__func_body_2"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "func_body"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "instr_list"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+  transitiveSubRuleNames: "kleene_star__func_body_3"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "func_body"
+  immediateSubRuleNames: "instr_list"
+  immediateSubRuleNames: "kleene_star__func_body_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__func_body_2"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "instr_list"
+  transitiveSubRuleNames: "kleene_star__func_body_3"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "offset"
+  immediateSubRuleNames: "aux_rule__offset_1"
+  immediateSubRuleNames: "expr"
+  transitiveSubRuleNames: "aux_rule__offset_1"
+  transitiveSubRuleNames: "expr"
+}
+entries {
+  ruleName: "elem"
+}
+entries {
+  ruleName: "table"
+}
+entries {
+  ruleName: "data"
+}
+entries {
+  ruleName: "memory"
+}
+entries {
+  ruleName: "sglobal"
+}
+entries {
+  ruleName: "import_desc"
+}
+entries {
+  ruleName: "simport"
+}
+entries {
+  ruleName: "inline_import"
+}
+entries {
+  ruleName: "export_desc"
+}
+entries {
+  ruleName: "export_"
+}
+entries {
+  ruleName: "inline_export"
+}
+entries {
+  ruleName: "type_"
+  immediateSubRuleNames: "def_type"
+  transitiveSubRuleNames: "def_type"
+}
+entries {
+  ruleName: "type_def"
+}
+entries {
+  ruleName: "start_"
+}
+entries {
+  ruleName: "module_field"
+  immediateSubRuleNames: "data"
+  immediateSubRuleNames: "elem"
+  immediateSubRuleNames: "export_"
+  immediateSubRuleNames: "func_"
+  immediateSubRuleNames: "memory"
+  immediateSubRuleNames: "sglobal"
+  immediateSubRuleNames: "simport"
+  immediateSubRuleNames: "start_"
+  immediateSubRuleNames: "table"
+  immediateSubRuleNames: "type_def"
+  transitiveSubRuleNames: "data"
+  transitiveSubRuleNames: "elem"
+  transitiveSubRuleNames: "export_"
+  transitiveSubRuleNames: "func_"
+  transitiveSubRuleNames: "memory"
+  transitiveSubRuleNames: "sglobal"
+  transitiveSubRuleNames: "simport"
+  transitiveSubRuleNames: "start_"
+  transitiveSubRuleNames: "table"
+  transitiveSubRuleNames: "type_def"
+}
+entries {
+  ruleName: "module_"
+}
+entries {
+  ruleName: "script_module"
+  immediateSubRuleNames: "aux_rule__script_module_4"
+  immediateSubRuleNames: "module_"
+  transitiveSubRuleNames: "aux_rule__script_module_4"
+  transitiveSubRuleNames: "module_"
+}
+entries {
+  ruleName: "action_"
+}
+entries {
+  ruleName: "assertion"
+}
+entries {
+  ruleName: "cmd"
+  immediateSubRuleNames: "action_"
+  immediateSubRuleNames: "assertion"
+  immediateSubRuleNames: "aux_rule__cmd_2"
+  immediateSubRuleNames: "meta"
+  immediateSubRuleNames: "script_module"
+  transitiveSubRuleNames: "action_"
+  transitiveSubRuleNames: "assertion"
+  transitiveSubRuleNames: "aux_rule__cmd_2"
+  transitiveSubRuleNames: "aux_rule__script_module_4"
+  transitiveSubRuleNames: "meta"
+  transitiveSubRuleNames: "module_"
+  transitiveSubRuleNames: "script_module"
+}
+entries {
+  ruleName: "meta"
+}
+entries {
+  ruleName: "wconst"
+}
+entries {
+  ruleName: "const_list"
+  immediateSubRuleNames: "wconst"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "wconst"
+}
+entries {
+  ruleName: "start"
+}
+entries {
+  ruleName: "kleene_star__func_type_1"
+  immediateSubRuleNames: "value_type"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "VALUE_TYPE"
+  transitiveSubRuleNames: "value_type"
+}
+entries {
+  ruleName: "aux_rule__func_type_3"
+}
+entries {
+  ruleName: "optional__table_type_1"
+  immediateSubRuleNames: "NAT"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "NAT"
+}
+entries {
+  ruleName: "kleene_plus__plain_instr_1"
+  immediateSubRuleNames: "var_"
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "VAR"
+  transitiveSubRuleNames: "var_"
+}
+entries {
+  ruleName: "optional__plain_instr_2"
+  immediateSubRuleNames: "OFFSET_EQ_NAT"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "OFFSET_EQ_NAT"
+}
+entries {
+  ruleName: "optional__plain_instr_3"
+  immediateSubRuleNames: "ALIGN_EQ_NAT"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "ALIGN_EQ_NAT"
+}
+entries {
+  ruleName: "aux_rule__call_instr_params_2"
+}
+entries {
+  ruleName: "kleene_star__call_instr_params_3"
+  immediateSubRuleNames: "aux_rule__call_instr_params_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__call_instr_params_2"
+}
+entries {
+  ruleName: "aux_rule__call_instr_params_5"
+}
+entries {
+  ruleName: "kleene_star__call_instr_params_6"
+  immediateSubRuleNames: "aux_rule__call_instr_params_5"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+}
+entries {
+  ruleName: "optional__call_instr_instr_1"
+  immediateSubRuleNames: "type_use"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "type_use"
+}
+entries {
+  ruleName: "optional__block_instr_1"
+  immediateSubRuleNames: "bind_var"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "VAR"
+  transitiveSubRuleNames: "bind_var"
+}
+entries {
+  ruleName: "aux_rule__block_instr_5"
+  immediateSubRuleNames: "ELSE"
+  transitiveSubRuleNames: "ELSE"
+  transitiveStringLiterals: "else"
+}
+entries {
+  ruleName: "optional__block_instr_6"
+  immediateSubRuleNames: "aux_rule__block_instr_5"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "ELSE"
+  transitiveSubRuleNames: "aux_rule__block_instr_5"
+  transitiveStringLiterals: "else"
+}
+entries {
+  ruleName: "optional__block_1"
+  immediateSubRuleNames: "block_type"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "block_type"
+}
+entries {
+  ruleName: "kleene_star__expr1_1"
+  immediateSubRuleNames: "expr"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "expr"
+}
+entries {
+  ruleName: "aux_rule__if_block_2"
+}
+entries {
+  ruleName: "optional__if_block_3"
+  immediateSubRuleNames: "aux_rule__if_block_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__if_block_2"
+}
+entries {
+  ruleName: "kleene_star__instr_list_1"
+  immediateSubRuleNames: "instr"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "optional__instr_list_2"
+  immediateSubRuleNames: "call_instr"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "call_instr"
+  transitiveStringLiterals: "call_indirect"
+}
+entries {
+  ruleName: "aux_rule__func_fields_body_2"
+}
+entries {
+  ruleName: "kleene_star__func_fields_body_3"
+  immediateSubRuleNames: "aux_rule__func_fields_body_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__func_fields_body_2"
+}
+entries {
+  ruleName: "aux_rule__func_body_2"
+}
+entries {
+  ruleName: "kleene_star__func_body_3"
+  immediateSubRuleNames: "aux_rule__func_body_2"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__func_body_2"
+}
+entries {
+  ruleName: "optional__elem_1"
+  immediateSubRuleNames: "var_"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "VAR"
+  transitiveSubRuleNames: "var_"
+}
+entries {
+  ruleName: "optional__elem_2"
+  immediateSubRuleNames: "FUNC"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "FUNC"
+  transitiveStringLiterals: "func"
+}
+entries {
+  ruleName: "aux_rule__elem_3"
+  immediateSubRuleNames: "var_"
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "VAR"
+  transitiveSubRuleNames: "var_"
+}
+entries {
+  ruleName: "kleene_star__elem_4"
+  immediateSubRuleNames: "aux_rule__elem_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "VAR"
+  transitiveSubRuleNames: "aux_rule__elem_3"
+  transitiveSubRuleNames: "var_"
+}
+entries {
+  ruleName: "kleene_star__table_fields_1"
+  immediateSubRuleNames: "var_"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "VAR"
+  transitiveSubRuleNames: "var_"
+}
+entries {
+  ruleName: "kleene_star__data_2"
+  immediateSubRuleNames: "STRING_"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "STRING_"
+}
+entries {
+  ruleName: "optional__module__1"
+  immediateSubRuleNames: "VAR"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "VAR"
+}
+entries {
+  ruleName: "kleene_star__module__2"
+  immediateSubRuleNames: "module_field"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "data"
+  transitiveSubRuleNames: "elem"
+  transitiveSubRuleNames: "export_"
+  transitiveSubRuleNames: "func_"
+  transitiveSubRuleNames: "memory"
+  transitiveSubRuleNames: "module_field"
+  transitiveSubRuleNames: "sglobal"
+  transitiveSubRuleNames: "simport"
+  transitiveSubRuleNames: "start_"
+  transitiveSubRuleNames: "table"
+  transitiveSubRuleNames: "type_def"
+}
+entries {
+  ruleName: "kleene_star__meta_2"
+  immediateSubRuleNames: "cmd"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "action_"
+  transitiveSubRuleNames: "assertion"
+  transitiveSubRuleNames: "aux_rule__cmd_2"
+  transitiveSubRuleNames: "aux_rule__script_module_4"
+  transitiveSubRuleNames: "cmd"
+  transitiveSubRuleNames: "meta"
+  transitiveSubRuleNames: "module_"
+  transitiveSubRuleNames: "script_module"
+}
+entries {
+  ruleName: "aux_rule__if_block_5"
+  immediateSubRuleNames: "block_type"
+  transitiveSubRuleNames: "block_type"
+}
+entries {
+  ruleName: "kleene_star__if_block_4"
+  immediateSubRuleNames: "aux_rule__if_block_5"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__if_block_5"
+  transitiveSubRuleNames: "block_type"
+}
+entries {
+  ruleName: "if_block"
+}
+entries {
+  ruleName: "aux_rule__func_fields_4"
+  immediateSubRuleNames: "inline_export"
+  transitiveSubRuleNames: "inline_export"
+}
+entries {
+  ruleName: "kleene_star__func_fields_3"
+  immediateSubRuleNames: "aux_rule__func_fields_4"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__func_fields_4"
+  transitiveSubRuleNames: "inline_export"
+}
+entries {
+  ruleName: "aux_rule__func_fields_5"
+  immediateSubRuleNames: "aux_rule__func_fields_6"
+  immediateSubRuleNames: "aux_rule__func_fields_7"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "aux_rule__func_body_2"
+  transitiveSubRuleNames: "aux_rule__func_fields_6"
+  transitiveSubRuleNames: "aux_rule__func_fields_7"
+  transitiveSubRuleNames: "aux_rule__func_fields_body_2"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "func_body"
+  transitiveSubRuleNames: "func_fields_body"
+  transitiveSubRuleNames: "func_result_body"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "instr_list"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+  transitiveSubRuleNames: "kleene_star__func_body_3"
+  transitiveSubRuleNames: "kleene_star__func_fields_body_3"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__call_instr_instr_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveSubRuleNames: "type_use"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "func_fields"
+  immediateSubRuleNames: "aux_rule__func_fields_5"
+  immediateSubRuleNames: "kleene_star__func_fields_3"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "aux_rule__func_body_2"
+  transitiveSubRuleNames: "aux_rule__func_fields_4"
+  transitiveSubRuleNames: "aux_rule__func_fields_5"
+  transitiveSubRuleNames: "aux_rule__func_fields_6"
+  transitiveSubRuleNames: "aux_rule__func_fields_7"
+  transitiveSubRuleNames: "aux_rule__func_fields_body_2"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "func_body"
+  transitiveSubRuleNames: "func_fields_body"
+  transitiveSubRuleNames: "func_result_body"
+  transitiveSubRuleNames: "inline_export"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "instr_list"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+  transitiveSubRuleNames: "kleene_star__func_body_3"
+  transitiveSubRuleNames: "kleene_star__func_fields_3"
+  transitiveSubRuleNames: "kleene_star__func_fields_body_3"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__call_instr_instr_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveSubRuleNames: "type_use"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "aux_rule__table_fields_4"
+  immediateSubRuleNames: "aux_rule__table_fields_6"
+  immediateSubRuleNames: "aux_rule__table_fields_7"
+  transitiveSubRuleNames: "aux_rule__table_fields_6"
+  transitiveSubRuleNames: "aux_rule__table_fields_7"
+  transitiveSubRuleNames: "table_type"
+}
+entries {
+  ruleName: "table_fields"
+  immediateSubRuleNames: "aux_rule__table_fields_4"
+  transitiveSubRuleNames: "aux_rule__table_fields_4"
+  transitiveSubRuleNames: "aux_rule__table_fields_6"
+  transitiveSubRuleNames: "aux_rule__table_fields_7"
+  transitiveSubRuleNames: "table_type"
+}
+entries {
+  ruleName: "aux_rule__memory_fields_4"
+  immediateSubRuleNames: "aux_rule__memory_fields_6"
+  immediateSubRuleNames: "aux_rule__memory_fields_7"
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "aux_rule__memory_fields_6"
+  transitiveSubRuleNames: "aux_rule__memory_fields_7"
+  transitiveSubRuleNames: "memory_type"
+}
+entries {
+  ruleName: "memory_fields"
+  immediateSubRuleNames: "aux_rule__memory_fields_4"
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "aux_rule__memory_fields_4"
+  transitiveSubRuleNames: "aux_rule__memory_fields_6"
+  transitiveSubRuleNames: "aux_rule__memory_fields_7"
+  transitiveSubRuleNames: "memory_type"
+}
+entries {
+  ruleName: "aux_rule__global_fields_3"
+  immediateSubRuleNames: "aux_rule__global_fields_4"
+  immediateSubRuleNames: "aux_rule__global_fields_5"
+  transitiveSubRuleNames: "VALUE_TYPE"
+  transitiveSubRuleNames: "aux_rule__global_fields_4"
+  transitiveSubRuleNames: "aux_rule__global_fields_5"
+  transitiveSubRuleNames: "aux_rule__global_type_1"
+  transitiveSubRuleNames: "global_type"
+  transitiveSubRuleNames: "value_type"
+}
+entries {
+  ruleName: "global_fields"
+  immediateSubRuleNames: "aux_rule__global_fields_3"
+  transitiveSubRuleNames: "VALUE_TYPE"
+  transitiveSubRuleNames: "aux_rule__global_fields_3"
+  transitiveSubRuleNames: "aux_rule__global_fields_4"
+  transitiveSubRuleNames: "aux_rule__global_fields_5"
+  transitiveSubRuleNames: "aux_rule__global_type_1"
+  transitiveSubRuleNames: "global_type"
+  transitiveSubRuleNames: "value_type"
+}
+entries {
+  ruleName: "optional__table_fields_5"
+  immediateSubRuleNames: "inline_import"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "inline_import"
+}
+entries {
+  ruleName: "altnt_block__plain_instr_6"
+  immediateSubRuleNames: "BR"
+  immediateSubRuleNames: "BR_IF"
+  immediateSubRuleNames: "CALL"
+  immediateSubRuleNames: "GLOBAL_GET"
+  immediateSubRuleNames: "GLOBAL_SET"
+  immediateSubRuleNames: "LOCAL_GET"
+  immediateSubRuleNames: "LOCAL_SET"
+  immediateSubRuleNames: "LOCAL_TEE"
+  transitiveSubRuleNames: "BR"
+  transitiveSubRuleNames: "BR_IF"
+  transitiveSubRuleNames: "CALL"
+  transitiveSubRuleNames: "GLOBAL_GET"
+  transitiveSubRuleNames: "GLOBAL_SET"
+  transitiveSubRuleNames: "LOCAL_GET"
+  transitiveSubRuleNames: "LOCAL_SET"
+  transitiveSubRuleNames: "LOCAL_TEE"
+  transitiveStringLiterals: "br"
+  transitiveStringLiterals: "br_if"
+  transitiveStringLiterals: "call"
+  transitiveStringLiterals: "global.get"
+  transitiveStringLiterals: "global.set"
+  transitiveStringLiterals: "local.get"
+  transitiveStringLiterals: "local.set"
+  transitiveStringLiterals: "local.tee"
+}
+entries {
+  ruleName: "altnt_block__expr1_5"
+  immediateSubRuleNames: "altnt_block__instr_1"
+  transitiveSubRuleNames: "BLOCK"
+  transitiveSubRuleNames: "LOOP"
+  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveStringLiterals: "block"
+  transitiveStringLiterals: "loop"
+}
+entries {
+  ruleName: "altnt_block__import_desc_6"
+  immediateSubRuleNames: "aux_rule__import_desc_10"
+  immediateSubRuleNames: "aux_rule__import_desc_11"
+  immediateSubRuleNames: "aux_rule__import_desc_12"
+  immediateSubRuleNames: "aux_rule__import_desc_9"
+  transitiveSubRuleNames: "FUNC"
+  transitiveSubRuleNames: "aux_rule__import_desc_10"
+  transitiveSubRuleNames: "aux_rule__import_desc_11"
+  transitiveSubRuleNames: "aux_rule__import_desc_12"
+  transitiveSubRuleNames: "aux_rule__import_desc_9"
+  transitiveStringLiterals: "func"
+}
+entries {
+  ruleName: "altnt_block__export_desc_1"
+  immediateSubRuleNames: "FUNC"
+  immediateSubRuleNames: "GLOBAL"
+  immediateSubRuleNames: "MEMORY"
+  immediateSubRuleNames: "TABLE"
+  transitiveSubRuleNames: "FUNC"
+  transitiveSubRuleNames: "GLOBAL"
+  transitiveSubRuleNames: "MEMORY"
+  transitiveSubRuleNames: "TABLE"
+  transitiveStringLiterals: "func"
+  transitiveStringLiterals: "global"
+  transitiveStringLiterals: "memory"
+  transitiveStringLiterals: "table"
+}
+entries {
+  ruleName: "altnt_block__action__3"
+  immediateSubRuleNames: "aux_rule__action__4"
+  immediateSubRuleNames: "aux_rule__action__5"
+  transitiveSubRuleNames: "aux_rule__action__4"
+  transitiveSubRuleNames: "aux_rule__action__5"
+}
+entries {
+  ruleName: "altnt_block__assertion_1"
+  immediateSubRuleNames: "aux_rule__assertion_6"
+  immediateSubRuleNames: "aux_rule__assertion_7"
+  immediateSubRuleNames: "aux_rule__assertion_8"
+  transitiveSubRuleNames: "aux_rule__assertion_6"
+  transitiveSubRuleNames: "aux_rule__assertion_7"
+  transitiveSubRuleNames: "aux_rule__assertion_8"
+}
+entries {
+  ruleName: "altnt_block__meta_6"
+  immediateSubRuleNames: "aux_rule__meta_10"
+  immediateSubRuleNames: "aux_rule__meta_11"
+  immediateSubRuleNames: "aux_rule__meta_9"
+  transitiveSubRuleNames: "OUTPUT"
+  transitiveSubRuleNames: "SCRIPT"
+  transitiveSubRuleNames: "aux_rule__meta_10"
+  transitiveSubRuleNames: "aux_rule__meta_11"
+  transitiveSubRuleNames: "aux_rule__meta_9"
+  transitiveStringLiterals: "output"
+  transitiveStringLiterals: "script"
+}
+entries {
+  ruleName: "altnt_block__start_3"
+  immediateSubRuleNames: "kleene_star__meta_2"
+  immediateSubRuleNames: "kleene_star__module__2"
+  immediateSubRuleNames: "module_"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "action_"
+  transitiveSubRuleNames: "assertion"
+  transitiveSubRuleNames: "aux_rule__cmd_2"
+  transitiveSubRuleNames: "aux_rule__script_module_4"
+  transitiveSubRuleNames: "cmd"
+  transitiveSubRuleNames: "data"
+  transitiveSubRuleNames: "elem"
+  transitiveSubRuleNames: "export_"
+  transitiveSubRuleNames: "func_"
+  transitiveSubRuleNames: "kleene_star__meta_2"
+  transitiveSubRuleNames: "kleene_star__module__2"
+  transitiveSubRuleNames: "memory"
+  transitiveSubRuleNames: "meta"
+  transitiveSubRuleNames: "module_"
+  transitiveSubRuleNames: "module_field"
+  transitiveSubRuleNames: "script_module"
+  transitiveSubRuleNames: "sglobal"
+  transitiveSubRuleNames: "simport"
+  transitiveSubRuleNames: "start_"
+  transitiveSubRuleNames: "table"
+  transitiveSubRuleNames: "type_def"
+}
+entries {
+  ruleName: "altnt_block__import_desc_7"
+  immediateSubRuleNames: "altnt_block__import_desc_8"
+  immediateSubRuleNames: "optional__block_instr_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "VAR"
+  transitiveSubRuleNames: "altnt_block__import_desc_8"
+  transitiveSubRuleNames: "aux_rule__func_type_3"
+  transitiveSubRuleNames: "bind_var"
+  transitiveSubRuleNames: "func_type"
+  transitiveSubRuleNames: "optional__block_instr_1"
+  transitiveSubRuleNames: "type_use"
+}
+entries {
+  ruleName: "altnt_block__assertion_2"
+  immediateSubRuleNames: "aux_rule__assertion_10"
+  immediateSubRuleNames: "aux_rule__assertion_9"
+  transitiveSubRuleNames: "aux_rule__assertion_10"
+  transitiveSubRuleNames: "aux_rule__assertion_9"
+}
+entries {
+  ruleName: "altnt_block__assertion_3"
+  immediateSubRuleNames: "ASSERT_RETURN_ARITHMETIC_NAN"
+  immediateSubRuleNames: "ASSERT_RETURN_CANONICAL_NAN"
+  transitiveSubRuleNames: "ASSERT_RETURN_ARITHMETIC_NAN"
+  transitiveSubRuleNames: "ASSERT_RETURN_CANONICAL_NAN"
+  transitiveStringLiterals: "assert_return_arithmetic_nan"
+  transitiveStringLiterals: "assert_return_canonical_nan"
+}
+entries {
+  ruleName: "altnt_block__meta_7"
+  immediateSubRuleNames: "optional__meta_8"
+  immediateSubRuleNames: "optional__module__1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "STRING_"
+  transitiveSubRuleNames: "VAR"
+  transitiveSubRuleNames: "optional__meta_8"
+  transitiveSubRuleNames: "optional__module__1"
+}
+entries {
+  ruleName: "altnt_block__assertion_4"
+  immediateSubRuleNames: "ASSERT_INVALID"
+  immediateSubRuleNames: "ASSERT_MALFORMED"
+  immediateSubRuleNames: "ASSERT_TRAP"
+  immediateSubRuleNames: "ASSERT_UNLINKABLE"
+  transitiveSubRuleNames: "ASSERT_INVALID"
+  transitiveSubRuleNames: "ASSERT_MALFORMED"
+  transitiveSubRuleNames: "ASSERT_TRAP"
+  transitiveSubRuleNames: "ASSERT_UNLINKABLE"
+  transitiveStringLiterals: "assert_invalid"
+  transitiveStringLiterals: "assert_malformed"
+  transitiveStringLiterals: "assert_trap"
+  transitiveStringLiterals: "assert_unlinkable"
+}
+entries {
+  ruleName: "altnt_block__assertion_5"
+  immediateSubRuleNames: "ASSERT_EXHAUSTION"
+  immediateSubRuleNames: "ASSERT_TRAP"
+  transitiveSubRuleNames: "ASSERT_EXHAUSTION"
+  transitiveSubRuleNames: "ASSERT_TRAP"
+  transitiveStringLiterals: "assert_exhaustion"
+  transitiveStringLiterals: "assert_trap"
+}
+entries {
+  ruleName: "instr"
+  immediateSubRuleNames: "aux_rule__instr_3"
+  immediateSubRuleNames: "call_instr_instr"
+  immediateSubRuleNames: "expr"
+  immediateSubRuleNames: "plain_instr"
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "altnt_block__script_module_3"
+  immediateSubRuleNames: "BIN"
+  immediateSubRuleNames: "QUOTE"
+  transitiveSubRuleNames: "BIN"
+  transitiveSubRuleNames: "QUOTE"
+  transitiveStringLiterals: "binary"
+  transitiveStringLiterals: "quote"
+}
+entries {
+  ruleName: "altnt_block__func_type_4"
+  immediateSubRuleNames: "aux_rule__func_type_6"
+  immediateSubRuleNames: "aux_rule__func_type_7"
+  transitiveSubRuleNames: "PARAM"
+  transitiveSubRuleNames: "RESULT"
+  transitiveSubRuleNames: "aux_rule__func_type_6"
+  transitiveSubRuleNames: "aux_rule__func_type_7"
+  transitiveStringLiterals: "param"
+  transitiveStringLiterals: "result"
+}
+entries {
+  ruleName: "altnt_block__instr_1"
+  immediateSubRuleNames: "BLOCK"
+  immediateSubRuleNames: "LOOP"
+  transitiveSubRuleNames: "BLOCK"
+  transitiveSubRuleNames: "LOOP"
+  transitiveStringLiterals: "block"
+  transitiveStringLiterals: "loop"
+}
+entries {
+  ruleName: "optional__meta_8"
+  immediateSubRuleNames: "STRING_"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "STRING_"
+}
+entries {
+  ruleName: "altnt_block__func_type_5"
+  immediateSubRuleNames: "aux_rule__func_type_8"
+  immediateSubRuleNames: "kleene_star__func_type_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "VALUE_TYPE"
+  transitiveSubRuleNames: "aux_rule__func_type_8"
+  transitiveSubRuleNames: "kleene_star__func_type_1"
+  transitiveSubRuleNames: "value_type"
+}
+entries {
+  ruleName: "altnt_block__instr_2"
+  immediateSubRuleNames: "aux_rule__instr_4"
+  immediateSubRuleNames: "aux_rule__instr_5"
+  transitiveSubRuleNames: "BLOCK"
+  transitiveSubRuleNames: "IF"
+  transitiveSubRuleNames: "LOOP"
+  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveSubRuleNames: "aux_rule__instr_4"
+  transitiveSubRuleNames: "aux_rule__instr_5"
+  transitiveStringLiterals: "block"
+  transitiveStringLiterals: "if"
+  transitiveStringLiterals: "loop"
+}
+entries {
+  ruleName: "altnt_block__plain_instr_7"
+  immediateSubRuleNames: "LOAD"
+  immediateSubRuleNames: "STORE"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "STORE"
+}
+entries {
+  ruleName: "altnt_block__import_desc_8"
+  immediateSubRuleNames: "func_type"
+  immediateSubRuleNames: "type_use"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__func_type_3"
+  transitiveSubRuleNames: "func_type"
+  transitiveSubRuleNames: "type_use"
+}
+entries {
+  ruleName: "aux_rule__global_type_1"
+}
+entries {
+  ruleName: "aux_rule__plain_instr_8"
+}
+entries {
+  ruleName: "aux_rule__plain_instr_9"
+}
+entries {
+  ruleName: "aux_rule__plain_instr_10"
+}
+entries {
+  ruleName: "aux_rule__plain_instr_11"
+  immediateSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+}
+entries {
+  ruleName: "aux_rule__expr1_7"
+  immediateSubRuleNames: "plain_instr"
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "aux_rule__expr1_8"
+  immediateSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveStringLiterals: "call_indirect"
+}
+entries {
+  ruleName: "aux_rule__expr1_9"
+}
+entries {
+  ruleName: "aux_rule__expr1_10"
+  immediateSubRuleNames: "altnt_block__expr1_5"
+  transitiveSubRuleNames: "BLOCK"
+  transitiveSubRuleNames: "LOOP"
+  transitiveSubRuleNames: "altnt_block__expr1_5"
+  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveStringLiterals: "block"
+  transitiveStringLiterals: "loop"
+}
+entries {
+  ruleName: "aux_rule__offset_1"
+}
+entries {
+  ruleName: "aux_rule__script_module_4"
+}
+entries {
+  ruleName: "aux_rule__cmd_2"
+}
+entries {
+  ruleName: "aux_rule__func_fields_6"
+  immediateSubRuleNames: "func_fields_body"
+  immediateSubRuleNames: "optional__call_instr_instr_1"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "BINARY"
+  transitiveSubRuleNames: "CALL_INDIRECT"
+  transitiveSubRuleNames: "COMPARE"
+  transitiveSubRuleNames: "CONVERT"
+  transitiveSubRuleNames: "DROP"
+  transitiveSubRuleNames: "LOAD"
+  transitiveSubRuleNames: "MEMORY_COPY"
+  transitiveSubRuleNames: "MEMORY_FILL"
+  transitiveSubRuleNames: "MEMORY_GROW"
+  transitiveSubRuleNames: "MEMORY_SIZE"
+  transitiveSubRuleNames: "NOP"
+  transitiveSubRuleNames: "RETURN"
+  transitiveSubRuleNames: "SELECT"
+  transitiveSubRuleNames: "STORE"
+  transitiveSubRuleNames: "TEST"
+  transitiveSubRuleNames: "UNARY"
+  transitiveSubRuleNames: "UNREACHABLE"
+  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "aux_rule__call_instr_params_5"
+  transitiveSubRuleNames: "aux_rule__func_body_2"
+  transitiveSubRuleNames: "aux_rule__func_fields_body_2"
+  transitiveSubRuleNames: "aux_rule__instr_3"
+  transitiveSubRuleNames: "aux_rule__plain_instr_10"
+  transitiveSubRuleNames: "aux_rule__plain_instr_11"
+  transitiveSubRuleNames: "aux_rule__plain_instr_8"
+  transitiveSubRuleNames: "aux_rule__plain_instr_9"
+  transitiveSubRuleNames: "call_instr"
+  transitiveSubRuleNames: "call_instr_instr"
+  transitiveSubRuleNames: "expr"
+  transitiveSubRuleNames: "func_body"
+  transitiveSubRuleNames: "func_fields_body"
+  transitiveSubRuleNames: "func_result_body"
+  transitiveSubRuleNames: "instr"
+  transitiveSubRuleNames: "instr_list"
+  transitiveSubRuleNames: "kleene_star__call_instr_params_6"
+  transitiveSubRuleNames: "kleene_star__func_body_3"
+  transitiveSubRuleNames: "kleene_star__func_fields_body_3"
+  transitiveSubRuleNames: "kleene_star__instr_list_1"
+  transitiveSubRuleNames: "optional__call_instr_instr_1"
+  transitiveSubRuleNames: "optional__instr_list_2"
+  transitiveSubRuleNames: "plain_instr"
+  transitiveSubRuleNames: "type_use"
+  transitiveStringLiterals: "call_indirect"
+  transitiveStringLiterals: "drop"
+  transitiveStringLiterals: "memory.copy"
+  transitiveStringLiterals: "memory.fill"
+  transitiveStringLiterals: "memory.grow"
+  transitiveStringLiterals: "memory.size"
+  transitiveStringLiterals: "nop"
+  transitiveStringLiterals: "return"
+  transitiveStringLiterals: "select"
+  transitiveStringLiterals: "unreachable"
+}
+entries {
+  ruleName: "aux_rule__func_fields_7"
+}
+entries {
+  ruleName: "aux_rule__table_fields_6"
+  immediateSubRuleNames: "table_type"
+  transitiveSubRuleNames: "table_type"
+}
+entries {
+  ruleName: "aux_rule__table_fields_7"
+}
+entries {
+  ruleName: "aux_rule__memory_fields_6"
+  immediateSubRuleNames: "memory_type"
+  transitiveSubRuleNames: "NAT"
+  transitiveSubRuleNames: "memory_type"
+}
+entries {
+  ruleName: "aux_rule__memory_fields_7"
+}
+entries {
+  ruleName: "aux_rule__global_fields_4"
+  immediateSubRuleNames: "global_type"
+  transitiveSubRuleNames: "VALUE_TYPE"
+  transitiveSubRuleNames: "aux_rule__global_type_1"
+  transitiveSubRuleNames: "global_type"
+  transitiveSubRuleNames: "value_type"
+}
+entries {
+  ruleName: "aux_rule__global_fields_5"
+}
+entries {
+  ruleName: "aux_rule__import_desc_9"
+}
+entries {
+  ruleName: "aux_rule__import_desc_10"
+}
+entries {
+  ruleName: "aux_rule__import_desc_11"
+}
+entries {
+  ruleName: "aux_rule__import_desc_12"
+  immediateSubRuleNames: "FUNC"
+  transitiveSubRuleNames: "FUNC"
+  transitiveStringLiterals: "func"
+}
+entries {
+  ruleName: "aux_rule__action__4"
+}
+entries {
+  ruleName: "aux_rule__action__5"
+}
+entries {
+  ruleName: "aux_rule__assertion_6"
+}
+entries {
+  ruleName: "aux_rule__assertion_7"
+}
+entries {
+  ruleName: "aux_rule__assertion_8"
+}
+entries {
+  ruleName: "aux_rule__meta_9"
+  immediateSubRuleNames: "SCRIPT"
+  transitiveSubRuleNames: "SCRIPT"
+  transitiveStringLiterals: "script"
+}
+entries {
+  ruleName: "aux_rule__meta_10"
+}
+entries {
+  ruleName: "aux_rule__meta_11"
+  immediateSubRuleNames: "OUTPUT"
+  transitiveSubRuleNames: "OUTPUT"
+  transitiveStringLiterals: "output"
+}
+entries {
+  ruleName: "aux_rule__assertion_9"
+}
+entries {
+  ruleName: "aux_rule__assertion_10"
+}
+entries {
+  ruleName: "aux_rule__instr_3"
+}
+entries {
+  ruleName: "aux_rule__func_type_6"
+  immediateSubRuleNames: "RESULT"
+  transitiveSubRuleNames: "RESULT"
+  transitiveStringLiterals: "result"
+}
+entries {
+  ruleName: "aux_rule__func_type_7"
+  immediateSubRuleNames: "PARAM"
+  transitiveSubRuleNames: "PARAM"
+  transitiveStringLiterals: "param"
+}
+entries {
+  ruleName: "aux_rule__func_type_8"
+}
+entries {
+  ruleName: "aux_rule__instr_4"
+  immediateSubRuleNames: "altnt_block__instr_1"
+  transitiveSubRuleNames: "BLOCK"
+  transitiveSubRuleNames: "LOOP"
+  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveStringLiterals: "block"
+  transitiveStringLiterals: "loop"
+}
+entries {
+  ruleName: "aux_rule__instr_5"
+  immediateSubRuleNames: "IF"
+  transitiveSubRuleNames: "IF"
+  transitiveStringLiterals: "if"
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -15,20 +15,18 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.program.printer
-
 import org.perses.antlr.atn.LexerAtnWrapper
-import org.perses.program.PersesTokenFactory
+import org.perses.program.AbstractPersesToken
 
 class DeducedPositionProvider(
   val lexerAtnWrapper: LexerAtnWrapper,
 ) : AbstractTokenPositionProvider() {
-  override fun getLine(token: PersesTokenFactory.AbstractPersesToken): Int =
-    token.asAntlrToken().position.line
+  override fun getLine(token: AbstractPersesToken): Int = token.asAntlrToken().position.line
 
   override fun getCharPositionInLine(
-    token: PersesTokenFactory.AbstractPersesToken,
+    token: AbstractPersesToken,
     currentCursorPositionInLine: Int,
-    previousToken: PersesTokenFactory.AbstractPersesToken?,
+    previousToken: AbstractPersesToken?,
   ): Int {
     return if (previousToken == null) {
       if (token.isPlainText()) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -32,7 +32,7 @@ class LatraGeneralTreeEditTest {
 
   @Test
   fun testInternalApply() {
-    val builder = LatraGeneralActionSet.Builder("test 1")
+    val builder = LatraGeneralActionSet.Builder("test 1", transformationName = "test")
     val nodeSemicolCopy = nodeSemicol.recursiveDeepCopy(ReuseNodeIdStrategy).result
     val nodeMainCopy = nodeMain.recursiveDeepCopy(ReuseNodeIdStrategy).result
     // ";" replace Printf , main replace Int and delete main at int
@@ -43,7 +43,7 @@ class LatraGeneralTreeEditTest {
     val edit = tree.createLatraGeneralEdit(builder.buildOrNull()!!)
 
     val bufferParentOfPrintf = nodePrintf.parent
-    tree.applyEdit(edit)
+    tree.applyEdit(edit, canonicalTokenCount = null)
     // Check printF is replaced, int is replaced
     assertThat(nodePrintf.isPermanentlyDeleted).isTrue()
     assertThat(nodeInt.isPermanentlyDeleted).isTrue()
@@ -59,7 +59,7 @@ class LatraGeneralTreeEditTest {
       """
       main ( ) { { { { { ; ( ( "hello world\n" ) ) ; } } } } }
       """.trimIndent()
-    val builder = LatraGeneralActionSet.Builder("test 2")
+    val builder = LatraGeneralActionSet.Builder("test 2", transformationName = "test")
     val nodeSemicolCopy = nodeSemicol.recursiveDeepCopy(ReuseNodeIdStrategy).result
     val nodeMainCopy = nodeMain.recursiveDeepCopy(ReuseNodeIdStrategy).result
     // ";" replace Printf , main replace Int and delete main at int
@@ -69,17 +69,17 @@ class LatraGeneralTreeEditTest {
 
     val edit = tree.createLatraGeneralEdit(builder.buildOrNull()!!)
 
-    tree.applyEdit(edit)
+    tree.applyEdit(edit, canonicalTokenCount = null)
     assertThat(
       edit
-        .computeProgram(tree)
+        .program
         .tokens
         .asSequence()
         .map { it.lexemeText }
         .joinToString(" "),
     ).isEqualTo(expectOutput)
     assertThat(
-      tree.programSnapshot.tokens
+      tree.programSnapshot.payload.tokens
         .asSequence()
         .map { it.lexemeText }
         .joinToString(" "),
@@ -114,13 +114,14 @@ class LatraGeneralTreeEditTest {
       tree.createLatraGeneralEdit(
         LatraGeneralActionSet
           .Builder(
-            actionsDescription = "test action",
+            contextDescription = "test action",
+            transformationName = "test",
           ).replaceNode(
             targetNode = tree.realRoot,
             replacingNode = another,
           ).buildOrNull()!!,
       )
-    edit.computeProgram(tree).tokens.map { it.lexemeText }.let { tokens ->
+    edit.program.tokens.map { it.lexemeText }.let { tokens ->
       assertThat(tokens)
         .containsExactly(
           ";",
@@ -128,8 +129,8 @@ class LatraGeneralTreeEditTest {
           ";",
         ).inOrder()
     }
-    tree.applyEdit(edit)
-    tree.programSnapshot.tokens.map { it.lexemeText }.let { tokens ->
+    tree.applyEdit(edit, canonicalTokenCount = null)
+    tree.programSnapshot.payload.tokens.map { it.lexemeText }.let { tokens ->
       assertThat(tokens)
         .containsExactly(
           ";",

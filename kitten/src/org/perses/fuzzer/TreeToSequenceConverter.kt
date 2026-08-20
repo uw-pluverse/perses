@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -146,9 +146,11 @@ object TreeToSequenceConverter {
           is PersesRuleReferenceAst -> {
             "rule_${it.ruleNameHandle.id}"
           }
+
           is PersesTerminalAst -> {
             "token_${it.tokenType}"
           }
+
           else -> {
             error("Unreachable")
           }

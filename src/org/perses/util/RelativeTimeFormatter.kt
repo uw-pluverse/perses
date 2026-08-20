@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,7 +16,9 @@
  */
 package org.perses.util
 
+import org.perses.PersesConstants
 import java.util.logging.Formatter
+import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.logging.LogRecord
 
@@ -28,33 +30,31 @@ class RelativeTimeFormatter : Formatter() {
     value?.toBooleanStrict() ?: true
   }
 
-  override fun format(record: LogRecord): String =
-    if (booleanHideTimestamps) {
-      String.format(
-        "%4s %s%n",
-        record.level,
-        formatMessage(record),
-      )
-    } else {
-      val relativeTimeSpan = formatTimeDurationFromStart(System.currentTimeMillis())
+  override fun format(record: LogRecord): String {
+    val message = formatMessage(record)
+    val result = StringBuilder()
+    // TODO(cnsun): needs testing. When printing time, we hide INFO if the level is INFO.
+    if (!booleanHideTimestamps) {
+      val relativeTimeSpan = formatTimeDurationFromStart(PersesConstants.elapsedTimeSpan())
+      result.append(relativeTimeSpan).append(' ')
 
-      // Build the final log message string
-      String.format(
-        "%s %4s %s%n",
-        relativeTimeSpan,
-        record.level,
-        formatMessage(record),
-      )
+      if (record.level != Level.INFO) {
+        result.append(record.level.toString()).append(' ')
+      }
+    } else {
+      result.append(record.level.toString()).append(' ')
     }
+    result.append(message).append('\n')
+    // Without this, a cause attached to a log record -- FluentLogger's withCause(), or any JUL
+    // logger's thrown -- is silently dropped, so a caller who attached one gets a message that
+    // reads as though the exception were reported and no way to see what actually failed.
+    record.thrown?.let { result.append(it.stackTraceToString()) }
+    return result.toString()
+  }
 
   // Store the application start time in a companion object
   companion object {
-    private val startTimeMillis = System.currentTimeMillis()
-
-    private fun formatTimeDurationFromStart(endTimeMillis: Long): String =
-      TimeSpan(
-        startTimeMillis = startTimeMillis,
-        endTimeMillis = endTimeMillis,
-      ).breakdown.computeConciseFormattedString(includeSeconds = false)
+    private fun formatTimeDurationFromStart(timespan: TimeSpan): String =
+      timespan.breakdown.computeConciseFormattedString(includeSeconds = false)
   }
 }

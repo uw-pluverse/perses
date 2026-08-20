@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.reducer.vulcan
 
+import org.perses.program.PersesTokenFactory
 import org.perses.spartree.AnyNodeReplacementTreeEdit
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeReplacementActionSet
@@ -61,14 +62,16 @@ object TokenEditUtility {
     val builder =
       NodeReplacementActionSet
         .Builder("replace ${nodesToBeReplaced.size} lexer nodes with new lexeme '$newLexeme'")
-    val tokenFactory = tree.tokenizedProgramFactory.tokenFactory
     nodesToBeReplaced.forEach { targetNode ->
       check(!targetNode.isPermanentlyDeleted)
       lazyAssert { newLexeme != targetNode.token.lexemeText }
       val replacement =
         sparTreeNodeFactory.copyWithNewToken(
           targetNode,
-          tokenFactory.copyPersesTokenWithNewText(newLexeme, targetNode.token.asAntlrToken()),
+          PersesTokenFactory.copyPersesTokenWithNewText(
+            newLexeme,
+            targetNode.token.asAntlrToken(),
+          ),
         )
       builder.replaceNode(targetNode = targetNode, replacement = replacement)
     }

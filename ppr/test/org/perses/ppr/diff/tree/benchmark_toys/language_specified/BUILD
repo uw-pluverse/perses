@@ -15,7 +15,7 @@ ppr_reduction_golden_test(
     },
     perses_bin = PERSES_TREE_DIFF_REDUCER_BIN,
     progress_dump_file = "reduction_progress.txt",
-    reduction_algorithm = "node_priority-dfs",
+    reduction_algorithm = "node_priority",
     seed_file = "seed.unknown_language",
     test_script = "r.sh",
     thread_count = 1,

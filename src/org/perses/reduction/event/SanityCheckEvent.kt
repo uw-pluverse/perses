@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 University of Waterloo.
+ * Copyright (C) 2018-2026 University of Waterloo.
  *
  * This file is part of Perses.
  *
@@ -16,14 +16,15 @@
  */
 package org.perses.reduction.event
 
-import org.perses.reduction.IReductionDriver
+import org.perses.reduction.SanityCheckResult
+import org.perses.reduction.io.PerFileSizeMetrics
 
 class SanityCheckEvent(
   currentTimeMillis: Long,
-  programSize: Int,
-  val sanityCheckResult: IReductionDriver.SanityCheckResult,
-) : AbstractStartEvent(currentTimeMillis, programSize) {
-  override fun initialProgramSize(): Int = programSize
+  perFileSizeMetrics: PerFileSizeMetrics,
+  val sanityCheckResult: SanityCheckResult,
+) : AbstractStartEvent(currentTimeMillis, perFileSizeMetrics) {
+  override fun initialPerFileSizeMetrics(): PerFileSizeMetrics = perFileSizeMetrics
 
   override val prefixLabelFromRootToHere: String
     get() = ""
