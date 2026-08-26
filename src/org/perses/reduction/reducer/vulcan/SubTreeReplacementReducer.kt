@@ -33,7 +33,7 @@ import org.perses.spartree.MinimalSparTreeGenerator
 import org.perses.spartree.NodeReplacementActionSet
 import org.perses.spartree.SparTree
 import org.perses.spartree.TreeNodeFilterResult
-import org.perses.util.Util
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
 class SubTreeReplacementReducer(
@@ -108,7 +108,7 @@ class SubTreeReplacementReducer(
               ruleName,
               index,
             ) ?: continue
-          Util.lazyAssert(
+          lazyAssert(
             { replacement.leafNodeSequence().count() <= originalTokenCount },
           ) {
             """

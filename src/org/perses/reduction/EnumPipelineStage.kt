@@ -38,5 +38,15 @@ enum class EnumPipelineStage {
   MEDIUM_GRIT_LATRA,
 
   /** Fine-grit vulcan reducers. */
-  FINE_GRIT,
+  FINE_GRIT_VULCAN,
+
+  /**
+   * Fine-grit reducers based on structure form conversion.
+   *
+   * TODO: consolidate these with the reducers of [FINE_GRIT_VULCAN]. Both stages hold fine-grit
+   *   auxiliary reducers that run after the main reducer, and one stage would list them once.
+   *   What stands in the way is that each stage is repeated to a fixpoint under a flag of its
+   *   own, --vulcan-fixpoint and --sfc-fixpoint, so a single stage needs one answer for both.
+   */
+  FINE_GRIT_SFC,
 }

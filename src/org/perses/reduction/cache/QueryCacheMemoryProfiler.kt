@@ -19,7 +19,7 @@ package org.perses.reduction.cache
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import objectexplorer.MemoryMeasurer
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.util.FileStreamPool
 
 class QueryCacheMemoryProfiler(
@@ -89,7 +89,7 @@ class QueryCacheMemoryProfiler(
     private val CLASS_EXCLUSION_FILTER: ImmutableList<(Any) -> Boolean> =
       ImmutableList.of(
         { klass -> klass is AbstractQueryCacheProfiler },
-        { klass -> klass is PropertyTestResult },
+        { klass -> klass is TestScriptVerdict },
         { klass -> klass.javaClass === Any::class.java },
       )
 

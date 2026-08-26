@@ -24,7 +24,8 @@ import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.spartree.SparTree
-import org.perses.util.Util
+import org.perses.util.EnumStopCriterion
+import org.perses.util.fixpoint
 import org.perses.util.ktFine
 
 class DefaultLatraReducer(
@@ -84,10 +85,10 @@ class DefaultLatraReducer(
     }
 
     var firstTime = true
-    Util.fixpoint(
+    fixpoint(
       initial = bestTree.programSnapshot,
       stopCriterion = { tokenCountBefore, tokenCountAfter ->
-        Util.EnumStopCriterion.stopIfTrue(tokenCountBefore <= tokenCountAfter)
+        EnumStopCriterion.stopIfTrue(tokenCountBefore <= tokenCountAfter)
       },
     ) {
       if (firstTime || bestTree.dirty) {

@@ -19,7 +19,7 @@ package org.perses.analyzer.differential
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
 import org.perses.listener.DifferentialEvents
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.util.cmd.AbstractMain
 import org.perses.util.cmd.CommandLineProcessor
 import org.perses.util.cmd.OutputOnlyCommandOptions
@@ -34,7 +34,7 @@ class EventDiffTestDataGenerator(
         DifferentialEvents.Edit(
           contextualDescription = "Delete function f1",
           structureDescription = "Function -> Empty",
-          propertyTestResult = PropertyTestResult(ExitCode.ZERO, 50),
+          propertyTestResult = TestScriptVerdict(ExitCode.ZERO, 50),
           successfullyDeletedCode = "void f1() {}",
           deletedTokenCount = 2,
           startPersesTimeSeconds = 12,
@@ -59,7 +59,7 @@ class EventDiffTestDataGenerator(
         DifferentialEvents.Edit(
           contextualDescription = "Delete variable x",
           structureDescription = "Variable -> Empty",
-          propertyTestResult = PropertyTestResult(ExitCode.ONE, 30),
+          propertyTestResult = TestScriptVerdict(ExitCode.ONE, 30),
           successfullyDeletedCode = "int x = 0;",
           deletedTokenCount = 0,
           startPersesTimeSeconds = 22,

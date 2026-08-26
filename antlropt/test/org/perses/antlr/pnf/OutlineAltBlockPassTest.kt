@@ -45,7 +45,7 @@ class OutlineAltBlockPassTest {
     var ruleElement =
       processed.parserRules
         .find {
-          it.ruleNameHandle.ruleName == "altnt_block__start_1"
+          it.ruleNameHandle.ruleName == "alt_block__start_1"
         }!!
         .body as PersesAlternativeBlockAst
     assertThat(ruleElement.childCount).isEqualTo(2)
@@ -54,7 +54,7 @@ class OutlineAltBlockPassTest {
     ruleElement =
       processed.parserRules
         .find {
-          it.ruleNameHandle.ruleName == "altnt_block__start_2"
+          it.ruleNameHandle.ruleName == "alt_block__start_2"
         }!!
         .body as PersesAlternativeBlockAst
     assertThat(ruleElement.childCount).isEqualTo(2)

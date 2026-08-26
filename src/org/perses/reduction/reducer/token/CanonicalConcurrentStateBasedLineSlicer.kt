@@ -24,7 +24,7 @@ import org.perses.reduction.ReducerContext
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
-import org.perses.util.Util
+import org.perses.util.CollectionUtil
 import org.perses.util.toImmutableList
 
 private typealias CanonicalLine = ImmutableList<LexerRuleSparTreeNode>
@@ -106,7 +106,7 @@ class CanonicalConcurrentStateBasedLineSlicer(
     private const val NAME_PREFIX = "canonical_concurrent_state_line_slicer"
 
     fun computeLines(tokens: ImmutableList<LexerRuleSparTreeNode>): ImmutableList<CanonicalLine> =
-      Util.mergeContinuousElementsIntoRegions(tokens) { a, b ->
+      CollectionUtil.mergeContinuousElementsIntoRegions(tokens) { a, b ->
         a.token
           .asAntlrToken()
           .position.line ==

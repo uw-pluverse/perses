@@ -17,7 +17,7 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
 class PartitionList<T : Any>(

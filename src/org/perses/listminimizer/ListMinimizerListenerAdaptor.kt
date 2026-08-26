@@ -16,7 +16,8 @@
  */
 package org.perses.listminimizer
 
-import org.perses.util.Util
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.StringUtil
 import kotlin.reflect.KClass
 
 class ListMinimizerListenerAdaptor(
@@ -42,7 +43,7 @@ class ListMinimizerListenerAdaptor(
     val algName = listMinimizerClass.simpleName
     val elements = convertElementListToCompactString(minimizationResult)
     val localRatio =
-      Util.computePercentage(
+      StringUtil.computePercentage(
         numerator = minimizationResult.size,
         denominator = sizeOfOriginalInput,
       )
@@ -55,13 +56,13 @@ class ListMinimizerListenerAdaptor(
 
   override fun onPropertyTest(
     configuration: Candidate<*>,
-    result: ListMinimizerPropertyTestResult<*, *>,
+    result: CandidateOutcome<*>,
     sizeOfOriginalList: Int,
     sizeOfCurrentMinimizationResult: Int,
   ) {
     val deleted = convertElementListToCompactString(configuration.deletedWrappers)
     val localReductionRate =
-      Util.computePercentage(
+      StringUtil.computePercentage(
         numerator = sizeOfCurrentMinimizationResult,
         denominator = sizeOfOriginalList,
       )

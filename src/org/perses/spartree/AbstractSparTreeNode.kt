@@ -20,7 +20,7 @@ import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleHierarchyEntry
 import org.perses.antlr.RuleType
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 import org.perses.util.transformToImmutableList
 import java.io.IOError

@@ -16,7 +16,7 @@
  */
 package org.perses.spartree
 import org.perses.program.TokenizedProgram
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
 class NodeDeletionTreeEdit internal constructor(

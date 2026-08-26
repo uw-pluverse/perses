@@ -36,7 +36,7 @@ import org.perses.reduction.reducer.PersesNodeReducerAnnotations
 import org.perses.reduction.scheduler.AbstractSchedulerEvent.ReducerCallEvent
 import org.perses.reduction.scheduler.AbstractSchedulerEvent.StatsSnapshotEvent
 import org.perses.reduction.scheduler.ReducerScheduler
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.Shells
 import java.nio.file.Files
@@ -46,14 +46,14 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class RegularProgramReductionDriverTest {
-  private val workDir = Util.createTempDirForObject(this)
+  private val workDir = FileSystemUtil.createTempDirForObject(this)
   private val outputDir =
     workDir.resolve("default_test_output_dir").apply {
-      Util.ensureDirExists(this)
+      FileSystemUtil.ensureDirExists(this)
     }
   private val inputDir =
     workDir.resolve("input_dir").apply {
-      Util.ensureDirExists(this)
+      FileSystemUtil.ensureDirExists(this)
     }
   private val sourceFile =
     inputDir.resolve("t.c").apply {
@@ -64,7 +64,7 @@ class RegularProgramReductionDriverTest {
     inputDir.resolve("r.sh").apply {
       this.createFile()
       check(Files.exists(this))
-      Util.setExecutable(this)
+      FileSystemUtil.setExecutable(this)
       check(Files.isExecutable(this))
       this.writeText("${Shells.SHEBANG_BASH}\n")
     }

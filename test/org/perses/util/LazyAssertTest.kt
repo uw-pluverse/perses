@@ -14,13 +14,26 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction
+package org.perses.util
 
-import org.perses.reduction.io.AbstractOutputManager
-import org.perses.spartree.AbstractSparTreeEdit
+import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
-data class TreeEditWithItsResult(
-  val edit: AbstractSparTreeEdit<*>,
-  val testResult: PropertyTestResult,
-  val outputManager: AbstractOutputManager,
-)
+@RunWith(JUnit4::class)
+class LazyAssertTest {
+  @Test
+  fun lazyAssertionShouldThrow() {
+    assertThrows(Throwable::class.java) {
+      lazyAssert { false }
+    }
+    val goldenMessage = "this is the golden message"
+    val exception =
+      assertThrows(Throwable::class.java) {
+        lazyAssert({ false }) { goldenMessage }
+      }
+    assertThat(exception.message).contains(goldenMessage)
+  }
+}

@@ -17,7 +17,7 @@
 package org.perses.spartree
 
 import org.perses.util.SimpleStack
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 /**
  * A utility class to simplify a spar-tree, e.g., removing empty rule node path, shrink

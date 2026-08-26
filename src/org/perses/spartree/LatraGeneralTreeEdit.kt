@@ -16,8 +16,9 @@
  */
 package org.perses.spartree
 
+import org.perses.util.lazyAssert
 import org.perses.program.TokenizedProgram
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 class LatraGeneralTreeEdit internal constructor(
   tree: SparTree,

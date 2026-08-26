@@ -17,6 +17,7 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
+import org.perses.reduction.CandidateOutcome
 import kotlin.reflect.KClass
 
 data class ListMinimizerArguments<T : Any, PropertyPayload>(
@@ -73,7 +74,7 @@ data class ListMinimizerArguments<T : Any, PropertyPayload>(
   fun testProperty(
     configuration: Candidate<T>,
     sizeOfCurrentMinimizationResult: Int,
-  ): ListMinimizerPropertyTestResult<T, PropertyPayload> =
+  ): CandidateOutcome<PropertyPayload> =
     propertyTester.testProperty(configuration).get().also { result ->
       listener.onPropertyTest(
         configuration,
@@ -89,7 +90,7 @@ data class ListMinimizerArguments<T : Any, PropertyPayload>(
   ): PropertyTestHandle<T, PropertyPayload> {
     val handle = propertyTester.testProperty(configuration)
     return object : PropertyTestHandle<T, PropertyPayload> {
-      override fun get(): ListMinimizerPropertyTestResult<T, PropertyPayload> =
+      override fun get(): CandidateOutcome<PropertyPayload> =
         handle.get().also { result ->
           listener.onPropertyTest(
             configuration,

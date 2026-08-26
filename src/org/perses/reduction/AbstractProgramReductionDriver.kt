@@ -65,6 +65,9 @@ import org.perses.reduction.reducer.lpr.LlmBasedDataTypeSimplificationReducer
 import org.perses.reduction.reducer.lpr.LlmBasedFunctionInliningReducer
 import org.perses.reduction.reducer.lpr.LlmBasedLoopUnrollingReducer
 import org.perses.reduction.reducer.lpr.LlmBasedVariableEliminationReducer
+import org.perses.reduction.reducer.sfc.IdentifierUseEliminationReducer
+import org.perses.reduction.reducer.sfc.SmallerStructureReplacementReducer
+import org.perses.reduction.reducer.sfc.StructureCanonicalizationReducer
 import org.perses.reduction.reducer.token.ConcurrentTokenSlicer
 import org.perses.reduction.reducer.token.LineBasedConcurrentTokenSlicer
 import org.perses.reduction.reducer.trec.TokenCanonicalizer
@@ -85,8 +88,8 @@ import org.perses.spartree.AbstractSparTreeEditListener
 import org.perses.spartree.AbstractTreeNode
 import org.perses.spartree.SparTreeNodeFactory
 import org.perses.spartree.SparTreeParserUtility
+import org.perses.util.FileSystemUtil
 import org.perses.util.TimeSpan
-import org.perses.util.Util
 import org.perses.util.ktFine
 import org.perses.util.ktSevere
 import org.perses.util.ktWarning
@@ -345,7 +348,7 @@ abstract class AbstractProgramReductionDriver(
           overallFixpoint = cmd.latraFlags.enableFixpoint,
         )
 
-      EnumPipelineStage.FINE_GRIT ->
+      EnumPipelineStage.FINE_GRIT_VULCAN ->
         createExecutionPlanForFineGritReducers(
           cleanupReducerStep = cleanupReducerStep,
           reducerAnnotations =
@@ -360,6 +363,34 @@ abstract class AbstractProgramReductionDriver(
             ),
           overallFixpoint = configuration.vulcanConfig.vulcanFixpoint,
         )
+
+      EnumPipelineStage.FINE_GRIT_SFC ->
+        createExecutionPlanForFineGritReducers(
+          cleanupReducerStep = cleanupReducerStep,
+          reducerAnnotations = sfcReducerAnnotations(),
+          overallFixpoint = cmd.sfcFlags.enableFixpoint,
+        )
+    }
+
+  /**
+   * The auxiliary reducers of Figure 3 of the SFC paper, in its order: get rid of an identifier,
+   * then replace a subtree with a smaller structure, then canonicalize.
+   *
+   * The paper's Identifier Elimination first renames the uses of an identifier onto another name,
+   * which IdentifierReplacementReducer of Vulcan already does. It is listed here only when Vulcan
+   * is off, so that enabling SFC brings the whole of that algorithm without running the same
+   * reducer twice in one pipeline.
+   */
+  private fun sfcReducerAnnotations(): List<ReducerAnnotation> =
+    if (!cmd.sfcFlags.enableSfc) {
+      emptyList()
+    } else {
+      listOfNotNull(
+        IdentifierReplacementReducer.META.takeIf { !cmd.vulcanFlags.enableVulcan },
+        IdentifierUseEliminationReducer.META,
+        SmallerStructureReplacementReducer.META,
+        StructureCanonicalizationReducer.META,
+      )
     }
 
   /** The [EnumPipelineStage.COARSE_GRIT] stage: the enabled coarse-grit slicers, t-rec, and any
@@ -927,7 +958,7 @@ abstract class AbstractProgramReductionDriver(
     }
     return ListMinimizationMicrobenchmarkWriter(
       rootDirectory =
-        Util.ensureDirExists(
+        FileSystemUtil.ensureDirExists(
           checkNotNull(flags.microbenchmarkOutputDirectory) {
             "The problem output directory is null."
           },
@@ -1128,7 +1159,7 @@ abstract class AbstractProgramReductionDriver(
         "Tree Building: Start building spar-tree from input file ${fileToReduce.file.name}"
       }
       // This needs to be enabled, once isInputCompletelyConsumed support the Python grammar.
-      // Util.lazyAssert { parseTree.isInputCompletelyConsumed() }
+      // lazyAssert { parseTree.isInputCompletelyConsumed() }
       val sparTreeWithSemantics =
         createInputRepresentation(
           sourceFile = fileToReduce.file,
@@ -1225,6 +1256,11 @@ abstract class AbstractProgramReductionDriver(
         latraConfig =
           ReductionConfiguration.LatraConfig(
             listMinimizerForTransformations = cmd.latraFlags.transformationListMinimizer,
+          ),
+        sfcConfig =
+          ReductionConfiguration.SfcConfig(
+            subtreeTokenCountLimit = cmd.sfcFlags.subtreeTokenCountLimit,
+            candidateLimit = cmd.sfcFlags.candidateLimit,
           ),
         levelBasedReducerConfig =
           cmd.algorithmControlFlags.let {

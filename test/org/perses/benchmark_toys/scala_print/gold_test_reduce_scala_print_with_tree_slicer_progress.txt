@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -172,7 +178,7 @@ Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
 compilationUnit{id=1,slot_type=compilationUnit}
 |___(+){id=2,slot_type=topStatSeq}
-    |___aux_rule__tmplDef_7{id=8,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
+    |___aux_rule__tmplDef_7{id=8,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,alt_block__tmplDef_3,aux_rule__tmplDef_7]}
         |___Token:object{id=9,slot_type=Token}
         |___objectDef{id=10,slot_type=objectDef}
             |___Token:Hello{id=11,slot_type=Id}
@@ -180,59 +186,59 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |___templateBody{id=15,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
                     |___Token:{{id=16,slot_type=Token}
                     |___(+){id=17,slot_type=kleene_plus__templateBody_3}
-                    |   |___aux_rule__def_2{id=23,slot_type=[templateStat,aux_rule__templateStat_10,altnt_block__templateStat_9,def,aux_rule__def_2]}
+                    |   |___aux_rule__def_2{id=23,slot_type=[templateStat,aux_rule__templateStat_10,alt_block__templateStat_9,def,aux_rule__def_2]}
                     |       |___Token:def{id=24,slot_type=Token}
                     |       |___aux_rule__funDef_8{id=26,slot_type=[funDef,aux_rule__funDef_8]}
                     |           |___funSig{id=27,slot_type=funSig}
-                    |           |   |___Token:main{id=136,slot_type=Id}
-                    |           |   |___(*){id=138,slot_type=[paramClauses,kleene_star__paramClauses_1]}
-                    |           |       |___paramClause{id=139,slot_type=paramClause}
-                    |           |           |___Token:({id=140,slot_type=Token}
-                    |           |           |___(?){id=141,slot_type=optional__paramClause_2}
-                    |           |           |   |___param{id=144,slot_type=[params,param]}
-                    |           |           |       |___Token:args{id=145,slot_type=Id}
-                    |           |           |       |___(?){id=146,slot_type=optional__param_3}
-                    |           |           |           |___aux_rule__param_2{id=147,slot_type=aux_rule__param_2}
-                    |           |           |               |___Token::{id=148,slot_type=Token}
-                    |           |           |               |___simpleType{id=156,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
-                    |           |           |                   |___Token:Array{id=178,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                   |___(*){id=158,slot_type=kleene_star__simpleType_3}
-                    |           |           |                       |___typeArgs{id=160,slot_type=[aux_rule__simpleType_4,typeArgs]}
-                    |           |           |                           |___Token:[{id=161,slot_type=Token}
-                    |           |           |                           |___Token:String{id=174,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
-                    |           |           |                           |___Token:]{id=163,slot_type=Token}
-                    |           |           |___Token:){id=142,slot_type=Token}
-                    |           |___aux_rule__funDef_9{id=29,slot_type=[altnt_block__funDef_5,aux_rule__funDef_9]}
+                    |           |   |___Token:main{id=137,slot_type=Id}
+                    |           |   |___(*){id=139,slot_type=[paramClauses,kleene_star__paramClauses_1]}
+                    |           |       |___paramClause{id=140,slot_type=paramClause}
+                    |           |           |___Token:({id=141,slot_type=Token}
+                    |           |           |___(?){id=142,slot_type=optional__paramClause_2}
+                    |           |           |   |___param{id=145,slot_type=[params,param]}
+                    |           |           |       |___Token:args{id=146,slot_type=Id}
+                    |           |           |       |___(?){id=147,slot_type=optional__param_3}
+                    |           |           |           |___aux_rule__param_2{id=148,slot_type=aux_rule__param_2}
+                    |           |           |               |___Token::{id=149,slot_type=Token}
+                    |           |           |               |___simpleType{id=157,slot_type=[paramType,aux_rule__paramType_2,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType]}
+                    |           |           |                   |___Token:Array{id=179,slot_type=[aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                   |___(*){id=159,slot_type=kleene_star__simpleType_3}
+                    |           |           |                       |___typeArgs{id=161,slot_type=[aux_rule__simpleType_4,typeArgs]}
+                    |           |           |                           |___Token:[{id=162,slot_type=Token}
+                    |           |           |                           |___Token:String{id=175,slot_type=[types,type_,infixType,compoundType,aux_rule__compoundType_4,annotType,simpleType,aux_rule__simpleType_5,aux_rule__simpleType_7,stableId,aux_rule__stableId_6,Id]}
+                    |           |           |                           |___Token:]{id=164,slot_type=Token}
+                    |           |           |___Token:){id=143,slot_type=Token}
+                    |           |___aux_rule__funDef_9{id=29,slot_type=[alt_block__funDef_5,aux_rule__funDef_9]}
                     |               |___Token:={id=30,slot_type=Token}
-                    |               |___blockExpr{id=40,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,simpleExpr,blockExpr]}
+                    |               |___blockExpr{id=40,slot_type=[expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,simpleExpr,blockExpr]}
                     |                   |___Token:{{id=41,slot_type=Token}
-                    |                   |___(+){id=45,slot_type=[altnt_block__blockExpr_1,block,kleene_plus__block_1]}
-                    |                   |   |___infixExpr{id=51,slot_type=[blockStat,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
-                    |                   |       |___simpleExpr1{id=109,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
-                    |                   |       |   |___Token:println{id=135,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
-                    |                   |       |   |___(*){id=111,slot_type=kleene_star__simpleExpr1_4}
-                    |                   |       |       |___aux_rule__argumentExprs_7{id=114,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
-                    |                   |       |           |___Token:({id=115,slot_type=Token}
-                    |                   |       |           |___(?){id=118,slot_type=[altnt_block__argumentExprs_5,optional__simpleExpr1_1]}
-                    |                   |       |           |   |___Token:"line 1"{id=132,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                   |       |           |___Token:){id=117,slot_type=Token}
-                    |                   |       |___(*){id=53,slot_type=kleene_star__infixExpr_2}
-                    |                   |           |___aux_rule__infixExpr_3{id=54,slot_type=aux_rule__infixExpr_3}
-                    |                   |               |___Token:println{id=55,slot_type=Id}
-                    |                   |               |___infixExpr{id=56,slot_type=infixExpr}
-                    |                   |                   |___aux_rule__simpleExpr1_10{id=89,slot_type=[prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
-                    |                   |                   |   |___Token:({id=90,slot_type=Token}
-                    |                   |                   |   |___(?){id=91,slot_type=optional__simpleExpr1_1}
-                    |                   |                   |   |   |___Token:"Hello, world"{id=106,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                   |                   |   |___Token:){id=92,slot_type=Token}
-                    |                   |                   |___(*){id=58,slot_type=kleene_star__infixExpr_2}
-                    |                   |                       |___aux_rule__infixExpr_3{id=59,slot_type=aux_rule__infixExpr_3}
-                    |                   |                           |___Token:println{id=60,slot_type=Id}
-                    |                   |                           |___aux_rule__simpleExpr1_10{id=67,slot_type=[infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
-                    |                   |                               |___Token:({id=68,slot_type=Token}
-                    |                   |                               |___(?){id=69,slot_type=optional__simpleExpr1_1}
-                    |                   |                               |   |___Token:"line 2"{id=84,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |                   |                               |___Token:){id=70,slot_type=Token}
+                    |                   |___(+){id=46,slot_type=[alt_block__blockExpr_1,block,aux_rule__block_5,kleene_plus__block_1]}
+                    |                   |   |___infixExpr{id=52,slot_type=[blockStat,expr1,aux_rule__expr1_25,postfixExpr,infixExpr]}
+                    |                   |       |___simpleExpr1{id=110,slot_type=[prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1]}
+                    |                   |       |   |___Token:println{id=136,slot_type=[aux_rule__simpleExpr1_6,stableId,aux_rule__stableId_6,Id]}
+                    |                   |       |   |___(*){id=112,slot_type=kleene_star__simpleExpr1_4}
+                    |                   |       |       |___aux_rule__argumentExprs_7{id=115,slot_type=[aux_rule__simpleExpr1_5,argumentExprs,aux_rule__argumentExprs_7]}
+                    |                   |       |           |___Token:({id=116,slot_type=Token}
+                    |                   |       |           |___(?){id=119,slot_type=[alt_block__argumentExprs_5,optional__simpleExpr1_1]}
+                    |                   |       |           |   |___Token:"line 1"{id=133,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |       |           |___Token:){id=118,slot_type=Token}
+                    |                   |       |___(*){id=54,slot_type=kleene_star__infixExpr_2}
+                    |                   |           |___aux_rule__infixExpr_3{id=55,slot_type=aux_rule__infixExpr_3}
+                    |                   |               |___Token:println{id=56,slot_type=Id}
+                    |                   |               |___infixExpr{id=57,slot_type=infixExpr}
+                    |                   |                   |___aux_rule__simpleExpr1_10{id=90,slot_type=[prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                   |                   |   |___Token:({id=91,slot_type=Token}
+                    |                   |                   |   |___(?){id=92,slot_type=optional__simpleExpr1_1}
+                    |                   |                   |   |   |___Token:"Hello, world"{id=107,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |                   |   |___Token:){id=93,slot_type=Token}
+                    |                   |                   |___(*){id=59,slot_type=kleene_star__infixExpr_2}
+                    |                   |                       |___aux_rule__infixExpr_3{id=60,slot_type=aux_rule__infixExpr_3}
+                    |                   |                           |___Token:println{id=61,slot_type=Id}
+                    |                   |                           |___aux_rule__simpleExpr1_10{id=68,slot_type=[infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,aux_rule__simpleExpr1_10]}
+                    |                   |                               |___Token:({id=69,slot_type=Token}
+                    |                   |                               |___(?){id=70,slot_type=optional__simpleExpr1_1}
+                    |                   |                               |   |___Token:"line 2"{id=85,slot_type=[exprs,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |                   |                               |___Token:){id=71,slot_type=Token}
                     |                   |___Token:}{id=43,slot_type=Token}
                     |___Token:}{id=18,slot_type=Token}
 ------------------------------------------------------------
@@ -555,7 +561,7 @@ The current best program is the following
 ================The best program is updated.================
 
 token count change 29 -> 16
-Edit: HoistEdit:[replace_23_with_51]
+Edit: HoistEdit:[replace_23_with_52]
 ------------------------------------------------------------
 
 
@@ -565,7 +571,7 @@ Succeeded to reduce node 23 from 29 to 16
 ------------------------------------------------------------
 
 
-=================Reducing node 51, size=16==================
+=================Reducing node 52, size=16==================
 
 The current best program is the following
 
@@ -623,17 +629,17 @@ The current best program is the following
 ================The best program is updated.================
 
 token count change 16 -> 7
-Edit: HoistEdit:[replace_51_with_89]
+Edit: HoistEdit:[replace_52_with_90]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 51 from 16 to 7
+Succeeded to reduce node 52 from 16 to 7
 ------------------------------------------------------------
 
 
-==================Reducing node 89, size=7==================
+==================Reducing node 90, size=7==================
 
 The current best program is the following
 
@@ -669,17 +675,17 @@ The current best program is the following
 ================The best program is updated.================
 
 token count change 7 -> 5
-Edit: HoistEdit:[replace_89_with_106]
+Edit: HoistEdit:[replace_90_with_107]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 89 from 7 to 5
+Succeeded to reduce node 90 from 7 to 5
 ------------------------------------------------------------
 
 
-=================Reducing node 106, size=5==================
+=================Reducing node 107, size=5==================
 
 The current best program is the following
 
@@ -692,7 +698,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 106
+Failed to reduce node 107
 ------------------------------------------------------------
 
 
@@ -701,24 +707,24 @@ Failed to reduce node 106
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
-compilationUnit{id=180,slot_type=compilationUnit}
-|___(+){id=181,slot_type=topStatSeq}
-    |___aux_rule__tmplDef_7{id=187,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
-        |___Token:object{id=188,slot_type=Token}
-        |___objectDef{id=189,slot_type=objectDef}
-            |___Token:Hello{id=190,slot_type=Id}
-            |___(?){id=192,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
-                |___templateBody{id=194,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
-                    |___Token:{{id=195,slot_type=Token}
-                    |___(+){id=196,slot_type=kleene_plus__templateBody_3}
-                    |   |___Token:"Hello, world"{id=211,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |___Token:}{id=197,slot_type=Token}
+compilationUnit{id=181,slot_type=compilationUnit}
+|___(+){id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7{id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,alt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object{id=189,slot_type=Token}
+        |___objectDef{id=190,slot_type=objectDef}
+            |___Token:Hello{id=191,slot_type=Id}
+            |___(?){id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody{id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{{id=196,slot_type=Token}
+                    |___(+){id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___Token:"Hello, world"{id=212,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |___Token:}{id=198,slot_type=Token}
 ------------------------------------------------------------
 
 
 FixPt[2][node-dfs](5/29)  Starting to retrieve the semantics provider
 FixPt[2][node-dfs](5/29)  Retrieved semantics provider null
-=================Reducing node 181, size=5==================
+=================Reducing node 182, size=5==================
 
 The current best program is the following
 
@@ -742,24 +748,7 @@ FixPt[2][node-dfs][DFS](5/29)  There is only one element in the input, and the e
 FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 181
-------------------------------------------------------------
-
-
-=================Reducing node 187, size=5==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-                    "Hello, world"
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 187
+Failed to reduce node 182
 ------------------------------------------------------------
 
 
@@ -791,13 +780,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Hello.sc--
-    object Hello
-------------------------------------------------------------
-
-
 ===================Node reduction is done===================
 
 Failed to reduce node 189
@@ -815,13 +797,37 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello
+------------------------------------------------------------
+
+
 ===================Node reduction is done===================
 
 Failed to reduce node 190
 ------------------------------------------------------------
 
 
-=================Reducing node 192, size=5==================
+=================Reducing node 191, size=5==================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+                    "Hello, world"
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 191
+------------------------------------------------------------
+
+
+=================Reducing node 193, size=5==================
 
 The current best program is the following
 
@@ -846,11 +852,11 @@ FixPt[2][node-dfs][DFS](5/29)  There is only one element in the input, and the e
 FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 192
+Failed to reduce node 193
 ------------------------------------------------------------
 
 
-=================Reducing node 194, size=5==================
+=================Reducing node 195, size=5==================
 
 The current best program is the following
 
@@ -863,25 +869,8 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_194]
+    structure: [delete_195]
     context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 194
-------------------------------------------------------------
-
-
-=================Reducing node 195, size=5==================
-
-The current best program is the following
-
-    --file: Hello.sc--
-    object Hello {
-                    "Hello, world"
-    }
 ------------------------------------------------------------
 
 
@@ -902,19 +891,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/29=17.24%
-FixPt[2][node-dfs][DFS](5/29)  Testing the empty input. Global ratio:5/29=17.24%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Hello.sc--
-    object Hello {
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node-dfs][DFS](5/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
-FixPt[2][node-dfs][DFS](5/29)  There is only one element in the input, and the empty input has been tested. Global ratio:5/29=17.24%
-FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
 ===================Node reduction is done===================
 
 Failed to reduce node 196
@@ -932,13 +908,26 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  Testing the empty input. Global ratio:5/29=17.24%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Hello.sc--
+    object Hello {
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node-dfs][DFS](5/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  There is only one element in the input, and the empty input has been tested. Global ratio:5/29=17.24%
+FixPt[2][node-dfs][DFS](5/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
 ===================Node reduction is done===================
 
 Failed to reduce node 197
 ------------------------------------------------------------
 
 
-=================Reducing node 211, size=5==================
+=================Reducing node 198, size=5==================
 
 The current best program is the following
 
@@ -951,7 +940,24 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 211
+Failed to reduce node 198
+------------------------------------------------------------
+
+
+=================Reducing node 212, size=5==================
+
+The current best program is the following
+
+    --file: Hello.sc--
+    object Hello {
+                    "Hello, world"
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 212
 ------------------------------------------------------------
 
 
@@ -960,24 +966,24 @@ Failed to reduce node 211
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
-compilationUnit{id=180,slot_type=compilationUnit}
-|___(+){id=181,slot_type=topStatSeq}
-    |___aux_rule__tmplDef_7{id=187,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7]}
-        |___Token:object{id=188,slot_type=Token}
-        |___objectDef{id=189,slot_type=objectDef}
-            |___Token:Hello{id=190,slot_type=Id}
-            |___(?){id=192,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
-                |___templateBody{id=194,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
-                    |___Token:{{id=195,slot_type=Token}
-                    |___(+){id=196,slot_type=kleene_plus__templateBody_3}
-                    |   |___Token:"Hello, world"{id=211,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
-                    |___Token:}{id=197,slot_type=Token}
+compilationUnit{id=181,slot_type=compilationUnit}
+|___(+){id=182,slot_type=topStatSeq}
+    |___aux_rule__tmplDef_7{id=188,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,alt_block__tmplDef_3,aux_rule__tmplDef_7]}
+        |___Token:object{id=189,slot_type=Token}
+        |___objectDef{id=190,slot_type=objectDef}
+            |___Token:Hello{id=191,slot_type=Id}
+            |___(?){id=193,slot_type=[classTemplateOpt,optional__classTemplateOpt_3]}
+                |___templateBody{id=195,slot_type=[aux_rule__classTemplateOpt_2,templateBody]}
+                    |___Token:{{id=196,slot_type=Token}
+                    |___(+){id=197,slot_type=kleene_plus__templateBody_3}
+                    |   |___Token:"Hello, world"{id=212,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+                    |___Token:}{id=198,slot_type=Token}
 ------------------------------------------------------------
 
 
 FixPt[3][tree_slicer](5/29)  Starting to retrieve the semantics provider
 FixPt[3][tree_slicer](5/29)  Retrieved semantics provider null
-=================Reducing node 181, size=5==================
+=================Reducing node 182, size=5==================
 
 The current best program is the following
 
@@ -992,7 +998,7 @@ FixPt[3][tree_slicer][DFS](5/29)  Minimizer UnweightedDfsListMinimizer starts. I
 FixPt[3][tree_slicer][DFS](5/29)  Testing the empty input. Global ratio:5/29=17.24%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_187]
+    structure: [delete_188]
     context: DFS in tree_slicer(NonSyntacticSingleTreeNodeReducer)[ReduceEachChildNodeSeparately]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -1002,11 +1008,11 @@ FixPt[3][tree_slicer][DFS](5/29)  There is only one element in the input, and th
 FixPt[3][tree_slicer][DFS](5/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/29=17.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 181
+Failed to reduce node 182
 ------------------------------------------------------------
 
 
-=================Reducing node 187, size=5==================
+=================Reducing node 188, size=5==================
 
 The current best program is the following
 
@@ -1061,18 +1067,18 @@ FixPt[3][tree_slicer][DFS](5/29)  Try deleting [0]#1: Interesting. Local ratio: 
 ================The best program is updated.================
 
 token count change 5 -> 4
-Edit: [delete_188]
+Edit: [delete_189]
 ------------------------------------------------------------
 
 
 FixPt[3][tree_slicer][DFS](4/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:4/29=13.79%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 187 from 5 to 4
+Succeeded to reduce node 188 from 5 to 4
 ------------------------------------------------------------
 
 
-=================Reducing node 189, size=4==================
+=================Reducing node 190, size=4==================
 
 The current best program is the following
 
@@ -1127,18 +1133,18 @@ FixPt[3][tree_slicer][DFS](4/29)  Try deleting [0]#1: Interesting. Local ratio: 
 ================The best program is updated.================
 
 token count change 4 -> 3
-Edit: [delete_190]
+Edit: [delete_191]
 ------------------------------------------------------------
 
 
 FixPt[3][tree_slicer][DFS](3/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:3/29=10.34%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 189 from 4 to 3
+Succeeded to reduce node 190 from 4 to 3
 ------------------------------------------------------------
 
 
-=================Reducing node 192, size=3==================
+=================Reducing node 193, size=3==================
 
 The current best program is the following
 
@@ -1162,11 +1168,11 @@ FixPt[3][tree_slicer][DFS](3/29)  There is only one element in the input, and th
 FixPt[3][tree_slicer][DFS](3/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/29=10.34%
 ===================Node reduction is done===================
 
-Failed to reduce node 192
+Failed to reduce node 193
 ------------------------------------------------------------
 
 
-=================Reducing node 194, size=3==================
+=================Reducing node 195, size=3==================
 
 The current best program is the following
 
@@ -1211,7 +1217,7 @@ FixPt[3][tree_slicer][DFS](3/29)  Try deleting [2]#1: Interesting. Local ratio: 
 ================The best program is updated.================
 
 token count change 3 -> 2
-Edit: [delete_197]
+Edit: [delete_198]
 ------------------------------------------------------------
 
 
@@ -1255,18 +1261,18 @@ FixPt[3][tree_slicer][DFS](2/29)  Try deleting [0]#1: Interesting. Local ratio: 
 ================The best program is updated.================
 
 token count change 2 -> 1
-Edit: [delete_195]
+Edit: [delete_196]
 ------------------------------------------------------------
 
 
 FixPt[3][tree_slicer][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/3=33.33%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 194 from 3 to 1
+Succeeded to reduce node 195 from 3 to 1
 ------------------------------------------------------------
 
 
-=================Reducing node 196, size=1==================
+=================Reducing node 197, size=1==================
 
 The current best program is the following
 
@@ -1288,11 +1294,11 @@ FixPt[3][tree_slicer][DFS](1/29)  There is only one element in the input, and th
 FixPt[3][tree_slicer][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
-Failed to reduce node 196
+Failed to reduce node 197
 ------------------------------------------------------------
 
 
-=================Reducing node 211, size=1==================
+=================Reducing node 212, size=1==================
 
 The current best program is the following
 
@@ -1303,7 +1309,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 211
+Failed to reduce node 212
 ------------------------------------------------------------
 
 
@@ -1312,17 +1318,17 @@ Failed to reduce node 211
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
-compilationUnit{id=180,slot_type=compilationUnit}
-|___(+){id=181,slot_type=topStatSeq}
-    |___(?){id=192,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7,objectDef,classTemplateOpt,optional__classTemplateOpt_3]}
-        |___(+){id=196,slot_type=[aux_rule__classTemplateOpt_2,templateBody,kleene_plus__templateBody_3]}
-            |___Token:"Hello, world"{id=211,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+compilationUnit{id=181,slot_type=compilationUnit}
+|___(+){id=182,slot_type=topStatSeq}
+    |___(?){id=193,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,alt_block__tmplDef_3,aux_rule__tmplDef_7,objectDef,classTemplateOpt,optional__classTemplateOpt_3]}
+        |___(+){id=197,slot_type=[aux_rule__classTemplateOpt_2,templateBody,kleene_plus__templateBody_3]}
+            |___Token:"Hello, world"{id=212,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
 ------------------------------------------------------------
 
 
 FixPt[4][node-dfs](1/29)  Starting to retrieve the semantics provider
 FixPt[4][node-dfs](1/29)  Retrieved semantics provider null
-=================Reducing node 181, size=1==================
+=================Reducing node 182, size=1==================
 
 The current best program is the following
 
@@ -1344,11 +1350,11 @@ FixPt[4][node-dfs][DFS](1/29)  There is only one element in the input, and the e
 FixPt[4][node-dfs][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
-Failed to reduce node 181
+Failed to reduce node 182
 ------------------------------------------------------------
 
 
-=================Reducing node 192, size=1==================
+=================Reducing node 193, size=1==================
 
 The current best program is the following
 
@@ -1370,11 +1376,11 @@ FixPt[4][node-dfs][DFS](1/29)  There is only one element in the input, and the e
 FixPt[4][node-dfs][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
-Failed to reduce node 192
+Failed to reduce node 193
 ------------------------------------------------------------
 
 
-=================Reducing node 196, size=1==================
+=================Reducing node 197, size=1==================
 
 The current best program is the following
 
@@ -1385,7 +1391,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_196]
+    structure: [delete_197]
     context: [kleene_plus:kleene_plus__templateBody_3]can be epsilon
 ------------------------------------------------------------
 
@@ -1394,7 +1400,7 @@ FixPt[4][node-dfs][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. Inpu
 FixPt[4][node-dfs][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_211]
+    structure: [delete_212]
     context: DFS in node-dfs(PersesNodeReducer)[kleene_plus:kleene_plus__templateBody_3]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -1404,11 +1410,11 @@ FixPt[4][node-dfs][DFS](1/29)  There is only one element in the input, and the e
 FixPt[4][node-dfs][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
-Failed to reduce node 196
+Failed to reduce node 197
 ------------------------------------------------------------
 
 
-=================Reducing node 211, size=1==================
+=================Reducing node 212, size=1==================
 
 The current best program is the following
 
@@ -1419,7 +1425,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 211
+Failed to reduce node 212
 ------------------------------------------------------------
 
 
@@ -1428,17 +1434,17 @@ Failed to reduce node 211
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
-compilationUnit{id=180,slot_type=compilationUnit}
-|___(+){id=181,slot_type=topStatSeq}
-    |___(?){id=192,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7,objectDef,classTemplateOpt,optional__classTemplateOpt_3]}
-        |___(+){id=196,slot_type=[aux_rule__classTemplateOpt_2,templateBody,kleene_plus__templateBody_3]}
-            |___Token:"Hello, world"{id=211,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+compilationUnit{id=181,slot_type=compilationUnit}
+|___(+){id=182,slot_type=topStatSeq}
+    |___(?){id=193,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,alt_block__tmplDef_3,aux_rule__tmplDef_7,objectDef,classTemplateOpt,optional__classTemplateOpt_3]}
+        |___(+){id=197,slot_type=[aux_rule__classTemplateOpt_2,templateBody,kleene_plus__templateBody_3]}
+            |___Token:"Hello, world"{id=212,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
 ------------------------------------------------------------
 
 
 FixPt[5][tree_slicer](1/29)  Starting to retrieve the semantics provider
 FixPt[5][tree_slicer](1/29)  Retrieved semantics provider null
-=================Reducing node 181, size=1==================
+=================Reducing node 182, size=1==================
 
 The current best program is the following
 
@@ -1451,7 +1457,7 @@ FixPt[5][tree_slicer][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. I
 FixPt[5][tree_slicer][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_192]
+    structure: [delete_193]
     context: DFS in tree_slicer(NonSyntacticSingleTreeNodeReducer)[ReduceEachChildNodeSeparately]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -1461,11 +1467,11 @@ FixPt[5][tree_slicer][DFS](1/29)  There is only one element in the input, and th
 FixPt[5][tree_slicer][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
-Failed to reduce node 181
+Failed to reduce node 182
 ------------------------------------------------------------
 
 
-=================Reducing node 192, size=1==================
+=================Reducing node 193, size=1==================
 
 The current best program is the following
 
@@ -1478,7 +1484,7 @@ FixPt[5][tree_slicer][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. I
 FixPt[5][tree_slicer][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_196]
+    structure: [delete_197]
     context: DFS in tree_slicer(NonSyntacticSingleTreeNodeReducer)[ReduceEachChildNodeSeparately]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -1488,11 +1494,11 @@ FixPt[5][tree_slicer][DFS](1/29)  There is only one element in the input, and th
 FixPt[5][tree_slicer][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
-Failed to reduce node 192
+Failed to reduce node 193
 ------------------------------------------------------------
 
 
-=================Reducing node 196, size=1==================
+=================Reducing node 197, size=1==================
 
 The current best program is the following
 
@@ -1505,7 +1511,7 @@ FixPt[5][tree_slicer][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. I
 FixPt[5][tree_slicer][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_211]
+    structure: [delete_212]
     context: DFS in tree_slicer(NonSyntacticSingleTreeNodeReducer)[ReduceEachChildNodeSeparately]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -1515,11 +1521,11 @@ FixPt[5][tree_slicer][DFS](1/29)  There is only one element in the input, and th
 FixPt[5][tree_slicer][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
-Failed to reduce node 196
+Failed to reduce node 197
 ------------------------------------------------------------
 
 
-=================Reducing node 211, size=1==================
+=================Reducing node 212, size=1==================
 
 The current best program is the following
 
@@ -1530,7 +1536,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 211
+Failed to reduce node 212
 ------------------------------------------------------------
 
 
@@ -1539,11 +1545,11 @@ Failed to reduce node 211
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
-compilationUnit{id=180,slot_type=compilationUnit}
-|___(+){id=181,slot_type=topStatSeq}
-    |___(?){id=192,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,altnt_block__tmplDef_3,aux_rule__tmplDef_7,objectDef,classTemplateOpt,optional__classTemplateOpt_3]}
-        |___(+){id=196,slot_type=[aux_rule__classTemplateOpt_2,templateBody,kleene_plus__templateBody_3]}
-            |___Token:"Hello, world"{id=211,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,altnt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+compilationUnit{id=181,slot_type=compilationUnit}
+|___(+){id=182,slot_type=topStatSeq}
+    |___(?){id=193,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,alt_block__tmplDef_3,aux_rule__tmplDef_7,objectDef,classTemplateOpt,optional__classTemplateOpt_3]}
+        |___(+){id=197,slot_type=[aux_rule__classTemplateOpt_2,templateBody,kleene_plus__templateBody_3]}
+            |___Token:"Hello, world"{id=212,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
 ------------------------------------------------------------
 
 

@@ -19,7 +19,7 @@ package org.pluverse.perses
 import com.google.common.collect.ImmutableList
 import org.perses.AbstractMain
 import org.perses.program.LanguageKind
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.cmd.CommandLineProcessor
 import org.perses.util.cmd.OutputOnlyCommandOptions
 import org.perses.util.toImmutableList
@@ -32,7 +32,7 @@ class SupportedLanguageDumpMain(
   override fun internalRun() {
     val supportedLanguages = getActuallySupportedLanguages()
     val outputFile = cmd.flags.outputFile!!.absolute()
-    Util.ensureDirExists(outputFile.parent)
+    FileSystemUtil.ensureDirExists(outputFile.parent)
     outputFile.bufferedWriter().use { writer ->
       writer.apply {
         append("### Supported Languages\n")

@@ -35,7 +35,7 @@ import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeBuilder
 import org.perses.util.SimpleStack
-import org.perses.util.Util
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 import org.perses.util.toImmutableMap
 
@@ -423,7 +423,7 @@ object TransformationUtility {
     require(holesToMatch.isNotEmpty()) { "Holes should not be empty." }
     require(tokensToMatch.isNotEmpty()) { "Tokens should nto be empty." }
     val totalHoleCount = holesToMatch.size
-    Util.lazyAssert { holesToMatch.toHashSet().size == totalHoleCount }
+    lazyAssert { holesToMatch.toHashSet().size == totalHoleCount }
     val greedyHoles = holesToMatch.filter { it.greedyKleenePlusMatching }
 
     // Case 1&2: Only at most one greedy hole
@@ -443,7 +443,7 @@ object TransformationUtility {
     tokensToMatch: List<LexerRuleSparTreeNode>,
     holesToMatch: List<Hole>,
   ): TokenHoleMatchingResult {
-    Util.lazyAssert { holesToMatch.count { it.greedyKleenePlusMatching } >= 2 }
+    lazyAssert { holesToMatch.count { it.greedyKleenePlusMatching } >= 2 }
     // Case 3: Multiple greedy holes —> try all valid token splits
     val splitPlans =
       generateBalancedTokenSplits(

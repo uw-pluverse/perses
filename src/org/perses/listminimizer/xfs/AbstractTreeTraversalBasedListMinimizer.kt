@@ -20,10 +20,10 @@ import com.google.common.collect.ImmutableList
 import org.perses.listminimizer.AbstractListMinimizer
 import org.perses.listminimizer.Candidate
 import org.perses.listminimizer.ElementWrapper
-import org.perses.listminimizer.ListMinimizerPropertyTestResult
 import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.Partition
-import org.perses.util.Util
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.CollectionUtil
 import java.util.ArrayDeque
 
 abstract class AbstractTreeTraversalBasedListMinimizer<T : Any, PropertyPayload>(
@@ -41,8 +41,8 @@ abstract class AbstractTreeTraversalBasedListMinimizer<T : Any, PropertyPayload>
       val testResult =
         testProperty(
           Candidate.DeletionsFromOriginal(original = best, deleted_ = deletedInThisIteration),
-        )
-      if (testResult !is ListMinimizerPropertyTestResult.Completed || testResult.result.isNotInteresting) {
+        ).get()
+      if (testResult !is CandidateOutcome.Interesting) {
         val splits =
           when (splitPolicy) {
             SplitPolicy.EVEN -> partition.splitEvently()
@@ -54,7 +54,7 @@ abstract class AbstractTreeTraversalBasedListMinimizer<T : Any, PropertyPayload>
         addToWorklist(worklist, splits)
         continue
       } else {
-        updateBest(Util.computeDifference(best, deletedInThisIteration), testResult.payload)
+        updateBest(CollectionUtil.computeDifference(best, deletedInThisIteration), testResult.payload)
       }
     }
   }

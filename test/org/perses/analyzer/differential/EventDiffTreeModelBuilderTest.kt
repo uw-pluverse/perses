@@ -22,7 +22,7 @@ import org.junit.After
 import org.junit.Test
 import org.perses.antlr.RuleType
 import org.perses.listener.DifferentialEvents
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.ExitCode
 import javax.swing.tree.DefaultMutableTreeNode
 import kotlin.io.path.ExperimentalPathApi
@@ -30,7 +30,7 @@ import kotlin.io.path.deleteRecursively
 import kotlin.io.path.readText
 
 class EventDiffTreeModelBuilderTest {
-  private val tempDir = Util.createTempDirForObject(this)
+  private val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -56,7 +56,7 @@ class EventDiffTreeModelBuilderTest {
             DifferentialEvents.Edit(
               contextualDescription = "Edit1",
               structureDescription = "Struct1",
-              propertyTestResult = org.perses.reduction.PropertyTestResult(ExitCode.ZERO, 100),
+              propertyTestResult = org.perses.reduction.TestScriptVerdict(ExitCode.ZERO, 100),
               successfullyDeletedCode = "code",
               deletedTokenCount = 1,
               startPersesTimeSeconds = 10,

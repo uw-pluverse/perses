@@ -22,6 +22,17 @@ kt_jvm_library(
     ],
 )
 
+kt_jvm_library(
+    name = "tiny_grammar_facade",
+    testonly = True,
+    srcs = ["TinyGrammarFacade.kt"],
+    data = ["//kitten/test/fuzzer_test_data"],
+    deps = [
+        "//src/org/perses/grammar:parser_facade_interface",
+        "//test/org/perses:test_util",
+    ],
+)
+
 kt_jvm_test(
     name = "SparTreeFuzzerTest",
     srcs = ["SparTreeFuzzerTest.kt"],
@@ -29,6 +40,7 @@ kt_jvm_test(
         "//kitten/test/fuzzer_test_data",
     ],
     deps = [
+        ":tiny_grammar_facade",
         "//:antlr_runtime",
         "//:antlr_tool",
         "//:flogger",
@@ -220,11 +232,11 @@ kt_jvm_test(
 kt_jvm_test(
     name = "TreeToSequenceConverterTest",
     srcs = ["TreeToSequenceConverterTest.kt"],
-    data = ["//kitten/test/fuzzer_test_data"],
     deps = [
+        ":tiny_grammar_facade",
+        "//:guava",
         "//:truth",
         "//kitten/src/org/perses/fuzzer:perses_fuzzer",
         "//kitten/src/org/perses/fuzzer/languagemodel:node_representation",
-        "//test/org/perses:test_util",
     ],
 )

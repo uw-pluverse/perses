@@ -23,7 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.perses.util.DaemonThreadPool
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.ShellCommandOnPath.Companion.normalizeAndCheckExecutability
 import org.perses.util.shell.Shells.Companion.CURRENT_ENV
 import org.perses.util.shell.Shells.Companion.SHEBANG_BASH
@@ -65,7 +65,7 @@ class ShellTest(
   @Test
   fun localScript() {
     val tempFile = tempDir.resolve("run.sh").createFile()
-    Util.setExecutable(tempFile)
+    FileSystemUtil.setExecutable(tempFile)
     check(Files.isExecutable(tempFile))
     tempFile.toFile().deleteOnExit()
 
@@ -99,7 +99,7 @@ class ShellTest(
   @Test
   fun testSettingEnvironmentVariable() {
     val script = tempDir.resolve("test_script.sh").createFile()
-    Util.setExecutable(script)
+    FileSystemUtil.setExecutable(script)
     assertThat(Files.isExecutable(script)).isTrue()
 
     script.writeText(
@@ -147,7 +147,7 @@ class ShellTest(
           |$scriptBodyForRunningForever
           """.trimMargin(),
         )
-        Util.setExecutable(it)
+        FileSystemUtil.setExecutable(it)
       }
     val childScript =
       tempDir.resolve("run-forever-child$suffix.sh").also {
@@ -158,9 +158,9 @@ class ShellTest(
           |$scriptBodyForRunningForever
           """.trimMargin(),
         )
-        Util.setExecutable(it)
+        FileSystemUtil.setExecutable(it)
       }
-    Util.setExecutable(childScript)
+    FileSystemUtil.setExecutable(childScript)
     val mainScript =
       tempDir.resolve("run-forever-main$suffix.sh").also {
         it.writeText(
@@ -172,7 +172,7 @@ class ShellTest(
           """.trimMargin(),
         )
       }
-    Util.setExecutable(mainScript)
+    FileSystemUtil.setExecutable(mainScript)
     val thread =
       DaemonThreadPool.createSingleThreadPool(
         creatorObject = this,

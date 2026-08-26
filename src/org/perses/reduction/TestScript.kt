@@ -18,8 +18,8 @@ package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
 import org.perses.program.ScriptFile
+import org.perses.util.FileSystemUtil
 import org.perses.util.TimeSpan
-import org.perses.util.Util
 import org.perses.util.ktFine
 import org.perses.util.shell.CmdOutput
 import org.perses.util.shell.Shells.Companion.CURRENT_ENV
@@ -34,7 +34,7 @@ class TestScript(
 ) {
   /** @return true if the test script passes.
    */
-  fun test(): PropertyTestResult {
+  fun test(): TestScriptVerdict {
     val timeSpanBuilder = TimeSpan.Builder.start(System.currentTimeMillis())
     val output =
       defaultSingleton.run(
@@ -46,7 +46,7 @@ class TestScript(
     logger.ktFine { "test script stdout: " + output.stdout }
     logger.ktFine { "test script stderr: " + output.stderr }
     val timeSpan = timeSpanBuilder.end(System.currentTimeMillis())
-    return PropertyTestResult(output.exitCode, timeSpan.elapsedTimeInMillis.toInt())
+    return TestScriptVerdict(output.exitCode, timeSpan.elapsedTimeInMillis.toInt())
   }
 
   fun runAndCaptureOutput(): CmdOutput =
@@ -59,7 +59,7 @@ class TestScript(
 
   init {
     scriptTemplate.writeTo(scriptFile)
-    Util.setExecutable(scriptFile)
+    FileSystemUtil.setExecutable(scriptFile)
     check(Files.isExecutable(scriptFile)) { "Fail to set executable bit for $scriptFile" }
   }
 

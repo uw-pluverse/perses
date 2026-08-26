@@ -37,9 +37,10 @@ import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.event.TokenSlicingEndEvent
 import org.perses.reduction.event.TokenSlicingStartEvent
 import org.perses.reduction.io.PerFileSizeMetrics
+import org.perses.util.StringUtil
+import org.perses.util.StringUtil.computePercentage
 import org.perses.util.TimeSpan.Builder.Companion.start
 import org.perses.util.TimeUtil.formatDateForDisplay
-import org.perses.util.Util.computePercentage
 import org.perses.util.ktInfo
 
 /** A logging listener to print the progress of reduction.  */

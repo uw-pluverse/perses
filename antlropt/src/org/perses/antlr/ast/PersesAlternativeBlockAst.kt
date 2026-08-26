@@ -33,7 +33,8 @@ class PersesAlternativeBlockAst(
     }
     checkNoDuplicatesAmongAlternatives(alternatives)
     alternatives.forEach {
-      // FIXME: an alternative should not be a star or optional either.
+      // Quantified alternatives (`b? | c`) are legal ANTLR and must be representable here;
+      // PNF forbids them, and QuantifiedAstNormalizationPass outlines them into aux rules.
       require(it.tag != AstTag.EPSILON && it.tag != AstTag.STAR) {
         "Cannot have epsilon or * as an alternative: $sourceCode"
       }

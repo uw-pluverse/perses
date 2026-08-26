@@ -16,12 +16,11 @@
  */
 package org.perses.listminimizer
 
-import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.PropertyTestResult
-import org.perses.util.Util
-import org.perses.util.Util.lazyAssert
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.CollectionUtil
 import org.perses.util.isSortedAscendinglyBy
+import org.perses.util.lazyAssert
 import org.perses.util.transformToImmutableList
 
 sealed class Candidate<T : Any> {
@@ -69,7 +68,7 @@ sealed class Candidate<T : Any> {
     }
 
     override val candidateWrappers: ImmutableList<ElementWrapper<T>> by lazy {
-      Util.computeDifference(superList = original, subList = deleted_)
+      CollectionUtil.computeDifference(superList = original, subList = deleted_)
     }
 
     override fun getCandidateOrFail(): ImmutableList<T> = candidateElements
@@ -92,7 +91,7 @@ sealed class Candidate<T : Any> {
     }
 
     override fun computeDeletedWrappers(): ImmutableList<ElementWrapper<T>> =
-      Util.computeDifference(
+      CollectionUtil.computeDifference(
         superList = original,
         subList = candidate_,
       )
@@ -113,58 +112,30 @@ sealed class Candidate<T : Any> {
 fun interface IPropertyTester<T : Any, Payload> {
   /**
    * Submits [configuration] for testing and returns a handle whose [PropertyTestHandle.get] yields
-   * the result. A synchronous tester returns the [ListMinimizerPropertyTestResult] directly (it is its own
-   * handle); a concurrency-capable tester runs the test off-thread so [SpeculativeGreedyDriver] can
-   * keep several in flight. Submission runs on the minimizer's single orchestration thread.
+   * the outcome. A synchronous tester wraps its answer in an [ImmediatePropertyTestHandle]; a
+   * concurrency-capable tester runs the test off-thread so [SpeculativeGreedyDriver] can keep
+   * several in flight. Submission runs on the minimizer's single orchestration thread.
    */
   fun testProperty(configuration: Candidate<T>): PropertyTestHandle<T, Payload>
 }
 
 /** A handle to a (possibly speculative) property test that has been submitted for a candidate. */
 interface PropertyTestHandle<T : Any, Payload> {
-  fun get(): ListMinimizerPropertyTestResult<T, Payload>
+  fun get(): CandidateOutcome<Payload>
 
   fun requestToCancel()
 }
 
-sealed class ListMinimizerPropertyTestResult<T : Any, Payload>(
-  val staleElementsToRemove: ImmutableList<ElementWrapper<T>>,
+/**
+ * The handle of a tester that already has its answer. Replaces the older arrangement in which an
+ * outcome was its own handle, which forced the outcome to know about cancellation and about the
+ * element type.
+ */
+class ImmediatePropertyTestHandle<T : Any, Payload>(
+  private val outcome: CandidateOutcome<Payload>,
 ) : PropertyTestHandle<T, Payload> {
-  // A completed result is its own handle: a synchronous tester returns the result directly.
-  final override fun get(): ListMinimizerPropertyTestResult<T, Payload> = this
+  override fun get(): CandidateOutcome<Payload> = outcome
 
-  final override fun requestToCancel() {
-  }
-
-  abstract fun toShortString(): String
-
-  class Skipped<T : Any, Payload>(
-    private val result: String,
-    staleElementsToRemove: ImmutableList<ElementWrapper<T>> = ImmutableList.of(),
-  ) : ListMinimizerPropertyTestResult<T, Payload>(staleElementsToRemove) {
-    override fun toShortString(): String = result
-
-    override fun toString(): String = MoreObjects.toStringHelper(this).addValue(result).toString()
-  }
-
-  class Completed<T : Any, Payload>(
-    val result: PropertyTestResult,
-    val payload: Payload,
-    staleElementsToRemove: ImmutableList<ElementWrapper<T>> = ImmutableList.of(),
-  ) : ListMinimizerPropertyTestResult<T, Payload>(
-      staleElementsToRemove,
-    ) {
-    override fun toShortString(): String =
-      if (result.isInteresting) {
-        "Interesting"
-      } else {
-        "Uninteresting"
-      }
-
-    override fun toString(): String =
-      MoreObjects
-        .toStringHelper(this)
-        .add("interesting", result.isInteresting)
-        .toString()
+  override fun requestToCancel() {
   }
 }

@@ -56,13 +56,20 @@ kt_jvm_library(
 kt_jvm_library(
     name = "util",
     srcs = [
+        "CollectionUtil.kt",
         "DaemonThreadPool.kt",
         "FileStreamPool.kt",
+        "FileSystemUtil.kt",
+        "Fixpoint.kt",
         "GlobalSequenceGenerator.kt",
+        "IoUtil.kt",
+        "LazyAssert.kt",
         "PersesKtExts.kt",
         "ReflectionUtil.kt",
+        "SpaceSize.kt",
+        "StringUtil.kt",
         "TableForTextPrinting.kt",
-        "Util.kt",
+        "ThreadUtil.kt",
     ],
     exports = [
         ":AtomicSequenceGenerator",

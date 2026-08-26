@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10

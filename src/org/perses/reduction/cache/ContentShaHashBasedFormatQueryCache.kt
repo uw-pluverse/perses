@@ -17,7 +17,7 @@
 package org.perses.reduction.cache
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.util.ImmutableIntArray
 import org.perses.util.hashing.ShaHashCode
@@ -65,7 +65,7 @@ class ContentShaHashBasedFormatQueryCache(
   override fun recordUninteresting(
     outputManager: AbstractOutputManager,
     perFileNonBlankCharacterCounts: ImmutableIntArray,
-    result: PropertyTestResult,
+    result: TestScriptVerdict,
   ) {
     val nanoDuration =
       measureNanoTime {

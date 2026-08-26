@@ -443,63 +443,75 @@ All available reduction algorithms:
     desc : 
     class: org.perses.reduction.reducer.token.LineBasedTokenSlicer$META
 
-112: subtree_replacer
+112: sfc_identifier_use_elimination
+    desc : Get rid of one use of an identifier by replacing an ancestor of it with a smaller subtree of another alternative, built without the subtrees that contain the use.
+    class: org.perses.reduction.reducer.sfc.IdentifierUseEliminationReducer$META
+
+113: sfc_smaller_structure_replacement
+    desc : Replace a subtree with a smaller subtree of another alternative of the same rule, spelling again the content of the subtrees under the original one.
+    class: org.perses.reduction.reducer.sfc.SmallerStructureReplacementReducer$META
+
+114: sfc_structure_canonicalization
+    desc : Replace a subtree with a subtree of the same size that comes from an alternative the grammar spells earlier, so that programs converge on the same structures.
+    class: org.perses.reduction.reducer.sfc.StructureCanonicalizationReducer$META
+
+115: subtree_replacer
     desc : Randomly pick up a subtree, and replace it with another subtree of the same type.
     class: org.perses.reduction.reducer.vulcan.SubTreeReplacementReducer$META
 
-113: token_canonicalizer
+116: token_canonicalizer
     desc : 
     class: org.perses.reduction.reducer.trec.TokenCanonicalizer$META
 
-114: token_pattern_reducer
+117: token_pattern_reducer
     desc : traverse all the sets that contain a fixed number (pattern size) of consecutive nodes in each level of the parse tree, and try all possible patterns of deletions.
     class: org.perses.reduction.reducer.vulcan.pattern.LocalExhaustivePatternReducer$META
 
-115: token_replacer
+118: token_replacer
     desc : Randomly pick up an identifier or a set of identifiers, and replace it with another identifier.
     class: org.perses.reduction.reducer.vulcan.IdentifierReplacementReducer$META
 
-116: token_slicer
+119: token_slicer
     desc : 
     class: org.perses.reduction.reducer.token.TokenSlicer$META
 
-117: topformflat
+120: topformflat
     desc : topformflat chunking, swept over C-Reduce's brace-nesting levels
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$CompositeReducerAnnotation
 
-118: topformflat@0
+121: topformflat@0
     desc : topformflat chunking at brace-nesting level 0
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
 
-119: topformflat@1
+122: topformflat@1
     desc : topformflat chunking at brace-nesting level 1
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
 
-120: topformflat@10
+123: topformflat@10
     desc : topformflat chunking at brace-nesting level 10
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
 
-121: topformflat@2
+124: topformflat@2
     desc : topformflat chunking at brace-nesting level 2
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
 
-122: topformflat@3
+125: topformflat@3
     desc : topformflat chunking at brace-nesting level 3
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
 
-123: topformflat@4
+126: topformflat@4
     desc : topformflat chunking at brace-nesting level 4
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
 
-124: topformflat@6
+127: topformflat@6
     desc : topformflat chunking at brace-nesting level 6
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
 
-125: topformflat@8
+128: topformflat@8
     desc : topformflat chunking at brace-nesting level 8
     class: org.perses.reduction.reducer.line.TopFormFlatReducer$TopFormFlatLevelAnnotation
 
-126: tree_slicer
+129: tree_slicer
     desc : 
     class: org.perses.reduction.reducer.NonSyntacticSingleTreeNodeReducer$META
 

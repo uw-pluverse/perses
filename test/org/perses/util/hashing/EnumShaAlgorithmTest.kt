@@ -32,4 +32,34 @@ class EnumShaAlgorithmTest {
     assertThat(sha256).hasLength(64)
     assertThat(sha512).isNotEqualTo(sha256)
   }
+
+  @Test
+  fun testComputeSha512ForString() {
+    val string = "hello"
+    val sha512 = EnumShaAlgorithm.SHA512.createFromString(string)
+    assertThat(sha512.numOfStrings).isEqualTo(1)
+    assertThat(sha512.getLengthOfString(0)).isEqualTo(string.length)
+    assertThat(sha512.digest.toString()).isEqualTo(
+      "9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caa" +
+        "dae2dff72519673ca72323c3d99ba5c11d7c7acc6e14b8c5da0c4663475c2e5c3adef46f73bcdec043",
+    )
+  }
+
+  @Test
+  fun testComputeShaForListOfStrings() {
+    val sha = EnumShaAlgorithm.SHA512
+    val list =
+      listOf(
+        sha.hashListOfStrings(emptyList()),
+        sha.hashListOfStrings(listOf("")),
+        sha.hashListOfStrings(listOf("", "")),
+        sha.hashListOfStrings(listOf("ab", "")),
+        sha.hashListOfStrings(listOf("", "ab")),
+        sha.hashListOfStrings(listOf("", "", "")),
+        sha.hashListOfStrings(listOf("a", "")),
+        sha.hashListOfStrings(listOf("", "a")),
+      )
+    assertThat(list.toSet()).containsExactlyElementsIn(list)
+    assertThat(list.toSet().size).isEqualTo(list.size)
+  }
 }

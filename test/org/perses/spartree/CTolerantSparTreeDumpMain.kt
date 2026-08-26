@@ -18,7 +18,7 @@ package org.perses.spartree
 
 import org.perses.grammar.ParseErrorHandling
 import org.perses.grammar.c.PnfCParserFacade
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Paths
 import kotlin.io.path.absolute
 import kotlin.io.path.bufferedWriter
@@ -38,7 +38,7 @@ object CTolerantSparTreeDumpMain {
     }
     val sourceCode = Paths.get(args[0]).readText()
     val outputFile = Paths.get(args[1]).absolute()
-    Util.ensureDirExists(outputFile.parent)
+    FileSystemUtil.ensureDirExists(outputFile.parent)
     val tree =
       SparTreeParserUtility.buildSparTree(
         sourceCode = sourceCode,

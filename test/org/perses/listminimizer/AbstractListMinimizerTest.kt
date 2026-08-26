@@ -18,8 +18,9 @@ package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
-import org.perses.reduction.PropertyTestResult.Companion.INTERESTING_RESULT
-import org.perses.reduction.PropertyTestResult.Companion.NON_INTERESTING_RESULT
+import org.perses.reduction.CandidateOutcome
+import org.perses.reduction.TestScriptVerdict.Companion.INTERESTING
+import org.perses.reduction.TestScriptVerdict.Companion.NON_INTERESTING
 
 abstract class AbstractListMinimizerTest<T : Any> {
   protected val dummyHandler = OnBestUpdateHandler<T, String> { _, _ -> }
@@ -33,11 +34,13 @@ abstract class AbstractListMinimizerTest<T : Any> {
       val candidate = configuration.getCandidateOrFail()
       testHistory.add(candidate.joinToString(separator = ""))
       onCandidateRequested?.invoke(configuration)
-      if (candidate.containsAll(property)) {
-        ListMinimizerPropertyTestResult.Completed(INTERESTING_RESULT, "")
-      } else {
-        ListMinimizerPropertyTestResult.Completed(NON_INTERESTING_RESULT, "")
-      }
+      ImmediatePropertyTestHandle(
+        if (candidate.containsAll(property)) {
+          CandidateOutcome.Interesting("", INTERESTING)
+        } else {
+          CandidateOutcome.Uninteresting.Rejected(NON_INTERESTING)
+        },
+      )
     }
 
   protected fun <M : AbstractListMinimizer<T, String>> runMinimizerTest(

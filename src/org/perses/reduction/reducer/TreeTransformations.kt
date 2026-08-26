@@ -16,10 +16,11 @@
  */
 package org.perses.reduction.reducer
 
+import org.perses.util.lazyAssert
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.TreeNodeFilterResult
 import org.perses.spartree.TreeNodeFilterResult.CONTINUE
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 /** Various tree transformations.  */
 object TreeTransformations {

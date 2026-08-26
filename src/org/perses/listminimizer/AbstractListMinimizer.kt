@@ -18,6 +18,7 @@ package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Sets
+import org.perses.reduction.CandidateOutcome
 import org.perses.util.transformToImmutableList
 
 abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
@@ -75,7 +76,6 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
       }
     best =
       if (elementsDeletedElsewhere) {
-        // TODO(cnsun): write tests for the following code.
         val builder = ImmutableList.builder<ElementWrapper<T>>()
         for (elementWrapper in newBest) {
           if (arguments.isElementDeletedElsewhere(elementWrapper.element)) {
@@ -88,19 +88,26 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
       } else {
         newBest
       }
-    arguments.onBestUpdate(newBest, payload)
+    // [best], not [newBest]: an element reported deleted elsewhere is not part of the new best, and
+    // announcing it would tell a handler something the minimizer does not itself believe. ppr's
+    // handler records the reported list as its best diff, and everything else here -- the size
+    // passed to onPropertyTest, the config cache below -- already reads [best].
+    arguments.onBestUpdate(best, payload)
     cache.refreshAndUpdateBest(best)
   }
 
-  protected fun testProperty(
-    configuration: Candidate<T>,
-  ): ListMinimizerPropertyTestResult<T, PropertyPayload> {
+  /**
+   * Returns the handle rather than the outcome, because [AbstractCursorDrivenMinimizer] hands this
+   * straight to [SpeculativeGreedyDriver] as its sequential `submit`, which submits now and reads
+   * later. A caller that wants the answer immediately calls [PropertyTestHandle.get] on it.
+   */
+  protected fun testProperty(configuration: Candidate<T>): PropertyTestHandle<T, PropertyPayload> {
     val cacheKey = configuration.candidateWrappers
     if (cache.contains(cacheKey)) {
-      return ListMinimizerPropertyTestResult.Skipped("Cached")
+      return ImmediatePropertyTestHandle(CandidateOutcome.Uninteresting.NotTested("Cached"))
     }
     cache.add(cacheKey)
-    return arguments.testProperty(
+    return arguments.submitProperty(
       configuration,
       sizeOfCurrentMinimizationResult = best.size,
     )
@@ -123,8 +130,8 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
         val empty = ImmutableList.of<ElementWrapper<T>>()
         testProperty(
           Candidate.SublistFromOriginal(original = best, candidate_ = empty),
-        ).let {
-          if (it is ListMinimizerPropertyTestResult.Completed && it.result.isInteresting) {
+        ).get().let {
+          if (it is CandidateOutcome.Interesting) {
             updateBest(empty, it.payload)
             return convertBestAsRawElements()
           }

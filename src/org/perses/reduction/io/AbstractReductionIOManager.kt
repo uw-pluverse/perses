@@ -21,8 +21,8 @@ import com.google.common.base.Joiner
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
+import org.perses.util.FileSystemUtil
 import org.perses.util.TimeUtil
-import org.perses.util.Util
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.toImmutableList
 import java.nio.file.Files
@@ -56,7 +56,7 @@ abstract class AbstractReductionIOManager<
      */
     val tempDirectory = createCurrentBestResultFolder()
     outputManager.write(tempDirectory)
-    Util.copyDirectory(
+    FileSystemUtil.copyDirectory(
       tempDirectory.path,
       resultFolder.path,
       StandardCopyOption.REPLACE_EXISTING,

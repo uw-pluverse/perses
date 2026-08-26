@@ -19,7 +19,7 @@ package org.perses.cmd
 import com.beust.jcommander.Parameter
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.google.common.collect.ImmutableList
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Files
 import java.nio.file.Path
@@ -137,14 +137,14 @@ open class InputFlagGroup : AbstractCommandLineFlagGroup(groupName = "Inputs") {
   /**
    * Expands [paths] in order: each explicit file is kept where it appears (preserving the
    * command-line order the user gave), and each directory is replaced in place by all regular files
-   * under it, sorted deterministically (by [Util.globWithFilter]). Duplicates are dropped, keeping
+   * under it, sorted deterministically (by [FileSystemUtil.globWithFilter]). Duplicates are dropped, keeping
    * the first occurrence.
    */
   private fun expandPaths(paths: List<Path>): ImmutableList<Path> {
     val expanded = LinkedHashSet<Path>()
     for (path in paths) {
       if (Files.isDirectory(path)) {
-        expanded.addAll(Util.globWithFilter(path) { true })
+        expanded.addAll(FileSystemUtil.globWithFilter(path) { true })
       } else {
         expanded.add(path)
       }

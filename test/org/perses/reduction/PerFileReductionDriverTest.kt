@@ -31,7 +31,7 @@ import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.reduction.io.ReductionFolderManager
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.Shells
 import org.perses.util.transformToImmutableList
@@ -41,14 +41,14 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class PerFileReductionDriverTest {
-  private val workDir = Util.createTempDirForObject(this)
+  private val workDir = FileSystemUtil.createTempDirForObject(this)
   private val outputDir =
     workDir.resolve("default_test_output_dir").apply {
-      Util.ensureDirExists(this)
+      FileSystemUtil.ensureDirExists(this)
     }
   private val inputDir =
     workDir.resolve("input_dir").apply {
-      Util.ensureDirExists(this)
+      FileSystemUtil.ensureDirExists(this)
     }
   private val fileA =
     inputDir.resolve("a.c").apply {
@@ -63,7 +63,7 @@ class PerFileReductionDriverTest {
   private val scriptFile =
     inputDir.resolve("r.sh").apply {
       createFile()
-      Util.setExecutable(this)
+      FileSystemUtil.setExecutable(this)
       writeText(
         """
         |${Shells.SHEBANG_BASH}
@@ -204,7 +204,7 @@ class PerFileReductionDriverTest {
 
   @Test
   fun reducesAMixedLanguageSetWithEachFileOnItsOwnFacade() {
-    val mixedDir = workDir.resolve("mixed_input").apply { Util.ensureDirExists(this) }
+    val mixedDir = workDir.resolve("mixed_input").apply { FileSystemUtil.ensureDirExists(this) }
     val cFile =
       mixedDir.resolve("prog.c").apply {
         createFile()
@@ -218,7 +218,7 @@ class PerFileReductionDriverTest {
     val script =
       mixedDir.resolve("r.sh").apply {
         createFile()
-        Util.setExecutable(this)
+        FileSystemUtil.setExecutable(this)
         writeText(
           """
           |${Shells.SHEBANG_BASH}

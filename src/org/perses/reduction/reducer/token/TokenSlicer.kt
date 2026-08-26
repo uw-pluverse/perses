@@ -26,7 +26,7 @@ import org.perses.reduction.ReducerContext
 import org.perses.spartree.ContextDescription
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeDeletionActionSet
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import org.perses.util.shell.ExitCode
 
 class TokenSlicer(

@@ -27,8 +27,8 @@ import org.perses.ppr.diff.tree.TreeDiffMain
 import org.perses.ppr.seed.SeedMain
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
+import org.perses.util.FileSystemUtil
 import org.perses.util.ListAlignment
-import org.perses.util.Util
 import org.perses.util.ktInfo
 import java.nio.file.Path
 
@@ -43,17 +43,17 @@ class PPRMetaReductionDriver private constructor(
     check(workingDir != null) {
       "Should specify the outputDir"
     }
-    Util.ensureDirExists(workingDir)
+    FileSystemUtil.ensureDirExists(workingDir)
 
     // compute new path in the working folder, and copy inputs to the path
     val seedPath =
-      Util.copyFileToDirectory(
+      FileSystemUtil.copyFileToDirectory(
         cmd.overallInputFlags.computeInputFiles().single(),
         workingDir,
       )
-    val variantPath = Util.copyFileToDirectory(cmd.overallInputFlags.variantFile!!, workingDir)
-    val testPath = Util.copyFileToDirectory(cmd.overallInputFlags.getTestScript(), workingDir)
-    val filesToBeKept = Util.listFilesInFolder(workingDir)
+    val variantPath = FileSystemUtil.copyFileToDirectory(cmd.overallInputFlags.variantFile!!, workingDir)
+    val testPath = FileSystemUtil.copyFileToDirectory(cmd.overallInputFlags.getTestScript(), workingDir)
+    val filesToBeKept = FileSystemUtil.listFilesInFolder(workingDir)
 
     // TODO(cnsun): need to move this logic to the Main class.
     val languageKind =
@@ -160,7 +160,7 @@ class PPRMetaReductionDriver private constructor(
       }
     }
 
-    Util.deleteFilesConditionally(workingDir) { path ->
+    FileSystemUtil.deleteFilesConditionally(workingDir) { path ->
       !filesToBeKept.contains(path)
     }
   }

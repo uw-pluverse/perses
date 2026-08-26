@@ -21,7 +21,8 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.CandidateOutcome
+import org.perses.reduction.TestScriptVerdict
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 
@@ -86,19 +87,20 @@ class SpeculativeGreedyDriverTest {
                 // Make earlier-submitted (smaller) values finish last, so completion order differs
                 // from submission order; the committed sequence must still be submission-ordered.
                 Thread.sleep(5L * (maxValue - value))
-                val interesting = value !in required
-                ListMinimizerPropertyTestResult.Completed<Int, String>(
-                  if (interesting) {
-                    PropertyTestResult.INTERESTING_RESULT
-                  } else {
-                    PropertyTestResult.NON_INTERESTING_RESULT
-                  },
-                  "",
-                )
+                if (value !in required) {
+                  CandidateOutcome.Interesting<String>(
+                    payload = "",
+                    testScriptVerdict = TestScriptVerdict.INTERESTING,
+                  )
+                } else {
+                  CandidateOutcome.Uninteresting.Rejected(
+                    testScriptVerdict = TestScriptVerdict.NON_INTERESTING,
+                  )
+                }
               },
             )
           object : PropertyTestHandle<Int, String> {
-            override fun get(): ListMinimizerPropertyTestResult<Int, String> = future.get()
+            override fun get(): CandidateOutcome<String> = future.get()
 
             override fun requestToCancel() {
               future.cancel(true)

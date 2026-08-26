@@ -16,7 +16,8 @@
  */
 package org.perses.listminimizer
 
-import org.perses.util.Util
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.CollectionUtil
 import org.perses.util.toImmutableList
 import java.io.Closeable
 import kotlin.reflect.KClass
@@ -38,7 +39,7 @@ abstract class AbstractListMinimizerListener : Closeable {
 
   abstract fun onPropertyTest(
     configuration: Candidate<*>,
-    result: ListMinimizerPropertyTestResult<*, *>,
+    result: CandidateOutcome<*>,
     sizeOfOriginalList: Int,
     sizeOfCurrentMinimizationResult: Int,
   )
@@ -57,7 +58,7 @@ abstract class AbstractListMinimizerListener : Closeable {
     }
 
     fun clusterIdsIntoRanges(list: List<ElementWrapper<*>>): List<String> =
-      Util.clusterIdsIntoRanges(list, idExtractor = {
+      CollectionUtil.clusterIdsIntoRanges(list, idExtractor = {
         it.index
       })
 

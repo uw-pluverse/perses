@@ -17,7 +17,7 @@
 package org.perses.reduction.event
 
 import org.perses.program.TokenizedProgram
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.spartree.AbstractSparTreeEdit
 
@@ -33,7 +33,7 @@ sealed class AbstractTestScriptExecutionEvent(
 
   class TestScriptExecutionEvent(
     currentTimeMillis: Long,
-    val result: PropertyTestResult,
+    val result: TestScriptVerdict,
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
     outputManager: AbstractOutputManager,

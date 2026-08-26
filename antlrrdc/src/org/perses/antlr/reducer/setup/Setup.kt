@@ -24,7 +24,7 @@ import org.perses.antlr.reducer.codegen.ReductionScriptTemplate
 import org.perses.program.ScriptFile
 import org.perses.util.AutoDeletableFolder
 import org.perses.util.AutoIncrementDirectory
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.java.JarFile
 import org.perses.util.java.JavacWrapper
 import org.perses.util.ktInfo
@@ -50,7 +50,7 @@ class Setup(
         defaultDirName = DEFAULT_SETUP_DIR_NAME,
       ).also {
         check(Files.isDirectory(it))
-        check(Util.isEmptyDirectory(it))
+        check(FileSystemUtil.isEmptyDirectory(it))
         logger.ktInfo { "The working directory of the setup is $it" }
       }
 
@@ -64,7 +64,7 @@ class Setup(
       lexerFile = lexerFile,
       startRuleName = startRuleName,
       workingDir.resolve(
-        Util.replaceFileExtension(parserFile.fileName.toString(), "jar"),
+        FileSystemUtil.replaceFileExtension(parserFile.fileName.toString(), "jar"),
       ),
     ).also { logger.ktInfo { "Create the JAR file at ${it.path}" } }
 

@@ -25,6 +25,7 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 
 class StarLeftIntroducerPass : AbstractStarIntroducerPass() {
   override fun classifyAndExtractPartsFromSequenceDef(
+    mutableGrammar: MutableGrammar,
     ruleName: RuleNameHandle,
     sequenceDef: PersesSequenceAst,
     nonRecursivePartsInRecursiveDef: ArrayList<AbstractPersesRuleElement>,

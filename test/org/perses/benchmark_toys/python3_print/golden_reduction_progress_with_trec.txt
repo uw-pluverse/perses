@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -186,29 +192,29 @@ file_input{id=1,slot_type=file_input}
     |       |___(+){id=88,slot_type=kleene_plus__suite_1}
     |       |   |___simple_stmt{id=169,slot_type=[stmt,simple_stmt]}
     |       |   |   |___expr_stmt{id=172,slot_type=[small_stmt,expr_stmt]}
-    |       |   |   |   |___Token:a{id=216,slot_type=[testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
+    |       |   |   |   |___Token:a{id=216,slot_type=[testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
     |       |   |   |   |___(?){id=174,slot_type=optional__expr_stmt_4}
     |       |   |   |       |___(+){id=176,slot_type=[aux_rule__expr_stmt_3,kleene_plus__expr_stmt_2]}
     |       |   |   |           |___aux_rule__expr_stmt_1{id=177,slot_type=aux_rule__expr_stmt_1}
     |       |   |   |               |___Token:={id=178,slot_type=ASSIGN}
-    |       |   |   |               |___Token:True{id=198,slot_type=[altnt_block__expr_stmt_5,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,TRUE]}
+    |       |   |   |               |___Token:True{id=198,slot_type=[alt_block__expr_stmt_5,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,TRUE]}
     |       |   |   |___Token: {id=171,slot_type=NEWLINE}
     |       |   |___if_stmt{id=92,slot_type=[stmt,if_stmt]}
     |       |       |___Token:if{id=93,slot_type=IF}
-    |       |       |___Token:a{id=168,slot_type=[test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
+    |       |       |___Token:a{id=168,slot_type=[test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
     |       |       |___Token::{id=95,slot_type=COLON}
     |       |       |___aux_rule__suite_2{id=97,slot_type=[suite,aux_rule__suite_2]}
     |       |           |___Token: {id=98,slot_type=NEWLINE}
     |       |           |___Token:        {id=99,slot_type=Token}
     |       |           |___(+){id=100,slot_type=kleene_plus__suite_1}
     |       |           |   |___simple_stmt{id=103,slot_type=[stmt,simple_stmt]}
-    |       |           |       |___atom_expr{id=123,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |           |       |___atom_expr{id=123,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
     |       |           |       |   |___Token:print{id=152,slot_type=[atom,NAME]}
     |       |           |       |   |___(*){id=125,slot_type=kleene_star__atom_expr_2}
     |       |           |       |       |___aux_rule__trailer_2{id=127,slot_type=[trailer,aux_rule__trailer_2]}
     |       |           |       |           |___Token:({id=128,slot_type=OPEN_PAREN}
     |       |           |       |           |___(?){id=129,slot_type=optional__decorator_1}
-    |       |           |       |           |   |___(+){id=150,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |           |       |           |   |___(+){id=150,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
     |       |           |       |           |       |___Token:"hello world"{id=151,slot_type=STRING}
     |       |           |       |           |___Token:){id=130,slot_type=CLOSE_PAREN}
     |       |           |       |___Token:\n{id=105,slot_type=NEWLINE}
@@ -216,7 +222,7 @@ file_input{id=1,slot_type=file_input}
     |       |___Token:\n{id=89,slot_type=Token}
     |___if_stmt{id=7,slot_type=[aux_rule__file_input_1,stmt,if_stmt]}
         |___Token:if{id=8,slot_type=IF}
-        |___comparison{id=50,slot_type=[test,aux_rule__test_3,or_test,and_test,not_test,comparison]}
+        |___comparison{id=50,slot_type=[test,aux_rule__test_5,or_test,and_test,not_test,comparison]}
         |   |___Token:__name__{id=77,slot_type=[expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,NAME]}
         |   |___(*){id=52,slot_type=kleene_star__comparison_2}
         |       |___aux_rule__comparison_1{id=53,slot_type=aux_rule__comparison_1}
@@ -229,7 +235,7 @@ file_input{id=1,slot_type=file_input}
             |___Token:    {id=14,slot_type=Token}
             |___(+){id=15,slot_type=kleene_plus__suite_1}
             |   |___simple_stmt{id=18,slot_type=[stmt,simple_stmt]}
-            |       |___atom_expr{id=38,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+            |       |___atom_expr{id=38,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
             |       |   |___Token:main{id=45,slot_type=[atom,NAME]}
             |       |   |___(*){id=40,slot_type=kleene_star__atom_expr_2}
             |       |       |___aux_rule__trailer_2{id=42,slot_type=[trailer,aux_rule__trailer_2]}
@@ -1233,19 +1239,19 @@ file_input{id=221,slot_type=file_input}
     |       |___Token:    {id=264,slot_type=Token}
     |       |___(+){id=265,slot_type=kleene_plus__suite_1}
     |       |   |___simple_stmt{id=268,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr{id=288,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |___atom_expr{id=288,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
     |       |       |   |___Token:print{id=317,slot_type=[atom,NAME]}
     |       |       |   |___(*){id=290,slot_type=kleene_star__atom_expr_2}
     |       |       |       |___aux_rule__trailer_2{id=292,slot_type=[trailer,aux_rule__trailer_2]}
     |       |       |           |___Token:({id=293,slot_type=OPEN_PAREN}
     |       |       |           |___(?){id=294,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+){id=315,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |   |___(+){id=315,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
     |       |       |           |       |___Token:"hello world"{id=316,slot_type=STRING}
     |       |       |           |___Token:){id=295,slot_type=CLOSE_PAREN}
     |       |       |___Token:\n{id=270,slot_type=NEWLINE}
     |       |___Token:\n{id=266,slot_type=Token}
     |___simple_stmt{id=227,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr{id=247,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |___atom_expr{id=247,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
         |   |___Token:main{id=254,slot_type=[atom,NAME]}
         |   |___(*){id=249,slot_type=kleene_star__atom_expr_2}
         |       |___aux_rule__trailer_2{id=251,slot_type=[trailer,aux_rule__trailer_2]}
@@ -2038,19 +2044,19 @@ file_input{id=322,slot_type=file_input}
     |       |___Token:    {id=365,slot_type=Token}
     |       |___(+){id=366,slot_type=kleene_plus__suite_1}
     |       |   |___simple_stmt{id=369,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr{id=389,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |___atom_expr{id=389,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
     |       |       |   |___Token:print{id=418,slot_type=[atom,NAME]}
     |       |       |   |___(*){id=391,slot_type=kleene_star__atom_expr_2}
     |       |       |       |___aux_rule__trailer_2{id=393,slot_type=[trailer,aux_rule__trailer_2]}
     |       |       |           |___Token:({id=394,slot_type=OPEN_PAREN}
     |       |       |           |___(?){id=395,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+){id=416,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |   |___(+){id=416,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
     |       |       |           |       |___Token:"hello world"{id=417,slot_type=STRING}
     |       |       |           |___Token:){id=396,slot_type=CLOSE_PAREN}
     |       |       |___Token:\n{id=371,slot_type=NEWLINE}
     |       |___Token:\n{id=367,slot_type=Token}
     |___simple_stmt{id=328,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr{id=348,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |___atom_expr{id=348,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
         |   |___Token:main{id=355,slot_type=[atom,NAME]}
         |   |___(*){id=350,slot_type=kleene_star__atom_expr_2}
         |       |___aux_rule__trailer_2{id=352,slot_type=[trailer,aux_rule__trailer_2]}
@@ -2937,19 +2943,19 @@ file_input{id=585,slot_type=file_input}
     |       |___Token:    {id=628,slot_type=Token}
     |       |___(+){id=629,slot_type=kleene_plus__suite_1}
     |       |   |___simple_stmt{id=632,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr{id=652,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |___atom_expr{id=652,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
     |       |       |   |___Token:print{id=681,slot_type=[atom,NAME]}
     |       |       |   |___(*){id=654,slot_type=kleene_star__atom_expr_2}
     |       |       |       |___aux_rule__trailer_2{id=656,slot_type=[trailer,aux_rule__trailer_2]}
     |       |       |           |___Token:({id=657,slot_type=OPEN_PAREN}
     |       |       |           |___(?){id=658,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+){id=679,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |   |___(+){id=679,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
     |       |       |           |       |___Token:"hello"{id=680,slot_type=STRING}
     |       |       |           |___Token:){id=659,slot_type=CLOSE_PAREN}
     |       |       |___Token:\n{id=634,slot_type=NEWLINE}
     |       |___Token:\n{id=630,slot_type=Token}
     |___simple_stmt{id=591,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr{id=611,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |___atom_expr{id=611,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
         |   |___Token:b{id=618,slot_type=[atom,NAME]}
         |   |___(*){id=613,slot_type=kleene_star__atom_expr_2}
         |       |___aux_rule__trailer_2{id=615,slot_type=[trailer,aux_rule__trailer_2]}
@@ -3748,19 +3754,19 @@ file_input{id=686,slot_type=file_input}
     |       |___Token:    {id=729,slot_type=Token}
     |       |___(+){id=730,slot_type=kleene_plus__suite_1}
     |       |   |___simple_stmt{id=733,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr{id=753,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |___atom_expr{id=753,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
     |       |       |   |___Token:print{id=782,slot_type=[atom,NAME]}
     |       |       |   |___(*){id=755,slot_type=kleene_star__atom_expr_2}
     |       |       |       |___aux_rule__trailer_2{id=757,slot_type=[trailer,aux_rule__trailer_2]}
     |       |       |           |___Token:({id=758,slot_type=OPEN_PAREN}
     |       |       |           |___(?){id=759,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+){id=780,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |   |___(+){id=780,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
     |       |       |           |       |___Token:"hello"{id=781,slot_type=STRING}
     |       |       |           |___Token:){id=760,slot_type=CLOSE_PAREN}
     |       |       |___Token:\n{id=735,slot_type=NEWLINE}
     |       |___Token:\n{id=731,slot_type=Token}
     |___simple_stmt{id=692,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr{id=712,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |___atom_expr{id=712,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
         |   |___Token:b{id=719,slot_type=[atom,NAME]}
         |   |___(*){id=714,slot_type=kleene_star__atom_expr_2}
         |       |___aux_rule__trailer_2{id=716,slot_type=[trailer,aux_rule__trailer_2]}
@@ -4076,19 +4082,19 @@ file_input{id=835,slot_type=file_input}
     |       |___Token:    {id=878,slot_type=Token}
     |       |___(+){id=879,slot_type=kleene_plus__suite_1}
     |       |   |___simple_stmt{id=882,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr{id=902,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |___atom_expr{id=902,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
     |       |       |   |___Token:print{id=931,slot_type=[atom,NAME]}
     |       |       |   |___(*){id=904,slot_type=kleene_star__atom_expr_2}
     |       |       |       |___aux_rule__trailer_2{id=906,slot_type=[trailer,aux_rule__trailer_2]}
     |       |       |           |___Token:({id=907,slot_type=OPEN_PAREN}
     |       |       |           |___(?){id=908,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+){id=929,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |   |___(+){id=929,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
     |       |       |           |       |___Token:"hello"{id=930,slot_type=STRING}
     |       |       |           |___Token:){id=909,slot_type=CLOSE_PAREN}
     |       |       |___Token:\n{id=884,slot_type=NEWLINE}
     |       |___Token:\n{id=880,slot_type=Token}
     |___simple_stmt{id=841,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr{id=861,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |___atom_expr{id=861,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
         |   |___Token:b{id=868,slot_type=[atom,NAME]}
         |   |___(*){id=863,slot_type=kleene_star__atom_expr_2}
         |       |___aux_rule__trailer_2{id=865,slot_type=[trailer,aux_rule__trailer_2]}
@@ -4119,19 +4125,19 @@ file_input{id=835,slot_type=file_input}
     |       |___Token:    {id=878,slot_type=Token}
     |       |___(+){id=879,slot_type=kleene_plus__suite_1}
     |       |   |___simple_stmt{id=882,slot_type=[stmt,simple_stmt]}
-    |       |       |___atom_expr{id=902,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+    |       |       |___atom_expr{id=902,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
     |       |       |   |___Token:print{id=931,slot_type=[atom,NAME]}
     |       |       |   |___(*){id=904,slot_type=kleene_star__atom_expr_2}
     |       |       |       |___aux_rule__trailer_2{id=906,slot_type=[trailer,aux_rule__trailer_2]}
     |       |       |           |___Token:({id=907,slot_type=OPEN_PAREN}
     |       |       |           |___(?){id=908,slot_type=optional__decorator_1}
-    |       |       |           |   |___(+){id=929,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
+    |       |       |           |   |___(+){id=929,slot_type=[arglist,argument,aux_rule__argument_3,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr,atom,kleene_plus__atom_5]}
     |       |       |           |       |___Token:"hello"{id=930,slot_type=STRING}
     |       |       |           |___Token:){id=909,slot_type=CLOSE_PAREN}
     |       |       |___Token:\n{id=884,slot_type=NEWLINE}
     |       |___Token:\n{id=880,slot_type=Token}
     |___simple_stmt{id=841,slot_type=[aux_rule__file_input_1,stmt,simple_stmt]}
-        |___atom_expr{id=861,slot_type=[small_stmt,expr_stmt,testlist_star_expr,altnt_block__testlist_star_expr_4,test,aux_rule__test_3,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
+        |___atom_expr{id=861,slot_type=[small_stmt,expr_stmt,testlist_star_expr,alt_block__testlist_star_expr_4,test,aux_rule__test_5,or_test,and_test,not_test,comparison,expr,xor_expr,and_expr,shift_expr,arith_expr,term,factor,power,atom_expr]}
         |   |___Token:b{id=868,slot_type=[atom,NAME]}
         |   |___(*){id=863,slot_type=kleene_star__atom_expr_2}
         |       |___aux_rule__trailer_2{id=865,slot_type=[trailer,aux_rule__trailer_2]}

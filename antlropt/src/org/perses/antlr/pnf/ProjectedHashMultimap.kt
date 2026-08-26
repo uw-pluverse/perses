@@ -25,7 +25,7 @@ class ProjectedHashMultimap(
 ) {
   private val projectedKeySet = LinkedHashSet(projectedKeySet)
 
-  fun ketSet(): Set<RuleNameHandle> = projectedKeySet
+  fun keySet(): Set<RuleNameHandle> = projectedKeySet
 
   operator fun get(ruleName: RuleNameHandle): MutableAltBlock? =
     if (!projectedKeySet.contains(ruleName)) {

@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -167,7 +173,7 @@ document{id=1,slot_type=document}
 |___element{id=2,slot_type=element}
     |___Token:<{id=3,slot_type=OPEN}
     |___Token:title{id=4,slot_type=Name}
-    |___aux_rule__element_5{id=7,slot_type=[altnt_block__element_3,altnt_block__element_4,aux_rule__element_5]}
+    |___aux_rule__element_5{id=7,slot_type=[alt_block__element_3,alt_block__element_4,aux_rule__element_5]}
         |___Token:>{id=8,slot_type=CLOSE}
         |___(?){id=14,slot_type=[content,optional__content_1]}
         |   |___Token:Computer Systems: A Programmer's Perspective{id=16,slot_type=[chardata,TEXT]}
@@ -206,7 +212,7 @@ The current best program is the following
 
 ==========Testing the following program (0): pass===========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__element_3->/>
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__element_3->/>
     --file: hello.xml--
     <title/>
 ------------------------------------------------------------
@@ -291,7 +297,7 @@ document{id=19,slot_type=document}
 |___element{id=20,slot_type=element}
 |   |___Token:<{id=24,slot_type=OPEN}
 |   |___Token:title{id=25,slot_type=Name}
-|   |___Token:/>{id=28,slot_type=[altnt_block__element_3,altnt_block__element_4,SLASH_CLOSE]}
+|   |___Token:/>{id=28,slot_type=[alt_block__element_3,alt_block__element_4,SLASH_CLOSE]}
 |___(*){id=21,slot_type=kleene_star__document_2}
     |___Token:\n{id=23,slot_type=[misc,SEA_WS]}
 ------------------------------------------------------------
@@ -414,7 +420,7 @@ document{id=30,slot_type=document}
 |___element{id=31,slot_type=element}
 |   |___Token:<{id=35,slot_type=OPEN}
 |   |___Token:title{id=36,slot_type=Name}
-|   |___Token:/>{id=39,slot_type=[altnt_block__element_3,altnt_block__element_4,SLASH_CLOSE]}
+|   |___Token:/>{id=39,slot_type=[alt_block__element_3,alt_block__element_4,SLASH_CLOSE]}
 |___(*){id=32,slot_type=kleene_star__document_2}
     |___Token:\n{id=34,slot_type=[misc,SEA_WS]}
 ------------------------------------------------------------
@@ -430,7 +436,7 @@ document{id=30,slot_type=document}
 |___element{id=31,slot_type=element}
 |   |___Token:<{id=35,slot_type=OPEN}
 |   |___Token:title{id=36,slot_type=Name}
-|   |___Token:/>{id=39,slot_type=[altnt_block__element_3,altnt_block__element_4,SLASH_CLOSE]}
+|   |___Token:/>{id=39,slot_type=[alt_block__element_3,alt_block__element_4,SLASH_CLOSE]}
 |___(*){id=32,slot_type=kleene_star__document_2}
     |___Token:\n{id=34,slot_type=[misc,SEA_WS]}
 ------------------------------------------------------------

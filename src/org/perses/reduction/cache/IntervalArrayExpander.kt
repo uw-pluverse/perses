@@ -15,10 +15,11 @@
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
 package org.perses.reduction.cache
+import org.perses.util.lazyAssert
 import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.IntIterator
 import org.perses.program.AbstractPersesToken
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 object IntervalArrayExpander {
   private val EMPTY_ITERATOR =

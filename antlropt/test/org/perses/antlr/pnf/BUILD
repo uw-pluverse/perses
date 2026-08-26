@@ -16,13 +16,13 @@ pnf_pass_golden_test(
     pnf_pass_name = "org.perses.antlr.pnf.ConvertAllAltToRuleReferenceOrTerminalPass",
 )
 
-# We should delete this pass in the future.
-#pnf_pass_golden_test(
-#    name = "lexer_with_fragments_InlineFragmentPass",
-#    golden_file = "lexer_with_fragments.g4.InlineFragmentPass.golden",
-#    input_file = "lexer_with_fragments.g4",
-#    pnf_pass_name = "org.perses.antlr.pnf.InlineFragmentPass",
-#)
+# InlineFragmentPass is not in the pipeline but is kept as a tool; the test keeps it honest.
+pnf_pass_golden_test(
+    name = "lexer_with_fragments_InlineFragmentPass",
+    golden_file = "lexer_with_fragments.g4.InlineFragmentPass.golden",
+    input_file = "lexer_with_fragments.g4",
+    pnf_pass_name = "org.perses.antlr.pnf.InlineFragmentPass",
+)
 
 pnf_pass_golden_test(
     name = "test_grammar_2",
@@ -353,4 +353,48 @@ kt_jvm_test(
         "//:truth",
         "//antlropt/src/org/perses/antlr/pnf:pnf_passes",
     ],
+)
+
+pnf_pass_golden_test(
+    name = "test_grammar_10_StarRightIntroducerPass",
+    golden_file = "test_grammar_10.g4.StarRightIntroducerPass.golden",
+    input_file = "test_grammar_10.g4",
+    pnf_pass_name = "org.perses.antlr.pnf.StarRightIntroducerPass",
+)
+
+pnf_pass_golden_test(
+    name = "test_grammar_11_AssociativityParserRuleEliminatorPass",
+    golden_file = "test_grammar_11.g4.AssociativityParserRuleEliminatorPass.golden",
+    input_file = "test_grammar_11.g4",
+    pnf_pass_name = "org.perses.antlr.pnf.AssociativityParserRuleEliminatorPass",
+)
+
+pnf_pass_golden_test(
+    name = "test_grammar_12_DuplicateRuleEliminationPass",
+    golden_file = "test_grammar_12.g4.DuplicateRuleEliminationPass.golden",
+    input_file = "test_grammar_12.g4",
+    pnf_pass_name = "org.perses.antlr.pnf.DuplicateRuleEliminationPass",
+    start_rule_name = "s",
+)
+
+pnf_pass_golden_test(
+    name = "test_grammar_13_EliminateUnreachableRulePass",
+    golden_file = "test_grammar_13.g4.EliminateUnreachableRulePass.golden",
+    input_file = "test_grammar_13.g4",
+    pnf_pass_name = "org.perses.antlr.pnf.EliminateUnreachableRulePass",
+    start_rule_name = "s",
+)
+
+pnf_pass_golden_test(
+    name = "test_grammar_14_InlineSingleUseAltRulePass",
+    golden_file = "test_grammar_14.g4.InlineSingleUseAltRulePass.golden",
+    input_file = "test_grammar_14.g4",
+    pnf_pass_name = "org.perses.antlr.pnf.InlineSingleUseAltRulePass",
+)
+
+pnf_pass_golden_test(
+    name = "test_grammar_15_EliminateEpsilonPass",
+    golden_file = "test_grammar_15.g4.EliminateEpsilonPass.golden",
+    input_file = "test_grammar_15.g4",
+    pnf_pass_name = "org.perses.antlr.pnf.EliminateEpsilonPass",
 )

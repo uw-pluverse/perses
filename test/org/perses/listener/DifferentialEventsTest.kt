@@ -22,15 +22,15 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.reduction.PropertyTestResult
-import org.perses.util.Util
+import org.perses.reduction.TestScriptVerdict
+import org.perses.util.FileSystemUtil
 import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class DifferentialEventsTest {
-  val tempDir = Util.createTempDirForObject(this)
+  val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -46,7 +46,7 @@ class DifferentialEventsTest {
         DifferentialEvents.Edit(
           contextualDescription = "context",
           structureDescription = "structure",
-          propertyTestResult = PropertyTestResult.INTERESTING_RESULT,
+          propertyTestResult = TestScriptVerdict.INTERESTING,
           successfullyDeletedCode = "deleted code",
           deletedTokenCount = 1,
           startPersesTimeSeconds = 123,

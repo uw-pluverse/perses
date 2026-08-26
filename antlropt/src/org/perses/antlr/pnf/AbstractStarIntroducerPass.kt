@@ -39,6 +39,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
     val nonRecursiveDefs = LinkedHashSet<AbstractPersesRuleElement>()
     val ruleDef = mutableGrammar.getAltBlock(ruleName)
     classifyDefsAndExtractNonrecursiveParts(
+      mutableGrammar,
       ruleName,
       ruleDef,
       nonRecursivePartsInRecursiveDef,
@@ -90,6 +91,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
   }
 
   private fun classifyDefsAndExtractNonrecursiveParts(
+    mutableGrammar: MutableGrammar,
     ruleName: RuleNameHandle,
     definitions: Iterable<AbstractPersesRuleElement>,
     nonRecursivePartsInRecursiveDef: ArrayList<AbstractPersesRuleElement>,
@@ -108,6 +110,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
       if (tag === AstTag.SEQUENCE) {
         val seq = def as PersesSequenceAst
         classifyAndExtractPartsFromSequenceDef(
+          mutableGrammar,
           ruleName,
           seq,
           nonRecursivePartsInRecursiveDef,
@@ -125,6 +128,7 @@ abstract class AbstractStarIntroducerPass : AbstractPnfPass() {
   ): ImmutableList<AbstractPersesRuleElement>
 
   protected abstract fun classifyAndExtractPartsFromSequenceDef(
+    mutableGrammar: MutableGrammar,
     ruleName: RuleNameHandle,
     sequenceDef: PersesSequenceAst,
     nonRecursivePartsInRecursiveDef: ArrayList<AbstractPersesRuleElement>,

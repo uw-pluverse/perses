@@ -22,10 +22,10 @@ import com.google.common.graph.SuccessorsFunction
 import com.google.common.graph.Traverser
 import org.perses.spartree.TreeNodeFilterResult.CONTINUE
 import org.perses.spartree.TreeNodeFilterResult.STOP
+import org.perses.util.CollectionUtil
 import org.perses.util.SimpleQueue
 import org.perses.util.SimpleStack
-import org.perses.util.Util
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 abstract class AbstractTreeNode<
   T : AbstractTreeNode<T, Payload>,
@@ -85,7 +85,7 @@ abstract class AbstractTreeNode<
 
   fun cleanDeletedImmediateChildren() {
     lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }
-    Util.removeElementsFromList(children) { _, element ->
+    CollectionUtil.removeElementsFromList(children) { _, element ->
       element.isPermanentlyDeleted
     }
     lazyAssert({ checkNodeIntegrity() == null }) { checkNodeIntegrity()!! }

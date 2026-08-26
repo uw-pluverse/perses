@@ -22,18 +22,18 @@ import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.EditTestPayload
 import org.perses.reduction.FixpointReductionState
-import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.reduction.TestScriptExecResult
-import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Proceed
-import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Skip
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
+import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Proceed
+import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Skip
+import org.perses.reduction.TestScriptVerdict
 import org.perses.spartree.NodeActionSetCacheResult
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import org.perses.util.shell.ExitCode
 
 abstract class AbstractStateBasedConcurrentReducer<
@@ -160,7 +160,7 @@ abstract class AbstractStateBasedConcurrentReducer<
   }
 
   private fun notifyListenerOnTestScriptExecution(
-    testResult: PropertyTestResult,
+    testResult: TestScriptVerdict,
     statePayload: ConcurrentStateEditTestPayload<ConcurrentState>?,
   ) {
     statePayload?.let {
@@ -174,7 +174,7 @@ abstract class AbstractStateBasedConcurrentReducer<
   }
 
   private fun cacheResultIfNotInteresting(
-    testResult: PropertyTestResult,
+    testResult: TestScriptVerdict,
     statePayload: ConcurrentStateEditTestPayload<ConcurrentState>?,
   ) {
     if (statePayload != null) {
@@ -242,14 +242,14 @@ abstract class AbstractStateBasedConcurrentReducer<
   }
 
   private fun createParsabilityPostCheck(): (
-    existingResult: PropertyTestResult,
+    existingResult: TestScriptVerdict,
     payload: ConcurrentStateEditTestPayload<ConcurrentState>,
-  ) -> PropertyTestResult =
+  ) -> TestScriptVerdict =
     { existing, payload ->
       if (existing.isNotInteresting || isProgramParsable(payload.editTestPayload.edit.program)) {
         existing
       } else {
-        PropertyTestResult(
+        TestScriptVerdict(
           exitCode = INVALID_SYNTAX_EXIT_CODE,
           elapsedMillis = -1,
         )

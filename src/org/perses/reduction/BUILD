@@ -37,20 +37,13 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
-    name = "tree_edit_with_its_program",
-    srcs = ["TreeEditWithItsResult.kt"],
-    deps = [
-        ":property_test_result",
-        "//src/org/perses/program",
-        "//src/org/perses/reduction/io:output_manager_interface",
-        "//src/org/perses/spartree",
-    ],
-)
-
-kt_jvm_library(
     name = "property_test_result",
-    srcs = ["PropertyTestResult.kt"],
+    srcs = [
+        "CandidateOutcome.kt",
+        "TestScriptVerdict.kt",
+    ],
     deps = [
+        "//:guava",
         "//:jackson",
         "//src/org/perses/util/shell:ExitCode",
     ],
@@ -201,7 +194,6 @@ kt_jvm_library(
         ":reduction_configuration",
         ":test_script",
         ":test_script_executor_service",
-        ":tree_edit_with_its_program",
         "//:guava",
         "//src/org/perses/listminimizer",
         "//src/org/perses/listminimizer:ListMinimizerFactory",
@@ -259,6 +251,7 @@ kt_jvm_library(
         "//:guava",
         "//latra/src/org/perses/reduction/reducer/latra:reducer",
         "//lpr/src/org/perses/reduction/reducer/lpr",
+        "//sfc/src/org/perses/reduction/reducer/sfc:smaller_structure_replacement_reducer",
         "//src/org/perses/reduction/reducer:node_based_reducer",
         "//src/org/perses/reduction/reducer/hdd:level_based_reducers",
         "//src/org/perses/reduction/reducer/line:line_reducer",

@@ -24,7 +24,7 @@ import org.antlr.v4.runtime.tree.TerminalNode
 import org.perses.antlr.ParseTreeWithParser
 import org.perses.grammar.AbstractParserFacade
 import org.perses.util.SimpleStack
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 /** Build a spar-tree from an Antlr [ParseTree] node.  */
 class SparTreeBuilder(

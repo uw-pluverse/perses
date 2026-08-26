@@ -26,7 +26,7 @@ import org.perses.reduction.LanguageProfile
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.util.AutoDeletableFolder
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.transformToImmutableList
 import java.io.Closeable
@@ -43,7 +43,7 @@ class ReducerFunctionalTestUtility(
   val reducerAnnotation: ReducerAnnotation,
   cmdCustomizer: (PersesCommandOptions) -> Unit = {},
 ) : Closeable {
-  val tempDir = AutoDeletableFolder(Util.createTempDirForObject(this))
+  val tempDir = AutoDeletableFolder(FileSystemUtil.createTempDirForObject(this))
 
   val outputDir = tempDir.file.resolve("perses_output_dir")
   val cmd =

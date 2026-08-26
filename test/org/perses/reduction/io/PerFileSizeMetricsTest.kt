@@ -27,14 +27,14 @@ import org.perses.grammar.c.LanguageC
 import org.perses.program.ProgramSize
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
+import org.perses.util.FileSystemUtil
 import org.perses.util.ImmutableIntArray
-import org.perses.util.Util
 import java.nio.file.Files
 import java.nio.file.Path
 
 @RunWith(JUnit4::class)
 class PerFileSizeMetricsTest {
-  private val root: Path = Util.createTempDirForObject(this)
+  private val root: Path = FileSystemUtil.createTempDirForObject(this)
 
   private fun writeFile(
     name: String,

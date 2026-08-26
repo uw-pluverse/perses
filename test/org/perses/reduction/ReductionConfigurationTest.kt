@@ -34,7 +34,7 @@ import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.reduction.reducer.EnumMimirReductionAlgorithm
 import org.perses.reduction.reducer.PersesNodeReducerAnnotations
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -52,7 +52,7 @@ class ReductionConfigurationTest {
   private val sourceFile = SourceFile(Paths.get(FOLDER, "t.c"), LanguageC)
   private val outputDir =
     workingDirectory.resolve("perses_output_dir").apply {
-      Util.ensureDirExists(this)
+      FileSystemUtil.ensureDirExists(this)
     }
   private val originalReductionInputs =
     DefaultLanguageOriginalReductionInputs(
@@ -132,6 +132,11 @@ class ReductionConfigurationTest {
         latraConfig =
           ReductionConfiguration.LatraConfig(
             listMinimizerForTransformations = EnumListMinimizerType.WPROBDD,
+          ),
+        sfcConfig =
+          ReductionConfiguration.SfcConfig(
+            subtreeTokenCountLimit = 64,
+            candidateLimit = 64,
           ),
         levelBasedReducerConfig =
           ReductionConfiguration.LevelBasedReducerConfig(

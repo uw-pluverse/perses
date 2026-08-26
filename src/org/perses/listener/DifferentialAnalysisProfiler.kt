@@ -19,7 +19,7 @@ package org.perses.listener
 import org.perses.PersesConstants
 import org.perses.listener.DifferentialEvents.NodeReductionEvent
 import org.perses.reduction.AbstractReductionListener
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestScriptExecutionEvent
 import org.perses.reduction.event.NodeReductionEndEvent
 import org.perses.util.FileStreamPool
@@ -78,9 +78,9 @@ class DifferentialAnalysisProfiler(
     val newPropertyTestResult =
       if (hideTimestamp) {
         if (propertyTestResult.isInteresting) {
-          PropertyTestResult.INTERESTING_RESULT
+          TestScriptVerdict.INTERESTING
         } else {
-          PropertyTestResult.NON_INTERESTING_RESULT
+          TestScriptVerdict.NON_INTERESTING
         }
       } else {
         propertyTestResult

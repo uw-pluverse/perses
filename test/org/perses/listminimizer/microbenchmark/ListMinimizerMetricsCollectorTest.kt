@@ -28,11 +28,11 @@ import org.perses.listminimizer.Candidate
 import org.perses.listminimizer.ElementWrapper
 import org.perses.listminimizer.IWeightProvider
 import org.perses.listminimizer.ListMinimizerArguments
-import org.perses.listminimizer.ListMinimizerPropertyTestResult
 import org.perses.listminimizer.PristineDeltaDebugger
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.CandidateOutcome
+import org.perses.reduction.TestScriptVerdict
+import org.perses.util.FileSystemUtil
 import org.perses.util.Serialization
-import org.perses.util.Util
 import org.perses.util.shell.ExitCode
 import java.nio.file.Path
 import kotlin.io.path.deleteRecursively
@@ -40,7 +40,7 @@ import kotlin.io.path.readLines
 
 @RunWith(JUnit4::class)
 class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
-  private val workDir = Util.createTempDirForObject(this)
+  private val workDir = FileSystemUtil.createTempDirForObject(this)
 
   private val queryJsonlFile = workDir.resolve(ListMinimizerMetricsCollector.QUERY_JSONL_FILE_NAME)
 
@@ -62,13 +62,14 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
   private fun createCollector(
     weightProvider: IWeightProvider<Any> = IWeightProvider { 1 },
     hideTimings: Boolean = false,
-    scriptExecutionCount: Int = 0,
+    // The executor's cumulative total, which the collector brackets across the minimizer's run.
+    scriptExecutionCounter: () -> Int = { 0 },
   ) = ListMinimizerMetricsCollector(
     microbenchmarkId = "000042",
     weightProvider = weightProvider,
     hideTimings = hideTimings,
     minimizerTypeName = "PRISTINE_DDMIN",
-    scriptExecutionCountSupplier = { scriptExecutionCount },
+    scriptExecutionCountSupplier = scriptExecutionCounter,
     queryJsonlFile = queryJsonlFile,
     summaryJsonlFile = summaryJsonlFile,
   )
@@ -79,13 +80,19 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
       deleted_ = ImmutableList.copyOf(indices.map { wrappers[it] }),
     )
 
-  private fun completed(
+  /** A query whose oracle actually ran: interesting on [ExitCode.ZERO], rejected otherwise. */
+  private fun tested(
     exitCode: ExitCode,
     elapsedMillis: Int = 0,
-  ) = ListMinimizerPropertyTestResult.Completed<String, String>(
-    result = PropertyTestResult(exitCode = exitCode, elapsedMillis = elapsedMillis),
-    payload = "",
-  )
+  ): CandidateOutcome<String> {
+    val testScriptVerdict =
+      TestScriptVerdict(exitCode = exitCode, elapsedMillis = elapsedMillis)
+    return if (testScriptVerdict.isInteresting) {
+      CandidateOutcome.Interesting("", testScriptVerdict)
+    } else {
+      CandidateOutcome.Uninteresting.Rejected(testScriptVerdict)
+    }
+  }
 
   /** Every record of a JSON Lines file, in order, each as a field name to value map. */
   private fun recordsOf(file: Path): List<Map<String, Any?>> =
@@ -169,19 +176,19 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
     startAndEnd {
       onPropertyTest(
         configuration = candidateDeleting(0, 1, 2),
-        result = completed(exitCode = ExitCode.ONE),
+        result = tested(exitCode = ExitCode.ONE),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
       onPropertyTest(
         configuration = candidateDeleting(0, 2, 4),
-        result = completed(exitCode = ExitCode.ONE),
+        result = tested(exitCode = ExitCode.ONE),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
       onPropertyTest(
         configuration = candidateDeleting(0, 1, 4, 5),
-        result = completed(exitCode = ExitCode.ONE),
+        result = tested(exitCode = ExitCode.ONE),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
@@ -201,17 +208,17 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
   }
 
   @Test
-  fun testOutcomeAndElapsedTimeComeFromThePropertyTestResult() {
+  fun testOutcomeAndElapsedTimeComeFromTheTestScriptVerdict() {
     startAndEnd {
       onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO, elapsedMillis = 11),
+        result = tested(exitCode = ExitCode.ZERO, elapsedMillis = 11),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
       onPropertyTest(
         configuration = candidateDeleting(1),
-        result = completed(exitCode = ExitCode.ONE, elapsedMillis = 22),
+        result = tested(exitCode = ExitCode.ONE, elapsedMillis = 22),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 5,
       )
@@ -241,18 +248,18 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
     startAndEnd {
       onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO, elapsedMillis = 11),
+        result = tested(exitCode = ExitCode.ZERO, elapsedMillis = 11),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
       onPropertyTest(
         configuration = candidateDeleting(1),
-        result = ListMinimizerPropertyTestResult.Skipped<String, String>("Cached"),
+        result = CandidateOutcome.Uninteresting.NotTested("Cached"),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
     }
-    // A Skipped result is an uninteresting outcome: the deletion did not survive, which is all a
+    // A cache hit is an uninteresting outcome: the deletion did not survive, which is all a
     // minimizer acts on and all the outcome field claims to say.
     assertThat(
       valuesOf(file = queryJsonlFile, fieldName = "outcome"),
@@ -268,6 +275,47 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
       valuesOf(file = summaryJsonlFile, fieldName = "totalOracleMillis"),
     ).containsExactly("11")
     assertThat(valuesOf(file = summaryJsonlFile, fieldName = "totalQueries")).containsExactly("2")
+  }
+
+  @Test
+  fun testARejectedCandidateReportsItsOracleTimeButAnUntestedOneDoesNot() {
+    startAndEnd {
+      onPropertyTest(
+        configuration = candidateDeleting(0),
+        result = tested(exitCode = ExitCode.ONE, elapsedMillis = 40),
+        sizeOfOriginalList = 6,
+        sizeOfCurrentMinimizationResult = 6,
+      )
+      onPropertyTest(
+        configuration = candidateDeleting(1),
+        result = CandidateOutcome.Uninteresting.NotTested("Cached"),
+        sizeOfOriginalList = 6,
+        sizeOfCurrentMinimizationResult = 6,
+      )
+      onPropertyTest(
+        configuration = candidateDeleting(2),
+        result =
+          CandidateOutcome.Uninteresting.NotTested("NoEdit"),
+        sizeOfOriginalList = 6,
+        sizeOfCurrentMinimizationResult = 6,
+      )
+    }
+    // All three did not survive, so all three are uninteresting -- but only the first spent a
+    // script. Reporting a rejected candidate as free is what made totalOracleMillis a lower bound
+    // over the interesting queries, which is the opposite of the queries a comparison is about.
+    assertThat(
+      valuesOf(file = queryJsonlFile, fieldName = "outcome"),
+    ).containsExactly("uninteresting", "uninteresting", "uninteresting")
+    assertThat(
+      valuesOf(file = queryJsonlFile, fieldName = "elapsedMillis"),
+    ).containsExactly("40", "", "").inOrder()
+    assertThat(
+      valuesOf(file = summaryJsonlFile, fieldName = "totalOracleMillis"),
+    ).containsExactly("40")
+    assertThat(valuesOf(file = summaryJsonlFile, fieldName = "interestingCount"))
+      .containsExactly("0")
+    assertThat(valuesOf(file = summaryJsonlFile, fieldName = "uninterestingCount"))
+      .containsExactly("3")
   }
 
   @Test
@@ -290,7 +338,7 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
             original = longWrappers,
             deleted_ = ImmutableList.of(longWrappers[1], longWrappers[2]),
           ),
-        result = completed(exitCode = ExitCode.ONE),
+        result = tested(exitCode = ExitCode.ONE),
         sizeOfOriginalList = 3,
         sizeOfCurrentMinimizationResult = 3,
       )
@@ -311,20 +359,20 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
     startAndEnd {
       onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO),
+        result = tested(exitCode = ExitCode.ZERO),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
       onBestUpdate(wrappers.drop(1))
       onPropertyTest(
         configuration = candidateDeleting(1),
-        result = completed(exitCode = ExitCode.ONE),
+        result = tested(exitCode = ExitCode.ONE),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 5,
       )
       onPropertyTest(
         configuration = candidateDeleting(2),
-        result = completed(exitCode = ExitCode.ONE),
+        result = tested(exitCode = ExitCode.ONE),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 5,
       )
@@ -354,7 +402,7 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
       collector.startReduction(wrappers, PristineDeltaDebugger::class, "prefix")
       collector.onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO),
+        result = tested(exitCode = ExitCode.ZERO),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
@@ -374,7 +422,7 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
       collector.startReduction(wrappers, PristineDeltaDebugger::class, "prefix")
       collector.onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO, elapsedMillis = 37),
+        result = tested(exitCode = ExitCode.ZERO, elapsedMillis = 37),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
@@ -401,7 +449,7 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
       collector.startReduction(wrappers, PristineDeltaDebugger::class, "prefix")
       collector.onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO, elapsedMillis = 37),
+        result = tested(exitCode = ExitCode.ZERO, elapsedMillis = 37),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
@@ -416,8 +464,10 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
   fun testSummaryCarriesBothMinimizerNamesAndTheScriptExecutionCount() {
     // These three fields are what evaluation.jsonl used to hold; they now live on the one record
     // per run, so nothing has to be joined back together.
-    createCollector(scriptExecutionCount = 6).use { collector ->
+    var executions = 0
+    createCollector(scriptExecutionCounter = { executions }).use { collector ->
       collector.startReduction(wrappers, PristineDeltaDebugger::class, "prefix")
+      executions += 6
       collector.endReduction(wrappers, PristineDeltaDebugger::class, wrappers.size)
     }
     assertThat(valuesOf(file = summaryJsonlFile, fieldName = "minimizerType"))
@@ -428,13 +478,34 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
       .containsExactly("6")
   }
 
+  /**
+   * The executor is shared with the reduction driver, which runs scripts of its own before the
+   * minimizer is ever invoked -- the Layer-2 code-format check in
+   * AbstractProgramReductionDriver.ensureInterestingCodeFormatOrThrow is one, and it bypasses the
+   * listener entirely. Those must not land in this run's count: comparing scriptExecutionCount with
+   * the observed queries is how a query that never reached the listener is detected, and a constant
+   * offset would make a lost query look like agreement.
+   */
+  @Test
+  fun testScriptExecutionCountExcludesWhateverRanBeforeTheMinimizerStarted() {
+    var executions = 11
+    createCollector(scriptExecutionCounter = { executions }).use { collector ->
+      collector.startReduction(wrappers, PristineDeltaDebugger::class, "prefix")
+      executions += 3
+      collector.endReduction(wrappers, PristineDeltaDebugger::class, wrappers.size)
+    }
+
+    assertThat(valuesOf(file = summaryJsonlFile, fieldName = "scriptExecutionCount"))
+      .containsExactly("3")
+  }
+
   @Test
   fun testQueriesJoinToTheSummaryOnTheMinimizerClassName() {
     createCollector().use { collector ->
       collector.startReduction(wrappers, PristineDeltaDebugger::class, "prefix")
       collector.onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO),
+        result = tested(exitCode = ExitCode.ZERO),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
@@ -449,25 +520,25 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
     startAndEnd {
       onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO),
+        result = tested(exitCode = ExitCode.ZERO),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
       onPropertyTest(
         configuration = candidateDeleting(1),
-        result = completed(exitCode = ExitCode.ONE),
+        result = tested(exitCode = ExitCode.ONE),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
       onPropertyTest(
         configuration = candidateDeleting(2),
-        result = ListMinimizerPropertyTestResult.Skipped<String, String>("Cached"),
+        result = CandidateOutcome.Uninteresting.NotTested("Cached"),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )
     }
     // No third bucket: every query lands in exactly one of the two, so the counts sum to the
-    // total. That was not true while Skipped results were reported separately.
+    // total. That was not true while every non-Completed result was reported as a third outcome.
     assertThat(valuesOf(file = queryJsonlFile, fieldName = "outcome"))
       .containsExactly("interesting", "uninteresting", "uninteresting")
       .inOrder()
@@ -514,7 +585,7 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
         collector.startReduction(wrappers, PristineDeltaDebugger::class, "prefix")
         collector.onPropertyTest(
           configuration = candidateDeleting(0),
-          result = completed(exitCode = ExitCode.ZERO),
+          result = tested(exitCode = ExitCode.ZERO),
           sizeOfOriginalList = 6,
           sizeOfCurrentMinimizationResult = 6,
         )
@@ -535,7 +606,7 @@ class ListMinimizerMetricsCollectorTest : AbstractListMinimizerTest<String>() {
       log { "a message, with a comma\nand a newline" }
       onPropertyTest(
         configuration = candidateDeleting(0),
-        result = completed(exitCode = ExitCode.ZERO),
+        result = tested(exitCode = ExitCode.ZERO),
         sizeOfOriginalList = 6,
         sizeOfCurrentMinimizationResult = 6,
       )

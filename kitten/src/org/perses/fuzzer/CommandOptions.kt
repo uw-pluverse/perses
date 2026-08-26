@@ -24,7 +24,7 @@ import org.perses.fuzzer.config.TestingConfiguration
 import org.perses.fuzzer.config.TestingConfiguration.Companion.readFrom
 import org.perses.fuzzer.languagemodel.LanguageModelType
 import org.perses.spartree.SparTreeGeneratorType
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 import java.io.File
@@ -448,7 +448,7 @@ class CommandOptions : AbstractCommandOptions() {
         }
         coverageResultFile!!.let {
           if (Files.notExists(it)) {
-            Util.ensureDirExists(it.parent)
+            FileSystemUtil.ensureDirExists(it.parent)
             Files.createFile(it)
           }
         }

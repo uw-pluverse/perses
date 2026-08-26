@@ -28,7 +28,7 @@ import org.perses.reduction.scheduler.AbstractSchedulerEvent.StatsSnapshotEvent
 import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.ContinueOnChange
 import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.ContinueOnSmallSize
 import org.perses.spartree.SparTree
-import org.perses.util.Util
+import org.perses.util.lazyAssert
 
 /**
  * Generic over the reducer, because the scheduler never reduces anything itself: it hands a reducer
@@ -187,7 +187,7 @@ class ReducerScheduler<ReducerType : Any>(
     }
     val last = schedulerEvents.lastEvent()
     check(last is StatsSnapshotEvent) { "The last element is $last" }
-    Util.lazyAssert({ schedulerEvents.checkSchedulerEventsIntegrity() }) { schedulerEvents }
+    lazyAssert({ schedulerEvents.checkSchedulerEventsIntegrity() }) { schedulerEvents }
     return last
   }
 
@@ -356,12 +356,12 @@ class ReducerScheduler<ReducerType : Any>(
       require(startIndex >= 0) {
         "$startIndex, $startStats, $history"
       }
-      Util.lazyAssert({ history.lastIndexOf(startStats) == startIndex }) {
+      lazyAssert({ history.lastIndexOf(startStats) == startIndex }) {
         "$startIndex, $history, ${history.lastIndexOf(startStats)}"
       }
       val endIndex = history.lastIndexOf(endStats)
       require(endIndex >= 0)
-      Util.lazyAssert({ history.indexOf(endStats) == endIndex }) {
+      lazyAssert({ history.indexOf(endStats) == endIndex }) {
         "$endIndex, $history, ${history.indexOf(endStats)}"
       }
       require(startIndex < endIndex) { "$startIndex, $endIndex" }

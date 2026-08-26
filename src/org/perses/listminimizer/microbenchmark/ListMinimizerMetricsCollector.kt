@@ -22,10 +22,10 @@ import org.perses.listminimizer.AbstractListMinimizerListener
 import org.perses.listminimizer.Candidate
 import org.perses.listminimizer.ElementWrapper
 import org.perses.listminimizer.IWeightProvider
-import org.perses.listminimizer.ListMinimizerPropertyTestResult
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.IoUtil
 import org.perses.util.Serialization
 import org.perses.util.TimeSpan
-import org.perses.util.Util
 import java.io.PrintStream
 import java.nio.file.Path
 import kotlin.reflect.KClass
@@ -73,16 +73,18 @@ class ListMinimizerMetricsCollector(
    * How many test scripts the executor has run for this measurement, read at [endReduction].
    *
    * A listener cannot see this -- it is the executor's statistic, owned by the driver -- so it
-   * arrives as a supplier rather than being written to a second file by the caller. Read when the
-   * minimizer finishes rather than when the driver does, so it covers the same window as
-   * [observedQueryCount] and the two remain comparable.
+   * arrives as a supplier rather than being written to a second file by the caller. It is the
+   * executor's cumulative total; this class brackets it across the minimizer's lifetime, so that it
+   * covers the same window as the observed queries and the two stay comparable. Bracketing it
+   * anywhere earlier would include the driver's own pre-reducer script executions, which are not
+   * queries -- and a constant offset would defeat the comparison this field exists for.
    */
   private val scriptExecutionCountSupplier: () -> Int,
   queryJsonlFile: Path,
   summaryJsonlFile: Path,
 ) : AbstractListMinimizerListener() {
-  private val queryStream = Util.createNonAppendablePrintStream(path = queryJsonlFile)
-  private val summaryStream = Util.createNonAppendablePrintStream(path = summaryJsonlFile)
+  private val queryStream = IoUtil.createNonAppendablePrintStream(path = queryJsonlFile)
+  private val summaryStream = IoUtil.createNonAppendablePrintStream(path = summaryJsonlFile)
 
   private lateinit var minimizerName: String
   private lateinit var timeSpanBuilder: TimeSpan.Builder
@@ -92,6 +94,7 @@ class ListMinimizerMetricsCollector(
   private var interestingCount = 0
   private var uninterestingCount = 0
   private var totalOracleMillis = 0L
+  private var scriptExecutionsAtStart = 0
 
   /**
    * How many property tests this listener saw during the current reduction. A caller that also
@@ -131,37 +134,37 @@ class ListMinimizerMetricsCollector(
     uninterestingCount = 0
     totalOracleMillis = 0
     querySeqOfLastBestUpdate = 0
+    scriptExecutionsAtStart = scriptExecutionCountSupplier()
   }
 
   override fun onPropertyTest(
     configuration: Candidate<*>,
-    result: ListMinimizerPropertyTestResult<*, *>,
+    result: CandidateOutcome<*>,
     sizeOfOriginalList: Int,
     sizeOfCurrentMinimizationResult: Int,
   ) {
     ++querySeq
     val deleted = configuration.deletedWrappers
-    // Interesting or not -- there is no third outcome. A candidate the oracle rejected and one
-    // that was never tested (a cache already knew the answer, no edit could be built) both reach
-    // the listener as Skipped, and both mean the same thing: this deletion did not survive. They
-    // were previously reported as "skipped", which left uninterestingCount permanently zero and
-    // hid the queries a minimizer comparison is actually about.
-    val isInteresting =
-      result is ListMinimizerPropertyTestResult.Completed && result.result.isInteresting
+    // Interesting or not -- there is no third outcome, and the result hierarchy now says so: every
+    // way of not surviving is a CandidateOutcome.Uninteresting.
     val outcome =
-      if (isInteresting) {
+      if (result is CandidateOutcome.Interesting) {
         ++interestingCount
         "interesting"
       } else {
         ++uninterestingCount
         "uninteresting"
       }
+    // Cost is orthogonal to outcome, so it comes from the oracle verdict rather than from which
+    // branch above was taken: a rejected candidate is the expensive case, and an interesting one
+    // can be free (deleting nothing runs no script).
+    val testScriptVerdict = result.testScriptVerdict
     val elapsedMillis =
-      if (result is ListMinimizerPropertyTestResult.Completed) {
-        totalOracleMillis += result.result.elapsedMillis
+      if (testScriptVerdict != null) {
+        totalOracleMillis += testScriptVerdict.elapsedMillis
         // Null under [hideTimings] too. The two are not worth distinguishing: when durations
         // are suppressed, no cost in the file means anything.
-        if (hideTimings) null else result.result.elapsedMillis
+        if (hideTimings) null else testScriptVerdict.elapsedMillis
       } else {
         // Null rather than zero: a query that ran no script has no cost to report, and a zero
         // would be averaged in as if the script had run instantly.
@@ -217,7 +220,7 @@ class ListMinimizerMetricsCollector(
               .end(nowInMillis = System.currentTimeMillis())
               .elapsedTimeInMillis
               .takeUnless { hideTimings },
-          scriptExecutionCount = scriptExecutionCountSupplier(),
+          scriptExecutionCount = scriptExecutionCountSupplier() - scriptExecutionsAtStart,
         ),
     )
   }
@@ -257,11 +260,9 @@ class ListMinimizerMetricsCollector(
     val minElementIndex: Int?,
     val maxElementIndex: Int?,
     /**
-     * Null when no cost was measured: no script ran, or [hideTimings] is set.
-     *
-     * Note this is *also* null for an uninteresting candidate that did run a script, because the
-     * spar-tree tester discards the result on that path. So the summary's totalOracleMillis is a
-     * lower bound, counting only the interesting queries.
+     * Null when no cost was measured: no script ran (the candidate was already cached, no edit
+     * could be built, or the deletion was empty), or [hideTimings] is set. A candidate the oracle
+     * ran and rejected reports its real cost here.
      */
     val elapsedMillis: Int?,
   )
@@ -281,6 +282,10 @@ class ListMinimizerMetricsCollector(
     val interestingCount: Int,
     val uninterestingCount: Int,
     val querySeqOfLastBestUpdate: Int,
+    /**
+     * Summed over every query whose oracle actually ran, rejections included, so this is the real
+     * script cost of the run rather than the cost of its successes.
+     */
     val totalOracleMillis: Long?,
     val wallClockMillis: Long?,
     /**

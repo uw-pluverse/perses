@@ -19,13 +19,13 @@ import com.google.common.collect.ImmutableList
 import org.perses.program.AbstractPersesToken
 import org.perses.reduction.AbstractNonDeletionBasedReducer
 import org.perses.reduction.AbstractSparTreeReducer
+import org.perses.reduction.EditTestPayload
 import org.perses.reduction.FixpointReductionState
 import org.perses.reduction.ReducerContext
-import org.perses.reduction.TreeEditWithItsResult
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.SparTree
-import org.perses.util.Util.lazyAssert
 import org.perses.util.isSortedAscendingly
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
 class IdentifierReplacementReducer(
@@ -116,7 +116,7 @@ class IdentifierReplacementReducer(
     fixpointReductionState: FixpointReductionState,
     sequenceOfLexerNodesToBeReplaced: (LexerNodeClusterWithSameLexeme)
     -> Sequence<List<LexerRuleSparTreeNode>>,
-  ): TreeEditWithItsResult? {
+  ): EditTestPayload? {
     for (clusterToBeReplaced in candidates.tokenClusterWithSameLexemes) {
       val replacementLexemeCandidates =
         candidates

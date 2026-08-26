@@ -21,7 +21,6 @@ import com.google.common.io.Closer
 import org.perses.reduction.AbstractGlobalExecutionCache.GlobalExecutionCache
 import org.perses.util.AtomicSequenceGenerator
 import org.perses.util.FileStreamPool
-import org.perses.util.Util
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.ktFine
 import java.io.Closeable

@@ -52,9 +52,9 @@ class FileStreamPool : Closeable {
       map.computeIfAbsent(normalizedPath) { path ->
         val parent: Path? = path.parent
         if (parent != null) {
-          Util.ensureDirExists(parent)
+          FileSystemUtil.ensureDirExists(parent)
         }
-        ManagedPrintStream(Util.createNonAppendablePrintStream(path))
+        ManagedPrintStream(IoUtil.createNonAppendablePrintStream(path))
       }
     val rentingObject =
       "Description: " + (description ?: "") + "\n" +

@@ -21,7 +21,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.perses.antlr.RuleType
 import org.perses.listener.DifferentialEvents
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.util.shell.ExitCode
 
 class EventDiffStatisticsTest {
@@ -31,7 +31,7 @@ class EventDiffStatisticsTest {
       DifferentialEvents.Edit(
         contextualDescription = "Interesting edit",
         structureDescription = "",
-        propertyTestResult = PropertyTestResult(ExitCode.ZERO, 100),
+        propertyTestResult = TestScriptVerdict(ExitCode.ZERO, 100),
         successfullyDeletedCode = "",
         deletedTokenCount = 0,
         startPersesTimeSeconds = 101,
@@ -40,7 +40,7 @@ class EventDiffStatisticsTest {
       DifferentialEvents.Edit(
         contextualDescription = "Not interesting edit",
         structureDescription = "",
-        propertyTestResult = PropertyTestResult(ExitCode.ONE, 200),
+        propertyTestResult = TestScriptVerdict(ExitCode.ONE, 200),
         successfullyDeletedCode = "",
         deletedTokenCount = 3,
         startPersesTimeSeconds = 105,
@@ -49,7 +49,7 @@ class EventDiffStatisticsTest {
       DifferentialEvents.Edit(
         contextualDescription = "Another interesting edit",
         structureDescription = "",
-        propertyTestResult = PropertyTestResult(ExitCode.ZERO, 150),
+        propertyTestResult = TestScriptVerdict(ExitCode.ZERO, 150),
         successfullyDeletedCode = "",
         deletedTokenCount = 0,
         startPersesTimeSeconds = 125,
@@ -121,7 +121,7 @@ class EventDiffStatisticsTest {
       DifferentialEvents.Edit(
         contextualDescription = "",
         structureDescription = "",
-        propertyTestResult = PropertyTestResult(ExitCode.ZERO, 50),
+        propertyTestResult = TestScriptVerdict(ExitCode.ZERO, 50),
         successfullyDeletedCode = "",
         deletedTokenCount = 0,
         startPersesTimeSeconds = 12,
@@ -130,7 +130,7 @@ class EventDiffStatisticsTest {
       DifferentialEvents.Edit(
         contextualDescription = "",
         structureDescription = "",
-        propertyTestResult = PropertyTestResult(ExitCode.ZERO, 150),
+        propertyTestResult = TestScriptVerdict(ExitCode.ZERO, 150),
         successfullyDeletedCode = "",
         deletedTokenCount = 0,
         startPersesTimeSeconds = 35,

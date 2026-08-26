@@ -14,34 +14,20 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction
+package org.perses.util
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import org.perses.util.shell.ExitCode
-
-/** The result of a test, including runtime information, i.e., time, exit code.  */
-data class PropertyTestResult(
-  val exitCode: ExitCode,
-  val elapsedMillis: Int,
+data class SpaceSize(
+  val bytes: Long,
 ) {
-  @get:JsonIgnore
-  val isInteresting: Boolean
-    get() = exitCode.isZero()
+  fun toKiloBytes() = bytes / 1000
 
-  @get:JsonIgnore
-  val isNotInteresting: Boolean
-    get() = !isInteresting
+  fun toMegaBytes() = toKiloBytes() / 1000
+
+  fun toGigaBytes() = toMegaBytes() / 1000
 
   companion object {
-    val INTERESTING_RESULT = PropertyTestResult(ExitCode.ZERO, elapsedMillis = 0)
-    val NON_INTERESTING_RESULT = PropertyTestResult(ExitCode.ONE, elapsedMillis = 0)
+    fun megaBytes(mb: Long): SpaceSize = kiloBytes(kb = mb * 1000)
 
-    fun of(
-      exitCode: Int,
-      elapsedMillis: Int,
-    ) = PropertyTestResult(
-      ExitCode(exitCode),
-      elapsedMillis,
-    )
+    fun kiloBytes(kb: Long) = SpaceSize(bytes = kb * 1000)
   }
 }

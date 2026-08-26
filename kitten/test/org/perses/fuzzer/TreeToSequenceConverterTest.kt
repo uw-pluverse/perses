@@ -22,28 +22,25 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.TestUtility
 import org.perses.fuzzer.languagemodel.NodeRepresentation
 import org.perses.fuzzer.languagemodel.NodeRepresentationList
 import java.io.File
 import java.nio.file.Files
-import java.nio.file.Paths
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class TreeToSequenceConverterTest {
   private val tempDir = Files.createTempDirectory(javaClass.simpleName)
+
+  // Covers each encoding path once: the top-level Kleene star with several children,
+  // collapsed stmt -> assign and stmt -> print chains, a nested block with its own
+  // Kleene star, both expr alternatives, and both atom alternatives.
   private val test =
     """
-    int main () {
-      return 0;
-    }
-    """.trimIndent()
-  private val rustTest =
-    """
-    fn main() {
-      println!("hello_world");
+    x = 1;
+    {
+      print x + y;
     }
     """.trimIndent()
 
@@ -55,70 +52,24 @@ class TreeToSequenceConverterTest {
 
   @Test
   fun testSparTreeToSequence() {
-    var program = File(tempDir.toFile(), "test.c")
+    val program = File(tempDir.toFile(), "test.tiny")
     program.writeText(test)
-    var parserFacade =
-      TestUtility.generateAdhocFacade(
-        Paths.get("kitten/test/fuzzer_test_data/grammar_for_testing/OrigC.g4"),
-        startRule = "compilationUnit",
-        tokenNamesOfIdentifiers = listOf("Identifier"),
-        workingDir = tempDir,
-        enablePnfNormalization = true,
-      )
-    var treeFuzzer =
-      SparTreeFuzzer.fromFile(parserFacade, program)
-    var seq = TreeToSequenceConverter.convertWithPreOrder(treeFuzzer.sparTree.realRoot)
+    val treeFuzzer = SparTreeFuzzer.fromFile(TinyGrammarFacade.facade, program)
+    val seq = TreeToSequenceConverter.convertWithPreOrder(treeFuzzer.sparTree.realRoot)
+    // In pre-order: the top-level Kleene star with two statements, stmt -> assign,
+    // expr -> atom for `1`, stmt -> block, the block's single-statement Kleene star,
+    // stmt -> print, and expr -> addition for `x + y`. The node types are the ids of
+    // kleene_star__program_1 (4), stmt (5), and expr (9) in the normalized grammar.
     assertThat(seq).isEqualTo(
       ImmutableList
         .of(
-          NodeRepresentation.create(nodeType = 230, featureValue = 0),
-          NodeRepresentation.create(nodeType = 342, featureValue = 0),
-          NodeRepresentation.create(nodeType = 362, featureValue = 0),
-          NodeRepresentation.create(nodeType = 233, featureValue = 0),
-          NodeRepresentation.create(nodeType = 163, featureValue = 0),
-          NodeRepresentation.create(nodeType = 164, featureValue = 6),
-          NodeRepresentation.create(nodeType = 325, featureValue = 0),
-          NodeRepresentation.create(nodeType = 322, featureValue = 1),
-          NodeRepresentation.create(nodeType = 224, featureValue = 0),
-          NodeRepresentation.create(nodeType = 341, featureValue = 0),
-          NodeRepresentation.create(nodeType = 361, featureValue = 1),
-          NodeRepresentation.create(nodeType = 413, featureValue = 5),
-          NodeRepresentation.create(nodeType = 228, featureValue = 2),
-          NodeRepresentation.create(nodeType = 226, featureValue = 0),
-          NodeRepresentation.create(nodeType = 347, featureValue = 0),
-        ).fold(NodeRepresentationList.Builder()) { acc, nodeRepresentation ->
-          acc.add(nodeRepresentation)
-          acc
-        }.build(),
-    )
-    program = File(tempDir.toFile(), "test.rs")
-    program.writeText(rustTest)
-    parserFacade =
-      TestUtility.generateAdhocFacade(
-        Paths.get("kitten/test/fuzzer_test_data/grammar_for_testing/Rust.g4"),
-        startRule = "crate",
-        tokenNamesOfIdentifiers = listOf("Ident"),
-        workingDir = tempDir,
-        enablePnfNormalization = true,
-      )
-    treeFuzzer =
-      SparTreeFuzzer.fromFile(parserFacade, program)
-    seq = TreeToSequenceConverter.convertWithPreOrder(treeFuzzer.sparTree.realRoot)
-    assertThat(seq).isEqualTo(
-      ImmutableList
-        .of(
-          NodeRepresentation.create(nodeType = 34, featureValue = 0),
-          NodeRepresentation.create(nodeType = 41, featureValue = 0),
-          NodeRepresentation.create(nodeType = 42, featureValue = 8),
-          NodeRepresentation.create(nodeType = 91, featureValue = 0),
-          NodeRepresentation.create(nodeType = 291, featureValue = 0),
-          NodeRepresentation.create(nodeType = 294, featureValue = 0),
-          NodeRepresentation.create(nodeType = 41, featureValue = 4),
-          NodeRepresentation.create(nodeType = 190, featureValue = 0),
-          NodeRepresentation.create(nodeType = 379, featureValue = 1),
-          NodeRepresentation.create(nodeType = 685, featureValue = 0),
-          NodeRepresentation.create(nodeType = 177, featureValue = 0),
-          NodeRepresentation.create(nodeType = 100, featureValue = 0),
+          NodeRepresentation.create(nodeType = 4, featureValue = 1),
+          NodeRepresentation.create(nodeType = 5, featureValue = 0),
+          NodeRepresentation.create(nodeType = 9, featureValue = 0),
+          NodeRepresentation.create(nodeType = 5, featureValue = 2),
+          NodeRepresentation.create(nodeType = 4, featureValue = 0),
+          NodeRepresentation.create(nodeType = 5, featureValue = 1),
+          NodeRepresentation.create(nodeType = 9, featureValue = 1),
         ).fold(NodeRepresentationList.Builder()) { acc, nodeRepresentation ->
           acc.add(nodeRepresentation)
           acc

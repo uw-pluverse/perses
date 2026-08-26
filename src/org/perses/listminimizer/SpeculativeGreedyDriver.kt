@@ -17,6 +17,7 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
+import org.perses.reduction.CandidateOutcome
 
 /**
  * Drives a [DeletionCandidateCursor]: it keeps up to [concurrency] candidates in flight and commits
@@ -68,8 +69,7 @@ class SpeculativeGreedyDriver<T : Any, PropertyPayload>(
     while (inFlight.isNotEmpty()) {
       val head = inFlight.removeFirst()
       val result = head.handle.get()
-      if (result is ListMinimizerPropertyTestResult.Completed &&
-        result.result.isInteresting &&
+      if (result is CandidateOutcome.Interesting &&
         head.candidate.deletedWrappers.none { it.deleted }
       ) {
         val followers = ArrayDeque<ImmutableList<ElementWrapper<T>>>()

@@ -24,7 +24,7 @@ import org.antlr.v4.runtime.Recognizer
 import org.antlr.v4.runtime.atn.ATNConfigSet
 import org.antlr.v4.runtime.dfa.DFA
 import org.antlr.v4.runtime.misc.Interval
-import org.perses.util.Util
+import org.perses.util.StringUtil
 import java.util.BitSet
 
 class FailOnErrorAntlrErrorListener(
@@ -53,7 +53,7 @@ class FailOnErrorAntlrErrorListener(
         append("column: ").append(charPositionInLine).append('\n')
         if (msg != null) {
           append("offending msg: ").append(msg).append('\n')
-          append("UTF chars: ").append(Util.findUtf16Chars(msg)).append("\n")
+          append("UTF chars: ").append(StringUtil.findUtf16Chars(msg)).append("\n")
         }
         if (recognizer is Lexer) {
           append("The whole input is shown below:\n")

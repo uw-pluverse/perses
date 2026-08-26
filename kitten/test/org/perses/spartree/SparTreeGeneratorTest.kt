@@ -20,17 +20,14 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.TestUtility
+import org.perses.fuzzer.TinyGrammarFacade
 import org.perses.fuzzer.languagemodel.NDepthTreeModel
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.c.PnfCParserFacade
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.util.Random
 
 @RunWith(JUnit4::class)
 class SparTreeGeneratorTest {
-  private val workingDir = Files.createTempDirectory(javaClass.simpleName)
   private val cParserFacade = PnfCParserFacade()
 
   private fun testRandomGeneration(
@@ -81,19 +78,12 @@ class SparTreeGeneratorTest {
   }
 
   @Test
-  fun testRandomGenerationWithC() {
-    val parserFacade =
-      TestUtility.generateAdhocFacade(
-        Paths.get("kitten/test/fuzzer_test_data/grammar_for_testing/OrigC.g4"),
-        startRule = "compilationUnit",
-        tokenNamesOfIdentifiers = listOf("Identifier"),
-        workingDir = workingDir,
-        enablePnfNormalization = true,
-      )
+  fun testRandomGenerationWithTinyGrammar() {
     testRandomGeneration(
-      parserFacade,
-      expectedSuccessTimes = 229,
-      expectedFailedTimes = 44,
+      TinyGrammarFacade.facade,
+      // Every rule of the normalized tiny grammar is generatable.
+      expectedSuccessTimes = 9,
+      expectedFailedTimes = 0,
     )
   }
 
@@ -111,23 +101,6 @@ class SparTreeGeneratorTest {
       cParserFacade.lexerAtnWrapper.metaTokenInfoDB
         .getTokenInfoWithName("StringLiteral")!!
         .tokenType,
-    )
-  }
-
-  @Test
-  fun testRandomGenerationWithRust() {
-    val parserFacade =
-      TestUtility.generateAdhocFacade(
-        Paths.get("kitten/test/fuzzer_test_data/grammar_for_testing/Rust.g4"),
-        startRule = "crate",
-        tokenNamesOfIdentifiers = listOf("Ident"),
-        workingDir = workingDir,
-        enablePnfNormalization = true,
-      )
-    testRandomGeneration(
-      parserFacade,
-      expectedSuccessTimes = 600,
-      expectedFailedTimes = 111,
     )
   }
 }

@@ -46,7 +46,7 @@ import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.grammar.AbstractParserFacade
 import org.perses.program.AbstractPersesToken
 import org.perses.program.PersesTokenFactory
-import org.perses.util.Util
+import org.perses.util.CollectionUtil
 import org.perses.util.sample
 import org.perses.util.toImmutableMap
 import java.util.Random
@@ -486,7 +486,7 @@ abstract class AbstractSparTreeGenerator(
       if (corpus.containsKey(tokenType)) {
         corpus[tokenType]!!.add(lexerNode.token.lexemeText)
       } else {
-        val newSet = Util.createConcurrentSet<String>()
+        val newSet = CollectionUtil.createConcurrentSet<String>()
         newSet.add(lexerNode.token.lexemeText)
         corpus[tokenType] = newSet
       }

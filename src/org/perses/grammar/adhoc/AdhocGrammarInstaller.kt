@@ -21,7 +21,7 @@ import org.perses.PersesConstants
 import org.perses.antlr.AntlrCompiler
 import org.perses.antlr.pnf.PnfNormalizer
 import org.perses.grammar.adhoc.AdhocGrammarConfiguration.ParserFacadeJarFile.LanguageInfo
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.java.JarFile
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -56,11 +56,11 @@ class AdhocGrammarInstaller(
       }
 
     val workingDirectory =
-      Util.ensureDirExists(
+      FileSystemUtil.ensureDirExists(
         grammarRootFolder.resolve("generate_jar"),
       )
 
-    Util.clearDirectory(workingDirectory)
+    FileSystemUtil.clearDirectory(workingDirectory)
 
     val compiler =
       AntlrCompiler.createFromFiles(
@@ -117,7 +117,7 @@ class AdhocGrammarInstaller(
   ): Path {
     val sourceFolder = grammarRootFolder.resolve(packageName.replace(".", "/"))
     val result = Files.createDirectories(sourceFolder)
-    Util.ensureDirExists(result)
+    FileSystemUtil.ensureDirExists(result)
     return result
   }
 
@@ -139,7 +139,7 @@ class AdhocGrammarInstaller(
       persesConstants: PersesConstants,
     ): Path {
       val result = grammarConfiguration.computeDirectoryForGrammar(persesConstants)
-      Util.ensureDirExists(result)
+      FileSystemUtil.ensureDirExists(result)
       return result
     }
 

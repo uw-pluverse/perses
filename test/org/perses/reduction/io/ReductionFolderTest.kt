@@ -28,7 +28,7 @@ import org.perses.program.AbstractDataKind
 import org.perses.program.BinaryReductionFile
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.Shells
 import org.perses.util.toImmutableList
 import org.perses.util.transformToImmutableList
@@ -321,7 +321,7 @@ class ReductionFolderTest {
     // The constructor writes only the script + dependency files, so populate the mutable files.
     originalReductionInputs.mutableFiles.forEach { file ->
       val absPath = reductionFolder.computeAbsPathForOrigFile(file)
-      Util.ensureDirExists(absPath.parent)
+      FileSystemUtil.ensureDirExists(absPath.parent)
       absPath.writeText("content")
     }
     val nestedInFolder =
@@ -377,7 +377,7 @@ class ReductionFolderTest {
       )
     originalReductionInputs.mutableFiles.forEach { file ->
       val absPath = reductionFolder.computeAbsPathForOrigFile(file)
-      Util.ensureDirExists(absPath.parent)
+      FileSystemUtil.ensureDirExists(absPath.parent)
       absPath.writeText("content")
     }
 
@@ -554,7 +554,7 @@ class ReductionFolderTest {
       )
     inputs.mutableFiles.forEach { file ->
       val absPath = folder.computeAbsPathForOrigFile(file)
-      Util.ensureDirExists(absPath.parent)
+      FileSystemUtil.ensureDirExists(absPath.parent)
       absPath.writeText("content")
     }
     return folder
@@ -564,7 +564,7 @@ class ReductionFolderTest {
     ScriptFile(
       Files.createFile(path).apply {
         this.writeText(Shells.SHEBANG_BASH)
-        Util.setExecutable(this)
+        FileSystemUtil.setExecutable(this)
       },
     )
 }

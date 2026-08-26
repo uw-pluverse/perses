@@ -25,7 +25,8 @@ import org.perses.reduction.ReducerContext
 import org.perses.util.AbstractFileContent
 import org.perses.util.AutoDeletableFolder
 import org.perses.util.FileNameContentPair
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
+import org.perses.util.IoUtil
 import org.perses.util.ktInfo
 import java.nio.file.Files
 import java.nio.file.Path
@@ -91,7 +92,7 @@ abstract class AbstractLlmBasedReducer(
           val defaultScriptPath = tempDir.file.resolve(DEFAULT_LLM_CLIENT_SCRIPT_BASE_NAME)
           check(defaultScriptPath.notExists()) { "$defaultScriptPath already exists." }
           defaultLLMClientScript.content.writeToFile(defaultScriptPath)
-          Util.setExecutable(defaultScriptPath)
+          FileSystemUtil.setExecutable(defaultScriptPath)
           listenerManager.onAdHocMessageEvent(
             fixpointReductionState.createAdHocMessageEvent {
               "No --llm-client-script was provided, so LPR is falling back to the bundled " +
@@ -228,7 +229,7 @@ abstract class AbstractLlmBasedReducer(
       FileNameContentPair(
         fileName = DEFAULT_LLM_CLIENT_SCRIPT_BASE_NAME,
         content =
-          Util
+          IoUtil
             .openResourceAsStream(
               resourceName =
                 "/lpr/src/" +

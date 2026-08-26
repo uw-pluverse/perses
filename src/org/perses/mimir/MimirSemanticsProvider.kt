@@ -27,7 +27,7 @@ import org.perses.reduction.semantics.SemanticTokenType
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.SparTree
-import org.perses.util.Util
+import org.perses.util.CollectionUtil
 
 // TODO(cnsun): this class needs thorough testing.
 class MimirSemanticsProvider internal constructor(
@@ -112,7 +112,7 @@ class MimirSemanticsProvider internal constructor(
   ): Set<LexerRuleSparTreeNode> = treeNodeToSemanticTokenMap.get(treeNode)
 
   override fun removeDeletedNodes() {
-    Util.removeElementsFromList(
+    CollectionUtil.removeElementsFromList(
       list = defs,
       criterionToKeep = { index, element ->
         element.isPermanentlyDeleted.not()

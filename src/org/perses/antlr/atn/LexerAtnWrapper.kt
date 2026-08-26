@@ -44,8 +44,8 @@ import org.perses.antlr.atn.nfa.PersesATNState
 import org.perses.antlr.atn.nfa.PersesTransitionAst
 import org.perses.antlr.atn.tdtree.TDTree
 import org.perses.util.SimpleStack
-import org.perses.util.Util.lazyAssert
 import org.perses.util.ktWarning
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.min

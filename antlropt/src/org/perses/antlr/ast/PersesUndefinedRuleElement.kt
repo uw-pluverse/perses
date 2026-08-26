@@ -19,9 +19,6 @@ package org.perses.antlr.ast
 import org.perses.util.ast.Indent
 import java.io.PrintStream
 
-/**
- * TODO(cnsun): to be tested.
- */
 class PersesUndefinedRuleElement : AbstractPersesRuleElement() {
   override val tag: AstTag?
     get() = AstTag.UNDEFINED
@@ -49,7 +46,6 @@ class PersesUndefinedRuleElement : AbstractPersesRuleElement() {
     return PersesUndefinedRuleElement()
   }
 
-  // TODO(cnsun): make sure equivalence test works for this class.
   override fun extraEquivalenceTest(other: AbstractPersesRuleElement): Boolean {
     // this element is not equivalent to any element including itself.
     return false

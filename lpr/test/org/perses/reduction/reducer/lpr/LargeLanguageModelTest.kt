@@ -22,14 +22,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.util.AutoDeletableFolder
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Paths
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class LargeLanguageModelTest {
-  val tempDir = Util.createTempDirForObject(this)
+  val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -133,7 +133,7 @@ class LargeLanguageModelTest {
     LargeLanguageModel(
       Paths.get("lpr/scripts/llm_client_mock_to_test_functions.py"),
       tempDirectoryCreator = {
-        AutoDeletableFolder(Util.ensureDirExists(tempDir.resolve("temp")))
+        AutoDeletableFolder(FileSystemUtil.ensureDirExists(tempDir.resolve("temp")))
       },
     )
 

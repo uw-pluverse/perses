@@ -20,7 +20,7 @@ import org.perses.program.ProgramSize
 import org.perses.reduction.event.AbstractTestScriptExecutionEvent.TestScriptExecutionEvent
 import org.perses.util.FileStreamPool
 import org.perses.util.Serialization
-import org.perses.util.Util
+import org.perses.util.StringUtil
 
 class ActionSetEffectProfiler(
   stream: FileStreamPool.ManagedPrintStream,
@@ -60,7 +60,7 @@ class ActionSetEffectProfiler(
           val uninterestingSize = uninteresting.size
           val total = interestingSize + uninterestingSize
           val percentage =
-            Util
+            StringUtil
               .computePercentage(
                 interestingSize,
                 total,

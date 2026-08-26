@@ -35,7 +35,7 @@ import org.perses.program.AbstractPersesToken
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.transformToImmutableList
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -45,7 +45,7 @@ class ParserFacadeTest {
   private val cFacade = CParserFacade()
   private val pnfcFacade = PnfCParserFacade()
   private val scalaFacade = PnfScalaParserFacade()
-  private val tempDir = Util.createTempDirForObject(this)
+  private val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   private var scalaProgram: TokenizedProgram? = null
 

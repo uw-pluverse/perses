@@ -22,7 +22,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.ShellCommandOnPath
 import java.nio.file.Files
 import java.nio.file.Path
@@ -33,7 +33,7 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class JavaLanguageServerTest {
-  private val tempDir: Path = Util.createTempDirForObject(this)
+  private val tempDir: Path = FileSystemUtil.createTempDirForObject(this)
 
   // Use the startup script from the runfiles
   private val jdtlsCommand =

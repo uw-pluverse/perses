@@ -32,6 +32,7 @@ import org.perses.cmd.PersesFlagGroup
 import org.perses.cmd.ProfilingFlagGroup
 import org.perses.cmd.ReductionAlgorithmControlFlagGroup
 import org.perses.cmd.ReductionControlFlagGroup
+import org.perses.cmd.SfcFlagGroup
 import org.perses.cmd.TRecFlagGroup
 import org.perses.cmd.VulcanFlagGroup
 import org.perses.program.EnumFormatControl
@@ -68,6 +69,8 @@ open class PersesCommandOptions : AbstractPersesCommandOptions() {
   val lprFlags = registerFlags(LPRFlagGroup())
 
   open val latraFlags = registerFlags(LatraFlagGroup())
+
+  open val sfcFlags = registerFlags(SfcFlagGroup())
 
   open val mimirFlags = registerFlags(MimirFlagGroup())
 

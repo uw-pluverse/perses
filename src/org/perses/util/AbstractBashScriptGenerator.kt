@@ -31,7 +31,7 @@ abstract class AbstractBashScriptGenerator {
 
     val sourceCode = lines.joinToString("\n")
     path.writeText(sourceCode)
-    Util.setExecutable(path)
+    FileSystemUtil.setExecutable(path)
     return ScriptFile(path)
   }
 

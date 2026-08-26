@@ -52,7 +52,7 @@ abstract class AbstractNonDeletionBasedReducer(
     // TODO(cnsun): need to see whether we need to accept a single edit or a list of edits.
     edits: List<AbstractSparTreeEdit<*>>,
     fixpointReductionState: FixpointReductionState,
-  ): TreeEditWithItsResult? {
+  ): EditTestPayload? {
     val filtered =
       edits.filter { edit ->
         if (mutationHistory.add(edit.program)) {

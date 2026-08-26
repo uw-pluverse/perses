@@ -16,10 +16,11 @@
  */
 package org.perses.spartree
 
+import org.perses.util.lazyAssert
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import org.perses.program.AbstractPersesToken
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 abstract class AbstractTokenizedProgramCustomizer protected constructor(
   actionSet: AbstractActionSet<*>,

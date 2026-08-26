@@ -19,7 +19,7 @@ package org.perses.util.shell
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.Shells.Companion.SHEBANG_BASH
 import java.nio.file.Files
 import kotlin.io.path.ExperimentalPathApi
@@ -63,7 +63,7 @@ class ProcessUtilTest {
         |sleep 999999
           """.trimMargin(),
         )
-        Util.setExecutable(it)
+        FileSystemUtil.setExecutable(it)
       }
     val childScript =
       tempDir.resolve("child.sh").also {
@@ -74,7 +74,7 @@ class ProcessUtilTest {
         |sleep 999999
           """.trimMargin(),
         )
-        Util.setExecutable(it)
+        FileSystemUtil.setExecutable(it)
       }
     val mainProcess = ProcessBuilder("bash", childScript.toString()).start()
     assertThat(mainProcess.isAlive).isTrue()

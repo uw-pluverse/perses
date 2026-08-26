@@ -5,14 +5,13 @@ package(default_visibility = ["//test:__subpackages__"])
 kt_jvm_test(
     name = "SparTreeGeneratorTest",
     srcs = ["SparTreeGeneratorTest.kt"],
-    data = ["//kitten/test/fuzzer_test_data"],
     deps = [
         "//:truth",
         "//kitten/src/org/perses/spartree:generator",
+        "//kitten/test/org/perses/fuzzer:tiny_grammar_facade",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/c:language_kind",
-        "//test/org/perses:test_util",
     ],
 )
 

@@ -16,7 +16,9 @@
  */
 package org.perses.listminimizer
 
-import org.perses.util.Util
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.CollectionUtil
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 import kotlin.random.Random
 
@@ -43,7 +45,7 @@ abstract class AbstractProbabilisticDeltaDebugger<T : Any, PropertyPayload, Payl
         "The list cannot be empty."
       }
       sortElements(copyBest)
-      Util.lazyAssert { copyBest.none { shouldExcludeElementFromReduction(it) } }
+      lazyAssert { copyBest.none { shouldExcludeElementFromReduction(it) } }
       val toBeDeleted = findNextTest(copyBest)
 
       // avoid deleting all elements multiple times
@@ -61,12 +63,10 @@ abstract class AbstractProbabilisticDeltaDebugger<T : Any, PropertyPayload, Payl
           deleted_ = toBeDeleted.toImmutableList(),
         )
 
-      val propertyTestResult = testProperty(config)
-      if (propertyTestResult is ListMinimizerPropertyTestResult.Completed<T, PropertyPayload> &&
-        propertyTestResult.result.isInteresting
-      ) {
-        val newBest = Util.computeDifference(best, toBeDeleted)
-        updateBest(newBest, propertyTestResult.payload)
+      val outcome = testProperty(config).get()
+      if (outcome is CandidateOutcome.Interesting<PropertyPayload>) {
+        val newBest = CollectionUtil.computeDifference(best, toBeDeleted)
+        updateBest(newBest, outcome.payload)
       } else {
         updatePayload(toBeDeleted)
       }

@@ -35,7 +35,7 @@ class RuleRefCounterAstVisitor(
 
   companion object {
     @JvmStatic
-    fun countRuleRefences(
+    fun countRuleReferences(
       target: RuleNameHandle,
       ast: AbstractPersesRuleElement,
     ): Int {

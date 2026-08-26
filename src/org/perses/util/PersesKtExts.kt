@@ -21,7 +21,6 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
 import com.google.common.primitives.ImmutableIntArray
-import org.perses.util.Util.lazyAssert
 import java.util.Random
 
 fun <T> Random.sample(list: List<T>): T {

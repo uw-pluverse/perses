@@ -16,7 +16,8 @@
  */
 package org.perses.grammar.adhoc
 
-import org.perses.util.Util.ensureDirExists
+import org.perses.util.FileSystemUtil
+import org.perses.util.FileSystemUtil.ensureDirExists
 import java.nio.file.Paths
 
 object ExistingLangParserFacadeStubTemplateDumpMain {

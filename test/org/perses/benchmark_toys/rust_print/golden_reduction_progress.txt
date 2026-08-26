@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -172,40 +178,40 @@ Parser Facade: class org.perses.grammar.rust.PnfRustParserFacade
 The spar-tree is the following.
 crate{id=1,slot_type=crate}
 |___(*){id=3,slot_type=[mod_body,kleene_star__mod_body_2]}
-    |___fn_decl{id=8,slot_type=[item,altnt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
+    |___fn_decl{id=8,slot_type=[item,alt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
         |___fn_head{id=9,slot_type=fn_head}
         |   |___Token:fn{id=77,slot_type=Token}
         |   |___Token:main{id=79,slot_type=[ident,Ident]}
         |___Token:({id=10,slot_type=Token}
         |___Token:){id=11,slot_type=Token}
-        |___block_with_inner_attrs{id=13,slot_type=[altnt_block__fn_decl_4,block_with_inner_attrs]}
+        |___block_with_inner_attrs{id=13,slot_type=[alt_block__fn_decl_4,block_with_inner_attrs]}
             |___Token:{{id=14,slot_type=Token}
             |___(*){id=15,slot_type=kleene_star__block_with_inner_attrs_2}
-            |   |___macro_invocation_semi{id=60,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |   |___macro_invocation_semi{id=60,slot_type=[stmt,item,alt_block__item_7,macro_invocation_semi]}
             |   |   |___Token:println{id=76,slot_type=[simple_path,simple_path_segment,ident,Ident]}
             |   |   |___Token:!{id=62,slot_type=Token}
-            |   |   |___aux_rule__macro_invocation_semi_7{id=64,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
-            |   |       |___aux_rule__macro_invocation_semi_8{id=67,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |   |   |___aux_rule__macro_invocation_semi_7{id=64,slot_type=[alt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |   |       |___aux_rule__macro_invocation_semi_8{id=67,slot_type=[alt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
             |   |       |   |___Token:({id=68,slot_type=Token}
             |   |       |   |___(*){id=69,slot_type=kleene_star__inner_attr_1}
             |   |       |   |   |___Token:"ingress"{id=73,slot_type=[tt,aux_rule__tt_1,StringLit]}
             |   |       |   |___Token:){id=70,slot_type=Token}
             |   |       |___Token:;{id=66,slot_type=Token}
-            |   |___macro_invocation_semi{id=41,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |   |___macro_invocation_semi{id=41,slot_type=[stmt,item,alt_block__item_7,macro_invocation_semi]}
             |   |   |___Token:println{id=57,slot_type=[simple_path,simple_path_segment,ident,Ident]}
             |   |   |___Token:!{id=43,slot_type=Token}
-            |   |   |___aux_rule__macro_invocation_semi_7{id=45,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
-            |   |       |___aux_rule__macro_invocation_semi_8{id=48,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |   |   |___aux_rule__macro_invocation_semi_7{id=45,slot_type=[alt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |   |       |___aux_rule__macro_invocation_semi_8{id=48,slot_type=[alt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
             |   |       |   |___Token:({id=49,slot_type=Token}
             |   |       |   |___(*){id=50,slot_type=kleene_star__inner_attr_1}
             |   |       |   |   |___Token:"hello_world"{id=54,slot_type=[tt,aux_rule__tt_1,StringLit]}
             |   |       |   |___Token:){id=51,slot_type=Token}
             |   |       |___Token:;{id=47,slot_type=Token}
-            |   |___macro_invocation_semi{id=22,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |   |___macro_invocation_semi{id=22,slot_type=[stmt,item,alt_block__item_7,macro_invocation_semi]}
             |       |___Token:println{id=38,slot_type=[simple_path,simple_path_segment,ident,Ident]}
             |       |___Token:!{id=24,slot_type=Token}
-            |       |___aux_rule__macro_invocation_semi_7{id=26,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
-            |           |___aux_rule__macro_invocation_semi_8{id=29,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |       |___aux_rule__macro_invocation_semi_7{id=26,slot_type=[alt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |           |___aux_rule__macro_invocation_semi_8{id=29,slot_type=[alt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
             |           |   |___Token:({id=30,slot_type=Token}
             |           |   |___(*){id=31,slot_type=kleene_star__inner_attr_1}
             |           |   |   |___Token:"egress"{id=35,slot_type=[tt,aux_rule__tt_1,StringLit]}
@@ -328,7 +334,7 @@ The current best program is the following
 
 ==========Testing the following program (5): fail===========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__fn_decl_4->;
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__fn_decl_4->;
     --file: hello.rs--
     fn main() ;
 ------------------------------------------------------------
@@ -816,20 +822,20 @@ Parser Facade: class org.perses.grammar.rust.PnfRustParserFacade
 The spar-tree is the following.
 crate{id=91,slot_type=crate}
 |___(*){id=93,slot_type=[mod_body,kleene_star__mod_body_2]}
-    |___fn_decl{id=98,slot_type=[item,altnt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
+    |___fn_decl{id=98,slot_type=[item,alt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
         |___fn_head{id=99,slot_type=fn_head}
         |   |___Token:fn{id=127,slot_type=Token}
         |   |___Token:main{id=129,slot_type=[ident,Ident]}
         |___Token:({id=100,slot_type=Token}
         |___Token:){id=101,slot_type=Token}
-        |___block_with_inner_attrs{id=103,slot_type=[altnt_block__fn_decl_4,block_with_inner_attrs]}
+        |___block_with_inner_attrs{id=103,slot_type=[alt_block__fn_decl_4,block_with_inner_attrs]}
             |___Token:{{id=104,slot_type=Token}
             |___(*){id=105,slot_type=kleene_star__block_with_inner_attrs_2}
-            |   |___macro_invocation_semi{id=110,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |   |___macro_invocation_semi{id=110,slot_type=[stmt,item,alt_block__item_7,macro_invocation_semi]}
             |       |___Token:println{id=126,slot_type=[simple_path,simple_path_segment,ident,Ident]}
             |       |___Token:!{id=112,slot_type=Token}
-            |       |___aux_rule__macro_invocation_semi_7{id=114,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
-            |           |___aux_rule__macro_invocation_semi_8{id=117,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |       |___aux_rule__macro_invocation_semi_7{id=114,slot_type=[alt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |           |___aux_rule__macro_invocation_semi_8{id=117,slot_type=[alt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
             |           |   |___Token:({id=118,slot_type=Token}
             |           |   |___(*){id=119,slot_type=kleene_star__inner_attr_1}
             |           |   |   |___Token:"hello_world"{id=123,slot_type=[tt,aux_rule__tt_1,StringLit]}
@@ -1303,20 +1309,20 @@ Parser Facade: class org.perses.grammar.rust.PnfRustParserFacade
 The spar-tree is the following.
 crate{id=91,slot_type=crate}
 |___(*){id=93,slot_type=[mod_body,kleene_star__mod_body_2]}
-    |___fn_decl{id=98,slot_type=[item,altnt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
+    |___fn_decl{id=98,slot_type=[item,alt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
         |___fn_head{id=99,slot_type=fn_head}
         |   |___Token:fn{id=127,slot_type=Token}
         |   |___Token:main{id=129,slot_type=[ident,Ident]}
         |___Token:({id=100,slot_type=Token}
         |___Token:){id=101,slot_type=Token}
-        |___block_with_inner_attrs{id=103,slot_type=[altnt_block__fn_decl_4,block_with_inner_attrs]}
+        |___block_with_inner_attrs{id=103,slot_type=[alt_block__fn_decl_4,block_with_inner_attrs]}
             |___Token:{{id=104,slot_type=Token}
             |___(*){id=105,slot_type=kleene_star__block_with_inner_attrs_2}
-            |   |___macro_invocation_semi{id=110,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |   |___macro_invocation_semi{id=110,slot_type=[stmt,item,alt_block__item_7,macro_invocation_semi]}
             |       |___Token:println{id=126,slot_type=[simple_path,simple_path_segment,ident,Ident]}
             |       |___Token:!{id=112,slot_type=Token}
-            |       |___aux_rule__macro_invocation_semi_7{id=114,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
-            |           |___aux_rule__macro_invocation_semi_8{id=117,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |       |___aux_rule__macro_invocation_semi_7{id=114,slot_type=[alt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |           |___aux_rule__macro_invocation_semi_8{id=117,slot_type=[alt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
             |           |   |___Token:({id=118,slot_type=Token}
             |           |   |___(*){id=119,slot_type=kleene_star__inner_attr_1}
             |           |   |   |___Token:"hello_world"{id=123,slot_type=[tt,aux_rule__tt_1,StringLit]}
@@ -1692,20 +1698,20 @@ Parser Facade: class org.perses.grammar.rust.PnfRustParserFacade
 The spar-tree is the following.
 crate{id=91,slot_type=crate}
 |___(*){id=93,slot_type=[mod_body,kleene_star__mod_body_2]}
-    |___fn_decl{id=98,slot_type=[item,altnt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
+    |___fn_decl{id=98,slot_type=[item,alt_block__item_7,aux_rule__item_8,pub_item,fn_decl]}
         |___fn_head{id=99,slot_type=fn_head}
         |   |___Token:fn{id=127,slot_type=Token}
         |   |___Token:main{id=129,slot_type=[ident,Ident]}
         |___Token:({id=100,slot_type=Token}
         |___Token:){id=101,slot_type=Token}
-        |___block_with_inner_attrs{id=103,slot_type=[altnt_block__fn_decl_4,block_with_inner_attrs]}
+        |___block_with_inner_attrs{id=103,slot_type=[alt_block__fn_decl_4,block_with_inner_attrs]}
             |___Token:{{id=104,slot_type=Token}
             |___(*){id=105,slot_type=kleene_star__block_with_inner_attrs_2}
-            |   |___macro_invocation_semi{id=110,slot_type=[stmt,item,altnt_block__item_7,macro_invocation_semi]}
+            |   |___macro_invocation_semi{id=110,slot_type=[stmt,item,alt_block__item_7,macro_invocation_semi]}
             |       |___Token:println{id=126,slot_type=[simple_path,simple_path_segment,ident,Ident]}
             |       |___Token:!{id=112,slot_type=Token}
-            |       |___aux_rule__macro_invocation_semi_7{id=114,slot_type=[altnt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
-            |           |___aux_rule__macro_invocation_semi_8{id=117,slot_type=[altnt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
+            |       |___aux_rule__macro_invocation_semi_7{id=114,slot_type=[alt_block__macro_invocation_semi_4,aux_rule__macro_invocation_semi_7]}
+            |           |___aux_rule__macro_invocation_semi_8{id=117,slot_type=[alt_block__macro_invocation_semi_5,aux_rule__macro_invocation_semi_8]}
             |           |   |___Token:({id=118,slot_type=Token}
             |           |   |___(*){id=119,slot_type=kleene_star__inner_attr_1}
             |           |   |   |___Token:"hello_world"{id=123,slot_type=[tt,aux_rule__tt_1,StringLit]}

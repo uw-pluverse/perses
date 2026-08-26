@@ -16,7 +16,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |___(?){id=11,slot_type=optional__compoundStatement_1}
                 |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
                 |       |___jumpStatement{id=18,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=22,slot_type=Return}
                 |           |   |___(?){id=23,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:0{id=42,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}

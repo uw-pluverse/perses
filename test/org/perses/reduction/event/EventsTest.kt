@@ -30,12 +30,12 @@ import org.perses.program.SourceFile
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.reduction.reducer.token.ConcurrentTokenSlicer
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Files
 
 @RunWith(JUnit4::class)
 class EventsTest {
-  private val root = Util.createTempDirForObject(this)
+  private val root = FileSystemUtil.createTempDirForObject(this)
   private val script = ScriptFile(Files.writeString(root.resolve("r.sh"), "#!/bin/bash\ntrue\n"))
   private val sourceFile = SourceFile(Files.writeString(root.resolve("a.c"), "int a;"), LanguageC)
   private val originalReductionInputs =

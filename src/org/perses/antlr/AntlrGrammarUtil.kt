@@ -28,7 +28,7 @@ import org.antlr.v4.tool.ast.GrammarAST
 import org.perses.program.LanguageKind
 import org.perses.program.TokenizedProgram
 import org.perses.util.SimpleStack
-import org.perses.util.Util
+import org.perses.util.lazyAssert
 import java.io.IOException
 import java.io.StringWriter
 import java.io.Writer
@@ -96,7 +96,7 @@ object AntlrGrammarUtil {
     val builder = ImmutableList.builder<Token>()
     forEachTokenInDefaultChannel(lexer) { builder.add(it) }
     return builder.build().also { tokens ->
-      Util.lazyAssert(
+      lazyAssert(
         test = {
           if (tokens.isEmpty()) {
             return@lazyAssert true

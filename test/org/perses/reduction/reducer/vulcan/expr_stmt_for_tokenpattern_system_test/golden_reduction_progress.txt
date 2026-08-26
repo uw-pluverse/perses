@@ -131,6 +131,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -181,7 +187,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
         |   |   |___(*){id=195,slot_type=kleene_star__directDeclarator_7}
         |   |       |___aux_rule__directDeclarator_15{id=197,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
         |   |           |___Token:({id=198,slot_type=LeftParen}
-        |   |           |___parameterList{id=202,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+        |   |           |___parameterList{id=202,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList]}
         |   |           |   |___(+){id=233,slot_type=[parameterDeclaration,declarationSpecifiers]}
         |   |           |   |   |___Token:int{id=243,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
         |   |           |   |   |___Token:a{id=240,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
@@ -245,7 +251,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |       |   |               |___Token:){id=74,slot_type=RightParen}
                 |       |   |___Token:;{id=50,slot_type=Semi}
                 |       |___jumpStatement{id=21,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=24,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=25,slot_type=Return}
                 |           |   |___(?){id=26,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:var{id=45,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
@@ -2527,7 +2533,7 @@ compilationUnit{id=251,slot_type=compilationUnit}
                 |       |   |       |___Token:){id=309,slot_type=RightParen}
                 |       |   |___Token:;{id=300,slot_type=Semi}
                 |       |___jumpStatement{id=271,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=274,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=274,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=275,slot_type=Return}
                 |           |   |___(?){id=276,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:var{id=295,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
@@ -4489,7 +4495,7 @@ compilationUnit{id=251,slot_type=compilationUnit}
                 |       |   |       |___Token:){id=309,slot_type=RightParen}
                 |       |   |___Token:;{id=300,slot_type=Semi}
                 |       |___jumpStatement{id=271,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=274,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=274,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=275,slot_type=Return}
                 |           |   |___(?){id=276,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:var{id=295,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
@@ -4604,63 +4610,63 @@ FixPt[3][FineGritLatraReducer][UnifyFunctionDecl](25/37)  Found matches: 0 in tr
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-compilationUnit{id=25253,slot_type=compilationUnit}
-|___(?){id=25254,slot_type=optional__compilationUnit_1}
-    |___(+){id=25256,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___functionDefinition{id=25371,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |   |___(?){id=25372,slot_type=optional__functionDefinition_2}
-        |   |   |___(+){id=25386,slot_type=declarationSpecifiers}
-        |   |       |___Token:void{id=25390,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
-        |   |___directDeclarator{id=25377,slot_type=[declarator,directDeclarator]}
-        |   |   |___Token:fun{id=25385,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |   |___(*){id=25379,slot_type=kleene_star__directDeclarator_7}
-        |   |       |___aux_rule__directDeclarator_15{id=25381,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |   |           |___Token:({id=25382,slot_type=LeftParen}
-        |   |           |___Token:){id=25384,slot_type=RightParen}
-        |   |___compoundStatement{id=25374,slot_type=compoundStatement}
-        |       |___Token:{{id=25375,slot_type=LeftBrace}
-        |       |___Token:}{id=25376,slot_type=RightBrace}
-        |___functionDefinition{id=25259,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-            |___(?){id=25260,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=25366,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=25370,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=25357,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=25365,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=25359,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=25361,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=25362,slot_type=LeftParen}
-            |           |___Token:){id=25364,slot_type=RightParen}
-            |___compoundStatement{id=25262,slot_type=compoundStatement}
-                |___Token:{{id=25263,slot_type=LeftBrace}
-                |___(?){id=25264,slot_type=optional__compoundStatement_1}
-                |   |___(+){id=25267,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=25321,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=25322,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=25356,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=25323,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclarator{id=25326,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |   |       |___Token:var{id=25352,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(?){id=25328,slot_type=optional__initDeclarator_2}
-                |       |   |           |___aux_rule__initDeclarator_1{id=25329,slot_type=aux_rule__initDeclarator_1}
-                |       |   |               |___Token:={id=25330,slot_type=Assign}
-                |       |   |               |___Token:99{id=25349,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |___Token:;{id=25324,slot_type=Semi}
-                |       |___aux_rule__declaration_3{id=25299,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=25300,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:fun{id=25319,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-                |       |   |___(?){id=25301,slot_type=optional__declaration_2}
-                |       |   |   |___aux_rule__directDeclarator_16{id=25308,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,aux_rule__directDeclarator_16]}
-                |       |   |       |___Token:({id=25309,slot_type=LeftParen}
-                |       |   |       |___Token:var{id=25314,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___Token:){id=25311,slot_type=RightParen}
-                |       |   |___Token:;{id=25302,slot_type=Semi}
-                |       |___jumpStatement{id=25273,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=25276,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-                |           |   |___Token:return{id=25277,slot_type=Return}
-                |           |   |___(?){id=25278,slot_type=optional__postfixExpression_1}
-                |           |       |___Token:var{id=25297,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |___Token:;{id=25275,slot_type=Semi}
-                |___Token:}{id=25265,slot_type=RightBrace}
+compilationUnit{id=24346,slot_type=compilationUnit}
+|___(?){id=24347,slot_type=optional__compilationUnit_1}
+    |___(+){id=24349,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=24464,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=24465,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=24479,slot_type=declarationSpecifiers}
+        |   |       |___Token:void{id=24483,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |   |___directDeclarator{id=24470,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:fun{id=24478,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=24472,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=24474,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=24475,slot_type=LeftParen}
+        |   |           |___Token:){id=24477,slot_type=RightParen}
+        |   |___compoundStatement{id=24467,slot_type=compoundStatement}
+        |       |___Token:{{id=24468,slot_type=LeftBrace}
+        |       |___Token:}{id=24469,slot_type=RightBrace}
+        |___functionDefinition{id=24352,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=24353,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=24459,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=24463,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=24450,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=24458,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=24452,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=24454,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=24455,slot_type=LeftParen}
+            |           |___Token:){id=24457,slot_type=RightParen}
+            |___compoundStatement{id=24355,slot_type=compoundStatement}
+                |___Token:{{id=24356,slot_type=LeftBrace}
+                |___(?){id=24357,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=24360,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=24414,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=24415,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=24449,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=24416,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=24419,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:var{id=24445,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=24421,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=24422,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=24423,slot_type=Assign}
+                |       |   |               |___Token:99{id=24442,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=24417,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=24392,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=24393,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:fun{id=24412,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___(?){id=24394,slot_type=optional__declaration_2}
+                |       |   |   |___aux_rule__directDeclarator_16{id=24401,slot_type=[initDeclaratorList,initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,aux_rule__directDeclarator_16]}
+                |       |   |       |___Token:({id=24402,slot_type=LeftParen}
+                |       |   |       |___Token:var{id=24407,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___Token:){id=24404,slot_type=RightParen}
+                |       |   |___Token:;{id=24395,slot_type=Semi}
+                |       |___jumpStatement{id=24366,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=24369,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=24370,slot_type=Return}
+                |           |   |___(?){id=24371,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:var{id=24390,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=24368,slot_type=Semi}
+                |___Token:}{id=24358,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
@@ -14812,7 +14818,7 @@ FixPt[4][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](25/37)  Tr
 ================The best program is updated.================
 
 token count change 25 -> 22
-Edit: [delete: 25309,25311,25319]
+Edit: [delete: 24402,24404,24412]
 ------------------------------------------------------------
 
 
@@ -20025,64 +20031,64 @@ FixPt[4][token_pattern_reducer][LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION](22/37)  Mi
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-compilationUnit{id=25392,slot_type=compilationUnit}
-|___(?){id=25393,slot_type=optional__compilationUnit_1}
-    |___(+){id=25395,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___functionDefinition{id=25497,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-        |   |___(?){id=25498,slot_type=optional__functionDefinition_2}
-        |   |   |___(+){id=25512,slot_type=declarationSpecifiers}
-        |   |       |___Token:void{id=25516,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
-        |   |___directDeclarator{id=25503,slot_type=[declarator,directDeclarator]}
-        |   |   |___Token:fun{id=25511,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-        |   |   |___(*){id=25505,slot_type=kleene_star__directDeclarator_7}
-        |   |       |___aux_rule__directDeclarator_15{id=25507,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-        |   |           |___Token:({id=25508,slot_type=LeftParen}
-        |   |           |___Token:){id=25510,slot_type=RightParen}
-        |   |___compoundStatement{id=25500,slot_type=compoundStatement}
-        |       |___Token:{{id=25501,slot_type=LeftBrace}
-        |       |___Token:}{id=25502,slot_type=RightBrace}
-        |___functionDefinition{id=25398,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-            |___(?){id=25399,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=25492,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=25496,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=25483,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=25491,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=25485,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=25487,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=25488,slot_type=LeftParen}
-            |           |___Token:){id=25490,slot_type=RightParen}
-            |___compoundStatement{id=25401,slot_type=compoundStatement}
-                |___Token:{{id=25402,slot_type=LeftBrace}
-                |___(?){id=25403,slot_type=optional__compoundStatement_1}
-                |   |___(+){id=25406,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=25447,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=25448,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=25482,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=25449,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclarator{id=25452,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |   |       |___Token:var{id=25478,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(?){id=25454,slot_type=optional__initDeclarator_2}
-                |       |   |           |___aux_rule__initDeclarator_1{id=25455,slot_type=aux_rule__initDeclarator_1}
-                |       |   |               |___Token:={id=25456,slot_type=Assign}
-                |       |   |               |___Token:99{id=25475,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |___Token:;{id=25450,slot_type=Semi}
-                |       |___aux_rule__declaration_3{id=25438,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=25439,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:var{id=25445,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-                |       |   |___Token:;{id=25440,slot_type=Semi}
-                |       |___jumpStatement{id=25412,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=25415,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-                |           |   |___Token:return{id=25416,slot_type=Return}
-                |           |   |___(?){id=25417,slot_type=optional__postfixExpression_1}
-                |           |       |___Token:var{id=25436,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |___Token:;{id=25414,slot_type=Semi}
-                |___Token:}{id=25404,slot_type=RightBrace}
+compilationUnit{id=24485,slot_type=compilationUnit}
+|___(?){id=24486,slot_type=optional__compilationUnit_1}
+    |___(+){id=24488,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=24590,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+        |   |___(?){id=24591,slot_type=optional__functionDefinition_2}
+        |   |   |___(+){id=24605,slot_type=declarationSpecifiers}
+        |   |       |___Token:void{id=24609,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
+        |   |___directDeclarator{id=24596,slot_type=[declarator,directDeclarator]}
+        |   |   |___Token:fun{id=24604,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+        |   |   |___(*){id=24598,slot_type=kleene_star__directDeclarator_7}
+        |   |       |___aux_rule__directDeclarator_15{id=24600,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+        |   |           |___Token:({id=24601,slot_type=LeftParen}
+        |   |           |___Token:){id=24603,slot_type=RightParen}
+        |   |___compoundStatement{id=24593,slot_type=compoundStatement}
+        |       |___Token:{{id=24594,slot_type=LeftBrace}
+        |       |___Token:}{id=24595,slot_type=RightBrace}
+        |___functionDefinition{id=24491,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=24492,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=24585,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=24589,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=24576,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=24584,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=24578,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=24580,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=24581,slot_type=LeftParen}
+            |           |___Token:){id=24583,slot_type=RightParen}
+            |___compoundStatement{id=24494,slot_type=compoundStatement}
+                |___Token:{{id=24495,slot_type=LeftBrace}
+                |___(?){id=24496,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=24499,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=24540,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=24541,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=24575,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=24542,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=24545,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:var{id=24571,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=24547,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=24548,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=24549,slot_type=Assign}
+                |       |   |               |___Token:99{id=24568,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=24543,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=24531,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=24532,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:var{id=24538,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=24533,slot_type=Semi}
+                |       |___jumpStatement{id=24505,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=24508,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=24509,slot_type=Return}
+                |           |   |___(?){id=24510,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:var{id=24529,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=24507,slot_type=Semi}
+                |___Token:}{id=24497,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 FixPt[5][node_priority](22/37)  Starting to retrieve the semantics provider
 FixPt[5][node_priority](22/37)  Retrieved semantics provider null
-================Reducing node 25393, size=22================
+================Reducing node 24486, size=22================
 
 The current best program is the following
 
@@ -20111,11 +20117,11 @@ FixPt[5][node_priority][DFS](22/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](22/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:22/37=59.46%
 ===================Node reduction is done===================
 
-Failed to reduce node 25393
+Failed to reduce node 24486
 ------------------------------------------------------------
 
 
-================Reducing node 25395, size=22================
+================Reducing node 24488, size=22================
 
 The current best program is the following
 
@@ -20194,18 +20200,18 @@ FixPt[5][node_priority][DFS](22/37)  Try deleting [0]#1: Interesting. Local rati
 ================The best program is updated.================
 
 token count change 22 -> 16
-Edit: [delete_25497]
+Edit: [delete_24590]
 ------------------------------------------------------------
 
 
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 25395 from 22 to 16
+Succeeded to reduce node 24488 from 22 to 16
 ------------------------------------------------------------
 
 
-================Reducing node 25398, size=16================
+================Reducing node 24491, size=16================
 
 The current best program is the following
 
@@ -20267,11 +20273,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25398
+Failed to reduce node 24491
 ------------------------------------------------------------
 
 
-================Reducing node 25401, size=16================
+================Reducing node 24494, size=16================
 
 The current best program is the following
 
@@ -20286,11 +20292,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25401
+Failed to reduce node 24494
 ------------------------------------------------------------
 
 
-================Reducing node 25403, size=16================
+================Reducing node 24496, size=16================
 
 The current best program is the following
 
@@ -20319,11 +20325,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25403
+Failed to reduce node 24496
 ------------------------------------------------------------
 
 
-================Reducing node 25406, size=16================
+================Reducing node 24499, size=16================
 
 The current best program is the following
 
@@ -20417,11 +20423,11 @@ FixPt[5][node_priority][DFS](16/37)  Try deleting [0]#1: Uninteresting. Local ra
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25406
+Failed to reduce node 24499
 ------------------------------------------------------------
 
 
-================Reducing node 25447, size=16================
+================Reducing node 24540, size=16================
 
 The current best program is the following
 
@@ -20459,11 +20465,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25447
+Failed to reduce node 24540
 ------------------------------------------------------------
 
 
-================Reducing node 25483, size=16================
+================Reducing node 24576, size=16================
 
 The current best program is the following
 
@@ -20490,11 +20496,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25483
+Failed to reduce node 24576
 ------------------------------------------------------------
 
 
-================Reducing node 25449, size=16================
+================Reducing node 24542, size=16================
 
 The current best program is the following
 
@@ -20526,11 +20532,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25449
+Failed to reduce node 24542
 ------------------------------------------------------------
 
 
-================Reducing node 25452, size=16================
+================Reducing node 24545, size=16================
 
 The current best program is the following
 
@@ -20569,11 +20575,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25452
+Failed to reduce node 24545
 ------------------------------------------------------------
 
 
-================Reducing node 25412, size=16================
+================Reducing node 24505, size=16================
 
 The current best program is the following
 
@@ -20611,11 +20617,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25412
+Failed to reduce node 24505
 ------------------------------------------------------------
 
 
-================Reducing node 25485, size=16================
+================Reducing node 24578, size=16================
 
 The current best program is the following
 
@@ -20647,11 +20653,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25485
+Failed to reduce node 24578
 ------------------------------------------------------------
 
 
-================Reducing node 25487, size=16================
+================Reducing node 24580, size=16================
 
 The current best program is the following
 
@@ -20678,11 +20684,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25487
+Failed to reduce node 24580
 ------------------------------------------------------------
 
 
-================Reducing node 25454, size=16================
+================Reducing node 24547, size=16================
 
 The current best program is the following
 
@@ -20714,11 +20720,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25454
+Failed to reduce node 24547
 ------------------------------------------------------------
 
 
-================Reducing node 25455, size=16================
+================Reducing node 24548, size=16================
 
 The current best program is the following
 
@@ -20745,11 +20751,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25455
+Failed to reduce node 24548
 ------------------------------------------------------------
 
 
-================Reducing node 25438, size=16================
+================Reducing node 24531, size=16================
 
 The current best program is the following
 
@@ -20787,11 +20793,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25438
+Failed to reduce node 24531
 ------------------------------------------------------------
 
 
-================Reducing node 25415, size=16================
+================Reducing node 24508, size=16================
 
 The current best program is the following
 
@@ -20818,11 +20824,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25415
+Failed to reduce node 24508
 ------------------------------------------------------------
 
 
-================Reducing node 25491, size=16================
+================Reducing node 24584, size=16================
 
 The current best program is the following
 
@@ -20837,11 +20843,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25491
+Failed to reduce node 24584
 ------------------------------------------------------------
 
 
-================Reducing node 25490, size=16================
+================Reducing node 24583, size=16================
 
 The current best program is the following
 
@@ -20856,11 +20862,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25490
+Failed to reduce node 24583
 ------------------------------------------------------------
 
 
-================Reducing node 25488, size=16================
+================Reducing node 24581, size=16================
 
 The current best program is the following
 
@@ -20875,11 +20881,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25488
+Failed to reduce node 24581
 ------------------------------------------------------------
 
 
-================Reducing node 25478, size=16================
+================Reducing node 24571, size=16================
 
 The current best program is the following
 
@@ -20894,11 +20900,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25478
+Failed to reduce node 24571
 ------------------------------------------------------------
 
 
-================Reducing node 25475, size=16================
+================Reducing node 24568, size=16================
 
 The current best program is the following
 
@@ -20913,11 +20919,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25475
+Failed to reduce node 24568
 ------------------------------------------------------------
 
 
-================Reducing node 25456, size=16================
+================Reducing node 24549, size=16================
 
 The current best program is the following
 
@@ -20932,11 +20938,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25456
+Failed to reduce node 24549
 ------------------------------------------------------------
 
 
-================Reducing node 25450, size=16================
+================Reducing node 24543, size=16================
 
 The current best program is the following
 
@@ -20951,11 +20957,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25450
+Failed to reduce node 24543
 ------------------------------------------------------------
 
 
-================Reducing node 25448, size=16================
+================Reducing node 24541, size=16================
 
 The current best program is the following
 
@@ -20987,11 +20993,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25448
+Failed to reduce node 24541
 ------------------------------------------------------------
 
 
-================Reducing node 25482, size=16================
+================Reducing node 24575, size=16================
 
 The current best program is the following
 
@@ -21006,11 +21012,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25482
+Failed to reduce node 24575
 ------------------------------------------------------------
 
 
-================Reducing node 25440, size=16================
+================Reducing node 24533, size=16================
 
 The current best program is the following
 
@@ -21025,11 +21031,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25440
+Failed to reduce node 24533
 ------------------------------------------------------------
 
 
-================Reducing node 25439, size=16================
+================Reducing node 24532, size=16================
 
 The current best program is the following
 
@@ -21061,11 +21067,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25439
+Failed to reduce node 24532
 ------------------------------------------------------------
 
 
-================Reducing node 25445, size=16================
+================Reducing node 24538, size=16================
 
 The current best program is the following
 
@@ -21080,11 +21086,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25445
+Failed to reduce node 24538
 ------------------------------------------------------------
 
 
-================Reducing node 25417, size=16================
+================Reducing node 24510, size=16================
 
 The current best program is the following
 
@@ -21116,11 +21122,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25417
+Failed to reduce node 24510
 ------------------------------------------------------------
 
 
-================Reducing node 25436, size=16================
+================Reducing node 24529, size=16================
 
 The current best program is the following
 
@@ -21135,11 +21141,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25436
+Failed to reduce node 24529
 ------------------------------------------------------------
 
 
-================Reducing node 25416, size=16================
+================Reducing node 24509, size=16================
 
 The current best program is the following
 
@@ -21154,11 +21160,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25416
+Failed to reduce node 24509
 ------------------------------------------------------------
 
 
-================Reducing node 25414, size=16================
+================Reducing node 24507, size=16================
 
 The current best program is the following
 
@@ -21173,11 +21179,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25414
+Failed to reduce node 24507
 ------------------------------------------------------------
 
 
-================Reducing node 25404, size=16================
+================Reducing node 24497, size=16================
 
 The current best program is the following
 
@@ -21192,11 +21198,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25404
+Failed to reduce node 24497
 ------------------------------------------------------------
 
 
-================Reducing node 25402, size=16================
+================Reducing node 24495, size=16================
 
 The current best program is the following
 
@@ -21211,11 +21217,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25402
+Failed to reduce node 24495
 ------------------------------------------------------------
 
 
-================Reducing node 25399, size=16================
+================Reducing node 24492, size=16================
 
 The current best program is the following
 
@@ -21247,11 +21253,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25399
+Failed to reduce node 24492
 ------------------------------------------------------------
 
 
-================Reducing node 25492, size=16================
+================Reducing node 24585, size=16================
 
 The current best program is the following
 
@@ -21295,11 +21301,11 @@ FixPt[5][node_priority][DFS](16/37)  There is only one element in the input, and
 FixPt[5][node_priority][DFS](16/37)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:16/37=43.24%
 ===================Node reduction is done===================
 
-Failed to reduce node 25492
+Failed to reduce node 24585
 ------------------------------------------------------------
 
 
-================Reducing node 25496, size=16================
+================Reducing node 24589, size=16================
 
 The current best program is the following
 
@@ -21314,7 +21320,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 25496
+Failed to reduce node 24589
 ------------------------------------------------------------
 
 
@@ -21323,45 +21329,45 @@ Failed to reduce node 25496
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-compilationUnit{id=25518,slot_type=compilationUnit}
-|___(?){id=25519,slot_type=optional__compilationUnit_1}
-    |___(+){id=25521,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___functionDefinition{id=25523,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-            |___(?){id=25524,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=25617,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=25621,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=25608,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=25616,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=25610,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=25612,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=25613,slot_type=LeftParen}
-            |           |___Token:){id=25615,slot_type=RightParen}
-            |___compoundStatement{id=25526,slot_type=compoundStatement}
-                |___Token:{{id=25527,slot_type=LeftBrace}
-                |___(?){id=25528,slot_type=optional__compoundStatement_1}
-                |   |___(+){id=25531,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=25572,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=25573,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=25607,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=25574,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclarator{id=25577,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |   |       |___Token:var{id=25603,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(?){id=25579,slot_type=optional__initDeclarator_2}
-                |       |   |           |___aux_rule__initDeclarator_1{id=25580,slot_type=aux_rule__initDeclarator_1}
-                |       |   |               |___Token:={id=25581,slot_type=Assign}
-                |       |   |               |___Token:99{id=25600,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |___Token:;{id=25575,slot_type=Semi}
-                |       |___aux_rule__declaration_3{id=25563,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=25564,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:var{id=25570,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-                |       |   |___Token:;{id=25565,slot_type=Semi}
-                |       |___jumpStatement{id=25537,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=25540,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-                |           |   |___Token:return{id=25541,slot_type=Return}
-                |           |   |___(?){id=25542,slot_type=optional__postfixExpression_1}
-                |           |       |___Token:var{id=25561,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |___Token:;{id=25539,slot_type=Semi}
-                |___Token:}{id=25529,slot_type=RightBrace}
+compilationUnit{id=24611,slot_type=compilationUnit}
+|___(?){id=24612,slot_type=optional__compilationUnit_1}
+    |___(+){id=24614,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=24616,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=24617,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=24710,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=24714,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=24701,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=24709,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=24703,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=24705,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=24706,slot_type=LeftParen}
+            |           |___Token:){id=24708,slot_type=RightParen}
+            |___compoundStatement{id=24619,slot_type=compoundStatement}
+                |___Token:{{id=24620,slot_type=LeftBrace}
+                |___(?){id=24621,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=24624,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=24665,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=24666,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=24700,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=24667,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=24670,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:var{id=24696,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=24672,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=24673,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=24674,slot_type=Assign}
+                |       |   |               |___Token:99{id=24693,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=24668,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=24656,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=24657,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:var{id=24663,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+                |       |   |___Token:;{id=24658,slot_type=Semi}
+                |       |___jumpStatement{id=24630,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=24633,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=24634,slot_type=Return}
+                |           |   |___(?){id=24635,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:var{id=24654,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=24632,slot_type=Semi}
+                |___Token:}{id=24622,slot_type=RightBrace}
 ------------------------------------------------------------
 
 

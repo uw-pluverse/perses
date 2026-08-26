@@ -17,7 +17,7 @@
 package org.perses.program.printer
 import org.perses.program.AbstractPersesToken
 import org.perses.program.TokenPosition
-import org.perses.util.Util
+import org.perses.util.lazyAssert
 
 class TokenPlacementRecorder : AbstractTokenPlacementListener() {
   private val placement = HashMap<AbstractPersesToken, TokenPosition>()
@@ -27,7 +27,7 @@ class TokenPlacementRecorder : AbstractTokenPlacementListener() {
     line: Int,
     charPositionInLine: Int,
   ) {
-    Util.lazyAssert({ placement.containsKey(token).not() }) {
+    lazyAssert({ placement.containsKey(token).not() }) {
       "The token $token has been added to the placement map. ${placement[token]}"
     }
     placement[token] = TokenPosition(line = line, charPositionInLine = charPositionInLine)

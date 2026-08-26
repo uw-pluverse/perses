@@ -22,7 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.grammar.c.LanguageC
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.io.path.ExperimentalPathApi
@@ -53,10 +53,10 @@ class SourceFileTest {
   @Test
   fun testWriteToDirectory() {
     val dir = tempDir.resolve("testWriteToDirectory")
-    Util.ensureDirExists(dir)
-    assertThat(Util.isEmptyDirectory(dir)).isTrue()
+    FileSystemUtil.ensureDirExists(dir)
+    assertThat(FileSystemUtil.isEmptyDirectory(dir)).isTrue()
     val result = source.writeToDirectory(dir)
-    assertThat(Util.isEmptyDirectory(dir)).isFalse()
+    assertThat(FileSystemUtil.isEmptyDirectory(dir)).isFalse()
     assertThat(dir.toFile().listFiles()).hasLength(1)
     val file = dir.resolve(source.baseName)
     assertThat(Files.isRegularFile(file)).isTrue()

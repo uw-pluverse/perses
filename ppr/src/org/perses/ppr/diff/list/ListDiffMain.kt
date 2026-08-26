@@ -26,7 +26,7 @@ import org.perses.program.BinaryReductionFile
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.event.ReductionStartEvent
-import org.perses.util.Util
+import org.perses.util.IoUtil
 import org.perses.util.cmd.CommandLineProcessor
 import org.perses.util.transformToImmutableList
 import java.nio.file.Path
@@ -113,7 +113,7 @@ class ListDiffMain(
         return
       }
       val cmd = processor.cmd
-      Util.useResources(
+      IoUtil.useResources(
         {
           GlobalContext(
             enableGlobalCache = cmd.cacheControlFlags.enableGlobalCache,

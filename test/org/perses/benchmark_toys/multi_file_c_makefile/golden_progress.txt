@@ -135,6 +135,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -2720,7 +2726,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=97,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=99,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=100,slot_type=LeftParen}
-            |           |___(+){id=106,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |___(+){id=106,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
             |           |   |___Token:void{id=111,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
             |           |___Token:){id=102,slot_type=RightParen}
             |___compoundStatement{id=10,slot_type=compoundStatement}
@@ -2740,7 +2746,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |       |   |               |___Token:){id=73,slot_type=RightParen}
                 |       |   |___Token:;{id=49,slot_type=Semi}
                 |       |___jumpStatement{id=20,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=23,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=23,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=24,slot_type=Return}
                 |           |   |___(?){id=25,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:0{id=44,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -4655,7 +4661,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=45,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=47,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=48,slot_type=LeftParen}
-            |           |___(+){id=54,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |___(+){id=54,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
             |           |   |___Token:void{id=59,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
             |           |___Token:){id=50,slot_type=RightParen}
             |___compoundStatement{id=9,slot_type=compoundStatement}
@@ -4663,7 +4669,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |___(?){id=11,slot_type=optional__compoundStatement_1}
                 |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
                 |       |___jumpStatement{id=18,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=22,slot_type=Return}
                 |           |   |___(?){id=23,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:1{id=42,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -4785,7 +4791,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=45,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=47,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=48,slot_type=LeftParen}
-            |           |___(+){id=54,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |___(+){id=54,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
             |           |   |___Token:void{id=59,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
             |           |___Token:){id=50,slot_type=RightParen}
             |___compoundStatement{id=9,slot_type=compoundStatement}
@@ -4793,7 +4799,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |___(?){id=11,slot_type=optional__compoundStatement_1}
                 |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
                 |       |___jumpStatement{id=18,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=22,slot_type=Return}
                 |           |   |___(?){id=23,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:2{id=42,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -4909,7 +4915,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=45,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=47,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=48,slot_type=LeftParen}
-            |           |___(+){id=54,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |___(+){id=54,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
             |           |   |___Token:void{id=59,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
             |           |___Token:){id=50,slot_type=RightParen}
             |___compoundStatement{id=9,slot_type=compoundStatement}
@@ -4917,7 +4923,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |___(?){id=11,slot_type=optional__compoundStatement_1}
                 |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
                 |       |___jumpStatement{id=18,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=22,slot_type=Return}
                 |           |   |___(?){id=23,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:3{id=42,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -5027,7 +5033,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=45,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=47,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=48,slot_type=LeftParen}
-            |           |___(+){id=54,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |___(+){id=54,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
             |           |   |___Token:void{id=59,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
             |           |___Token:){id=50,slot_type=RightParen}
             |___compoundStatement{id=9,slot_type=compoundStatement}
@@ -5035,7 +5041,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |___(?){id=11,slot_type=optional__compoundStatement_1}
                 |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
                 |       |___jumpStatement{id=18,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=21,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=22,slot_type=Return}
                 |           |   |___(?){id=23,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:4{id=42,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}

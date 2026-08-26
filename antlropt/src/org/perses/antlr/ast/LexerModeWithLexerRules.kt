@@ -20,7 +20,6 @@ import com.google.common.collect.ImmutableList
 import org.perses.util.ast.Indent
 import java.io.PrintStream
 
-/** TODO: test  */
 class LexerModeWithLexerRules(
   val modeName: String,
   val lexerRules: ImmutableList<AbstractPersesLexerRuleAst>,

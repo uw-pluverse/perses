@@ -18,7 +18,7 @@ package org.perses.util
 
 object DummyClassWithResource {
   fun read(): String =
-    Util
+    IoUtil
       .openResourceAsStream(
         // Load from the JAR root because resource_strip_prefix in the BUILD file
         // strips the entire package path to avoid filename-stripping bugs.

@@ -14,15 +14,38 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.antlr.pnf
+package org.perses.util
 
-import org.perses.antlr.ast.PersesGrammar
+enum class EnumStopCriterion {
+  STOP,
+  CONTINUE,
+  ;
 
-class ReplaceStringLiteralWithLexerRuleRefPass : AbstractPnfPass() {
-  override fun processParserGrammar(
-    parserGrammar: PersesGrammar,
-    lexerGrammar: PersesGrammar?,
-  ): PersesGrammar {
-    TODO("Not yet implemented")
+  companion object {
+    fun stopIfTrue(value: Boolean): EnumStopCriterion =
+      if (value) {
+        STOP
+      } else {
+        CONTINUE
+      }
+
+    fun continueIfTrue(value: Boolean) = stopIfTrue(!value)
   }
+}
+
+inline fun <T> fixpoint(
+  initial: T,
+  stopCriterion: (prev: T, transformed: T) -> EnumStopCriterion =
+    { prev, transformed -> EnumStopCriterion.stopIfTrue(prev == transformed) },
+  transform: (T) -> T,
+): T {
+  var current = initial
+  while (true) {
+    val prev = current
+    current = transform(prev)
+    if (stopCriterion(prev, current) == EnumStopCriterion.STOP) {
+      break
+    }
+  }
+  return current
 }

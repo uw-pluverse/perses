@@ -21,7 +21,7 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.ShellCommandOnPath
 import java.nio.file.Paths
 import kotlin.io.path.ExperimentalPathApi
@@ -29,7 +29,7 @@ import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class ClangDLanguageServerTest {
-  val tempDir = Util.createTempDirForObject(this)
+  val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   val clangdCommand = ShellCommandOnPath("clangd-18")
 

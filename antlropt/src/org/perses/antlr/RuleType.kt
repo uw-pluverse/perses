@@ -47,7 +47,7 @@ enum class RuleType(
    * The counterpart in regular expressions is '?'
    */
   OPTIONAL("optional__", isLexerRule = false),
-  ALT_BLOCKS("altnt_block__", isLexerRule = false),
+  ALT_BLOCKS("alt_block__", isLexerRule = false),
 
   /** This is a token node.  */
   TOKEN("AUX_TOKEN__", isLexerRule = true),

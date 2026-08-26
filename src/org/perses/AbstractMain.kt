@@ -34,13 +34,13 @@ import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
 import org.perses.reduction.LanguageProfile
 import org.perses.reduction.ListMinimizerEvaluationDriver
-import org.perses.reduction.PropertyTestResult
 import org.perses.reduction.QueryCacheManager
 import org.perses.reduction.ReducerFactory
 import org.perses.reduction.ReductionDriverParams
 import org.perses.reduction.SanityCheckFailedException
 import org.perses.reduction.SanityCheckResult
 import org.perses.reduction.TestScriptExecutorService
+import org.perses.reduction.TestScriptVerdict
 import org.perses.reduction.createSnapshot
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.event.SanityCheckEvent
@@ -51,9 +51,9 @@ import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.reduction.io.ReductionFolder
 import org.perses.reduction.io.ReductionFolderManager
 import org.perses.util.AutoIncrementDirectory
+import org.perses.util.FileSystemUtil
 import org.perses.util.ReflectionUtil
 import org.perses.util.Serialization
-import org.perses.util.Util
 import org.perses.util.ktFine
 import org.perses.util.ktInfo
 import org.perses.util.ktWarning
@@ -130,7 +130,7 @@ abstract class AbstractMain<
           currentProcessID = ProcessHandle.current().pid(),
         ),
       )
-    Util.ensureDirExists(tempRoot)
+    FileSystemUtil.ensureDirExists(tempRoot)
     TestScriptExecutorService(
       reductionFolderManager = ReductionFolderManager(inputs, tempRoot),
       specifiedNumOfThreads = cmd.reductionControlFlags.getNumOfThreads(),
@@ -406,7 +406,7 @@ abstract class AbstractMain<
    * property is flaky and build a pretty-printed diagnostic.
    */
   private fun buildInitialSanityFailure(
-    runTest: () -> PropertyTestResult,
+    runTest: () -> TestScriptVerdict,
   ): SanityCheckFailedException {
     logger.ktInfo { "The initial sanity check failed." }
     val flakinessResult =
@@ -460,9 +460,9 @@ abstract class AbstractMain<
   class PropertyFlakinessChecker(
     val numberOfTrials: Int,
     val initialNumOfUninteresting: Int,
-    private val sanityChecker: () -> PropertyTestResult,
+    private val sanityChecker: () -> TestScriptVerdict,
   ) {
-    private val results = mutableListOf<PropertyTestResult>()
+    private val results = mutableListOf<TestScriptVerdict>()
 
     init {
       require(numberOfTrials > 0) { numberOfTrials }
@@ -540,7 +540,7 @@ abstract class AbstractMain<
         computePlausibleParserFacades(languageKind).defaultParserFacade.create(),
       microbenchmark = microbenchmark,
       minimizerType = flags.minimizerUnderEvaluation!!,
-      outputDirectory = Util.ensureDirExists(flags.evaluationOutputDirectory!!),
+      outputDirectory = FileSystemUtil.ensureDirExists(flags.evaluationOutputDirectory!!),
     )
   }
 

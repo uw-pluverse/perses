@@ -40,7 +40,7 @@ search space by avoiding generating syntactically invalid programs.</p>
 <li>
 <p>Download a prebuilt release JAR file from our <a href="https://github.com/perses-project/perses/releases">release page</a>,
 for example,</p>
-<pre><code class="language-bash">wget https://github.com/uw-pluverse/perses/releases/download/v2.6/perses_deploy.jar
+<pre><code class="language-bash">wget https://github.com/uw-pluverse/perses/releases/download/v2.7/perses_deploy.jar
 java -jar perses_deploy.jar [options]? --test-script &lt;test-script.sh&gt; --input-file &lt;program file&gt;
 </code></pre>
 </li>
@@ -373,6 +373,22 @@ forward the port over SSH, e.g. <code>ssh -L 9000:127.0.0.1:9000 &lt;remote-host
       The list minimizer algorithm to reduce with the found transformations
       Default: WPROBDD
       Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, WEIGHTED_DFS, WEIGHTED_BFS, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION, ONE_BY_ONE, ADAPTIVE_GAIN_DRIVEN]
+
+[SFC (Structure Form Conversion) Reducer Control]  Options:
+    --enable-sfc
+      Enable the SFC reducers (structure form conversion, to produce smaller 
+      reduction output at the cost of more property tests).
+      Default: false
+    --sfc-fixpoint
+      Enable fixpoint mode for running the SFC reducers.
+      Default: true
+    --sfc-subtree-token-count-limit
+      Skip a subtree whose token count exceeds this limit: the number of 
+      structures of a subtree grows with the number of its reusable pieces.
+      Default: 64
+    --sfc-candidate-limit
+      The maximum number of candidate structures to test for a single subtree.
+      Default: 64
 
 [Verbosity]  Options:
     --verbosity

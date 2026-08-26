@@ -189,7 +189,7 @@ class TestScriptExecutorServiceTest {
       futureList.add(
         service.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
-          { _, _ -> PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMillis = 1) },
+          { _, _ -> TestScriptVerdict(exitCode = ExitCode.ZERO, elapsedMillis = 1) },
           outputManagerFor(invalidProgram),
           dummyPayload,
         ),
@@ -209,7 +209,7 @@ class TestScriptExecutorServiceTest {
     for (i in 0..49) {
       futureList.add(
         service.testProgramAsync(
-          { PropertyTestResult(exitCode = ExitCode.ONE, elapsedMillis = 1) },
+          { TestScriptVerdict(exitCode = ExitCode.ONE, elapsedMillis = 1) },
           IDENTITY_POST_CHECK,
           outputManagerFor(invalidProgram),
           dummyPayload,

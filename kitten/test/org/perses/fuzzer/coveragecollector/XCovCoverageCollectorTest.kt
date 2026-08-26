@@ -22,7 +22,7 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.Shells
 import java.nio.file.Files
 import java.nio.file.Path
@@ -34,8 +34,8 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class XCovCoverageCollectorTest {
-  private val tempDir = Util.createTempDirForObject(this)
-  private val srcDir = Util.ensureDirExists(tempDir.resolve("src"))
+  private val tempDir = FileSystemUtil.createTempDirForObject(this)
+  private val srcDir = FileSystemUtil.ensureDirExists(tempDir.resolve("src"))
   private val binaryFile =
     srcDir.resolve("t.out").also {
       check(Files.notExists(it))
@@ -76,8 +76,8 @@ class XCovCoverageCollectorTest {
           check(cmdOutput.exitCode.isZero())
         }
     }
-  private val gcdaFile = Util.listFilesInFolder(srcDir).single { it.name.endsWith(".gcda") }
-  private val gcnoFile = Util.listFilesInFolder(srcDir).single { it.name.endsWith("gcno") }
+  private val gcdaFile = FileSystemUtil.listFilesInFolder(srcDir).single { it.name.endsWith(".gcda") }
+  private val gcnoFile = FileSystemUtil.listFilesInFolder(srcDir).single { it.name.endsWith("gcno") }
 
   @OptIn(ExperimentalPathApi::class)
   @After

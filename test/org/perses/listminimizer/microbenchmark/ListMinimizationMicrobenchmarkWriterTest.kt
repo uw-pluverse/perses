@@ -34,8 +34,8 @@ import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.ReductionFolder
 import org.perses.util.AtomicSequenceGenerator
+import org.perses.util.FileSystemUtil
 import org.perses.util.Interval
-import org.perses.util.Util
 import org.perses.util.shell.Shells
 import java.nio.file.Files
 import java.util.IdentityHashMap
@@ -49,9 +49,9 @@ private const val COMMAND_LINE_OPTIONS = "alg: \"token_slicer\"\nthreads: \"1\"\
 
 @RunWith(JUnit4::class)
 class ListMinimizationMicrobenchmarkWriterTest {
-  private val workDir = Util.createTempDirForObject(this)
+  private val workDir = FileSystemUtil.createTempDirForObject(this)
 
-  private val inputDir = Util.ensureDirExists(workDir.resolve("input_dir"))
+  private val inputDir = FileSystemUtil.ensureDirExists(workDir.resolve("input_dir"))
 
   private val sourceFile =
     inputDir.resolve("small.c").apply {
@@ -62,7 +62,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
   private val scriptFile =
     inputDir.resolve("r.sh").apply {
       createFile()
-      Util.setExecutable(this)
+      FileSystemUtil.setExecutable(this)
       writeText(
         """
         |${Shells.SHEBANG_BASH}
@@ -105,7 +105,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     minListSizeToRecord: Int = 1,
     maxMicrobenchmarksToRecord: Int? = null,
   ) = ListMinimizationMicrobenchmarkWriter(
-    rootDirectory = Util.ensureDirExists(workDir.resolve("microbenchmarks")),
+    rootDirectory = FileSystemUtil.ensureDirExists(workDir.resolve("microbenchmarks")),
     underlyingLexerClass = PnfCLexer::class.java,
     minListSizeToRecord = minListSizeToRecord,
     maxMicrobenchmarksToRecord = maxMicrobenchmarksToRecord,
@@ -231,7 +231,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
   @Test
   fun testWritersSharingAGeneratorDoNotCollide() {
     val shared = AtomicSequenceGenerator(start = 0, minLengthForPadding = 6)
-    val rootDirectory = Util.ensureDirExists(workDir.resolve("microbenchmarks"))
+    val rootDirectory = FileSystemUtil.ensureDirExists(workDir.resolve("microbenchmarks"))
 
     fun writerSharing() =
       ListMinimizationMicrobenchmarkWriter(
@@ -493,7 +493,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
   // ---- relexWrittenFileForTokenRanges: the lexing fixpoint, asserted where a problem is created ----
 
   private fun writeProgramFile(sourceCode: String) =
-    Util.ensureDirExists(workDir.resolve("lexed")).resolve("program.c").apply {
+    FileSystemUtil.ensureDirExists(workDir.resolve("lexed")).resolve("program.c").apply {
       writeText(printer.print(programFrom(sourceCode)).sourceCode)
     }
 

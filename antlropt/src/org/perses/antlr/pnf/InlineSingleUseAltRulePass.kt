@@ -26,11 +26,6 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
   /**
    * Note that this method is intentionally written in this way, to make sure the new def keeps the
    * original order of alternatives, to avoid ambiguity.
-   *
-   * @param parserGrammar
-   * @return
-   *
-   * FIXME(cnsun): this needs to be rewritten with the current [MutableGrammar].
    */
   override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
@@ -106,14 +101,11 @@ class InlineSingleUseAltRulePass : AbstractPnfPass() {
         }
         val calledRules = mutable.getAltBlock(ruleRef.ruleNameHandle)
         if (calledRules.size() < 2) {
-          // TODO: maybe we can still inline it.
-          // Not a rule with multiple alternatives.
+          // A single-alternative rule adds no alternative-block indirection, and inlining it
+          // would drop a named tree level the reducer can use for node replacement.
           continue
         }
-        // FIXME(cnsun): the logic here is not right.
-        calledRules.forEach {
-          builder.add(Candidate(def, ImmutableList.copyOf(calledRules)))
-        }
+        builder.add(Candidate(def, ImmutableList.copyOf(calledRules)))
       }
       return builder.build()
     }

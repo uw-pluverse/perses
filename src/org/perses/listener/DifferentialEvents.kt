@@ -19,7 +19,7 @@ package org.perses.listener
 import com.fasterxml.jackson.core.type.TypeReference
 import com.google.common.collect.ImmutableList
 import org.perses.antlr.RuleType
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.util.Serialization
 import java.nio.file.Path
 
@@ -40,7 +40,7 @@ object DifferentialEvents {
   data class Edit(
     val contextualDescription: String,
     val structureDescription: String,
-    val propertyTestResult: PropertyTestResult,
+    val propertyTestResult: TestScriptVerdict,
     val successfullyDeletedCode: String,
     val deletedTokenCount: Int,
     val startPersesTimeSeconds: Int,

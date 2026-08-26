@@ -16,12 +16,13 @@
  */
 package org.perses.reduction.reducer.vulcan
 
+import org.perses.util.lazyAssert
 import org.perses.program.PersesTokenFactory
 import org.perses.spartree.AnyNodeReplacementTreeEdit
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.NodeReplacementActionSet
 import org.perses.spartree.SparTree
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 object TokenEditUtility {
   fun createEditToReplaceAllLexerNodesHavingSameLexeme(

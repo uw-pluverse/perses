@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.LexerRuleSparTreeNode
 import org.perses.spartree.ParserRuleSparTreeNode
-import org.perses.util.Util
+import org.perses.util.lazyAssert
 
 /**
  * Note that this class should not be a data class, as we need the default hashCode() and equals().
@@ -30,7 +30,7 @@ class NodeContainerForListMinimizer(
 ) {
   init {
     require(nodes.isNotEmpty()) { "The nodes should not be empty" }
-    Util.lazyAssert(
+    lazyAssert(
       test = {
         nodes.none { it.isPermanentlyDeleted }
       },

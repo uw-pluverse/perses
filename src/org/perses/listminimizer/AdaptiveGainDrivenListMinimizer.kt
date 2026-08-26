@@ -16,7 +16,8 @@
  */
 package org.perses.listminimizer
 
-import org.perses.util.Util
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.CollectionUtil
 import java.util.PriorityQueue
 
 class AdaptiveGainDrivenListMinimizer<T : Any, PropertyPayload>(
@@ -50,17 +51,17 @@ class AdaptiveGainDrivenListMinimizer<T : Any, PropertyPayload>(
           original = best,
           deleted_ = searchSpaceNode.elements!!,
         )
-      when (val testResult: ListMinimizerPropertyTestResult<T, PropertyPayload> = testProperty(candidate)) {
-        is ListMinimizerPropertyTestResult.Skipped<*, *> -> continue
-        is ListMinimizerPropertyTestResult.Completed<T, PropertyPayload> -> {
-          if (testResult.result.isNotInteresting) {
-            continue
-          }
+      when (
+        val testResult: CandidateOutcome<PropertyPayload> =
+          testProperty(candidate).get()
+      ) {
+        is CandidateOutcome.Uninteresting -> continue
+        is CandidateOutcome.Interesting<PropertyPayload> -> {
           searchSpaceNode.parent?.removeChild(searchSpaceNode)
           searchSpaceNode.delete()
           // Need to update the best first, so that the global total token count can be updated.
           updateBest(
-            Util.computeDifference(best, candidate.deletedWrappers),
+            CollectionUtil.computeDifference(best, candidate.deletedWrappers),
             payload = testResult.payload,
           )
           recomputeExpectedGainAndUpdatePriorityQueue(searchSpace, priorityQueue)

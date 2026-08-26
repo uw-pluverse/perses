@@ -21,8 +21,9 @@ import com.google.common.flogger.FluentLogger
 import org.antlr.v4.runtime.Lexer
 import org.perses.program.AbstractPersesToken
 import org.perses.util.AtomicSequenceGenerator
+import org.perses.util.CollectionUtil
+import org.perses.util.FileSystemUtil
 import org.perses.util.Interval
-import org.perses.util.Util
 import org.perses.util.transformToImmutableList
 import java.nio.file.Path
 import java.util.IdentityHashMap
@@ -157,9 +158,9 @@ class ListMinimizationMicrobenchmarkWriter(
     // repeating a simple-name copy here would be a second place to keep in step, and one that goes
     // quietly stale when a reducer is renamed. A directory name only has to be unique and to sort
     // in issue order, which the zero-padded id already does.
-    val microbenchmarkDirectory = Util.ensureDirExists(rootDirectory.resolve(microbenchmarkId))
+    val microbenchmarkDirectory = FileSystemUtil.ensureDirExists(rootDirectory.resolve(microbenchmarkId))
     val inputDirectory =
-      Util.ensureDirExists(
+      FileSystemUtil.ensureDirExists(
         microbenchmarkDirectory.resolve(ListMinimizationMicrobenchmark.INPUT_FOLDER_NAME),
       )
     writeProgramFilesTo(inputDirectory)
@@ -274,7 +275,7 @@ class ListMinimizationMicrobenchmarkWriter(
      * element's shape rather than to its token count.
      */
     private fun mergeTouchingRanges(sorted: List<Interval>): ImmutableList<Interval> =
-      Util
+      CollectionUtil
         .mergeContinuousElementsIntoRegions(sorted) { previous, current ->
           previous.rightExclusive == current.leftInclusive
         }.transformToImmutableList { run ->

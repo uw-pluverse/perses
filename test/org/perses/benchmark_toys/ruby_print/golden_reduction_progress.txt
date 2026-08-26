@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -179,7 +185,7 @@ compilation_unit{id=1,slot_type=compilation_unit}
     |   |       |       |   |___(?){id=127,slot_type=optional__statement_list_terms_4}
     |   |       |       |   |   |___aux_rule__expr_45{id=134,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |   |       |       |   |       |___Token:puts{id=150,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |       |   |       |___(+){id=145,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |       |   |       |___(+){id=145,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |   |       |       |   |           |___Token:"start"{id=146,slot_type=String}
     |   |       |       |   |___(+){id=128,slot_type=terms}
     |   |       |       |       |___Token:\n{id=130,slot_type=[term,CRLF]}
@@ -187,14 +193,14 @@ compilation_unit{id=1,slot_type=compilation_unit}
     |   |       |           |___aux_rule__statement_list_terms_2{id=79,slot_type=aux_rule__statement_list_terms_2}
     |   |       |           |   |___aux_rule__expr_45{id=110,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |   |       |           |   |   |___Token:puts{id=126,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |           |   |   |___(+){id=121,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |           |   |   |___(+){id=121,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |   |       |           |   |       |___Token:"hello world"{id=122,slot_type=String}
     |   |       |           |   |___(+){id=105,slot_type=terms}
     |   |       |           |       |___Token:\n{id=107,slot_type=[term,CRLF]}
     |   |       |           |___aux_rule__statement_list_terms_2{id=80,slot_type=aux_rule__statement_list_terms_2}
     |   |       |               |___aux_rule__expr_45{id=87,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |   |       |               |   |___Token:puts{id=103,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |               |   |___(+){id=98,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |   |       |               |   |___(+){id=98,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |   |       |               |       |___Token:"finish"{id=99,slot_type=String}
     |   |       |               |___(+){id=82,slot_type=terms}
     |   |       |                   |___Token:\n{id=84,slot_type=[term,CRLF]}
@@ -206,14 +212,14 @@ compilation_unit{id=1,slot_type=compilation_unit}
     |___(*){id=4,slot_type=kleene_star__statement_list_terms_1}
         |___aux_rule__statement_list_terms_2{id=5,slot_type=aux_rule__statement_list_terms_2}
             |___aux_rule__expr_42{id=14,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_42]}
-            |   |___aux_rule__primary_53{id=17,slot_type=[altnt_block__primary_44,aux_rule__primary_53]}
+            |   |___aux_rule__primary_53{id=17,slot_type=[alt_block__primary_44,aux_rule__primary_53]}
             |   |   |___Token:if{id=18,slot_type=IF}
-            |   |   |___aux_rule__primary_57{id=20,slot_type=[altnt_block__primary_45,aux_rule__primary_57]}
+            |   |   |___aux_rule__primary_57{id=20,slot_type=[alt_block__primary_45,aux_rule__primary_57]}
             |   |       |___expr{id=21,slot_type=expr}
             |   |       |   |___Token:__FILE__{id=60,slot_type=[aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,Identifier]}
             |   |       |   |___(*){id=41,slot_type=kleene_star__expr_14}
             |   |       |       |___aux_rule__expr_33{id=43,slot_type=[aux_rule__expr_15,aux_rule__expr_33]}
-            |   |       |           |___Token:=={id=56,slot_type=[altnt_block__expr_20,aux_rule__expr_36,altnt_block__expr_29,equalsOperator,EQUAL]}
+            |   |       |           |___Token:=={id=56,slot_type=[alt_block__expr_20,aux_rule__expr_36,alt_block__expr_29,equalsOperator,EQUAL]}
             |   |       |           |___aux_rule__identifier_1{id=50,slot_type=[expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,aux_rule__identifier_1]}
             |   |       |               |___Token:${id=51,slot_type=DOLLAR}
             |   |       |               |___Token:0{id=52,slot_type=Integer}
@@ -714,7 +720,7 @@ compilation_unit{id=165,slot_type=compilation_unit}
         |___aux_rule__statement_list_terms_2{id=169,slot_type=aux_rule__statement_list_terms_2}
             |___aux_rule__expr_45{id=176,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
             |   |___Token:puts{id=192,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-            |   |___(+){id=187,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+            |   |___(+){id=187,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
             |       |___Token:"hello world"{id=188,slot_type=String}
             |___(+){id=171,slot_type=terms}
                 |___Token:\n{id=173,slot_type=[term,CRLF]}
@@ -1050,7 +1056,7 @@ compilation_unit{id=201,slot_type=compilation_unit}
     |___(?){id=204,slot_type=optional__statement_list_terms_4}
     |   |___aux_rule__expr_45{id=211,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |       |___Token:puts{id=227,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |       |___(+){id=222,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |       |___(+){id=222,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |           |___Token:"hello world"{id=223,slot_type=String}
     |___(+){id=205,slot_type=terms}
         |___Token:\n{id=207,slot_type=[term,CRLF]}
@@ -1284,7 +1290,7 @@ compilation_unit{id=232,slot_type=compilation_unit}
     |___(?){id=235,slot_type=optional__statement_list_terms_4}
     |   |___aux_rule__expr_45{id=242,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |       |___Token:puts{id=258,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |       |___(+){id=253,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |       |___(+){id=253,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |           |___Token:"hello world"{id=254,slot_type=String}
     |___(+){id=236,slot_type=terms}
         |___Token:\n{id=238,slot_type=[term,CRLF]}
@@ -1302,7 +1308,7 @@ compilation_unit{id=232,slot_type=compilation_unit}
     |___(?){id=235,slot_type=optional__statement_list_terms_4}
     |   |___aux_rule__expr_45{id=242,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
     |       |___Token:puts{id=258,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |       |___(+){id=253,slot_type=[altnt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |       |___(+){id=253,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
     |           |___Token:"hello world"{id=254,slot_type=String}
     |___(+){id=236,slot_type=terms}
         |___Token:\n{id=238,slot_type=[term,CRLF]}

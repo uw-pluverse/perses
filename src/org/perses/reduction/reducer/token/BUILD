@@ -25,8 +25,8 @@ kt_jvm_library(
         "//src/org/perses/grammar/line:parser_facade",
         "//src/org/perses/listminimizer",
         "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction:future_execution_result_triple",
         "//src/org/perses/reduction:test_script",
-        "//src/org/perses/reduction:tree_edit_with_its_program",
         "//src/org/perses/spartree",
     ],
 )

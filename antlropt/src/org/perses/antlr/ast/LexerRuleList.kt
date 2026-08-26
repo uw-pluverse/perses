@@ -22,7 +22,6 @@ import org.perses.util.plus
 import org.perses.util.toImmutableList
 import java.io.PrintStream
 
-// TODO: test
 class LexerRuleList(
   val defaultModeLexerRules: ImmutableList<AbstractPersesLexerRuleAst>,
   val nonDefaultModes: ImmutableList<LexerModeWithLexerRules>,

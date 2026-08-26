@@ -26,7 +26,7 @@ class AssertionCanBeDisabledTest {
   @Test
   fun lazyAssertionsCanBeDisabled() {
     val counter = MutableInt(0)
-    Util.lazyAssert({
+    lazyAssert({
       counter.set(100)
       false
     }) {

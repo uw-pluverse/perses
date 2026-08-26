@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -222,115 +228,115 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |       |   |           |           |           |       |       |___Token:b{id=956,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
                 |       |   |           |           |           |       |       |___Token:={id=952,slot_type=[assignmentOperator,Assign]}
                 |       |   |           |           |           |       |___aux_rule__postfixExpression_13{id=97,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |___aux_rule__primaryExpression_4{id=100,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |___aux_rule__primaryExpression_4{id=100,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |   |___Token:({id=101,slot_type=LeftParen}
                 |       |   |           |           |           |           |   |___aux_rule__postfixExpression_13{id=120,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |___aux_rule__primaryExpression_4{id=123,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |___aux_rule__primaryExpression_4{id=123,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |   |___Token:({id=124,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |   |___aux_rule__postfixExpression_13{id=143,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |___aux_rule__primaryExpression_4{id=146,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |___aux_rule__primaryExpression_4{id=146,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |   |___Token:({id=147,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |   |___aux_rule__postfixExpression_13{id=166,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |___aux_rule__primaryExpression_4{id=169,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |___aux_rule__primaryExpression_4{id=169,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |   |___Token:({id=170,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |   |___aux_rule__postfixExpression_13{id=189,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |___aux_rule__primaryExpression_4{id=192,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |___aux_rule__primaryExpression_4{id=192,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |   |___Token:({id=193,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |   |___aux_rule__postfixExpression_13{id=212,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |___aux_rule__primaryExpression_4{id=215,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |___aux_rule__primaryExpression_4{id=215,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |   |___Token:({id=216,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=235,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=238,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=238,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |   |___Token:({id=239,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=258,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=261,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=261,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |   |___Token:({id=262,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=281,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=284,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=284,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |   |___Token:({id=285,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=304,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=307,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=307,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |   |___Token:({id=308,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=327,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=330,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=330,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=331,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=350,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=353,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=353,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=354,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=373,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=376,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=376,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=377,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=396,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=399,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=399,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=400,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=419,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=422,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=422,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=423,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=442,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=445,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=445,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=446,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=465,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=468,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=468,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=469,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=488,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=491,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=491,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=492,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=511,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=514,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=514,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=515,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=534,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=537,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=537,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=538,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=557,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=560,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=560,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=561,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=580,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=583,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=583,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=584,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=603,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=606,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=606,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=607,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=626,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=629,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=629,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=630,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=649,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=652,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=652,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=653,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=672,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=675,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=675,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=676,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=695,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=698,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=698,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=699,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=718,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=721,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=721,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=722,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=741,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=744,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=744,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=745,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=764,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=767,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=767,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=768,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=787,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=790,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=790,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=791,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=810,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=813,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=813,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=814,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=833,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=836,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=836,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=837,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=856,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=859,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=859,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=860,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=879,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=882,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=882,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=883,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=902,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=905,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=905,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=906,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___aux_rule__postfixExpression_13{id=925,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,aux_rule__postfixExpression_13]}
-                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=928,slot_type=[altnt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
+                |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___aux_rule__primaryExpression_4{id=928,slot_type=[alt_block__primaryExpression_3,aux_rule__primaryExpression_4]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:({id=929,slot_type=LeftParen}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |   |___Token:a{id=948,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
                 |       |   |           |           |           |           |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |___Token:){id=927,slot_type=RightParen}
@@ -375,7 +381,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |       |   |           |___Token:}{id=60,slot_type=RightBrace}
                 |       |   |___Token:}{id=51,slot_type=RightBrace}
                 |       |___jumpStatement{id=21,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=24,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=24,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=25,slot_type=Return}
                 |           |   |___(?){id=26,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:b{id=45,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
@@ -3157,7 +3163,7 @@ The current best program is the following
 
 ==========Testing the following program (70): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__jumpStatement_2->return
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__jumpStatement_2->return
     --file: t.c--
     int main() {
       int a = 99;
@@ -3837,7 +3843,7 @@ compilationUnit{id=1073,slot_type=compilationUnit}
                 |       |   |       |___Token:a{id=1142,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
                 |       |   |___Token:;{id=1122,slot_type=Semi}
                 |       |___jumpStatement{id=1093,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=1096,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=1096,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=1097,slot_type=Return}
                 |           |   |___(?){id=1098,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:b{id=1117,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
@@ -5619,7 +5625,7 @@ compilationUnit{id=1073,slot_type=compilationUnit}
                 |       |   |       |___Token:a{id=1142,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
                 |       |   |___Token:;{id=1122,slot_type=Semi}
                 |       |___jumpStatement{id=1093,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=1096,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=1096,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=1097,slot_type=Return}
                 |           |   |___(?){id=1098,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:b{id=1117,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
@@ -5810,61 +5816,61 @@ FixPt[3][FineGritLatraReducer][UnifyFunctionDecl](22/103)  Found matches: 0 in t
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-compilationUnit{id=26121,slot_type=compilationUnit}
-|___(?){id=26122,slot_type=optional__compilationUnit_1}
-    |___(+){id=26124,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___aux_rule__declaration_3{id=26251,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
-        |   |___(+){id=26252,slot_type=declarationSpecifiers}
-        |   |   |___Token:int{id=26262,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |   |   |___Token:b{id=26259,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-        |   |___Token:;{id=26253,slot_type=Semi}
-        |___functionDefinition{id=26127,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-            |___(?){id=26128,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=26245,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=26249,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=26236,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=26244,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=26238,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=26240,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=26241,slot_type=LeftParen}
-            |           |___Token:){id=26243,slot_type=RightParen}
-            |___compoundStatement{id=26130,slot_type=compoundStatement}
-                |___Token:{{id=26131,slot_type=LeftBrace}
-                |___(?){id=26132,slot_type=optional__compoundStatement_1}
-                |   |___(+){id=26135,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=26200,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=26201,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=26235,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=26202,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclarator{id=26205,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |   |       |___Token:a{id=26231,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(?){id=26207,slot_type=optional__initDeclarator_2}
-                |       |   |           |___aux_rule__initDeclarator_1{id=26208,slot_type=aux_rule__initDeclarator_1}
-                |       |   |               |___Token:={id=26209,slot_type=Assign}
-                |       |   |               |___Token:99{id=26228,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |___Token:;{id=26203,slot_type=Semi}
-                |       |___expressionStatement{id=26168,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-                |       |   |___(?){id=26169,slot_type=optional__postfixExpression_1}
-                |       |   |   |___assignmentExpression{id=26172,slot_type=[expression,assignmentExpression]}
-                |       |   |       |___(*){id=26173,slot_type=kleene_star__assignmentExpression_1}
-                |       |   |       |   |___aux_rule__assignmentExpression_2{id=26191,slot_type=aux_rule__assignmentExpression_2}
-                |       |   |       |       |___Token:b{id=26198,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |       |       |___Token:={id=26194,slot_type=[assignmentOperator,Assign]}
-                |       |   |       |___Token:a{id=26190,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |___Token:;{id=26170,slot_type=Semi}
-                |       |___jumpStatement{id=26141,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=26144,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-                |           |   |___Token:return{id=26145,slot_type=Return}
-                |           |   |___(?){id=26146,slot_type=optional__postfixExpression_1}
-                |           |       |___Token:b{id=26165,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |___Token:;{id=26143,slot_type=Semi}
-                |___Token:}{id=26133,slot_type=RightBrace}
+compilationUnit{id=25214,slot_type=compilationUnit}
+|___(?){id=25215,slot_type=optional__compilationUnit_1}
+    |___(+){id=25217,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=25344,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=25345,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=25355,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:b{id=25352,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=25346,slot_type=Semi}
+        |___functionDefinition{id=25220,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=25221,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=25338,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=25342,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=25329,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=25337,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=25331,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=25333,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=25334,slot_type=LeftParen}
+            |           |___Token:){id=25336,slot_type=RightParen}
+            |___compoundStatement{id=25223,slot_type=compoundStatement}
+                |___Token:{{id=25224,slot_type=LeftBrace}
+                |___(?){id=25225,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=25228,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=25293,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=25294,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=25328,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=25295,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=25298,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=25324,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=25300,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=25301,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=25302,slot_type=Assign}
+                |       |   |               |___Token:99{id=25321,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=25296,slot_type=Semi}
+                |       |___expressionStatement{id=25261,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=25262,slot_type=optional__postfixExpression_1}
+                |       |   |   |___assignmentExpression{id=25265,slot_type=[expression,assignmentExpression]}
+                |       |   |       |___(*){id=25266,slot_type=kleene_star__assignmentExpression_1}
+                |       |   |       |   |___aux_rule__assignmentExpression_2{id=25284,slot_type=aux_rule__assignmentExpression_2}
+                |       |   |       |       |___Token:b{id=25291,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___Token:={id=25287,slot_type=[assignmentOperator,Assign]}
+                |       |   |       |___Token:a{id=25283,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |___Token:;{id=25263,slot_type=Semi}
+                |       |___jumpStatement{id=25234,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=25237,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=25238,slot_type=Return}
+                |           |   |___(?){id=25239,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:b{id=25258,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=25236,slot_type=Semi}
+                |___Token:}{id=25226,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 FixPt[4][node_priority](21/103)  Starting to retrieve the semantics provider
 FixPt[4][node_priority](21/103)  Retrieved semantics provider null
-================Reducing node 26122, size=21================
+================Reducing node 25215, size=21================
 
 The current best program is the following
 
@@ -5899,11 +5905,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26122
+Failed to reduce node 25215
 ------------------------------------------------------------
 
 
-================Reducing node 26124, size=21================
+================Reducing node 25217, size=21================
 
 The current best program is the following
 
@@ -5919,7 +5925,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26124]
+    structure: [delete_25217]
     context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
 ------------------------------------------------------------
 
@@ -5953,7 +5959,7 @@ FixPt[4][node_priority][DFS](21/103)  Testing the empty input. Global ratio:21/1
 FixPt[4][node_priority][DFS](21/103)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/103=20.39%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26127]
+    structure: [delete_25220]
     context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__translationUnit_3]dd@#nodes=1,#parts=1#total-parts=2
 ------------------------------------------------------------
 
@@ -5997,11 +6003,11 @@ FixPt[4][node_priority][DFS](21/103)  Try deleting [0]#1: Uninteresting. Local r
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26124
+Failed to reduce node 25217
 ------------------------------------------------------------
 
 
-================Reducing node 26127, size=21================
+================Reducing node 25220, size=21================
 
 The current best program is the following
 
@@ -6017,7 +6023,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26127]
+    structure: [delete_25220]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -6072,11 +6078,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26127
+Failed to reduce node 25220
 ------------------------------------------------------------
 
 
-================Reducing node 26130, size=21================
+================Reducing node 25223, size=21================
 
 The current best program is the following
 
@@ -6092,11 +6098,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26130
+Failed to reduce node 25223
 ------------------------------------------------------------
 
 
-================Reducing node 26132, size=21================
+================Reducing node 25225, size=21================
 
 The current best program is the following
 
@@ -6138,11 +6144,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26132
+Failed to reduce node 25225
 ------------------------------------------------------------
 
 
-================Reducing node 26135, size=21================
+================Reducing node 25228, size=21================
 
 The current best program is the following
 
@@ -6158,7 +6164,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26135]
+    structure: [delete_25228]
     context: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
 ------------------------------------------------------------
 
@@ -6305,11 +6311,11 @@ FixPt[4][node_priority][DFS](21/103)  Try deleting [0]#1: Uninteresting. Local r
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26135
+Failed to reduce node 25228
 ------------------------------------------------------------
 
 
-================Reducing node 26200, size=21================
+================Reducing node 25293, size=21================
 
 The current best program is the following
 
@@ -6325,7 +6331,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26200]
+    structure: [delete_25293]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -6357,11 +6363,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26200
+Failed to reduce node 25293
 ------------------------------------------------------------
 
 
-================Reducing node 26168, size=21================
+================Reducing node 25261, size=21================
 
 The current best program is the following
 
@@ -6377,7 +6383,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26168]
+    structure: [delete_25261]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -6409,11 +6415,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26168
+Failed to reduce node 25261
 ------------------------------------------------------------
 
 
-================Reducing node 26251, size=21================
+================Reducing node 25344, size=21================
 
 The current best program is the following
 
@@ -6429,7 +6435,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26251]
+    structure: [delete_25344]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -6460,11 +6466,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26251
+Failed to reduce node 25344
 ------------------------------------------------------------
 
 
-================Reducing node 26236, size=21================
+================Reducing node 25329, size=21================
 
 The current best program is the following
 
@@ -6493,11 +6499,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26236
+Failed to reduce node 25329
 ------------------------------------------------------------
 
 
-================Reducing node 26202, size=21================
+================Reducing node 25295, size=21================
 
 The current best program is the following
 
@@ -6531,11 +6537,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26202
+Failed to reduce node 25295
 ------------------------------------------------------------
 
 
-================Reducing node 26205, size=21================
+================Reducing node 25298, size=21================
 
 The current best program is the following
 
@@ -6551,7 +6557,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26205]
+    structure: [delete_25298]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -6571,11 +6577,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26205
+Failed to reduce node 25298
 ------------------------------------------------------------
 
 
-================Reducing node 26169, size=21================
+================Reducing node 25262, size=21================
 
 The current best program is the following
 
@@ -6608,11 +6614,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26169
+Failed to reduce node 25262
 ------------------------------------------------------------
 
 
-================Reducing node 26172, size=21================
+================Reducing node 25265, size=21================
 
 The current best program is the following
 
@@ -6628,7 +6634,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26172]
+    structure: [delete_25265]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -6660,11 +6666,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26172
+Failed to reduce node 25265
 ------------------------------------------------------------
 
 
-================Reducing node 26141, size=21================
+================Reducing node 25234, size=21================
 
 The current best program is the following
 
@@ -6680,7 +6686,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26141]
+    structure: [delete_25234]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -6712,11 +6718,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26141
+Failed to reduce node 25234
 ------------------------------------------------------------
 
 
-================Reducing node 26252, size=21================
+================Reducing node 25345, size=21================
 
 The current best program is the following
 
@@ -6772,7 +6778,7 @@ FixPt[4][node_priority][DFS](21/103)  Testing the empty input. Global ratio:21/1
 FixPt[4][node_priority][DFS](21/103)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:21/103=20.39%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26259]
+    structure: [delete_25352]
     context: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=2
 ------------------------------------------------------------
 
@@ -6795,11 +6801,11 @@ FixPt[4][node_priority][DFS](21/103)  Try deleting [0]#1: Skipped LiteralReplace
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26252
+Failed to reduce node 25345
 ------------------------------------------------------------
 
 
-================Reducing node 26238, size=21================
+================Reducing node 25331, size=21================
 
 The current best program is the following
 
@@ -6832,11 +6838,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26238
+Failed to reduce node 25331
 ------------------------------------------------------------
 
 
-================Reducing node 26240, size=21================
+================Reducing node 25333, size=21================
 
 The current best program is the following
 
@@ -6852,18 +6858,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26240]
+    structure: [delete_25333]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26240
+Failed to reduce node 25333
 ------------------------------------------------------------
 
 
-================Reducing node 26207, size=21================
+================Reducing node 25300, size=21================
 
 The current best program is the following
 
@@ -6896,11 +6902,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26207
+Failed to reduce node 25300
 ------------------------------------------------------------
 
 
-================Reducing node 26208, size=21================
+================Reducing node 25301, size=21================
 
 The current best program is the following
 
@@ -6916,18 +6922,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26208]
+    structure: [delete_25301]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26208
+Failed to reduce node 25301
 ------------------------------------------------------------
 
 
-================Reducing node 26173, size=21================
+================Reducing node 25266, size=21================
 
 The current best program is the following
 
@@ -6960,11 +6966,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26173
+Failed to reduce node 25266
 ------------------------------------------------------------
 
 
-================Reducing node 26191, size=21================
+================Reducing node 25284, size=21================
 
 The current best program is the following
 
@@ -6980,18 +6986,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26191]
+    structure: [delete_25284]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26191
+Failed to reduce node 25284
 ------------------------------------------------------------
 
 
-================Reducing node 26144, size=21================
+================Reducing node 25237, size=21================
 
 The current best program is the following
 
@@ -7007,7 +7013,7 @@ The current best program is the following
 
 =========Testing the following program (132): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__jumpStatement_2->return
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__jumpStatement_2->return
     --file: t.c--
       int  b
                     ;int main() {
@@ -7020,11 +7026,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26144
+Failed to reduce node 25237
 ------------------------------------------------------------
 
 
-================Reducing node 26262, size=21================
+================Reducing node 25355, size=21================
 
 The current best program is the following
 
@@ -7040,11 +7046,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26262
+Failed to reduce node 25355
 ------------------------------------------------------------
 
 
-================Reducing node 26259, size=21================
+================Reducing node 25352, size=21================
 
 The current best program is the following
 
@@ -7060,11 +7066,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26259
+Failed to reduce node 25352
 ------------------------------------------------------------
 
 
-================Reducing node 26253, size=21================
+================Reducing node 25346, size=21================
 
 The current best program is the following
 
@@ -7080,11 +7086,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26253
+Failed to reduce node 25346
 ------------------------------------------------------------
 
 
-================Reducing node 26244, size=21================
+================Reducing node 25337, size=21================
 
 The current best program is the following
 
@@ -7100,11 +7106,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26244
+Failed to reduce node 25337
 ------------------------------------------------------------
 
 
-================Reducing node 26243, size=21================
+================Reducing node 25336, size=21================
 
 The current best program is the following
 
@@ -7120,11 +7126,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26243
+Failed to reduce node 25336
 ------------------------------------------------------------
 
 
-================Reducing node 26241, size=21================
+================Reducing node 25334, size=21================
 
 The current best program is the following
 
@@ -7140,11 +7146,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26241
+Failed to reduce node 25334
 ------------------------------------------------------------
 
 
-================Reducing node 26231, size=21================
+================Reducing node 25324, size=21================
 
 The current best program is the following
 
@@ -7160,11 +7166,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26231
+Failed to reduce node 25324
 ------------------------------------------------------------
 
 
-================Reducing node 26228, size=21================
+================Reducing node 25321, size=21================
 
 The current best program is the following
 
@@ -7180,11 +7186,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26228
+Failed to reduce node 25321
 ------------------------------------------------------------
 
 
-================Reducing node 26209, size=21================
+================Reducing node 25302, size=21================
 
 The current best program is the following
 
@@ -7200,11 +7206,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26209
+Failed to reduce node 25302
 ------------------------------------------------------------
 
 
-================Reducing node 26203, size=21================
+================Reducing node 25296, size=21================
 
 The current best program is the following
 
@@ -7220,11 +7226,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26203
+Failed to reduce node 25296
 ------------------------------------------------------------
 
 
-================Reducing node 26201, size=21================
+================Reducing node 25294, size=21================
 
 The current best program is the following
 
@@ -7258,11 +7264,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26201
+Failed to reduce node 25294
 ------------------------------------------------------------
 
 
-================Reducing node 26235, size=21================
+================Reducing node 25328, size=21================
 
 The current best program is the following
 
@@ -7278,11 +7284,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26235
+Failed to reduce node 25328
 ------------------------------------------------------------
 
 
-================Reducing node 26198, size=21================
+================Reducing node 25291, size=21================
 
 The current best program is the following
 
@@ -7298,11 +7304,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26198
+Failed to reduce node 25291
 ------------------------------------------------------------
 
 
-================Reducing node 26194, size=21================
+================Reducing node 25287, size=21================
 
 The current best program is the following
 
@@ -7318,11 +7324,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26194
+Failed to reduce node 25287
 ------------------------------------------------------------
 
 
-================Reducing node 26190, size=21================
+================Reducing node 25283, size=21================
 
 The current best program is the following
 
@@ -7338,11 +7344,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26190
+Failed to reduce node 25283
 ------------------------------------------------------------
 
 
-================Reducing node 26170, size=21================
+================Reducing node 25263, size=21================
 
 The current best program is the following
 
@@ -7358,11 +7364,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26170
+Failed to reduce node 25263
 ------------------------------------------------------------
 
 
-================Reducing node 26146, size=21================
+================Reducing node 25239, size=21================
 
 The current best program is the following
 
@@ -7395,11 +7401,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26146
+Failed to reduce node 25239
 ------------------------------------------------------------
 
 
-================Reducing node 26165, size=21================
+================Reducing node 25258, size=21================
 
 The current best program is the following
 
@@ -7415,11 +7421,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26165
+Failed to reduce node 25258
 ------------------------------------------------------------
 
 
-================Reducing node 26145, size=21================
+================Reducing node 25238, size=21================
 
 The current best program is the following
 
@@ -7435,11 +7441,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26145
+Failed to reduce node 25238
 ------------------------------------------------------------
 
 
-================Reducing node 26143, size=21================
+================Reducing node 25236, size=21================
 
 The current best program is the following
 
@@ -7455,11 +7461,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26143
+Failed to reduce node 25236
 ------------------------------------------------------------
 
 
-================Reducing node 26133, size=21================
+================Reducing node 25226, size=21================
 
 The current best program is the following
 
@@ -7475,11 +7481,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26133
+Failed to reduce node 25226
 ------------------------------------------------------------
 
 
-================Reducing node 26131, size=21================
+================Reducing node 25224, size=21================
 
 The current best program is the following
 
@@ -7495,11 +7501,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26131
+Failed to reduce node 25224
 ------------------------------------------------------------
 
 
-================Reducing node 26128, size=21================
+================Reducing node 25221, size=21================
 
 The current best program is the following
 
@@ -7533,11 +7539,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26128
+Failed to reduce node 25221
 ------------------------------------------------------------
 
 
-================Reducing node 26245, size=21================
+================Reducing node 25338, size=21================
 
 The current best program is the following
 
@@ -7553,7 +7559,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_26245]
+    structure: [delete_25338]
     context: [kleene_plus:declarationSpecifiers]can be epsilon
 ------------------------------------------------------------
 
@@ -7577,11 +7583,11 @@ FixPt[4][node_priority][DFS](21/103)  There is only one element in the input, an
 FixPt[4][node_priority][DFS](21/103)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/103=20.39%
 ===================Node reduction is done===================
 
-Failed to reduce node 26245
+Failed to reduce node 25338
 ------------------------------------------------------------
 
 
-================Reducing node 26249, size=21================
+================Reducing node 25342, size=21================
 
 The current best program is the following
 
@@ -7597,7 +7603,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 26249
+Failed to reduce node 25342
 ------------------------------------------------------------
 
 
@@ -7606,55 +7612,55 @@ Failed to reduce node 26249
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-compilationUnit{id=26121,slot_type=compilationUnit}
-|___(?){id=26122,slot_type=optional__compilationUnit_1}
-    |___(+){id=26124,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___aux_rule__declaration_3{id=26251,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
-        |   |___(+){id=26252,slot_type=declarationSpecifiers}
-        |   |   |___Token:int{id=26262,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-        |   |   |___Token:b{id=26259,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
-        |   |___Token:;{id=26253,slot_type=Semi}
-        |___functionDefinition{id=26127,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-            |___(?){id=26128,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=26245,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=26249,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=26236,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=26244,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=26238,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=26240,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=26241,slot_type=LeftParen}
-            |           |___Token:){id=26243,slot_type=RightParen}
-            |___compoundStatement{id=26130,slot_type=compoundStatement}
-                |___Token:{{id=26131,slot_type=LeftBrace}
-                |___(?){id=26132,slot_type=optional__compoundStatement_1}
-                |   |___(+){id=26135,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=26200,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=26201,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=26235,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=26202,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclarator{id=26205,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |   |       |___Token:a{id=26231,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(?){id=26207,slot_type=optional__initDeclarator_2}
-                |       |   |           |___aux_rule__initDeclarator_1{id=26208,slot_type=aux_rule__initDeclarator_1}
-                |       |   |               |___Token:={id=26209,slot_type=Assign}
-                |       |   |               |___Token:99{id=26228,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |___Token:;{id=26203,slot_type=Semi}
-                |       |___expressionStatement{id=26168,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-                |       |   |___(?){id=26169,slot_type=optional__postfixExpression_1}
-                |       |   |   |___assignmentExpression{id=26172,slot_type=[expression,assignmentExpression]}
-                |       |   |       |___(*){id=26173,slot_type=kleene_star__assignmentExpression_1}
-                |       |   |       |   |___aux_rule__assignmentExpression_2{id=26191,slot_type=aux_rule__assignmentExpression_2}
-                |       |   |       |       |___Token:b{id=26198,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |       |       |___Token:={id=26194,slot_type=[assignmentOperator,Assign]}
-                |       |   |       |___Token:a{id=26190,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |___Token:;{id=26170,slot_type=Semi}
-                |       |___jumpStatement{id=26141,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=26144,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
-                |           |   |___Token:return{id=26145,slot_type=Return}
-                |           |   |___(?){id=26146,slot_type=optional__postfixExpression_1}
-                |           |       |___Token:b{id=26165,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |___Token:;{id=26143,slot_type=Semi}
-                |___Token:}{id=26133,slot_type=RightBrace}
+compilationUnit{id=25214,slot_type=compilationUnit}
+|___(?){id=25215,slot_type=optional__compilationUnit_1}
+    |___(+){id=25217,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=25344,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=25345,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=25355,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:b{id=25352,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=25346,slot_type=Semi}
+        |___functionDefinition{id=25220,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=25221,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=25338,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=25342,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=25329,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=25337,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=25331,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=25333,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=25334,slot_type=LeftParen}
+            |           |___Token:){id=25336,slot_type=RightParen}
+            |___compoundStatement{id=25223,slot_type=compoundStatement}
+                |___Token:{{id=25224,slot_type=LeftBrace}
+                |___(?){id=25225,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=25228,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=25293,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=25294,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=25328,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=25295,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=25298,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=25324,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=25300,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=25301,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=25302,slot_type=Assign}
+                |       |   |               |___Token:99{id=25321,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=25296,slot_type=Semi}
+                |       |___expressionStatement{id=25261,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=25262,slot_type=optional__postfixExpression_1}
+                |       |   |   |___assignmentExpression{id=25265,slot_type=[expression,assignmentExpression]}
+                |       |   |       |___(*){id=25266,slot_type=kleene_star__assignmentExpression_1}
+                |       |   |       |   |___aux_rule__assignmentExpression_2{id=25284,slot_type=aux_rule__assignmentExpression_2}
+                |       |   |       |       |___Token:b{id=25291,slot_type=[unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___Token:={id=25287,slot_type=[assignmentOperator,Assign]}
+                |       |   |       |___Token:a{id=25283,slot_type=[conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |___Token:;{id=25263,slot_type=Semi}
+                |       |___jumpStatement{id=25234,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
+                |           |___aux_rule__jumpStatement_4{id=25237,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |   |___Token:return{id=25238,slot_type=Return}
+                |           |   |___(?){id=25239,slot_type=optional__postfixExpression_1}
+                |           |       |___Token:b{id=25258,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |___Token:;{id=25236,slot_type=Semi}
+                |___Token:}{id=25226,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
@@ -7675,7 +7681,7 @@ FixPt[5][FineGritLatraReducer](21/103)  Reparsing the best spartree to faithfull
 ================The best program is updated.================
 
 token count change 21 -> 21
-Edit: AnyNodeReplace:[replace_26121_with_26286]
+Edit: AnyNodeReplace:[replace_25214_with_25379]
 ------------------------------------------------------------
 
 
@@ -7688,14 +7694,14 @@ FixPt[5][FineGritLatraReducer][PlusOperationSimplification](21/103)  Found match
 FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Found matches: 2 in transformation LocalToGlobalTransformation
 FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation][WPROBDD](21/103)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-1]#2.
 FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation][WPROBDD](21/103)  Testing the empty input is disabled.
-FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Try to apply transformations for matches [subroot(id=26290,#3), subroot(id=26303,#3)]
-FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Built a LatraGeneralActionSet [subroot(id=26290,#3), subroot(id=26303,#3)] in LocalToGlobalTransformation
+FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Try to apply transformations for matches [subroot(id=25383,#3), subroot(id=25396,#3)]
+FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Built a LatraGeneralActionSet [subroot(id=25383,#3), subroot(id=25396,#3)] in LocalToGlobalTransformation
 FixPt[5][FineGritLatraReducer](21/103)  An edit (description=Latra Transformation LocalToGlobalTransformation created by FullFunctionalLatraRewriterBuilder) is skipped in DefaultLatraReducer because it was visited before.
 FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation][WPROBDD](21/103)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%.
-FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Try to apply transformations for matches subroot(id=26290,#3)
+FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Try to apply transformations for matches subroot(id=25383,#3)
 FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation][WPROBDD](21/103)  Try deleting [0]#1: null edit. Local ratio: 2/2=100.00%.
-FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Try to apply transformations for matches subroot(id=26303,#3)
-FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Built a LatraGeneralActionSet subroot(id=26303,#3) in LocalToGlobalTransformation
+FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Try to apply transformations for matches subroot(id=25396,#3)
+FixPt[5][FineGritLatraReducer][LocalToGlobalTransformation](21/103)  Built a LatraGeneralActionSet subroot(id=25396,#3) in LocalToGlobalTransformation
 =========Testing the following program (135): fail==========
 
 // edit action set type: Latra Transformation LocalToGlobalTransformation created by FullFunctionalLatraRewriterBuilder
@@ -7748,8 +7754,8 @@ FixPt[5][FineGritLatraReducer][EmptyStructToInt](21/103)  Found matches: 0 in tr
 FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Found matches: 2 in transformation RemoveAssignment
 FixPt[5][FineGritLatraReducer][RemoveAssignment][WPROBDD](21/103)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-1]#2.
 FixPt[5][FineGritLatraReducer][RemoveAssignment][WPROBDD](21/103)  Testing the empty input is disabled.
-FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Try to apply transformations for matches [subroot(id=26369,#3), subroot(id=26336,#3)]
-FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Built a LatraGeneralActionSet [subroot(id=26369,#3), subroot(id=26336,#3)] in RemoveAssignment
+FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Try to apply transformations for matches [subroot(id=25462,#3), subroot(id=25429,#3)]
+FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Built a LatraGeneralActionSet [subroot(id=25462,#3), subroot(id=25429,#3)] in RemoveAssignment
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
@@ -7763,8 +7769,8 @@ FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Built a LatraGeneralAc
 
 
 FixPt[5][FineGritLatraReducer][RemoveAssignment][WPROBDD](21/103)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%.
-FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Try to apply transformations for matches subroot(id=26369,#3)
-FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Built a LatraGeneralActionSet subroot(id=26369,#3) in RemoveAssignment
+FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Try to apply transformations for matches subroot(id=25462,#3)
+FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Built a LatraGeneralActionSet subroot(id=25462,#3) in RemoveAssignment
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
@@ -7778,8 +7784,8 @@ FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Built a LatraGeneralAc
 
 
 FixPt[5][FineGritLatraReducer][RemoveAssignment][WPROBDD](21/103)  Try deleting [0]#1: Uninteresting. Local ratio: 2/2=100.00%.
-FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Try to apply transformations for matches subroot(id=26336,#3)
-FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Built a LatraGeneralActionSet subroot(id=26336,#3) in RemoveAssignment
+FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Try to apply transformations for matches subroot(id=25429,#3)
+FixPt[5][FineGritLatraReducer][RemoveAssignment](21/103)  Built a LatraGeneralActionSet subroot(id=25429,#3) in RemoveAssignment
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
@@ -7802,13 +7808,13 @@ FixPt[5][FineGritLatraReducer][ReplaceDefByDecl](21/103)  Found matches: 0 in tr
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Found matches: 2 in transformation CombineLocalVarDecl
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl][WPROBDD](21/103)  Minimizer WeightedProbabilisticDeltaDebugger starts. Input=[0-1]#2.
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl][WPROBDD](21/103)  Testing the empty input is disabled.
-FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Try to apply transformations for matches [subroot(id=26290,#3), subroot(id=26303,#3)]
+FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Try to apply transformations for matches [subroot(id=25383,#3), subroot(id=25396,#3)]
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Exception: There must be at least one match for this transformation CombineLocalVarDecl
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl][WPROBDD](21/103)  Try deleting [0-1]#2: null edit. Local ratio: 2/2=100.00%.
-FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Try to apply transformations for matches subroot(id=26290,#3)
+FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Try to apply transformations for matches subroot(id=25383,#3)
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Exception: There must be at least one match for this transformation CombineLocalVarDecl
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl][WPROBDD](21/103)  Try deleting [0]#1: null edit. Local ratio: 2/2=100.00%.
-FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Try to apply transformations for matches subroot(id=26303,#3)
+FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Try to apply transformations for matches subroot(id=25396,#3)
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl](21/103)  Exception: There must be at least one match for this transformation CombineLocalVarDecl
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl][WPROBDD](21/103)  Try deleting [1]#1: null edit. Local ratio: 2/2=100.00%.
 FixPt[5][FineGritLatraReducer][CombineLocalVarDecl][WPROBDD](21/103)  Minimizer WeightedProbabilisticDeltaDebugger ends. Result=[0-1]#2. Local ratio: 2/2=100.00%.

@@ -14,31 +14,35 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.reduction
+package org.perses.util
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Serialization
-import org.perses.util.shell.ExitCode
 
 @RunWith(JUnit4::class)
-class PropertyTestResultTest {
+class SpaceSizeTest {
   @Test
-  fun testSerialization() {
-    val result = PropertyTestResult(ExitCode.ZERO, elapsedMillis = 100)
-    val yaml = Serialization.toYamlString(result)
-    val deserialized =
-      Serialization.fromYamlString(
-        yaml,
-        object : TypeReference<PropertyTestResult>() {},
-      )
-    assertThat(deserialized).isEqualTo(result)
-    assertThat(yaml as String?).contains("exitCode")
-    assertThat(yaml as String?).contains("elapsedMillis")
-    assertThat(yaml as String?).doesNotContain("isInteresting")
-    assertThat(yaml as String?).doesNotContain("isNotInteresting")
+  fun testSpaceSize() {
+    SpaceSize(bytes = 1000).let {
+      assertThat(it.bytes).isEqualTo(1000)
+    }
+    SpaceSize.kiloBytes(kb = 1).let {
+      assertThat(it.bytes).isEqualTo(1000)
+      assertThat(it.toKiloBytes()).isEqualTo(1)
+      assertThat(it.toMegaBytes()).isEqualTo(0)
+      assertThat(it.toGigaBytes()).isEqualTo(0)
+    }
+    SpaceSize.megaBytes(mb = 1).let {
+      assertThat(it.bytes).isEqualTo(1000 * 1000)
+      assertThat(it.toKiloBytes()).isEqualTo(1000)
+      assertThat(it.toMegaBytes()).isEqualTo(1)
+      assertThat(it.toGigaBytes()).isEqualTo(0)
+    }
+    SpaceSize.megaBytes(mb = 1000).let {
+      assertThat(it.toMegaBytes()).isEqualTo(1000)
+      assertThat(it.toGigaBytes()).isEqualTo(1)
+    }
   }
 }

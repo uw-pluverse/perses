@@ -21,11 +21,11 @@ import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Path
 
 abstract class AbstractGlobalExecutionCache {
-  abstract fun getCachedResultOrNull(outputManager: AbstractOutputManager): PropertyTestResult?
+  abstract fun getCachedResultOrNull(outputManager: AbstractOutputManager): TestScriptVerdict?
 
   abstract fun cacheTestScriptResult(
     outputManager: AbstractOutputManager,
-    result: PropertyTestResult,
+    result: TestScriptVerdict,
   )
 
   abstract fun saveCacheEntriesToCsvFile(csvFileToSaveHistory: Path)
@@ -33,14 +33,14 @@ abstract class AbstractGlobalExecutionCache {
   class GlobalExecutionCache private constructor(
     private val history: TestScriptHistory,
   ) : AbstractGlobalExecutionCache() {
-    override fun getCachedResultOrNull(outputManager: AbstractOutputManager): PropertyTestResult? {
+    override fun getCachedResultOrNull(outputManager: AbstractOutputManager): TestScriptVerdict? {
       val key = outputManager.shaHashCode.digest
       return history.getExecutionHistoryFor(key)
     }
 
     override fun cacheTestScriptResult(
       outputManager: AbstractOutputManager,
-      result: PropertyTestResult,
+      result: TestScriptVerdict,
     ) {
       history.cacheExecutionHistory(
         key = outputManager.shaHashCode.digest,
@@ -69,12 +69,12 @@ abstract class AbstractGlobalExecutionCache {
   }
 
   class NullCache : AbstractGlobalExecutionCache() {
-    override fun getCachedResultOrNull(outputManager: AbstractOutputManager): PropertyTestResult? =
+    override fun getCachedResultOrNull(outputManager: AbstractOutputManager): TestScriptVerdict? =
       null
 
     override fun cacheTestScriptResult(
       outputManager: AbstractOutputManager,
-      result: PropertyTestResult,
+      result: TestScriptVerdict,
     ) {
       // Do nothing.
     }

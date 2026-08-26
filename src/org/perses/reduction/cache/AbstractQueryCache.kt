@@ -16,7 +16,7 @@
  */
 package org.perses.reduction.cache
 
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.util.ImmutableIntArray
 
@@ -26,7 +26,7 @@ abstract class AbstractQueryCache {
   abstract fun recordUninteresting(
     outputManager: AbstractOutputManager,
     perFileNonBlankCharacterCounts: ImmutableIntArray,
-    result: PropertyTestResult,
+    result: TestScriptVerdict,
   )
 
   abstract fun cacheSize(): Int

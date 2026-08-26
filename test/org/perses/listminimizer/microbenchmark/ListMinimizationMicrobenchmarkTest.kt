@@ -23,14 +23,14 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.perses.util.FileSystemUtil
 import org.perses.util.Interval
-import org.perses.util.Util
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.readText
 
 @RunWith(JUnit4::class)
 class ListMinimizationMicrobenchmarkTest {
-  private val tempDir = Util.createTempDirForObject(this)
+  private val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   @After
   fun teardown() {

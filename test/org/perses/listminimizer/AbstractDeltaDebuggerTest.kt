@@ -24,7 +24,8 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.listminimizer.PristineDeltaDebugger.Companion.computePartitionSize
 import org.perses.listminimizer.PristineDeltaDebugger.Companion.countBasedPartition
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.CandidateOutcome
+import org.perses.reduction.TestScriptVerdict
 import org.perses.util.toImmutableList
 
 @RunWith(JUnit4::class)
@@ -32,7 +33,9 @@ class AbstractDeltaDebuggerTest {
   companion object {
     val dummyPropertyTest =
       IPropertyTester<String, String> {
-        ListMinimizerPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "dummy")
+        ImmediatePropertyTestHandle(
+          CandidateOutcome.Interesting("dummy", TestScriptVerdict.INTERESTING),
+        )
       }
 
     val dummyHandler =

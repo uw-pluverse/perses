@@ -70,7 +70,7 @@ useDeclarationContent
     ;
 
 namespaceDeclaration
-    : Namespace altnt_block__namespaceDeclaration_3
+    : Namespace alt_block__namespaceDeclaration_3
     ;
 
 namespaceStatement
@@ -86,7 +86,7 @@ functionDeclaration
     ;
 
 classDeclaration
-    : optional__functionDeclaration_1 optional__classDeclaration_2 optional__classDeclaration_3 optional__classDeclaration_4 altnt_block__classDeclaration_14 OpenCurlyBracket kleene_star__classDeclaration_13 CloseCurlyBracket
+    : optional__functionDeclaration_1 optional__classDeclaration_2 optional__classDeclaration_3 optional__classDeclaration_4 alt_block__classDeclaration_14 OpenCurlyBracket kleene_star__classDeclaration_13 CloseCurlyBracket
     ;
 
 classEntryType
@@ -99,7 +99,7 @@ interfaceList
     ;
 
 typeParameterListInBrackets
-    : '<:' altnt_block__typeParameterListInBrackets_3 ':>'
+    : '<:' alt_block__typeParameterListInBrackets_3 ':>'
     ;
 
 typeParameterList
@@ -115,7 +115,7 @@ typeParameterDecl
     ;
 
 typeParameterWithDefaultDecl
-    : optional__functionDeclaration_1 identifier Eq altnt_block__typeParameterWithDefaultDecl_2
+    : optional__functionDeclaration_1 identifier Eq alt_block__typeParameterWithDefaultDecl_2
     ;
 
 genericDynamicArgs
@@ -178,7 +178,7 @@ blockStatement
     ;
 
 ifStatement
-    : If parentheses altnt_block__ifStatement_5
+    : If parentheses alt_block__ifStatement_5
     ;
 
 elseIfStatement
@@ -198,7 +198,7 @@ elseColonStatement
     ;
 
 whileStatement
-    : While parentheses altnt_block__whileStatement_1
+    : While parentheses alt_block__whileStatement_1
     ;
 
 doWhileStatement
@@ -206,7 +206,7 @@ doWhileStatement
     ;
 
 forStatement
-    : For '(' optional__forStatement_1 SemiColon optional__forStatement_2 SemiColon optional__forStatement_1 ')' altnt_block__forStatement_4
+    : For '(' optional__forStatement_1 SemiColon optional__forStatement_2 SemiColon optional__forStatement_1 ')' alt_block__forStatement_4
     ;
 
 forInit
@@ -214,7 +214,7 @@ forInit
     ;
 
 switchStatement
-    : Switch parentheses altnt_block__switchStatement_5
+    : Switch parentheses alt_block__switchStatement_5
     ;
 
 switchBlock
@@ -234,7 +234,7 @@ returnStatement
     ;
 
 expressionStatement
-    : expression altnt_block__expressionStatement_1
+    : expression alt_block__expressionStatement_1
     ;
 
 phpInlineHtml
@@ -246,11 +246,11 @@ unsetStatement
     ;
 
 foreachStatement
-    : Foreach altnt_block__foreachStatement_8 altnt_block__foreachStatement_9
+    : Foreach alt_block__foreachStatement_8 alt_block__foreachStatement_9
     ;
 
 tryCatchFinally
-    : Try blockStatement altnt_block__tryCatchFinally_4
+    : Try blockStatement alt_block__tryCatchFinally_4
     ;
 
 catchClause
@@ -270,7 +270,7 @@ gotoStatement
     ;
 
 declareStatement
-    : Declare '(' declareList ')' altnt_block__declareStatement_1
+    : Declare '(' declareList ')' alt_block__declareStatement_1
     ;
 
 declareList
@@ -328,7 +328,7 @@ traitPrecedence
     ;
 
 traitAlias
-    : traitMethodReference As altnt_block__traitAlias_2 SemiColon
+    : traitMethodReference As alt_block__traitAlias_2 SemiColon
     ;
 
 traitMethodReference
@@ -380,7 +380,7 @@ expressionList
     ;
 
 parentheses
-    : '(' altnt_block__parentheses_1 ')'
+    : '(' alt_block__parentheses_1 ')'
     ;
 
 assignable
@@ -389,11 +389,11 @@ assignable
     ;
 
 arrayCreation
-    : altnt_block__arrayCreation_5 optional__arrayCreation_4
+    : alt_block__arrayCreation_5 optional__arrayCreation_4
     ;
 
 arrayDestructuring
-    : '[' altnt_block__arrayDestructuring_10 ']'
+    : '[' alt_block__arrayDestructuring_10 ']'
     ;
 
 indexedDestructItem
@@ -434,7 +434,7 @@ assignmentOperator
     ;
 
 yieldExpression
-    : Yield altnt_block__yieldExpression_3
+    : Yield alt_block__yieldExpression_3
     ;
 
 arrayItemList
@@ -467,7 +467,7 @@ typeRef
     ;
 
 anonymousClass
-    : optional__functionDeclaration_1 optional__classDeclaration_2 optional__classDeclaration_3 optional__classDeclaration_4 altnt_block__anonymousClass_14 OpenCurlyBracket kleene_star__classDeclaration_13 CloseCurlyBracket
+    : optional__functionDeclaration_1 optional__classDeclaration_2 optional__classDeclaration_3 optional__classDeclaration_4 alt_block__anonymousClass_14 OpenCurlyBracket kleene_star__classDeclaration_13 CloseCurlyBracket
     ;
 
 indirectTypeRef
@@ -572,11 +572,11 @@ keyedFieldName
     ;
 
 keyedSimpleFieldName
-    : altnt_block__keyedSimpleFieldName_2 kleene_star__keyedVariable_2
+    : alt_block__keyedSimpleFieldName_2 kleene_star__keyedVariable_2
     ;
 
 keyedVariable
-    : kleene_star__keyedVariable_1 altnt_block__keyedVariable_3 kleene_star__keyedVariable_2
+    : kleene_star__keyedVariable_1 alt_block__keyedVariable_3 kleene_star__keyedVariable_2
     ;
 
 squareCurlyExpression
@@ -966,7 +966,7 @@ kleene_star__switchStatement_2
     ;
 
 aux_rule__switchBlock_1
-    : altnt_block__switchBlock_3 altnt_block__switchBlock_4
+    : alt_block__switchBlock_3 alt_block__switchBlock_4
     ;
 
 kleene_plus__switchBlock_2
@@ -1107,7 +1107,7 @@ kleene_star__globalConstantDeclaration_3
     ;
 
 aux_rule__enumDeclaration_1
-    : Colon altnt_block__enumDeclaration_6
+    : Colon alt_block__enumDeclaration_6
     ;
 
 optional__enumDeclaration_2
@@ -1308,7 +1308,7 @@ optional__constantInitializer_3
     ;
 
 aux_rule__constantInitializer_7
-    : '.' altnt_block__constantInitializer_12
+    : '.' alt_block__constantInitializer_12
     ;
 
 kleene_star__constantInitializer_8
@@ -1448,31 +1448,31 @@ optional__typeParameterListInBrackets_2
     : aux_rule__typeParameterListInBrackets_1?
     ;
 
-altnt_block__expression_9
+alt_block__expression_9
     : '++'
     | '--'
     ;
 
 optional__expression_10
-    : altnt_block__expression_9?
+    : alt_block__expression_9?
     ;
 
-altnt_block__typeParameterListInBrackets_3
+alt_block__typeParameterListInBrackets_3
     : typeParameterWithDefaultsList
     | aux_rule__typeParameterListInBrackets_4
     ;
 
-altnt_block__ifStatement_5
+alt_block__ifStatement_5
     : aux_rule__ifStatement_6
     | aux_rule__ifStatement_7
     ;
 
-altnt_block__expressionStatement_1
+alt_block__expressionStatement_1
     : SemiColon
     | phpInlineHtml
     ;
 
-altnt_block__expression_11
+alt_block__expression_11
     : '**'
     | '*'
     | Divide
@@ -1503,23 +1503,23 @@ altnt_block__expression_11
     | LogicalOr
     ;
 
-altnt_block__expression_13
+alt_block__expression_13
     : aux_rule__expression_22
     | aux_rule__expression_23
     | aux_rule__expression_24
     ;
 
-altnt_block__arrayDestructuring_10
+alt_block__arrayDestructuring_10
     : aux_rule__arrayDestructuring_11
     | aux_rule__arrayDestructuring_12
     ;
 
-altnt_block__globalVar_1
+alt_block__globalVar_1
     : chain
     | aux_rule__globalVar_3
     ;
 
-altnt_block__expression_14
+alt_block__expression_14
     : aux_rule__expression_25
     | arrayDestructuring
     ;
@@ -1562,169 +1562,169 @@ constant
     | qualifiedNamespaceName
     ;
 
-altnt_block__namespaceDeclaration_3
+alt_block__namespaceDeclaration_3
     : aux_rule__namespaceDeclaration_4
     | aux_rule__namespaceDeclaration_5
     ;
 
-altnt_block__classDeclaration_14
+alt_block__classDeclaration_14
     : aux_rule__classDeclaration_15
     | aux_rule__classDeclaration_16
     ;
 
-altnt_block__typeParameterWithDefaultDecl_2
+alt_block__typeParameterWithDefaultDecl_2
     : qualifiedStaticTypeRef
     | primitiveType
     ;
 
-altnt_block__whileStatement_1
+alt_block__whileStatement_1
     : statement
     | aux_rule__whileStatement_2
     ;
 
-altnt_block__forStatement_4
+alt_block__forStatement_4
     : statement
     | aux_rule__forStatement_5
     ;
 
-altnt_block__switchStatement_5
+alt_block__switchStatement_5
     : aux_rule__switchStatement_6
     | aux_rule__switchStatement_7
     ;
 
-altnt_block__foreachStatement_8
-    : '(' altnt_block__foreachStatement_10 ')'
+alt_block__foreachStatement_8
+    : '(' alt_block__foreachStatement_10 ')'
     ;
 
-altnt_block__foreachStatement_9
+alt_block__foreachStatement_9
     : statement
     | aux_rule__foreachStatement_13
     ;
 
-altnt_block__tryCatchFinally_4
+alt_block__tryCatchFinally_4
     : aux_rule__tryCatchFinally_5
     | aux_rule__tryCatchFinally_6
     ;
 
-altnt_block__declareStatement_1
+alt_block__declareStatement_1
     : statement
     | aux_rule__declareStatement_2
     ;
 
-altnt_block__directive_1
+alt_block__directive_1
     : numericConstant
     | Real
     ;
 
-altnt_block__classStatement_13
+alt_block__classStatement_13
     : aux_rule__classStatement_17
     | aux_rule__classStatement_18
     ;
 
-altnt_block__traitAlias_2
+alt_block__traitAlias_2
     : memberModifier
     | aux_rule__traitAlias_3
     ;
 
-altnt_block__parentheses_1
+alt_block__parentheses_1
     : expression
     | yieldExpression
     ;
 
-altnt_block__arrayCreation_5
+alt_block__arrayCreation_5
     : aux_rule__arrayCreation_6
     | aux_rule__arrayCreation_7
     ;
 
-altnt_block__yieldExpression_3
+alt_block__yieldExpression_3
     : aux_rule__yieldExpression_4
     | aux_rule__yieldExpression_5
     ;
 
-altnt_block__typeRef_2
+alt_block__typeRef_2
     : qualifiedNamespaceName
     | indirectTypeRef
     ;
 
-altnt_block__anonymousClass_14
+alt_block__anonymousClass_14
     : aux_rule__anonymousClass_15
     | aux_rule__anonymousClass_16
     ;
 
-altnt_block__classConstant_1
+alt_block__classConstant_1
     : Class
     | Parent_
     ;
 
-altnt_block__classConstant_2
+alt_block__classConstant_2
     : identifier
     | Constructor
     | Get
     | Set
     ;
 
-altnt_block__classConstant_3
+alt_block__classConstant_3
     : qualifiedStaticTypeRef
     | keyedVariable
     | string
     ;
 
-altnt_block__classConstant_4
+alt_block__classConstant_4
     : identifier
     | keyedVariable
     ;
 
-altnt_block__keyedSimpleFieldName_2
+alt_block__keyedSimpleFieldName_2
     : identifier
     | aux_rule__keyedSimpleFieldName_3
     ;
 
-altnt_block__keyedVariable_3
+alt_block__keyedVariable_3
     : VarName
     | aux_rule__keyedVariable_4
     ;
 
-altnt_block__switchBlock_3
+alt_block__switchBlock_3
     : aux_rule__switchBlock_5
     | Default
     ;
 
-altnt_block__switchBlock_4
+alt_block__switchBlock_4
     : ':'
     | SemiColon
     ;
 
-altnt_block__enumDeclaration_6
+alt_block__enumDeclaration_6
     : IntType
     | StringType
     ;
 
-altnt_block__constantInitializer_12
+alt_block__constantInitializer_12
     : string
     | constant
     ;
 
-altnt_block__expression_16
+alt_block__expression_16
     : chain
     | newExpr
     ;
 
-altnt_block__foreachStatement_10
+alt_block__foreachStatement_10
     : aux_rule__foreachStatement_14
     | aux_rule__foreachStatement_15
     ;
 
-altnt_block__string_4
+alt_block__string_4
     : StartHereDoc
     | StartNowDoc
     ;
 
-altnt_block__foreachStatement_11
+alt_block__foreachStatement_11
     : arrayDestructuring
     | aux_rule__foreachStatement_16
     ;
 
-altnt_block__foreachStatement_12
+alt_block__foreachStatement_12
     : aux_rule__foreachStatement_17
     | aux_rule__foreachStatement_18
     ;
@@ -1735,7 +1735,7 @@ aux_rule__htmlDocument_2
     | phpBlock
     ;
 
-altnt_block__expression_17
+alt_block__expression_17
     : aux_rule__expression_34
     | Clone
     | aux_rule__expression_35
@@ -1754,7 +1754,7 @@ altnt_block__expression_17
     | aux_rule__expression_37
     ;
 
-altnt_block__classStatement_14
+alt_block__classStatement_14
     : aux_rule__classStatement_19
     | aux_rule__classStatement_20
     ;
@@ -1772,7 +1772,7 @@ aux_rule__statement_2
     ;
 
 aux_rule__directive_2
-    : Ticks Eq altnt_block__directive_1
+    : Ticks Eq alt_block__directive_1
     ;
 
 aux_rule__directive_3
@@ -1784,11 +1784,11 @@ aux_rule__directive_4
     ;
 
 aux_rule__globalVar_2
-    : Dollar altnt_block__globalVar_1
+    : Dollar alt_block__globalVar_1
     ;
 
 aux_rule__classStatement_15
-    : optional__functionDeclaration_1 altnt_block__classStatement_13
+    : optional__functionDeclaration_1 alt_block__classStatement_13
     ;
 
 aux_rule__classStatement_16
@@ -1824,7 +1824,7 @@ aux_rule__qualifiedStaticTypeRef_2
     ;
 
 aux_rule__typeRef_3
-    : altnt_block__typeRef_2 optional__qualifiedStaticTypeRef_1
+    : alt_block__typeRef_2 optional__qualifiedStaticTypeRef_1
     ;
 
 aux_rule__namespaceNameTail_6
@@ -1844,11 +1844,11 @@ aux_rule__actualArgument_4
     ;
 
 aux_rule__classConstant_5
-    : altnt_block__classConstant_1 '::' altnt_block__classConstant_2
+    : alt_block__classConstant_1 '::' alt_block__classConstant_2
     ;
 
 aux_rule__classConstant_6
-    : altnt_block__classConstant_3 '::' altnt_block__classConstant_4
+    : alt_block__classConstant_3 '::' alt_block__classConstant_4
     ;
 
 aux_rule__string_5
@@ -1856,7 +1856,7 @@ aux_rule__string_5
     ;
 
 aux_rule__string_6
-    : altnt_block__string_4 kleene_plus__string_1
+    : alt_block__string_4 kleene_plus__string_1
     ;
 
 aux_rule__chainOrigin_1
@@ -1896,7 +1896,7 @@ aux_rule__expression_19
     ;
 
 aux_rule__expression_20
-    : altnt_block__expression_11 expression
+    : alt_block__expression_11 expression
     ;
 
 aux_rule__constantInitializer_14
@@ -1908,7 +1908,7 @@ aux_rule__constantInitializer_15
     ;
 
 aux_rule__constantInitializer_16
-    : altnt_block__constantInitializer_12 kleene_star__constantInitializer_8
+    : alt_block__constantInitializer_12 kleene_star__constantInitializer_8
     ;
 
 aux_rule__typeParameterListInBrackets_4
@@ -1964,7 +1964,7 @@ aux_rule__expression_27
     ;
 
 aux_rule__expression_28
-    : chain altnt_block__expression_9
+    : chain alt_block__expression_9
     ;
 
 aux_rule__expression_29
@@ -1976,15 +1976,15 @@ aux_rule__expression_30
     ;
 
 aux_rule__expression_31
-    : assignable Eq optional__functionDeclaration_1 '&' altnt_block__expression_16
+    : assignable Eq optional__functionDeclaration_1 '&' alt_block__expression_16
     ;
 
 aux_rule__expression_32
-    : altnt_block__expression_13 ')'
+    : alt_block__expression_13 ')'
     ;
 
 aux_rule__expression_33
-    : altnt_block__expression_17 expression
+    : alt_block__expression_17 expression
     ;
 
 aux_rule__namespaceDeclaration_4
@@ -2040,7 +2040,7 @@ aux_rule__classStatement_17
     ;
 
 aux_rule__classStatement_18
-    : optional__classStatement_5 altnt_block__classStatement_14
+    : optional__classStatement_5 alt_block__classStatement_14
     ;
 
 aux_rule__traitAlias_3
@@ -2084,11 +2084,11 @@ aux_rule__switchBlock_5
     ;
 
 aux_rule__foreachStatement_14
-    : expression As altnt_block__foreachStatement_11
+    : expression As alt_block__foreachStatement_11
     ;
 
 aux_rule__foreachStatement_15
-    : chain As altnt_block__foreachStatement_12
+    : chain As alt_block__foreachStatement_12
     ;
 
 aux_rule__foreachStatement_16
@@ -2116,7 +2116,7 @@ aux_rule__expression_36
     ;
 
 aux_rule__expression_37
-    : altnt_block__expression_14 Eq
+    : alt_block__expression_14 Eq
     ;
 
 aux_rule__classStatement_19

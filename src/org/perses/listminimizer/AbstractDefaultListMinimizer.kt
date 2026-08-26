@@ -16,8 +16,10 @@
  */
 package org.perses.listminimizer
 
+import org.perses.util.lazyAssert
 import com.google.common.collect.ImmutableList
-import org.perses.util.Util.lazyAssert
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.lazyAssert
 
 abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
@@ -90,22 +92,16 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
     for (partition in partitionList.partitions) {
       val elements = partition.asImmutableList()
       lazyAssert { elements.isNotEmpty() }
-      val propertyTestResult =
+      val outcome =
         testProperty(
           Candidate.SublistFromOriginal(original = best, candidate_ = elements),
-        )
-      if (propertyTestResult.staleElementsToRemove.isNotEmpty()) {
-        TODO("(cnsun): need to remove those elements from the best list.")
-      }
+        ).get()
 
-      // TODO: this needs test.
-      if (propertyTestResult !is ListMinimizerPropertyTestResult.Completed<T, PropertyPayload>) {
+      if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
         continue
       }
-      if (propertyTestResult.result.isInteresting) {
-        updateBest(elements, propertyTestResult.payload)
-        return true
-      }
+      updateBest(elements, outcome.payload)
+      return true
     }
     return false
   }
@@ -125,16 +121,10 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
 
   protected fun testComplement(
     complement: ImmutableList<ElementWrapper<T>>,
-  ): ListMinimizerPropertyTestResult.Completed<T, PropertyPayload>? {
-    val propertyTestResult =
-      testProperty(
-        Candidate.SublistFromOriginal(original = best, candidate_ = complement),
-      )
-    if (propertyTestResult !is ListMinimizerPropertyTestResult.Completed<T, PropertyPayload>) {
-      return null
-    }
-    return propertyTestResult
-  }
+  ): CandidateOutcome<PropertyPayload> =
+    testProperty(
+      Candidate.SublistFromOriginal(original = best, candidate_ = complement),
+    ).get()
 
   private fun reduceComplements(originalPartitionList: PartitionList<ElementWrapper<T>>): Int {
     arguments.log {
@@ -142,15 +132,15 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
     }
     var currentPartitionList = originalPartitionList
     var countOfDeletedPartitions = 0
-    complementLoop@ for (partition in currentPartitionList.partitions) {
+    for (partition in currentPartitionList.partitions) {
       val complement = computeComplement(partition)
-      val propertyTestResult = testComplement(complement) ?: continue
-      if (propertyTestResult.result.isInteresting) {
-        ++countOfDeletedPartitions
-        updateBest(complement, propertyTestResult.payload)
-        currentPartitionList = currentPartitionList.duplicateByRemovePartition(partition)
-        continue@complementLoop
+      val outcome = testComplement(complement)
+      if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
+        continue
       }
+      ++countOfDeletedPartitions
+      updateBest(complement, outcome.payload)
+      currentPartitionList = currentPartitionList.duplicateByRemovePartition(partition)
     }
     return countOfDeletedPartitions
   }

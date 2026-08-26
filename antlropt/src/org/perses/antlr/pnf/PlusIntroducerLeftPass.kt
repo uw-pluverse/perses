@@ -117,7 +117,6 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
           .asSequence()
           .filterNotNull()
           .toImmutableList()
-      check(element.tag === AstTag.SEQUENCE)
       check(newChildren.size > 0)
       val finalResult =
         if (newChildren.size == 1) {
@@ -125,10 +124,7 @@ class PlusIntroducerLeftPass : AbstractPnfPass() {
         } else {
           PersesSequenceAst(newChildren)
         }
-
       return if (finalResult.isEquivalent(sequence)) {
-        // FIXME(cnsun): this is a bug, which needs to be fixed.
-        //               check(!finalResult.isEquivalent(sequence)) {finalResult}
         TransformDecision.Keep(sequence)
       } else {
         TransformDecision.Replace(oldValue = sequence, newValue = finalResult)

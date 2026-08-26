@@ -54,7 +54,7 @@ abstract class AbstractIndirectRecursionEliminationPass : AbstractPnfPass() {
     var changed = true
     while (changed) {
       changed = false
-      for (ruleName in grammar.ketSet()) {
+      for (ruleName in grammar.keySet()) {
         for (def in grammar[ruleName]!!) {
           val target = getRuleRefToInline(def) ?: continue
           if (!grammar.containsKey(target)) {

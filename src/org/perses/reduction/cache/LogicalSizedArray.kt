@@ -16,7 +16,7 @@
  */
 package org.perses.reduction.cache
 
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 /**
  * Note that the entire class will be inlined. If you need to add new methods, you need to

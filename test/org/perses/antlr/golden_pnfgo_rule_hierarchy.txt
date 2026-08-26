@@ -714,10 +714,10 @@ entries {
 }
 entries {
   ruleName: "typeList"
-  immediateSubRuleNames: "altnt_block__typeList_3"
+  immediateSubRuleNames: "alt_block__typeList_3"
   transitiveSubRuleNames: "IDENTIFIER"
   transitiveSubRuleNames: "NIL_LIT"
-  transitiveSubRuleNames: "altnt_block__typeList_3"
+  transitiveSubRuleNames: "alt_block__typeList_3"
   transitiveSubRuleNames: "arrayType"
   transitiveSubRuleNames: "aux_rule__type__1"
   transitiveSubRuleNames: "channelType"
@@ -1034,9 +1034,9 @@ entries {
 }
 entries {
   ruleName: "fieldDecl"
-  immediateSubRuleNames: "altnt_block__fieldDecl_2"
+  immediateSubRuleNames: "alt_block__fieldDecl_2"
   transitiveSubRuleNames: "IDENTIFIER"
-  transitiveSubRuleNames: "altnt_block__fieldDecl_2"
+  transitiveSubRuleNames: "alt_block__fieldDecl_2"
   transitiveSubRuleNames: "anonymousField"
   transitiveSubRuleNames: "aux_rule__fieldDecl_3"
   transitiveSubRuleNames: "qualifiedIdent"
@@ -1707,7 +1707,7 @@ entries {
 }
 entries {
   ruleName: "aux_rule__arguments_5"
-  immediateSubRuleNames: "altnt_block__arguments_7"
+  immediateSubRuleNames: "alt_block__arguments_7"
   transitiveSubRuleNames: "DECIMAL_LIT"
   transitiveSubRuleNames: "FLOAT_LIT"
   transitiveSubRuleNames: "HEX_LIT"
@@ -1718,7 +1718,7 @@ entries {
   transitiveSubRuleNames: "OCTAL_LIT"
   transitiveSubRuleNames: "RAW_STRING_LIT"
   transitiveSubRuleNames: "RUNE_LIT"
-  transitiveSubRuleNames: "altnt_block__arguments_7"
+  transitiveSubRuleNames: "alt_block__arguments_7"
   transitiveSubRuleNames: "arrayType"
   transitiveSubRuleNames: "aux_rule__arguments_8"
   transitiveSubRuleNames: "aux_rule__primaryExpr_3"
@@ -1759,7 +1759,7 @@ entries {
   transitiveSubRuleNames: "OCTAL_LIT"
   transitiveSubRuleNames: "RAW_STRING_LIT"
   transitiveSubRuleNames: "RUNE_LIT"
-  transitiveSubRuleNames: "altnt_block__arguments_7"
+  transitiveSubRuleNames: "alt_block__arguments_7"
   transitiveSubRuleNames: "arrayType"
   transitiveSubRuleNames: "aux_rule__arguments_5"
   transitiveSubRuleNames: "aux_rule__arguments_8"
@@ -1946,7 +1946,7 @@ entries {
   transitiveSubRuleNames: "type_"
 }
 entries {
-  ruleName: "altnt_block__expression_3"
+  ruleName: "alt_block__expression_3"
   immediateStringLiterals: "!="
   immediateStringLiterals: "%"
   immediateStringLiterals: "&"
@@ -2082,7 +2082,7 @@ entries {
   transitiveStringLiterals: "return"
 }
 entries {
-  ruleName: "altnt_block__importDecl_3"
+  ruleName: "alt_block__importDecl_3"
   immediateSubRuleNames: "aux_rule__importDecl_4"
   immediateSubRuleNames: "importSpec"
   transitiveSubRuleNames: "INTERPRETED_STRING_LIT"
@@ -2093,7 +2093,7 @@ entries {
   transitiveSubRuleNames: "string_"
 }
 entries {
-  ruleName: "altnt_block__constDecl_3"
+  ruleName: "alt_block__constDecl_3"
   immediateSubRuleNames: "aux_rule__constDecl_4"
   immediateSubRuleNames: "constSpec"
   transitiveSubRuleNames: "IDENTIFIER"
@@ -2102,21 +2102,21 @@ entries {
   transitiveSubRuleNames: "identifierList"
 }
 entries {
-  ruleName: "altnt_block__typeDecl_3"
+  ruleName: "alt_block__typeDecl_3"
   immediateSubRuleNames: "aux_rule__typeDecl_4"
   immediateSubRuleNames: "typeSpec"
   transitiveSubRuleNames: "aux_rule__typeDecl_4"
   transitiveSubRuleNames: "typeSpec"
 }
 entries {
-  ruleName: "altnt_block__varDecl_3"
+  ruleName: "alt_block__varDecl_3"
   immediateSubRuleNames: "aux_rule__varDecl_4"
   immediateSubRuleNames: "varSpec"
   transitiveSubRuleNames: "aux_rule__varDecl_4"
   transitiveSubRuleNames: "varSpec"
 }
 entries {
-  ruleName: "altnt_block__varSpec_3"
+  ruleName: "alt_block__varSpec_3"
   immediateSubRuleNames: "aux_rule__varSpec_4"
   immediateSubRuleNames: "aux_rule__varSpec_5"
   transitiveSubRuleNames: "IDENTIFIER"
@@ -2136,7 +2136,7 @@ entries {
   transitiveSubRuleNames: "type_"
 }
 entries {
-  ruleName: "altnt_block__incDecStmt_1"
+  ruleName: "alt_block__incDecStmt_1"
   immediateSubRuleNames: "MINUS_MINUS"
   immediateSubRuleNames: "PLUS_PLUS"
   transitiveSubRuleNames: "MINUS_MINUS"
@@ -2145,7 +2145,7 @@ entries {
   transitiveStringLiterals: "--"
 }
 entries {
-  ruleName: "altnt_block__typeList_3"
+  ruleName: "alt_block__typeList_3"
   immediateSubRuleNames: "NIL_LIT"
   immediateSubRuleNames: "type_"
   transitiveSubRuleNames: "IDENTIFIER"
@@ -2165,7 +2165,7 @@ entries {
   transitiveStringLiterals: "nil"
 }
 entries {
-  ruleName: "altnt_block__commCase_1"
+  ruleName: "alt_block__commCase_1"
   immediateSubRuleNames: "recvStmt"
   immediateSubRuleNames: "sendStmt"
   transitiveSubRuleNames: "DECIMAL_LIT"
@@ -2195,7 +2195,7 @@ entries {
   transitiveStringLiterals: "nil"
 }
 entries {
-  ruleName: "altnt_block__channelType_1"
+  ruleName: "alt_block__channelType_1"
   immediateSubRuleNames: "aux_rule__channelType_3"
   immediateSubRuleNames: "aux_rule__channelType_4"
   transitiveSubRuleNames: "aux_rule__channelType_3"
@@ -2203,7 +2203,7 @@ entries {
   transitiveStringLiterals: "chan"
 }
 entries {
-  ruleName: "altnt_block__fieldDecl_2"
+  ruleName: "alt_block__fieldDecl_2"
   immediateSubRuleNames: "anonymousField"
   immediateSubRuleNames: "aux_rule__fieldDecl_3"
   transitiveSubRuleNames: "IDENTIFIER"
@@ -2213,12 +2213,12 @@ entries {
   transitiveSubRuleNames: "typeName"
 }
 entries {
-  ruleName: "altnt_block__slice_4"
+  ruleName: "alt_block__slice_4"
   immediateStringLiterals: ":"
   transitiveStringLiterals: ":"
 }
 entries {
-  ruleName: "altnt_block__sourceFile_5"
+  ruleName: "alt_block__sourceFile_5"
   immediateSubRuleNames: "declaration"
   immediateSubRuleNames: "functionDecl"
   immediateSubRuleNames: "methodDecl"
@@ -2230,14 +2230,14 @@ entries {
   transitiveSubRuleNames: "varDecl"
 }
 entries {
-  ruleName: "altnt_block__ifStmt_5"
+  ruleName: "alt_block__ifStmt_5"
   immediateSubRuleNames: "block"
   immediateSubRuleNames: "ifStmt"
   transitiveSubRuleNames: "block"
   transitiveSubRuleNames: "ifStmt"
 }
 entries {
-  ruleName: "altnt_block__arguments_7"
+  ruleName: "alt_block__arguments_7"
   immediateSubRuleNames: "aux_rule__arguments_8"
   immediateSubRuleNames: "expressionList"
   transitiveSubRuleNames: "DECIMAL_LIT"
@@ -2283,7 +2283,7 @@ entries {
   transitiveStringLiterals: "<-"
 }
 entries {
-  ruleName: "altnt_block__slice_5"
+  ruleName: "alt_block__slice_5"
   immediateSubRuleNames: "aux_rule__slice_6"
   immediateSubRuleNames: "optional__exprSwitchStmt_3"
   canBeEpsilon: true

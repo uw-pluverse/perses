@@ -540,7 +540,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
   transitiveSubRuleNames: "aux_rule__plain_instr_8"
@@ -593,7 +593,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__instr_3"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
@@ -633,7 +633,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__instr_3"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
@@ -678,7 +678,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__instr_3"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
@@ -733,9 +733,9 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__expr1_5"
-  transitiveSubRuleNames: "altnt_block__instr_1"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__expr1_5"
+  transitiveSubRuleNames: "alt_block__instr_1"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__expr1_10"
   transitiveSubRuleNames: "aux_rule__expr1_7"
   transitiveSubRuleNames: "aux_rule__expr1_8"
@@ -819,7 +819,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__instr_3"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
@@ -864,7 +864,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__instr_3"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
@@ -919,7 +919,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__call_instr_params_5"
   transitiveSubRuleNames: "aux_rule__func_body_2"
   transitiveSubRuleNames: "aux_rule__func_fields_body_2"
@@ -974,7 +974,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__call_instr_params_5"
   transitiveSubRuleNames: "aux_rule__func_body_2"
   transitiveSubRuleNames: "aux_rule__instr_3"
@@ -1026,7 +1026,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__func_body_2"
   transitiveSubRuleNames: "aux_rule__instr_3"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
@@ -1294,7 +1294,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__instr_3"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
@@ -1469,7 +1469,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__call_instr_params_5"
   transitiveSubRuleNames: "aux_rule__func_body_2"
   transitiveSubRuleNames: "aux_rule__func_fields_6"
@@ -1529,7 +1529,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__call_instr_params_5"
   transitiveSubRuleNames: "aux_rule__func_body_2"
   transitiveSubRuleNames: "aux_rule__func_fields_4"
@@ -1634,7 +1634,7 @@ entries {
   transitiveSubRuleNames: "inline_import"
 }
 entries {
-  ruleName: "altnt_block__plain_instr_6"
+  ruleName: "alt_block__plain_instr_6"
   immediateSubRuleNames: "BR"
   immediateSubRuleNames: "BR_IF"
   immediateSubRuleNames: "CALL"
@@ -1661,16 +1661,16 @@ entries {
   transitiveStringLiterals: "local.tee"
 }
 entries {
-  ruleName: "altnt_block__expr1_5"
-  immediateSubRuleNames: "altnt_block__instr_1"
+  ruleName: "alt_block__expr1_5"
+  immediateSubRuleNames: "alt_block__instr_1"
   transitiveSubRuleNames: "BLOCK"
   transitiveSubRuleNames: "LOOP"
-  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveSubRuleNames: "alt_block__instr_1"
   transitiveStringLiterals: "block"
   transitiveStringLiterals: "loop"
 }
 entries {
-  ruleName: "altnt_block__import_desc_6"
+  ruleName: "alt_block__import_desc_6"
   immediateSubRuleNames: "aux_rule__import_desc_10"
   immediateSubRuleNames: "aux_rule__import_desc_11"
   immediateSubRuleNames: "aux_rule__import_desc_12"
@@ -1683,7 +1683,7 @@ entries {
   transitiveStringLiterals: "func"
 }
 entries {
-  ruleName: "altnt_block__export_desc_1"
+  ruleName: "alt_block__export_desc_1"
   immediateSubRuleNames: "FUNC"
   immediateSubRuleNames: "GLOBAL"
   immediateSubRuleNames: "MEMORY"
@@ -1698,14 +1698,14 @@ entries {
   transitiveStringLiterals: "table"
 }
 entries {
-  ruleName: "altnt_block__action__3"
+  ruleName: "alt_block__action__3"
   immediateSubRuleNames: "aux_rule__action__4"
   immediateSubRuleNames: "aux_rule__action__5"
   transitiveSubRuleNames: "aux_rule__action__4"
   transitiveSubRuleNames: "aux_rule__action__5"
 }
 entries {
-  ruleName: "altnt_block__assertion_1"
+  ruleName: "alt_block__assertion_1"
   immediateSubRuleNames: "aux_rule__assertion_6"
   immediateSubRuleNames: "aux_rule__assertion_7"
   immediateSubRuleNames: "aux_rule__assertion_8"
@@ -1714,7 +1714,7 @@ entries {
   transitiveSubRuleNames: "aux_rule__assertion_8"
 }
 entries {
-  ruleName: "altnt_block__meta_6"
+  ruleName: "alt_block__meta_6"
   immediateSubRuleNames: "aux_rule__meta_10"
   immediateSubRuleNames: "aux_rule__meta_11"
   immediateSubRuleNames: "aux_rule__meta_9"
@@ -1727,7 +1727,7 @@ entries {
   transitiveStringLiterals: "script"
 }
 entries {
-  ruleName: "altnt_block__start_3"
+  ruleName: "alt_block__start_3"
   immediateSubRuleNames: "kleene_star__meta_2"
   immediateSubRuleNames: "kleene_star__module__2"
   immediateSubRuleNames: "module_"
@@ -1755,12 +1755,12 @@ entries {
   transitiveSubRuleNames: "type_def"
 }
 entries {
-  ruleName: "altnt_block__import_desc_7"
-  immediateSubRuleNames: "altnt_block__import_desc_8"
+  ruleName: "alt_block__import_desc_7"
+  immediateSubRuleNames: "alt_block__import_desc_8"
   immediateSubRuleNames: "optional__block_instr_1"
   canBeEpsilon: true
   transitiveSubRuleNames: "VAR"
-  transitiveSubRuleNames: "altnt_block__import_desc_8"
+  transitiveSubRuleNames: "alt_block__import_desc_8"
   transitiveSubRuleNames: "aux_rule__func_type_3"
   transitiveSubRuleNames: "bind_var"
   transitiveSubRuleNames: "func_type"
@@ -1768,14 +1768,14 @@ entries {
   transitiveSubRuleNames: "type_use"
 }
 entries {
-  ruleName: "altnt_block__assertion_2"
+  ruleName: "alt_block__assertion_2"
   immediateSubRuleNames: "aux_rule__assertion_10"
   immediateSubRuleNames: "aux_rule__assertion_9"
   transitiveSubRuleNames: "aux_rule__assertion_10"
   transitiveSubRuleNames: "aux_rule__assertion_9"
 }
 entries {
-  ruleName: "altnt_block__assertion_3"
+  ruleName: "alt_block__assertion_3"
   immediateSubRuleNames: "ASSERT_RETURN_ARITHMETIC_NAN"
   immediateSubRuleNames: "ASSERT_RETURN_CANONICAL_NAN"
   transitiveSubRuleNames: "ASSERT_RETURN_ARITHMETIC_NAN"
@@ -1784,7 +1784,7 @@ entries {
   transitiveStringLiterals: "assert_return_canonical_nan"
 }
 entries {
-  ruleName: "altnt_block__meta_7"
+  ruleName: "alt_block__meta_7"
   immediateSubRuleNames: "optional__meta_8"
   immediateSubRuleNames: "optional__module__1"
   canBeEpsilon: true
@@ -1794,7 +1794,7 @@ entries {
   transitiveSubRuleNames: "optional__module__1"
 }
 entries {
-  ruleName: "altnt_block__assertion_4"
+  ruleName: "alt_block__assertion_4"
   immediateSubRuleNames: "ASSERT_INVALID"
   immediateSubRuleNames: "ASSERT_MALFORMED"
   immediateSubRuleNames: "ASSERT_TRAP"
@@ -1809,7 +1809,7 @@ entries {
   transitiveStringLiterals: "assert_unlinkable"
 }
 entries {
-  ruleName: "altnt_block__assertion_5"
+  ruleName: "alt_block__assertion_5"
   immediateSubRuleNames: "ASSERT_EXHAUSTION"
   immediateSubRuleNames: "ASSERT_TRAP"
   transitiveSubRuleNames: "ASSERT_EXHAUSTION"
@@ -1839,7 +1839,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__instr_3"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
@@ -1859,7 +1859,7 @@ entries {
   transitiveStringLiterals: "unreachable"
 }
 entries {
-  ruleName: "altnt_block__script_module_3"
+  ruleName: "alt_block__script_module_3"
   immediateSubRuleNames: "BIN"
   immediateSubRuleNames: "QUOTE"
   transitiveSubRuleNames: "BIN"
@@ -1868,7 +1868,7 @@ entries {
   transitiveStringLiterals: "quote"
 }
 entries {
-  ruleName: "altnt_block__func_type_4"
+  ruleName: "alt_block__func_type_4"
   immediateSubRuleNames: "aux_rule__func_type_6"
   immediateSubRuleNames: "aux_rule__func_type_7"
   transitiveSubRuleNames: "PARAM"
@@ -1879,7 +1879,7 @@ entries {
   transitiveStringLiterals: "result"
 }
 entries {
-  ruleName: "altnt_block__instr_1"
+  ruleName: "alt_block__instr_1"
   immediateSubRuleNames: "BLOCK"
   immediateSubRuleNames: "LOOP"
   transitiveSubRuleNames: "BLOCK"
@@ -1894,7 +1894,7 @@ entries {
   transitiveSubRuleNames: "STRING_"
 }
 entries {
-  ruleName: "altnt_block__func_type_5"
+  ruleName: "alt_block__func_type_5"
   immediateSubRuleNames: "aux_rule__func_type_8"
   immediateSubRuleNames: "kleene_star__func_type_1"
   canBeEpsilon: true
@@ -1904,13 +1904,13 @@ entries {
   transitiveSubRuleNames: "value_type"
 }
 entries {
-  ruleName: "altnt_block__instr_2"
+  ruleName: "alt_block__instr_2"
   immediateSubRuleNames: "aux_rule__instr_4"
   immediateSubRuleNames: "aux_rule__instr_5"
   transitiveSubRuleNames: "BLOCK"
   transitiveSubRuleNames: "IF"
   transitiveSubRuleNames: "LOOP"
-  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveSubRuleNames: "alt_block__instr_1"
   transitiveSubRuleNames: "aux_rule__instr_4"
   transitiveSubRuleNames: "aux_rule__instr_5"
   transitiveStringLiterals: "block"
@@ -1918,14 +1918,14 @@ entries {
   transitiveStringLiterals: "loop"
 }
 entries {
-  ruleName: "altnt_block__plain_instr_7"
+  ruleName: "alt_block__plain_instr_7"
   immediateSubRuleNames: "LOAD"
   immediateSubRuleNames: "STORE"
   transitiveSubRuleNames: "LOAD"
   transitiveSubRuleNames: "STORE"
 }
 entries {
-  ruleName: "altnt_block__import_desc_8"
+  ruleName: "alt_block__import_desc_8"
   immediateSubRuleNames: "func_type"
   immediateSubRuleNames: "type_use"
   canBeEpsilon: true
@@ -1947,10 +1947,10 @@ entries {
 }
 entries {
   ruleName: "aux_rule__plain_instr_11"
-  immediateSubRuleNames: "altnt_block__plain_instr_7"
+  immediateSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "LOAD"
   transitiveSubRuleNames: "STORE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
 }
 entries {
   ruleName: "aux_rule__expr1_7"
@@ -1971,7 +1971,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__plain_instr_10"
   transitiveSubRuleNames: "aux_rule__plain_instr_11"
   transitiveSubRuleNames: "aux_rule__plain_instr_8"
@@ -1998,11 +1998,11 @@ entries {
 }
 entries {
   ruleName: "aux_rule__expr1_10"
-  immediateSubRuleNames: "altnt_block__expr1_5"
+  immediateSubRuleNames: "alt_block__expr1_5"
   transitiveSubRuleNames: "BLOCK"
   transitiveSubRuleNames: "LOOP"
-  transitiveSubRuleNames: "altnt_block__expr1_5"
-  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveSubRuleNames: "alt_block__expr1_5"
+  transitiveSubRuleNames: "alt_block__instr_1"
   transitiveStringLiterals: "block"
   transitiveStringLiterals: "loop"
 }
@@ -2037,7 +2037,7 @@ entries {
   transitiveSubRuleNames: "TEST"
   transitiveSubRuleNames: "UNARY"
   transitiveSubRuleNames: "UNREACHABLE"
-  transitiveSubRuleNames: "altnt_block__plain_instr_7"
+  transitiveSubRuleNames: "alt_block__plain_instr_7"
   transitiveSubRuleNames: "aux_rule__call_instr_params_5"
   transitiveSubRuleNames: "aux_rule__func_body_2"
   transitiveSubRuleNames: "aux_rule__func_fields_body_2"
@@ -2175,10 +2175,10 @@ entries {
 }
 entries {
   ruleName: "aux_rule__instr_4"
-  immediateSubRuleNames: "altnt_block__instr_1"
+  immediateSubRuleNames: "alt_block__instr_1"
   transitiveSubRuleNames: "BLOCK"
   transitiveSubRuleNames: "LOOP"
-  transitiveSubRuleNames: "altnt_block__instr_1"
+  transitiveSubRuleNames: "alt_block__instr_1"
   transitiveStringLiterals: "block"
   transitiveStringLiterals: "loop"
 }

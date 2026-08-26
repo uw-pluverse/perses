@@ -22,7 +22,7 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.JDKShellExecutionPolicy
 import org.perses.util.shell.Shells.Companion.CURRENT_DIR
 import org.perses.util.shell.Shells.Companion.SHEBANG_BASH
@@ -71,7 +71,7 @@ class JDKShellExecutionPolicyTest {
   @Test
   fun testEnvironmentVariables() {
     val script = tempDir.resolve("test_env.sh").createFile()
-    Util.setExecutable(script)
+    FileSystemUtil.setExecutable(script)
     script.writeText(
       """$SHEBANG_BASH
       |if [ "${"$"}{TEST_VAR}" = "expected_value" ]; then
@@ -104,7 +104,7 @@ class JDKShellExecutionPolicyTest {
   fun testWorkingDirectory() {
     val subDir = Files.createDirectory(tempDir.resolve("subdir"))
     val script = tempDir.resolve("test_pwd.sh").createFile()
-    Util.setExecutable(script)
+    FileSystemUtil.setExecutable(script)
     script.writeText(
       """$SHEBANG_BASH
       |if [ "$(pwd)" = "${subDir.toAbsolutePath()}" ]; then

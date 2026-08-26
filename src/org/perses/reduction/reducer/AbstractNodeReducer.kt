@@ -16,6 +16,7 @@
  */
 package org.perses.reduction.reducer
 
+import org.perses.util.lazyAssert
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.AsyncReductionListenerManager
@@ -31,7 +32,7 @@ import org.perses.spartree.NodeDeletionTreeEdit
 import org.perses.spartree.NodeReplacementAction
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import java.util.Queue
 
 abstract class AbstractNodeReducer(

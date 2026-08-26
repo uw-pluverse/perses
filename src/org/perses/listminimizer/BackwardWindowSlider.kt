@@ -17,7 +17,7 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
-import org.perses.util.Util
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
 class BackwardWindowSlider<T : Any>(
@@ -29,7 +29,7 @@ class BackwardWindowSlider<T : Any>(
     require(expectedWindowSize > 0) {
       "Invalid expected window size: $expectedWindowSize. Should be positive"
     }
-    Util.lazyAssert({
+    lazyAssert({
       list.toSet().size == list.size
     }) {
       "The objects in the list should be distinct. $list"

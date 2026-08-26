@@ -24,7 +24,7 @@ import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.event.ReductionStartEvent
-import org.perses.util.Util
+import org.perses.util.IoUtil
 import org.perses.util.cmd.CommandLineProcessor
 import java.nio.file.Path
 
@@ -86,7 +86,7 @@ class Main(
         return
       }
       val cmd = processor.cmd
-      Util.useResources(
+      IoUtil.useResources(
         {
           GlobalContext(
             enableGlobalCache = cmd.cacheControlFlags.enableGlobalCache,

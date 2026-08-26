@@ -22,7 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.PersesConstants.Companion.HOME_DIR_PROPERTY_NAME
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Files
 
 @RunWith(JUnit4::class)
@@ -41,7 +41,7 @@ class PersesConstantsTest {
   @Test
   fun testCreateDefaultPersesConstants_AtHomeDir() {
     val homeDir = PersesConstants.createDefaultConstants()
-    assertThat(homeDir.userHomeFolder.startsWith(Util.getUserHomeDirectory())).isTrue()
+    assertThat(homeDir.userHomeFolder.startsWith(FileSystemUtil.getUserHomeDirectory())).isTrue()
   }
 
   // This test is tricky, as it modifies a global variable. Be careful of using

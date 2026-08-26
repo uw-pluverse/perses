@@ -17,7 +17,8 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
-import org.perses.util.Util
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
 class WeightedDeltaDebugger<T : Any, PropertyPayload>(
@@ -52,7 +53,7 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
     while (best.size > 1 && best.size > partitionList.partitions.size) {
       partitionList = weightedPartition(partitionList)
       if (partitionList.partitions.size < 2) {
-        Util.lazyAssert { partitionList.partitions.size == 0 }
+        lazyAssert { partitionList.partitions.size == 0 }
         break
       }
       logPartitionList(partitionList)
@@ -95,18 +96,19 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
     var restart = true
     while (restart) {
       restart = false
-      complementLoop@ for (partition in currentPartitionList.partitions) {
+      for (partition in currentPartitionList.partitions) {
         val complement = computeComplement(partition)
-        val propertyTestResult = testComplement(complement) ?: continue
-        if (propertyTestResult.result.isInteresting) {
-          ++countOfDeletedPartitions
-          updateBest(complement, propertyTestResult.payload)
-          val partitions = currentPartitionList.partitions.toMutableList()
-          partitions.remove(partition)
-          currentPartitionList = PartitionList(partitions.toImmutableList())
-          restart = true
-          break
+        val outcome = testComplement(complement)
+        if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
+          continue
         }
+        ++countOfDeletedPartitions
+        updateBest(complement, outcome.payload)
+        val partitions = currentPartitionList.partitions.toMutableList()
+        partitions.remove(partition)
+        currentPartitionList = PartitionList(partitions.toImmutableList())
+        restart = true
+        break
       }
     }
     return currentPartitionList
@@ -118,12 +120,17 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
       restart = false
       for (element in best) {
         val complement = best.filter { it != element }.toImmutableList()
-        val propertyTestResult = testComplement(complement) ?: continue
-        if (propertyTestResult.result.isInteresting) {
-          updateBest(complement, propertyTestResult.payload)
-          restart = true
-          break
+        val outcome = testComplement(complement)
+        // A NotTested complement is skipped like a rejected one, which means the one-minimality
+        // this function is named for is not actually established for that element: nothing ran to
+        // establish it. Pre-existing, and left alone here because closing it changes behaviour --
+        // but it is only expressible at all because the result type reaches this call site.
+        if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
+          continue
         }
+        updateBest(complement, outcome.payload)
+        restart = true
+        break
       }
     }
   }

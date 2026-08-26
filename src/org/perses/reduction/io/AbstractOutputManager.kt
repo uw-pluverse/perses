@@ -21,7 +21,7 @@ import org.perses.program.AbstractReductionFile
 import org.perses.util.AbstractFileContent
 import org.perses.util.FileNameContentPair
 import org.perses.util.FileNameContentPairList
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.hashing.ShaHashCode
 import org.perses.util.toImmutableList
@@ -79,7 +79,7 @@ abstract class AbstractOutputManager(
   fun write(folder: ReductionFolder) {
     fileContentList.pairs.forEach { (fileName, content) ->
       val destinationFile = folder.computeAbsPathForOrigFile(fileName)
-      Util.ensureDirExists(destinationFile.parent)
+      FileSystemUtil.ensureDirExists(destinationFile.parent)
       content.writeToFile(destinationFile)
     }
     writeMore(folder)

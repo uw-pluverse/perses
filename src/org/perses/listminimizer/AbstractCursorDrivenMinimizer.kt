@@ -39,8 +39,8 @@ abstract class AbstractCursorDrivenMinimizer<T : Any, PropertyPayload>(
             arguments.submitProperty(candidate, sizeOfCurrentMinimizationResult = best.size)
           }
         } else {
-          // The plain sequential path, byte-for-byte the pre-concurrency behavior. The result is
-          // its own handle, so no wrapping is needed.
+          // The plain sequential path, byte-for-byte the pre-concurrency behavior. testProperty
+          // already hands back a handle, so no wrapping is needed.
           { candidate -> testProperty(candidate) }
         },
       commit = { candidate, payload ->

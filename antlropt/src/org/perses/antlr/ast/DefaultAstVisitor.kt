@@ -16,8 +16,9 @@
  */
 package org.perses.antlr.ast
 
-// TODO: I should deprecate this class. This default visitor might makes subclass error-prone to
-//      miss some cases.
+// Base for collectors that care about a few node types and ignore the rest. A visitor that must
+// handle every node type should extend AbstractAstVisitor directly so a new node type fails to
+// compile instead of being silently skipped.
 open class DefaultAstVisitor : AbstractAstVisitor() {
   override fun visit(ast: PersesTokenSetAst) {}
 

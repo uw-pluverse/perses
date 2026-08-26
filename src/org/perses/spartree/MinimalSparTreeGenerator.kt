@@ -46,7 +46,7 @@ import org.perses.program.AbstractPersesToken
 import org.perses.program.PersesTokenFactory
 import org.perses.program.TokenPosition
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 import org.perses.util.toImmutableMap
 import org.perses.util.transformToImmutableList

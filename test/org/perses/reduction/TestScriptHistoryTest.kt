@@ -68,8 +68,8 @@ class TestScriptHistoryTest {
 
   @Test
   fun testSerializeDeserialize() {
-    val result1 = PropertyTestResult(ExitCode.ZERO, 100)
-    val result2 = PropertyTestResult(ExitCode.ZERO, 200)
+    val result1 = TestScriptVerdict(ExitCode.ZERO, 100)
+    val result2 = TestScriptVerdict(ExitCode.ZERO, 200)
     history.cacheExecutionHistory(hash("AA"), result1)
     history.cacheExecutionHistory(hash("BB"), result2)
     assertThat(history.getExecutionHistoryFor(hash("AA"))).isEqualTo(result1)
@@ -84,8 +84,8 @@ class TestScriptHistoryTest {
 
   @Test
   fun testLoadFromGzippedCsv() {
-    history.cacheExecutionHistory(hash("AA"), PropertyTestResult(ExitCode.ZERO, 100))
-    history.cacheExecutionHistory(hash("BB"), PropertyTestResult(ExitCode.ZERO, 200))
+    history.cacheExecutionHistory(hash("AA"), TestScriptVerdict(ExitCode.ZERO, 100))
+    history.cacheExecutionHistory(hash("BB"), TestScriptVerdict(ExitCode.ZERO, 200))
     history.saveToCSV(file)
 
     val gzFile = tempDir.resolve("a.csv.gz")
@@ -99,8 +99,8 @@ class TestScriptHistoryTest {
 
   @Test
   fun testSaveToGzippedCsv() {
-    history.cacheExecutionHistory(hash("AA"), PropertyTestResult(ExitCode.ZERO, 100))
-    history.cacheExecutionHistory(hash("BB"), PropertyTestResult(ExitCode.ZERO, 200))
+    history.cacheExecutionHistory(hash("AA"), TestScriptVerdict(ExitCode.ZERO, 100))
+    history.cacheExecutionHistory(hash("BB"), TestScriptVerdict(ExitCode.ZERO, 200))
 
     val gzFile = tempDir.resolve("a.csv.gz")
     history.saveToCSV(gzFile)
@@ -119,17 +119,19 @@ class TestScriptHistoryTest {
   fun testLoadUnsupportedExtensionRejected() {
     val txtFile = tempDir.resolve("a.txt")
     txtFile.writeText("")
-    val e = assertThrows(IllegalStateException::class.java) {
-      TestScriptHistory.loadFromCSV(shaAlgorithm, txtFile)
-    }
+    val e =
+      assertThrows(IllegalStateException::class.java) {
+        TestScriptHistory.loadFromCSV(shaAlgorithm, txtFile)
+      }
     assertThat(e).hasMessageThat().contains("Unsupported cache file extension")
   }
 
   @Test
   fun testSaveUnsupportedExtensionRejected() {
-    val e = assertThrows(IllegalStateException::class.java) {
-      history.saveToCSV(tempDir.resolve("a.txt"))
-    }
+    val e =
+      assertThrows(IllegalStateException::class.java) {
+        history.saveToCSV(tempDir.resolve("a.txt"))
+      }
     assertThat(e).hasMessageThat().contains("Unsupported cache file extension")
   }
 

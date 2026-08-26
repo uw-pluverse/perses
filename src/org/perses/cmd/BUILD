@@ -32,6 +32,7 @@ kt_jvm_library(
         "ProfilingFlagGroup.kt",
         "ReductionAlgorithmControlFlagGroup.kt",
         "ReductionControlFlagGroup.kt",
+        "SfcFlagGroup.kt",
         "TRecFlagGroup.kt",
         "VulcanFlagGroup.kt",
     ],

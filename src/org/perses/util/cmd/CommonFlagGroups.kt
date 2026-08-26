@@ -52,7 +52,7 @@ class InputOnlyFlagGroup : AbstractCommandLineFlagGroup(groupName = "Input") {
         """input file does not exist: $inputFile.
         |
         |The absolute path is ${inputFile.absolute()}
-        |${org.perses.util.Util.listFilesInFolder(inputFile.parent)}
+        |${org.perses.util.FileSystemUtil.listFilesInFolder(inputFile.parent)}
         """.trimMargin()
       }
     }

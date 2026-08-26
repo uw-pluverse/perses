@@ -21,7 +21,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.GrammarTestingUtility
+import org.perses.antlr.GrammarTestingUtility.createSeqOfTerminals
 import org.perses.antlr.GrammarTestingUtility.createTerminal
+import org.perses.antlr.ast.AstTag
+import org.perses.antlr.ast.PersesEpsilonAst
 import org.perses.antlr.ast.PersesPlusAst
 import org.perses.antlr.ast.PersesStarAst
 import org.perses.antlr.pnf.AstUtil.convertStarToPlus
@@ -89,4 +92,41 @@ class AstUtilTest {
       assertThat(result.last().sourceCode).isEqualTo("a+")
     }
   }
+
+  @Test
+  fun testFindEquivalenceAstGroupsStructurallyEqualAsts() {
+    val a1 = createTerminal("a")
+    val a2 = createTerminal("a")
+    val b = createTerminal("b")
+    val ab = createSeqOfTerminals("a", "b")
+    val classes = AstUtil.findEquivalenceAst(listOf(a1, b, a2, ab))
+    assertThat(classes).hasSize(3)
+    assertThat(classes[0].getAsts().toList()).containsExactly(a1, a2).inOrder()
+    assertThat(classes[1].getAsts().toList()).containsExactly(b)
+    assertThat(classes[2].getAsts().toList()).containsExactly(ab)
+    assertThat(AstUtil.findEquivalenceAst(emptyList())).isEmpty()
+  }
+
+  @Test
+  fun testCreateAltBlockIfNecessary() {
+    val a = createTerminal("a")
+    val b = createTerminal("b")
+    assertThat(AstUtil.createAltBlockIfNecessary(listOf(a))).isSameInstanceAs(a)
+    assertThat(AstUtil.createAltBlockIfNecessary(listOf(a, createTerminal("a"))).sourceCode)
+      .isEqualTo("a")
+    AstUtil.createAltBlockIfNecessary(listOf(a, b)).let {
+      assertThat(it.tag).isEqualTo(AstTag.ALTERNATIVE_BLOCK)
+      assertThat(singleLine(it.sourceCode)).isEqualTo("a | b")
+    }
+    AstUtil.createAltBlockIfNecessary(listOf(a, PersesEpsilonAst())).let {
+      assertThat(it.tag).isEqualTo(AstTag.OPTIONAL)
+      assertThat(it.sourceCode).isEqualTo("a?")
+    }
+    AstUtil.createAltBlockIfNecessary(listOf(a, PersesEpsilonAst(), b)).let {
+      assertThat(it.tag).isEqualTo(AstTag.OPTIONAL)
+      assertThat(singleLine(it.sourceCode)).isEqualTo("(a | b)?")
+    }
+  }
+
+  private fun singleLine(sourceCode: String) = sourceCode.replace(Regex("\\s+"), " ").trim()
 }

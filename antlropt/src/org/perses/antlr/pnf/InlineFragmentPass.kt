@@ -21,6 +21,7 @@ import org.perses.antlr.ast.AbstractPersesLexerRuleAst
 import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.LexerRuleList
 import org.perses.antlr.ast.PersesAlternativeBlockAst
+import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesTerminalAst
 import org.perses.antlr.ast.RuleNameRegistry
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
@@ -29,8 +30,17 @@ import org.perses.util.toImmutableList
 
 class InlineFragmentPass : AbstractPnfPass() {
   override fun processGrammar(grammar: GrammarPair): GrammarPair {
-    val parserGrammar = grammar.parserGrammar ?: return grammar
-    val allLexerRules = parserGrammar.lexerRules.flattenedLexerRules
+    val lexerGrammar = grammar.lexerGrammar
+    val parserGrammar = grammar.parserGrammar
+    return when {
+      lexerGrammar != null -> GrammarPair(parserGrammar, inlineFragments(lexerGrammar))
+      parserGrammar != null -> grammar.withNewParserGrammar(inlineFragments(parserGrammar))
+      else -> grammar
+    }
+  }
+
+  private fun inlineFragments(grammarWithLexerRules: PersesGrammar): PersesGrammar {
+    val allLexerRules = grammarWithLexerRules.lexerRules.flattenedLexerRules
     val mutableGrammar = MutableGrammar.createRulesFrom(allLexerRules)
     inlineLexerRules(
       mutableGrammar,
@@ -40,7 +50,7 @@ class InlineFragmentPass : AbstractPnfPass() {
           .filter { it.tag == AstTag.RULE_DEFINITION_LEXER_FRAGMENT }
           .map { it.ruleNameHandle }
           .toImmutableList(),
-      ruleNameRegistry = parserGrammar.symbolTable.ruleNameRegistry,
+      ruleNameRegistry = grammarWithLexerRules.symbolTable.ruleNameRegistry,
     )
     inlineLexerRules(
       mutableGrammar,
@@ -50,21 +60,21 @@ class InlineFragmentPass : AbstractPnfPass() {
           .filter { it.tag == AstTag.RULE_DEFINITION_LEXER }
           .map { it.ruleNameHandle }
           .toImmutableList(),
-      ruleNameRegistry = parserGrammar.symbolTable.ruleNameRegistry,
+      ruleNameRegistry = grammarWithLexerRules.symbolTable.ruleNameRegistry,
     )
     val defaultMode =
       transformLexerRules(
-        parserGrammar.lexerRules.defaultModeLexerRules,
+        grammarWithLexerRules.lexerRules.defaultModeLexerRules,
         mutableGrammar,
       )
     val nonDefaultModes =
-      parserGrammar.lexerRules.nonDefaultModes
+      grammarWithLexerRules.lexerRules.nonDefaultModes
         .asSequence()
         .map { mode ->
           mode.copyWithNewLexerRules(transformLexerRules(mode.lexerRules, mutableGrammar))
         }.toImmutableList()
     val newLexerRules = LexerRuleList(defaultMode, nonDefaultModes)
-    return grammar.withNewParserGrammar(parserGrammar.copyWithNewLexerRuleDefs(newLexerRules))
+    return grammarWithLexerRules.copyWithNewLexerRuleDefs(newLexerRules)
   }
 
   companion object {

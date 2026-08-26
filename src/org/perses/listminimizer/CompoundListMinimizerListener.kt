@@ -18,6 +18,7 @@ package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
 import com.google.common.io.Closer
+import org.perses.reduction.CandidateOutcome
 import kotlin.reflect.KClass
 
 class CompoundListMinimizerListener(
@@ -63,7 +64,7 @@ class CompoundListMinimizerListener(
 
   override fun onPropertyTest(
     configuration: Candidate<*>,
-    result: ListMinimizerPropertyTestResult<*, *>,
+    result: CandidateOutcome<*>,
     sizeOfOriginalList: Int,
     sizeOfCurrentMinimizationResult: Int,
   ) {

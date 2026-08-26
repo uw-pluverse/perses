@@ -17,6 +17,7 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
+import org.perses.reduction.CandidateOutcome
 
 // TODO(cnsun): needs testing.
 class OneByOneMinimizer<T : Any, PropertyPayload>(
@@ -42,15 +43,13 @@ class OneByOneMinimizer<T : Any, PropertyPayload>(
             original = best,
             deleted_ = ImmutableList.of(element),
           )
-        val testResult = testProperty(configuration)
-        if (testResult !is ListMinimizerPropertyTestResult.Completed) {
+        val testResult = testProperty(configuration).get()
+        if (testResult !is CandidateOutcome.Interesting) {
           return@forEach
         }
-        if (testResult.result.isInteresting) {
-          configuration.deletedWrappers.forEach { it.markAsDeleted() }
-          updateBest(configuration.candidateWrappers, payload = testResult.payload)
-          changed = true
-        }
+        configuration.deletedWrappers.forEach { it.markAsDeleted() }
+        updateBest(configuration.candidateWrappers, payload = testResult.payload)
+        changed = true
       }
     } while (changed && extraArguments.repeatForFixpoint)
   }

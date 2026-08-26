@@ -23,7 +23,8 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.listminimizer.xfs.DeltaDebugger
 import org.perses.listminimizer.xfs.UnweightedBfsListMinimizer
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.CandidateOutcome
+import org.perses.reduction.TestScriptVerdict
 
 @RunWith(JUnit4::class)
 class DeltaDebuggerFactoryTest {
@@ -33,7 +34,12 @@ class DeltaDebuggerFactoryTest {
       input = ImmutableList.of("a"),
       isElementDeletedElsewhere = { false },
       propertyTester = {
-        ListMinimizerPropertyTestResult.Completed(PropertyTestResult.INTERESTING_RESULT, "payload")
+        ImmediatePropertyTestHandle(
+          CandidateOutcome.Interesting(
+            "payload",
+            TestScriptVerdict.INTERESTING,
+          ),
+        )
       },
       onBestUpdateHandler = { _, _ -> },
       descriptionPrefix = "",

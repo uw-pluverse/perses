@@ -29,7 +29,7 @@ importStatement
     ;
 
 importFromBlock
-    : altnt_block__importFromBlock_2 eos
+    : alt_block__importFromBlock_2 eos
     ;
 
 moduleItems
@@ -41,7 +41,7 @@ importDefault
     ;
 
 importNamespace
-    : altnt_block__importNamespace_3 optional__importNamespace_2
+    : alt_block__importNamespace_3 optional__importNamespace_2
     ;
 
 importFrom
@@ -53,11 +53,11 @@ aliasName
     ;
 
 exportStatement
-    : Export altnt_block__exportStatement_1 eos
+    : Export alt_block__exportStatement_1 eos
     ;
 
 exportFromBlock
-    : altnt_block__exportFromBlock_2 eos
+    : alt_block__exportFromBlock_2 eos
     ;
 
 variableStatement
@@ -139,7 +139,7 @@ throwStatement
     ;
 
 tryStatement
-    : Try block altnt_block__tryStatement_2
+    : Try block alt_block__tryStatement_2
     ;
 
 catchProduction
@@ -173,7 +173,7 @@ classElement
     ;
 
 methodDefinition
-    : altnt_block__methodDefinition_9 ')' functionBody
+    : alt_block__methodDefinition_9 ')' functionBody
     ;
 
 formalParameterList
@@ -222,7 +222,7 @@ arguments
     ;
 
 argument
-    : optional__arrayElement_1 altnt_block__argument_2
+    : optional__arrayElement_1 alt_block__argument_2
     ;
 
 expressionSequence
@@ -559,27 +559,27 @@ optional__singleExpression_9
     : aux_rule__singleExpression_8?
     ;
 
-altnt_block__iterationStatement_6
+alt_block__iterationStatement_6
     : aux_rule__iterationStatement_11
     | aux_rule__iterationStatement_12
     ;
 
-altnt_block__importFromBlock_2
+alt_block__importFromBlock_2
     : aux_rule__importFromBlock_4
     | StringLiteral
     ;
 
-altnt_block__exportFromBlock_2
+alt_block__exportFromBlock_2
     : aux_rule__exportFromBlock_3
     | aux_rule__exportFromBlock_4
     ;
 
-altnt_block__singleExpression_11
+alt_block__singleExpression_11
     : '++'
     | '--'
     ;
 
-altnt_block__singleExpression_12
+alt_block__singleExpression_12
     : Delete
     | Void
     | Typeof
@@ -592,42 +592,42 @@ altnt_block__singleExpression_12
     | Await
     ;
 
-altnt_block__singleExpression_13
+alt_block__singleExpression_13
     : aux_rule__singleExpression_19
     | aux_rule__singleExpression_20
     ;
 
-altnt_block__methodDefinition_9
-    : optional__functionDeclaration_2 optional__singleExpression_3 altnt_block__methodDefinition_10
+alt_block__methodDefinition_9
+    : optional__functionDeclaration_2 optional__singleExpression_3 alt_block__methodDefinition_10
     ;
 
-altnt_block__propertyAssignment_5
+alt_block__propertyAssignment_5
     : aux_rule__propertyAssignment_10
     | aux_rule__propertyAssignment_11
     | aux_rule__propertyAssignment_12
     ;
 
-altnt_block__propertyAssignment_6
+alt_block__propertyAssignment_6
     : optional__arrayElement_1
     | aux_rule__propertyAssignment_13
     ;
 
-altnt_block__iterationStatement_7
+alt_block__iterationStatement_7
     : aux_rule__iterationStatement_13
     | aux_rule__iterationStatement_14
     ;
 
-altnt_block__propertyAssignment_7
+alt_block__propertyAssignment_7
     : propertyName
     | aux_rule__propertyAssignment_14
     ;
 
-altnt_block__iterationStatement_8
+alt_block__iterationStatement_8
     : aux_rule__iterationStatement_15
     | aux_rule__iterationStatement_16
     ;
 
-altnt_block__exportStatement_1
+alt_block__exportStatement_1
     : exportFromBlock
     | variableStatement
     | classDeclaration
@@ -635,7 +635,7 @@ altnt_block__exportStatement_1
     | aux_rule__exportStatement_2
     ;
 
-altnt_block__singleExpression_10
+alt_block__singleExpression_10
     : '**'
     | '*'
     | '/'
@@ -677,38 +677,38 @@ altnt_block__singleExpression_10
     | '**='
     ;
 
-altnt_block__importNamespace_3
+alt_block__importNamespace_3
     : '*'
     | identifierName
     ;
 
-altnt_block__tryStatement_2
+alt_block__tryStatement_2
     : aux_rule__tryStatement_3
     | finallyProduction
     ;
 
-altnt_block__classElement_4
+alt_block__classElement_4
     : methodDefinition
     | aux_rule__classElement_8
     ;
 
-altnt_block__argument_2
+alt_block__argument_2
     : singleExpression
     | identifier
     ;
 
-altnt_block__importFromBlock_3
+alt_block__importFromBlock_3
     : importNamespace
     | moduleItems
     ;
 
-altnt_block__iterationStatement_9
+alt_block__iterationStatement_9
     : singleExpression
     | variableDeclarationList
     ;
 
 aux_rule__statement_2
-    : altnt_block__iterationStatement_6 ')'
+    : alt_block__iterationStatement_6 ')'
     ;
 
 kleene_star__statement_1
@@ -742,17 +742,17 @@ statement
     : kleene_star__statement_1 aux_rule__statement_3
     ;
 
-altnt_block__singleExpression_14
+alt_block__singleExpression_14
     : aux_rule__singleExpression_22
     | aux_rule__singleExpression_23
     ;
 
-altnt_block__methodDefinition_10
+alt_block__methodDefinition_10
     : aux_rule__methodDefinition_12
     | aux_rule__methodDefinition_13
     ;
 
-altnt_block__methodDefinition_11
+alt_block__methodDefinition_11
     : propertyName
     | setter
     ;
@@ -835,7 +835,7 @@ aux_rule__singleExpression_7
     ;
 
 aux_rule__classElement_5
-    : kleene_star__classElement_2 altnt_block__classElement_4
+    : kleene_star__classElement_2 alt_block__classElement_4
     ;
 
 aux_rule__classElement_6
@@ -847,11 +847,11 @@ aux_rule__formalParameterList_5
     ;
 
 aux_rule__propertyAssignment_8
-    : altnt_block__propertyAssignment_5 ')' functionBody
+    : alt_block__propertyAssignment_5 ')' functionBody
     ;
 
 aux_rule__propertyAssignment_9
-    : altnt_block__propertyAssignment_6 singleExpression
+    : alt_block__propertyAssignment_6 singleExpression
     ;
 
 aux_rule__propertyName_1
@@ -883,11 +883,11 @@ aux_rule__singleExpression_16
     ;
 
 aux_rule__singleExpression_17
-    : altnt_block__singleExpression_10 singleExpression
+    : alt_block__singleExpression_10 singleExpression
     ;
 
 aux_rule__singleExpression_18
-    : {this.notLineTerminator()}? altnt_block__singleExpression_11
+    : {this.notLineTerminator()}? alt_block__singleExpression_11
     ;
 
 aux_rule__iterationStatement_11
@@ -895,11 +895,11 @@ aux_rule__iterationStatement_11
     ;
 
 aux_rule__iterationStatement_12
-    : For altnt_block__iterationStatement_7
+    : For alt_block__iterationStatement_7
     ;
 
 aux_rule__importFromBlock_4
-    : optional__importFromBlock_1 altnt_block__importFromBlock_3 importFrom
+    : optional__importFromBlock_1 alt_block__importFromBlock_3 importFrom
     ;
 
 aux_rule__exportFromBlock_3
@@ -931,15 +931,15 @@ aux_rule__propertyAssignment_12
     ;
 
 aux_rule__propertyAssignment_13
-    : altnt_block__propertyAssignment_7 ':'
+    : alt_block__propertyAssignment_7 ':'
     ;
 
 aux_rule__iterationStatement_13
-    : optional__iterationStatement_5 '(' altnt_block__iterationStatement_9 identifier {this.p("of")}? expressionSequence
+    : optional__iterationStatement_5 '(' alt_block__iterationStatement_9 identifier {this.p("of")}? expressionSequence
     ;
 
 aux_rule__iterationStatement_14
-    : '(' altnt_block__iterationStatement_8
+    : '(' alt_block__iterationStatement_8
     ;
 
 aux_rule__propertyAssignment_14
@@ -951,7 +951,7 @@ aux_rule__iterationStatement_15
     ;
 
 aux_rule__iterationStatement_16
-    : altnt_block__iterationStatement_9 In expressionSequence
+    : alt_block__iterationStatement_9 In expressionSequence
     ;
 
 aux_rule__exportStatement_2
@@ -987,7 +987,7 @@ aux_rule__methodDefinition_12
     ;
 
 aux_rule__methodDefinition_13
-    : altnt_block__methodDefinition_11 '(' optional__functionDeclaration_3
+    : alt_block__methodDefinition_11 '(' optional__functionDeclaration_3
     ;
 
 aux_rule__singleExpression_24
@@ -1003,14 +1003,14 @@ aux_rule__singleExpression_26
     ;
 
 aux_rule__singleExpression_27
-    : altnt_block__singleExpression_12 singleExpression
+    : alt_block__singleExpression_12 singleExpression
     ;
 
 aux_rule__singleExpression_28
-    : altnt_block__singleExpression_13 ')'
+    : alt_block__singleExpression_13 ')'
     ;
 
 aux_rule__singleExpression_29
-    : optional__functionDeclaration_1 altnt_block__singleExpression_14
+    : optional__functionDeclaration_1 alt_block__singleExpression_14
     ;
 

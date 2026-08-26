@@ -35,7 +35,7 @@ import org.perses.antlr.atn.transitionSequence
 import org.perses.antlr.obtainRuleIndex
 import org.perses.antlr.pnf.AstUtil
 import org.perses.util.SimpleStack
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 class MutableNfa(
   override var startState: PersesATNState,

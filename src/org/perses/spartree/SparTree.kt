@@ -25,8 +25,8 @@ import org.perses.program.AbstractPersesToken
 import org.perses.program.ProgramSize
 import org.perses.program.TokenizedProgram
 import org.perses.spartree.AbstractTreeNode.NodeIdCopyStrategy
-import org.perses.util.Util
-import org.perses.util.Util.lazyAssert
+import org.perses.util.ASSERTION_ENABLED
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 import org.perses.util.transformToImmutableList
 import java.lang.ref.WeakReference
@@ -455,7 +455,7 @@ class SparTree internal constructor(
   }
 
   fun lazyAssertTreeNodeIdsAreUnique() {
-    if (Util.ASSERTION_ENABLED) {
+    if (ASSERTION_ENABLED) {
       val nodeIds = ArrayListMultimap.create<Int, AbstractSparTreeNode>()
       realRoot.postOrderVisit { node ->
         nodeIds.put(node.nodeId, node)

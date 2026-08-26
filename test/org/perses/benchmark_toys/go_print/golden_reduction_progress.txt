@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -180,11 +186,11 @@ The spar-tree is the following.
     |   |___aux_rule__sourceFile_1{id=283,slot_type=aux_rule__sourceFile_1}
     |       |___importDecl{id=284,slot_type=importDecl}
     |       |   |___Token:import{id=287,slot_type=IMPORT}
-    |       |   |___Token:"fmt"{id=292,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |   |___Token:"fmt"{id=292,slot_type=[alt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
     |       |___Token:;{id=286,slot_type=[eos,SEMI]}
     |___(*){id=6,slot_type=kleene_star__sourceFile_4}
         |___aux_rule__sourceFile_3{id=7,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl{id=11,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |___functionDecl{id=11,slot_type=[alt_block__sourceFile_5,functionDecl]}
             |   |___Token:func{id=12,slot_type=FUNC}
             |   |___Token:main{id=13,slot_type=IDENTIFIER}
             |   |___parameters{id=280,slot_type=[signature,parameters]}
@@ -205,11 +211,11 @@ The spar-tree is the following.
             |           |       |   |       |___arguments{id=252,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |       |   |           |___Token:({id=253,slot_type=L_PAREN}
             |           |       |   |           |___(?){id=254,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression{id=259,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |   |___expression{id=259,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression]}
             |           |       |   |           |       |___Token:"go"{id=274,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |       |   |           |       |___(*){id=261,slot_type=kleene_star__expression_1}
             |           |       |   |           |           |___aux_rule__expression_2{id=262,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:+{id=270,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |       |   |           |               |___Token:+{id=270,slot_type=[alt_block__expression_3,PLUS]}
             |           |       |   |           |               |___Token:"lang"{id=269,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |       |   |           |___Token:){id=255,slot_type=R_PAREN}
             |           |       |   |___Token:;{id=242,slot_type=[eos,SEMI]}
@@ -223,7 +229,7 @@ The spar-tree is the following.
             |           |       |   |       |___arguments{id=204,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |       |   |           |___Token:({id=205,slot_type=L_PAREN}
             |           |       |   |           |___(?){id=206,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expressionList{id=210,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
+            |           |       |   |           |   |___expressionList{id=210,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList]}
             |           |       |   |           |       |___Token:"1+1 ="{id=233,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |       |   |           |       |___(*){id=212,slot_type=kleene_star__expressionList_2}
             |           |       |   |           |           |___aux_rule__expressionList_1{id=213,slot_type=aux_rule__expressionList_1}
@@ -232,7 +238,7 @@ The spar-tree is the following.
             |           |       |   |           |                   |___Token:1{id=228,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
             |           |       |   |           |                   |___(*){id=217,slot_type=kleene_star__expression_1}
             |           |       |   |           |                       |___aux_rule__expression_2{id=218,slot_type=aux_rule__expression_2}
-            |           |       |   |           |                           |___Token:+{id=225,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |       |   |           |                           |___Token:+{id=225,slot_type=[alt_block__expression_3,PLUS]}
             |           |       |   |           |                           |___Token:1{id=224,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,DECIMAL_LIT]}
             |           |       |   |           |___Token:){id=207,slot_type=R_PAREN}
             |           |       |   |___Token:;{id=194,slot_type=[eos,SEMI]}
@@ -246,7 +252,7 @@ The spar-tree is the following.
             |           |       |   |       |___arguments{id=156,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |       |   |           |___Token:({id=157,slot_type=L_PAREN}
             |           |       |   |           |___(?){id=158,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expressionList{id=162,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList]}
+            |           |       |   |           |   |___expressionList{id=162,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList]}
             |           |       |   |           |       |___Token:"7.0/3.0 ="{id=185,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |       |   |           |       |___(*){id=164,slot_type=kleene_star__expressionList_2}
             |           |       |   |           |           |___aux_rule__expressionList_1{id=165,slot_type=aux_rule__expressionList_1}
@@ -255,7 +261,7 @@ The spar-tree is the following.
             |           |       |   |           |                   |___Token:7.0{id=180,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
             |           |       |   |           |                   |___(*){id=169,slot_type=kleene_star__expression_1}
             |           |       |   |           |                       |___aux_rule__expression_2{id=170,slot_type=aux_rule__expression_2}
-            |           |       |   |           |                           |___Token:/{id=177,slot_type=[altnt_block__expression_3,DIV]}
+            |           |       |   |           |                           |___Token:/{id=177,slot_type=[alt_block__expression_3,DIV]}
             |           |       |   |           |                           |___Token:3.0{id=176,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,FLOAT_LIT]}
             |           |       |   |           |___Token:){id=159,slot_type=R_PAREN}
             |           |       |   |___Token:;{id=146,slot_type=[eos,SEMI]}
@@ -269,11 +275,11 @@ The spar-tree is the following.
             |           |       |   |       |___arguments{id=115,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |       |   |           |___Token:({id=116,slot_type=L_PAREN}
             |           |       |   |           |___(?){id=117,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression{id=122,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |   |___expression{id=122,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression]}
             |           |       |   |           |       |___Token:true{id=137,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
             |           |       |   |           |       |___(*){id=124,slot_type=kleene_star__expression_1}
             |           |       |   |           |           |___aux_rule__expression_2{id=125,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:&&{id=133,slot_type=[altnt_block__expression_3,LOGICAL_AND]}
+            |           |       |   |           |               |___Token:&&{id=133,slot_type=[alt_block__expression_3,LOGICAL_AND]}
             |           |       |   |           |               |___Token:false{id=132,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
             |           |       |   |           |___Token:){id=118,slot_type=R_PAREN}
             |           |       |   |___Token:;{id=105,slot_type=[eos,SEMI]}
@@ -287,11 +293,11 @@ The spar-tree is the following.
             |           |       |   |       |___arguments{id=74,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |       |   |           |___Token:({id=75,slot_type=L_PAREN}
             |           |       |   |           |___(?){id=76,slot_type=optional__arguments_6}
-            |           |       |   |           |   |___expression{id=81,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |       |   |           |   |___expression{id=81,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression]}
             |           |       |   |           |       |___Token:true{id=96,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
             |           |       |   |           |       |___(*){id=83,slot_type=kleene_star__expression_1}
             |           |       |   |           |           |___aux_rule__expression_2{id=84,slot_type=aux_rule__expression_2}
-            |           |       |   |           |               |___Token:||{id=92,slot_type=[altnt_block__expression_3,LOGICAL_OR]}
+            |           |       |   |           |               |___Token:||{id=92,slot_type=[alt_block__expression_3,LOGICAL_OR]}
             |           |       |   |           |               |___Token:false{id=91,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
             |           |       |   |           |___Token:){id=77,slot_type=R_PAREN}
             |           |       |   |___Token:;{id=64,slot_type=[eos,SEMI]}
@@ -305,7 +311,7 @@ The spar-tree is the following.
             |           |           |       |___arguments{id=40,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |           |           |___Token:({id=41,slot_type=L_PAREN}
             |           |           |           |___(?){id=42,slot_type=optional__arguments_6}
-            |           |           |           |   |___unaryExpr{id=48,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression,unaryExpr]}
+            |           |           |           |   |___unaryExpr{id=48,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression,unaryExpr]}
             |           |           |           |       |___(*){id=49,slot_type=kleene_star__unaryExpr_1}
             |           |           |           |       |   |___Token:!{id=55,slot_type=[aux_rule__unaryExpr_2,EXCLAMATION]}
             |           |           |           |       |___Token:true{id=53,slot_type=[primaryExpr,aux_rule__primaryExpr_3,typeName,IDENTIFIER]}
@@ -1526,11 +1532,11 @@ The spar-tree is the following.
     |   |___aux_rule__sourceFile_1{id=362,slot_type=aux_rule__sourceFile_1}
     |       |___importDecl{id=363,slot_type=importDecl}
     |       |   |___Token:import{id=366,slot_type=IMPORT}
-    |       |   |___Token:"fmt"{id=371,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |   |___Token:"fmt"{id=371,slot_type=[alt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
     |       |___Token:;{id=365,slot_type=[eos,SEMI]}
     |___(*){id=302,slot_type=kleene_star__sourceFile_4}
         |___aux_rule__sourceFile_3{id=303,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl{id=307,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |___functionDecl{id=307,slot_type=[alt_block__sourceFile_5,functionDecl]}
             |   |___Token:func{id=308,slot_type=FUNC}
             |   |___Token:main{id=309,slot_type=IDENTIFIER}
             |   |___parameters{id=359,slot_type=[signature,parameters]}
@@ -1551,11 +1557,11 @@ The spar-tree is the following.
             |           |           |       |___arguments{id=331,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |           |           |___Token:({id=332,slot_type=L_PAREN}
             |           |           |           |___(?){id=333,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression{id=338,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |   |___expression{id=338,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression]}
             |           |           |           |       |___Token:"go"{id=353,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |       |___(*){id=340,slot_type=kleene_star__expression_1}
             |           |           |           |           |___aux_rule__expression_2{id=341,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+{id=349,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:+{id=349,slot_type=[alt_block__expression_3,PLUS]}
             |           |           |           |               |___Token:"lang"{id=348,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |___Token:){id=334,slot_type=R_PAREN}
             |           |           |___Token:;{id=321,slot_type=[eos,SEMI]}
@@ -2690,11 +2696,11 @@ The spar-tree is the following.
     |   |___aux_rule__sourceFile_1{id=362,slot_type=aux_rule__sourceFile_1}
     |       |___importDecl{id=363,slot_type=importDecl}
     |       |   |___Token:import{id=366,slot_type=IMPORT}
-    |       |   |___Token:"fmt"{id=371,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |   |___Token:"fmt"{id=371,slot_type=[alt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
     |       |___Token:;{id=365,slot_type=[eos,SEMI]}
     |___(*){id=302,slot_type=kleene_star__sourceFile_4}
         |___aux_rule__sourceFile_3{id=303,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl{id=307,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |___functionDecl{id=307,slot_type=[alt_block__sourceFile_5,functionDecl]}
             |   |___Token:func{id=308,slot_type=FUNC}
             |   |___Token:main{id=309,slot_type=IDENTIFIER}
             |   |___parameters{id=359,slot_type=[signature,parameters]}
@@ -2715,11 +2721,11 @@ The spar-tree is the following.
             |           |           |       |___arguments{id=331,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |           |           |___Token:({id=332,slot_type=L_PAREN}
             |           |           |           |___(?){id=333,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression{id=338,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |   |___expression{id=338,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression]}
             |           |           |           |       |___Token:"go"{id=353,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |       |___(*){id=340,slot_type=kleene_star__expression_1}
             |           |           |           |           |___aux_rule__expression_2{id=341,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+{id=349,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:+{id=349,slot_type=[alt_block__expression_3,PLUS]}
             |           |           |           |               |___Token:"lang"{id=348,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |___Token:){id=334,slot_type=R_PAREN}
             |           |           |___Token:;{id=321,slot_type=[eos,SEMI]}
@@ -3274,11 +3280,11 @@ The spar-tree is the following.
     |   |___aux_rule__sourceFile_1{id=523,slot_type=aux_rule__sourceFile_1}
     |       |___importDecl{id=524,slot_type=importDecl}
     |       |   |___Token:import{id=527,slot_type=IMPORT}
-    |       |   |___Token:"fmt"{id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |   |___Token:"fmt"{id=532,slot_type=[alt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
     |       |___Token:;{id=526,slot_type=[eos,SEMI]}
     |___(*){id=463,slot_type=kleene_star__sourceFile_4}
         |___aux_rule__sourceFile_3{id=464,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl{id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |___functionDecl{id=468,slot_type=[alt_block__sourceFile_5,functionDecl]}
             |   |___Token:func{id=469,slot_type=FUNC}
             |   |___Token:main{id=470,slot_type=IDENTIFIER}
             |   |___parameters{id=520,slot_type=[signature,parameters]}
@@ -3299,11 +3305,11 @@ The spar-tree is the following.
             |           |           |       |___arguments{id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |           |           |___Token:({id=493,slot_type=L_PAREN}
             |           |           |           |___(?){id=494,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression]}
             |           |           |           |       |___Token:"go"{id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |       |___(*){id=501,slot_type=kleene_star__expression_1}
             |           |           |           |           |___aux_rule__expression_2{id=502,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+{id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:+{id=510,slot_type=[alt_block__expression_3,PLUS]}
             |           |           |           |               |___Token:"la"{id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |___Token:){id=495,slot_type=R_PAREN}
             |           |           |___Token:;{id=482,slot_type=[eos,SEMI]}
@@ -4442,11 +4448,11 @@ The spar-tree is the following.
     |   |___aux_rule__sourceFile_1{id=523,slot_type=aux_rule__sourceFile_1}
     |       |___importDecl{id=524,slot_type=importDecl}
     |       |   |___Token:import{id=527,slot_type=IMPORT}
-    |       |   |___Token:"fmt"{id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |   |___Token:"fmt"{id=532,slot_type=[alt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
     |       |___Token:;{id=526,slot_type=[eos,SEMI]}
     |___(*){id=463,slot_type=kleene_star__sourceFile_4}
         |___aux_rule__sourceFile_3{id=464,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl{id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |___functionDecl{id=468,slot_type=[alt_block__sourceFile_5,functionDecl]}
             |   |___Token:func{id=469,slot_type=FUNC}
             |   |___Token:main{id=470,slot_type=IDENTIFIER}
             |   |___parameters{id=520,slot_type=[signature,parameters]}
@@ -4467,11 +4473,11 @@ The spar-tree is the following.
             |           |           |       |___arguments{id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |           |           |___Token:({id=493,slot_type=L_PAREN}
             |           |           |           |___(?){id=494,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression]}
             |           |           |           |       |___Token:"go"{id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |       |___(*){id=501,slot_type=kleene_star__expression_1}
             |           |           |           |           |___aux_rule__expression_2{id=502,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+{id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:+{id=510,slot_type=[alt_block__expression_3,PLUS]}
             |           |           |           |               |___Token:"la"{id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |___Token:){id=495,slot_type=R_PAREN}
             |           |           |___Token:;{id=482,slot_type=[eos,SEMI]}
@@ -4880,11 +4886,11 @@ The spar-tree is the following.
     |   |___aux_rule__sourceFile_1{id=523,slot_type=aux_rule__sourceFile_1}
     |       |___importDecl{id=524,slot_type=importDecl}
     |       |   |___Token:import{id=527,slot_type=IMPORT}
-    |       |   |___Token:"fmt"{id=532,slot_type=[altnt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
+    |       |   |___Token:"fmt"{id=532,slot_type=[alt_block__importDecl_3,importSpec,importPath,string_,INTERPRETED_STRING_LIT]}
     |       |___Token:;{id=526,slot_type=[eos,SEMI]}
     |___(*){id=463,slot_type=kleene_star__sourceFile_4}
         |___aux_rule__sourceFile_3{id=464,slot_type=aux_rule__sourceFile_3}
-            |___functionDecl{id=468,slot_type=[altnt_block__sourceFile_5,functionDecl]}
+            |___functionDecl{id=468,slot_type=[alt_block__sourceFile_5,functionDecl]}
             |   |___Token:func{id=469,slot_type=FUNC}
             |   |___Token:main{id=470,slot_type=IDENTIFIER}
             |   |___parameters{id=520,slot_type=[signature,parameters]}
@@ -4905,11 +4911,11 @@ The spar-tree is the following.
             |           |           |       |___arguments{id=492,slot_type=[aux_rule__primaryExpr_2,arguments]}
             |           |           |           |___Token:({id=493,slot_type=L_PAREN}
             |           |           |           |___(?){id=494,slot_type=optional__arguments_6}
-            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,altnt_block__arguments_7,expressionList,expression]}
+            |           |           |           |   |___expression{id=499,slot_type=[aux_rule__arguments_5,alt_block__arguments_7,expressionList,expression]}
             |           |           |           |       |___Token:"go"{id=514,slot_type=[unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |       |___(*){id=501,slot_type=kleene_star__expression_1}
             |           |           |           |           |___aux_rule__expression_2{id=502,slot_type=aux_rule__expression_2}
-            |           |           |           |               |___Token:+{id=510,slot_type=[altnt_block__expression_3,PLUS]}
+            |           |           |           |               |___Token:+{id=510,slot_type=[alt_block__expression_3,PLUS]}
             |           |           |           |               |___Token:"la"{id=509,slot_type=[expression,unaryExpr,primaryExpr,aux_rule__primaryExpr_3,string_,INTERPRETED_STRING_LIT]}
             |           |           |           |___Token:){id=495,slot_type=R_PAREN}
             |           |           |___Token:;{id=482,slot_type=[eos,SEMI]}

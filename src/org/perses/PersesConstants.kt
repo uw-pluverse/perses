@@ -16,8 +16,8 @@
  */
 package org.perses
 
+import org.perses.util.FileSystemUtil
 import org.perses.util.TimeSpan
-import org.perses.util.Util
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -31,7 +31,7 @@ class PersesConstants private constructor(
 
   fun getPersesRootFolderOrCreate() =
     PersesRoot(
-      Util.ensureDirExists(userHomeFolder.resolve(".perses")),
+      FileSystemUtil.ensureDirExists(userHomeFolder.resolve(".perses")),
     )
 
   data class PersesRoot(
@@ -45,7 +45,7 @@ class PersesConstants private constructor(
 
     fun getPersesAdhocRootOrCreate() =
       AdhocGrammarRoot(
-        Util.ensureDirExists(
+        FileSystemUtil.ensureDirExists(
           file.resolve("installed_adhoc_languages"),
         ),
       )
@@ -85,7 +85,7 @@ class PersesConstants private constructor(
       return if (customizedHomeDir.isNotBlank()) {
         PersesConstants(Paths.get(customizedHomeDir))
       } else {
-        PersesConstants(Util.getUserHomeDirectory())
+        PersesConstants(FileSystemUtil.getUserHomeDirectory())
       }
     }
 

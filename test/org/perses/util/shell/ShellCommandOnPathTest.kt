@@ -23,7 +23,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Files.createFile
 import java.nio.file.Files.createTempDirectory
 import java.nio.file.Paths
@@ -87,7 +87,7 @@ class ShellCommandOnPathTest {
       tempDir.resolve("temp.sh").apply {
         createFile(this)
       }
-    Util.setExecutable(script)
+    FileSystemUtil.setExecutable(script)
     assertThat(
       ShellCommandOnPath.isCmdOnPATH(
         cmdName = script.fileName.toString(),
@@ -102,7 +102,7 @@ class ShellCommandOnPathTest {
       tempDir.resolve("temp.sh").apply {
         createFile(this)
       }
-    Util.setExecutable(script)
+    FileSystemUtil.setExecutable(script)
 
     Paths.get("tempSymLink").createSymbolicLinkPointingTo(script)
     assertThat(

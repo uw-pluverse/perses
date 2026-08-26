@@ -18,7 +18,9 @@ package org.perses.antlr.ast
 
 import com.google.common.collect.ImmutableList
 
-// TODO: to be refined and tested.
+// Bottom-up rewriting base for the antlrrdc grammar-reduction passes. A visit override may
+// return null to delete its node: a sequence drops the child, an alternative block replaces it
+// with epsilon (so the block becomes optional), and a rule whose whole body is deleted is removed.
 abstract class AbstractAstEditor {
   fun bottomUpApply(grammar: PersesGrammar): PersesGrammar {
     val rules = grammar.parserRules

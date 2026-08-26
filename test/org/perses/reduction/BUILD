@@ -300,8 +300,8 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
-    name = "PropertyTestResultTest",
-    srcs = ["PropertyTestResultTest.kt"],
+    name = "TestScriptVerdictTest",
+    srcs = ["TestScriptVerdictTest.kt"],
     deps = [
         "//:jackson",
         "//:truth",

@@ -850,7 +850,7 @@ typePat
     ;
 
 ascription
-    : ':' altnt_block__ascription_2
+    : ':' alt_block__ascription_2
     ;
 
 expr1
@@ -874,7 +874,7 @@ postfixExpr
     ;
 
 prefixExpr
-    : optional__prefixExpr_1 altnt_block__expr1_18
+    : optional__prefixExpr_1 alt_block__expr1_18
     ;
 
 simpleExpr
@@ -892,22 +892,13 @@ argumentExprs
     ;
 
 blockExpr
-    : '{' altnt_block__blockExpr_1 '}'
-    ;
-
-block
-    : kleene_plus__block_1 optional__block_2
+    : '{' alt_block__blockExpr_1 '}'
     ;
 
 blockStat
     : import_
     | expr1
     | aux_rule__blockStat_7
-    ;
-
-resultExpr
-    : expr1
-    | aux_rule__resultExpr_4
     ;
 
 enumerators
@@ -956,11 +947,6 @@ simplePattern
     | aux_rule__simplePattern_11
     ;
 
-patterns
-    : aux_rule__patterns_3
-    | aux_rule__patterns_4
-    ;
-
 typeParamClause
     : '[' variantTypeParam kleene_star__typeParamClause_2 ']'
     ;
@@ -974,7 +960,7 @@ variantTypeParam
     ;
 
 typeParam
-    : altnt_block__typeParam_10 optional__typeDcl_1 optional__typeDcl_3 optional__typeDcl_5 kleene_star__typeParam_7 kleene_star__typeParam_9
+    : alt_block__typeParam_10 optional__typeDcl_1 optional__typeDcl_3 optional__typeDcl_5 kleene_star__typeParam_7 kleene_star__typeParam_9
     ;
 
 paramClauses
@@ -1019,7 +1005,7 @@ bindings
     ;
 
 binding
-    : altnt_block__typeParam_10 optional__binding_2
+    : alt_block__typeParam_10 optional__binding_2
     ;
 
 modifier
@@ -1037,11 +1023,11 @@ localModifier
     ;
 
 accessModifier
-    : altnt_block__accessModifier_2 optional__accessModifier_1
+    : alt_block__accessModifier_2 optional__accessModifier_1
     ;
 
 accessQualifier
-    : '[' altnt_block__accessQualifier_1 ']'
+    : '[' alt_block__accessQualifier_1 ']'
     ;
 
 annotation
@@ -1063,7 +1049,7 @@ templateStat
     ;
 
 selfType
-    : altnt_block__selfType_3 '=>'
+    : alt_block__selfType_3 '=>'
     ;
 
 import_
@@ -1075,7 +1061,7 @@ importExpr
     ;
 
 importSelectors
-    : '{' kleene_star__importSelectors_2 altnt_block__importSelectors_3 '}'
+    : '{' kleene_star__importSelectors_2 alt_block__importSelectors_3 '}'
     ;
 
 importSelector
@@ -1374,7 +1360,7 @@ optional__expr1_11
     ;
 
 aux_rule__expr1_12
-    : altnt_block__expr1_18 '.'
+    : alt_block__expr1_18 '.'
     ;
 
 optional__expr1_13
@@ -1423,10 +1409,6 @@ optional__argumentExprs_3
 
 kleene_plus__block_1
     : blockStat+
-    ;
-
-optional__block_2
-    : resultExpr?
     ;
 
 aux_rule__blockStat_2
@@ -1505,14 +1487,6 @@ aux_rule__simplePattern_6
 
 optional__simplePattern_7
     : aux_rule__simplePattern_6?
-    ;
-
-aux_rule__patterns_1
-    : ',' patterns
-    ;
-
-optional__patterns_2
-    : aux_rule__patterns_1?
     ;
 
 aux_rule__typeParamClause_1
@@ -1625,7 +1599,7 @@ kleene_star__classParam_2
     ;
 
 optional__classParam_4
-    : altnt_block__dcl_2?
+    : alt_block__dcl_2?
     ;
 
 aux_rule__bindings_1
@@ -1673,7 +1647,7 @@ kleene_star__import__2
     ;
 
 aux_rule__importExpr_1
-    : '.' altnt_block__importExpr_3
+    : '.' alt_block__importExpr_3
     ;
 
 optional__importExpr_2
@@ -1689,7 +1663,7 @@ kleene_star__importSelectors_2
     ;
 
 aux_rule__importSelector_1
-    : '=>' altnt_block__typeParam_10
+    : '=>' alt_block__typeParam_10
     ;
 
 optional__importSelector_2
@@ -1857,7 +1831,7 @@ type_
     ;
 
 aux_rule__expr_3
-    : altnt_block__expr_4 '=>'
+    : alt_block__expr_4 '=>'
     ;
 
 kleene_star__expr_2
@@ -1868,167 +1842,204 @@ expr
     : kleene_star__expr_2 expr1
     ;
 
+aux_rule__block_4
+    : kleene_plus__block_1 alt_block__block_7 '=>'
+    ;
+
+kleene_star__block_3
+    : aux_rule__block_4*
+    ;
+
+aux_rule__block_5
+    : kleene_plus__block_1 optional__block_6
+    ;
+
+block
+    : kleene_star__block_3 aux_rule__block_5
+    ;
+
+aux_rule__patterns_4
+    : pattern ','
+    ;
+
+kleene_star__patterns_3
+    : aux_rule__patterns_4*
+    ;
+
+aux_rule__patterns_5
+    : pattern
+    | aux_rule__patterns_6
+    ;
+
+patterns
+    : kleene_star__patterns_3 aux_rule__patterns_5
+    ;
+
 optional__paramType_1
     : '=>'?
+    ;
+
+optional__block_6
+    : expr1?
     ;
 
 optional__pattern3_4
     : kleene_star__pattern3_3?
     ;
 
-altnt_block__ascription_2
+alt_block__ascription_2
     : infixType
     | kleene_plus__ascription_1
     | aux_rule__ascription_3
     ;
 
-altnt_block__expr1_15
+alt_block__expr1_15
     : aux_rule__expr1_26
     | aux_rule__expr1_27
     | 'throw'
     | aux_rule__expr1_28
     ;
 
-altnt_block__expr1_16
+alt_block__expr1_16
     : optional__expr1_14
     | aux_rule__expr1_29
     ;
 
-altnt_block__simpleExpr1_7
+alt_block__simpleExpr1_7
     : aux_rule__simpleExpr1_12
     | typeArgs
     ;
 
-altnt_block__argumentExprs_5
+alt_block__argumentExprs_5
     : optional__simpleExpr1_1
     | aux_rule__argumentExprs_8
     ;
 
-altnt_block__blockExpr_1
+alt_block__blockExpr_1
     : caseClauses
     | block
     ;
 
-altnt_block__simplePattern_9
+alt_block__simplePattern_9
     : optional__simplePattern_3
     | aux_rule__simplePattern_12
     ;
 
-altnt_block__selfType_3
+alt_block__selfType_3
     : aux_rule__selfType_4
     | aux_rule__selfType_5
     ;
 
-altnt_block__funDef_5
+alt_block__funDef_5
     : aux_rule__funDef_9
     | aux_rule__funDef_10
     ;
 
-altnt_block__expr1_17
+alt_block__expr1_17
     : aux_rule__expr1_30
     | aux_rule__expr1_31
     ;
 
-altnt_block__simpleExpr_1
+alt_block__simpleExpr_1
     : classTemplate
     | templateBody
     ;
 
-altnt_block__resultExpr_2
-    : bindings
-    | aux_rule__resultExpr_5
-    ;
-
-altnt_block__pattern1_1
+alt_block__pattern1_1
     : BoundVarid
     | '_'
     | Id
     ;
 
-altnt_block__typeParam_10
+alt_block__typeParam_10
     : Id
     | '_'
     ;
 
-altnt_block__accessModifier_2
+alt_block__accessModifier_2
     : 'private'
     | 'protected'
     ;
 
-altnt_block__accessQualifier_1
+alt_block__accessQualifier_1
     : Id
     | 'this'
     ;
 
-altnt_block__importSelectors_3
+alt_block__importSelectors_3
     : importSelector
     | '_'
     ;
 
-altnt_block__funDef_6
+alt_block__funDef_6
     : aux_rule__funDef_11
     | aux_rule__funDef_12
     ;
 
-altnt_block__expr1_18
+alt_block__expr1_18
     : simpleExpr
     | aux_rule__expr1_32
     ;
 
-altnt_block__importExpr_3
+alt_block__importExpr_3
     : Id
     | '_'
     | importSelectors
     ;
 
-altnt_block__stableId_7
+alt_block__stableId_7
     : 'this'
     | aux_rule__stableId_9
     ;
 
-altnt_block__expr_4
+alt_block__expr_4
     : bindings
     | aux_rule__expr_5
     | '_'
     ;
 
-altnt_block__expr1_19
+alt_block__block_7
+    : bindings
+    | aux_rule__block_9
+    ;
+
+alt_block__expr1_19
     : aux_rule__expr1_33
     | aux_rule__expr1_34
     ;
 
-altnt_block__literal_3
+alt_block__literal_3
     : IntegerLiteral
     | FloatingPointLiteral
     ;
 
-altnt_block__dcl_2
+alt_block__dcl_2
     : 'val'
     | 'var'
     ;
 
-altnt_block__blockStat_6
+alt_block__blockStat_6
     : aux_rule__blockStat_8
     | aux_rule__blockStat_9
     ;
 
-altnt_block__tmplDef_3
+alt_block__tmplDef_3
     : aux_rule__tmplDef_6
     | aux_rule__tmplDef_7
     ;
 
-altnt_block__templateStat_9
+alt_block__templateStat_9
     : def
     | dcl
     ;
 
-altnt_block__resultExpr_3
-    : aux_rule__resultExpr_6
+alt_block__block_8
+    : aux_rule__block_10
     | '_'
     ;
 
 aux_rule__literal_4
-    : optional__literal_1 altnt_block__literal_3
+    : optional__literal_1 alt_block__literal_3
     ;
 
 aux_rule__functionArgTypes_5
@@ -2068,15 +2079,15 @@ aux_rule__expr1_23
     ;
 
 aux_rule__expr1_24
-    : altnt_block__expr1_15 expr
+    : alt_block__expr1_15 expr
     ;
 
 aux_rule__expr1_25
-    : postfixExpr altnt_block__expr1_16
+    : postfixExpr alt_block__expr1_16
     ;
 
 aux_rule__simpleExpr_2
-    : 'new' altnt_block__simpleExpr_1
+    : 'new' alt_block__simpleExpr_1
     ;
 
 aux_rule__argumentExprs_6
@@ -2084,19 +2095,15 @@ aux_rule__argumentExprs_6
     ;
 
 aux_rule__argumentExprs_7
-    : '(' altnt_block__argumentExprs_5 ')'
+    : '(' alt_block__argumentExprs_5 ')'
     ;
 
 aux_rule__blockStat_7
-    : kleene_star__annotType_1 altnt_block__blockStat_6
-    ;
-
-aux_rule__resultExpr_4
-    : altnt_block__resultExpr_2 '=>' block
+    : kleene_star__annotType_1 alt_block__blockStat_6
     ;
 
 aux_rule__pattern1_2
-    : altnt_block__pattern1_1 ':' typePat
+    : alt_block__pattern1_1 ':' typePat
     ;
 
 aux_rule__pattern2_3
@@ -2108,15 +2115,7 @@ aux_rule__simplePattern_10
     ;
 
 aux_rule__simplePattern_11
-    : stableId altnt_block__simplePattern_9
-    ;
-
-aux_rule__patterns_3
-    : pattern optional__patterns_2
-    ;
-
-aux_rule__patterns_4
-    : '_' '*'
+    : stableId alt_block__simplePattern_9
     ;
 
 aux_rule__paramType_2
@@ -2128,7 +2127,7 @@ aux_rule__paramType_3
     ;
 
 aux_rule__templateStat_10
-    : kleene_star__templateStat_3 kleene_star__classParam_2 altnt_block__templateStat_9
+    : kleene_star__templateStat_3 kleene_star__classParam_2 alt_block__templateStat_9
     ;
 
 aux_rule__dcl_3
@@ -2140,7 +2139,7 @@ aux_rule__dcl_4
     ;
 
 aux_rule__dcl_5
-    : altnt_block__dcl_2 valDcl
+    : alt_block__dcl_2 valDcl
     ;
 
 aux_rule__patVarDef_1
@@ -2164,11 +2163,11 @@ aux_rule__varDef_1
     ;
 
 aux_rule__funDef_7
-    : 'this' paramClause paramClauses altnt_block__funDef_6
+    : 'this' paramClause paramClauses alt_block__funDef_6
     ;
 
 aux_rule__funDef_8
-    : funSig altnt_block__funDef_5
+    : funSig alt_block__funDef_5
     ;
 
 aux_rule__tmplDef_4
@@ -2176,7 +2175,7 @@ aux_rule__tmplDef_4
     ;
 
 aux_rule__tmplDef_5
-    : optional__tmplDef_1 altnt_block__tmplDef_3
+    : optional__tmplDef_1 alt_block__tmplDef_3
     ;
 
 aux_rule__classTemplateOpt_4
@@ -2196,7 +2195,7 @@ aux_rule__generator_3
     ;
 
 aux_rule__stableId_8
-    : optional__stableId_2 altnt_block__stableId_7
+    : optional__stableId_2 alt_block__stableId_7
     ;
 
 aux_rule__simpleType_6
@@ -2212,7 +2211,7 @@ aux_rule__simpleType_8
     ;
 
 aux_rule__simpleExpr1_9
-    : optional__expr1_11 altnt_block__simpleExpr1_7
+    : optional__expr1_11 alt_block__simpleExpr1_7
     ;
 
 aux_rule__simpleExpr1_10
@@ -2220,7 +2219,11 @@ aux_rule__simpleExpr1_10
     ;
 
 aux_rule__simpleExpr1_11
-    : simpleExpr altnt_block__simpleExpr1_7
+    : simpleExpr alt_block__simpleExpr1_7
+    ;
+
+aux_rule__patterns_6
+    : '_' '*'
     ;
 
 aux_rule__ascription_3
@@ -2232,11 +2235,11 @@ aux_rule__expr1_26
     ;
 
 aux_rule__expr1_27
-    : 'for' altnt_block__expr1_19 optional__expr1_9
+    : 'for' alt_block__expr1_19 optional__expr1_9
     ;
 
 aux_rule__expr1_28
-    : altnt_block__expr1_17 '='
+    : alt_block__expr1_17 '='
     ;
 
 aux_rule__expr1_29
@@ -2279,10 +2282,6 @@ aux_rule__expr1_31
     : simpleExpr1 argumentExprs
     ;
 
-aux_rule__resultExpr_5
-    : altnt_block__resultExpr_3 ':' compoundType
-    ;
-
 aux_rule__funDef_11
     : '=' constrExpr
     ;
@@ -2301,6 +2300,10 @@ aux_rule__stableId_9
 
 aux_rule__expr_5
     : optional__expr_1 Id
+    ;
+
+aux_rule__block_9
+    : alt_block__block_8 ':' compoundType
     ;
 
 aux_rule__expr1_33
@@ -2327,7 +2330,7 @@ aux_rule__tmplDef_7
     : 'object' objectDef
     ;
 
-aux_rule__resultExpr_6
+aux_rule__block_10
     : optional__expr_1 Id
     ;
 

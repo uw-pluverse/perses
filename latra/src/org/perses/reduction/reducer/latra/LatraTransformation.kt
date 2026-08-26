@@ -20,16 +20,16 @@ import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import org.perses.grammar.AbstractParserFacade
 import org.perses.listminimizer.AbstractListMinimizerListener
-import org.perses.listminimizer.ElementWrapper
 import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.IPropertyTester
-import org.perses.listminimizer.ListMinimizerPropertyTestResult
+import org.perses.listminimizer.ImmediatePropertyTestHandle
 import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.ListMinimizerFactory
 import org.perses.listminimizer.ListMinimizerListenerAdaptor
 import org.perses.listminimizer.OnBestUpdateHandler
 import org.perses.listminimizer.PartitionComplementControl
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.CandidateOutcome
+import org.perses.reduction.TestScriptVerdict
 import org.perses.reduction.reducer.latra.language.LatraTransformationDefinition
 import org.perses.spartree.AbstractSparTreeEdit
 import org.perses.spartree.LatraGeneralTreeEdit
@@ -169,8 +169,13 @@ open class LatraTransformation(
       // need to keep at least one match.
       needToTestEmpty = false,
       input = input,
-      // TODO(cnsun): need to double check whether the following is correct.
-      isElementDeletedElsewhere = { false },
+      // A match whose nodes an earlier accepted edit removed, and which cannot be re-anchored by
+      // node id, can never be applied again. Reporting it here is what drops it from the
+      // minimizer's best list: AbstractListMinimizer.updateBest rebuilds best without it, on
+      // exactly the occasions staleness can newly arise -- an edit was accepted, so the tree moved.
+      isElementDeletedElsewhere = { match ->
+        portMatchToTreeIfNecessary(match, sparTree) == null
+      },
       propertyTester = createPropertyTester(sparTree, testProperty),
       onBestUpdateHandler = createOnBestUpdateHandler(),
       descriptionPrefix = "$listMinimizerType in ${this::class.simpleName}",
@@ -200,22 +205,18 @@ open class LatraTransformation(
     tree: SparTree,
     testProperty: (AbstractSparTreeEdit<*>) -> Boolean,
   ) = IPropertyTester<SparTreeHoleMatch, SparTreeHoleMatchPayload> { configuration ->
-    val invalidMatchesBuilder = ImmutableList.builder<ElementWrapper<SparTreeHoleMatch>>()
+    // A match that cannot be ported onto the current tree is simply left out of this candidate.
+    // Dropping it from the minimizer's list is not this tester's job: isElementDeletedElsewhere
+    // reports it, and AbstractListMinimizer.updateBest prunes it when the tree next moves.
     val matches =
       configuration.deletedWrappers.mapNotNull { originalMatch ->
-        val portedMatch = portMatchToTreeIfNecessary(originalMatch.element, tree)
-        if (portedMatch == null) {
-          invalidMatchesBuilder.add(originalMatch)
-        }
-        portedMatch
+        portMatchToTreeIfNecessary(originalMatch.element, tree)
       }
 
-    val staleElementsToRemove = invalidMatchesBuilder.build()
     if (matches.isEmpty()) {
       latraArguments.log { "The matches in the candidate are invalid. " }
-      return@IPropertyTester ListMinimizerPropertyTestResult.Skipped(
-        result = "all matches are invalid.",
-        staleElementsToRemove = staleElementsToRemove,
+      return@IPropertyTester ImmediatePropertyTestHandle(
+        CandidateOutcome.Uninteresting.NotTested("all matches are invalid."),
       )
     }
 
@@ -225,23 +226,26 @@ open class LatraTransformation(
     }
     val edit =
       createTreeEditFromMatches(matches, tree)
-        ?: return@IPropertyTester ListMinimizerPropertyTestResult.Skipped(
-          result = "null edit",
-          staleElementsToRemove = staleElementsToRemove,
+        ?: return@IPropertyTester ImmediatePropertyTestHandle(
+          CandidateOutcome.Uninteresting.NotTested("null edit"),
         )
-    ListMinimizerPropertyTestResult.Completed(
-      result =
-        if (testProperty(edit)) {
-          PropertyTestResult.INTERESTING_RESULT
-        } else {
-          PropertyTestResult.NON_INTERESTING_RESULT
-        },
-      payload =
-        SparTreeHoleMatchPayload(
-          tree = tree,
-          edit = edit,
-        ),
-      staleElementsToRemove = staleElementsToRemove,
+    // testProperty reports only a boolean, so the verdicts here carry the elapsedMillis = 0 of the
+    // shared constants rather than a measured cost. That is unchanged from before this hierarchy.
+    ImmediatePropertyTestHandle(
+      if (testProperty(edit)) {
+        CandidateOutcome.Interesting(
+          payload =
+            SparTreeHoleMatchPayload(
+              tree = tree,
+              edit = edit,
+            ),
+          testScriptVerdict = TestScriptVerdict.INTERESTING,
+        )
+      } else {
+        CandidateOutcome.Uninteresting.Rejected(
+          testScriptVerdict = TestScriptVerdict.NON_INTERESTING,
+        )
+      },
     )
   }
 

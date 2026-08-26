@@ -83,13 +83,13 @@ class TestScriptExecutorService(
 
   fun interface IPostCheck<Payload> {
     fun perform(
-      currentResult: PropertyTestResult,
+      currentResult: TestScriptVerdict,
       payload: Payload,
-    ): PropertyTestResult
+    ): TestScriptVerdict
   }
 
   fun interface IPreCheck<Payload : Any> {
-    fun perform(payload: Payload): PropertyTestResult
+    fun perform(payload: Payload): TestScriptVerdict
   }
 
   fun <Payload : Any> testProgramAsync(
@@ -137,7 +137,7 @@ class TestScriptExecutorService(
     val testScriptExecFuture =
       createRestrictedFuture(
         scriptExecutorService.submit(
-          Callable<PropertyTestResult?> {
+          Callable<TestScriptVerdict?> {
             if (outputManagerCreatorFuture.isCancelled()) {
               return@Callable null
             }
@@ -231,9 +231,9 @@ class TestScriptExecutorService(
 
   companion object {
     val ALWAYS_TRUE_PRECHECK = { _: Any ->
-      PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMillis = 0)
+      TestScriptVerdict(exitCode = ExitCode.ZERO, elapsedMillis = 0)
     }
-    val IDENTITY_POST_CHECK = { currentResult: PropertyTestResult, _: Any ->
+    val IDENTITY_POST_CHECK = { currentResult: TestScriptVerdict, _: Any ->
       currentResult
     }
     val logger = FluentLogger.forEnclosingClass()

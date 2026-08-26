@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -172,7 +178,7 @@ Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_S
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=1,slot_type=start}
-|___(*){id=3,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=3,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=6,slot_type=[cmd,script_module,module_]}
         |___Token:({id=7,slot_type=LPAR}
         |___Token:module{id=8,slot_type=MODULE}
@@ -184,17 +190,17 @@ start{id=1,slot_type=start}
         |   |   |___Token:"fd_write"{id=239,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=201,slot_type=import_desc}
         |   |   |   |___Token:({id=203,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=206,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=206,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=207,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=208,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=208,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=209,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=238,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=211,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=211,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=212,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=222,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=225,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=225,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=226,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=228,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=228,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=236,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=235,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=234,slot_type=[value_type,VALUE_TYPE]}
@@ -202,7 +208,7 @@ start{id=1,slot_type=start}
         |   |   |   |           |   |___Token:){id=224,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=213,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=214,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=217,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=217,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=218,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=219,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=221,slot_type=[value_type,VALUE_TYPE]}
@@ -220,7 +226,7 @@ start{id=1,slot_type=start}
         |   |   |___Token:"memory"{id=186,slot_type=[name,STRING_]}
         |   |   |___export_desc{id=178,slot_type=export_desc}
         |   |   |   |___Token:({id=180,slot_type=LPAR}
-        |   |   |   |___Token:memory{id=185,slot_type=[altnt_block__export_desc_1,MEMORY]}
+        |   |   |   |___Token:memory{id=185,slot_type=[alt_block__export_desc_1,MEMORY]}
         |   |   |   |___Token:0{id=184,slot_type=[var_,NAT]}
         |   |   |   |___Token:){id=183,slot_type=RPAR}
         |   |   |___Token:){id=179,slot_type=RPAR}
@@ -263,14 +269,14 @@ start{id=1,slot_type=start}
         |       |   |       |___Token:){id=128,slot_type=RPAR}
         |       |   |___(*){id=29,slot_type=[aux_rule__func_fields_5,aux_rule__func_fields_6,func_fields_body,func_result_body,func_body,instr_list,kleene_star__instr_list_1]}
         |       |       |___aux_rule__plain_instr_10{id=118,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:global.get{id=122,slot_type=[altnt_block__plain_instr_6,GLOBAL_GET]}
+        |       |       |   |___Token:global.get{id=122,slot_type=[alt_block__plain_instr_6,GLOBAL_GET]}
         |       |       |   |___Token:$a{id=121,slot_type=[var_,VAR]}
         |       |       |___aux_rule__plain_instr_9{id=113,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=114,slot_type=CONST}
         |       |       |   |___Token:1{id=116,slot_type=[literal,NAT]}
         |       |       |___Token:i32.eq{id=111,slot_type=[instr,plain_instr,COMPARE]}
         |       |       |___aux_rule__instr_3{id=34,slot_type=[instr,aux_rule__instr_3]}
-        |       |           |___aux_rule__instr_5{id=37,slot_type=[altnt_block__instr_2,aux_rule__instr_5]}
+        |       |           |___aux_rule__instr_5{id=37,slot_type=[alt_block__instr_2,aux_rule__instr_5]}
         |       |           |   |___Token:if{id=38,slot_type=IF}
         |       |           |   |___(*){id=41,slot_type=[block,instr_list,kleene_star__instr_list_1]}
         |       |           |       |___aux_rule__plain_instr_9{id=106,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
@@ -279,14 +285,14 @@ start{id=1,slot_type=start}
         |       |           |       |___aux_rule__plain_instr_9{id=101,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=102,slot_type=CONST}
         |       |           |       |   |___Token:8{id=104,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=99,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=99,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=92,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=93,slot_type=CONST}
         |       |           |       |   |___Token:4{id=95,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_9{id=87,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=88,slot_type=CONST}
         |       |           |       |   |___Token:6{id=90,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=85,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=85,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=78,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=79,slot_type=CONST}
         |       |           |       |   |___Token:1{id=81,slot_type=[literal,NAT]}
@@ -300,7 +306,7 @@ start{id=1,slot_type=start}
         |       |           |       |   |___Token:i32.const{id=64,slot_type=CONST}
         |       |           |       |   |___Token:20{id=66,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_10{id=57,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |           |       |   |___Token:call{id=61,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |           |       |   |___Token:call{id=61,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |           |       |   |___Token:$fd_write{id=60,slot_type=[var_,VAR]}
         |       |           |       |___Token:drop{id=55,slot_type=[instr,plain_instr,DROP]}
         |       |           |___Token:end{id=36,slot_type=END}
@@ -363,7 +369,7 @@ FixPt[1][CoarseGritLatraReducer][SimplifyDataSegment](87/87)  Built a LatraGener
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=5506,slot_type=start}
-|___(*){id=5508,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=5508,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=5511,slot_type=[cmd,script_module,module_]}
         |___Token:({id=5512,slot_type=LPAR}
         |___Token:module{id=5513,slot_type=MODULE}
@@ -375,17 +381,17 @@ start{id=5506,slot_type=start}
         |   |   |___Token:"fd_write"{id=5744,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=5706,slot_type=import_desc}
         |   |   |   |___Token:({id=5708,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=5711,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=5711,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=5712,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=5713,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=5713,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=5714,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=5743,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=5716,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=5716,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=5717,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=5727,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=5730,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=5730,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=5731,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=5733,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=5733,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=5741,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=5740,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=5739,slot_type=[value_type,VALUE_TYPE]}
@@ -393,7 +399,7 @@ start{id=5506,slot_type=start}
         |   |   |   |           |   |___Token:){id=5729,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=5718,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=5719,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=5722,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=5722,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=5723,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=5724,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=5726,slot_type=[value_type,VALUE_TYPE]}
@@ -411,7 +417,7 @@ start{id=5506,slot_type=start}
         |   |   |___Token:"memory"{id=5691,slot_type=[name,STRING_]}
         |   |   |___export_desc{id=5683,slot_type=export_desc}
         |   |   |   |___Token:({id=5685,slot_type=LPAR}
-        |   |   |   |___Token:memory{id=5690,slot_type=[altnt_block__export_desc_1,MEMORY]}
+        |   |   |   |___Token:memory{id=5690,slot_type=[alt_block__export_desc_1,MEMORY]}
         |   |   |   |___Token:0{id=5689,slot_type=[var_,NAT]}
         |   |   |   |___Token:){id=5688,slot_type=RPAR}
         |   |   |___Token:){id=5684,slot_type=RPAR}
@@ -454,14 +460,14 @@ start{id=5506,slot_type=start}
         |       |   |       |___Token:){id=5633,slot_type=RPAR}
         |       |   |___(*){id=5534,slot_type=[aux_rule__func_fields_5,aux_rule__func_fields_6,func_fields_body,func_result_body,func_body,instr_list,kleene_star__instr_list_1]}
         |       |       |___aux_rule__plain_instr_10{id=5623,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:global.get{id=5627,slot_type=[altnt_block__plain_instr_6,GLOBAL_GET]}
+        |       |       |   |___Token:global.get{id=5627,slot_type=[alt_block__plain_instr_6,GLOBAL_GET]}
         |       |       |   |___Token:$a{id=5626,slot_type=[var_,VAR]}
         |       |       |___aux_rule__plain_instr_9{id=5618,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=5619,slot_type=CONST}
         |       |       |   |___Token:1{id=5621,slot_type=[literal,NAT]}
         |       |       |___Token:i32.eq{id=5616,slot_type=[instr,plain_instr,COMPARE]}
         |       |       |___aux_rule__instr_3{id=5539,slot_type=[instr,aux_rule__instr_3]}
-        |       |           |___aux_rule__instr_5{id=5542,slot_type=[altnt_block__instr_2,aux_rule__instr_5]}
+        |       |           |___aux_rule__instr_5{id=5542,slot_type=[alt_block__instr_2,aux_rule__instr_5]}
         |       |           |   |___Token:if{id=5543,slot_type=IF}
         |       |           |   |___(*){id=5546,slot_type=[block,instr_list,kleene_star__instr_list_1]}
         |       |           |       |___aux_rule__plain_instr_9{id=5611,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
@@ -470,14 +476,14 @@ start{id=5506,slot_type=start}
         |       |           |       |___aux_rule__plain_instr_9{id=5606,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5607,slot_type=CONST}
         |       |           |       |   |___Token:8{id=5609,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=5604,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=5604,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=5597,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5598,slot_type=CONST}
         |       |           |       |   |___Token:4{id=5600,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_9{id=5592,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5593,slot_type=CONST}
         |       |           |       |   |___Token:6{id=5595,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=5590,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=5590,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=5583,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5584,slot_type=CONST}
         |       |           |       |   |___Token:1{id=5586,slot_type=[literal,NAT]}
@@ -491,7 +497,7 @@ start{id=5506,slot_type=start}
         |       |           |       |   |___Token:i32.const{id=5569,slot_type=CONST}
         |       |           |       |   |___Token:20{id=5571,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_10{id=5562,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |           |       |   |___Token:call{id=5566,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |           |       |   |___Token:call{id=5566,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |           |       |   |___Token:$fd_write{id=5565,slot_type=[var_,VAR]}
         |       |           |       |___Token:drop{id=5560,slot_type=[instr,plain_instr,DROP]}
         |       |           |___Token:end{id=5541,slot_type=END}
@@ -2067,7 +2073,7 @@ The current best program is the following
 
 ==========Testing the following program (53): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__instr_2->block
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__instr_2->block
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param i32 i32 i32 i32) (result i32)))
@@ -3595,7 +3601,7 @@ The current best program is the following
 
 ==========Testing the following program (96): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__import_desc_6->func
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__import_desc_6->func
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func                                               ))
@@ -4190,7 +4196,7 @@ The current best program is the following
 
 =========Testing the following program (105): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__func_type_4->param
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__func_type_4->param
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param                ) (result i32)))
@@ -5092,7 +5098,7 @@ The current best program is the following
 
 =========Testing the following program (116): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__func_type_4->param
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__func_type_4->param
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param i32 i32 i32 i32) (param     )))
@@ -9767,7 +9773,7 @@ Failed to reduce node 5512
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=5832,slot_type=start}
-|___(*){id=5834,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=5834,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=5837,slot_type=[cmd,script_module,module_]}
         |___Token:({id=5838,slot_type=LPAR}
         |___Token:module{id=5839,slot_type=MODULE}
@@ -9779,17 +9785,17 @@ start{id=5832,slot_type=start}
         |   |   |___Token:"fd_write"{id=6051,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=6013,slot_type=import_desc}
         |   |   |   |___Token:({id=6015,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=6018,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=6018,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=6019,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=6020,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=6020,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=6021,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=6050,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=6023,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=6023,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=6024,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=6034,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=6037,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=6037,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=6038,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=6040,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=6040,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=6048,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=6047,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=6046,slot_type=[value_type,VALUE_TYPE]}
@@ -9797,7 +9803,7 @@ start{id=5832,slot_type=start}
         |   |   |   |           |   |___Token:){id=6036,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=6025,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=6026,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=6029,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=6029,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=6030,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=6031,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=6033,slot_type=[value_type,VALUE_TYPE]}
@@ -9845,14 +9851,14 @@ start{id=5832,slot_type=start}
         |       |   |       |___Token:){id=5958,slot_type=RPAR}
         |       |   |___(*){id=5859,slot_type=[aux_rule__func_fields_5,aux_rule__func_fields_6,func_fields_body,func_result_body,func_body,instr_list,kleene_star__instr_list_1]}
         |       |       |___aux_rule__plain_instr_10{id=5948,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:global.get{id=5952,slot_type=[altnt_block__plain_instr_6,GLOBAL_GET]}
+        |       |       |   |___Token:global.get{id=5952,slot_type=[alt_block__plain_instr_6,GLOBAL_GET]}
         |       |       |   |___Token:$a{id=5951,slot_type=[var_,VAR]}
         |       |       |___aux_rule__plain_instr_9{id=5943,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=5944,slot_type=CONST}
         |       |       |   |___Token:1{id=5946,slot_type=[literal,NAT]}
         |       |       |___Token:i32.eq{id=5941,slot_type=[instr,plain_instr,COMPARE]}
         |       |       |___aux_rule__instr_3{id=5864,slot_type=[instr,aux_rule__instr_3]}
-        |       |           |___aux_rule__instr_5{id=5867,slot_type=[altnt_block__instr_2,aux_rule__instr_5]}
+        |       |           |___aux_rule__instr_5{id=5867,slot_type=[alt_block__instr_2,aux_rule__instr_5]}
         |       |           |   |___Token:if{id=5868,slot_type=IF}
         |       |           |   |___(*){id=5871,slot_type=[block,instr_list,kleene_star__instr_list_1]}
         |       |           |       |___aux_rule__plain_instr_9{id=5936,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
@@ -9861,14 +9867,14 @@ start{id=5832,slot_type=start}
         |       |           |       |___aux_rule__plain_instr_9{id=5931,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5932,slot_type=CONST}
         |       |           |       |   |___Token:8{id=5934,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=5929,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=5929,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=5922,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5923,slot_type=CONST}
         |       |           |       |   |___Token:4{id=5925,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_9{id=5917,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5918,slot_type=CONST}
         |       |           |       |   |___Token:6{id=5920,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=5915,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=5915,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=5908,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5909,slot_type=CONST}
         |       |           |       |   |___Token:1{id=5911,slot_type=[literal,NAT]}
@@ -9882,7 +9888,7 @@ start{id=5832,slot_type=start}
         |       |           |       |   |___Token:i32.const{id=5894,slot_type=CONST}
         |       |           |       |   |___Token:20{id=5896,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_10{id=5887,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |           |       |   |___Token:call{id=5891,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |           |       |   |___Token:call{id=5891,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |           |       |   |___Token:$fd_write{id=5890,slot_type=[var_,VAR]}
         |       |           |       |___Token:drop{id=5885,slot_type=[instr,plain_instr,DROP]}
         |       |           |___Token:end{id=5866,slot_type=END}
@@ -11354,7 +11360,7 @@ The current best program is the following
 
 =========Testing the following program (188): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__instr_2->block
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__instr_2->block
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param i32 i32 i32 i32) (result i32)))
@@ -12864,7 +12870,7 @@ The current best program is the following
 
 =========Testing the following program (213): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__import_desc_6->func
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__import_desc_6->func
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func                                               ))
@@ -13410,7 +13416,7 @@ The current best program is the following
 
 =========Testing the following program (219): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__func_type_4->param
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__func_type_4->param
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param                ) (result i32)))
@@ -18550,7 +18556,7 @@ Failed to reduce node 5838
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=5832,slot_type=start}
-|___(*){id=5834,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=5834,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=5837,slot_type=[cmd,script_module,module_]}
         |___Token:({id=5838,slot_type=LPAR}
         |___Token:module{id=5839,slot_type=MODULE}
@@ -18562,17 +18568,17 @@ start{id=5832,slot_type=start}
         |   |   |___Token:"fd_write"{id=6051,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=6013,slot_type=import_desc}
         |   |   |   |___Token:({id=6015,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=6018,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=6018,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=6019,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=6020,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=6020,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=6021,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=6050,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=6023,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=6023,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=6024,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=6034,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=6037,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=6037,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=6038,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=6040,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=6040,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=6048,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=6047,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=6046,slot_type=[value_type,VALUE_TYPE]}
@@ -18580,7 +18586,7 @@ start{id=5832,slot_type=start}
         |   |   |   |           |   |___Token:){id=6036,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=6025,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=6026,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=6029,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=6029,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=6030,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=6031,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=6033,slot_type=[value_type,VALUE_TYPE]}
@@ -18628,14 +18634,14 @@ start{id=5832,slot_type=start}
         |       |   |       |___Token:){id=5958,slot_type=RPAR}
         |       |   |___(*){id=5859,slot_type=[aux_rule__func_fields_5,aux_rule__func_fields_6,func_fields_body,func_result_body,func_body,instr_list,kleene_star__instr_list_1]}
         |       |       |___aux_rule__plain_instr_10{id=5948,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:global.get{id=5952,slot_type=[altnt_block__plain_instr_6,GLOBAL_GET]}
+        |       |       |   |___Token:global.get{id=5952,slot_type=[alt_block__plain_instr_6,GLOBAL_GET]}
         |       |       |   |___Token:$a{id=5951,slot_type=[var_,VAR]}
         |       |       |___aux_rule__plain_instr_9{id=5943,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=5944,slot_type=CONST}
         |       |       |   |___Token:1{id=5946,slot_type=[literal,NAT]}
         |       |       |___Token:i32.eq{id=5941,slot_type=[instr,plain_instr,COMPARE]}
         |       |       |___aux_rule__instr_3{id=5864,slot_type=[instr,aux_rule__instr_3]}
-        |       |           |___aux_rule__instr_5{id=5867,slot_type=[altnt_block__instr_2,aux_rule__instr_5]}
+        |       |           |___aux_rule__instr_5{id=5867,slot_type=[alt_block__instr_2,aux_rule__instr_5]}
         |       |           |   |___Token:if{id=5868,slot_type=IF}
         |       |           |   |___(*){id=5871,slot_type=[block,instr_list,kleene_star__instr_list_1]}
         |       |           |       |___aux_rule__plain_instr_9{id=5936,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
@@ -18644,14 +18650,14 @@ start{id=5832,slot_type=start}
         |       |           |       |___aux_rule__plain_instr_9{id=5931,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5932,slot_type=CONST}
         |       |           |       |   |___Token:8{id=5934,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=5929,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=5929,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=5922,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5923,slot_type=CONST}
         |       |           |       |   |___Token:4{id=5925,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_9{id=5917,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5918,slot_type=CONST}
         |       |           |       |   |___Token:6{id=5920,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=5915,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=5915,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=5908,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=5909,slot_type=CONST}
         |       |           |       |   |___Token:1{id=5911,slot_type=[literal,NAT]}
@@ -18665,7 +18671,7 @@ start{id=5832,slot_type=start}
         |       |           |       |   |___Token:i32.const{id=5894,slot_type=CONST}
         |       |           |       |   |___Token:20{id=5896,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_10{id=5887,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |           |       |   |___Token:call{id=5891,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |           |       |   |___Token:call{id=5891,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |           |       |   |___Token:$fd_write{id=5890,slot_type=[var_,VAR]}
         |       |           |       |___Token:drop{id=5885,slot_type=[instr,plain_instr,DROP]}
         |       |           |___Token:end{id=5866,slot_type=END}
@@ -27444,7 +27450,7 @@ Edit: AnyNodeReplace:[replace_5896_with_6905]
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=6912,slot_type=start}
-|___(*){id=6914,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=6914,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=6917,slot_type=[cmd,script_module,module_]}
         |___Token:({id=6918,slot_type=LPAR}
         |___Token:module{id=6919,slot_type=MODULE}
@@ -27456,17 +27462,17 @@ start{id=6912,slot_type=start}
         |   |   |___Token:"fd_write"{id=7131,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=7093,slot_type=import_desc}
         |   |   |   |___Token:({id=7095,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=7098,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=7098,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=7099,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=7100,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=7100,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=7101,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=7130,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=7103,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=7103,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=7104,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=7114,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=7117,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=7117,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=7118,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=7120,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=7120,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=7128,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=7127,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=7126,slot_type=[value_type,VALUE_TYPE]}
@@ -27474,7 +27480,7 @@ start{id=6912,slot_type=start}
         |   |   |   |           |   |___Token:){id=7116,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=7105,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=7106,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=7109,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=7109,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=7110,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=7111,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=7113,slot_type=[value_type,VALUE_TYPE]}
@@ -27522,14 +27528,14 @@ start{id=6912,slot_type=start}
         |       |   |       |___Token:){id=7038,slot_type=RPAR}
         |       |   |___(*){id=6939,slot_type=[aux_rule__func_fields_5,aux_rule__func_fields_6,func_fields_body,func_result_body,func_body,instr_list,kleene_star__instr_list_1]}
         |       |       |___aux_rule__plain_instr_10{id=7028,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:global.get{id=7032,slot_type=[altnt_block__plain_instr_6,GLOBAL_GET]}
+        |       |       |   |___Token:global.get{id=7032,slot_type=[alt_block__plain_instr_6,GLOBAL_GET]}
         |       |       |   |___Token:$a{id=7031,slot_type=[var_,VAR]}
         |       |       |___aux_rule__plain_instr_9{id=7023,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=7024,slot_type=CONST}
         |       |       |   |___Token:1{id=7026,slot_type=[literal,NAT]}
         |       |       |___Token:i32.eq{id=7021,slot_type=[instr,plain_instr,COMPARE]}
         |       |       |___aux_rule__instr_3{id=6944,slot_type=[instr,aux_rule__instr_3]}
-        |       |           |___aux_rule__instr_5{id=6947,slot_type=[altnt_block__instr_2,aux_rule__instr_5]}
+        |       |           |___aux_rule__instr_5{id=6947,slot_type=[alt_block__instr_2,aux_rule__instr_5]}
         |       |           |   |___Token:if{id=6948,slot_type=IF}
         |       |           |   |___(*){id=6951,slot_type=[block,instr_list,kleene_star__instr_list_1]}
         |       |           |       |___aux_rule__plain_instr_9{id=7016,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
@@ -27538,14 +27544,14 @@ start{id=6912,slot_type=start}
         |       |           |       |___aux_rule__plain_instr_9{id=7011,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=7012,slot_type=CONST}
         |       |           |       |   |___Token:8{id=7014,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=7009,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=7009,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=7002,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=7003,slot_type=CONST}
         |       |           |       |   |___Token:4{id=7005,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_9{id=6997,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=6998,slot_type=CONST}
         |       |           |       |   |___Token:6{id=7000,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=6995,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=6995,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=6988,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=6989,slot_type=CONST}
         |       |           |       |   |___Token:1{id=6991,slot_type=[literal,NAT]}
@@ -27559,7 +27565,7 @@ start{id=6912,slot_type=start}
         |       |           |       |   |___Token:i32.const{id=6974,slot_type=CONST}
         |       |           |       |   |___Token:0{id=6976,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_10{id=6967,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |           |       |   |___Token:call{id=6971,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |           |       |   |___Token:call{id=6971,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |           |       |   |___Token:$fd_write{id=6970,slot_type=[var_,VAR]}
         |       |           |       |___Token:drop{id=6965,slot_type=[instr,plain_instr,DROP]}
         |       |           |___Token:end{id=6946,slot_type=END}
@@ -29002,7 +29008,7 @@ The current best program is the following
 
 =========Testing the following program (486): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__instr_2->block
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__instr_2->block
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param i32 i32 i32 i32) (result i32)))
@@ -30530,7 +30536,7 @@ The current best program is the following
 
 =========Testing the following program (529): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__import_desc_6->func
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__import_desc_6->func
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func                                               ))
@@ -31077,7 +31083,7 @@ The current best program is the following
 
 =========Testing the following program (536): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__func_type_4->param
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__func_type_4->param
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param                ) (result i32)))
@@ -31743,7 +31749,7 @@ The current best program is the following
 
 =========Testing the following program (544): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__func_type_4->param
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__func_type_4->param
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param i32 i32 i32 i32) (param     )))
@@ -36224,7 +36230,7 @@ Failed to reduce node 6918
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=6912,slot_type=start}
-|___(*){id=6914,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=6914,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=6917,slot_type=[cmd,script_module,module_]}
         |___Token:({id=6918,slot_type=LPAR}
         |___Token:module{id=6919,slot_type=MODULE}
@@ -36236,17 +36242,17 @@ start{id=6912,slot_type=start}
         |   |   |___Token:"fd_write"{id=7131,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=7093,slot_type=import_desc}
         |   |   |   |___Token:({id=7095,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=7098,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=7098,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=7099,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=7100,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=7100,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=7101,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=7130,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=7103,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=7103,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=7104,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=7114,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=7117,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=7117,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=7118,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=7120,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=7120,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=7128,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=7127,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=7126,slot_type=[value_type,VALUE_TYPE]}
@@ -36254,7 +36260,7 @@ start{id=6912,slot_type=start}
         |   |   |   |           |   |___Token:){id=7116,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=7105,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=7106,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=7109,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=7109,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=7110,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=7111,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=7113,slot_type=[value_type,VALUE_TYPE]}
@@ -36302,14 +36308,14 @@ start{id=6912,slot_type=start}
         |       |   |       |___Token:){id=7038,slot_type=RPAR}
         |       |   |___(*){id=6939,slot_type=[aux_rule__func_fields_5,aux_rule__func_fields_6,func_fields_body,func_result_body,func_body,instr_list,kleene_star__instr_list_1]}
         |       |       |___aux_rule__plain_instr_10{id=7028,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:global.get{id=7032,slot_type=[altnt_block__plain_instr_6,GLOBAL_GET]}
+        |       |       |   |___Token:global.get{id=7032,slot_type=[alt_block__plain_instr_6,GLOBAL_GET]}
         |       |       |   |___Token:$a{id=7031,slot_type=[var_,VAR]}
         |       |       |___aux_rule__plain_instr_9{id=7023,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=7024,slot_type=CONST}
         |       |       |   |___Token:1{id=7026,slot_type=[literal,NAT]}
         |       |       |___Token:i32.eq{id=7021,slot_type=[instr,plain_instr,COMPARE]}
         |       |       |___aux_rule__instr_3{id=6944,slot_type=[instr,aux_rule__instr_3]}
-        |       |           |___aux_rule__instr_5{id=6947,slot_type=[altnt_block__instr_2,aux_rule__instr_5]}
+        |       |           |___aux_rule__instr_5{id=6947,slot_type=[alt_block__instr_2,aux_rule__instr_5]}
         |       |           |   |___Token:if{id=6948,slot_type=IF}
         |       |           |   |___(*){id=6951,slot_type=[block,instr_list,kleene_star__instr_list_1]}
         |       |           |       |___aux_rule__plain_instr_9{id=7016,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
@@ -36318,14 +36324,14 @@ start{id=6912,slot_type=start}
         |       |           |       |___aux_rule__plain_instr_9{id=7011,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=7012,slot_type=CONST}
         |       |           |       |   |___Token:8{id=7014,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=7009,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=7009,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=7002,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=7003,slot_type=CONST}
         |       |           |       |   |___Token:4{id=7005,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_9{id=6997,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=6998,slot_type=CONST}
         |       |           |       |   |___Token:6{id=7000,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=6995,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=6995,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=6988,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=6989,slot_type=CONST}
         |       |           |       |   |___Token:1{id=6991,slot_type=[literal,NAT]}
@@ -36339,7 +36345,7 @@ start{id=6912,slot_type=start}
         |       |           |       |   |___Token:i32.const{id=6974,slot_type=CONST}
         |       |           |       |   |___Token:0{id=6976,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_10{id=6967,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |           |       |   |___Token:call{id=6971,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |           |       |   |___Token:call{id=6971,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |           |       |   |___Token:$fd_write{id=6970,slot_type=[var_,VAR]}
         |       |           |       |___Token:drop{id=6965,slot_type=[instr,plain_instr,DROP]}
         |       |           |___Token:end{id=6946,slot_type=END}
@@ -44606,7 +44612,7 @@ start{id=6912,slot_type=start}
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=6912,slot_type=start}
-|___(*){id=6914,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=6914,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=6917,slot_type=[cmd,script_module,module_]}
         |___Token:({id=6918,slot_type=LPAR}
         |___Token:module{id=6919,slot_type=MODULE}
@@ -44618,17 +44624,17 @@ start{id=6912,slot_type=start}
         |   |   |___Token:"fd_write"{id=7131,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=7093,slot_type=import_desc}
         |   |   |   |___Token:({id=7095,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=7098,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=7098,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=7099,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=7100,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=7100,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=7101,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=7130,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=7103,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=7103,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=7104,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=7114,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=7117,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=7117,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=7118,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=7120,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=7120,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=7128,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=7127,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=7126,slot_type=[value_type,VALUE_TYPE]}
@@ -44636,7 +44642,7 @@ start{id=6912,slot_type=start}
         |   |   |   |           |   |___Token:){id=7116,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=7105,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=7106,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=7109,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=7109,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=7110,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=7111,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=7113,slot_type=[value_type,VALUE_TYPE]}
@@ -44684,14 +44690,14 @@ start{id=6912,slot_type=start}
         |       |   |       |___Token:){id=7038,slot_type=RPAR}
         |       |   |___(*){id=6939,slot_type=[aux_rule__func_fields_5,aux_rule__func_fields_6,func_fields_body,func_result_body,func_body,instr_list,kleene_star__instr_list_1]}
         |       |       |___aux_rule__plain_instr_10{id=7028,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:global.get{id=7032,slot_type=[altnt_block__plain_instr_6,GLOBAL_GET]}
+        |       |       |   |___Token:global.get{id=7032,slot_type=[alt_block__plain_instr_6,GLOBAL_GET]}
         |       |       |   |___Token:$a{id=7031,slot_type=[var_,VAR]}
         |       |       |___aux_rule__plain_instr_9{id=7023,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=7024,slot_type=CONST}
         |       |       |   |___Token:1{id=7026,slot_type=[literal,NAT]}
         |       |       |___Token:i32.eq{id=7021,slot_type=[instr,plain_instr,COMPARE]}
         |       |       |___aux_rule__instr_3{id=6944,slot_type=[instr,aux_rule__instr_3]}
-        |       |           |___aux_rule__instr_5{id=6947,slot_type=[altnt_block__instr_2,aux_rule__instr_5]}
+        |       |           |___aux_rule__instr_5{id=6947,slot_type=[alt_block__instr_2,aux_rule__instr_5]}
         |       |           |   |___Token:if{id=6948,slot_type=IF}
         |       |           |   |___(*){id=6951,slot_type=[block,instr_list,kleene_star__instr_list_1]}
         |       |           |       |___aux_rule__plain_instr_9{id=7016,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
@@ -44700,14 +44706,14 @@ start{id=6912,slot_type=start}
         |       |           |       |___aux_rule__plain_instr_9{id=7011,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=7012,slot_type=CONST}
         |       |           |       |   |___Token:8{id=7014,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=7009,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=7009,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=7002,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=7003,slot_type=CONST}
         |       |           |       |   |___Token:4{id=7005,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_9{id=6997,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=6998,slot_type=CONST}
         |       |           |       |   |___Token:6{id=7000,slot_type=[literal,NAT]}
-        |       |           |       |___Token:i32.store{id=6995,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |           |       |___Token:i32.store{id=6995,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |           |       |___aux_rule__plain_instr_9{id=6988,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |           |       |   |___Token:i32.const{id=6989,slot_type=CONST}
         |       |           |       |   |___Token:1{id=6991,slot_type=[literal,NAT]}
@@ -44721,7 +44727,7 @@ start{id=6912,slot_type=start}
         |       |           |       |   |___Token:i32.const{id=6974,slot_type=CONST}
         |       |           |       |   |___Token:0{id=6976,slot_type=[literal,NAT]}
         |       |           |       |___aux_rule__plain_instr_10{id=6967,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |           |       |   |___Token:call{id=6971,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |           |       |   |___Token:call{id=6971,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |           |       |   |___Token:$fd_write{id=6970,slot_type=[var_,VAR]}
         |       |           |       |___Token:drop{id=6965,slot_type=[instr,plain_instr,DROP]}
         |       |           |___Token:end{id=6946,slot_type=END}
@@ -44870,7 +44876,7 @@ FixPt[7][FineGritLatraReducer][ReplaceIfBlockWithFalseBranch2](76/87)  Found mat
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=8682,slot_type=start}
-|___(*){id=8684,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=8684,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=8687,slot_type=[cmd,script_module,module_]}
         |___Token:({id=8688,slot_type=LPAR}
         |___Token:module{id=8689,slot_type=MODULE}
@@ -44882,17 +44888,17 @@ start{id=8682,slot_type=start}
         |   |   |___Token:"fd_write"{id=8895,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=8857,slot_type=import_desc}
         |   |   |   |___Token:({id=8859,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=8862,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=8862,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=8863,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=8864,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=8864,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=8865,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=8894,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=8867,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=8867,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=8868,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=8878,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=8881,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=8881,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=8882,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=8884,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=8884,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=8892,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=8891,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=8890,slot_type=[value_type,VALUE_TYPE]}
@@ -44900,7 +44906,7 @@ start{id=8682,slot_type=start}
         |   |   |   |           |   |___Token:){id=8880,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=8869,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=8870,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=8873,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=8873,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=8874,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=8875,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=8877,slot_type=[value_type,VALUE_TYPE]}
@@ -44948,7 +44954,7 @@ start{id=8682,slot_type=start}
         |       |   |       |___Token:){id=8802,slot_type=RPAR}
         |       |   |___(*){id=8709,slot_type=[aux_rule__func_fields_5,aux_rule__func_fields_6,func_fields_body,func_result_body,func_body,instr_list,kleene_star__instr_list_1]}
         |       |       |___aux_rule__plain_instr_10{id=8792,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:global.get{id=8796,slot_type=[altnt_block__plain_instr_6,GLOBAL_GET]}
+        |       |       |   |___Token:global.get{id=8796,slot_type=[alt_block__plain_instr_6,GLOBAL_GET]}
         |       |       |   |___Token:$a{id=8795,slot_type=[var_,VAR]}
         |       |       |___aux_rule__plain_instr_9{id=8787,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=8788,slot_type=CONST}
@@ -44961,14 +44967,14 @@ start{id=8682,slot_type=start}
         |       |       |___aux_rule__plain_instr_9{id=8773,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=8774,slot_type=CONST}
         |       |       |   |___Token:8{id=8776,slot_type=[literal,NAT]}
-        |       |       |___Token:i32.store{id=8771,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |       |___Token:i32.store{id=8771,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |       |___aux_rule__plain_instr_9{id=8764,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=8765,slot_type=CONST}
         |       |       |   |___Token:4{id=8767,slot_type=[literal,NAT]}
         |       |       |___aux_rule__plain_instr_9{id=8759,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=8760,slot_type=CONST}
         |       |       |   |___Token:6{id=8762,slot_type=[literal,NAT]}
-        |       |       |___Token:i32.store{id=8757,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |       |___Token:i32.store{id=8757,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |       |___aux_rule__plain_instr_9{id=8750,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=8751,slot_type=CONST}
         |       |       |   |___Token:1{id=8753,slot_type=[literal,NAT]}
@@ -44982,7 +44988,7 @@ start{id=8682,slot_type=start}
         |       |       |   |___Token:i32.const{id=8736,slot_type=CONST}
         |       |       |   |___Token:0{id=8738,slot_type=[literal,NAT]}
         |       |       |___aux_rule__plain_instr_10{id=8729,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:call{id=8733,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |       |   |___Token:call{id=8733,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |       |   |___Token:$fd_write{id=8732,slot_type=[var_,VAR]}
         |       |       |___Token:drop{id=8727,slot_type=[instr,plain_instr,DROP]}
         |       |___Token:){id=8701,slot_type=RPAR}
@@ -47242,7 +47248,7 @@ The current best program is the following
 
 =========Testing the following program (796): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__import_desc_6->func
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__import_desc_6->func
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func                                               ))
@@ -47770,7 +47776,7 @@ The current best program is the following
 
 =========Testing the following program (805): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__func_type_4->param
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__func_type_4->param
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param                ) (result i32)))
@@ -48307,7 +48313,7 @@ The current best program is the following
 
 =========Testing the following program (815): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__func_type_4->param
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__func_type_4->param
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param i32 i32 i32 i32) (param     )))
@@ -51454,7 +51460,7 @@ Failed to reduce node 8688
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=8977,slot_type=start}
-|___(*){id=8979,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=8979,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=8982,slot_type=[cmd,script_module,module_]}
         |___Token:({id=8983,slot_type=LPAR}
         |___Token:module{id=8984,slot_type=MODULE}
@@ -51466,17 +51472,17 @@ start{id=8977,slot_type=start}
         |   |   |___Token:"fd_write"{id=9148,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=9110,slot_type=import_desc}
         |   |   |   |___Token:({id=9112,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=9115,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=9115,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=9116,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=9117,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=9117,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=9118,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=9147,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=9120,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=9120,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=9121,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=9131,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=9134,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=9134,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=9135,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=9137,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=9137,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=9145,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=9144,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=9143,slot_type=[value_type,VALUE_TYPE]}
@@ -51484,7 +51490,7 @@ start{id=8977,slot_type=start}
         |   |   |   |           |   |___Token:){id=9133,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=9122,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=9123,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=9126,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=9126,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=9127,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=9128,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=9130,slot_type=[value_type,VALUE_TYPE]}
@@ -51525,14 +51531,14 @@ start{id=8977,slot_type=start}
         |       |       |___aux_rule__plain_instr_9{id=9063,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=9064,slot_type=CONST}
         |       |       |   |___Token:8{id=9066,slot_type=[literal,NAT]}
-        |       |       |___Token:i32.store{id=9061,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |       |___Token:i32.store{id=9061,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |       |___aux_rule__plain_instr_9{id=9054,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=9055,slot_type=CONST}
         |       |       |   |___Token:4{id=9057,slot_type=[literal,NAT]}
         |       |       |___aux_rule__plain_instr_9{id=9049,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=9050,slot_type=CONST}
         |       |       |   |___Token:6{id=9052,slot_type=[literal,NAT]}
-        |       |       |___Token:i32.store{id=9047,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |       |___Token:i32.store{id=9047,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |       |___aux_rule__plain_instr_9{id=9040,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=9041,slot_type=CONST}
         |       |       |   |___Token:1{id=9043,slot_type=[literal,NAT]}
@@ -51546,7 +51552,7 @@ start{id=8977,slot_type=start}
         |       |       |   |___Token:i32.const{id=9026,slot_type=CONST}
         |       |       |   |___Token:0{id=9028,slot_type=[literal,NAT]}
         |       |       |___aux_rule__plain_instr_10{id=9019,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:call{id=9023,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |       |   |___Token:call{id=9023,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |       |   |___Token:$fd_write{id=9022,slot_type=[var_,VAR]}
         |       |       |___Token:drop{id=9017,slot_type=[instr,plain_instr,DROP]}
         |       |___Token:){id=8995,slot_type=RPAR}
@@ -53275,7 +53281,7 @@ The current best program is the following
 
 =========Testing the following program (877): fail==========
 
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,altnt_block__import_desc_6->func
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,alt_block__import_desc_6->func
     --file: t.wat--
     (module
       (import "wasi_snapshot_preview1" "fd_write" (func                                               ))
@@ -57153,7 +57159,7 @@ Failed to reduce node 8983
 Parser Facade: class org.perses.grammar.wasm.WebAssemblyParserFacade
 The spar-tree is the following.
 start{id=8977,slot_type=start}
-|___(*){id=8979,slot_type=[altnt_block__start_3,kleene_star__meta_2]}
+|___(*){id=8979,slot_type=[alt_block__start_3,kleene_star__meta_2]}
     |___module_{id=8982,slot_type=[cmd,script_module,module_]}
         |___Token:({id=8983,slot_type=LPAR}
         |___Token:module{id=8984,slot_type=MODULE}
@@ -57165,17 +57171,17 @@ start{id=8977,slot_type=start}
         |   |   |___Token:"fd_write"{id=9148,slot_type=[name,STRING_]}
         |   |   |___import_desc{id=9110,slot_type=import_desc}
         |   |   |   |___Token:({id=9112,slot_type=LPAR}
-        |   |   |   |___aux_rule__import_desc_12{id=9115,slot_type=[altnt_block__import_desc_6,aux_rule__import_desc_12]}
+        |   |   |   |___aux_rule__import_desc_12{id=9115,slot_type=[alt_block__import_desc_6,aux_rule__import_desc_12]}
         |   |   |   |   |___Token:func{id=9116,slot_type=FUNC}
-        |   |   |   |   |___altnt_block__import_desc_7{id=9117,slot_type=altnt_block__import_desc_7}
+        |   |   |   |   |___alt_block__import_desc_7{id=9117,slot_type=alt_block__import_desc_7}
         |   |   |   |       |___(?){id=9118,slot_type=optional__block_instr_1}
         |   |   |   |       |   |___Token:$fd_write{id=9147,slot_type=[bind_var,VAR]}
-        |   |   |   |       |___(*){id=9120,slot_type=[altnt_block__import_desc_8,func_type]}
+        |   |   |   |       |___(*){id=9120,slot_type=[alt_block__import_desc_8,func_type]}
         |   |   |   |           |___aux_rule__func_type_3{id=9121,slot_type=aux_rule__func_type_3}
         |   |   |   |           |   |___Token:({id=9131,slot_type=LPAR}
-        |   |   |   |           |   |___aux_rule__func_type_7{id=9134,slot_type=[altnt_block__func_type_4,aux_rule__func_type_7]}
+        |   |   |   |           |   |___aux_rule__func_type_7{id=9134,slot_type=[alt_block__func_type_4,aux_rule__func_type_7]}
         |   |   |   |           |   |   |___Token:param{id=9135,slot_type=PARAM}
-        |   |   |   |           |   |   |___(*){id=9137,slot_type=[altnt_block__func_type_5,kleene_star__func_type_1]}
+        |   |   |   |           |   |   |___(*){id=9137,slot_type=[alt_block__func_type_5,kleene_star__func_type_1]}
         |   |   |   |           |   |       |___Token:i32{id=9145,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=9144,slot_type=[value_type,VALUE_TYPE]}
         |   |   |   |           |   |       |___Token:i32{id=9143,slot_type=[value_type,VALUE_TYPE]}
@@ -57183,7 +57189,7 @@ start{id=8977,slot_type=start}
         |   |   |   |           |   |___Token:){id=9133,slot_type=RPAR}
         |   |   |   |           |___aux_rule__func_type_3{id=9122,slot_type=aux_rule__func_type_3}
         |   |   |   |               |___Token:({id=9123,slot_type=LPAR}
-        |   |   |   |               |___aux_rule__func_type_6{id=9126,slot_type=[altnt_block__func_type_4,aux_rule__func_type_6]}
+        |   |   |   |               |___aux_rule__func_type_6{id=9126,slot_type=[alt_block__func_type_4,aux_rule__func_type_6]}
         |   |   |   |               |   |___Token:result{id=9127,slot_type=RESULT}
         |   |   |   |               |   |___(*){id=9128,slot_type=kleene_star__func_type_1}
         |   |   |   |               |       |___Token:i32{id=9130,slot_type=[value_type,VALUE_TYPE]}
@@ -57224,14 +57230,14 @@ start{id=8977,slot_type=start}
         |       |       |___aux_rule__plain_instr_9{id=9063,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=9064,slot_type=CONST}
         |       |       |   |___Token:8{id=9066,slot_type=[literal,NAT]}
-        |       |       |___Token:i32.store{id=9061,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |       |___Token:i32.store{id=9061,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |       |___aux_rule__plain_instr_9{id=9054,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=9055,slot_type=CONST}
         |       |       |   |___Token:4{id=9057,slot_type=[literal,NAT]}
         |       |       |___aux_rule__plain_instr_9{id=9049,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=9050,slot_type=CONST}
         |       |       |   |___Token:6{id=9052,slot_type=[literal,NAT]}
-        |       |       |___Token:i32.store{id=9047,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,altnt_block__plain_instr_7,STORE]}
+        |       |       |___Token:i32.store{id=9047,slot_type=[instr,plain_instr,aux_rule__plain_instr_11,alt_block__plain_instr_7,STORE]}
         |       |       |___aux_rule__plain_instr_9{id=9040,slot_type=[instr,plain_instr,aux_rule__plain_instr_9]}
         |       |       |   |___Token:i32.const{id=9041,slot_type=CONST}
         |       |       |   |___Token:1{id=9043,slot_type=[literal,NAT]}
@@ -57245,7 +57251,7 @@ start{id=8977,slot_type=start}
         |       |       |   |___Token:i32.const{id=9026,slot_type=CONST}
         |       |       |   |___Token:0{id=9028,slot_type=[literal,NAT]}
         |       |       |___aux_rule__plain_instr_10{id=9019,slot_type=[instr,plain_instr,aux_rule__plain_instr_10]}
-        |       |       |   |___Token:call{id=9023,slot_type=[altnt_block__plain_instr_6,CALL]}
+        |       |       |   |___Token:call{id=9023,slot_type=[alt_block__plain_instr_6,CALL]}
         |       |       |   |___Token:$fd_write{id=9022,slot_type=[var_,VAR]}
         |       |       |___Token:drop{id=9017,slot_type=[instr,plain_instr,DROP]}
         |       |___Token:){id=8995,slot_type=RPAR}

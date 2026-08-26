@@ -44,8 +44,8 @@ import org.perses.reduction.event.TokenSlicingStartEvent
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.spartree.AbstractActionSet
 import org.perses.spartree.AbstractSparTreeEdit
+import org.perses.util.ASSERTION_ENABLED
 import org.perses.util.DaemonThreadPool
-import org.perses.util.Util
 import org.perses.util.ktFine
 import java.io.Closeable
 import kotlin.Exception
@@ -130,7 +130,7 @@ class AsyncReductionListenerManager(
       submitEvent { listener ->
         listener.onCriticalException(exception)
       }
-    if (Util.ASSERTION_ENABLED) {
+    if (ASSERTION_ENABLED) {
       future.get()
       // If the assertion is enabled, make sure we throw the exception
       // so tests can see this failure.
@@ -195,7 +195,7 @@ class AsyncReductionListenerManager(
   }
 
   fun onTestScriptExecution(
-    result: PropertyTestResult,
+    result: TestScriptVerdict,
     program: TokenizedProgram,
     edit: AbstractSparTreeEdit<*>,
     outputManager: AbstractOutputManager,

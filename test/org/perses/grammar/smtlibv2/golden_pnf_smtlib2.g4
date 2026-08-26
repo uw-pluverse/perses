@@ -521,7 +521,7 @@ constructor_dec
     ;
 
 datatype_dec
-    : ParOpen altnt_block__datatype_dec_4 ParClose
+    : ParOpen alt_block__datatype_dec_4 ParClose
     ;
 
 function_dec
@@ -665,7 +665,7 @@ cmd_declareHeap
     ;
 
 command
-    : ParOpen altnt_block__command_12 ParClose
+    : ParOpen alt_block__command_12 ParClose
     ;
 
 b_value
@@ -771,19 +771,19 @@ optional__attribute_1
     : attribute_value?
     ;
 
-altnt_block__term_7
+alt_block__term_7
     : aux_rule__term_11
     | aux_rule__term_12
     | aux_rule__term_13
     | aux_rule__term_14
     ;
 
-altnt_block__datatype_dec_4
+alt_block__datatype_dec_4
     : kleene_plus__datatype_dec_1
     | aux_rule__datatype_dec_5
     ;
 
-altnt_block__command_12
+alt_block__command_12
     : cmd_checkSat
     | aux_rule__command_20
     | aux_rule__command_21
@@ -809,7 +809,7 @@ altnt_block__command_12
     | aux_rule__command_32
     ;
 
-altnt_block__option_1
+alt_block__option_1
     : PK_GlobalDeclarations
     | PK_InteractiveMode
     | PK_PrintSuccess
@@ -821,50 +821,50 @@ altnt_block__option_1
     | PK_ProduceUnsatCores
     ;
 
-altnt_block__option_2
+alt_block__option_2
     : PK_RandomSeed
     | PK_ReproducibleResourceLimit
     | PK_Verbosity
     ;
 
-altnt_block__option_3
+alt_block__option_3
     : PK_DiagnosticOutputChannel
     | PK_RegularOutputChannel
     ;
 
-altnt_block__term_8
+alt_block__term_8
     : aux_rule__term_15
     | aux_rule__term_16
     ;
 
-altnt_block__command_13
+alt_block__command_13
     : aux_rule__command_33
     | aux_rule__command_34
     | aux_rule__command_35
     ;
 
-altnt_block__command_14
+alt_block__command_14
     : aux_rule__command_36
     | aux_rule__command_37
     ;
 
-altnt_block__command_15
+alt_block__command_15
     : aux_rule__command_38
     | cmd_pop
     | cmd_push
     ;
 
-altnt_block__command_16
+alt_block__command_16
     : cmd_assert
     | cmd_getQe
     ;
 
-altnt_block__command_17
+alt_block__command_17
     : cmd_defineFun
     | cmd_defineFunRec
     ;
 
-altnt_block__command_18
+alt_block__command_18
     : aux_rule__command_39
     | aux_rule__command_40
     ;
@@ -934,12 +934,12 @@ keyword
     | aux_rule__keyword_1
     ;
 
-altnt_block__term_9
+alt_block__term_9
     : GRW_Forall
     | GRW_Exists
     ;
 
-altnt_block__command_19
+alt_block__command_19
     : aux_rule__command_41
     | cmd_getValue
     ;
@@ -969,19 +969,19 @@ aux_rule__pattern_2
     ;
 
 aux_rule__term_10
-    : ParOpen altnt_block__term_7 ParClose
+    : ParOpen alt_block__term_7 ParClose
     ;
 
 aux_rule__option_4
-    : altnt_block__option_1 b_value
+    : alt_block__option_1 b_value
     ;
 
 aux_rule__option_5
-    : altnt_block__option_2 numeral
+    : alt_block__option_2 numeral
     ;
 
 aux_rule__option_6
-    : altnt_block__option_3 string
+    : alt_block__option_3 string
     ;
 
 aux_rule__term_11
@@ -997,7 +997,7 @@ aux_rule__term_13
     ;
 
 aux_rule__term_14
-    : altnt_block__term_8 ParClose term
+    : alt_block__term_8 ParClose term
     ;
 
 aux_rule__datatype_dec_5
@@ -1037,23 +1037,23 @@ aux_rule__command_27
     ;
 
 aux_rule__command_28
-    : altnt_block__command_13 ParClose
+    : alt_block__command_13 ParClose
     ;
 
 aux_rule__command_29
-    : altnt_block__command_14 sort
+    : alt_block__command_14 sort
     ;
 
 aux_rule__command_30
-    : altnt_block__command_15 numeral
+    : alt_block__command_15 numeral
     ;
 
 aux_rule__command_31
-    : altnt_block__command_16 term
+    : alt_block__command_16 term
     ;
 
 aux_rule__command_32
-    : altnt_block__command_17 function_def
+    : alt_block__command_17 function_def
     ;
 
 aux_rule__term_15
@@ -1061,7 +1061,7 @@ aux_rule__term_15
     ;
 
 aux_rule__term_16
-    : altnt_block__term_9 ParOpen kleene_plus__term_3
+    : alt_block__term_9 ParOpen kleene_plus__term_3
     ;
 
 aux_rule__command_33
@@ -1073,7 +1073,7 @@ aux_rule__command_34
     ;
 
 aux_rule__command_35
-    : altnt_block__command_19 ParOpen kleene_plus__term_1
+    : alt_block__command_19 ParOpen kleene_plus__term_1
     ;
 
 aux_rule__command_36
@@ -1081,7 +1081,7 @@ aux_rule__command_36
     ;
 
 aux_rule__command_37
-    : altnt_block__command_18 ParClose
+    : alt_block__command_18 ParClose
     ;
 
 aux_rule__command_38

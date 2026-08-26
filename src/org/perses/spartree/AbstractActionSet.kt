@@ -19,7 +19,7 @@ package org.perses.spartree
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableMap
 
 sealed class AbstractActionSet<ACTION : AbstractTreeEditAction>(

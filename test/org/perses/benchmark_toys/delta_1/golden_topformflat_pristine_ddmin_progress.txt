@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -1985,14 +1991,14 @@ compilationUnit{id=1,slot_type=compilationUnit}
         |   |       |___(*){id=133,slot_type=kleene_star__directDeclarator_7}
         |   |           |___aux_rule__directDeclarator_15{id=135,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
         |   |               |___Token:({id=136,slot_type=LeftParen}
-        |   |               |___parameterTypeList{id=139,slot_type=[altnt_block__directDeclarator_11,parameterTypeList]}
+        |   |               |___parameterTypeList{id=139,slot_type=[alt_block__directDeclarator_11,parameterTypeList]}
         |   |               |   |___parameterDeclaration{id=145,slot_type=[parameterList,parameterDeclaration]}
         |   |               |   |   |___(+){id=146,slot_type=declarationSpecifiers}
         |   |               |   |   |   |___Token:const{id=161,slot_type=[declarationSpecifier,typeQualifier,Const]}
         |   |               |   |   |   |___Token:char{id=159,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
-        |   |               |   |   |___(?){id=148,slot_type=[altnt_block__parameterDeclaration_2,optional__typeName_1]}
+        |   |               |   |   |___(?){id=148,slot_type=[alt_block__parameterDeclaration_2,optional__typeName_1]}
         |   |               |   |       |___(+){id=151,slot_type=[abstractDeclarator,pointer,kleene_plus__pointer_8]}
-        |   |               |   |           |___Token:*{id=154,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+        |   |               |   |           |___Token:*{id=154,slot_type=[aux_rule__pointer_6,alt_block__pointer_9,Star]}
         |   |               |   |___(?){id=141,slot_type=optional__parameterTypeList_2}
         |   |               |       |___aux_rule__parameterTypeList_1{id=142,slot_type=aux_rule__parameterTypeList_1}
         |   |               |           |___Token:,{id=143,slot_type=Comma}
@@ -2008,7 +2014,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=69,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=71,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=72,slot_type=LeftParen}
-            |           |___parameterList{id=76,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList]}
+            |           |___parameterList{id=76,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList]}
             |           |   |___(+){id=106,slot_type=[parameterDeclaration,declarationSpecifiers]}
             |           |   |   |___Token:int{id=116,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
             |           |   |   |___Token:argc{id=113,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
@@ -2018,10 +2024,10 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |           |           |___parameterDeclaration{id=81,slot_type=parameterDeclaration}
             |           |               |___(+){id=82,slot_type=declarationSpecifiers}
             |           |               |   |___Token:char{id=105,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Char]}
-            |           |               |___declarator{id=84,slot_type=[altnt_block__parameterDeclaration_2,declarator]}
+            |           |               |___declarator{id=84,slot_type=[alt_block__parameterDeclaration_2,declarator]}
             |           |                   |___(?){id=85,slot_type=optional__declarator_1}
             |           |                   |   |___(+){id=98,slot_type=[pointer,kleene_plus__pointer_8]}
-            |           |                   |       |___Token:*{id=101,slot_type=[aux_rule__pointer_6,altnt_block__pointer_9,Star]}
+            |           |                   |       |___Token:*{id=101,slot_type=[aux_rule__pointer_6,alt_block__pointer_9,Star]}
             |           |                   |___directDeclarator{id=86,slot_type=directDeclarator}
             |           |                       |___Token:argv{id=96,slot_type=[aux_rule__directDeclarator_9,Identifier]}
             |           |                       |___(*){id=88,slot_type=kleene_star__directDeclarator_7}

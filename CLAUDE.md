@@ -46,9 +46,11 @@
 
 - Before implementing something that looks like a common helper (file/directory
   operations, copying, string/collection helpers, time formatting, etc.), check
-  `//src/org/perses/util/` (especially `Util.kt`) for an existing utility method
+  `//src/org/perses/util/` (e.g. `FileSystemUtil.kt`, `CollectionUtil.kt`, `IoUtil.kt`,
+  `StringUtil.kt`) for an existing utility method
   and use it instead of reimplementing the logic. For example, prefer
-  `Util.ensureDirExists`, `Util.copyDirectory`, and `Util.copyFileToDirectory`
+  `FileSystemUtil.ensureDirExists`, `FileSystemUtil.copyDirectory`, and
+  `FileSystemUtil.copyFileToDirectory`
   over hand-rolled `Files.*` sequences.
 
 - Do not generate comments that explain what the code is doing. Assume the

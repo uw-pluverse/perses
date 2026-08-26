@@ -35,8 +35,8 @@ import org.perses.spartree.NodeReplacementActionSet
 import org.perses.spartree.ParserRuleSparTreeNode
 import org.perses.spartree.SparTree
 import org.perses.spartree.TreeNodeFilterResult.CONTINUE
-import org.perses.util.Util.lazyAssert
 import org.perses.util.ktFine
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
 /** Perses reducer. The granularity is parse tree nodes, but not level-based.  */
@@ -157,7 +157,7 @@ open class PersesNodeReducer(
       testAllTreeEditsAndReturnTheBest(editList)
         ?: return ImmutableList.copyOf(regularRuleNode.immutableChildView)
     val edit = best.edit
-    applyEditToTree(treeEditTuple = best)
+    applyEditToTree(payload = best)
     return computePendingNodes(regularRuleNode, edit)
   }
 
@@ -425,7 +425,7 @@ open class PersesNodeReducer(
     }
     val best = testAllTreeEditsAndReturnTheBest(editList)
     if (best != null) {
-      applyEditToTree(treeEditTuple = best)
+      applyEditToTree(payload = best)
     }
     kleenePlusNode.immutableChildView.let { children ->
       if (children.isNotEmpty()) {

@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -168,86 +174,84 @@ compilationUnit{id=1,slot_type=compilationUnit}
     |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
         |___functionDefinition{id=6,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
             |___(?){id=7,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=252,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=256,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=243,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=251,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=245,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=247,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=248,slot_type=LeftParen}
-            |           |___Token:){id=250,slot_type=RightParen}
+            |   |___(+){id=251,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=255,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=242,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=250,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=244,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=246,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=247,slot_type=LeftParen}
+            |           |___Token:){id=249,slot_type=RightParen}
             |___compoundStatement{id=9,slot_type=compoundStatement}
                 |___Token:{{id=10,slot_type=LeftBrace}
                 |___(?){id=11,slot_type=optional__compoundStatement_1}
                 |   |___(+){id=14,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=177,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=178,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=242,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=179,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclaratorList{id=181,slot_type=initDeclaratorList}
-                |       |   |       |___initDeclarator{id=182,slot_type=initDeclarator}
-                |       |   |       |   |___Token:a{id=238,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |   |___(?){id=214,slot_type=optional__initDeclarator_2}
-                |       |   |       |       |___aux_rule__initDeclarator_1{id=215,slot_type=aux_rule__initDeclarator_1}
-                |       |   |       |           |___Token:={id=216,slot_type=Assign}
-                |       |   |       |           |___Token:0{id=235,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |       |___(*){id=183,slot_type=kleene_star__initDeclaratorList_1}
-                |       |   |           |___aux_rule__initDeclaratorList_2{id=184,slot_type=aux_rule__initDeclaratorList_2}
-                |       |   |               |___Token:,{id=185,slot_type=Comma}
-                |       |   |               |___initDeclarator{id=186,slot_type=initDeclarator}
-                |       |   |                   |___Token:b{id=212,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |                   |___(?){id=188,slot_type=optional__initDeclarator_2}
-                |       |   |                       |___aux_rule__initDeclarator_1{id=189,slot_type=aux_rule__initDeclarator_1}
-                |       |   |                           |___Token:={id=190,slot_type=Assign}
-                |       |   |                           |___Token:2{id=209,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |___Token:;{id=180,slot_type=Semi}
-                |       |___aux_rule__statement_6{id=47,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
-                |       |   |___Token:if{id=48,slot_type=If}
-                |       |   |___Token:({id=49,slot_type=LeftParen}
-                |       |   |___relationalExpression{id=153,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
-                |       |   |   |___Token:a{id=175,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |   |___(*){id=155,slot_type=kleene_star__relationalExpression_1}
-                |       |   |       |___aux_rule__relationalExpression_2{id=156,slot_type=aux_rule__relationalExpression_2}
-                |       |   |           |___Token:<{id=167,slot_type=[altnt_block__relationalExpression_3,Less]}
-                |       |   |           |___Token:b{id=166,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |___Token:){id=51,slot_type=RightParen}
-                |       |   |___statement{id=52,slot_type=statement}
-                |       |   |   |___(*){id=101,slot_type=kleene_star__statement_1}
-                |       |   |   |   |___aux_rule__statement_2{id=106,slot_type=aux_rule__statement_2}
-                |       |   |   |       |___aux_rule__statement_9{id=109,slot_type=[altnt_block__statement_4,aux_rule__statement_9]}
-                |       |   |   |       |   |___Token:while{id=144,slot_type=[altnt_block__statement_5,While]}
-                |       |   |   |       |   |___Token:({id=111,slot_type=LeftParen}
-                |       |   |   |       |   |___relationalExpression{id=121,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
-                |       |   |   |       |       |___Token:a{id=143,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |   |       |       |___(*){id=123,slot_type=kleene_star__relationalExpression_1}
-                |       |   |   |       |           |___aux_rule__relationalExpression_2{id=124,slot_type=aux_rule__relationalExpression_2}
-                |       |   |   |       |               |___Token:>={id=135,slot_type=[altnt_block__relationalExpression_3,GreaterEqual]}
-                |       |   |   |       |               |___Token:b{id=134,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |   |       |___Token:){id=108,slot_type=RightParen}
-                |       |   |   |___compoundStatement{id=103,slot_type=[aux_rule__statement_3,compoundStatement]}
-                |       |   |       |___Token:{{id=104,slot_type=LeftBrace}
-                |       |   |       |___Token:}{id=105,slot_type=RightBrace}
-                |       |   |___(?){id=53,slot_type=optional__selectionStatement_2}
-                |       |       |___aux_rule__selectionStatement_1{id=54,slot_type=aux_rule__selectionStatement_1}
-                |       |           |___Token:else{id=55,slot_type=Else}
-                |       |           |___statement{id=56,slot_type=statement}
-                |       |               |___(*){id=57,slot_type=kleene_star__statement_1}
-                |       |               |   |___aux_rule__statement_2{id=62,slot_type=aux_rule__statement_2}
-                |       |               |       |___aux_rule__statement_9{id=65,slot_type=[altnt_block__statement_4,aux_rule__statement_9]}
-                |       |               |       |   |___Token:while{id=100,slot_type=[altnt_block__statement_5,While]}
-                |       |               |       |   |___Token:({id=67,slot_type=LeftParen}
-                |       |               |       |   |___relationalExpression{id=77,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
-                |       |               |       |       |___Token:a{id=99,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |               |       |       |___(*){id=79,slot_type=kleene_star__relationalExpression_1}
-                |       |               |       |           |___aux_rule__relationalExpression_2{id=80,slot_type=aux_rule__relationalExpression_2}
-                |       |               |       |               |___Token:<{id=91,slot_type=[altnt_block__relationalExpression_3,Less]}
-                |       |               |       |               |___Token:b{id=90,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |               |       |___Token:){id=64,slot_type=RightParen}
-                |       |               |___compoundStatement{id=59,slot_type=[aux_rule__statement_3,compoundStatement]}
-                |       |                   |___Token:{{id=60,slot_type=LeftBrace}
-                |       |                   |___Token:}{id=61,slot_type=RightBrace}
+                |       |___aux_rule__declaration_3{id=176,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=177,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=241,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=178,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclaratorList{id=180,slot_type=initDeclaratorList}
+                |       |   |       |___initDeclarator{id=181,slot_type=initDeclarator}
+                |       |   |       |   |___Token:a{id=237,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |   |___(?){id=213,slot_type=optional__initDeclarator_2}
+                |       |   |       |       |___aux_rule__initDeclarator_1{id=214,slot_type=aux_rule__initDeclarator_1}
+                |       |   |       |           |___Token:={id=215,slot_type=Assign}
+                |       |   |       |           |___Token:0{id=234,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |       |___(*){id=182,slot_type=kleene_star__initDeclaratorList_1}
+                |       |   |           |___aux_rule__initDeclaratorList_2{id=183,slot_type=aux_rule__initDeclaratorList_2}
+                |       |   |               |___Token:,{id=184,slot_type=Comma}
+                |       |   |               |___initDeclarator{id=185,slot_type=initDeclarator}
+                |       |   |                   |___Token:b{id=211,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |                   |___(?){id=187,slot_type=optional__initDeclarator_2}
+                |       |   |                       |___aux_rule__initDeclarator_1{id=188,slot_type=aux_rule__initDeclarator_1}
+                |       |   |                           |___Token:={id=189,slot_type=Assign}
+                |       |   |                           |___Token:2{id=208,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=179,slot_type=Semi}
+                |       |___statement{id=45,slot_type=[aux_rule__blockItemList_2,statement]}
+                |       |   |___(*){id=46,slot_type=kleene_star__statement_1}
+                |       |   |   |___aux_rule__statement_6{id=92,slot_type=[aux_rule__statement_2,aux_rule__statement_6]}
+                |       |   |   |   |___Token:if{id=93,slot_type=If}
+                |       |   |   |   |___Token:({id=94,slot_type=LeftParen}
+                |       |   |   |   |___relationalExpression{id=152,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |       |   |   |   |   |___Token:a{id=174,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |   |   |___(*){id=154,slot_type=kleene_star__relationalExpression_1}
+                |       |   |   |   |       |___aux_rule__relationalExpression_2{id=155,slot_type=aux_rule__relationalExpression_2}
+                |       |   |   |   |           |___Token:<{id=166,slot_type=[alt_block__relationalExpression_3,Less]}
+                |       |   |   |   |           |___Token:b{id=165,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |   |___Token:){id=96,slot_type=RightParen}
+                |       |   |   |   |___statement{id=97,slot_type=statement}
+                |       |   |   |   |   |___(*){id=99,slot_type=kleene_star__statement_1}
+                |       |   |   |   |   |   |___aux_rule__statement_7{id=105,slot_type=[aux_rule__statement_2,aux_rule__statement_7]}
+                |       |   |   |   |   |       |___aux_rule__statement_11{id=108,slot_type=[alt_block__statement_4,aux_rule__statement_11]}
+                |       |   |   |   |   |       |   |___Token:while{id=143,slot_type=[alt_block__statement_5,While]}
+                |       |   |   |   |   |       |   |___Token:({id=110,slot_type=LeftParen}
+                |       |   |   |   |   |       |   |___relationalExpression{id=120,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |       |   |   |   |   |       |       |___Token:a{id=142,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |   |   |       |       |___(*){id=122,slot_type=kleene_star__relationalExpression_1}
+                |       |   |   |   |   |       |           |___aux_rule__relationalExpression_2{id=123,slot_type=aux_rule__relationalExpression_2}
+                |       |   |   |   |   |       |               |___Token:>={id=134,slot_type=[alt_block__relationalExpression_3,GreaterEqual]}
+                |       |   |   |   |   |       |               |___Token:b{id=133,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |   |   |   |       |___Token:){id=107,slot_type=RightParen}
+                |       |   |   |   |   |___compoundStatement{id=101,slot_type=[aux_rule__statement_3,compoundStatement]}
+                |       |   |   |   |       |___Token:{{id=102,slot_type=LeftBrace}
+                |       |   |   |   |       |___Token:}{id=103,slot_type=RightBrace}
+                |       |   |   |   |___Token:else{id=98,slot_type=Else}
+                |       |   |   |___aux_rule__statement_7{id=53,slot_type=[aux_rule__statement_2,aux_rule__statement_7]}
+                |       |   |       |___aux_rule__statement_11{id=56,slot_type=[alt_block__statement_4,aux_rule__statement_11]}
+                |       |   |       |   |___Token:while{id=91,slot_type=[alt_block__statement_5,While]}
+                |       |   |       |   |___Token:({id=58,slot_type=LeftParen}
+                |       |   |       |   |___relationalExpression{id=68,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |       |   |       |       |___Token:a{id=90,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |       |___(*){id=70,slot_type=kleene_star__relationalExpression_1}
+                |       |   |       |           |___aux_rule__relationalExpression_2{id=71,slot_type=aux_rule__relationalExpression_2}
+                |       |   |       |               |___Token:<{id=82,slot_type=[alt_block__relationalExpression_3,Less]}
+                |       |   |       |               |___Token:b{id=81,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___Token:){id=55,slot_type=RightParen}
+                |       |   |___compoundStatement{id=48,slot_type=[aux_rule__statement_3,compoundStatement]}
+                |       |       |___Token:{{id=49,slot_type=LeftBrace}
+                |       |       |___Token:}{id=50,slot_type=RightBrace}
                 |       |___jumpStatement{id=20,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=23,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=23,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=24,slot_type=Return}
                 |           |   |___(?){id=25,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:0{id=44,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -428,7 +432,7 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     --file: t.c--
     int main ()
-                      {}
+                     {}
 ------------------------------------------------------------
 
 
@@ -650,7 +654,7 @@ Succeeded to reduce node 14 from 41 to 38
 ------------------------------------------------------------
 
 
-=================Reducing node 47, size=38==================
+=================Reducing node 45, size=38==================
 
 The current best program is the following
 
@@ -667,7 +671,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_47]
+    structure: [delete_45]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -688,7 +692,7 @@ The current best program is the following
     --file: t.c--
     int main () {
       int a = 0, b = 2;
-                      {}
+                     {}
     }
 ------------------------------------------------------------
 
@@ -699,7 +703,7 @@ The current best program is the following
     --file: t.c--
     int main () {
       int a = 0, b = 2;
-                     {}
+                      {}
     }
 ------------------------------------------------------------
 
@@ -710,17 +714,6 @@ The current best program is the following
     --file: t.c--
     int main () {
       int a = 0, b = 2;
-        while(a < b) {}
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (18): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
         while(a >= b) {}
     }
 ------------------------------------------------------------
@@ -728,11 +721,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 47
+Failed to reduce node 45
 ------------------------------------------------------------
 
 
-=================Reducing node 177, size=38=================
+=================Reducing node 46, size=38==================
 
 The current best program is the following
 
@@ -747,492 +740,37 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
-
-    structure: [delete_177]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main () {
-      ;
-      if (a < b)
-        while(a >= b) {}
-      else
-        while(a < b) {}
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (19): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main () {
-                      ;
-      if (a < b)
-        while(a >= b) {}
-      else
-        while(a < b) {}
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 177
-------------------------------------------------------------
-
-
-=================Reducing node 53, size=38==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        while(a >= b) {}
-      else
-        while(a < b) {}
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](38/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:38/41=92.68%
+FixPt[1][node_priority][DFS](38/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:38/41=92.68%
 FixPt[1][node_priority][DFS](38/41)  Testing the empty input. Global ratio:38/41=92.68%
-==========Testing the following program (20): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__selectionStatement_2]dd@#nodes=1,#parts=1#total-parts=1
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        while(a >= b) {}
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](38/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:38/41=92.68%
-FixPt[1][node_priority][DFS](38/41)  There is only one element in the input, and the empty input has been tested. Global ratio:38/41=92.68%
-FixPt[1][node_priority][DFS](38/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:38/41=92.68%
-===================Node reduction is done===================
-
-Failed to reduce node 53
-------------------------------------------------------------
-
-
-=================Reducing node 54, size=38==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        while(a >= b) {}
-      else
-        while(a < b) {}
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [delete_54]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 54
-------------------------------------------------------------
-
-
-=================Reducing node 56, size=38==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        while(a >= b) {}
-      else
-        while(a < b) {}
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (21): pass==========
-
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->;
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        while(a >= b) {}
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-3 entries are removed: 20 --> 17.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 10
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 38 -> 31
-Edit: LatraEdit:[replace_56_with_271]
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Succeeded to reduce node 56 from 38 to 31
-------------------------------------------------------------
-
-
-=================Reducing node 52, size=31==================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        while(a >= b) {}
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (22): pass==========
-
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->;
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-2 entries are removed: 17 --> 15.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 1
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 31 -> 24
-Edit: LatraEdit:[replace_52_with_272]
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Succeeded to reduce node 52 from 31 to 24
-------------------------------------------------------------
-
-
-=================Reducing node 179, size=24=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](24/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:24/41=58.54%
-FixPt[1][node_priority][DFS](24/41)  Testing the empty input. Global ratio:24/41=58.54%
-==========Testing the following program (23): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__declaration_2]dd@#nodes=1,#parts=1#total-parts=1
-    --file: t.c--
-    int main () {
-      int             ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](24/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:24/41=58.54%
-FixPt[1][node_priority][DFS](24/41)  There is only one element in the input, and the empty input has been tested. Global ratio:24/41=58.54%
-FixPt[1][node_priority][DFS](24/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/41=58.54%
-===================Node reduction is done===================
-
-Failed to reduce node 179
-------------------------------------------------------------
-
-
-=================Reducing node 181, size=24=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [delete_181]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-==========Testing the following program (24): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main () {
-      int a           ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (25): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main () {
-      int        b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (26): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main () {
-      int a = 0       ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (27): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main () {
-      int        b = 2;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 181
-------------------------------------------------------------
-
-
-=================Reducing node 183, size=24=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](24/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:24/41=58.54%
-FixPt[1][node_priority][DFS](24/41)  Testing the empty input. Global ratio:24/41=58.54%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
     int main () {
-      int a = 0       ;
-      if (a < b)
-        ;
-      else
-        ;
+      int a = 0, b = 2;
+                     {}
     }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](24/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:24/41=58.54%
-FixPt[1][node_priority][DFS](24/41)  There is only one element in the input, and the empty input has been tested. Global ratio:24/41=58.54%
-FixPt[1][node_priority][DFS](24/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:24/41=58.54%
-===================Node reduction is done===================
+FixPt[1][node_priority][DFS](38/41)  Try deleting [0-1]#2: Skipped LiteralReplacement. Local ratio: 2/2=100.00%. Global ratio:38/41=92.68%
+==========Testing the following program (18): pass==========
 
-Failed to reduce node 183
-------------------------------------------------------------
-
-
-=================Reducing node 184, size=24=================
-
-The current best program is the following
-
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__statement_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: t.c--
     int main () {
       int a = 0, b = 2;
       if (a < b)
-        ;
+        while(a >= b) {}
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
-
-    structure: [delete_184]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 184
-------------------------------------------------------------
-
-
-=================Reducing node 243, size=24=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (28): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main    {
-      int a = 0, b = 2;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 243
-------------------------------------------------------------
-
-
-=================Reducing node 186, size=24=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a = 0, b = 2;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (29): pass==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main () {
-      int a = 0, b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
+FixPt[1][node_priority][DFS](38/41)  Try deleting [1]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:38/41=92.68%
 ===========TestScriptExecutionCacheEntryEviction============
 
-2 entries are removed: 21 --> 19.
+1 entries are removed: 17 --> 16.
 ------------------------------------------------------------
 
 
@@ -1244,28 +782,429 @@ The current best program is the following
 
 ================The best program is updated.================
 
-token count change 24 -> 22
-Edit: HoistEdit:[replace_186_with_212]
+token count change 38 -> 32
+Edit: [delete_53]
 ------------------------------------------------------------
 
 
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+                     {}
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](32/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/2=50.00%. Global ratio:32/41=78.05%
+FixPt[1][node_priority][DFS](32/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:32/41=78.05%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 186 from 24 to 22
+Succeeded to reduce node 46 from 38 to 32
 ------------------------------------------------------------
 
 
-=================Reducing node 182, size=22=================
+=================Reducing node 92, size=32==================
 
 The current best program is the following
 
     --file: t.c--
     int main () {
-      int a = 0, b    ;
+      int a = 0, b = 2;
+      if (a < b)
+        while(a >= b) {}
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_92]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (19): fail==========
+
+// edit action set type: [regular_node]kleene replacement
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+        while(a >= b)
+                     {}
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 92
+------------------------------------------------------------
+
+
+=================Reducing node 176, size=32=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+      if (a < b)
+        while(a >= b) {}
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (20): fail==========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: t.c--
+    int main () {
+      if (a < b)
+        while(a >= b) {}
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (21): fail==========
+
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,aux_rule__blockItemList_2->;
+    --file: t.c--
+    int main () {
+      ;
+      if (a < b)
+        while(a >= b) {}
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (22): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+                      ;
+      if (a < b)
+        while(a >= b) {}
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 176
+------------------------------------------------------------
+
+
+=================Reducing node 97, size=32==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+      if (a < b)
+        while(a >= b) {}
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (23): pass==========
+
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->;
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
       if (a < b)
         ;
       else
+                     {}
+    }
+------------------------------------------------------------
+
+
+============Test script execution is cancelled.=============
+
+It took less than 1 second to cancel the task.
+
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+4 entries are removed: 20 --> 16.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 6
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 32 -> 25
+Edit: LatraEdit:[replace_97_with_270]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 97 from 32 to 25
+------------------------------------------------------------
+
+
+=================Reducing node 178, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+      if (a < b)
         ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](25/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:25/41=60.98%
+FixPt[1][node_priority][DFS](25/41)  Testing the empty input. Global ratio:25/41=60.98%
+==========Testing the following program (24): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__declaration_2]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+    int main () {
+      int             ;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](25/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:25/41=60.98%
+FixPt[1][node_priority][DFS](25/41)  There is only one element in the input, and the empty input has been tested. Global ratio:25/41=60.98%
+FixPt[1][node_priority][DFS](25/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:25/41=60.98%
+===================Node reduction is done===================
+
+Failed to reduce node 178
+------------------------------------------------------------
+
+
+=================Reducing node 180, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_180]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (25): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int a           ;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (26): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int        b    ;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (27): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int a = 0       ;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (28): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int        b = 2;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 182, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](25/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:25/41=60.98%
+FixPt[1][node_priority][DFS](25/41)  Testing the empty input. Global ratio:25/41=60.98%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main () {
+      int a = 0       ;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](25/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:25/41=60.98%
+FixPt[1][node_priority][DFS](25/41)  There is only one element in the input, and the empty input has been tested. Global ratio:25/41=60.98%
+FixPt[1][node_priority][DFS](25/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:25/41=60.98%
+===================Node reduction is done===================
+
+Failed to reduce node 182
+------------------------------------------------------------
+
+
+=================Reducing node 183, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_183]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 183
+------------------------------------------------------------
+
+
+=================Reducing node 242, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (29): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main    {
+      int a = 0, b = 2;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 242
+------------------------------------------------------------
+
+
+=================Reducing node 185, size=25=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b = 2;
+      if (a < b)
+        ;
+      else
+                     {}
     }
 ------------------------------------------------------------
 
@@ -1275,11 +1214,65 @@ The current best program is the following
 // edit action set type: [regular node]compatible replacement
     --file: t.c--
     int main () {
+      int a = 0, b    ;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+3 entries are removed: 22 --> 19.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 8
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 25 -> 23
+Edit: HoistEdit:[replace_185_with_211]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 185 from 25 to 23
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=23=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a = 0, b    ;
+      if (a < b)
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (31): pass==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
       int a    , b    ;
       if (a < b)
         ;
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
@@ -1298,18 +1291,18 @@ The current best program is the following
 
 ================The best program is updated.================
 
-token count change 22 -> 20
-Edit: HoistEdit:[replace_182_with_238]
+token count change 23 -> 21
+Edit: HoistEdit:[replace_181_with_237]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 182 from 22 to 20
+Succeeded to reduce node 181 from 23 to 21
 ------------------------------------------------------------
 
 
-=================Reducing node 153, size=20=================
+=================Reducing node 152, size=21=================
 
 The current best program is the following
 
@@ -1319,21 +1312,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (31): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a    )
-        ;
-      else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
@@ -1344,21 +1323,35 @@ The current best program is the following
     --file: t.c--
     int main () {
       int a    , b    ;
+      if (a    )
+        ;
+      else
+                     {}
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (33): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int a    , b    ;
       if (    b)
         ;
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 153
+Failed to reduce node 152
 ------------------------------------------------------------
 
 
-=================Reducing node 245, size=20=================
+=================Reducing node 244, size=21=================
 
 The current best program is the following
 
@@ -1368,14 +1361,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
-FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
-==========Testing the following program (33): fail==========
+FixPt[1][node_priority][DFS](21/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:21/41=51.22%
+FixPt[1][node_priority][DFS](21/41)  Testing the empty input. Global ratio:21/41=51.22%
+==========Testing the following program (34): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
@@ -1384,21 +1377,21 @@ FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
       if (a < b)
         ;
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-FixPt[1][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
-FixPt[1][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+FixPt[1][node_priority][DFS](21/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:21/41=51.22%
+FixPt[1][node_priority][DFS](21/41)  There is only one element in the input, and the empty input has been tested. Global ratio:21/41=51.22%
+FixPt[1][node_priority][DFS](21/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/41=51.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 245
+Failed to reduce node 244
 ------------------------------------------------------------
 
 
-=================Reducing node 247, size=20=================
+=================Reducing node 246, size=21=================
 
 The current best program is the following
 
@@ -1408,25 +1401,25 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_247]
+    structure: [delete_246]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 247
+Failed to reduce node 246
 ------------------------------------------------------------
 
 
-=================Reducing node 155, size=20=================
+=================Reducing node 154, size=21=================
 
 The current best program is the following
 
@@ -1436,13 +1429,13 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
-FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
+FixPt[1][node_priority][DFS](21/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:21/41=51.22%
+FixPt[1][node_priority][DFS](21/41)  Testing the empty input. Global ratio:21/41=51.22%
 =====Cache hit for the following uninteresting program:=====
 
     --file: t.c--
@@ -1451,21 +1444,21 @@ FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
       if (a    )
         ;
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-FixPt[1][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
-FixPt[1][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+FixPt[1][node_priority][DFS](21/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:21/41=51.22%
+FixPt[1][node_priority][DFS](21/41)  There is only one element in the input, and the empty input has been tested. Global ratio:21/41=51.22%
+FixPt[1][node_priority][DFS](21/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:21/41=51.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 155
+Failed to reduce node 154
 ------------------------------------------------------------
 
 
-=================Reducing node 156, size=20=================
+=================Reducing node 155, size=21=================
 
 The current best program is the following
 
@@ -1475,25 +1468,25 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     {}
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_156]
+    structure: [delete_155]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 156
+Failed to reduce node 155
 ------------------------------------------------------------
 
 
-=================Reducing node 272, size=20=================
+=================Reducing node 48, size=21==================
 
 The current best program is the following
 
@@ -1503,14 +1496,47 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     {}
     }
+------------------------------------------------------------
+
+
+==========Testing the following program (35): pass==========
+
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,aux_rule__statement_3->;
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 20 --> 20.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 21 -> 20
+Edit: LatraEdit:[replace_48_with_271]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 272
+Succeeded to reduce node 48 from 21 to 20
 ------------------------------------------------------------
 
 
@@ -1524,7 +1550,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -1535,7 +1561,7 @@ Failed to reduce node 271
 ------------------------------------------------------------
 
 
-=================Reducing node 251, size=20=================
+=================Reducing node 270, size=20=================
 
 The current best program is the following
 
@@ -1545,14 +1571,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 251
+Failed to reduce node 270
 ------------------------------------------------------------
 
 
@@ -1566,7 +1592,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -1577,7 +1603,7 @@ Failed to reduce node 250
 ------------------------------------------------------------
 
 
-=================Reducing node 248, size=20=================
+=================Reducing node 249, size=20=================
 
 The current best program is the following
 
@@ -1587,18 +1613,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 248
+Failed to reduce node 249
 ------------------------------------------------------------
 
 
-=================Reducing node 238, size=20=================
+=================Reducing node 247, size=20=================
 
 The current best program is the following
 
@@ -1608,18 +1634,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 238
+Failed to reduce node 247
 ------------------------------------------------------------
 
 
-=================Reducing node 212, size=20=================
+=================Reducing node 237, size=20=================
 
 The current best program is the following
 
@@ -1629,18 +1655,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 212
+Failed to reduce node 237
 ------------------------------------------------------------
 
 
-=================Reducing node 185, size=20=================
+=================Reducing node 211, size=20=================
 
 The current best program is the following
 
@@ -1650,18 +1676,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 185
+Failed to reduce node 211
 ------------------------------------------------------------
 
 
-=================Reducing node 180, size=20=================
+=================Reducing node 184, size=20=================
 
 The current best program is the following
 
@@ -1671,18 +1697,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 180
+Failed to reduce node 184
 ------------------------------------------------------------
 
 
-=================Reducing node 178, size=20=================
+=================Reducing node 179, size=20=================
 
 The current best program is the following
 
@@ -1692,14 +1718,35 @@ The current best program is the following
       if (a < b)
         ;
       else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 179
+------------------------------------------------------------
+
+
+=================Reducing node 177, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
         ;
+      else
+                     ;
     }
 ------------------------------------------------------------
 
 
 FixPt[1][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
 FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
-==========Testing the following program (34): fail==========
+==========Testing the following program (36): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
@@ -1708,7 +1755,7 @@ FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -1718,11 +1765,11 @@ FixPt[1][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[1][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 178
+Failed to reduce node 177
 ------------------------------------------------------------
 
 
-=================Reducing node 242, size=20=================
+=================Reducing node 241, size=20=================
 
 The current best program is the following
 
@@ -1732,18 +1779,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 242
+Failed to reduce node 241
 ------------------------------------------------------------
 
 
-=================Reducing node 175, size=20=================
+=================Reducing node 174, size=20=================
 
 The current best program is the following
 
@@ -1753,35 +1800,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 175
-------------------------------------------------------------
-
-
-=================Reducing node 167, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 167
+Failed to reduce node 174
 ------------------------------------------------------------
 
 
@@ -1795,7 +1821,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -1806,7 +1832,7 @@ Failed to reduce node 166
 ------------------------------------------------------------
 
 
-=================Reducing node 55, size=20==================
+=================Reducing node 165, size=20=================
 
 The current best program is the following
 
@@ -1816,18 +1842,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 55
+Failed to reduce node 165
 ------------------------------------------------------------
 
 
-=================Reducing node 51, size=20==================
+=================Reducing node 98, size=20==================
 
 The current best program is the following
 
@@ -1837,18 +1863,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 51
+Failed to reduce node 98
 ------------------------------------------------------------
 
 
-=================Reducing node 49, size=20==================
+=================Reducing node 96, size=20==================
 
 The current best program is the following
 
@@ -1858,18 +1884,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 49
+Failed to reduce node 96
 ------------------------------------------------------------
 
 
-=================Reducing node 48, size=20==================
+=================Reducing node 94, size=20==================
 
 The current best program is the following
 
@@ -1879,14 +1905,35 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 48
+Failed to reduce node 94
+------------------------------------------------------------
+
+
+=================Reducing node 93, size=20==================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 93
 ------------------------------------------------------------
 
 
@@ -1900,7 +1947,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -1921,7 +1968,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -1942,14 +1989,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 FixPt[1][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
 FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
-==========Testing the following program (35): fail==========
+==========Testing the following program (37): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
@@ -1958,7 +2005,7 @@ FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -1972,7 +2019,7 @@ Failed to reduce node 7
 ------------------------------------------------------------
 
 
-=================Reducing node 252, size=20=================
+=================Reducing node 251, size=20=================
 
 The current best program is the following
 
@@ -1982,14 +2029,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_252]
+    structure: [delete_251]
     context: [kleene_plus:declarationSpecifiers]can be epsilon
 ------------------------------------------------------------
 
@@ -2004,7 +2051,7 @@ FixPt[1][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -2014,11 +2061,11 @@ FixPt[1][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[1][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 252
+Failed to reduce node 251
 ------------------------------------------------------------
 
 
-=================Reducing node 256, size=20=================
+=================Reducing node 255, size=20=================
 
 The current best program is the following
 
@@ -2028,14 +2075,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 256
+Failed to reduce node 255
 ------------------------------------------------------------
 
 
@@ -2044,56 +2091,56 @@ Failed to reduce node 256
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-compilationUnit{id=273,slot_type=compilationUnit}
-|___(?){id=274,slot_type=optional__compilationUnit_1}
-    |___(+){id=276,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___functionDefinition{id=278,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-            |___(?){id=279,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=370,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=374,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=361,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=369,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=363,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=365,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=366,slot_type=LeftParen}
-            |           |___Token:){id=368,slot_type=RightParen}
-            |___compoundStatement{id=281,slot_type=compoundStatement}
-                |___Token:{{id=282,slot_type=LeftBrace}
-                |___(?){id=283,slot_type=optional__compoundStatement_1}
-                |   |___(+){id=286,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=339,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=340,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=360,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=341,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclaratorList{id=343,slot_type=initDeclaratorList}
-                |       |   |       |___Token:a{id=356,slot_type=[initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(*){id=345,slot_type=kleene_star__initDeclaratorList_1}
-                |       |   |           |___aux_rule__initDeclaratorList_2{id=346,slot_type=aux_rule__initDeclaratorList_2}
-                |       |   |               |___Token:,{id=347,slot_type=Comma}
-                |       |   |               |___Token:b{id=352,slot_type=[initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |___Token:;{id=342,slot_type=Semi}
-                |       |___aux_rule__statement_6{id=291,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
-                |           |___Token:if{id=292,slot_type=If}
-                |           |___Token:({id=293,slot_type=LeftParen}
-                |           |___relationalExpression{id=315,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
-                |           |   |___Token:a{id=337,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |   |___(*){id=317,slot_type=kleene_star__relationalExpression_1}
-                |           |       |___aux_rule__relationalExpression_2{id=318,slot_type=aux_rule__relationalExpression_2}
-                |           |           |___Token:<{id=329,slot_type=[altnt_block__relationalExpression_3,Less]}
-                |           |           |___Token:b{id=328,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |___Token:){id=295,slot_type=RightParen}
-                |           |___Token:;{id=306,slot_type=[statement,aux_rule__statement_3,expressionStatement,Semi]}
-                |           |___(?){id=297,slot_type=optional__selectionStatement_2}
-                |               |___aux_rule__selectionStatement_1{id=298,slot_type=aux_rule__selectionStatement_1}
-                |                   |___Token:else{id=299,slot_type=Else}
-                |                   |___Token:;{id=303,slot_type=[statement,aux_rule__statement_3,expressionStatement,Semi]}
-                |___Token:}{id=284,slot_type=RightBrace}
+compilationUnit{id=272,slot_type=compilationUnit}
+|___(?){id=273,slot_type=optional__compilationUnit_1}
+    |___(+){id=275,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=277,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=278,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=367,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=371,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=358,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=366,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=360,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=362,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=363,slot_type=LeftParen}
+            |           |___Token:){id=365,slot_type=RightParen}
+            |___compoundStatement{id=280,slot_type=compoundStatement}
+                |___Token:{{id=281,slot_type=LeftBrace}
+                |___(?){id=282,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=285,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=336,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=337,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=357,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=338,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclaratorList{id=340,slot_type=initDeclaratorList}
+                |       |   |       |___Token:a{id=353,slot_type=[initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(*){id=342,slot_type=kleene_star__initDeclaratorList_1}
+                |       |   |           |___aux_rule__initDeclaratorList_2{id=343,slot_type=aux_rule__initDeclaratorList_2}
+                |       |   |               |___Token:,{id=344,slot_type=Comma}
+                |       |   |               |___Token:b{id=349,slot_type=[initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |___Token:;{id=339,slot_type=Semi}
+                |       |___statement{id=288,slot_type=[aux_rule__blockItemList_2,statement]}
+                |           |___(*){id=289,slot_type=kleene_star__statement_1}
+                |           |   |___aux_rule__statement_6{id=294,slot_type=[aux_rule__statement_2,aux_rule__statement_6]}
+                |           |       |___Token:if{id=295,slot_type=If}
+                |           |       |___Token:({id=296,slot_type=LeftParen}
+                |           |       |___relationalExpression{id=312,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |           |       |   |___Token:a{id=334,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |       |   |___(*){id=314,slot_type=kleene_star__relationalExpression_1}
+                |           |       |       |___aux_rule__relationalExpression_2{id=315,slot_type=aux_rule__relationalExpression_2}
+                |           |       |           |___Token:<{id=326,slot_type=[alt_block__relationalExpression_3,Less]}
+                |           |       |           |___Token:b{id=325,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |       |___Token:){id=298,slot_type=RightParen}
+                |           |       |___Token:;{id=303,slot_type=[statement,aux_rule__statement_3,expressionStatement,Semi]}
+                |           |       |___Token:else{id=300,slot_type=Else}
+                |           |___Token:;{id=292,slot_type=[aux_rule__statement_3,expressionStatement,Semi]}
+                |___Token:}{id=283,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
 FixPt[2][node_priority](20/41)  Starting to retrieve the semantics provider
 FixPt[2][node_priority](20/41)  Retrieved semantics provider null
-=================Reducing node 274, size=20=================
+=================Reducing node 273, size=20=================
 
 The current best program is the following
 
@@ -2103,7 +2150,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -2128,11 +2175,11 @@ FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 274
+Failed to reduce node 273
 ------------------------------------------------------------
 
 
-=================Reducing node 276, size=20=================
+=================Reducing node 275, size=20=================
 
 The current best program is the following
 
@@ -2142,14 +2189,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_276]
+    structure: [delete_275]
     context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
 ------------------------------------------------------------
 
@@ -2174,11 +2221,11 @@ FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 276
+Failed to reduce node 275
 ------------------------------------------------------------
 
 
-=================Reducing node 278, size=20=================
+=================Reducing node 277, size=20=================
 
 The current best program is the following
 
@@ -2188,14 +2235,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_278]
+    structure: [delete_277]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -2214,15 +2261,15 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (36): fail==========
+==========Testing the following program (38): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: t.c--
-        ;
+                     ;
 ------------------------------------------------------------
 
 
-==========Testing the following program (37): fail==========
+==========Testing the following program (39): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: t.c--
@@ -2232,11 +2279,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 278
+Failed to reduce node 277
 ------------------------------------------------------------
 
 
-=================Reducing node 281, size=20=================
+=================Reducing node 280, size=20=================
 
 The current best program is the following
 
@@ -2246,18 +2293,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 281
+Failed to reduce node 280
 ------------------------------------------------------------
 
 
-=================Reducing node 283, size=20=================
+=================Reducing node 282, size=20=================
 
 The current best program is the following
 
@@ -2267,7 +2314,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -2296,11 +2343,11 @@ FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 283
+Failed to reduce node 282
 ------------------------------------------------------------
 
 
-=================Reducing node 286, size=20=================
+=================Reducing node 285, size=20=================
 
 The current best program is the following
 
@@ -2310,19 +2357,19 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_286]
+    structure: [delete_285]
     context: [kleene_plus:kleene_plus__blockItemList_3]can be epsilon
 ------------------------------------------------------------
 
 
-==========Testing the following program (38): fail==========
+==========Testing the following program (40): fail==========
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove all except first
     --file: t.c--
@@ -2355,12 +2402,12 @@ FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
 FixPt[2][node_priority][DFS](20/41)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/41=48.78%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_291]
+    structure: [delete_288]
     context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=2
 ------------------------------------------------------------
 
 
-==========Testing the following program (39): fail==========
+==========Testing the following program (41): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]LiteralReplacement@1,aux_rule__blockItemList_2->;
     --file: t.c--
@@ -2372,7 +2419,7 @@ FixPt[2][node_priority][DFS](20/41)  Try deleting [0-1]#2: Uninteresting. Local 
 
 
 FixPt[2][node_priority][DFS](20/41)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:20/41=48.78%
-==========Testing the following program (40): fail==========
+==========Testing the following program (42): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=2
     --file: t.c--
@@ -2380,12 +2427,12 @@ FixPt[2][node_priority][DFS](20/41)  Try deleting [1]#1: Uninteresting. Local ra
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
-==========Testing the following program (41): fail==========
+==========Testing the following program (43): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]LiteralReplacement@1,aux_rule__blockItemList_2->;
     --file: t.c--
@@ -2394,7 +2441,7 @@ FixPt[2][node_priority][DFS](20/41)  Try deleting [1]#1: Uninteresting. Local ra
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -2403,11 +2450,11 @@ FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Uninteresting. Local ra
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 286
+Failed to reduce node 285
 ------------------------------------------------------------
 
 
-=================Reducing node 291, size=20=================
+=================Reducing node 288, size=20=================
 
 The current best program is the following
 
@@ -2417,14 +2464,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_291]
+    structure: [delete_288]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -2439,7 +2486,18 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (42): fail==========
+==========Testing the following program (44): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+                     ;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (45): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: t.c--
@@ -2452,11 +2510,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 291
+Failed to reduce node 288
 ------------------------------------------------------------
 
 
-=================Reducing node 339, size=20=================
+=================Reducing node 289, size=20=================
 
 The current best program is the following
 
@@ -2466,14 +2524,78 @@ The current best program is the following
       if (a < b)
         ;
       else
+                     ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+                     ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+===================Node reduction is done===================
+
+Failed to reduce node 289
+------------------------------------------------------------
+
+
+=================Reducing node 294, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
         ;
+      else
+                     ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_339]
+    structure: [delete_294]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 294
+------------------------------------------------------------
+
+
+=================Reducing node 336, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_336]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -2486,12 +2608,12 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
-==========Testing the following program (43): fail==========
+==========Testing the following program (46): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: t.c--
@@ -2500,18 +2622,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 339
+Failed to reduce node 336
 ------------------------------------------------------------
 
 
-=================Reducing node 361, size=20=================
+=================Reducing node 358, size=20=================
 
 The current best program is the following
 
@@ -2521,31 +2643,32 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
+==========Testing the following program (47): fail==========
 
+// edit action set type: [regular node]compatible replacement
     --file: t.c--
     int main    {
       int a    , b    ;
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 361
+Failed to reduce node 358
 ------------------------------------------------------------
 
 
-=================Reducing node 341, size=20=================
+=================Reducing node 338, size=20=================
 
 The current best program is the following
 
@@ -2555,22 +2678,23 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
 FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
-=====Cache hit for the following uninteresting program:=====
+==========Testing the following program (48): fail==========
 
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__declaration_2]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
     int main () {
       int             ;
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -2580,522 +2704,7 @@ FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 341
-------------------------------------------------------------
-
-
-=================Reducing node 343, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [delete_343]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main () {
-      int a           ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main () {
-      int        b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 343
-------------------------------------------------------------
-
-
-=================Reducing node 315, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a    )
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (    b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 315
-------------------------------------------------------------
-
-
-=================Reducing node 363, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main    {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-===================Node reduction is done===================
-
-Failed to reduce node 363
-------------------------------------------------------------
-
-
-=================Reducing node 365, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [delete_365]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 365
-------------------------------------------------------------
-
-
-=================Reducing node 345, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main () {
-      int a           ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-===================Node reduction is done===================
-
-Failed to reduce node 345
-------------------------------------------------------------
-
-
-=================Reducing node 346, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [delete_346]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 346
-------------------------------------------------------------
-
-
-=================Reducing node 317, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a    )
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-===================Node reduction is done===================
-
-Failed to reduce node 317
-------------------------------------------------------------
-
-
-=================Reducing node 318, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [delete_318]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 318
-------------------------------------------------------------
-
-
-=================Reducing node 297, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
-==========Testing the following program (44): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__selectionStatement_2]dd@#nodes=1,#parts=1#total-parts=1
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-    }
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
-FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
-===================Node reduction is done===================
-
-Failed to reduce node 297
-------------------------------------------------------------
-
-
-=================Reducing node 298, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [delete_298]
-    context: [regular_node]can be epsilon
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 298
-------------------------------------------------------------
-
-
-=================Reducing node 369, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 369
-------------------------------------------------------------
-
-
-=================Reducing node 368, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 368
-------------------------------------------------------------
-
-
-=================Reducing node 366, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 366
-------------------------------------------------------------
-
-
-=================Reducing node 356, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 356
-------------------------------------------------------------
-
-
-=================Reducing node 352, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 352
-------------------------------------------------------------
-
-
-=================Reducing node 347, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 347
-------------------------------------------------------------
-
-
-=================Reducing node 342, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 342
+Failed to reduce node 338
 ------------------------------------------------------------
 
 
@@ -3109,7 +2718,460 @@ The current best program is the following
       if (a < b)
         ;
       else
+                     ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_340]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (49): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int a           ;
+      if (a < b)
         ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (50): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int        b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 340
+------------------------------------------------------------
+
+
+=================Reducing node 312, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (51): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a    )
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (52): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (    b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 312
+------------------------------------------------------------
+
+
+=================Reducing node 360, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main    {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+===================Node reduction is done===================
+
+Failed to reduce node 360
+------------------------------------------------------------
+
+
+=================Reducing node 362, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_362]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 362
+------------------------------------------------------------
+
+
+=================Reducing node 342, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main () {
+      int a           ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+===================Node reduction is done===================
+
+Failed to reduce node 342
+------------------------------------------------------------
+
+
+=================Reducing node 343, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_343]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 343
+------------------------------------------------------------
+
+
+=================Reducing node 314, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41=48.78%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a    )
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](20/41)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and the empty input has been tested. Global ratio:20/41=48.78%
+FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
+===================Node reduction is done===================
+
+Failed to reduce node 314
+------------------------------------------------------------
+
+
+=================Reducing node 315, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_315]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 315
+------------------------------------------------------------
+
+
+=================Reducing node 366, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 366
+------------------------------------------------------------
+
+
+=================Reducing node 365, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 365
+------------------------------------------------------------
+
+
+=================Reducing node 363, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 363
+------------------------------------------------------------
+
+
+=================Reducing node 353, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 353
+------------------------------------------------------------
+
+
+=================Reducing node 349, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 349
+------------------------------------------------------------
+
+
+=================Reducing node 344, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 344
+------------------------------------------------------------
+
+
+=================Reducing node 339, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 339
+------------------------------------------------------------
+
+
+=================Reducing node 337, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
     }
 ------------------------------------------------------------
 
@@ -3124,7 +3186,7 @@ FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -3134,53 +3196,11 @@ FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 340
-------------------------------------------------------------
-
-
-=================Reducing node 360, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 360
-------------------------------------------------------------
-
-
-=================Reducing node 337, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
 Failed to reduce node 337
 ------------------------------------------------------------
 
 
-=================Reducing node 329, size=20=================
+=================Reducing node 357, size=20=================
 
 The current best program is the following
 
@@ -3190,18 +3210,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 329
+Failed to reduce node 357
 ------------------------------------------------------------
 
 
-=================Reducing node 328, size=20=================
+=================Reducing node 334, size=20=================
 
 The current best program is the following
 
@@ -3211,18 +3231,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 328
+Failed to reduce node 334
 ------------------------------------------------------------
 
 
-=================Reducing node 306, size=20=================
+=================Reducing node 326, size=20=================
 
 The current best program is the following
 
@@ -3232,14 +3252,35 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 306
+Failed to reduce node 326
+------------------------------------------------------------
+
+
+=================Reducing node 325, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 325
 ------------------------------------------------------------
 
 
@@ -3253,7 +3294,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -3264,7 +3305,7 @@ Failed to reduce node 303
 ------------------------------------------------------------
 
 
-=================Reducing node 299, size=20=================
+=================Reducing node 300, size=20=================
 
 The current best program is the following
 
@@ -3274,14 +3315,56 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 299
+Failed to reduce node 300
+------------------------------------------------------------
+
+
+=================Reducing node 298, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 298
+------------------------------------------------------------
+
+
+=================Reducing node 296, size=20=================
+
+The current best program is the following
+
+    --file: t.c--
+    int main () {
+      int a    , b    ;
+      if (a < b)
+        ;
+      else
+                     ;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 296
 ------------------------------------------------------------
 
 
@@ -3295,7 +3378,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -3303,27 +3386,6 @@ The current best program is the following
 ===================Node reduction is done===================
 
 Failed to reduce node 295
-------------------------------------------------------------
-
-
-=================Reducing node 293, size=20=================
-
-The current best program is the following
-
-    --file: t.c--
-    int main () {
-      int a    , b    ;
-      if (a < b)
-        ;
-      else
-        ;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 293
 ------------------------------------------------------------
 
 
@@ -3337,7 +3399,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -3348,7 +3410,7 @@ Failed to reduce node 292
 ------------------------------------------------------------
 
 
-=================Reducing node 284, size=20=================
+=================Reducing node 283, size=20=================
 
 The current best program is the following
 
@@ -3358,18 +3420,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 284
+Failed to reduce node 283
 ------------------------------------------------------------
 
 
-=================Reducing node 282, size=20=================
+=================Reducing node 281, size=20=================
 
 The current best program is the following
 
@@ -3379,18 +3441,18 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 282
+Failed to reduce node 281
 ------------------------------------------------------------
 
 
-=================Reducing node 279, size=20=================
+=================Reducing node 278, size=20=================
 
 The current best program is the following
 
@@ -3400,7 +3462,7 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -3415,7 +3477,7 @@ FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -3425,11 +3487,11 @@ FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 279
+Failed to reduce node 278
 ------------------------------------------------------------
 
 
-=================Reducing node 370, size=20=================
+=================Reducing node 367, size=20=================
 
 The current best program is the following
 
@@ -3439,14 +3501,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_370]
+    structure: [delete_367]
     context: [kleene_plus:declarationSpecifiers]can be epsilon
 ------------------------------------------------------------
 
@@ -3461,7 +3523,7 @@ FixPt[2][node_priority][DFS](20/41)  Testing the empty input. Global ratio:20/41
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
@@ -3471,11 +3533,11 @@ FixPt[2][node_priority][DFS](20/41)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](20/41)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:20/41=48.78%
 ===================Node reduction is done===================
 
-Failed to reduce node 370
+Failed to reduce node 367
 ------------------------------------------------------------
 
 
-=================Reducing node 374, size=20=================
+=================Reducing node 371, size=20=================
 
 The current best program is the following
 
@@ -3485,14 +3547,14 @@ The current best program is the following
       if (a < b)
         ;
       else
-        ;
+                     ;
     }
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 374
+Failed to reduce node 371
 ------------------------------------------------------------
 
 
@@ -3501,50 +3563,50 @@ Failed to reduce node 374
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
-compilationUnit{id=273,slot_type=compilationUnit}
-|___(?){id=274,slot_type=optional__compilationUnit_1}
-    |___(+){id=276,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___functionDefinition{id=278,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
-            |___(?){id=279,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=370,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=374,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=361,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=369,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=363,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=365,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=366,slot_type=LeftParen}
-            |           |___Token:){id=368,slot_type=RightParen}
-            |___compoundStatement{id=281,slot_type=compoundStatement}
-                |___Token:{{id=282,slot_type=LeftBrace}
-                |___(?){id=283,slot_type=optional__compoundStatement_1}
-                |   |___(+){id=286,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=339,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=340,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=360,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=341,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclaratorList{id=343,slot_type=initDeclaratorList}
-                |       |   |       |___Token:a{id=356,slot_type=[initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(*){id=345,slot_type=kleene_star__initDeclaratorList_1}
-                |       |   |           |___aux_rule__initDeclaratorList_2{id=346,slot_type=aux_rule__initDeclaratorList_2}
-                |       |   |               |___Token:,{id=347,slot_type=Comma}
-                |       |   |               |___Token:b{id=352,slot_type=[initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |___Token:;{id=342,slot_type=Semi}
-                |       |___aux_rule__statement_6{id=291,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
-                |           |___Token:if{id=292,slot_type=If}
-                |           |___Token:({id=293,slot_type=LeftParen}
-                |           |___relationalExpression{id=315,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
-                |           |   |___Token:a{id=337,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |   |___(*){id=317,slot_type=kleene_star__relationalExpression_1}
-                |           |       |___aux_rule__relationalExpression_2{id=318,slot_type=aux_rule__relationalExpression_2}
-                |           |           |___Token:<{id=329,slot_type=[altnt_block__relationalExpression_3,Less]}
-                |           |           |___Token:b{id=328,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |           |___Token:){id=295,slot_type=RightParen}
-                |           |___Token:;{id=306,slot_type=[statement,aux_rule__statement_3,expressionStatement,Semi]}
-                |           |___(?){id=297,slot_type=optional__selectionStatement_2}
-                |               |___aux_rule__selectionStatement_1{id=298,slot_type=aux_rule__selectionStatement_1}
-                |                   |___Token:else{id=299,slot_type=Else}
-                |                   |___Token:;{id=303,slot_type=[statement,aux_rule__statement_3,expressionStatement,Semi]}
-                |___Token:}{id=284,slot_type=RightBrace}
+compilationUnit{id=272,slot_type=compilationUnit}
+|___(?){id=273,slot_type=optional__compilationUnit_1}
+    |___(+){id=275,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___functionDefinition{id=277,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
+            |___(?){id=278,slot_type=optional__functionDefinition_2}
+            |   |___(+){id=367,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=371,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=358,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=366,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=360,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=362,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=363,slot_type=LeftParen}
+            |           |___Token:){id=365,slot_type=RightParen}
+            |___compoundStatement{id=280,slot_type=compoundStatement}
+                |___Token:{{id=281,slot_type=LeftBrace}
+                |___(?){id=282,slot_type=optional__compoundStatement_1}
+                |   |___(+){id=285,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |___aux_rule__declaration_3{id=336,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=337,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=357,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=338,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclaratorList{id=340,slot_type=initDeclaratorList}
+                |       |   |       |___Token:a{id=353,slot_type=[initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(*){id=342,slot_type=kleene_star__initDeclaratorList_1}
+                |       |   |           |___aux_rule__initDeclaratorList_2{id=343,slot_type=aux_rule__initDeclaratorList_2}
+                |       |   |               |___Token:,{id=344,slot_type=Comma}
+                |       |   |               |___Token:b{id=349,slot_type=[initDeclarator,declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |___Token:;{id=339,slot_type=Semi}
+                |       |___statement{id=288,slot_type=[aux_rule__blockItemList_2,statement]}
+                |           |___(*){id=289,slot_type=kleene_star__statement_1}
+                |           |   |___aux_rule__statement_6{id=294,slot_type=[aux_rule__statement_2,aux_rule__statement_6]}
+                |           |       |___Token:if{id=295,slot_type=If}
+                |           |       |___Token:({id=296,slot_type=LeftParen}
+                |           |       |___relationalExpression{id=312,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression]}
+                |           |       |   |___Token:a{id=334,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |       |   |___(*){id=314,slot_type=kleene_star__relationalExpression_1}
+                |           |       |       |___aux_rule__relationalExpression_2{id=315,slot_type=aux_rule__relationalExpression_2}
+                |           |       |           |___Token:<{id=326,slot_type=[alt_block__relationalExpression_3,Less]}
+                |           |       |           |___Token:b{id=325,slot_type=[shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |           |       |___Token:){id=298,slot_type=RightParen}
+                |           |       |___Token:;{id=303,slot_type=[statement,aux_rule__statement_3,expressionStatement,Semi]}
+                |           |       |___Token:else{id=300,slot_type=Else}
+                |           |___Token:;{id=292,slot_type=[aux_rule__statement_3,expressionStatement,Semi]}
+                |___Token:}{id=283,slot_type=RightBrace}
 ------------------------------------------------------------
 
 
@@ -3552,7 +3614,7 @@ FixPt[3][FineGritLatraReducer](20/41)  For c, there are 46 transformations.
 FixPt[3][FineGritLatraReducer](20/41)  Reparsing the best spartree to faithfully reflect the syntactic structure.
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 31 --> 31.
+0 entries are removed: 37 --> 37.
 ------------------------------------------------------------
 
 
@@ -3565,7 +3627,7 @@ FixPt[3][FineGritLatraReducer](20/41)  Reparsing the best spartree to faithfully
 ================The best program is updated.================
 
 token count change 20 -> 20
-Edit: AnyNodeReplace:[replace_273_with_386]
+Edit: AnyNodeReplace:[replace_272_with_383]
 ------------------------------------------------------------
 
 
@@ -3621,25 +3683,25 @@ FixPt[3][FineGritLatraReducer][UnifyFunctionDecl](20/41)  Found matches: 0 in tr
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
 ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
- 0        node_priority      5             0     -21            -35      36   time-hidden
- 1        node_priority      0             0       0              0       9   time-hidden
+ 0        node_priority      6             0     -21            -35      38   time-hidden
+ 1        node_priority      0             0       0              0      15   time-hidden
  2 FineGritLatraReducer      1             1       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
              Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
-       node_priority     2      5             0     -21            -35      45   time-hidden
+       node_priority     2      6             0     -21            -35      53   time-hidden
 FineGritLatraReducer     1      1             1       0              0       0   time-hidden
 
 ------------------------------- Transformations --------------------------------
                   Transformation Worked #NonDeletions #Tokens #NonBlankChars
-node_priority.LiteralReplacement      2             0     -14            -23
+          node_priority.Deletion      2             0      -9            -18
+node_priority.LiteralReplacement      2             0      -8            -13
        node_priority.Replacement      2             0      -4             -4
-          node_priority.Deletion      1             0      -3             -8
     FineGritLatraReducer.Reparse      1             1       0              0
 ------------------------------------- End --------------------------------------
-#test success = 5
-#test failure = 40
-#test result cache hits = 35
-#test execution cancelled = 2
-#node edit action set cache hits = 23
+#test success = 6
+#test failure = 47
+#test result cache hits = 31
+#test execution cancelled = 1
+#node edit action set cache hits = 22
 #external test execution cache hits = 0

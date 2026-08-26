@@ -79,14 +79,102 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
-    name = "UtilTest",
-    srcs = ["UtilTest.kt"],
+    name = "CollectionUtilTest",
+    srcs = ["CollectionUtilTest.kt"],
+    deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "FileStreamPoolTest",
+    srcs = ["FileStreamPoolTest.kt"],
+    deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "FileSystemUtilTest",
+    srcs = ["FileSystemUtilTest.kt"],
+    deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "FixpointTest",
+    srcs = ["FixpointTest.kt"],
+    deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "IoUtilTest",
+    srcs = ["IoUtilTest.kt"],
     deps = [
         ":dummy_class_with_resources",
         "//:guava",
         "//:kotlin_stdib",
         "//:truth",
-        "//src/org/perses/util/hashing",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "ThreadUtilTest",
+    srcs = ["ThreadUtilTest.kt"],
+    deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "LazyAssertTest",
+    srcs = ["LazyAssertTest.kt"],
+    deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "SpaceSizeTest",
+    srcs = ["SpaceSizeTest.kt"],
+    deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util",
+    ],
+)
+
+kt_jvm_test(
+    name = "StringUtilTest",
+    srcs = ["StringUtilTest.kt"],
+    deps = [
+        "//:guava",
+        "//:kotlin_stdib",
+        "//:truth",
+        "//src/org/perses/util",
     ],
 )
 

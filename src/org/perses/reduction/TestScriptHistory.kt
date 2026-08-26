@@ -18,8 +18,8 @@ package org.perses.reduction
 
 import com.google.common.hash.HashCode
 import org.apache.commons.csv.CSVFormat
-import org.perses.util.Util.lazyAssert
 import org.perses.util.hashing.EnumShaAlgorithm
+import org.perses.util.lazyAssert
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.nio.file.Path
@@ -34,19 +34,19 @@ import kotlin.io.path.outputStream
 class TestScriptHistory(
   private val shaAlgorithm: EnumShaAlgorithm,
 ) {
-  private val history = ConcurrentHashMap<HashCode, PropertyTestResult>()
+  private val history = ConcurrentHashMap<HashCode, TestScriptVerdict>()
 
-  fun getExecutionHistoryFor(key: HashCode): PropertyTestResult? = history[key]
+  fun getExecutionHistoryFor(key: HashCode): TestScriptVerdict? = history[key]
 
   fun cacheExecutionHistory(
     key: HashCode,
-    result: PropertyTestResult,
+    result: TestScriptVerdict,
   ) {
     lazyAssert { !history.containsKey(key) }
     history[key] = result
   }
 
-  fun asReadOnlyMap(): Map<HashCode, PropertyTestResult> = history
+  fun asReadOnlyMap(): Map<HashCode, TestScriptVerdict> = history
 
   fun saveToCSV(file: Path) {
     openCsvWriter(file).use { writer ->
@@ -66,8 +66,11 @@ class TestScriptHistory(
   companion object {
     const val NAME_COLUMN_EXIT_CODE = "ExitCode"
     const val NAME_COLUMN_ELLAPSED_MILLIES = "EllapsedMillies"
+
     // A .gz path is a gzip-compressed CSV; a .csv path is plain.
-    private enum class CacheFormat(val suffix: String) {
+    private enum class CacheFormat(
+      val suffix: String,
+    ) {
       CSV(".csv"),
       GZIP(".gz"),
     }
@@ -127,7 +130,7 @@ class TestScriptHistory(
           for (record in csvParser) {
             val hashCode = record[0]
             val result =
-              PropertyTestResult.of(
+              TestScriptVerdict.of(
                 exitCode = record[1].toInt(),
                 elapsedMillis = record[2].toInt(),
               )

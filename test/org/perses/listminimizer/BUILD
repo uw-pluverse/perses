@@ -86,6 +86,29 @@ kt_jvm_library(
 )
 
 kt_jvm_test(
+    name = "ElementDeletedElsewhereTest",
+    srcs = ["ElementDeletedElsewhereTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer",
+        "//src/org/perses/listminimizer:interfaces",
+        "//src/org/perses/reduction:property_test_result",
+    ],
+)
+
+kt_jvm_test(
+    name = "ListMinimizerArgumentsTest",
+    srcs = ["ListMinimizerArgumentsTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer:interfaces",
+        "//src/org/perses/reduction:property_test_result",
+    ],
+)
+
+kt_jvm_test(
     name = "PristineDeltaDebuggerTest",
     srcs = ["PristineDeltaDebuggerTest.kt"],
     deps = [

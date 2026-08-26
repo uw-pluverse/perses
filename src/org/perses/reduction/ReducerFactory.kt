@@ -32,6 +32,9 @@ import org.perses.reduction.reducer.lpr.LlmBasedDataTypeSimplificationReducer
 import org.perses.reduction.reducer.lpr.LlmBasedFunctionInliningReducer
 import org.perses.reduction.reducer.lpr.LlmBasedLoopUnrollingReducer
 import org.perses.reduction.reducer.lpr.LlmBasedVariableEliminationReducer
+import org.perses.reduction.reducer.sfc.IdentifierUseEliminationReducer
+import org.perses.reduction.reducer.sfc.SmallerStructureReplacementReducer
+import org.perses.reduction.reducer.sfc.StructureCanonicalizationReducer
 import org.perses.reduction.reducer.token.CanonicalConcurrentStateBasedLineSlicer
 import org.perses.reduction.reducer.token.CanonicalLineBasedConcurrentTokenSlicer
 import org.perses.reduction.reducer.token.CanonicalLineBasedTokenSlicer
@@ -47,9 +50,9 @@ import org.perses.reduction.reducer.trec.TokenCanonicalizer
 import org.perses.reduction.reducer.vulcan.IdentifierReplacementReducer
 import org.perses.reduction.reducer.vulcan.SubTreeReplacementReducer
 import org.perses.reduction.reducer.vulcan.pattern.LocalExhaustivePatternReducer
-import org.perses.util.Util.lazyAssert
 import org.perses.util.ktInfo
 import org.perses.util.ktWarning
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableMap
 import java.lang.RuntimeException
 import kotlin.reflect.full.createInstance
@@ -172,6 +175,9 @@ class ReducerFactory private constructor(
         .add(LlmBasedDataTypeSimplificationReducer.META)
         .add(LlmBasedVariableEliminationReducer.META)
         .add(SubTreeReplacementReducer.META)
+        .add(SmallerStructureReplacementReducer.META)
+        .add(StructureCanonicalizationReducer.META)
+        .add(IdentifierUseEliminationReducer.META)
         .add(IdentifierReplacementReducer.META)
         .add(LocalExhaustivePatternReducer.META)
         .add(TokenCanonicalizer.META)

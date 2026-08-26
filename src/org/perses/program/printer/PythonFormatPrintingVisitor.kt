@@ -20,7 +20,7 @@ import org.perses.grammar.python3.Python3Lexer
 import org.perses.program.AbstractPersesToken
 import org.perses.program.TokenizedProgram
 import org.perses.util.FastStringBuilder
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 class PythonFormatPrintingVisitor(
   program: TokenizedProgram,

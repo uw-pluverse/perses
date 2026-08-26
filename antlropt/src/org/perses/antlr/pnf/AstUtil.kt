@@ -28,7 +28,7 @@ import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.PersesStarAst
 import org.perses.antlr.ast.SmartAstConstructor
 import org.perses.util.Interval
-import org.perses.util.Util
+import org.perses.util.fixpoint
 import org.perses.util.toImmutableList
 
 object AstUtil {
@@ -68,7 +68,6 @@ object AstUtil {
     fun size() = asts.size
   }
 
-  // TODO: test...
   @JvmStatic
   fun findEquivalenceAst(asts: Iterable<AbstractPersesRuleElement>): List<AstEquivalenceClass> {
     val result = ArrayList<AstEquivalenceClass>()
@@ -105,7 +104,6 @@ object AstUtil {
   private fun normalizeElementList(
     elements: List<AbstractPersesRuleElement>,
   ): ImmutableList<AbstractPersesRuleElement> {
-    // TODO: convert 'a a*' into a+
     var changed = true
     var current = ImmutableList.copyOf(elements)
     while (changed) {
@@ -124,7 +122,7 @@ object AstUtil {
   internal fun convertStarToPlus(
     list: List<AbstractPersesRuleElement>,
   ): ImmutableList<AbstractPersesRuleElement> {
-    return Util.fixpoint(ImmutableList.copyOf(list)) { current ->
+    return fixpoint(ImmutableList.copyOf(list)) { current ->
       val starList =
         current
           .withIndex()
@@ -230,7 +228,6 @@ object AstUtil {
     return SmartAstConstructor.createForSequence(builder.build())
   }
 
-  // TODO: needs tests
   fun createAltBlockIfNecessary(
     alternatives: Collection<AbstractPersesRuleElement>,
   ): AbstractPersesRuleElement {

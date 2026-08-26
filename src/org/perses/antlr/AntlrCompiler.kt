@@ -21,7 +21,7 @@ import org.perses.antlr.ast.PersesAstBuilder
 import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.util.AntlrToolWrapper
 import org.perses.util.FileNameContentLinesPair
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.java.JarFile
 import org.perses.util.java.JarPackager
 import org.perses.util.java.JavacWrapper
@@ -48,7 +48,7 @@ class AntlrCompiler(
     if (!Files.exists(workingDirectory)) {
       Files.createDirectories(workingDirectory)
     }
-    require(Util.isEmptyDirectory(workingDirectory)) { workingDirectory.toAbsolutePath() }
+    require(FileSystemUtil.isEmptyDirectory(workingDirectory)) { workingDirectory.toAbsolutePath() }
   }
 
   private val parserFileBaseName = parser.grammarName + ".g4"

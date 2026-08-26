@@ -27,7 +27,6 @@ data class GrammarPair(
   val lexerGrammar: PersesGrammar?,
 ) {
   init {
-    // TODO: enable the following test.
     if (parserGrammar != null) {
       val type = parserGrammar.grammarType
       // Note that a combined grammar can still have separate lexer parsers.

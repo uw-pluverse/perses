@@ -20,9 +20,9 @@ import com.google.common.annotations.VisibleForTesting
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableMap
 import org.perses.program.AbstractReductionFile
-import org.perses.reduction.PropertyTestResult
-import org.perses.util.Util
-import org.perses.util.Util.lazyAssert
+import org.perses.reduction.TestScriptVerdict
+import org.perses.util.FileSystemUtil
+import org.perses.util.lazyAssert
 import java.io.IOException
 import java.lang.RuntimeException
 import java.nio.file.FileVisitResult
@@ -61,7 +61,7 @@ class ReductionFolder(
   @VisibleForTesting
   val testScript = originalReductionInputs.writeTestScriptTo(folder)
 
-  fun runTestScript(): PropertyTestResult {
+  fun runTestScript(): TestScriptVerdict {
     checkThisFolderIsStillInUse()
     return testScript.test()
   }
@@ -173,7 +173,7 @@ class ReductionFolder(
     while (parent != null &&
       parent != path &&
       Files.isDirectory(parent) &&
-      Util.isEmptyDirectory(parent)
+      FileSystemUtil.isEmptyDirectory(parent)
     ) {
       Files.delete(parent)
       parent = parent.parent
@@ -209,7 +209,7 @@ class ReductionFolder(
           dir: Path,
           exc: IOException?,
         ): FileVisitResult {
-          if (Util.isEmptyDirectory(dir)) {
+          if (FileSystemUtil.isEmptyDirectory(dir)) {
             Files.delete(dir)
           }
           return super.postVisitDirectory(dir, exc)
@@ -240,7 +240,7 @@ class ReductionFolder(
         |folder: ${this.path.fileName}
         |
         |The following are the files in this folder.
-        |${Util.listFilesInFolder(path).joinToString(separator = "\n") {it.toString()}}
+        |${FileSystemUtil.listFilesInFolder(path).joinToString(separator = "\n") {it.toString()}}
         |----------------------------------------------------------
         |
         |There was an exception previously.
@@ -257,7 +257,7 @@ class ReductionFolder(
   }
 
   fun copyTo(destFolder: ReductionFolder) {
-    Util.copyDirectory(path, destFolder.path, StandardCopyOption.REPLACE_EXISTING)
+    FileSystemUtil.copyDirectory(path, destFolder.path, StandardCopyOption.REPLACE_EXISTING)
   }
 
   override fun toString(): String =
@@ -272,7 +272,7 @@ class ReductionFolder(
     }
     originalReductionInputs.immutableDependencyFiles.forEach { file ->
       val absPath = computeAbsPathForOrigFile(file)
-      Util.ensureDirExists(absPath.parent)
+      FileSystemUtil.ensureDirExists(absPath.parent)
       file.writeTo(absPath)
     }
   }

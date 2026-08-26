@@ -50,7 +50,7 @@ class MultiAltBlockExtractionPassTest {
     val alts =
       processedGrammar.parserRules
         .find {
-          it.ruleNameHandle.ruleName == "altnt_block__argument_1"
+          it.ruleNameHandle.ruleName == "alt_block__argument_1"
         }!!
         .body as PersesAlternativeBlockAst
     assertThat(alts.childCount).isEqualTo(3)

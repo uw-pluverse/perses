@@ -80,6 +80,7 @@ kt_jvm_library(
 
 java_binary(
     name = "outline_implicit_token_def_bin",
+    jvm_flags = ["-Xmx1g"],
     main_class = "org.perses.antlr.pnf.OutlineImplicitTokenDefMain",
     runtime_deps = [
         ":implicit_token_def_outliner_lib",
@@ -159,7 +160,10 @@ java_library(
 
 java_binary(
     name = "pnf_main",
-    jvm_flags = ["-ea"],
+    jvm_flags = [
+        "-ea",
+        "-Xmx1g",
+    ],
     main_class = "org.perses.antlr.pnf.Main",
     runtime_deps = [
         ":pnf",

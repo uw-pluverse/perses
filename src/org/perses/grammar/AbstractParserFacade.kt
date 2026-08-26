@@ -59,8 +59,9 @@ import org.perses.antlr.pnf.UsedRuleNameCollector
 import org.perses.antlr.toTokenType
 import org.perses.program.LanguageKind
 import org.perses.program.ProgramSize
+import org.perses.util.IoUtil
 import org.perses.util.ReflectionUtil
-import org.perses.util.Util
+import org.perses.util.ThreadUtil.callWithLargeStackOnStackOverflow
 import org.perses.util.ktFine
 import org.perses.util.ktWarning
 import org.perses.util.toImmutableList
@@ -275,7 +276,7 @@ abstract class AbstractParserFacade protected constructor(
     // unchanged. (The spar-tree build downstream is iterative, so the parse is the only overflow
     // point.)
     try {
-      Util.callWithLargeStackOnStackOverflow {
+      callWithLargeStackOnStackOverflow {
         when (errorMode) {
           ParseErrorHandling.STRICT -> parseStringStrictly(string, startRuleName)
           ParseErrorHandling.TOLERANT -> parseStringTolerantly(string, filename, startRuleName)
@@ -689,7 +690,7 @@ abstract class AbstractParserFacade protected constructor(
       antlrGrammarFileName: String,
       classUnderSamePkg: Class<*>,
     ): String {
-      Util.openResourceAsStream(antlrGrammarFileName, classUnderSamePkg).use { stream ->
+      IoUtil.openResourceAsStream(antlrGrammarFileName, classUnderSamePkg).use { stream ->
         return String(ByteStreams.toByteArray(stream), StandardCharsets.UTF_8)
       }
     }

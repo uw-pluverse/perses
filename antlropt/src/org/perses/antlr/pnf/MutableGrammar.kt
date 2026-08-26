@@ -148,7 +148,6 @@ class MutableGrammar(
     return result
   }
 
-  // TODO: need test
   fun transform(
     transformer: (RuleNameHandle, AbstractPersesRuleElement) -> TransformDecision,
   ): MutableGrammar {

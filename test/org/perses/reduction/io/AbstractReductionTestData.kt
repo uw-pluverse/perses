@@ -23,7 +23,7 @@ import org.perses.program.SourceFile
 import org.perses.reduction.AbstractGlobalExecutionCache.NullCache
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.util.AutoDeletableFolder
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.Shells
 import java.nio.file.Files
@@ -60,15 +60,15 @@ abstract class AbstractReductionTestData(
 
   val script =
     ScriptFile(
-      Util
+      FileSystemUtil
         .createDirsAndWriteText(tempDir.resolve("r.sh"), "${Shells.SHEBANG_BASH}\n$scriptBody\n")
-        .also { Util.setExecutable(it) },
+        .also { FileSystemUtil.setExecutable(it) },
     )
   private val sourceFilesByBaseName: Map<String, SourceFile> =
     sources.associate { spec ->
       spec.baseName to
         SourceFile(
-          Util.createDirsAndWriteText(tempDir.resolve(spec.baseName), spec.content),
+          FileSystemUtil.createDirsAndWriteText(tempDir.resolve(spec.baseName), spec.content),
           spec.language,
         )
     }
@@ -78,8 +78,8 @@ abstract class AbstractReductionTestData(
       mutableFiles = ImmutableList.copyOf(sourceFilesByBaseName.values),
       immutableDependencyFiles = ImmutableList.of(),
     )
-  val outputDir: Path = Util.ensureDirExists(tempDir.resolve("output_dir"))
-  val workingDir: Path = Util.ensureDirExists(tempDir.resolve("working_dir"))
+  val outputDir: Path = FileSystemUtil.ensureDirExists(tempDir.resolve("output_dir"))
+  val workingDir: Path = FileSystemUtil.ensureDirExists(tempDir.resolve("working_dir"))
 
   /** The IO manager under test -- the only piece that differs between reduction flavors. */
   abstract val ioManager: AbstractReductionIOManager<*, *>

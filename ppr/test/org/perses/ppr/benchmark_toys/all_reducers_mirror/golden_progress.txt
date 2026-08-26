@@ -131,6 +131,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -174,7 +180,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=270,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=272,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=273,slot_type=LeftParen}
-            |           |___(+){id=279,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |___(+){id=279,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
             |           |   |___Token:void{id=284,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
             |           |___Token:){id=275,slot_type=RightParen}
             |___compoundStatement{id=10,slot_type=compoundStatement}
@@ -243,7 +249,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |       |   |               |___Token:){id=77,slot_type=RightParen}
                 |       |   |___Token:;{id=53,slot_type=Semi}
                 |       |___jumpStatement{id=24,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=27,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=27,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=28,slot_type=Return}
                 |           |   |___(?){id=29,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:0{id=48,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -398,7 +404,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=260,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=262,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=263,slot_type=LeftParen}
-            |           |___(+){id=269,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |___(+){id=269,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
             |           |   |___Token:void{id=274,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
             |           |___Token:){id=265,slot_type=RightParen}
             |___compoundStatement{id=10,slot_type=compoundStatement}
@@ -463,7 +469,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |       |   |               |___Token:){id=77,slot_type=RightParen}
                 |       |   |___Token:;{id=53,slot_type=Semi}
                 |       |___jumpStatement{id=24,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=27,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=27,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=28,slot_type=Return}
                 |           |   |___(?){id=29,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:0{id=48,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -748,6 +754,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -945,6 +957,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -1140,6 +1158,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -1183,7 +1207,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
             |   |___(*){id=232,slot_type=kleene_star__directDeclarator_7}
             |       |___aux_rule__directDeclarator_15{id=234,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
             |           |___Token:({id=235,slot_type=LeftParen}
-            |           |___(+){id=241,slot_type=[altnt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
+            |           |___(+){id=241,slot_type=[alt_block__directDeclarator_11,parameterTypeList,parameterList,parameterDeclaration,declarationSpecifiers]}
             |           |   |___Token:void{id=246,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Void]}
             |           |___Token:){id=237,slot_type=RightParen}
             |___compoundStatement{id=10,slot_type=compoundStatement}
@@ -1241,7 +1265,7 @@ compilationUnit{id=1,slot_type=compilationUnit}
                 |       |   |               |___Token:){id=76,slot_type=RightParen}
                 |       |   |___Token:;{id=52,slot_type=Semi}
                 |       |___jumpStatement{id=23,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=26,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=26,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=27,slot_type=Return}
                 |           |   |___(?){id=28,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:0{id=47,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -4229,6 +4253,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -6865,6 +6895,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -7233,6 +7269,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -7430,6 +7472,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -7625,6 +7673,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -10261,6 +10315,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10

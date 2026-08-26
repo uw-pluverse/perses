@@ -22,7 +22,7 @@ import com.google.common.flogger.FluentLogger
 import org.perses.fuzzer.compilers.ActionResult
 import org.perses.fuzzer.compilers.ICompilationAction
 import org.perses.fuzzer.coveragecollector.ICoverageCollector.CoverageReport
-import org.perses.util.Util
+import org.perses.util.IoUtil
 import org.perses.util.ktInfo
 import java.io.File
 import java.nio.Buffer
@@ -171,7 +171,7 @@ class AFLCoverageCollector(
     private fun loadSystemLibrary(): Path {
       val dir = createAFLSysLibraryDirectory()
       val libFile = dir.resolve(AFL_LIB_SO_FILE_NAME)
-      Util.copyResource(
+      IoUtil.copyResource(
         AFL_LIB_SO_FILE_NAME,
         AFLCoverageCollector::class.java,
         libFile,

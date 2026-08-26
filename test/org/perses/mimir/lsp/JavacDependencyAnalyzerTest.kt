@@ -21,7 +21,7 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.ShellCommandOnPath
 import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
@@ -30,7 +30,7 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class JavacDependencyAnalyzerTest {
-  private val tempDir: Path = Util.createTempDirForObject(this)
+  private val tempDir: Path = FileSystemUtil.createTempDirForObject(this)
 
   @OptIn(ExperimentalPathApi::class)
   @After

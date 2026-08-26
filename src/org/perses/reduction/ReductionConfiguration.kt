@@ -42,6 +42,7 @@ class ReductionConfiguration(
   val vulcanConfig: VulcanConfig,
   val lprConfig: LPRConfig,
   val latraConfig: LatraConfig,
+  val sfcConfig: SfcConfig,
   val levelBasedReducerConfig: LevelBasedReducerConfig,
   val mimirConfig: MimirConfig,
   val shaHashAlgorithm: EnumShaAlgorithm,
@@ -99,6 +100,17 @@ class ReductionConfiguration(
   // Need to generate hashcode and equals.
   data class LatraConfig(
     val listMinimizerForTransformations: EnumListMinimizerType,
+  )
+
+  // Need to generate hashcode and equals.
+  data class SfcConfig(
+    /**
+     * A subtree of more tokens than this is left alone: the number of structures a subtree can
+     * be converted into grows with the number of subtrees under it that can be reused.
+     */
+    val subtreeTokenCountLimit: Int,
+    /** How many of a subtree's candidates are tested before moving on to the next subtree. */
+    val candidateLimit: Int,
   )
 
   // Need to generate hashcode and equals.

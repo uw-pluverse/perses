@@ -17,7 +17,7 @@
 package org.perses.reduction.io
 
 import org.perses.util.AtomicSequenceGenerator
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
@@ -48,7 +48,7 @@ class ReductionFolderManager(
     val directoryName = prefix + sequenceGenerator.next() + postfix
     return createDirectory(directoryName).also { directory ->
       check(Files.isDirectory(directory)) { directory }
-      check(Util.isEmptyDirectory(directory)) { directory }
+      check(FileSystemUtil.isEmptyDirectory(directory)) { directory }
     }
   }
 
@@ -82,7 +82,7 @@ class ReductionFolderManager(
     require(Files.isDirectory(rootFolder)) {
       "The root folder is not a directory: $rootFolder"
     }
-    require(Util.isEmptyDirectory(rootFolder)) {
+    require(FileSystemUtil.isEmptyDirectory(rootFolder)) {
       "The root folder should be empty: $rootFolder"
     }
   }

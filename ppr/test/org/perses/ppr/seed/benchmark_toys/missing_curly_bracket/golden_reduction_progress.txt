@@ -131,6 +131,12 @@ latraFlags:
   enableLatra: false
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -166,114 +172,114 @@ The spar-tree is the following.
 compilationUnit{id=1,slot_type=compilationUnit}
 |___(?){id=2,slot_type=optional__compilationUnit_1}
     |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___Token:#include <stdio.h>{id=367,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___Token:#include <stdio.h>{id=365,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
         |___functionDefinition{id=7,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
             |___(?){id=8,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=362,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=366,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=353,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=361,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=355,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=357,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=358,slot_type=LeftParen}
-            |           |___Token:){id=360,slot_type=RightParen}
+            |   |___(+){id=360,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=364,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=351,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=359,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=353,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=355,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=356,slot_type=LeftParen}
+            |           |___Token:){id=358,slot_type=RightParen}
             |___compoundStatement{id=10,slot_type=compoundStatement}
                 |___Token:{{id=11,slot_type=LeftBrace}
                 |___(?){id=12,slot_type=optional__compoundStatement_1}
                 |   |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___aux_rule__declaration_3{id=317,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=318,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=352,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=319,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclarator{id=322,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |   |       |___Token:a{id=348,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(?){id=324,slot_type=optional__initDeclarator_2}
-                |       |   |           |___aux_rule__initDeclarator_1{id=325,slot_type=aux_rule__initDeclarator_1}
-                |       |   |               |___Token:={id=326,slot_type=Assign}
-                |       |   |               |___Token:1{id=345,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |___Token:;{id=320,slot_type=Semi}
-                |       |___aux_rule__declaration_3{id=280,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |___(+){id=281,slot_type=declarationSpecifiers}
-                |       |   |   |___Token:int{id=315,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |___(?){id=282,slot_type=optional__declaration_2}
-                |       |   |   |___initDeclarator{id=285,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |   |       |___Token:b{id=311,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |       |___(?){id=287,slot_type=optional__initDeclarator_2}
-                |       |   |           |___aux_rule__initDeclarator_1{id=288,slot_type=aux_rule__initDeclarator_1}
-                |       |   |               |___Token:={id=289,slot_type=Assign}
-                |       |   |               |___Token:2{id=308,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |___Token:;{id=283,slot_type=Semi}
-                |       |___expressionStatement{id=231,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-                |       |   |___(?){id=232,slot_type=optional__postfixExpression_1}
-                |       |   |   |___postfixExpression{id=250,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-                |       |   |       |___Token:printf{id=278,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-                |       |   |       |___(*){id=252,slot_type=kleene_star__postfixExpression_2}
-                |       |   |           |___aux_rule__postfixExpression_11{id=254,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-                |       |   |               |___Token:({id=255,slot_type=LeftParen}
-                |       |   |               |___(?){id=256,slot_type=optional__postfixExpression_1}
-                |       |   |               |   |___(+){id=276,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-                |       |   |               |       |___Token:"hello"{id=277,slot_type=StringLiteral}
-                |       |   |               |___Token:){id=257,slot_type=RightParen}
-                |       |   |___Token:;{id=233,slot_type=Semi}
-                |       |___expressionStatement{id=181,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-                |       |   |___(?){id=182,slot_type=optional__postfixExpression_1}
-                |       |   |   |___postfixExpression{id=200,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-                |       |   |       |___Token:printf{id=228,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-                |       |   |       |___(*){id=202,slot_type=kleene_star__postfixExpression_2}
-                |       |   |           |___aux_rule__postfixExpression_11{id=204,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-                |       |   |               |___Token:({id=205,slot_type=LeftParen}
-                |       |   |               |___(?){id=206,slot_type=optional__postfixExpression_1}
-                |       |   |               |   |___(+){id=226,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-                |       |   |               |       |___Token:"world"{id=227,slot_type=StringLiteral}
-                |       |   |               |___Token:){id=207,slot_type=RightParen}
-                |       |   |___Token:;{id=183,slot_type=Semi}
-                |       |___aux_rule__statement_6{id=51,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,aux_rule__statement_6]}
-                |       |   |___Token:if{id=52,slot_type=If}
-                |       |   |___Token:({id=53,slot_type=LeftParen}
-                |       |   |___Token:a{id=178,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |   |___Token:){id=55,slot_type=RightParen}
-                |       |   |___compoundStatement{id=117,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
-                |       |   |   |___Token:{{id=118,slot_type=LeftBrace}
-                |       |   |   |___(?){id=119,slot_type=optional__compoundStatement_1}
-                |       |   |   |   |___(+){id=122,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |   |   |       |___aux_rule__declaration_3{id=125,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |   |   |           |___(+){id=126,slot_type=declarationSpecifiers}
-                |       |   |   |           |   |___Token:int{id=160,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |   |   |           |___(?){id=127,slot_type=optional__declaration_2}
-                |       |   |   |           |   |___initDeclarator{id=130,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |   |   |           |       |___Token:c{id=156,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |   |   |           |       |___(?){id=132,slot_type=optional__initDeclarator_2}
-                |       |   |   |           |           |___aux_rule__initDeclarator_1{id=133,slot_type=aux_rule__initDeclarator_1}
-                |       |   |   |           |               |___Token:={id=134,slot_type=Assign}
-                |       |   |   |           |               |___Token:1{id=153,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
-                |       |   |   |           |___Token:;{id=128,slot_type=Semi}
-                |       |   |   |___Token:}{id=120,slot_type=RightBrace}
-                |       |   |___(?){id=57,slot_type=optional__selectionStatement_2}
-                |       |       |___aux_rule__selectionStatement_1{id=58,slot_type=aux_rule__selectionStatement_1}
-                |       |           |___Token:else{id=59,slot_type=Else}
-                |       |           |___compoundStatement{id=62,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
-                |       |               |___Token:{{id=63,slot_type=LeftBrace}
-                |       |               |___(?){id=64,slot_type=optional__compoundStatement_1}
-                |       |               |   |___(+){id=67,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |               |       |___aux_rule__declaration_3{id=70,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
-                |       |               |           |___(+){id=71,slot_type=declarationSpecifiers}
-                |       |               |           |   |___Token:int{id=115,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-                |       |               |           |___(?){id=72,slot_type=optional__declaration_2}
-                |       |               |           |   |___initDeclarator{id=75,slot_type=[initDeclaratorList,initDeclarator]}
-                |       |               |           |       |___Token:d{id=111,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
-                |       |               |           |       |___(?){id=77,slot_type=optional__initDeclarator_2}
-                |       |               |           |           |___aux_rule__initDeclarator_1{id=78,slot_type=aux_rule__initDeclarator_1}
-                |       |               |           |               |___Token:={id=79,slot_type=Assign}
-                |       |               |           |               |___multiplicativeExpression{id=92,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression]}
-                |       |               |           |                   |___Token:a{id=108,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |               |           |                   |___(*){id=94,slot_type=kleene_star__multiplicativeExpression_1}
-                |       |               |           |                       |___aux_rule__multiplicativeExpression_2{id=95,slot_type=aux_rule__multiplicativeExpression_2}
-                |       |               |           |                           |___Token:*{id=103,slot_type=[altnt_block__multiplicativeExpression_3,Star]}
-                |       |               |           |                           |___Token:b{id=102,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
-                |       |               |           |___Token:;{id=73,slot_type=Semi}
-                |       |               |___Token:}{id=65,slot_type=RightBrace}
+                |       |___aux_rule__declaration_3{id=315,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=316,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=350,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=317,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=320,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:a{id=346,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=322,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=323,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=324,slot_type=Assign}
+                |       |   |               |___Token:1{id=343,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=318,slot_type=Semi}
+                |       |___aux_rule__declaration_3{id=278,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |___(+){id=279,slot_type=declarationSpecifiers}
+                |       |   |   |___Token:int{id=313,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |___(?){id=280,slot_type=optional__declaration_2}
+                |       |   |   |___initDeclarator{id=283,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |___Token:b{id=309,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |___(?){id=285,slot_type=optional__initDeclarator_2}
+                |       |   |           |___aux_rule__initDeclarator_1{id=286,slot_type=aux_rule__initDeclarator_1}
+                |       |   |               |___Token:={id=287,slot_type=Assign}
+                |       |   |               |___Token:2{id=306,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |___Token:;{id=281,slot_type=Semi}
+                |       |___expressionStatement{id=229,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=230,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=248,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=276,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=250,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=252,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=253,slot_type=LeftParen}
+                |       |   |               |___(?){id=254,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___(+){id=274,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |___Token:"hello"{id=275,slot_type=StringLiteral}
+                |       |   |               |___Token:){id=255,slot_type=RightParen}
+                |       |   |___Token:;{id=231,slot_type=Semi}
+                |       |___expressionStatement{id=179,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |       |   |___(?){id=180,slot_type=optional__postfixExpression_1}
+                |       |   |   |___postfixExpression{id=198,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |       |   |       |___Token:printf{id=226,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___(*){id=200,slot_type=kleene_star__postfixExpression_2}
+                |       |   |           |___aux_rule__postfixExpression_11{id=202,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |       |   |               |___Token:({id=203,slot_type=LeftParen}
+                |       |   |               |___(?){id=204,slot_type=optional__postfixExpression_1}
+                |       |   |               |   |___(+){id=224,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |       |   |               |       |___Token:"world"{id=225,slot_type=StringLiteral}
+                |       |   |               |___Token:){id=205,slot_type=RightParen}
+                |       |   |___Token:;{id=181,slot_type=Semi}
+                |       |___statement{id=49,slot_type=[aux_rule__blockItemList_2,statement]}
+                |       |   |___(*){id=50,slot_type=kleene_star__statement_1}
+                |       |   |   |___aux_rule__statement_6{id=107,slot_type=[aux_rule__statement_2,aux_rule__statement_6]}
+                |       |   |       |___Token:if{id=108,slot_type=If}
+                |       |   |       |___Token:({id=109,slot_type=LeftParen}
+                |       |   |       |___Token:a{id=176,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |   |       |___Token:){id=111,slot_type=RightParen}
+                |       |   |       |___compoundStatement{id=115,slot_type=[statement,aux_rule__statement_3,compoundStatement]}
+                |       |   |       |   |___Token:{{id=116,slot_type=LeftBrace}
+                |       |   |       |   |___(?){id=117,slot_type=optional__compoundStatement_1}
+                |       |   |       |   |   |___(+){id=120,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |   |       |   |       |___aux_rule__declaration_3{id=123,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |   |       |   |           |___(+){id=124,slot_type=declarationSpecifiers}
+                |       |   |       |   |           |   |___Token:int{id=158,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |   |       |   |           |___(?){id=125,slot_type=optional__declaration_2}
+                |       |   |       |   |           |   |___initDeclarator{id=128,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |   |       |   |           |       |___Token:c{id=154,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |   |       |   |           |       |___(?){id=130,slot_type=optional__initDeclarator_2}
+                |       |   |       |   |           |           |___aux_rule__initDeclarator_1{id=131,slot_type=aux_rule__initDeclarator_1}
+                |       |   |       |   |           |               |___Token:={id=132,slot_type=Assign}
+                |       |   |       |   |           |               |___Token:1{id=151,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
+                |       |   |       |   |           |___Token:;{id=126,slot_type=Semi}
+                |       |   |       |   |___Token:}{id=118,slot_type=RightBrace}
+                |       |   |       |___Token:else{id=113,slot_type=Else}
+                |       |   |___compoundStatement{id=52,slot_type=[aux_rule__statement_3,compoundStatement]}
+                |       |       |___Token:{{id=53,slot_type=LeftBrace}
+                |       |       |___(?){id=54,slot_type=optional__compoundStatement_1}
+                |       |       |   |___(+){id=57,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |       |       |       |___aux_rule__declaration_3{id=60,slot_type=[aux_rule__blockItemList_2,declaration,aux_rule__declaration_3]}
+                |       |       |           |___(+){id=61,slot_type=declarationSpecifiers}
+                |       |       |           |   |___Token:int{id=105,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+                |       |       |           |___(?){id=62,slot_type=optional__declaration_2}
+                |       |       |           |   |___initDeclarator{id=65,slot_type=[initDeclaratorList,initDeclarator]}
+                |       |       |           |       |___Token:d{id=101,slot_type=[declarator,directDeclarator,aux_rule__directDeclarator_9,Identifier]}
+                |       |       |           |       |___(?){id=67,slot_type=optional__initDeclarator_2}
+                |       |       |           |           |___aux_rule__initDeclarator_1{id=68,slot_type=aux_rule__initDeclarator_1}
+                |       |       |           |               |___Token:={id=69,slot_type=Assign}
+                |       |       |           |               |___multiplicativeExpression{id=82,slot_type=[initializer,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression]}
+                |       |       |           |                   |___Token:a{id=98,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |       |           |                   |___(*){id=84,slot_type=kleene_star__multiplicativeExpression_1}
+                |       |       |           |                       |___aux_rule__multiplicativeExpression_2{id=85,slot_type=aux_rule__multiplicativeExpression_2}
+                |       |       |           |                           |___Token:*{id=93,slot_type=[alt_block__multiplicativeExpression_3,Star]}
+                |       |       |           |                           |___Token:b{id=92,slot_type=[castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Identifier]}
+                |       |       |           |___Token:;{id=63,slot_type=Semi}
+                |       |       |___Token:}{id=55,slot_type=RightBrace}
                 |       |___jumpStatement{id=24,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,jumpStatement]}
-                |           |___aux_rule__jumpStatement_4{id=27,slot_type=[altnt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
+                |           |___aux_rule__jumpStatement_4{id=27,slot_type=[alt_block__jumpStatement_2,aux_rule__jumpStatement_4]}
                 |           |   |___Token:return{id=28,slot_type=Return}
                 |           |   |___(?){id=29,slot_type=optional__postfixExpression_1}
                 |           |       |___Token:0{id=48,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,Constant]}
@@ -603,14 +609,14 @@ The current best program is the following
     --file: seed.c--
     #include <stdio.h>
     int main()
-            {
-        int c = 1;
+           {
+        int d = a * b;
       }
     --file: variant.c--
     #include <stdio.h>
     int main()
-            {
-        int c = 1;
+           {
+        int d = a * b;
       }
 ------------------------------------------------------------
 
@@ -885,7 +891,7 @@ FixPt[1][node_priority][DFS](48/101)  Try deleting [4]#1: Interesting. Local rat
 ================The best program is updated.================
 
 token count change 48 -> 27
-Edit: [delete_51]
+Edit: [delete_49]
 ------------------------------------------------------------
 
 
@@ -940,7 +946,7 @@ FixPt[1][node_priority][DFS](27/101)  Try deleting [0-2]#3: Interesting. Local r
 ================The best program is updated.================
 
 token count change 27 -> 12
-Edit: [delete: 231,280,317]
+Edit: [delete: 229,278,315]
 ------------------------------------------------------------
 
 
@@ -951,7 +957,7 @@ Succeeded to reduce node 15 from 51 to 12
 ------------------------------------------------------------
 
 
-=================Reducing node 181, size=12=================
+=================Reducing node 179, size=12=================
 
 The current best program is the following
 
@@ -997,11 +1003,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 181
+Failed to reduce node 179
 ------------------------------------------------------------
 
 
-=================Reducing node 182, size=12=================
+=================Reducing node 180, size=12=================
 
 The current best program is the following
 
@@ -1039,11 +1045,11 @@ FixPt[1][node_priority][DFS](12/101)  There is only one element in the input, an
 FixPt[1][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 182
+Failed to reduce node 180
 ------------------------------------------------------------
 
 
-=================Reducing node 200, size=12=================
+=================Reducing node 198, size=12=================
 
 The current best program is the following
 
@@ -1061,7 +1067,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_200]
+    structure: [delete_198]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -1098,11 +1104,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 200
+Failed to reduce node 198
 ------------------------------------------------------------
 
 
-=================Reducing node 353, size=12=================
+=================Reducing node 351, size=12=================
 
 The current best program is the following
 
@@ -1135,11 +1141,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 353
+Failed to reduce node 351
 ------------------------------------------------------------
 
 
-=================Reducing node 202, size=12=================
+=================Reducing node 200, size=12=================
 
 The current best program is the following
 
@@ -1177,11 +1183,11 @@ FixPt[1][node_priority][DFS](12/101)  There is only one element in the input, an
 FixPt[1][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 202
+Failed to reduce node 200
 ------------------------------------------------------------
 
 
-=================Reducing node 204, size=12=================
+=================Reducing node 202, size=12=================
 
 The current best program is the following
 
@@ -1199,18 +1205,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_204]
+    structure: [delete_202]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 204
+Failed to reduce node 202
 ------------------------------------------------------------
 
 
-=================Reducing node 355, size=12=================
+=================Reducing node 353, size=12=================
 
 The current best program is the following
 
@@ -1248,11 +1254,11 @@ FixPt[1][node_priority][DFS](12/101)  There is only one element in the input, an
 FixPt[1][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 355
+Failed to reduce node 353
 ------------------------------------------------------------
 
 
-=================Reducing node 357, size=12=================
+=================Reducing node 355, size=12=================
 
 The current best program is the following
 
@@ -1270,18 +1276,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_357]
+    structure: [delete_355]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 357
+Failed to reduce node 355
 ------------------------------------------------------------
 
 
-=================Reducing node 367, size=12=================
+=================Reducing node 365, size=12=================
 
 The current best program is the following
 
@@ -1299,11 +1305,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 367
+Failed to reduce node 365
 ------------------------------------------------------------
 
 
-=================Reducing node 361, size=12=================
+=================Reducing node 359, size=12=================
 
 The current best program is the following
 
@@ -1321,29 +1327,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 361
-------------------------------------------------------------
-
-
-=================Reducing node 360, size=12=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 360
+Failed to reduce node 359
 ------------------------------------------------------------
 
 
@@ -1369,7 +1353,7 @@ Failed to reduce node 358
 ------------------------------------------------------------
 
 
-=================Reducing node 228, size=12=================
+=================Reducing node 356, size=12=================
 
 The current best program is the following
 
@@ -1387,11 +1371,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 228
+Failed to reduce node 356
 ------------------------------------------------------------
 
 
-=================Reducing node 207, size=12=================
+=================Reducing node 226, size=12=================
 
 The current best program is the following
 
@@ -1409,11 +1393,33 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 207
+Failed to reduce node 226
 ------------------------------------------------------------
 
 
-=================Reducing node 206, size=12=================
+=================Reducing node 205, size=12=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 205
+------------------------------------------------------------
+
+
+=================Reducing node 204, size=12=================
 
 The current best program is the following
 
@@ -1451,11 +1457,11 @@ FixPt[1][node_priority][DFS](12/101)  There is only one element in the input, an
 FixPt[1][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 206
+Failed to reduce node 204
 ------------------------------------------------------------
 
 
-=================Reducing node 226, size=12=================
+=================Reducing node 224, size=12=================
 
 The current best program is the following
 
@@ -1473,7 +1479,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_226]
+    structure: [delete_224]
     context: [kleene_plus:kleene_plus__primaryExpression_1]can be epsilon
 ------------------------------------------------------------
 
@@ -1500,11 +1506,11 @@ FixPt[1][node_priority][DFS](12/101)  There is only one element in the input, an
 FixPt[1][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 226
+Failed to reduce node 224
 ------------------------------------------------------------
 
 
-=================Reducing node 227, size=12=================
+=================Reducing node 225, size=12=================
 
 The current best program is the following
 
@@ -1522,11 +1528,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 227
+Failed to reduce node 225
 ------------------------------------------------------------
 
 
-=================Reducing node 205, size=12=================
+=================Reducing node 203, size=12=================
 
 The current best program is the following
 
@@ -1544,11 +1550,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 205
+Failed to reduce node 203
 ------------------------------------------------------------
 
 
-=================Reducing node 183, size=12=================
+=================Reducing node 181, size=12=================
 
 The current best program is the following
 
@@ -1566,7 +1572,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 183
+Failed to reduce node 181
 ------------------------------------------------------------
 
 
@@ -1656,7 +1662,7 @@ Failed to reduce node 8
 ------------------------------------------------------------
 
 
-=================Reducing node 362, size=12=================
+=================Reducing node 360, size=12=================
 
 The current best program is the following
 
@@ -1674,7 +1680,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_362]
+    structure: [delete_360]
     context: [kleene_plus:declarationSpecifiers]can be epsilon
 ------------------------------------------------------------
 
@@ -1701,11 +1707,11 @@ FixPt[1][node_priority][DFS](12/101)  There is only one element in the input, an
 FixPt[1][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 362
+Failed to reduce node 360
 ------------------------------------------------------------
 
 
-=================Reducing node 366, size=12=================
+=================Reducing node 364, size=12=================
 
 The current best program is the following
 
@@ -1723,7 +1729,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 366
+Failed to reduce node 364
 ------------------------------------------------------------
 
 
@@ -1734,33 +1740,33 @@ The spar-tree is the following.
 compilationUnit{id=1,slot_type=compilationUnit}
 |___(?){id=2,slot_type=optional__compilationUnit_1}
     |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
-        |___Token:#include <stdio.h>{id=367,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
+        |___Token:#include <stdio.h>{id=365,slot_type=[aux_rule__translationUnit_2,IncludeDirective]}
         |___functionDefinition{id=7,slot_type=[aux_rule__translationUnit_2,functionDefinition]}
             |___(?){id=8,slot_type=optional__functionDefinition_2}
-            |   |___(+){id=362,slot_type=declarationSpecifiers}
-            |       |___Token:int{id=366,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
-            |___directDeclarator{id=353,slot_type=[declarator,directDeclarator]}
-            |   |___Token:main{id=361,slot_type=[aux_rule__directDeclarator_9,Identifier]}
-            |   |___(*){id=355,slot_type=kleene_star__directDeclarator_7}
-            |       |___aux_rule__directDeclarator_15{id=357,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
-            |           |___Token:({id=358,slot_type=LeftParen}
-            |           |___Token:){id=360,slot_type=RightParen}
+            |   |___(+){id=360,slot_type=declarationSpecifiers}
+            |       |___Token:int{id=364,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |___directDeclarator{id=351,slot_type=[declarator,directDeclarator]}
+            |   |___Token:main{id=359,slot_type=[aux_rule__directDeclarator_9,Identifier]}
+            |   |___(*){id=353,slot_type=kleene_star__directDeclarator_7}
+            |       |___aux_rule__directDeclarator_15{id=355,slot_type=[aux_rule__directDeclarator_8,aux_rule__directDeclarator_15]}
+            |           |___Token:({id=356,slot_type=LeftParen}
+            |           |___Token:){id=358,slot_type=RightParen}
             |___compoundStatement{id=10,slot_type=compoundStatement}
                 |___Token:{{id=11,slot_type=LeftBrace}
                 |___(?){id=12,slot_type=optional__compoundStatement_1}
                 |   |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
-                |       |___expressionStatement{id=181,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
-                |           |___(?){id=182,slot_type=optional__postfixExpression_1}
-                |           |   |___postfixExpression{id=200,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
-                |           |       |___Token:printf{id=228,slot_type=[aux_rule__postfixExpression_4,Identifier]}
-                |           |       |___(*){id=202,slot_type=kleene_star__postfixExpression_2}
-                |           |           |___aux_rule__postfixExpression_11{id=204,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
-                |           |               |___Token:({id=205,slot_type=LeftParen}
-                |           |               |___(?){id=206,slot_type=optional__postfixExpression_1}
-                |           |               |   |___(+){id=226,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
-                |           |               |       |___Token:"world"{id=227,slot_type=StringLiteral}
-                |           |               |___Token:){id=207,slot_type=RightParen}
-                |           |___Token:;{id=183,slot_type=Semi}
+                |       |___expressionStatement{id=179,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                |           |___(?){id=180,slot_type=optional__postfixExpression_1}
+                |           |   |___postfixExpression{id=198,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                |           |       |___Token:printf{id=226,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                |           |       |___(*){id=200,slot_type=kleene_star__postfixExpression_2}
+                |           |           |___aux_rule__postfixExpression_11{id=202,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                |           |               |___Token:({id=203,slot_type=LeftParen}
+                |           |               |___(?){id=204,slot_type=optional__postfixExpression_1}
+                |           |               |   |___(+){id=224,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                |           |               |       |___Token:"world"{id=225,slot_type=StringLiteral}
+                |           |               |___Token:){id=205,slot_type=RightParen}
+                |           |___Token:;{id=181,slot_type=Semi}
                 |___Token:}{id=13,slot_type=RightBrace}
 ------------------------------------------------------------
 
@@ -2005,7 +2011,7 @@ FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer start
 FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_181]
+    structure: [delete_179]
     context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__blockItemList_3]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -2019,7 +2025,7 @@ Failed to reduce node 15
 ------------------------------------------------------------
 
 
-=================Reducing node 181, size=12=================
+=================Reducing node 179, size=12=================
 
 The current best program is the following
 
@@ -2037,25 +2043,25 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_181]
+    structure: [delete_179]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ==============Node edit action set cache hit.===============
 
-    structure: [replace_181_with_183]
+    structure: [replace_179_with_181]
     context: [regular node]compatible replacement
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 181
+Failed to reduce node 179
 ------------------------------------------------------------
 
 
-=================Reducing node 182, size=12=================
+=================Reducing node 180, size=12=================
 
 The current best program is the following
 
@@ -2075,7 +2081,7 @@ FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer start
 FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_200]
+    structure: [delete_198]
     context: DFS in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -2085,7 +2091,86 @@ FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, an
 FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 182
+Failed to reduce node 180
+------------------------------------------------------------
+
+
+=================Reducing node 198, size=12=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_198]
+    context: [regular_node]can be epsilon
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [replace_198_with_226]
+    context: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [replace_198_with_224]
+    context: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [replace_198_with_225]
+    context: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 198
+------------------------------------------------------------
+
+
+=================Reducing node 351, size=12=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [replace_351_with_359]
+    context: [regular node]compatible replacement
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 351
 ------------------------------------------------------------
 
 
@@ -2105,66 +2190,21 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_200]
-    context: [regular_node]can be epsilon
+    structure: [delete_202]
+    context: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__postfixExpression_2]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
-
-    structure: [replace_200_with_228]
-    context: [regular node]compatible replacement
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [replace_200_with_226]
-    context: [regular node]compatible replacement
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [replace_200_with_227]
-    context: [regular node]compatible replacement
-------------------------------------------------------------
-
-
+FixPt[2][node_priority][DFS](12/101)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, and the empty input has been tested. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
 Failed to reduce node 200
-------------------------------------------------------------
-
-
-=================Reducing node 353, size=12=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [replace_353_with_361]
-    context: [regular node]compatible replacement
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 353
 ------------------------------------------------------------
 
 
@@ -2184,25 +2224,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_204]
-    context: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__postfixExpression_2]dd@#nodes=1,#parts=1#total-parts=1
+    structure: [delete_202]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](12/101)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, and the empty input has been tested. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
 Failed to reduce node 202
 ------------------------------------------------------------
 
 
-=================Reducing node 204, size=12=================
+=================Reducing node 353, size=12=================
 
 The current best program is the following
 
@@ -2218,16 +2253,21 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_204]
-    context: [regular_node]can be epsilon
+    structure: [delete_355]
+    context: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
 
+FixPt[2][node_priority][DFS](12/101)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, and the empty input has been tested. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 204
+Failed to reduce node 353
 ------------------------------------------------------------
 
 
@@ -2247,54 +2287,20 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_357]
-    context: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__directDeclarator_7]dd@#nodes=1,#parts=1#total-parts=1
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](12/101)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, and the empty input has been tested. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
-===================Node reduction is done===================
-
-Failed to reduce node 355
-------------------------------------------------------------
-
-
-=================Reducing node 357, size=12=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-------------------------------------------------------------
-
-
-==============Node edit action set cache hit.===============
-
-    structure: [delete_357]
+    structure: [delete_355]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 357
+Failed to reduce node 355
 ------------------------------------------------------------
 
 
-=================Reducing node 367, size=12=================
+=================Reducing node 365, size=12=================
 
 The current best program is the following
 
@@ -2312,11 +2318,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 367
+Failed to reduce node 365
 ------------------------------------------------------------
 
 
-=================Reducing node 361, size=12=================
+=================Reducing node 359, size=12=================
 
 The current best program is the following
 
@@ -2334,29 +2340,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 361
-------------------------------------------------------------
-
-
-=================Reducing node 360, size=12=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 360
+Failed to reduce node 359
 ------------------------------------------------------------
 
 
@@ -2382,7 +2366,7 @@ Failed to reduce node 358
 ------------------------------------------------------------
 
 
-=================Reducing node 228, size=12=================
+=================Reducing node 356, size=12=================
 
 The current best program is the following
 
@@ -2400,63 +2384,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 228
-------------------------------------------------------------
-
-
-=================Reducing node 207, size=12=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 207
-------------------------------------------------------------
-
-
-=================Reducing node 206, size=12=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
-==============Node edit action set cache hit.===============
-
-    structure: [delete_226]
-    context: DFS in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]dd@#nodes=1,#parts=1#total-parts=1
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](12/101)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, and the empty input has been tested. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
-===================Node reduction is done===================
-
-Failed to reduce node 206
+Failed to reduce node 356
 ------------------------------------------------------------
 
 
@@ -2476,50 +2404,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==============Node edit action set cache hit.===============
-
-    structure: [delete_226]
-    context: [kleene_plus:kleene_plus__primaryExpression_1]can be epsilon
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
-==============Node edit action set cache hit.===============
-
-    structure: [delete_227]
-    context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__primaryExpression_1]dd@#nodes=1,#parts=1#total-parts=1
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](12/101)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, and the empty input has been tested. Global ratio:12/101=11.88%
-FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
 Failed to reduce node 226
-------------------------------------------------------------
-
-
-=================Reducing node 227, size=12=================
-
-The current best program is the following
-
-    --file: seed.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-    }
-    --file: variant.c--
-    #include <stdio.h>
-    int main(){
-      printf("world");
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 227
 ------------------------------------------------------------
 
 
@@ -2545,7 +2432,82 @@ Failed to reduce node 205
 ------------------------------------------------------------
 
 
-=================Reducing node 183, size=12=================
+=================Reducing node 204, size=12=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_224]
+    context: DFS in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](12/101)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, and the empty input has been tested. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
+===================Node reduction is done===================
+
+Failed to reduce node 204
+------------------------------------------------------------
+
+
+=================Reducing node 224, size=12=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_224]
+    context: [kleene_plus:kleene_plus__primaryExpression_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_225]
+    context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__primaryExpression_1]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](12/101)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, and the empty input has been tested. Global ratio:12/101=11.88%
+FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
+===================Node reduction is done===================
+
+Failed to reduce node 224
+------------------------------------------------------------
+
+
+=================Reducing node 225, size=12=================
 
 The current best program is the following
 
@@ -2563,7 +2525,51 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 183
+Failed to reduce node 225
+------------------------------------------------------------
+
+
+=================Reducing node 203, size=12=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 203
+------------------------------------------------------------
+
+
+=================Reducing node 181, size=12=================
+
+The current best program is the following
+
+    --file: seed.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+    }
+    --file: variant.c--
+    #include <stdio.h>
+    int main(){
+      printf("world");
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 181
 ------------------------------------------------------------
 
 
@@ -2631,7 +2637,7 @@ FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer start
 FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_362]
+    structure: [delete_360]
     context: DFS in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -2645,7 +2651,7 @@ Failed to reduce node 8
 ------------------------------------------------------------
 
 
-=================Reducing node 362, size=12=================
+=================Reducing node 360, size=12=================
 
 The current best program is the following
 
@@ -2663,7 +2669,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_362]
+    structure: [delete_360]
     context: [kleene_plus:declarationSpecifiers]can be epsilon
 ------------------------------------------------------------
 
@@ -2672,7 +2678,7 @@ FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer start
 FixPt[2][node_priority][DFS](12/101)  Testing the empty input. Global ratio:12/101=11.88%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_366]
+    structure: [delete_364]
     context: DFS in node_priority(PersesNodeReducer)[kleene_plus:declarationSpecifiers]dd@#nodes=1,#parts=1#total-parts=1
 ------------------------------------------------------------
 
@@ -2682,11 +2688,11 @@ FixPt[2][node_priority][DFS](12/101)  There is only one element in the input, an
 FixPt[2][node_priority][DFS](12/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:12/101=11.88%
 ===================Node reduction is done===================
 
-Failed to reduce node 362
+Failed to reduce node 360
 ------------------------------------------------------------
 
 
-=================Reducing node 366, size=12=================
+=================Reducing node 364, size=12=================
 
 The current best program is the following
 
@@ -2704,7 +2710,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 366
+Failed to reduce node 364
 ------------------------------------------------------------
 
 

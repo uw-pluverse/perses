@@ -17,7 +17,7 @@
 package org.perses.cmd
 
 import com.beust.jcommander.Parameter
-import org.perses.util.Util
+import org.perses.util.StringUtil
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import java.nio.file.Files
 import java.nio.file.Path
@@ -92,13 +92,13 @@ class LanguageControlFlagGroup : AbstractCommandLineFlagGroup(groupName = "Langu
     check(languageName.isEmpty() || designatedParserFacadeClassName.isEmpty()) {
       "The language name and the parser facade class cannot be set at the same time."
     }
-    check(!Util.hasWhitespace(languageName)) {
+    check(!StringUtil.hasWhitespace(languageName)) {
       "The language '$languageName' has whitespaces."
     }
-    check(!Util.hasWhitespace(designatedParserFacadeClassName)) {
+    check(!StringUtil.hasWhitespace(designatedParserFacadeClassName)) {
       "The specified parser facade $designatedParserFacadeClassName has whitespaces."
     }
-    check(!Util.hasWhitespace(underlyingLexerClassForDyckParser)) {
+    check(!StringUtil.hasWhitespace(underlyingLexerClassForDyckParser)) {
       "The specified underlying lexer $underlyingLexerClassForDyckParser " +
         "for the dyck parser has whitespaces."
     }

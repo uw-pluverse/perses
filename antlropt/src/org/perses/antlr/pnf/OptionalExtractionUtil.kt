@@ -23,7 +23,7 @@ import org.perses.antlr.ast.PersesSequenceAst
 import org.perses.antlr.ast.SmartAstConstructor
 import org.perses.antlr.pnf.AstUtil.isSeqOrRuleRefOrTerminal
 import org.perses.util.Interval
-import org.perses.util.Util.fixpoint
+import org.perses.util.fixpoint
 
 object OptionalExtractionUtil {
   class Candidate(

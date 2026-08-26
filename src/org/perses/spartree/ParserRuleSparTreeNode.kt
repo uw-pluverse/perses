@@ -16,10 +16,11 @@
  */
 package org.perses.spartree
 
+import org.perses.util.lazyAssert
 import org.perses.antlr.RuleHierarchyEntry
 import org.perses.antlr.RuleType
 import org.perses.antlr.pnf.AstUtil
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 /** A spar-tree node for a parser rule.  */
 class ParserRuleSparTreeNode internal constructor(

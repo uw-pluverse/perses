@@ -25,7 +25,8 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
+import org.perses.util.StringUtil
 import org.perses.util.shell.ShellCommandOnPath
 import java.nio.file.Paths
 import kotlin.io.path.ExperimentalPathApi
@@ -35,7 +36,7 @@ import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class MimirSemanticsProviderTest {
-  val tempDir = Util.createTempDirForObject(this)
+  val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   @OptIn(ExperimentalPathApi::class)
   @After
@@ -199,8 +200,8 @@ class MimirSemanticsProviderTest {
           }
           """.trimIndent(),
       ).first
-    assertThat(Util.extractNonBlankLinesAndTrim(provider.dumpGraph())).isEqualTo(
-      Util.extractNonBlankLinesAndTrim(
+    assertThat(StringUtil.extractNonBlankLinesAndTrim(provider.dumpGraph())).isEqualTo(
+      StringUtil.extractNonBlankLinesAndTrim(
         """
         def:main@1:function
         

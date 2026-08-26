@@ -19,7 +19,7 @@ package org.perses.util.shell
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.FluentLogger
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.toImmutableList
 import java.io.File.pathSeparator
 import java.nio.file.Files
@@ -117,7 +117,7 @@ data class ShellCommandOnPath(
         val currentDir = Shells.CURRENT_DIR.absolute()
         val children =
           if (cmdPath.parent != null) {
-            Util.listFilesInFolder(cmdPath.parent)
+            FileSystemUtil.listFilesInFolder(cmdPath.parent)
           } else {
             emptySet<Path>()
           }

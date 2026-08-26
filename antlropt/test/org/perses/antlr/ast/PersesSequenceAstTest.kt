@@ -40,4 +40,16 @@ class PersesSequenceAstTest {
     }
     assertThat(seq.subsequence(0, 0).tag).isEqualTo(AstTag.EPSILON)
   }
+
+  @Test
+  fun testFlattenInlinesNestedSequencesInOrder() {
+    val a = GrammarTestingUtility.createTerminal("a")
+    val bc = GrammarTestingUtility.createSeqOfTerminals("b", "c")
+    val d = GrammarTestingUtility.createTerminal("d")
+    val e = GrammarTestingUtility.createTerminal("e")
+    val flattened = PersesSequenceAst.flatten(listOf(a, bc, d, e))
+    assertThat(flattened.map { it.sourceCode }).containsExactly("a", "b", "c", "d", "e").inOrder()
+    assertThat(flattened.none { it is PersesSequenceAst }).isTrue()
+    assertThat(PersesSequenceAst.flatten(emptyList())).isEmpty()
+  }
 }

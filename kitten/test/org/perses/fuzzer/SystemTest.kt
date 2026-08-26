@@ -22,7 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.grammar.rust.LanguageRust
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.cmd.CommandLineProcessor
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -151,7 +151,7 @@ class SystemTest {
           echo "hello" > ${'$'}{FOLDER}/result.txt
           """.trimIndent(),
         )
-        Util.setExecutable(this)
+        FileSystemUtil.setExecutable(this)
       }
     val extensionScriptResultFolder =
       tempDir.resolve("extension-script-result-folder").apply {

@@ -16,7 +16,9 @@
  */
 package org.perses.listminimizer
 
-import org.perses.util.Util
+import org.perses.reduction.CandidateOutcome
+import org.perses.util.IoUtil
+import org.perses.util.StringUtil
 import java.nio.file.Path
 import kotlin.reflect.KClass
 
@@ -24,7 +26,7 @@ class ListMinimizerProgressListener(
   file: Path,
 ) : AbstractListMinimizerListener() {
   private val stream =
-    Util.createNonAppendablePrintStream(
+    IoUtil.createNonAppendablePrintStream(
       path = file,
     )
 
@@ -66,14 +68,14 @@ class ListMinimizerProgressListener(
 
   override fun onPropertyTest(
     configuration: Candidate<*>,
-    result: ListMinimizerPropertyTestResult<*, *>,
+    result: CandidateOutcome<*>,
     sizeOfOriginalList: Int,
     sizeOfCurrentMinimizationResult: Int,
   ) {
     val idList = configuration.deletedWrappers.map { it.index }
     val resultString = result.toShortString()
     val localReductionRate =
-      Util.computePercentage(
+      StringUtil.computePercentage(
         numerator = sizeOfCurrentMinimizationResult,
         denominator = sizeOfOriginalList,
       )

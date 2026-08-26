@@ -16,7 +16,7 @@
  */
 package org.perses.spartree
 
-import org.perses.util.Util
+import org.perses.util.lazyAssert
 import kotlin.comparisons.compareBy
 
 class NodeReplacementAction(
@@ -24,7 +24,7 @@ class NodeReplacementAction(
   val replacingNode: AbstractSparTreeNode,
 ) : AbstractTargetedTreeEditAction(targetNode) {
   init {
-    Util.lazyAssert {
+    lazyAssert {
       val errors = replacingNode.checkLeafLinkIntegrity()
       if (errors != null) {
         throw IllegalStateException(errors.toString())

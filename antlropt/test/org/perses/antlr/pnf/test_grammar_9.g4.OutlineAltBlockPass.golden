@@ -5,10 +5,10 @@ grammar test_grammar_9;
 
 
 start
-    : altnt_block__start_1 'C'+ 'D'* ('E' | 'F')?
+    : alt_block__start_1 'C'+ 'D'* ('E' | 'F')?
     ;
 
-altnt_block__start_1
+alt_block__start_1
     : 'A'
     | 'B'
     ;

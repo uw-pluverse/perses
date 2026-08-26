@@ -32,7 +32,7 @@ import org.perses.reduction.crossfile.CrossFileReductionDriver
 import org.perses.reduction.crossfile.CrossFileReductionIOManager
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
-import org.perses.util.Util
+import org.perses.util.IoUtil
 import org.perses.util.cmd.CommandLineProcessor
 import org.perses.util.cmd.CommandLineProcessor.HelpRequestProcessingDecision
 import java.nio.file.Path
@@ -276,7 +276,7 @@ class Main(
         return
       }
       val cmd = processor.cmd
-      Util.useResources(
+      IoUtil.useResources(
         {
           GlobalContext(
             enableGlobalCache = cmd.cacheControlFlags.enableGlobalCache,

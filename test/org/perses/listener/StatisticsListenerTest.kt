@@ -35,7 +35,7 @@ import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.reduction.reducer.PersesNodeReducerAnnotations
 import org.perses.util.FileStreamPool
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -45,7 +45,7 @@ import kotlin.io.path.deleteIfExists
 
 @RunWith(JUnit4::class)
 class StatisticsListenerTest {
-  private val root = Util.createTempDirForObject(this)
+  private val root = FileSystemUtil.createTempDirForObject(this)
   private val originalReductionInputs =
     DefaultLanguageOriginalReductionInputs(
       testScript = ScriptFile(Files.writeString(root.resolve("r.sh"), "#!/bin/bash\ntrue\n")),

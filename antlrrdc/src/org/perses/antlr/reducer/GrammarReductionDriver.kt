@@ -39,7 +39,7 @@ import org.perses.reduction.TestScriptExecutorService
 import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.reduction.io.ReductionFolder
 import org.perses.reduction.io.ReductionFolderManager
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.ktInfo
 import java.nio.file.Files
@@ -200,14 +200,14 @@ class GrammarReductionDriver private constructor(
           lexerGrammarPath = cmd.compulsoryFlags.lexerGrammarPath!!,
           startRuleName = cmd.compulsoryFlags.startRuleName,
           testPrograms =
-            Util.globWithFileNameExts(
+            FileSystemUtil.globWithFileNameExts(
               cmd.compulsoryFlags.corpus!!,
               ext = cmd.compulsoryFlags.fileExtName,
             ),
         )
       val outputDir =
         cmd.resultOutputFlags.outputDir!!.apply {
-          Util.ensureDirExists(this)
+          FileSystemUtil.ensureDirExists(this)
         }
       val originalReductionInputs = createOriginalReductionInputs(setup)
       // The grammar reducer also writes reduced content into the result folder without backing up the

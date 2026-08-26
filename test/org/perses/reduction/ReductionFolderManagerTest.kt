@@ -32,7 +32,7 @@ import org.perses.reduction.io.ReductionFolder
 import org.perses.reduction.io.ReductionFolderManager
 import org.perses.reduction.io.token.TokenReductionIOManager
 import org.perses.util.AutoDeletableFolder
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.hashing.EnumShaAlgorithm
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -52,7 +52,7 @@ class ReductionFolderManagerTest {
     )
   private val outputDir =
     tempDir.file.resolve("perses_output_dir").apply {
-      Util.ensureDirExists(this)
+      FileSystemUtil.ensureDirExists(this)
     }
   val ioManager =
     TokenReductionIOManager(
@@ -88,7 +88,7 @@ class ReductionFolderManagerTest {
     result.forEach {
       assertThat(it.fileName.toString()).startsWith(prefix)
       assertThat(it.fileName.toString()).endsWith(postfix)
-      assertThat(Util.isEmptyDirectory(it)).isTrue()
+      assertThat(FileSystemUtil.isEmptyDirectory(it)).isTrue()
     }
   }
 

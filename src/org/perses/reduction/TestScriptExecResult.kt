@@ -26,7 +26,7 @@ import java.util.concurrent.CancellationException
 class TestScriptExecResult<Payload : Any>(
   val workingDirectory: ReductionFolder,
   val outputManagerCreatorFuture: RestrictedFuture<OutputManagerCreatorResult<Payload>>,
-  val testScriptExecFuture: RestrictedFuture<PropertyTestResult?>,
+  val testScriptExecFuture: RestrictedFuture<TestScriptVerdict?>,
 ) : Closeable {
   private val outputManagerCreatorResult by lazy {
     try {
@@ -65,9 +65,9 @@ class TestScriptExecResult<Payload : Any>(
     outputManagerCreatorFuture.cancelWithInterruption()
   }
 
-  fun getWithTimeoutWarnings(): PropertyTestResult {
+  fun getWithTimeoutWarnings(): TestScriptVerdict {
     return testScriptExecFuture.getWithTimeoutWarnings()
-      ?: return PropertyTestResult.NON_INTERESTING_RESULT
+      ?: return TestScriptVerdict.NON_INTERESTING
   }
 
   fun isDone() = outputManagerCreatorFuture.isDone() && testScriptExecFuture.isDone()

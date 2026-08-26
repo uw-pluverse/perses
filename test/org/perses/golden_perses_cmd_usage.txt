@@ -243,6 +243,22 @@ Usage: org.perses.Main [options]
       Default: WPROBDD
       Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, WEIGHTED_DFS, WEIGHTED_BFS, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION, ONE_BY_ONE, ADAPTIVE_GAIN_DRIVEN]
 
+[SFC (Structure Form Conversion) Reducer Control]  Options:
+    --enable-sfc
+      Enable the SFC reducers (structure form conversion, to produce smaller 
+      reduction output at the cost of more property tests).
+      Default: false
+    --sfc-fixpoint
+      Enable fixpoint mode for running the SFC reducers.
+      Default: true
+    --sfc-subtree-token-count-limit
+      Skip a subtree whose token count exceeds this limit: the number of 
+      structures of a subtree grows with the number of its reusable pieces.
+      Default: 64
+    --sfc-candidate-limit
+      The maximum number of candidate structures to test for a single subtree.
+      Default: 64
+
 [Verbosity]  Options:
     --verbosity
       verbosity of logging

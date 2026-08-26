@@ -26,16 +26,17 @@ import org.perses.listminimizer.AdaptiveGainDrivenMinimizerArguments
 import org.perses.listminimizer.Candidate
 import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.IPropertyTester
+import org.perses.listminimizer.ImmediatePropertyTestHandle
 import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.ListMinimizerFactory
 import org.perses.listminimizer.ListMinimizerListenerAdaptor
-import org.perses.listminimizer.ListMinimizerPropertyTestResult
 import org.perses.listminimizer.LocalExhaustMinimizerArguments
 import org.perses.listminimizer.OnBestUpdateHandler
 import org.perses.listminimizer.PropertyTestHandle
 import org.perses.listminimizer.WindowedSlicerSpecificArguments
 import org.perses.listminimizer.microbenchmark.RecordingContext
 import org.perses.program.TokenizedProgram
+import org.perses.reduction.CandidateOutcome
 import org.perses.reduction.TestScriptExecutorService.Companion.ALWAYS_TRUE_PRECHECK
 import org.perses.reduction.TestScriptExecutorService.Companion.IDENTITY_POST_CHECK
 import org.perses.reduction.TestScriptExecutorService.OutputManagerCreatorResult.Proceed
@@ -57,21 +58,16 @@ import org.perses.spartree.NodeReplacementActionSet
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
 import org.perses.util.AbstractFileContent
+import org.perses.util.CollectionUtil
 import org.perses.util.FileNameContentPair
 import org.perses.util.FileNameContentPairList
+import org.perses.util.StringUtil
 import org.perses.util.TimeUtil
-import org.perses.util.Util
-import org.perses.util.Util.lazyAssert
 import org.perses.util.ktFine
+import org.perses.util.lazyAssert
 import org.perses.util.transformToImmutableList
 import java.lang.RuntimeException
 import java.util.HashSet
-
-private typealias SparTreeTestHandle =
-  PropertyTestHandle<NodeContainerForListMinimizer, SparTreeListMinimizerPayload>
-
-private typealias SparTreePropertyTestResult =
-  ListMinimizerPropertyTestResult<NodeContainerForListMinimizer, SparTreeListMinimizerPayload>
 
 /**
  * The base class for reducers that reduce by editing a [SparTree] in place: the reducer proposes
@@ -147,7 +143,7 @@ abstract class AbstractSparTreeReducer protected constructor(
 
   protected fun testAllTreeEditsAndReturnTheBest(
     editList: List<AbstractSparTreeEdit<*>>,
-  ): TreeEditWithItsResult? {
+  ): EditTestPayload? {
     if (editList.isEmpty()) {
       return null
     }
@@ -161,9 +157,15 @@ abstract class AbstractSparTreeReducer protected constructor(
     return result
   }
 
-  protected fun testOneTreeEditAndReturnTheBest(
+  protected fun testOneTreeEditAndGetOutcome(
     edit: AbstractSparTreeEdit<*>,
-  ): TreeEditWithItsResult? {
+  ): CandidateOutcome<EditTestPayload> {
+    asyncTestOneEdit(edit, visitedCacheKeys = null).use { future ->
+      return analyzeOneTestFuture(future)
+    }
+  }
+
+  protected fun testOneTreeEditAndReturnTheBest(edit: AbstractSparTreeEdit<*>): EditTestPayload? {
     asyncTestOneEdit(edit, visitedCacheKeys = null).use { future ->
       return analyzeOneTestFutureAndGetBest(future)
     }
@@ -191,7 +193,7 @@ abstract class AbstractSparTreeReducer protected constructor(
 
   protected fun analyzeResultsAndGetBest(
     futureList: List<TestScriptExecResult<EditTestPayload>>,
-  ): TreeEditWithItsResult? {
+  ): EditTestPayload? {
     lazyAssert({ isFutureListSortedFromLeastProgramSizeToGreatest(futureList) }) { futureList }
     var best: TestScriptExecResult<EditTestPayload>? = null
     val iterator = futureList.iterator()
@@ -231,21 +233,24 @@ abstract class AbstractSparTreeReducer protected constructor(
         }
       }
     }
-    return if (best != null) {
-      TreeEditWithItsResult(
-        edit = best.payload!!.edit,
-        testResult = best.getWithTimeoutWarnings(),
-        outputManager = best.payload!!.outputManager,
-      )
-    } else {
-      null
-    }
+    return best?.payload
   }
 
-  protected fun analyzeOneTestFutureAndGetBest(
+  /**
+   * What became of one submitted edit. [analyzeOneTestFutureAndGetBest] collapses both uninteresting
+   * cases to null, which discards the one fact a cost model needs: whether a script ran at all.
+   *
+   * A null `future.payload` is not "no edit could be built". The executor returns
+   * [TestScriptExecutorService.OutputManagerCreatorResult] `Skip` when the query cache already holds
+   * the verdict or the program repeats one already submitted in this batch, and a cancelled test
+   * resolves the same way -- so it means no script ran, and "Uninteresting" is the label that case
+   * has always printed.
+   */
+  protected fun analyzeOneTestFuture(
     future: TestScriptExecResult<EditTestPayload>,
-  ): TreeEditWithItsResult? {
-    val payload = future.payload ?: return null
+  ): CandidateOutcome<EditTestPayload> {
+    val payload =
+      future.payload ?: return CandidateOutcome.Uninteresting.NotTested("Uninteresting")
 
     val testResult = future.getWithTimeoutWarnings()
     cacheTestResultIfNotInteresting(payload, testResult)
@@ -255,19 +260,20 @@ abstract class AbstractSparTreeReducer protected constructor(
       payload.edit,
       outputManager = payload.outputManager,
     )
-    if (testResult.isInteresting) {
-      return TreeEditWithItsResult(
-        edit = payload.edit,
-        testResult = testResult,
-        outputManager = payload.outputManager,
-      )
+    return if (testResult.isInteresting) {
+      CandidateOutcome.Interesting(payload = payload, testScriptVerdict = testResult)
+    } else {
+      CandidateOutcome.Uninteresting.Rejected(testResult)
     }
-    return null
   }
+
+  protected fun analyzeOneTestFutureAndGetBest(
+    future: TestScriptExecResult<EditTestPayload>,
+  ): EditTestPayload? = (analyzeOneTestFuture(future) as? CandidateOutcome.Interesting)?.payload
 
   private fun cacheTestResultIfNotInteresting(
     payload: EditTestPayload,
-    result: PropertyTestResult,
+    result: TestScriptVerdict,
   ) {
     if (result.isNotInteresting) {
       reducerContext.queryCache.recordUninteresting(
@@ -281,7 +287,7 @@ abstract class AbstractSparTreeReducer protected constructor(
   private fun asyncApplyEditsInOrderOfProgramSizeFromLeast(
     editList: List<AbstractSparTreeEdit<*>>,
   ): List<TestScriptExecResult<EditTestPayload>> {
-    val visitedCacheKeys = Util.createConcurrentSet<HashCode>()
+    val visitedCacheKeys = CollectionUtil.createConcurrentSet<HashCode>()
     logger.ktFine {
       "Start to sort the tree edits. ${TimeUtil.formatDateForDisplay(System.currentTimeMillis())}"
     }
@@ -401,7 +407,7 @@ abstract class AbstractSparTreeReducer protected constructor(
   ): NodeDeletionActionSet {
     val actionSetBuilder =
       NodeDeletionActionSet.Builder("list minimizer@${input.size}")
-    Util.visitDifference(superList = originalInput, subList = input) {
+    CollectionUtil.visitDifference(superList = originalInput, subList = input) {
       lazyAssert { !it.isPermanentlyDeleted }
       actionSetBuilder.deleteNode(it)
     }
@@ -499,15 +505,17 @@ abstract class AbstractSparTreeReducer protected constructor(
     private fun testPropertyByLiteralReplacement(
       allNodesToBeDeleted: ImmutableList<AbstractSparTreeNode>,
       fixpointReductionState: FixpointReductionState,
-    ): SparTreePropertyTestResult {
+    ): CandidateOutcome<SparTreeListMinimizerPayload> {
       val treeEdit =
         createTreeEditForLiteralReplacement(
           tree,
           allNodesToBeDeleted,
           actionSetDescriptionPrefix,
           fixpointReductionState,
-        ) ?: return ListMinimizerPropertyTestResult.Skipped("Skipped LiteralReplacement")
-      return testOneTreeEditAndReturnBestAsListMinimizerPropertyTestResult(treeEdit)
+        ) ?: return CandidateOutcome.Uninteresting.NotTested(
+          "Skipped LiteralReplacement",
+        )
+      return testOneTreeEditAsCandidateOutcome(treeEdit)
     }
 
     private fun createDeletionEditOrNullOnCacheHit(
@@ -547,15 +555,18 @@ abstract class AbstractSparTreeReducer protected constructor(
     ): PropertyTestHandle<NodeContainerForListMinimizer, SparTreeListMinimizerPayload> {
       val allDeletedNodes = extractNonPermanentlyDeletedNodes(configuration.deletedElements)
       if (allDeletedNodes.isEmpty()) {
-        // Deleting nothing yields the current best program, which is interesting.
-        return ListMinimizerPropertyTestResult.Completed(
-          result = PropertyTestResult.INTERESTING_RESULT,
-          payload =
-            SparTreeListMinimizerPayload(
-              tree = tree,
-              edit = EmptySparTreeEdit(tree, "$actionSetDescriptionPrefix[Empty]"),
-              outputManager = null,
-            ),
+        // Deleting nothing yields the current best program, which is interesting. No script runs,
+        // so there is no oracle verdict and no cost to attribute to this query.
+        return ImmediatePropertyTestHandle(
+          CandidateOutcome.Interesting(
+            payload =
+              SparTreeListMinimizerPayload(
+                tree = tree,
+                edit = EmptySparTreeEdit(tree, "$actionSetDescriptionPrefix[Empty]"),
+                outputManager = null,
+              ),
+            testScriptVerdict = null,
+          ),
         )
       }
       val treeEdit =
@@ -563,19 +574,25 @@ abstract class AbstractSparTreeReducer protected constructor(
           allDeletedNodes,
           partitionCount = configuration.deletedElements.size,
           originalTotalPartitionCount = configuration.getOriginalOrNull()?.size,
-        ) ?: return uninterestingDeletionResult(allDeletedNodes, cacheHit = true)
+        ) ?: return ImmediatePropertyTestHandle(
+          uninterestingDeletionResult(
+            allDeletedNodes,
+            // "Skipped" is what this case has always printed: the same deletion was tried before.
+            CandidateOutcome.Uninteresting.NotTested("Skipped"),
+          ),
+        )
       val future = asyncTestOneEdit(treeEdit, visitedCacheKeys = null)
-      return object : SparTreeTestHandle {
-        override fun get(): SparTreePropertyTestResult {
-          val best = analyzeOneTestFutureAndGetBest(future)
+      return object :
+        PropertyTestHandle<NodeContainerForListMinimizer, SparTreeListMinimizerPayload> {
+        override fun get(): CandidateOutcome<SparTreeListMinimizerPayload> {
+          val outcome = analyzeOneTestFuture(future)
           future.close()
-          return if (best != null) {
-            ListMinimizerPropertyTestResult.Completed(
-              best.testResult,
-              SparTreeListMinimizerPayload(tree, best.edit, outputManager = best.outputManager),
-            )
+          val result = outcome.withListMinimizerPayload()
+          // Only a deletion that did not survive is eligible for the literal-replacement fallback.
+          return if (result is CandidateOutcome.Uninteresting) {
+            uninterestingDeletionResult(allDeletedNodes, result)
           } else {
-            uninterestingDeletionResult(allDeletedNodes, cacheHit = false)
+            result
           }
         }
 
@@ -586,34 +603,50 @@ abstract class AbstractSparTreeReducer protected constructor(
       }
     }
 
-    // What an uninteresting or cache-hit deletion resolves to: the literal-replacement fallback if
-    // enabled, otherwise a skip whose message distinguishes the two (matching the pre-concurrency
-    // sequential behavior).
+    // What a deletion that did not survive resolves to: the literal-replacement fallback if
+    // enabled, otherwise [outcome] -- which says *why* it did not survive, and so whether the query
+    // cost a script execution.
+    //
+    // The fallback discards [outcome]: when literal replacement is enabled and the deletion was
+    // rejected, the cost of that first rejected test is not attributed to the query, because the
+    // returned result carries the replacement's verdict instead. That path is off by default
+    // (--enable-literal-replacement-for-list-minimizer).
     private fun uninterestingDeletionResult(
       allDeletedNodes: ImmutableList<AbstractSparTreeNode>,
-      cacheHit: Boolean,
-    ): SparTreePropertyTestResult =
+      outcome: CandidateOutcome<SparTreeListMinimizerPayload>,
+    ): CandidateOutcome<SparTreeListMinimizerPayload> =
       if (persesConfig.enableLiteralReplacementForListMinimizer) {
         testPropertyByLiteralReplacement(allDeletedNodes, fixpointReductionState)
       } else {
-        ListMinimizerPropertyTestResult.Skipped(if (cacheHit) "Skipped" else "Uninteresting")
+        outcome
       }
 
-    private fun testOneTreeEditAndReturnBestAsListMinimizerPropertyTestResult(
+    private fun testOneTreeEditAsCandidateOutcome(
       treeEdit: AbstractSparTreeEdit<*>,
-    ): SparTreePropertyTestResult {
-      val result =
-        testOneTreeEditAndReturnTheBest(treeEdit)
-          ?: return ListMinimizerPropertyTestResult.Skipped(result = "Uninteresting")
-      return ListMinimizerPropertyTestResult.Completed(
-        result.testResult,
-        SparTreeListMinimizerPayload(
-          tree,
-          result.edit,
-          outputManager = result.outputManager,
-        ),
-      )
-    }
+    ): CandidateOutcome<SparTreeListMinimizerPayload> =
+      testOneTreeEditAndGetOutcome(treeEdit).withListMinimizerPayload()
+
+    /**
+     * Restates the reducer's outcome in the payload a list minimizer adopts. Only the interesting
+     * case is rebuilt: an uninteresting outcome carries no payload, so it already *is* an outcome of
+     * every payload type, and passes through untouched. Building the payload has to happen here
+     * because it needs the captured [tree].
+     */
+    private fun CandidateOutcome<EditTestPayload>.withListMinimizerPayload():
+      CandidateOutcome<SparTreeListMinimizerPayload> =
+      when (this) {
+        is CandidateOutcome.Interesting ->
+          CandidateOutcome.Interesting(
+            payload =
+              SparTreeListMinimizerPayload(
+                tree,
+                payload.edit,
+                outputManager = payload.outputManager,
+              ),
+            testScriptVerdict = testScriptVerdict,
+          )
+        is CandidateOutcome.Uninteresting -> this
+      }
   }
 
   protected fun createListMinimizerListenerAdaptor(
@@ -628,7 +661,7 @@ abstract class AbstractSparTreeReducer protected constructor(
           .computePerFileSizeMetrics()
       val initialMetrics = event.initialPerFileSizeMetrics()
       val globalPercentage =
-        Util.computePercentage(
+        StringUtil.computePercentage(
           perFileSizeMetrics.totalCanonicalTokenCount,
           denominator = initialMetrics.totalCanonicalTokenCount,
         )
@@ -888,21 +921,15 @@ abstract class AbstractSparTreeReducer protected constructor(
     tree: SparTree,
   ): EditApplicationResult {
     val result = testOneTreeEditAndReturnTheBest(edit) ?: return EditApplicationResult.NO
-    val outputManager = result.outputManager
-    if (result.testResult.isInteresting) {
-      tree.applyEdit(
-        result.edit,
-        canonicalTokenCount = computeCanonicalTokenCount(outputManager),
-      )
-      return EditApplicationResult.APPLIED
-    }
-    return EditApplicationResult.NO
+    tree.applyEdit(
+      result.edit,
+      canonicalTokenCount = computeCanonicalTokenCount(result.outputManager),
+    )
+    return EditApplicationResult.APPLIED
   }
 
-  protected fun applyEditToTree(treeEditTuple: TreeEditWithItsResult) {
-    val edit = treeEditTuple.edit
-    val outputManager = treeEditTuple.outputManager
-    applyEditToTree(edit, outputManager)
+  protected fun applyEditToTree(payload: EditTestPayload) {
+    applyEditToTree(payload.edit, payload.outputManager)
   }
 
   protected fun applyEditToTree(

@@ -100,8 +100,11 @@ recordingContext:
     \ \"AUTO\"\nlprFlags:\n  groupName: \"LPR Reducer Control\"\n  enableLPR: false\n\
     \  lprFixpoint: false\n  llmClientPath: null\nlatraFlags:\n  groupName: \"Latra\
     \ Reducer Control\"\n  enableLatra: true\n  enableFixpoint: true\n  transformationListMinimizer:\
-    \ \"WPROBDD\"\nmimirFlags:\n  groupName: \"Mimir Reducer Control\"\n  nodeCountThresholdToUseOneByOne:\
-    \ 10\n  enableBottomUpReductionAfterMainReductionLoop: true\n  bottomUpReductionMaxDepth:\
-    \ 5\n  mimirReductionAlgorithm: \"FINE_DAG_AS_LIST\"\n  enableMimirForRegularNode:\
-    \ true\n  enableMimirDeleteDefWithAllItsConcreteUses: false\n  javaLanguageServerCmd:\
-    \ \"start_jdtls.sh\"\n  clanguageServerCmd: \"clangd-18\"\n"
+    \ \"WPROBDD\"\nsfcFlags:\n  groupName: \"SFC (Structure Form Conversion) Reducer\
+    \ Control\"\n  enableSfc: false\n  enableFixpoint: true\n  subtreeTokenCountLimit:\
+    \ 64\n  candidateLimit: 64\nmimirFlags:\n  groupName: \"Mimir Reducer Control\"\
+    \n  nodeCountThresholdToUseOneByOne: 10\n  enableBottomUpReductionAfterMainReductionLoop:\
+    \ true\n  bottomUpReductionMaxDepth: 5\n  mimirReductionAlgorithm: \"FINE_DAG_AS_LIST\"\
+    \n  enableMimirForRegularNode: true\n  enableMimirDeleteDefWithAllItsConcreteUses:\
+    \ false\n  javaLanguageServerCmd: \"start_jdtls.sh\"\n  clanguageServerCmd: \"\
+    clangd-18\"\n"

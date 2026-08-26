@@ -725,35 +725,6 @@ entries {
   transitiveStringLiterals: "~"
 }
 entries {
-  ruleName: "conditionalExpression"
-  immediateSubRuleNames: "logicalOrExpression"
-  transitiveSubRuleNames: "Constant"
-  transitiveSubRuleNames: "Identifier"
-  transitiveSubRuleNames: "StringLiteral"
-  transitiveSubRuleNames: "additiveExpression"
-  transitiveSubRuleNames: "andExpression"
-  transitiveSubRuleNames: "aux_rule__postfixExpression_13"
-  transitiveSubRuleNames: "aux_rule__postfixExpression_14"
-  transitiveSubRuleNames: "aux_rule__postfixExpression_4"
-  transitiveSubRuleNames: "aux_rule__unaryExpression_3"
-  transitiveSubRuleNames: "aux_rule__unaryExpression_7"
-  transitiveSubRuleNames: "aux_rule__unaryExpression_8"
-  transitiveSubRuleNames: "aux_rule__unaryExpression_9"
-  transitiveSubRuleNames: "castExpression"
-  transitiveSubRuleNames: "equalityExpression"
-  transitiveSubRuleNames: "exclusiveOrExpression"
-  transitiveSubRuleNames: "genericSelection"
-  transitiveSubRuleNames: "inclusiveOrExpression"
-  transitiveSubRuleNames: "kleene_plus__primaryExpression_1"
-  transitiveSubRuleNames: "logicalAndExpression"
-  transitiveSubRuleNames: "logicalOrExpression"
-  transitiveSubRuleNames: "multiplicativeExpression"
-  transitiveSubRuleNames: "postfixExpression"
-  transitiveSubRuleNames: "relationalExpression"
-  transitiveSubRuleNames: "shiftExpression"
-  transitiveSubRuleNames: "unaryExpression"
-}
-entries {
   ruleName: "assignmentOperator"
   immediateSubRuleNames: "AndAssign"
   immediateSubRuleNames: "Assign"
@@ -1053,12 +1024,13 @@ entries {
   transitiveSubRuleNames: "Unsigned"
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
   transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__structDeclarationList_2"
   transitiveSubRuleNames: "aux_rule__structDeclaration_1"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "enumSpecifier"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
   transitiveSubRuleNames: "kleene_star__structDeclarationList_1"
   transitiveSubRuleNames: "optional__structDeclarationList_3"
   transitiveSubRuleNames: "specifierQualifierList"
@@ -1127,69 +1099,12 @@ entries {
   transitiveSubRuleNames: "Unsigned"
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
   transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "enumSpecifier"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
   transitiveSubRuleNames: "specifierQualifierList"
-  transitiveSubRuleNames: "structOrUnionSpecifier"
-  transitiveSubRuleNames: "typeQualifier"
-  transitiveSubRuleNames: "typeSpecifier"
-  transitiveSubRuleNames: "typeSpecifierWithAttrList"
-  transitiveSubRuleNames: "typedefName"
-  transitiveStringLiterals: "_Atomic"
-  transitiveStringLiterals: "_Bool"
-  transitiveStringLiterals: "_Complex"
-  transitiveStringLiterals: "_Nonnull"
-  transitiveStringLiterals: "_Nullable"
-  transitiveStringLiterals: "__m128"
-  transitiveStringLiterals: "__m128d"
-  transitiveStringLiterals: "__m128i"
-  transitiveStringLiterals: "__restrict"
-  transitiveStringLiterals: "__restrict__"
-  transitiveStringLiterals: "char"
-  transitiveStringLiterals: "const"
-  transitiveStringLiterals: "double"
-  transitiveStringLiterals: "float"
-  transitiveStringLiterals: "int"
-  transitiveStringLiterals: "long"
-  transitiveStringLiterals: "restrict"
-  transitiveStringLiterals: "short"
-  transitiveStringLiterals: "signed"
-  transitiveStringLiterals: "unsigned"
-  transitiveStringLiterals: "void"
-  transitiveStringLiterals: "volatile"
-}
-entries {
-  ruleName: "specifierQualifierList"
-  immediateSubRuleNames: "altnt_block__specifierQualifierList_3"
-  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
-  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_2"
-  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_3"
-  transitiveSubRuleNames: "Atomic"
-  transitiveSubRuleNames: "Bool"
-  transitiveSubRuleNames: "Char"
-  transitiveSubRuleNames: "Complex"
-  transitiveSubRuleNames: "Const"
-  transitiveSubRuleNames: "Double"
-  transitiveSubRuleNames: "Float"
-  transitiveSubRuleNames: "Identifier"
-  transitiveSubRuleNames: "Int"
-  transitiveSubRuleNames: "Long"
-  transitiveSubRuleNames: "Nonnull"
-  transitiveSubRuleNames: "Nullable"
-  transitiveSubRuleNames: "Restrict"
-  transitiveSubRuleNames: "Restrict_gcc"
-  transitiveSubRuleNames: "Restrict_gcc2"
-  transitiveSubRuleNames: "Short"
-  transitiveSubRuleNames: "Signed"
-  transitiveSubRuleNames: "Unsigned"
-  transitiveSubRuleNames: "Void"
-  transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
-  transitiveSubRuleNames: "atomicTypeSpecifier"
-  transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
-  transitiveSubRuleNames: "enumSpecifier"
   transitiveSubRuleNames: "structOrUnionSpecifier"
   transitiveSubRuleNames: "typeQualifier"
   transitiveSubRuleNames: "typeSpecifier"
@@ -1534,10 +1449,11 @@ entries {
   transitiveSubRuleNames: "Unsigned"
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
   transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "enumSpecifier"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
   transitiveSubRuleNames: "specifierQualifierList"
   transitiveSubRuleNames: "structOrUnionSpecifier"
   transitiveSubRuleNames: "typeQualifier"
@@ -1573,7 +1489,7 @@ entries {
   immediateSubRuleNames: "pointer"
   transitiveSubRuleNames: "Caret"
   transitiveSubRuleNames: "Star"
-  transitiveSubRuleNames: "altnt_block__pointer_9"
+  transitiveSubRuleNames: "alt_block__pointer_9"
   transitiveSubRuleNames: "aux_rule__abstractDeclarator_3"
   transitiveSubRuleNames: "aux_rule__directAbstractDeclarator_14"
   transitiveSubRuleNames: "aux_rule__directAbstractDeclarator_23"
@@ -1702,15 +1618,6 @@ entries {
   transitiveSubRuleNames: "unaryExpression"
 }
 entries {
-  ruleName: "aux_rule__conditionalExpression_1"
-}
-entries {
-  ruleName: "optional__conditionalExpression_2"
-  immediateSubRuleNames: "aux_rule__conditionalExpression_1"
-  canBeEpsilon: true
-  transitiveSubRuleNames: "aux_rule__conditionalExpression_1"
-}
-entries {
   ruleName: "optional__declaration_2"
   immediateSubRuleNames: "initDeclaratorList"
   canBeEpsilon: true
@@ -1769,12 +1676,13 @@ entries {
   transitiveSubRuleNames: "Unsigned"
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
   transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__structDeclarationList_2"
   transitiveSubRuleNames: "aux_rule__structDeclaration_1"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "enumSpecifier"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
   transitiveSubRuleNames: "specifierQualifierList"
   transitiveSubRuleNames: "staticAssertDeclaration"
   transitiveSubRuleNames: "staticAssertDeclarationWithoutSemicolon"
@@ -1822,66 +1730,6 @@ entries {
   transitiveSubRuleNames: "structDeclaratorList"
 }
 entries {
-  ruleName: "optional__specifierQualifierList_1"
-  immediateSubRuleNames: "specifierQualifierList"
-  canBeEpsilon: true
-  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
-  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_2"
-  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_3"
-  transitiveSubRuleNames: "Atomic"
-  transitiveSubRuleNames: "Bool"
-  transitiveSubRuleNames: "Char"
-  transitiveSubRuleNames: "Complex"
-  transitiveSubRuleNames: "Const"
-  transitiveSubRuleNames: "Double"
-  transitiveSubRuleNames: "Float"
-  transitiveSubRuleNames: "Identifier"
-  transitiveSubRuleNames: "Int"
-  transitiveSubRuleNames: "Long"
-  transitiveSubRuleNames: "Nonnull"
-  transitiveSubRuleNames: "Nullable"
-  transitiveSubRuleNames: "Restrict"
-  transitiveSubRuleNames: "Restrict_gcc"
-  transitiveSubRuleNames: "Restrict_gcc2"
-  transitiveSubRuleNames: "Short"
-  transitiveSubRuleNames: "Signed"
-  transitiveSubRuleNames: "Unsigned"
-  transitiveSubRuleNames: "Void"
-  transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
-  transitiveSubRuleNames: "atomicTypeSpecifier"
-  transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
-  transitiveSubRuleNames: "enumSpecifier"
-  transitiveSubRuleNames: "specifierQualifierList"
-  transitiveSubRuleNames: "structOrUnionSpecifier"
-  transitiveSubRuleNames: "typeQualifier"
-  transitiveSubRuleNames: "typeSpecifier"
-  transitiveSubRuleNames: "typeSpecifierWithAttrList"
-  transitiveSubRuleNames: "typedefName"
-  transitiveStringLiterals: "_Atomic"
-  transitiveStringLiterals: "_Bool"
-  transitiveStringLiterals: "_Complex"
-  transitiveStringLiterals: "_Nonnull"
-  transitiveStringLiterals: "_Nullable"
-  transitiveStringLiterals: "__m128"
-  transitiveStringLiterals: "__m128d"
-  transitiveStringLiterals: "__m128i"
-  transitiveStringLiterals: "__restrict"
-  transitiveStringLiterals: "__restrict__"
-  transitiveStringLiterals: "char"
-  transitiveStringLiterals: "const"
-  transitiveStringLiterals: "double"
-  transitiveStringLiterals: "float"
-  transitiveStringLiterals: "int"
-  transitiveStringLiterals: "long"
-  transitiveStringLiterals: "restrict"
-  transitiveStringLiterals: "short"
-  transitiveStringLiterals: "signed"
-  transitiveStringLiterals: "unsigned"
-  transitiveStringLiterals: "void"
-  transitiveStringLiterals: "volatile"
-}
-entries {
   ruleName: "optional__structDeclarator_1"
   immediateSubRuleNames: "declarator"
   canBeEpsilon: true
@@ -1897,7 +1745,7 @@ entries {
   canBeEpsilon: true
   transitiveSubRuleNames: "Caret"
   transitiveSubRuleNames: "Star"
-  transitiveSubRuleNames: "altnt_block__pointer_9"
+  transitiveSubRuleNames: "alt_block__pointer_9"
   transitiveSubRuleNames: "aux_rule__pointer_6"
   transitiveSubRuleNames: "kleene_plus__pointer_8"
   transitiveSubRuleNames: "pointer"
@@ -2044,7 +1892,7 @@ entries {
   transitiveSubRuleNames: "Caret"
   transitiveSubRuleNames: "Star"
   transitiveSubRuleNames: "abstractDeclarator"
-  transitiveSubRuleNames: "altnt_block__pointer_9"
+  transitiveSubRuleNames: "alt_block__pointer_9"
   transitiveSubRuleNames: "aux_rule__abstractDeclarator_3"
   transitiveSubRuleNames: "aux_rule__directAbstractDeclarator_14"
   transitiveSubRuleNames: "aux_rule__directAbstractDeclarator_23"
@@ -2259,8 +2107,8 @@ entries {
   transitiveSubRuleNames: "aux_rule__blockItemList_2"
   transitiveSubRuleNames: "aux_rule__declaration_3"
   transitiveSubRuleNames: "aux_rule__statement_3"
-  transitiveSubRuleNames: "aux_rule__statement_6"
-  transitiveSubRuleNames: "aux_rule__statement_7"
+  transitiveSubRuleNames: "aux_rule__statement_8"
+  transitiveSubRuleNames: "aux_rule__statement_9"
   transitiveSubRuleNames: "blockItemList"
   transitiveSubRuleNames: "compoundStatement"
   transitiveSubRuleNames: "declaration"
@@ -2271,15 +2119,6 @@ entries {
   transitiveSubRuleNames: "statement"
   transitiveSubRuleNames: "staticAssertDeclaration"
   transitiveStringLiterals: ";"
-}
-entries {
-  ruleName: "aux_rule__selectionStatement_1"
-}
-entries {
-  ruleName: "optional__selectionStatement_2"
-  immediateSubRuleNames: "aux_rule__selectionStatement_1"
-  canBeEpsilon: true
-  transitiveSubRuleNames: "aux_rule__selectionStatement_1"
 }
 entries {
   ruleName: "optional__compilationUnit_1"
@@ -3088,8 +2927,8 @@ entries {
   transitiveSubRuleNames: "aux_rule__blockItemList_2"
   transitiveSubRuleNames: "aux_rule__declaration_3"
   transitiveSubRuleNames: "aux_rule__statement_3"
-  transitiveSubRuleNames: "aux_rule__statement_6"
-  transitiveSubRuleNames: "aux_rule__statement_7"
+  transitiveSubRuleNames: "aux_rule__statement_8"
+  transitiveSubRuleNames: "aux_rule__statement_9"
   transitiveSubRuleNames: "compoundStatement"
   transitiveSubRuleNames: "declaration"
   transitiveSubRuleNames: "expressionStatement"
@@ -3259,11 +3098,166 @@ entries {
   transitiveSubRuleNames: "unaryExpression"
 }
 entries {
+  ruleName: "aux_rule__conditionalExpression_4"
+}
+entries {
+  ruleName: "kleene_star__conditionalExpression_3"
+  immediateSubRuleNames: "aux_rule__conditionalExpression_4"
+  canBeEpsilon: true
+  transitiveSubRuleNames: "aux_rule__conditionalExpression_4"
+}
+entries {
+  ruleName: "conditionalExpression"
+  immediateSubRuleNames: "logicalOrExpression"
+  transitiveSubRuleNames: "Constant"
+  transitiveSubRuleNames: "Identifier"
+  transitiveSubRuleNames: "StringLiteral"
+  transitiveSubRuleNames: "additiveExpression"
+  transitiveSubRuleNames: "andExpression"
+  transitiveSubRuleNames: "aux_rule__postfixExpression_13"
+  transitiveSubRuleNames: "aux_rule__postfixExpression_14"
+  transitiveSubRuleNames: "aux_rule__postfixExpression_4"
+  transitiveSubRuleNames: "aux_rule__unaryExpression_3"
+  transitiveSubRuleNames: "aux_rule__unaryExpression_7"
+  transitiveSubRuleNames: "aux_rule__unaryExpression_8"
+  transitiveSubRuleNames: "aux_rule__unaryExpression_9"
+  transitiveSubRuleNames: "castExpression"
+  transitiveSubRuleNames: "equalityExpression"
+  transitiveSubRuleNames: "exclusiveOrExpression"
+  transitiveSubRuleNames: "genericSelection"
+  transitiveSubRuleNames: "inclusiveOrExpression"
+  transitiveSubRuleNames: "kleene_plus__primaryExpression_1"
+  transitiveSubRuleNames: "logicalAndExpression"
+  transitiveSubRuleNames: "logicalOrExpression"
+  transitiveSubRuleNames: "multiplicativeExpression"
+  transitiveSubRuleNames: "postfixExpression"
+  transitiveSubRuleNames: "relationalExpression"
+  transitiveSubRuleNames: "shiftExpression"
+  transitiveSubRuleNames: "unaryExpression"
+}
+entries {
+  ruleName: "aux_rule__specifierQualifierList_4"
+  immediateSubRuleNames: "typeQualifier"
+  immediateSubRuleNames: "typeSpecifierWithAttrList"
+  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
+  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_2"
+  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_3"
+  transitiveSubRuleNames: "Atomic"
+  transitiveSubRuleNames: "Bool"
+  transitiveSubRuleNames: "Char"
+  transitiveSubRuleNames: "Complex"
+  transitiveSubRuleNames: "Const"
+  transitiveSubRuleNames: "Double"
+  transitiveSubRuleNames: "Float"
+  transitiveSubRuleNames: "Identifier"
+  transitiveSubRuleNames: "Int"
+  transitiveSubRuleNames: "Long"
+  transitiveSubRuleNames: "Nonnull"
+  transitiveSubRuleNames: "Nullable"
+  transitiveSubRuleNames: "Restrict"
+  transitiveSubRuleNames: "Restrict_gcc"
+  transitiveSubRuleNames: "Restrict_gcc2"
+  transitiveSubRuleNames: "Short"
+  transitiveSubRuleNames: "Signed"
+  transitiveSubRuleNames: "Unsigned"
+  transitiveSubRuleNames: "Void"
+  transitiveSubRuleNames: "Volatile"
+  transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
+  transitiveSubRuleNames: "enumSpecifier"
+  transitiveSubRuleNames: "structOrUnionSpecifier"
+  transitiveSubRuleNames: "typeQualifier"
+  transitiveSubRuleNames: "typeSpecifier"
+  transitiveSubRuleNames: "typeSpecifierWithAttrList"
+  transitiveSubRuleNames: "typedefName"
+  transitiveStringLiterals: "_Atomic"
+  transitiveStringLiterals: "_Bool"
+  transitiveStringLiterals: "_Complex"
+  transitiveStringLiterals: "_Nonnull"
+  transitiveStringLiterals: "_Nullable"
+  transitiveStringLiterals: "__m128"
+  transitiveStringLiterals: "__m128d"
+  transitiveStringLiterals: "__m128i"
+  transitiveStringLiterals: "__restrict"
+  transitiveStringLiterals: "__restrict__"
+  transitiveStringLiterals: "char"
+  transitiveStringLiterals: "const"
+  transitiveStringLiterals: "double"
+  transitiveStringLiterals: "float"
+  transitiveStringLiterals: "int"
+  transitiveStringLiterals: "long"
+  transitiveStringLiterals: "restrict"
+  transitiveStringLiterals: "short"
+  transitiveStringLiterals: "signed"
+  transitiveStringLiterals: "unsigned"
+  transitiveStringLiterals: "void"
+  transitiveStringLiterals: "volatile"
+}
+entries {
+  ruleName: "specifierQualifierList"
+  immediateSubRuleNames: "kleene_plus__specifierQualifierList_6"
+  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
+  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_2"
+  transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_3"
+  transitiveSubRuleNames: "Atomic"
+  transitiveSubRuleNames: "Bool"
+  transitiveSubRuleNames: "Char"
+  transitiveSubRuleNames: "Complex"
+  transitiveSubRuleNames: "Const"
+  transitiveSubRuleNames: "Double"
+  transitiveSubRuleNames: "Float"
+  transitiveSubRuleNames: "Identifier"
+  transitiveSubRuleNames: "Int"
+  transitiveSubRuleNames: "Long"
+  transitiveSubRuleNames: "Nonnull"
+  transitiveSubRuleNames: "Nullable"
+  transitiveSubRuleNames: "Restrict"
+  transitiveSubRuleNames: "Restrict_gcc"
+  transitiveSubRuleNames: "Restrict_gcc2"
+  transitiveSubRuleNames: "Short"
+  transitiveSubRuleNames: "Signed"
+  transitiveSubRuleNames: "Unsigned"
+  transitiveSubRuleNames: "Void"
+  transitiveSubRuleNames: "Volatile"
+  transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
+  transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
+  transitiveSubRuleNames: "enumSpecifier"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
+  transitiveSubRuleNames: "structOrUnionSpecifier"
+  transitiveSubRuleNames: "typeQualifier"
+  transitiveSubRuleNames: "typeSpecifier"
+  transitiveSubRuleNames: "typeSpecifierWithAttrList"
+  transitiveSubRuleNames: "typedefName"
+  transitiveStringLiterals: "_Atomic"
+  transitiveStringLiterals: "_Bool"
+  transitiveStringLiterals: "_Complex"
+  transitiveStringLiterals: "_Nonnull"
+  transitiveStringLiterals: "_Nullable"
+  transitiveStringLiterals: "__m128"
+  transitiveStringLiterals: "__m128d"
+  transitiveStringLiterals: "__m128i"
+  transitiveStringLiterals: "__restrict"
+  transitiveStringLiterals: "__restrict__"
+  transitiveStringLiterals: "char"
+  transitiveStringLiterals: "const"
+  transitiveStringLiterals: "double"
+  transitiveStringLiterals: "float"
+  transitiveStringLiterals: "int"
+  transitiveStringLiterals: "long"
+  transitiveStringLiterals: "restrict"
+  transitiveStringLiterals: "short"
+  transitiveStringLiterals: "signed"
+  transitiveStringLiterals: "unsigned"
+  transitiveStringLiterals: "void"
+  transitiveStringLiterals: "volatile"
+}
+entries {
   ruleName: "aux_rule__pointer_6"
-  immediateSubRuleNames: "altnt_block__pointer_9"
+  immediateSubRuleNames: "alt_block__pointer_9"
   transitiveSubRuleNames: "Caret"
   transitiveSubRuleNames: "Star"
-  transitiveSubRuleNames: "altnt_block__pointer_9"
+  transitiveSubRuleNames: "alt_block__pointer_9"
   transitiveStringLiterals: "*"
   transitiveStringLiterals: "^"
 }
@@ -3272,7 +3266,7 @@ entries {
   immediateSubRuleNames: "kleene_plus__pointer_8"
   transitiveSubRuleNames: "Caret"
   transitiveSubRuleNames: "Star"
-  transitiveSubRuleNames: "altnt_block__pointer_9"
+  transitiveSubRuleNames: "alt_block__pointer_9"
   transitiveSubRuleNames: "aux_rule__pointer_6"
   transitiveSubRuleNames: "kleene_plus__pointer_8"
   transitiveStringLiterals: "*"
@@ -3293,8 +3287,8 @@ entries {
   transitiveSubRuleNames: "aux_rule__blockItemList_2"
   transitiveSubRuleNames: "aux_rule__declaration_3"
   transitiveSubRuleNames: "aux_rule__statement_3"
-  transitiveSubRuleNames: "aux_rule__statement_6"
-  transitiveSubRuleNames: "aux_rule__statement_7"
+  transitiveSubRuleNames: "aux_rule__statement_8"
+  transitiveSubRuleNames: "aux_rule__statement_9"
   transitiveSubRuleNames: "compoundStatement"
   transitiveSubRuleNames: "declaration"
   transitiveSubRuleNames: "expressionStatement"
@@ -3361,7 +3355,7 @@ entries {
   transitiveSubRuleNames: "aux_rule__parameterTypeList_1"
 }
 entries {
-  ruleName: "altnt_block__primaryExpression_3"
+  ruleName: "alt_block__primaryExpression_3"
   immediateSubRuleNames: "aux_rule__primaryExpression_4"
   immediateSubRuleNames: "aux_rule__primaryExpression_5"
   immediateSubRuleNames: "aux_rule__primaryExpression_6"
@@ -3372,14 +3366,14 @@ entries {
   transitiveSubRuleNames: "aux_rule__primaryExpression_7"
 }
 entries {
-  ruleName: "altnt_block__unaryExpression_4"
+  ruleName: "alt_block__unaryExpression_4"
   immediateSubRuleNames: "aux_rule__unaryExpression_10"
   immediateSubRuleNames: "aux_rule__unaryExpression_11"
   transitiveSubRuleNames: "aux_rule__unaryExpression_10"
   transitiveSubRuleNames: "aux_rule__unaryExpression_11"
 }
 entries {
-  ruleName: "altnt_block__genericAssociation_1"
+  ruleName: "alt_block__genericAssociation_1"
   immediateSubRuleNames: "Default"
   immediateSubRuleNames: "typeName"
   transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
@@ -3406,10 +3400,11 @@ entries {
   transitiveSubRuleNames: "Unsigned"
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
   transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "enumSpecifier"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
   transitiveSubRuleNames: "specifierQualifierList"
   transitiveSubRuleNames: "structOrUnionSpecifier"
   transitiveSubRuleNames: "typeName"
@@ -3442,7 +3437,7 @@ entries {
   transitiveStringLiterals: "volatile"
 }
 entries {
-  ruleName: "altnt_block__postfixExpression_7"
+  ruleName: "alt_block__postfixExpression_7"
   immediateSubRuleNames: "Arrow"
   immediateSubRuleNames: "Dot"
   transitiveSubRuleNames: "Arrow"
@@ -3451,10 +3446,10 @@ entries {
   transitiveStringLiterals: "."
 }
 entries {
-  ruleName: "altnt_block__postfixExpression_8"
+  ruleName: "alt_block__postfixExpression_8"
 }
 entries {
-  ruleName: "altnt_block__multiplicativeExpression_3"
+  ruleName: "alt_block__multiplicativeExpression_3"
   immediateSubRuleNames: "Div"
   immediateSubRuleNames: "Mod"
   immediateSubRuleNames: "Star"
@@ -3466,7 +3461,7 @@ entries {
   transitiveStringLiterals: "/"
 }
 entries {
-  ruleName: "altnt_block__additiveExpression_3"
+  ruleName: "alt_block__additiveExpression_3"
   immediateSubRuleNames: "Minus"
   immediateSubRuleNames: "Plus"
   transitiveSubRuleNames: "Minus"
@@ -3475,7 +3470,7 @@ entries {
   transitiveStringLiterals: "-"
 }
 entries {
-  ruleName: "altnt_block__shiftExpression_3"
+  ruleName: "alt_block__shiftExpression_3"
   immediateSubRuleNames: "LeftShift"
   immediateSubRuleNames: "RightShift"
   transitiveSubRuleNames: "LeftShift"
@@ -3484,7 +3479,7 @@ entries {
   transitiveStringLiterals: ">>"
 }
 entries {
-  ruleName: "altnt_block__relationalExpression_3"
+  ruleName: "alt_block__relationalExpression_3"
   immediateSubRuleNames: "Greater"
   immediateSubRuleNames: "GreaterEqual"
   immediateSubRuleNames: "Less"
@@ -3499,7 +3494,7 @@ entries {
   transitiveStringLiterals: ">="
 }
 entries {
-  ruleName: "altnt_block__equalityExpression_3"
+  ruleName: "alt_block__equalityExpression_3"
   immediateSubRuleNames: "Equal"
   immediateSubRuleNames: "NotEqual"
   transitiveSubRuleNames: "Equal"
@@ -3508,15 +3503,15 @@ entries {
   transitiveStringLiterals: "=="
 }
 entries {
-  ruleName: "altnt_block__conditionalExpression_3"
+  ruleName: "alt_block__conditionalExpression_6"
   immediateSubRuleNames: "AUX_TOKEN__conditionalExpression_1"
-  immediateSubRuleNames: "aux_rule__conditionalExpression_4"
+  immediateSubRuleNames: "aux_rule__conditionalExpression_7"
   transitiveSubRuleNames: "AUX_TOKEN__conditionalExpression_1"
-  transitiveSubRuleNames: "aux_rule__conditionalExpression_4"
+  transitiveSubRuleNames: "aux_rule__conditionalExpression_7"
   transitiveStringLiterals: "?:"
 }
 entries {
-  ruleName: "altnt_block__alignmentSpecifier_1"
+  ruleName: "alt_block__alignmentSpecifier_1"
   immediateSubRuleNames: "constantExpression"
   immediateSubRuleNames: "typeName"
   transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
@@ -3545,12 +3540,12 @@ entries {
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
   transitiveSubRuleNames: "additiveExpression"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
   transitiveSubRuleNames: "andExpression"
   transitiveSubRuleNames: "atomicTypeSpecifier"
   transitiveSubRuleNames: "aux_rule__postfixExpression_13"
   transitiveSubRuleNames: "aux_rule__postfixExpression_14"
   transitiveSubRuleNames: "aux_rule__postfixExpression_4"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "aux_rule__unaryExpression_3"
   transitiveSubRuleNames: "aux_rule__unaryExpression_7"
@@ -3565,6 +3560,7 @@ entries {
   transitiveSubRuleNames: "genericSelection"
   transitiveSubRuleNames: "inclusiveOrExpression"
   transitiveSubRuleNames: "kleene_plus__primaryExpression_1"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
   transitiveSubRuleNames: "logicalAndExpression"
   transitiveSubRuleNames: "logicalOrExpression"
   transitiveSubRuleNames: "multiplicativeExpression"
@@ -3603,28 +3599,28 @@ entries {
   transitiveStringLiterals: "volatile"
 }
 entries {
-  ruleName: "altnt_block__typeSpecifier_1"
+  ruleName: "alt_block__typeSpecifier_1"
   immediateSubRuleNames: "aux_rule__typeSpecifier_4"
   immediateSubRuleNames: "aux_rule__typeSpecifier_5"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_4"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_5"
 }
 entries {
-  ruleName: "altnt_block__structOrUnionSpecifier_2"
+  ruleName: "alt_block__structOrUnionSpecifier_2"
   immediateSubRuleNames: "Identifier"
   immediateSubRuleNames: "aux_rule__structOrUnionSpecifier_3"
   transitiveSubRuleNames: "Identifier"
   transitiveSubRuleNames: "aux_rule__structOrUnionSpecifier_3"
 }
 entries {
-  ruleName: "altnt_block__enumSpecifier_3"
+  ruleName: "alt_block__enumSpecifier_3"
   immediateSubRuleNames: "Identifier"
   immediateSubRuleNames: "aux_rule__enumSpecifier_6"
   transitiveSubRuleNames: "Identifier"
   transitiveSubRuleNames: "aux_rule__enumSpecifier_6"
 }
 entries {
-  ruleName: "altnt_block__directDeclarator_10"
+  ruleName: "alt_block__directDeclarator_10"
   immediateSubRuleNames: "aux_rule__directDeclarator_17"
   immediateSubRuleNames: "aux_rule__directDeclarator_18"
   canBeEpsilon: true
@@ -3641,7 +3637,7 @@ entries {
   transitiveSubRuleNames: "StringLiteral"
   transitiveSubRuleNames: "Volatile"
   transitiveSubRuleNames: "additiveExpression"
-  transitiveSubRuleNames: "altnt_block__directDeclarator_13"
+  transitiveSubRuleNames: "alt_block__directDeclarator_13"
   transitiveSubRuleNames: "andExpression"
   transitiveSubRuleNames: "assignmentExpression"
   transitiveSubRuleNames: "aux_rule__directDeclarator_17"
@@ -3684,7 +3680,7 @@ entries {
   transitiveStringLiterals: "volatile"
 }
 entries {
-  ruleName: "altnt_block__directDeclarator_11"
+  ruleName: "alt_block__directDeclarator_11"
   immediateSubRuleNames: "optional__directDeclarator_6"
   immediateSubRuleNames: "parameterTypeList"
   canBeEpsilon: true
@@ -3773,7 +3769,7 @@ entries {
   transitiveStringLiterals: "volatile"
 }
 entries {
-  ruleName: "altnt_block__directAbstractDeclarator_15"
+  ruleName: "alt_block__directAbstractDeclarator_15"
   immediateSubRuleNames: "Star"
   immediateSubRuleNames: "aux_rule__directAbstractDeclarator_25"
   immediateSubRuleNames: "aux_rule__directAbstractDeclarator_26"
@@ -3833,13 +3829,13 @@ entries {
   transitiveStringLiterals: "volatile"
 }
 entries {
-  ruleName: "altnt_block__directAbstractDeclarator_17"
+  ruleName: "alt_block__directAbstractDeclarator_17"
   immediateSubRuleNames: "RightParen"
   transitiveSubRuleNames: "RightParen"
   transitiveStringLiterals: ")"
 }
 entries {
-  ruleName: "altnt_block__labeledStatement_1"
+  ruleName: "alt_block__labeledStatement_1"
   immediateSubRuleNames: "Default"
   immediateSubRuleNames: "Identifier"
   immediateSubRuleNames: "aux_rule__labeledStatement_2"
@@ -3849,7 +3845,7 @@ entries {
   transitiveStringLiterals: "default"
 }
 entries {
-  ruleName: "altnt_block__jumpStatement_2"
+  ruleName: "alt_block__jumpStatement_2"
   immediateSubRuleNames: "Break"
   immediateSubRuleNames: "Continue"
   immediateSubRuleNames: "aux_rule__jumpStatement_4"
@@ -3864,10 +3860,10 @@ entries {
   transitiveStringLiterals: "return"
 }
 entries {
-  ruleName: "altnt_block__enumSpecifier_4"
+  ruleName: "alt_block__enumSpecifier_4"
 }
 entries {
-  ruleName: "altnt_block__directDeclarator_12"
+  ruleName: "alt_block__directDeclarator_12"
   immediateSubRuleNames: "aux_rule__directDeclarator_19"
   immediateSubRuleNames: "aux_rule__directDeclarator_20"
   transitiveSubRuleNames: "Static"
@@ -3876,10 +3872,10 @@ entries {
   transitiveStringLiterals: "static"
 }
 entries {
-  ruleName: "altnt_block__iterationStatement_7"
+  ruleName: "alt_block__iterationStatement_7"
 }
 entries {
-  ruleName: "altnt_block__jumpStatement_3"
+  ruleName: "alt_block__jumpStatement_3"
   immediateSubRuleNames: "Identifier"
   immediateSubRuleNames: "unaryExpression"
   transitiveSubRuleNames: "Constant"
@@ -4035,11 +4031,12 @@ entries {
   transitiveSubRuleNames: "Unsigned"
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
   transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__structDeclaration_1"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "enumSpecifier"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
   transitiveSubRuleNames: "specifierQualifierList"
   transitiveSubRuleNames: "staticAssertDeclaration"
   transitiveSubRuleNames: "staticAssertDeclarationWithoutSemicolon"
@@ -4088,8 +4085,8 @@ entries {
   transitiveSubRuleNames: "asmStatement"
   transitiveSubRuleNames: "aux_rule__declaration_3"
   transitiveSubRuleNames: "aux_rule__statement_3"
-  transitiveSubRuleNames: "aux_rule__statement_6"
-  transitiveSubRuleNames: "aux_rule__statement_7"
+  transitiveSubRuleNames: "aux_rule__statement_8"
+  transitiveSubRuleNames: "aux_rule__statement_9"
   transitiveSubRuleNames: "compoundStatement"
   transitiveSubRuleNames: "declaration"
   transitiveSubRuleNames: "expressionStatement"
@@ -4115,7 +4112,7 @@ entries {
   transitiveStringLiterals: ";"
 }
 entries {
-  ruleName: "altnt_block__unaryExpression_5"
+  ruleName: "alt_block__unaryExpression_5"
   immediateSubRuleNames: "Alignof"
   immediateSubRuleNames: "Alignof_gcc"
   transitiveSubRuleNames: "Alignof"
@@ -4124,7 +4121,7 @@ entries {
   transitiveStringLiterals: "__alignof__"
 }
 entries {
-  ruleName: "altnt_block__unaryExpression_6"
+  ruleName: "alt_block__unaryExpression_6"
   immediateSubRuleNames: "typeName"
   immediateSubRuleNames: "unaryExpression"
   transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
@@ -4152,11 +4149,11 @@ entries {
   transitiveSubRuleNames: "Unsigned"
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
-  transitiveSubRuleNames: "altnt_block__specifierQualifierList_3"
   transitiveSubRuleNames: "atomicTypeSpecifier"
   transitiveSubRuleNames: "aux_rule__postfixExpression_13"
   transitiveSubRuleNames: "aux_rule__postfixExpression_14"
   transitiveSubRuleNames: "aux_rule__postfixExpression_4"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "aux_rule__unaryExpression_3"
   transitiveSubRuleNames: "aux_rule__unaryExpression_7"
@@ -4165,6 +4162,7 @@ entries {
   transitiveSubRuleNames: "enumSpecifier"
   transitiveSubRuleNames: "genericSelection"
   transitiveSubRuleNames: "kleene_plus__primaryExpression_1"
+  transitiveSubRuleNames: "kleene_plus__specifierQualifierList_6"
   transitiveSubRuleNames: "postfixExpression"
   transitiveSubRuleNames: "specifierQualifierList"
   transitiveSubRuleNames: "structOrUnionSpecifier"
@@ -4198,7 +4196,7 @@ entries {
   transitiveStringLiterals: "volatile"
 }
 entries {
-  ruleName: "altnt_block__typeSpecifier_2"
+  ruleName: "alt_block__typeSpecifier_2"
   immediateSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
   immediateSubRuleNames: "AUX_TOKEN__typeSpecifier_2"
   immediateSubRuleNames: "AUX_TOKEN__typeSpecifier_3"
@@ -4211,26 +4209,32 @@ entries {
 }
 entries {
   ruleName: "aux_rule__statement_2"
+  immediateSubRuleNames: "aux_rule__statement_6"
+  immediateSubRuleNames: "aux_rule__statement_7"
+  transitiveSubRuleNames: "aux_rule__statement_6"
+  transitiveSubRuleNames: "aux_rule__statement_7"
 }
 entries {
   ruleName: "kleene_star__statement_1"
   immediateSubRuleNames: "aux_rule__statement_2"
   canBeEpsilon: true
   transitiveSubRuleNames: "aux_rule__statement_2"
+  transitiveSubRuleNames: "aux_rule__statement_6"
+  transitiveSubRuleNames: "aux_rule__statement_7"
 }
 entries {
   ruleName: "aux_rule__statement_3"
   immediateSubRuleNames: "asmStatement"
-  immediateSubRuleNames: "aux_rule__statement_6"
-  immediateSubRuleNames: "aux_rule__statement_7"
+  immediateSubRuleNames: "aux_rule__statement_8"
+  immediateSubRuleNames: "aux_rule__statement_9"
   immediateSubRuleNames: "compoundStatement"
   immediateSubRuleNames: "expressionStatement"
   immediateSubRuleNames: "jumpStatement"
   immediateSubRuleNames: "labeledStatement"
   transitiveSubRuleNames: "Semi"
   transitiveSubRuleNames: "asmStatement"
-  transitiveSubRuleNames: "aux_rule__statement_6"
-  transitiveSubRuleNames: "aux_rule__statement_7"
+  transitiveSubRuleNames: "aux_rule__statement_8"
+  transitiveSubRuleNames: "aux_rule__statement_9"
   transitiveSubRuleNames: "compoundStatement"
   transitiveSubRuleNames: "expressionStatement"
   transitiveSubRuleNames: "jumpStatement"
@@ -4243,8 +4247,8 @@ entries {
   transitiveSubRuleNames: "Semi"
   transitiveSubRuleNames: "asmStatement"
   transitiveSubRuleNames: "aux_rule__statement_3"
-  transitiveSubRuleNames: "aux_rule__statement_6"
-  transitiveSubRuleNames: "aux_rule__statement_7"
+  transitiveSubRuleNames: "aux_rule__statement_8"
+  transitiveSubRuleNames: "aux_rule__statement_9"
   transitiveSubRuleNames: "compoundStatement"
   transitiveSubRuleNames: "expressionStatement"
   transitiveSubRuleNames: "jumpStatement"
@@ -4252,19 +4256,8 @@ entries {
   transitiveStringLiterals: ";"
 }
 entries {
-  ruleName: "kleene_plus__pointer_8"
-  immediateSubRuleNames: "aux_rule__pointer_6"
-  transitiveSubRuleNames: "Caret"
-  transitiveSubRuleNames: "Star"
-  transitiveSubRuleNames: "altnt_block__pointer_9"
-  transitiveSubRuleNames: "aux_rule__pointer_6"
-  transitiveStringLiterals: "*"
-  transitiveStringLiterals: "^"
-}
-entries {
-  ruleName: "altnt_block__specifierQualifierList_3"
-  immediateSubRuleNames: "typeQualifier"
-  immediateSubRuleNames: "typeSpecifierWithAttrList"
+  ruleName: "kleene_plus__specifierQualifierList_6"
+  immediateSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_1"
   transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_2"
   transitiveSubRuleNames: "AUX_TOKEN__typeSpecifier_3"
@@ -4289,6 +4282,7 @@ entries {
   transitiveSubRuleNames: "Void"
   transitiveSubRuleNames: "Volatile"
   transitiveSubRuleNames: "atomicTypeSpecifier"
+  transitiveSubRuleNames: "aux_rule__specifierQualifierList_4"
   transitiveSubRuleNames: "aux_rule__typeSpecifier_3"
   transitiveSubRuleNames: "enumSpecifier"
   transitiveSubRuleNames: "structOrUnionSpecifier"
@@ -4320,7 +4314,17 @@ entries {
   transitiveStringLiterals: "volatile"
 }
 entries {
-  ruleName: "altnt_block__pointer_9"
+  ruleName: "kleene_plus__pointer_8"
+  immediateSubRuleNames: "aux_rule__pointer_6"
+  transitiveSubRuleNames: "Caret"
+  transitiveSubRuleNames: "Star"
+  transitiveSubRuleNames: "alt_block__pointer_9"
+  transitiveSubRuleNames: "aux_rule__pointer_6"
+  transitiveStringLiterals: "*"
+  transitiveStringLiterals: "^"
+}
+entries {
+  ruleName: "alt_block__pointer_9"
   immediateSubRuleNames: "Caret"
   immediateSubRuleNames: "Star"
   transitiveSubRuleNames: "Caret"
@@ -4329,7 +4333,7 @@ entries {
   transitiveStringLiterals: "^"
 }
 entries {
-  ruleName: "altnt_block__directDeclarator_13"
+  ruleName: "alt_block__directDeclarator_13"
   immediateSubRuleNames: "Star"
   immediateSubRuleNames: "optional__directDeclarator_3"
   canBeEpsilon: true
@@ -4365,7 +4369,7 @@ entries {
   transitiveStringLiterals: "*"
 }
 entries {
-  ruleName: "altnt_block__parameterDeclaration_2"
+  ruleName: "alt_block__parameterDeclaration_2"
   immediateSubRuleNames: "declarator"
   immediateSubRuleNames: "optional__typeName_1"
   canBeEpsilon: true
@@ -4373,7 +4377,7 @@ entries {
   transitiveSubRuleNames: "Identifier"
   transitiveSubRuleNames: "Star"
   transitiveSubRuleNames: "abstractDeclarator"
-  transitiveSubRuleNames: "altnt_block__pointer_9"
+  transitiveSubRuleNames: "alt_block__pointer_9"
   transitiveSubRuleNames: "aux_rule__abstractDeclarator_3"
   transitiveSubRuleNames: "aux_rule__directAbstractDeclarator_14"
   transitiveSubRuleNames: "aux_rule__directAbstractDeclarator_23"
@@ -4391,7 +4395,7 @@ entries {
   transitiveStringLiterals: "^"
 }
 entries {
-  ruleName: "altnt_block__directAbstractDeclarator_20"
+  ruleName: "alt_block__directAbstractDeclarator_20"
   immediateSubRuleNames: "abstractDeclarator"
   immediateSubRuleNames: "optional__directAbstractDeclarator_5"
   canBeEpsilon: true
@@ -4432,7 +4436,7 @@ entries {
   transitiveSubRuleNames: "Volatile"
   transitiveSubRuleNames: "abstractDeclarator"
   transitiveSubRuleNames: "alignmentSpecifier"
-  transitiveSubRuleNames: "altnt_block__pointer_9"
+  transitiveSubRuleNames: "alt_block__pointer_9"
   transitiveSubRuleNames: "atomicTypeSpecifier"
   transitiveSubRuleNames: "aux_rule__abstractDeclarator_3"
   transitiveSubRuleNames: "aux_rule__declarationSpecifier_1"
@@ -4493,7 +4497,7 @@ entries {
   transitiveStringLiterals: "volatile"
 }
 entries {
-  ruleName: "altnt_block__iterationStatement_8"
+  ruleName: "alt_block__iterationStatement_8"
   immediateSubRuleNames: "aux_rule__iterationStatement_9"
   immediateSubRuleNames: "declaration"
   transitiveSubRuleNames: "Semi"
@@ -4505,14 +4509,14 @@ entries {
   transitiveStringLiterals: ";"
 }
 entries {
-  ruleName: "altnt_block__statement_4"
-  immediateSubRuleNames: "aux_rule__statement_8"
-  immediateSubRuleNames: "aux_rule__statement_9"
-  transitiveSubRuleNames: "aux_rule__statement_8"
-  transitiveSubRuleNames: "aux_rule__statement_9"
+  ruleName: "alt_block__statement_4"
+  immediateSubRuleNames: "aux_rule__statement_10"
+  immediateSubRuleNames: "aux_rule__statement_11"
+  transitiveSubRuleNames: "aux_rule__statement_10"
+  transitiveSubRuleNames: "aux_rule__statement_11"
 }
 entries {
-  ruleName: "altnt_block__statement_5"
+  ruleName: "alt_block__statement_5"
   immediateSubRuleNames: "Switch"
   immediateSubRuleNames: "While"
   transitiveSubRuleNames: "Switch"
@@ -4604,7 +4608,7 @@ entries {
   ruleName: "aux_rule__unaryExpression_11"
 }
 entries {
-  ruleName: "aux_rule__conditionalExpression_4"
+  ruleName: "aux_rule__conditionalExpression_7"
 }
 entries {
   ruleName: "aux_rule__typeSpecifier_4"
@@ -4623,7 +4627,7 @@ entries {
 }
 entries {
   ruleName: "aux_rule__directDeclarator_18"
-  immediateSubRuleNames: "altnt_block__directDeclarator_13"
+  immediateSubRuleNames: "alt_block__directDeclarator_13"
   immediateSubRuleNames: "optional__pointer_1"
   canBeEpsilon: true
   transitiveSubRuleNames: "Atomic"
@@ -4639,7 +4643,7 @@ entries {
   transitiveSubRuleNames: "StringLiteral"
   transitiveSubRuleNames: "Volatile"
   transitiveSubRuleNames: "additiveExpression"
-  transitiveSubRuleNames: "altnt_block__directDeclarator_13"
+  transitiveSubRuleNames: "alt_block__directDeclarator_13"
   transitiveSubRuleNames: "andExpression"
   transitiveSubRuleNames: "assignmentExpression"
   transitiveSubRuleNames: "aux_rule__postfixExpression_13"
@@ -4780,14 +4784,20 @@ entries {
   ruleName: "aux_rule__statement_7"
 }
 entries {
+  ruleName: "aux_rule__statement_8"
+}
+entries {
+  ruleName: "aux_rule__statement_9"
+}
+entries {
   ruleName: "aux_rule__iterationStatement_9"
   immediateSubRuleNames: "Semi"
   transitiveSubRuleNames: "Semi"
   transitiveStringLiterals: ";"
 }
 entries {
-  ruleName: "aux_rule__statement_8"
+  ruleName: "aux_rule__statement_10"
 }
 entries {
-  ruleName: "aux_rule__statement_9"
+  ruleName: "aux_rule__statement_11"
 }

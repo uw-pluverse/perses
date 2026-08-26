@@ -137,7 +137,6 @@ class PersesGrammar(
       symbolTable,
     )
 
-  // TODO: to be unit-tested.
   fun copyWithNewRuleDef(newDef: PersesParserRuleAst): PersesGrammar {
     val newParserRules =
       parserRules

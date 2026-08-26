@@ -35,3 +35,32 @@ kt_jvm_test(
         "//test/org/perses/antlr:GrammarTestingUtility",
     ],
 )
+
+kt_jvm_test(
+    name = "PersesGrammarTest",
+    srcs = ["PersesGrammarTest.kt"],
+    deps = [
+        "//:truth",
+        "//test/org/perses/antlr:GrammarTestingUtility",
+    ],
+)
+
+kt_jvm_test(
+    name = "PersesUndefinedRuleElementTest",
+    srcs = ["PersesUndefinedRuleElementTest.kt"],
+    deps = [
+        "//:truth",
+        "//test/org/perses/antlr:GrammarTestingUtility",
+    ],
+)
+
+kt_jvm_test(
+    name = "AbstractAstEditorTest",
+    srcs = ["AbstractAstEditorTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//antlropt/src/org/perses/antlr/ast:abstract_ast_editor",
+        "//test/org/perses/antlr:GrammarTestingUtility",
+    ],
+)

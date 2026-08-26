@@ -29,7 +29,7 @@ import org.perses.fuzzer.config.ProgramUnderTest
 import org.perses.fuzzer.config.SeedFolder
 import org.perses.fuzzer.config.TestingConfiguration
 import org.perses.grammar.SingleParserFacadeFactory
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import org.perses.util.shell.CmdOutput
 import org.perses.util.shell.ExitCode
 import org.perses.util.shell.ShellOutputLines
@@ -41,7 +41,7 @@ import kotlin.io.path.readLines
 class RustcCrashDetectorTest {
   private val detector = RustcCrashDetector()
   private val parserFacadeFactory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
-  private var workingDir = Util.createTempDirForObject(this).toFile()
+  private var workingDir = FileSystemUtil.createTempDirForObject(this).toFile()
 
   private val packagePath =
     "kitten/test/" +

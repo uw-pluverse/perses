@@ -58,7 +58,7 @@ superclass
     ;
 
 class_header
-    : CLASS altnt_block__class_header_2
+    : CLASS alt_block__class_header_2
     ;
 
 function_definition
@@ -103,7 +103,7 @@ expr_statement_suffix
     ;
 
 func_call_parameters
-    : LEFT_RBRACKET altnt_block__func_call_parameters_7 RIGHT_RBRACKET
+    : LEFT_RBRACKET alt_block__func_call_parameters_7 RIGHT_RBRACKET
     ;
 
 func_call_parameters_no_bracket
@@ -204,11 +204,11 @@ id_symbol
     ;
 
 symbol
-    : COLON altnt_block__symbol_1
+    : COLON alt_block__symbol_1
     ;
 
 hash_asso
-    : expr altnt_block__hash_asso_1 expr
+    : expr alt_block__hash_asso_1 expr
     ;
 
 cpath
@@ -419,7 +419,7 @@ kleene_star__block_params_2
     ;
 
 aux_rule__cpath_1
-    : altnt_block__cpath_3 identifier
+    : alt_block__cpath_3 identifier
     ;
 
 kleene_star__cpath_2
@@ -466,7 +466,7 @@ expr
     ;
 
 aux_rule__variable_path_2
-    : COLON2 altnt_block__variable_path_4
+    : COLON2 alt_block__variable_path_4
     ;
 
 kleene_star__variable_path_1
@@ -512,55 +512,55 @@ optional__function_definition_param_1
     ;
 
 aux_rule__primary_42
-    : altnt_block__expr_23 optional__expr_3
+    : alt_block__expr_23 optional__expr_3
     ;
 
 optional__primary_43
     : aux_rule__primary_42?
     ;
 
-altnt_block__do_keyword_1
+alt_block__do_keyword_1
     : DO
     | COLON
     ;
 
 optional__do_keyword_2
-    : altnt_block__do_keyword_1?
+    : alt_block__do_keyword_1?
     ;
 
-altnt_block__expr_20
+alt_block__expr_20
     : PATTERN_MATCH
     | aux_rule__expr_35
     | aux_rule__expr_36
     ;
 
-altnt_block__expr_21
+alt_block__expr_21
     : CLASS
     | aux_rule__expr_37
     ;
 
-altnt_block__symbol_1
+alt_block__symbol_1
     : aux_rule__symbol_2
     | function_name
     ;
 
-altnt_block__class_header_2
+alt_block__class_header_2
     : aux_rule__class_header_3
     | aux_rule__class_header_4
     ;
 
-altnt_block__function_definition_param_2
+alt_block__function_definition_param_2
     : MUL
     | EXP
     | optional__function_definition_param_1
     ;
 
-altnt_block__hash_asso_1
+alt_block__hash_asso_1
     : ASSOC
     | COLON
     ;
 
-altnt_block__primary_44
+alt_block__primary_44
     : aux_rule__primary_51
     | aux_rule__primary_52
     | aux_rule__primary_53
@@ -568,21 +568,21 @@ altnt_block__primary_44
     | aux_rule__primary_55
     ;
 
-altnt_block__expr_statement_suffix_8
-    : altnt_block__expr_statement_suffix_9 optional__expr_1
+alt_block__expr_statement_suffix_8
+    : alt_block__expr_statement_suffix_9 optional__expr_1
     ;
 
-altnt_block__func_call_parameters_7
+alt_block__func_call_parameters_7
     : optional__expr_1 optional__func_call_parameters_9
     ;
 
-altnt_block__primary_45
+alt_block__primary_45
     : aux_rule__primary_56
     | aux_rule__primary_57
     ;
 
-altnt_block__primary_46
-    : altnt_block__primary_49 kleene_star__primary_18
+alt_block__primary_46
+    : alt_block__primary_49 kleene_star__primary_18
     ;
 
 aux_rule__expr_16
@@ -622,27 +622,27 @@ identifier
     | aux_rule__identifier_3
     ;
 
-altnt_block__then_keyword_2
+alt_block__then_keyword_2
     : THEN
     | COLON
     ;
 
-altnt_block__cpath_3
+alt_block__cpath_3
     : COLON2
     | DOT
     ;
 
-altnt_block__expr_23
+alt_block__expr_23
     : DOT2
     | DOT3
     ;
 
-altnt_block__variable_path_4
+alt_block__variable_path_4
     : identifier
     | literal
     ;
 
-altnt_block__expr_25
+alt_block__expr_25
     : QUESTION
     | SIGH
     ;
@@ -655,41 +655,41 @@ optional__func_call_parameters_9
     : aux_rule__func_call_parameters_8?
     ;
 
-altnt_block__expr_26
+alt_block__expr_26
     : BREAK
     | RETURN
     | YIELD
     ;
 
-altnt_block__expr_27
+alt_block__expr_27
     : func_call_parameters
     | aux_rule__expr_47
     ;
 
-altnt_block__primary_48
+alt_block__primary_48
     : aux_rule__primary_58
     | aux_rule__primary_59
     | aux_rule__primary_60
     ;
 
-altnt_block__primary_49
+alt_block__primary_49
     : optional__module_definition_1
     | terms
     ;
 
-altnt_block__expr_statement_suffix_9
+alt_block__expr_statement_suffix_9
     : IF
     | UNLESS
     | WHILE
     | UNTIL
     ;
 
-altnt_block__primary_50
+alt_block__primary_50
     : WHILE
     | UNTIL
     ;
 
-altnt_block__expr_28
+alt_block__expr_28
     : RAISE
     | PLUS
     | MINUS
@@ -702,7 +702,7 @@ altnt_block__expr_28
     | BIT_NOT
     ;
 
-altnt_block__expr_29
+alt_block__expr_29
     : ','
     | dot_ref
     | aux_rule__expr_48
@@ -735,7 +735,7 @@ aux_rule__function_definition_param_3
     ;
 
 aux_rule__function_definition_param_4
-    : altnt_block__function_definition_param_2 identifier
+    : alt_block__function_definition_param_2 identifier
     ;
 
 aux_rule__expr_statement_suffix_10
@@ -747,7 +747,7 @@ aux_rule__expr_statement_suffix_11
     ;
 
 aux_rule__expr_statement_suffix_12
-    : altnt_block__expr_statement_suffix_8 expr
+    : alt_block__expr_statement_suffix_8 expr
     ;
 
 aux_rule__rescure_param_1
@@ -767,7 +767,7 @@ aux_rule__literal_2
     ;
 
 aux_rule__then_keyword_3
-    : altnt_block__then_keyword_2 optional__primary_25
+    : alt_block__then_keyword_2 optional__primary_25
     ;
 
 aux_rule__expr_30
@@ -775,7 +775,7 @@ aux_rule__expr_30
     ;
 
 aux_rule__expr_31
-    : altnt_block__expr_23 optional__expr_3
+    : alt_block__expr_23 optional__expr_3
     ;
 
 aux_rule__expr_32
@@ -783,11 +783,11 @@ aux_rule__expr_32
     ;
 
 aux_rule__expr_33
-    : altnt_block__expr_20 expr
+    : alt_block__expr_20 expr
     ;
 
 aux_rule__expr_34
-    : dot_ref altnt_block__expr_21
+    : dot_ref alt_block__expr_21
     ;
 
 aux_rule__variable_path_5
@@ -799,7 +799,7 @@ aux_rule__expr_35
     ;
 
 aux_rule__expr_36
-    : altnt_block__expr_29 optional__expr_1
+    : alt_block__expr_29 optional__expr_1
     ;
 
 aux_rule__expr_37
@@ -827,15 +827,15 @@ aux_rule__primary_52
     ;
 
 aux_rule__primary_53
-    : IF altnt_block__primary_45
+    : IF alt_block__primary_45
     ;
 
 aux_rule__primary_54
-    : CASE altnt_block__primary_46
+    : CASE alt_block__primary_46
     ;
 
 aux_rule__primary_55
-    : altnt_block__primary_48 optional__module_definition_1
+    : alt_block__primary_48 optional__module_definition_1
     ;
 
 aux_rule__primary_56
@@ -863,23 +863,23 @@ aux_rule__expr_41
     ;
 
 aux_rule__expr_42
-    : altnt_block__primary_44 END
+    : alt_block__primary_44 END
     ;
 
 aux_rule__expr_43
-    : cpath altnt_block__expr_25
+    : cpath alt_block__expr_25
     ;
 
 aux_rule__expr_44
-    : altnt_block__expr_26 optional__expr_3
+    : alt_block__expr_26 optional__expr_3
     ;
 
 aux_rule__expr_45
-    : function_name altnt_block__expr_27
+    : function_name alt_block__expr_27
     ;
 
 aux_rule__expr_46
-    : altnt_block__expr_28 expr
+    : alt_block__expr_28 expr
     ;
 
 aux_rule__identifier_1
@@ -907,7 +907,7 @@ aux_rule__primary_59
     ;
 
 aux_rule__primary_60
-    : altnt_block__primary_50 optional__expr_1 expr do_keyword
+    : alt_block__primary_50 optional__expr_1 expr do_keyword
     ;
 
 aux_rule__expr_48

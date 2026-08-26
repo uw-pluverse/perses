@@ -35,7 +35,7 @@ import org.perses.antlr.toTokenType
 import org.perses.grammar.jackson.JacksonParserFacade
 import org.perses.grammar.python3.Python3Lexer
 import org.perses.grammar.rust.PnfRustLexer
-import org.perses.util.Util
+import org.perses.util.SpaceSize
 
 @RunWith(JUnit4::class)
 class LexerAtnWrapperTest {
@@ -114,7 +114,7 @@ class LexerAtnWrapperTest {
           true
         }
     klasses.sortedBy { it.canonicalName }.forEach { println(it) }
-    assertThat(bytes).isLessThan(Util.SpaceSize.megaBytes(11L).bytes)
+    assertThat(bytes).isLessThan(SpaceSize.megaBytes(11L).bytes)
   }
 
   @Ignore("The current algorithm does not handle non-greedy matching.")

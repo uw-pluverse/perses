@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility.createTokenizedProgramFromString
 import org.perses.grammar.c.LanguageC
-import org.perses.reduction.PropertyTestResult
+import org.perses.reduction.TestScriptVerdict
 import org.perses.reduction.io.CommonReductionIOManagerData
 import org.perses.util.ImmutableIntArray
 
@@ -40,7 +40,7 @@ class NullQueryCacheTest : CommonReductionIOManagerData(NullQueryCacheTest::clas
     cache.recordUninteresting(
       outputManager,
       ImmutableIntArray.of(program.tokenCount),
-      PropertyTestResult.INTERESTING_RESULT,
+      TestScriptVerdict.INTERESTING,
     )
     assertThat(cache.cacheSize()).isEqualTo(0)
     cache.evictEntriesNotSmallerThan(ImmutableIntArray.of(program.tokenCount))

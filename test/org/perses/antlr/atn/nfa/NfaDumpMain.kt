@@ -18,7 +18,7 @@ package org.perses.antlr.atn.nfa
 
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.antlr.atn.OrigCLexer
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Paths
 import kotlin.io.path.absolute
 import kotlin.io.path.bufferedWriter
@@ -28,7 +28,7 @@ object NfaDumpMain {
   fun main(args: Array<String>) {
     require(args.size == 1)
     val outputFile = Paths.get(args.single()).absolute()
-    Util.ensureDirExists(outputFile.parent)
+    FileSystemUtil.ensureDirExists(outputFile.parent)
     val atn = LexerAtnWrapper.createLexerWrapperFromLexerClass(OrigCLexer::class.java)
     outputFile.bufferedWriter().use { stream ->
       atn.metaTokenInfoDB

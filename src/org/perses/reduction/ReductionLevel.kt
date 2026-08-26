@@ -19,8 +19,9 @@ package org.perses.reduction
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import org.perses.spartree.AbstractSparTreeNode
-import org.perses.util.Util.lazyAssert
-import org.perses.util.Util.removeElementsFromList
+import org.perses.util.CollectionUtil
+import org.perses.util.CollectionUtil.removeElementsFromList
+import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
 /** Represents a level in a spar-tree.  */

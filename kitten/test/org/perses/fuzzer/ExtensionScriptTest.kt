@@ -22,7 +22,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -46,7 +46,7 @@ class ExtensionScriptTest {
         echo "hello" > ${'$'}{FOLDER}/result.txt
         """.trimIndent(),
       )
-      Util.setExecutable(this)
+      FileSystemUtil.setExecutable(this)
     }
 
   private val failingScriptFile =
@@ -57,7 +57,7 @@ class ExtensionScriptTest {
         exit 100
         """.trimIndent(),
       )
-      Util.setExecutable(this)
+      FileSystemUtil.setExecutable(this)
     }
 
   private val tempFile =

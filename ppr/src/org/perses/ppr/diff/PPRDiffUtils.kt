@@ -33,9 +33,9 @@ import org.antlr.v4.runtime.Token
 import org.perses.program.AbstractPersesToken
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.SparTree
+import org.perses.util.CollectionUtil
 import org.perses.util.ListAlignment
 import org.perses.util.SimpleQueue
-import org.perses.util.Util
 import org.perses.util.toImmutableList
 import org.perses.util.transformToImmutableList
 
@@ -213,11 +213,11 @@ object PPRDiffUtils {
     variantTokens: ImmutableList<AbstractPersesToken.AntlrToken>,
   ): ImmutableSet<AbstractPersesToken.AntlrToken> {
     val seedLines =
-      Util.mergeContinuousElementsIntoRegions(seedTokens) { a, b ->
+      CollectionUtil.mergeContinuousElementsIntoRegions(seedTokens) { a, b ->
         a.position.line == b.position.line
       }
     val variantLines =
-      Util.mergeContinuousElementsIntoRegions(variantTokens) { a, b ->
+      CollectionUtil.mergeContinuousElementsIntoRegions(variantTokens) { a, b ->
         a.position.line == b.position.line
       }
 

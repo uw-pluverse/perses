@@ -24,7 +24,7 @@ import org.perses.reduction.event.FixpointIterationStartEvent
 import org.perses.reduction.event.ReductionEndEvent
 import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.util.FileStreamPool
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 
 /** Collects the statistics of reduction.  */
 class StatisticsListener(

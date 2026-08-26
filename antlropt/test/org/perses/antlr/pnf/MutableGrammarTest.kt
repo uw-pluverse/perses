@@ -22,6 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.antlr.ast.PersesAlternativeBlockAst
+import org.perses.antlr.ast.TransformDecision
 
 @RunWith(JUnit4::class)
 class MutableGrammarTest : AbstractMutableGrammarTest() {
@@ -135,5 +136,25 @@ class MutableGrammarTest : AbstractMutableGrammarTest() {
           refB,
         ).inOrder()
     }
+  }
+
+  @Test
+  fun testTransformKeepsDeletesAndReplacesPerAlternative() {
+    grammar.getAltBlock(nameA).addIfNotEquivalent(refB)
+    grammar.getAltBlock(nameA).addIfNotEquivalent(refC)
+    grammar.getAltBlock(nameB).addIfNotEquivalent(refD)
+    val transformed =
+      grammar.transform { ruleName, alternative ->
+        when {
+          alternative === refB -> TransformDecision.Keep(alternative)
+          alternative === refC -> TransformDecision.Delete(alternative)
+          ruleName == nameB -> TransformDecision.Replace(newValue = refA, oldValue = alternative)
+          else -> error("unexpected $alternative")
+        }
+      }
+    assertThat(transformed).isNotSameInstanceAs(grammar)
+    assertThat(transformed.getAltBlock(nameA).toList()).containsExactly(refB)
+    assertThat(transformed.getAltBlock(nameB).toList()).containsExactly(refA)
+    assertThat(grammar.getAltBlock(nameA).size()).isEqualTo(2)
   }
 }

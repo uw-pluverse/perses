@@ -18,7 +18,7 @@ packageClause
     ;
 
 importDecl
-    : 'import' altnt_block__importDecl_3
+    : 'import' alt_block__importDecl_3
     ;
 
 importSpec
@@ -36,7 +36,7 @@ declaration
     ;
 
 constDecl
-    : 'const' altnt_block__constDecl_3
+    : 'const' alt_block__constDecl_3
     ;
 
 constSpec
@@ -52,7 +52,7 @@ expressionList
     ;
 
 typeDecl
-    : 'type' altnt_block__typeDecl_3
+    : 'type' alt_block__typeDecl_3
     ;
 
 typeSpec
@@ -72,11 +72,11 @@ receiver
     ;
 
 varDecl
-    : 'var' altnt_block__varDecl_3
+    : 'var' alt_block__varDecl_3
     ;
 
 varSpec
-    : identifierList altnt_block__varSpec_3
+    : identifierList alt_block__varSpec_3
     ;
 
 block
@@ -112,7 +112,7 @@ sendStmt
     ;
 
 incDecStmt
-    : expression altnt_block__incDecStmt_1
+    : expression alt_block__incDecStmt_1
     ;
 
 assignment
@@ -190,7 +190,7 @@ typeSwitchCase
     ;
 
 typeList
-    : altnt_block__typeList_3 kleene_star__typeList_2
+    : alt_block__typeList_3 kleene_star__typeList_2
     ;
 
 selectStmt
@@ -256,7 +256,7 @@ mapType
     ;
 
 channelType
-    : altnt_block__channelType_1 elementType
+    : alt_block__channelType_1 elementType
     ;
 
 methodSpec
@@ -334,7 +334,7 @@ structType
     ;
 
 fieldDecl
-    : altnt_block__fieldDecl_2 optional__fieldDecl_1
+    : alt_block__fieldDecl_2 optional__fieldDecl_1
     ;
 
 string_
@@ -355,7 +355,7 @@ index
     ;
 
 slice
-    : '[' altnt_block__slice_4 ']'
+    : '[' alt_block__slice_4 ']'
     ;
 
 typeAssertion
@@ -386,7 +386,7 @@ kleene_star__sourceFile_2
     ;
 
 aux_rule__sourceFile_3
-    : altnt_block__sourceFile_5 eos
+    : alt_block__sourceFile_5 eos
     ;
 
 kleene_star__sourceFile_4
@@ -522,7 +522,7 @@ optional__ifStmt_2
     ;
 
 aux_rule__ifStmt_3
-    : 'else' altnt_block__ifStmt_5
+    : 'else' alt_block__ifStmt_5
     ;
 
 optional__ifStmt_4
@@ -550,7 +550,7 @@ optional__typeSwitchGuard_2
     ;
 
 aux_rule__typeList_1
-    : ',' altnt_block__typeList_3
+    : ',' alt_block__typeList_3
     ;
 
 kleene_star__typeList_2
@@ -673,7 +673,7 @@ optional__arguments_2
     ;
 
 aux_rule__arguments_5
-    : altnt_block__arguments_7 optional__parameterDecl_2 optional__conversion_1
+    : alt_block__arguments_7 optional__parameterDecl_2 optional__conversion_1
     ;
 
 optional__arguments_6
@@ -681,7 +681,7 @@ optional__arguments_6
     ;
 
 aux_rule__expression_2
-    : altnt_block__expression_3 expression
+    : alt_block__expression_3 expression
     ;
 
 kleene_star__expression_1
@@ -730,7 +730,7 @@ optional__signature_1
     : result?
     ;
 
-altnt_block__expression_3
+alt_block__expression_3
     : '*'
     | '/'
     | '%'
@@ -784,72 +784,72 @@ realStatement
     | deferStmt
     ;
 
-altnt_block__importDecl_3
+alt_block__importDecl_3
     : importSpec
     | aux_rule__importDecl_4
     ;
 
-altnt_block__constDecl_3
+alt_block__constDecl_3
     : constSpec
     | aux_rule__constDecl_4
     ;
 
-altnt_block__typeDecl_3
+alt_block__typeDecl_3
     : typeSpec
     | aux_rule__typeDecl_4
     ;
 
-altnt_block__varDecl_3
+alt_block__varDecl_3
     : varSpec
     | aux_rule__varDecl_4
     ;
 
-altnt_block__varSpec_3
+alt_block__varSpec_3
     : aux_rule__varSpec_4
     | aux_rule__varSpec_5
     ;
 
-altnt_block__incDecStmt_1
+alt_block__incDecStmt_1
     : PLUS_PLUS
     | MINUS_MINUS
     ;
 
-altnt_block__typeList_3
+alt_block__typeList_3
     : type_
     | NIL_LIT
     ;
 
-altnt_block__commCase_1
+alt_block__commCase_1
     : sendStmt
     | recvStmt
     ;
 
-altnt_block__channelType_1
+alt_block__channelType_1
     : aux_rule__channelType_3
     | aux_rule__channelType_4
     ;
 
-altnt_block__fieldDecl_2
+alt_block__fieldDecl_2
     : aux_rule__fieldDecl_3
     | anonymousField
     ;
 
-altnt_block__slice_4
-    : optional__exprSwitchStmt_3 ':' altnt_block__slice_5
+alt_block__slice_4
+    : optional__exprSwitchStmt_3 ':' alt_block__slice_5
     ;
 
-altnt_block__sourceFile_5
+alt_block__sourceFile_5
     : functionDecl
     | methodDecl
     | declaration
     ;
 
-altnt_block__ifStmt_5
+alt_block__ifStmt_5
     : ifStmt
     | block
     ;
 
-altnt_block__arguments_7
+alt_block__arguments_7
     : expressionList
     | aux_rule__arguments_8
     ;
@@ -858,7 +858,7 @@ optional__channelType_2
     : '<-'?
     ;
 
-altnt_block__slice_5
+alt_block__slice_5
     : optional__exprSwitchStmt_3
     | aux_rule__slice_6
     ;
@@ -893,7 +893,7 @@ aux_rule__typeSwitchCase_1
     ;
 
 aux_rule__commCase_2
-    : 'case' altnt_block__commCase_1
+    : 'case' alt_block__commCase_1
     ;
 
 aux_rule__methodSpec_2

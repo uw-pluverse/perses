@@ -16,6 +16,7 @@
  */
 package org.perses.listminimizer
 
+import org.perses.reduction.CandidateOutcome
 import kotlin.reflect.KClass
 
 object NullListMinimizerListener : AbstractListMinimizerListener() {
@@ -38,7 +39,7 @@ object NullListMinimizerListener : AbstractListMinimizerListener() {
 
   override fun onPropertyTest(
     configuration: Candidate<*>,
-    result: ListMinimizerPropertyTestResult<*, *>,
+    result: CandidateOutcome<*>,
     sizeOfOriginalList: Int,
     sizeOfCurrentMinimizationResult: Int,
   ) {

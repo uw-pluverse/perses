@@ -31,12 +31,10 @@ import org.perses.grammar.c.LanguageC
 import org.perses.grammar.go.LanguageGo
 import org.perses.grammar.java.LanguageJava
 import org.perses.grammar.rust.LanguageRust
-import org.perses.grammar.rust.PnfRustLexer
 import org.perses.program.printer.SingleTokenPerLinePrinter
 import org.perses.spartree.RandomSparTreeGenerator
 import org.perses.spartree.SparTree
-import org.perses.util.TruthExt
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.io.File
 import java.nio.file.Paths
 import java.util.Random
@@ -48,7 +46,7 @@ import kotlin.io.path.writeText
 @Suppress("DEPRECATION")
 @RunWith(JUnit4::class)
 class SparTreeFuzzerTest {
-  private val tempDir = Util.createTempDirForObject(this)
+  private val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   private val factory = SingleParserFacadeFactory.builderWithBuiltinLanguages().build()
   private val c = factory.getParserFacadeListForOrNull(LanguageC)!!.defaultParserFacade.create()
@@ -67,7 +65,6 @@ class SparTreeFuzzerTest {
       )!!
       .defaultParserFacade
       .create()
-  private val rustIdentifierTokenId = PnfRustLexer.Ident
 
   private val go = factory.getParserFacadeListForOrNull(LanguageGo)!!.defaultParserFacade.create()
 
@@ -145,15 +142,17 @@ class SparTreeFuzzerTest {
   fun testRandomRecursiveMutation() {
     val test =
       """
-      fn main() {
-          if true {
-              println!("Hello");
+      {
+          {
+              print x;
           }
+          print y;
       }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
-    val fuzzer = SparTreeFuzzer.fromFile(rust, testFile)
+    val tiny = TinyGrammarFacade.facade
+    val fuzzer = SparTreeFuzzer.fromFile(tiny, testFile)
     val rn1 = Random(3)
     val rn2 = Random(5)
     val mutant1 =
@@ -166,54 +165,101 @@ class SparTreeFuzzerTest {
         rn2,
         maxRepeatingTimes = 15,
       )
-    val expectedMutant1 =
+    assertThat(mutant1!!.program).isEqualTo(
       """
-        |fn main ( ) {
-        |if true {
-        |if true {
-        |if true {
-        |if true {
-        |if true {
-        |println ! ( "Hello" ) ;
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |print x ;
         |}
+        |print y ;
         |}
+        |print y ;
         |}
+        |print y ;
         |}
+        |print y ;
         |}
+        |print y ;
         |}
-      """.trimMargin() + "\n"
-    val expectedMutant2 =
+        |print y ;
+        |}
+        |print y ;
+        |}
+        |print y ;
+        |}
+        |print y ;
+        |}
+        |print y ;
+        |}
+        |print y ;
+        |}
+        |print y ;
+        |}
+        |print y ;
+        |}
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant2!!.program).isEqualTo(
       """
-        |fn main ( ) { { { { {
-        |if true {
-        |println ! ( "Hello" ) ;
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |{
+        |print x ;
         |}
         |}
         |}
         |}
         |}
         |}
-      """.trimMargin() + "\n"
-    assertThat(mutant1!!.program).isEqualTo(expectedMutant1)
-    assertThat(mutant2!!.program).isEqualTo(expectedMutant2)
-    rust.parseString(mutant1.program, errorMode = ParseErrorHandling.STRICT)
-    rust.parseString(mutant2.program, errorMode = ParseErrorHandling.STRICT)
+        |}
+        |}
+        |}
+        |}
+        |}
+        |}
+        |print y ;
+        |}
+      """.trimMargin() + "\n",
+    )
+    tiny.parseString(mutant1.program, errorMode = ParseErrorHandling.STRICT)
+    tiny.parseString(mutant2.program, errorMode = ParseErrorHandling.STRICT)
   }
 
   @Test
   fun testSplicingMutation() {
+    val tiny = TinyGrammarFacade.facade
     val testFile1 =
       tempDir
         .resolve("test_file_1.temp")
         .apply {
           writeText(
             """
-            fn main() {
-                if true {
-                    println!("yes_splicing_1");
-                } else {
-                    println!("no_splicing_1");
-                }
+            x = 1;
+            {
+                print yes_splicing_1;
+                print no_splicing_1;
             }
             """.trimIndent(),
           )
@@ -224,12 +270,10 @@ class SparTreeFuzzerTest {
         .apply {
           writeText(
             """
-            fn main() {
-                if true {
-                    println!("yes_splicing_2");
-                } else {
-                    println!("no_splicing_2");
-                }
+            x = 2;
+            {
+                print yes_splicing_2;
+                print no_splicing_2;
             }
             """.trimIndent(),
           )
@@ -241,9 +285,9 @@ class SparTreeFuzzerTest {
           writeText("")
         }.toFile()
 
-    val fuzzer1 = SparTreeFuzzer.fromFile(rust, testFile1)
-    val fuzzer2 = SparTreeFuzzer.fromFile(rust, testFile2)
-    val fuzzer3 = SparTreeFuzzer.fromFile(rust, testFile3)
+    val fuzzer1 = SparTreeFuzzer.fromFile(tiny, testFile1)
+    val fuzzer2 = SparTreeFuzzer.fromFile(tiny, testFile2)
+    val fuzzer3 = SparTreeFuzzer.fromFile(tiny, testFile3)
     val rn1 = Random(7)
     val mutant1 = fuzzer1.createMutantBySplicing(fuzzer2, rn1)!!
     val rn2 = Random(3)
@@ -253,28 +297,22 @@ class SparTreeFuzzerTest {
     fuzzer3.createMutantBySplicing(fuzzer1, rn1)
     assertThat(mutant1.program).isEqualTo(
       """
-        |fn main ( ) {
-        |if true {
-        |println ! ( "yes_splicing_1" ) ;
-        |} else {
-        |println ! ( "yes_splicing_2" ) ;
-        |}
+        |x = 1 ;
+        |{ print yes_splicing_2 ;
+        |print no_splicing_1 ;
         |}
       """.trimMargin() + "\n",
     )
     assertThat(mutant2.program).isEqualTo(
       """
-        |fn main ( ) {
-        |if true {
-        |println ! ( "yes_splicing_1" ) ;
-        |} else {
-        |println ! ( "no_splicing_2" ) ;
-        |}
+        |x = 1 ;
+        |{ print yes_splicing_2 ;
+        |print no_splicing_2 ;
         |}
       """.trimMargin() + "\n",
     )
-    rust.parseString(mutant1.program, errorMode = ParseErrorHandling.STRICT) // Does not crash
-    rust.parseString(mutant2.program, errorMode = ParseErrorHandling.STRICT) // Does not crash
+    tiny.parseString(mutant1.program, errorMode = ParseErrorHandling.STRICT) // Does not crash
+    tiny.parseString(mutant2.program, errorMode = ParseErrorHandling.STRICT) // Does not crash
   }
 
   @Test
@@ -314,320 +352,253 @@ class SparTreeFuzzerTest {
   fun testCreateMutantByDeletingTokens() {
     val test =
       """
-      fn main() {
-          if true {
-              println!("Hello");
-          }
+      x = 1;
+      {
+          print x + 2;
       }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
-    val fuzzer = SparTreeFuzzer.fromFile(rust, testFile)
+    val fuzzer = SparTreeFuzzer.fromFile(TinyGrammarFacade.facade, testFile)
     val rn1 = Random(0)
     val rn2 = Random(2)
     // Test deleting on random positions
     val mutant1 = fuzzer.createMutantByDeletingTokensOnRandomPositions(rn1)
     val mutant2 = fuzzer.createMutantByDeletingTokensOnRandomPositions(rn2)
-    val expectedMutant1 =
-      """
-        |fn main ( {
-        |if true {
-        |println ! ( )
-        |}
-        |}
-      """.trimMargin() + "\n"
-    val expectedMutant2 =
-      """
-        |fn main ( )
-        |if true {
-        |println ! ( ) ;
-        |}
-      """.trimMargin() + "\n"
-    assertThat(mutant1!!.program).isEqualTo(expectedMutant1)
-    assertThat(mutant2!!.program).isEqualTo(expectedMutant2)
     // Test deleting on continuous positions
     val mutant3 = fuzzer.createMutantByDeletingARangeOfTokens(rn1)
     val mutant4 = fuzzer.createMutantByDeletingARangeOfTokens(rn2)
-    val expectedMutant3 =
+    assertThat(mutant1!!.program).isEqualTo(
       """
-        |fn main ( ) {
-        |if true {
-        |println ) ;
+        |= 1 ;
+        |{
+        |print + ;
         |}
-        |}
-      """.trimMargin() + "\n"
-    val expectedMutant4 =
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant2!!.program).isEqualTo(
       """
-        |fn main ( ) {
-        |if true {
-        |println ! (
+        |x ;
+        |{
+        |print x + 2
         |}
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant3!!.program).isEqualTo(
+      """
+        |x =
+        |print x + 2 ;
         |}
-      """.trimMargin() + "\n"
-    assertThat(mutant3!!.program).isEqualTo(expectedMutant3)
-    assertThat(mutant4!!.program).isEqualTo(expectedMutant4)
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant4!!.program).isEqualTo(
+      """
+        |x
+        |{
+        |print x + 2 ;
+        |}
+      """.trimMargin() + "\n",
+    )
   }
 
   @Test
   fun testCreateMutantByInsertingTokens() {
     val test =
       """
-      fn main() {
-          if true {
-              println!("Hello");
-          }
+      x = 1;
+      {
+          print x + 2;
       }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
-    val fuzzer = SparTreeFuzzer.fromFile(rust, testFile)
+    val fuzzer = SparTreeFuzzer.fromFile(TinyGrammarFacade.facade, testFile)
     val rn1 = Random(0)
     val rn2 = Random(2)
     // Test inserting on random positions
     val mutant1 = fuzzer.createMutantByInsertingTokensOnRandomPositions(rn1)
     val mutant2 = fuzzer.createMutantByInsertingTokensOnRandomPositions(rn2)
-    val expectedMutant1 =
-      """
-        |fn main ( )
-        |"Hello" {
-        |if true {
-        |println ; ! ) ( "Hello" ) ;
-        |}
-        |}
-      """.trimMargin() + "\n"
-    val expectedMutant2 =
-      """
-        |"Hello" fn main ( ) {
-        |if true { {
-        |println ! ( "Hello" )
-        |} ;
-        |}
-        |}
-      """.trimMargin() + "\n"
-    assertThat(mutant1!!.program).isEqualTo(expectedMutant1)
-    assertThat(mutant2!!.program).isEqualTo(expectedMutant2)
     // Test inserting on continuous positions
     val mutant3 = fuzzer.createMutantByInsertingARangeOfTokens(rn1)
     val mutant4 = fuzzer.createMutantByInsertingARangeOfTokens(rn2)
-    val expectedMutant3 =
+    assertThat(mutant1!!.program).isEqualTo(
       """
-        |fn main ( ) {
-        |if true {
-        |println ! ( "Hello" println main ! ) ;
+        |x = x 1 ;
+        |{
+        |x
+        |print 2 x + 2 ;
         |}
-        |}
-      """.trimMargin() + "\n"
-    val expectedMutant4 =
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant2!!.program).isEqualTo(
       """
-        |fn main ( ) {
-        |if true {
-        |println ! ( "Hello" ) ;
-        |} fn ;
+        |x = = 1 ;
+        |{
+        |print x + 1 2 ; ;
         |}
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant3!!.program).isEqualTo(
+      """
+        |1
+        |x 1 x = 1 ;
+        |{
+        |print x + 2 ;
         |}
-      """.trimMargin() + "\n"
-    assertThat(mutant3!!.program).isEqualTo(expectedMutant3)
-    assertThat(mutant4!!.program).isEqualTo(expectedMutant4)
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant4!!.program).isEqualTo(
+      """
+        |x = 1 ;
+        |{
+        |x ; {
+        |print x + 2 ;
+        |}
+      """.trimMargin() + "\n",
+    )
   }
 
   @Test
   fun testCreateMutantByReplacingTokens() {
     val test =
       """
-      fn main() {
-          if true {
-              println!("Hello");
-          }
+      x = 1;
+      {
+          print x + 2;
       }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
-    val fuzzer = SparTreeFuzzer.fromFile(rust, testFile)
+    val fuzzer = SparTreeFuzzer.fromFile(TinyGrammarFacade.facade, testFile)
     val rn1 = Random(0)
     val rn2 = Random(2)
-    // Test inserting on random positions
+    // Test replacing on random positions
     val mutant1 = fuzzer.createMutantByReplacingTokensOnRandomPositions(rn1)
     val mutant2 = fuzzer.createMutantByReplacingTokensOnRandomPositions(rn2)
-    val expectedMutant1 =
-      """
-        |fn
-        |"Hello" ( ) {
-        |if
-        |true
-        |{
-        |;
-        |!
-        |(
-        |"Hello" )
-        |;
-        |}
-        |}
-      """.trimMargin() + "\n"
-    val expectedMutant2 =
-      """
-        |fn
-        |"Hello" ( ) { {
-        |true
-        |{
-        |println
-        |!
-        |(
-        |"Hello"
-        |)
-        |;
-        |}
-        |}
-      """.trimMargin() + "\n"
-    assertThat(mutant1!!.program).isEqualTo(expectedMutant1)
-    assertThat(mutant2!!.program).isEqualTo(expectedMutant2)
-    // Test inserting on continuous positions
+    // Test replacing on continuous positions
     val mutant3 = fuzzer.createMutantByReplacingARangeOfTokens(rn1)
     val mutant4 = fuzzer.createMutantByReplacingARangeOfTokens(rn2)
-    val expectedMutant3 =
+    assertThat(mutant1!!.program).isEqualTo(
       """
-        |fn main ( ) {
-        |if
-        |true
+        |x = 1 ;
         |{
-        |println
-        |!
-        |} ( {
-        |;
+        |print
+        |x
+        |+
+        |x
+        |2
         |}
-        |}
-      """.trimMargin() + "\n"
-    val expectedMutant4 =
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant2!!.program).isEqualTo(
       """
-        |fn main ( ) {
-        |}
-        |println fn
-        |println
-        |!
-        |(
-        |"Hello"
-        |)
+        |= = 1 ;
+        |{
+        |;
+        |x
+        |+
+        |2
         |;
         |}
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant3!!.program).isEqualTo(
+      """
+        |x = 1 ;
+        |print 1 =
+        |+
+        |2
+        |;
         |}
-      """.trimMargin() + "\n"
-    assertThat(mutant3!!.program).isEqualTo(expectedMutant3)
-    assertThat(mutant4!!.program).isEqualTo(expectedMutant4)
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant4!!.program).isEqualTo(
+      """
+        |x = 1 ;
+        |{
+        |print
+        |x x =
+        |}
+        |}
+      """.trimMargin() + "\n",
+    )
   }
 
   @Test
   fun testCreateMutatedTreeByDeletingChildrenOfKleeneStarOrPlusNode() {
     val test =
       """
-      fn main() {
-          if true {
-              println!("Hello");
-              println!("Hello");
-          }
-          if true {
-              println!("Hello");
-              println!("Hello");
-          }
+      {
+          print a;
+          print b;
+      }
+      {
+          print c;
+          print d;
       }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
-    val fuzzer = SparTreeFuzzer.fromFile(rust, testFile)
+    val fuzzer = SparTreeFuzzer.fromFile(TinyGrammarFacade.facade, testFile)
     val rn1 = Random(0)
     val rn2 = Random(2)
     val mutatedTree1 = fuzzer.createMutatedTreeByDeletingChildrenOfKleeneStarOrPlusNode(rn1)!!
     val mutatedTree2 = fuzzer.createMutatedTreeByDeletingChildrenOfKleeneStarOrPlusNode(rn2)!!
     val mutant1 = SingleTokenPerLinePrinter.print(mutatedTree1.programSnapshot.payload).sourceCode
     val mutant2 = SingleTokenPerLinePrinter.print(mutatedTree2.programSnapshot.payload).sourceCode
-    val expectedMutant1 =
+    assertThat(mutant1).isEqualTo(
       """
-        |fn
-        |main
-        |(
-        |)
         |{
-        |if
-        |true
-        |{
+        |print
+        |b
+        |;
         |}
-        |}
-      """.trimMargin() + "\n"
-    val expectedMutant2 =
+      """.trimMargin() + "\n",
+    )
+    assertThat(mutant2).isEqualTo(
       """
-        |fn
-        |main
-        |(
-        |)
         |{
-        |if
-        |true
-        |{
-        |println
-        |!
-        |(
-        |"Hello"
-        |)
+        |print
+        |b
         |;
         |}
-        |if
-        |true
-        |{
-        |println
-        |!
-        |(
-        |"Hello"
-        |)
-        |;
-        |println
-        |!
-        |(
-        |)
-        |;
-        |}
-        |}
-      """.trimMargin() + "\n"
-    assertThat(mutant1).isEqualTo(expectedMutant1)
-    assertThat(mutant2).isEqualTo(expectedMutant2)
+      """.trimMargin() + "\n",
+    )
   }
 
   @Test
   fun testCreateMutantByInsertingChildrenOfKleeneStarOrPlusNode() {
     val test =
       """
-      fn main() {
-          if true {
-              println!("Hello");
-          }
+      {
+          print a;
       }
       """.trimIndent()
     val testFile = File.createTempFile("testFile", ".temp").apply { writeText(test) }
     testFile.deleteOnExit()
-    val fuzzer = SparTreeFuzzer.fromFile(rust, testFile)
+    val tiny = TinyGrammarFacade.facade
+    val fuzzer = SparTreeFuzzer.fromFile(tiny, testFile)
     val rn1 = Random(0)
     val rn2 = Random(2)
-    // Test inserting on random positions
     val generator1 =
-      RandomSparTreeGenerator(rust, rn1)
+      RandomSparTreeGenerator(tiny, rn1)
     val generator2 =
-      RandomSparTreeGenerator(rust, rn2)
+      RandomSparTreeGenerator(tiny, rn2)
     val mutant1 = fuzzer.createMutantByInsertingChildrenToKleeneStarOrPlusNode(rn1, generator1)!!
     val mutant2 = fuzzer.createMutantByInsertingChildrenToKleeneStarOrPlusNode(rn2, generator2)!!
-    TruthExt.assertTrimmedNonBlankLinesEqual(
-      mutant1.program,
-      "fn main ( ) {",
-      "if true {",
-      """println ! ( "Hello" [ && ; %= ] ${'$'} ] ) ; """ +
-        """; # [ += ${'$'}crate ${'$'} <<= * , impl impl ... ] loop { }""",
-      "}",
-      "}",
+    assertThat(mutant1.program).isEqualTo(
+      """
+        |{
+        |print a ; print 008 ;
+        |} { print identifier_0 ; { } { } } identifier_0 = identifier_0 ;
+      """.trimMargin() + "\n",
     )
-    TruthExt.assertTrimmedNonBlankLinesEqual(
-      mutant2.program,
-      "fn main ( ) {",
-      "if true {",
-      """println ! ( "Hello" && ) ; try { }""",
-      """} # [ = <<= use ( -> mut ] # [ } default @ > += ${'$'}crate struct ] """ +
-        """# [ . >>= <<= use < as [ in unsafe ] # [ ] '""",
-      "}",
+    assertThat(mutant2.program).isEqualTo(
+      """
+        |{
+        |print a ; identifier_0 = identifier_0 ; identifier_0 = identifier_0 ;
+        |} print 33568007 + identifier_0 ;
+      """.trimMargin() + "\n",
     )
   }
 

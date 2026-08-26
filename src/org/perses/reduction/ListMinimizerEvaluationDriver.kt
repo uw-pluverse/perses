@@ -121,9 +121,9 @@ class ListMinimizerEvaluationDriver private constructor(
       weightProvider = { (it as NodeContainerForListMinimizer).tokenCount },
       hideTimings = cmd.verbosityFlags.hideTimestamps,
       minimizerTypeName = minimizerType.name,
-      scriptExecutionCountSupplier = {
-        executorService.statistics.scriptExecutionNumber - scriptExecutionsBeforeReduce
-      },
+      // The raw cumulative counter. The collector brackets it across the minimizer's own lifetime;
+      // bracketing it here would start the window too early -- see the comment on reduce() below.
+      scriptExecutionCountSupplier = { executorService.statistics.scriptExecutionNumber },
       queryJsonlFile =
         outputDirectory.resolve(ListMinimizerMetricsCollector.QUERY_JSONL_FILE_NAME),
       summaryJsonlFile =
@@ -170,14 +170,16 @@ class ListMinimizerEvaluationDriver private constructor(
   ) = ReducerExecutionPlan(steps = AtomicReducerStep(evaluationReducerAnnotation))
 
   /**
-   * The executor's count before this measurement started. The executor is shared across the whole
-   * reduction, so its statistic is cumulative; the collector reports the difference.
+   * The window the collector measures starts when the *minimizer* starts, not when this driver
+   * does. super.reduce() runs a script before the reducer is invoked -- the Layer-2 check in
+   * AbstractProgramReductionDriver.ensureInterestingCodeFormatOrThrow, which renders the tree under
+   * the active code format and verifies it still passes the test. That execution bypasses
+   * analyzeOneTestFuture, so it is not a query and never reaches the listener; counting it made
+   * scriptExecutionCount exceed the observed queries by exactly one, which is the discrepancy the
+   * field exists to detect.
    */
-  private var scriptExecutionsBeforeReduce = 0
-
   override fun reduce() {
     warnIfTheRecordedLanguageDisagrees()
-    scriptExecutionsBeforeReduce = executorService.statistics.scriptExecutionNumber
     logger.ktFine { "Evaluating $minimizerType on ${microbenchmark.microbenchmarkId}." }
     // The base class saves the starting program, registers the tree-edit listeners and drives the
     // plan above; the collector has written summary.jsonl by the time this returns.

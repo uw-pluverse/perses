@@ -20,13 +20,31 @@ import com.google.common.collect.ImmutableList
 import org.perses.antlr.ast.AstTag
 import org.perses.antlr.ast.PersesAlternativeBlockAst
 import org.perses.antlr.ast.PersesEpsilonAst
+import org.perses.antlr.ast.PersesGrammar
 import org.perses.antlr.ast.PersesOptionalAst
 import org.perses.antlr.ast.RuleNameRegistry.RuleNameHandle
 import org.perses.antlr.ast.TransformDecision
+import org.perses.util.EnumStopCriterion
+import org.perses.util.fixpoint
 
 class EliminateEpsilonPass : AbstractPnfPass() {
   override fun processGrammar(grammar: GrammarPair): GrammarPair {
     val parserGrammar = grammar.parserGrammar ?: return grammar
+    // Inlining an epsilon-only rule can turn its caller into a new epsilon-only rule. The
+    // inlined rule itself stays (EliminateUnreachableRulePass removes it), so the loop has to
+    // stop on equivalence rather than on "nothing found".
+    val result =
+      fixpoint(
+        parserGrammar,
+        stopCriterion = { prev, next ->
+          EnumStopCriterion.stopIfTrue(prev.isEquivalent(next))
+        },
+        transform = ::eliminateOnce,
+      )
+    return grammar.withNewParserGrammar(result)
+  }
+
+  private fun eliminateOnce(parserGrammar: PersesGrammar): PersesGrammar {
     val epsilonList =
       parserGrammar.parserRules
         .asSequence()
@@ -41,10 +59,9 @@ class EliminateEpsilonPass : AbstractPnfPass() {
         .distinct()
         .toList()
     if (epsilonList.isEmpty()) {
-      return grammar
+      return parserGrammar
     }
     val mutable = MutableGrammar.createParserRulesFrom(parserGrammar)
-    // TODO: need to introduce a fixpoint loop, and delete epsilon from sequences.
     val singleEpsilonRuleList = ArrayList<RuleNameHandle>()
     epsilonList.forEach { ruleName ->
       val altBlock = mutable.getAltBlock(ruleName)
@@ -67,7 +84,7 @@ class EliminateEpsilonPass : AbstractPnfPass() {
     val edits = ArrayList<RuleEditTriple>()
     singleEpsilonRuleList.forEach { epsilonRuleName ->
       mutable.ruleNameAltPairSequence().forEach {
-        if (RuleRefCounterAstVisitor.countRuleRefences(epsilonRuleName, it.value) > 0) {
+        if (RuleRefCounterAstVisitor.countRuleReferences(epsilonRuleName, it.value) > 0) {
           val edit = InlineEpsilonRuleEdit(epsilonRuleName)
           val decision = edit.apply(it.value)
           when (decision) {
@@ -90,9 +107,6 @@ class EliminateEpsilonPass : AbstractPnfPass() {
       }
     }
     edits.forEach { it.applyTo(mutable) }
-
-    return grammar.withNewParserGrammar(
-      parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList()),
-    )
+    return parserGrammar.copyWithNewParserRuleDefs(mutable.toParserRuleAstList())
   }
 }

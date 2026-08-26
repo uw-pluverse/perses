@@ -22,7 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.util.FileStreamPool
-import org.perses.util.Util
+import org.perses.util.IoUtil
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
@@ -43,7 +43,7 @@ class PersesListenerManagerCreatorTest {
   fun testCreateAsyncReductionListenerManager_DefaultProgramSizeTrendPath() {
     val cmd = PersesCommandOptions()
     val outputDir = tempDir.resolve("output")
-    Util.useResources(
+    IoUtil.useResources(
       creatorA = { FileStreamPool() },
       creatorB = { pool ->
         Files.createDirectories(outputDir)
@@ -67,7 +67,7 @@ class PersesListenerManagerCreatorTest {
     val cmd = PersesCommandOptions()
     cmd.profilingFlags.profileProgramSizeTrend = userPath
 
-    Util.useResources(
+    IoUtil.useResources(
       creatorA = { FileStreamPool() },
       creatorB = { pool ->
         PersesListenerManagerCreator.createAsyncReductionListenerManager(

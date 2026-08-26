@@ -94,25 +94,25 @@ class PersesSequenceAst(
   @JvmOverloads
   fun subsequence(
     from: Int,
-    toExcusive: Int = children.size,
+    toExclusive: Int = children.size,
   ): AbstractPersesRuleElement {
     val size = childCount
     require(from in 0 until size) { "Invalid index $from" }
-    require(toExcusive in from..size) {
-      "toExclusive:$toExcusive, size=$size, from=$from"
+    require(toExclusive in from..size) {
+      "toExclusive:$toExclusive, size=$size, from=$from"
     }
 
-    if (from == 0 && toExcusive == size) {
+    if (from == 0 && toExclusive == size) {
       return this
     }
-    if (from == toExcusive) {
+    if (from == toExclusive) {
       return PersesEpsilonAst()
     }
-    if (from + 1 == toExcusive) {
+    if (from + 1 == toExclusive) {
       return getChild(from)
     }
     val builder = ImmutableList.builder<AbstractPersesRuleElement>()
-    for (i in from until toExcusive) {
+    for (i in from until toExclusive) {
       builder.add(getChild(i))
     }
     return PersesSequenceAst(builder.build())
@@ -130,7 +130,6 @@ class PersesSequenceAst(
   }
 
   companion object {
-    // TODO: need tests.
     @JvmStatic
     fun flatten(
       children: List<AbstractPersesRuleElement>,

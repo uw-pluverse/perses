@@ -20,7 +20,7 @@ decorators
     ;
 
 decorated
-    : decorators altnt_block__decorated_1
+    : decorators alt_block__decorated_1
     ;
 
 async_funcdef
@@ -68,7 +68,7 @@ annassign
     ;
 
 testlist_star_expr
-    : altnt_block__testlist_star_expr_4 kleene_star__testlist_star_expr_2 optional__testlist_3
+    : alt_block__testlist_star_expr_4 kleene_star__testlist_star_expr_2 optional__testlist_3
     ;
 
 augassign
@@ -120,7 +120,7 @@ import_name
     ;
 
 import_from
-    : 'from' altnt_block__import_from_5 'import' altnt_block__import_from_6
+    : 'from' alt_block__import_from_5 'import' alt_block__import_from_6
     ;
 
 import_as_name
@@ -156,7 +156,7 @@ assert_stmt
     ;
 
 async_stmt
-    : ASYNC altnt_block__async_stmt_1
+    : ASYNC alt_block__async_stmt_1
     ;
 
 if_stmt
@@ -172,7 +172,7 @@ for_stmt
     ;
 
 try_stmt
-    : 'try' ':' suite altnt_block__try_stmt_7
+    : 'try' ':' suite alt_block__try_stmt_7
     ;
 
 with_stmt
@@ -190,11 +190,6 @@ except_clause
 suite
     : simple_stmt
     | aux_rule__suite_2
-    ;
-
-test
-    : aux_rule__test_3
-    | lambdef
     ;
 
 test_nocond
@@ -284,7 +279,7 @@ atom
     ;
 
 testlist_comp
-    : altnt_block__testlist_star_expr_4 altnt_block__testlist_comp_5
+    : alt_block__testlist_star_expr_4 alt_block__testlist_comp_5
     ;
 
 trailer
@@ -307,7 +302,7 @@ sliceop
     ;
 
 exprlist
-    : altnt_block__exprlist_4 kleene_star__exprlist_2 optional__testlist_3
+    : alt_block__exprlist_4 kleene_star__exprlist_2 optional__testlist_3
     ;
 
 testlist
@@ -330,19 +325,6 @@ arglist
 argument
     : aux_rule__argument_3
     | aux_rule__argument_4
-    ;
-
-comp_iter
-    : comp_for
-    | comp_if
-    ;
-
-comp_for
-    : optional__comp_for_1 'for' exprlist 'in' or_test optional__comp_for_2
-    ;
-
-comp_if
-    : 'if' test_nocond optional__comp_for_2
     ;
 
 yield_expr
@@ -506,7 +488,7 @@ optional__simple_stmt_3
     ;
 
 aux_rule__expr_stmt_1
-    : '=' altnt_block__expr_stmt_5
+    : '=' alt_block__expr_stmt_5
     ;
 
 kleene_plus__expr_stmt_2
@@ -524,7 +506,7 @@ optional__expr_stmt_4
     ;
 
 aux_rule__testlist_star_expr_1
-    : ',' altnt_block__testlist_star_expr_4
+    : ',' alt_block__testlist_star_expr_4
     ;
 
 kleene_star__testlist_star_expr_2
@@ -668,14 +650,6 @@ kleene_plus__suite_1
     : stmt+
     ;
 
-aux_rule__test_1
-    : 'if' or_test 'else' test
-    ;
-
-optional__test_2
-    : aux_rule__test_1?
-    ;
-
 optional__lambdef_1
     : varargslist?
     ;
@@ -729,7 +703,7 @@ kleene_star__and_expr_2
     ;
 
 aux_rule__shift_expr_1
-    : altnt_block__shift_expr_3 arith_expr
+    : alt_block__shift_expr_3 arith_expr
     ;
 
 kleene_star__shift_expr_2
@@ -737,7 +711,7 @@ kleene_star__shift_expr_2
     ;
 
 aux_rule__arith_expr_1
-    : altnt_block__arith_expr_3 term
+    : alt_block__arith_expr_3 term
     ;
 
 kleene_star__arith_expr_2
@@ -745,7 +719,7 @@ kleene_star__arith_expr_2
     ;
 
 aux_rule__term_1
-    : altnt_block__term_3 factor
+    : alt_block__term_3 factor
     ;
 
 kleene_star__term_2
@@ -806,7 +780,7 @@ optional__subscript__3
     ;
 
 aux_rule__exprlist_1
-    : ',' altnt_block__exprlist_4
+    : ',' alt_block__exprlist_4
     ;
 
 kleene_star__exprlist_2
@@ -826,7 +800,7 @@ optional__testlist_3
     ;
 
 aux_rule__dictorsetmaker_1
-    : ',' altnt_block__dictorsetmaker_7
+    : ',' alt_block__dictorsetmaker_7
     ;
 
 kleene_star__dictorsetmaker_2
@@ -849,12 +823,25 @@ optional__comp_for_1
     : ASYNC?
     ;
 
-optional__comp_for_2
-    : comp_iter?
-    ;
-
 optional__yield_expr_1
     : yield_arg?
+    ;
+
+aux_rule__test_4
+    : or_test 'if' or_test 'else'
+    ;
+
+kleene_star__test_3
+    : aux_rule__test_4*
+    ;
+
+aux_rule__test_5
+    : or_test
+    | lambdef
+    ;
+
+test
+    : kleene_star__test_3 aux_rule__test_5
     ;
 
 aux_rule__not_test_2
@@ -887,7 +874,7 @@ optional__comp_op_1
     : 'not'?
     ;
 
-altnt_block__argument_2
+alt_block__argument_2
     : aux_rule__argument_5
     | '**'
     | '*'
@@ -909,85 +896,121 @@ small_stmt
     | assert_stmt
     ;
 
-altnt_block__decorated_1
+alt_block__decorated_1
     : classdef
     | funcdef
     | async_funcdef
     ;
 
-altnt_block__testlist_star_expr_4
+alt_block__testlist_star_expr_4
     : test
     | star_expr
     ;
 
-altnt_block__import_from_5
+alt_block__import_from_5
     : aux_rule__import_from_7
     | kleene_plus__import_from_4
     ;
 
-altnt_block__import_from_6
+alt_block__import_from_6
     : '*'
     | aux_rule__import_from_8
     | import_as_names
     ;
 
-altnt_block__async_stmt_1
+alt_block__async_stmt_1
     : funcdef
     | with_stmt
     | for_stmt
     ;
 
-altnt_block__try_stmt_7
+alt_block__try_stmt_7
     : aux_rule__try_stmt_8
     | aux_rule__try_stmt_9
     ;
 
-altnt_block__testlist_comp_5
+alt_block__testlist_comp_5
     : comp_for
     | aux_rule__testlist_comp_6
     ;
 
-altnt_block__exprlist_4
+alt_block__exprlist_4
     : expr
     | star_expr
     ;
 
-altnt_block__dictorsetmaker_7
+alt_block__dictorsetmaker_7
     : aux_rule__dictorsetmaker_14
     | aux_rule__dictorsetmaker_15
     ;
 
-altnt_block__dictorsetmaker_8
+alt_block__dictorsetmaker_8
     : comp_for
     | aux_rule__dictorsetmaker_16
     ;
 
-altnt_block__expr_stmt_5
+alt_block__expr_stmt_5
     : yield_expr
     | testlist_star_expr
     ;
 
-altnt_block__expr_stmt_6
+alt_block__expr_stmt_6
     : yield_expr
     | testlist
     ;
 
-altnt_block__shift_expr_3
+alt_block__shift_expr_3
     : '<<'
     | '>>'
     ;
 
-altnt_block__arith_expr_3
+alt_block__arith_expr_3
     : '+'
     | '-'
     ;
 
-altnt_block__term_3
+alt_block__term_3
     : '*'
     | '@'
     | '/'
     | '%'
     | '//'
+    ;
+
+aux_rule__comp_for_4
+    : optional__comp_for_1 'for' exprlist 'in' or_test
+    ;
+
+kleene_star__comp_for_3
+    : aux_rule__comp_for_4*
+    ;
+
+aux_rule__comp_for_5
+    : optional__comp_for_1 'for' exprlist 'in' or_test optional__comp_for_6
+    ;
+
+comp_for
+    : kleene_star__comp_for_3 aux_rule__comp_for_5
+    ;
+
+aux_rule__comp_if_3
+    : 'if' test_nocond
+    ;
+
+kleene_star__comp_if_2
+    : aux_rule__comp_if_3*
+    ;
+
+aux_rule__comp_if_4
+    : 'if' test_nocond optional__argument_1
+    ;
+
+comp_if
+    : kleene_star__comp_if_2 aux_rule__comp_if_4
+    ;
+
+optional__comp_for_6
+    : comp_if?
     ;
 
 stmt
@@ -1031,10 +1054,6 @@ aux_rule__suite_2
     : NEWLINE INDENT kleene_plus__suite_1 DEDENT
     ;
 
-aux_rule__test_3
-    : or_test optional__test_2
-    ;
-
 aux_rule__comp_op_3
     : optional__comp_op_1 'in'
     ;
@@ -1072,11 +1091,11 @@ aux_rule__subscript__4
     ;
 
 aux_rule__dictorsetmaker_12
-    : altnt_block__dictorsetmaker_7 altnt_block__dictorsetmaker_8
+    : alt_block__dictorsetmaker_7 alt_block__dictorsetmaker_8
     ;
 
 aux_rule__dictorsetmaker_13
-    : altnt_block__testlist_star_expr_4 altnt_block__testlist_comp_5
+    : alt_block__testlist_star_expr_4 alt_block__testlist_comp_5
     ;
 
 aux_rule__argument_3
@@ -1084,7 +1103,7 @@ aux_rule__argument_3
     ;
 
 aux_rule__argument_4
-    : altnt_block__argument_2 test
+    : alt_block__argument_2 test
     ;
 
 aux_rule__yield_arg_1
@@ -1108,7 +1127,7 @@ aux_rule__varargslist_37
     ;
 
 aux_rule__expr_stmt_7
-    : augassign altnt_block__expr_stmt_6
+    : augassign alt_block__expr_stmt_6
     ;
 
 aux_rule__argument_5

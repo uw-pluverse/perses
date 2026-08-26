@@ -22,13 +22,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.listminimizer.EnumListMinimizerType
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import kotlin.io.path.createFile
 import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class ListMinimizerMicrobenchmarkingFlagGroupTest {
-  private val tempDir = Util.createTempDirForObject(this)
+  private val tempDir = FileSystemUtil.createTempDirForObject(this)
 
   private val microbenchmarkFile = tempDir.resolve("microbenchmark.yaml").apply { createFile() }
 

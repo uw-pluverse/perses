@@ -22,14 +22,14 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.deleteRecursively
 
 @RunWith(JUnit4::class)
 class InputFlagGroupTest {
-  private val tempDir: Path = Util.createTempDirForObject(this)
+  private val tempDir: Path = FileSystemUtil.createTempDirForObject(this)
 
   private val testScript: Path =
     tempDir.resolve("r.sh").also {

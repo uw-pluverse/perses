@@ -19,6 +19,7 @@ package org.perses.antlr.pnf
 import com.beust.jcommander.Parameter
 import com.google.common.base.Strings
 import org.perses.antlr.GrammarTestingUtility.loadGrammarFromFile
+import org.perses.antlr.ast.PersesGrammar.GrammarType
 import org.perses.util.cmd.AbstractCommandLineFlagGroup
 import org.perses.util.cmd.AbstractCommandOptions
 import org.perses.util.cmd.AbstractMain
@@ -31,7 +32,7 @@ class PnfPassCommandLine(
   cmd: CommandOptions,
 ) : AbstractMain<PnfPassCommandLine.CommandOptions>(cmd) {
   override fun internalRun() {
-    val parserGramamr = loadGrammarFromFile(cmd.flags.input!!)
+    val inputGrammar = loadGrammarFromFile(cmd.flags.input!!)
 
     @Suppress("UNCHECKED_CAST")
     val passClass = Class.forName(cmd.flags.pass) as Class<AbstractPnfPass>
@@ -42,9 +43,14 @@ class PnfPassCommandLine(
       } else {
         passClass.getConstructor(String::class.java).newInstance(startRuleName)
       }
-    val grammar = GrammarPair(parserGramamr, lexerGrammar = null)
+    val grammar =
+      if (inputGrammar.grammarType == GrammarType.LEXER) {
+        GrammarPair(parserGrammar = null, lexerGrammar = inputGrammar)
+      } else {
+        GrammarPair(inputGrammar, lexerGrammar = null)
+      }
     val output = pass.processGrammar(grammar)
-    output.parserGrammar?.let {
+    (output.parserGrammar ?: output.lexerGrammar)?.let {
       cmd.flags.output!!.writeText(it.sourceCode)
     }
   }

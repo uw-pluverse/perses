@@ -34,7 +34,7 @@ import org.perses.reduction.event.TestScriptExecutorServiceStatisticsSnapshot
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.reduction.reducer.PersesNodeReducerAnnotations
-import org.perses.util.Util
+import org.perses.util.FileSystemUtil
 import java.nio.file.Files
 
 /**
@@ -62,7 +62,7 @@ class WebUiListenerTest {
   private val sink = CapturingSink()
   private val listener = WebUiListener(sink)
 
-  private val root = Util.createTempDirForObject(this)
+  private val root = FileSystemUtil.createTempDirForObject(this)
   private val originalReductionInputs =
     DefaultLanguageOriginalReductionInputs(
       testScript = ScriptFile(Files.writeString(root.resolve("r.sh"), "#!/bin/bash\ntrue\n")),

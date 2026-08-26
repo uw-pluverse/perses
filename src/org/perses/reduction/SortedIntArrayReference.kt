@@ -16,8 +16,9 @@
  */
 package org.perses.reduction
 
+import org.perses.util.lazyAssert
 import com.google.common.collect.ImmutableList
-import org.perses.util.Util.lazyAssert
+import org.perses.util.lazyAssert
 import java.util.Arrays
 
 class SortedIntArrayReference(

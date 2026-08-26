@@ -130,6 +130,12 @@ latraFlags:
   enableLatra: true
   enableFixpoint: true
   transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
 mimirFlags:
   groupName: "Mimir Reducer Control"
   nodeCountThresholdToUseOneByOne: 10
@@ -174,85 +180,85 @@ The spar-tree is the following.
 |___(*){id=3,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
     |___normalClassDeclaration{id=6,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
         |___(*){id=7,slot_type=kleene_star__normalClassDeclaration_1}
-        |   |___Token:public{id=217,slot_type=[classModifier,PUBLIC]}
-        |   |___Token:sealed{id=216,slot_type=[classModifier,SEALED]}
+        |   |___Token:public{id=215,slot_type=[classModifier,PUBLIC]}
+        |   |___Token:sealed{id=214,slot_type=[classModifier,SEALED]}
         |___Token:class{id=8,slot_type=CLASS}
-        |___Token:HelloJava20{id=213,slot_type=[typeIdentifier,Identifier]}
+        |___Token:HelloJava20{id=211,slot_type=[typeIdentifier,Identifier]}
         |___classBody{id=10,slot_type=classBody}
             |___Token:{{id=11,slot_type=LBRACE}
             |___(*){id=12,slot_type=kleene_star__classBody_1}
             |   |___methodDeclaration{id=15,slot_type=[classBodyDeclaration,methodDeclaration]}
             |       |___(*){id=16,slot_type=kleene_star__methodDeclaration_1}
-            |       |   |___Token:public{id=212,slot_type=[methodModifier,PUBLIC]}
-            |       |   |___Token:static{id=211,slot_type=[methodModifier,STATIC]}
+            |       |   |___Token:public{id=210,slot_type=[methodModifier,PUBLIC]}
+            |       |   |___Token:static{id=209,slot_type=[methodModifier,STATIC]}
             |       |___methodHeader{id=17,slot_type=methodHeader}
-            |       |   |___Token:void{id=208,slot_type=[result,VOID]}
-            |       |   |___methodDeclarator{id=187,slot_type=methodDeclarator}
-            |       |       |___Token:main{id=188,slot_type=Identifier}
-            |       |       |___Token:({id=189,slot_type=LPAREN}
-            |       |       |___(?){id=190,slot_type=optional__methodDeclarator_3}
-            |       |       |   |___aux_rule__formalParameter_2{id=194,slot_type=[formalParameterList,formalParameter,aux_rule__formalParameter_2]}
-            |       |       |       |___unannArrayType{id=198,slot_type=[unannType,unannArrayType]}
-            |       |       |       |   |___Token:String{id=207,slot_type=[altnt_block__unannArrayType_1,unannClassOrInterfaceType,typeIdentifier,Identifier]}
-            |       |       |       |   |___(+){id=201,slot_type=[dims,kleene_plus__dims_5]}
-            |       |       |       |       |___aux_rule__dims_3{id=202,slot_type=aux_rule__dims_3}
-            |       |       |       |           |___Token:[{id=203,slot_type=LBRACK}
-            |       |       |       |           |___Token:]{id=204,slot_type=RBRACK}
-            |       |       |       |___Token:args{id=197,slot_type=[variableDeclaratorId,Identifier]}
-            |       |       |___Token:){id=191,slot_type=RPAREN}
+            |       |   |___Token:void{id=206,slot_type=[result,VOID]}
+            |       |   |___methodDeclarator{id=185,slot_type=methodDeclarator}
+            |       |       |___Token:main{id=186,slot_type=Identifier}
+            |       |       |___Token:({id=187,slot_type=LPAREN}
+            |       |       |___(?){id=188,slot_type=optional__methodDeclarator_3}
+            |       |       |   |___aux_rule__formalParameter_2{id=192,slot_type=[formalParameterList,formalParameter,aux_rule__formalParameter_2]}
+            |       |       |       |___unannArrayType{id=196,slot_type=[unannType,unannArrayType]}
+            |       |       |       |   |___Token:String{id=205,slot_type=[alt_block__unannArrayType_1,unannClassOrInterfaceType,typeIdentifier,Identifier]}
+            |       |       |       |   |___(+){id=199,slot_type=[dims,kleene_plus__dims_5]}
+            |       |       |       |       |___aux_rule__dims_3{id=200,slot_type=aux_rule__dims_3}
+            |       |       |       |           |___Token:[{id=201,slot_type=LBRACK}
+            |       |       |       |           |___Token:]{id=202,slot_type=RBRACK}
+            |       |       |       |___Token:args{id=195,slot_type=[variableDeclaratorId,Identifier]}
+            |       |       |___Token:){id=189,slot_type=RPAREN}
             |       |___block{id=19,slot_type=[methodBody,block]}
             |           |___Token:{{id=20,slot_type=LBRACE}
             |           |___(?){id=21,slot_type=optional__block_1}
             |           |   |___(+){id=24,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
-            |           |       |___localVariableDeclarationStatement{id=149,slot_type=[blockStatement,localVariableDeclarationStatement]}
-            |           |       |   |___localVariableDeclaration{id=150,slot_type=localVariableDeclaration}
-            |           |       |   |   |___Token:var{id=185,slot_type=[localVariableType,VAR]}
-            |           |       |   |   |___(?){id=153,slot_type=optional__localVariableDeclaration_2}
-            |           |       |   |       |___variableDeclarator{id=155,slot_type=[variableDeclaratorList,variableDeclarator]}
-            |           |       |   |           |___Token:message{id=184,slot_type=[variableDeclaratorId,Identifier]}
-            |           |       |   |           |___(?){id=157,slot_type=optional__variableDeclarator_2}
-            |           |       |   |               |___aux_rule__variableDeclarator_1{id=158,slot_type=aux_rule__variableDeclarator_1}
-            |           |       |   |                   |___Token:={id=159,slot_type=ASSIGN}
-            |           |       |   |                   |___Token:"hello"{id=183,slot_type=[variableInitializer,expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
-            |           |       |   |___Token:;{id=151,slot_type=SEMI}
-            |           |       |___expressionStatement{id=108,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |           |       |   |___methodInvocation{id=111,slot_type=[statementExpression,methodInvocation]}
-            |           |       |   |   |___aux_rule__methodInvocation_18{id=114,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
-            |           |       |   |   |   |___packageName{id=142,slot_type=[typeName,packageName]}
-            |           |       |   |   |   |   |___Token:System{id=143,slot_type=Identifier}
-            |           |       |   |   |   |   |___(?){id=144,slot_type=optional__packageName_2}
-            |           |       |   |   |   |       |___aux_rule__packageName_1{id=145,slot_type=aux_rule__packageName_1}
-            |           |       |   |   |   |           |___Token:.{id=146,slot_type=DOT}
-            |           |       |   |   |   |           |___Token:out{id=148,slot_type=[packageName,Identifier]}
-            |           |       |   |   |   |___Token:.{id=116,slot_type=DOT}
-            |           |       |   |   |   |___altnt_block__methodInvocation_13{id=117,slot_type=altnt_block__methodInvocation_13}
-            |           |       |   |   |       |___Token:println{id=118,slot_type=Identifier}
-            |           |       |   |   |       |___Token:({id=119,slot_type=LPAREN}
-            |           |       |   |   |       |___(?){id=120,slot_type=optional__explicitConstructorInvocation_2}
-            |           |       |   |   |           |___Token:message{id=141,slot_type=[argumentList,expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,expressionName,Identifier]}
-            |           |       |   |   |___Token:){id=113,slot_type=RPAREN}
-            |           |       |   |___Token:;{id=110,slot_type=SEMI}
-            |           |       |___expressionStatement{id=74,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |           |       |   |___assignment{id=77,slot_type=[statementExpression,assignment]}
-            |           |       |   |   |___Token:message{id=105,slot_type=[leftHandSide,expressionName,Identifier]}
-            |           |       |   |   |___Token:={id=103,slot_type=[assignmentOperator,ASSIGN]}
-            |           |       |   |   |___Token:"!!world"{id=102,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
-            |           |       |   |___Token:;{id=76,slot_type=SEMI}
+            |           |       |___localVariableDeclarationStatement{id=147,slot_type=[blockStatement,localVariableDeclarationStatement]}
+            |           |       |   |___localVariableDeclaration{id=148,slot_type=localVariableDeclaration}
+            |           |       |   |   |___Token:var{id=183,slot_type=[localVariableType,VAR]}
+            |           |       |   |   |___(?){id=151,slot_type=optional__localVariableDeclaration_2}
+            |           |       |   |       |___variableDeclarator{id=153,slot_type=[variableDeclaratorList,variableDeclarator]}
+            |           |       |   |           |___Token:message{id=182,slot_type=[variableDeclaratorId,Identifier]}
+            |           |       |   |           |___(?){id=155,slot_type=optional__variableDeclarator_2}
+            |           |       |   |               |___aux_rule__variableDeclarator_1{id=156,slot_type=aux_rule__variableDeclarator_1}
+            |           |       |   |                   |___Token:={id=157,slot_type=ASSIGN}
+            |           |       |   |                   |___Token:"hello"{id=181,slot_type=[variableInitializer,expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,alt_block__primaryNoNewArray_53,StringLiteral]}
+            |           |       |   |___Token:;{id=149,slot_type=SEMI}
+            |           |       |___expressionStatement{id=107,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |       |   |___methodInvocation{id=110,slot_type=[statementExpression,methodInvocation]}
+            |           |       |   |   |___aux_rule__methodInvocation_18{id=113,slot_type=[alt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |       |   |   |   |___packageName{id=141,slot_type=[typeName,packageName]}
+            |           |       |   |   |   |   |___(*){id=142,slot_type=kleene_star__packageName_3}
+            |           |       |   |   |   |   |   |___aux_rule__packageName_4{id=144,slot_type=aux_rule__packageName_4}
+            |           |       |   |   |   |   |       |___Token:System{id=145,slot_type=Identifier}
+            |           |       |   |   |   |   |       |___Token:.{id=146,slot_type=DOT}
+            |           |       |   |   |   |   |___Token:out{id=143,slot_type=Identifier}
+            |           |       |   |   |   |___Token:.{id=115,slot_type=DOT}
+            |           |       |   |   |   |___alt_block__methodInvocation_13{id=116,slot_type=alt_block__methodInvocation_13}
+            |           |       |   |   |       |___Token:println{id=117,slot_type=Identifier}
+            |           |       |   |   |       |___Token:({id=118,slot_type=LPAREN}
+            |           |       |   |   |       |___(?){id=119,slot_type=optional__explicitConstructorInvocation_2}
+            |           |       |   |   |           |___Token:message{id=140,slot_type=[argumentList,expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,expressionName,Identifier]}
+            |           |       |   |   |___Token:){id=112,slot_type=RPAREN}
+            |           |       |   |___Token:;{id=109,slot_type=SEMI}
+            |           |       |___expressionStatement{id=73,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |           |       |   |___assignment{id=76,slot_type=[statementExpression,assignment]}
+            |           |       |   |   |___Token:message{id=104,slot_type=[leftHandSide,expressionName,Identifier]}
+            |           |       |   |   |___Token:={id=102,slot_type=[assignmentOperator,ASSIGN]}
+            |           |       |   |   |___Token:"!!world"{id=101,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,alt_block__primaryNoNewArray_53,StringLiteral]}
+            |           |       |   |___Token:;{id=75,slot_type=SEMI}
             |           |       |___expressionStatement{id=31,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
             |           |           |___methodInvocation{id=34,slot_type=[statementExpression,methodInvocation]}
-            |           |           |   |___aux_rule__methodInvocation_18{id=37,slot_type=[altnt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
+            |           |           |   |___aux_rule__methodInvocation_18{id=37,slot_type=[alt_block__methodInvocation_12,aux_rule__methodInvocation_18]}
             |           |           |   |   |___packageName{id=65,slot_type=[typeName,packageName]}
-            |           |           |   |   |   |___Token:System{id=66,slot_type=Identifier}
-            |           |           |   |   |   |___(?){id=67,slot_type=optional__packageName_2}
-            |           |           |   |   |       |___aux_rule__packageName_1{id=68,slot_type=aux_rule__packageName_1}
-            |           |           |   |   |           |___Token:.{id=69,slot_type=DOT}
-            |           |           |   |   |           |___Token:out{id=71,slot_type=[packageName,Identifier]}
+            |           |           |   |   |   |___(*){id=66,slot_type=kleene_star__packageName_3}
+            |           |           |   |   |   |   |___aux_rule__packageName_4{id=68,slot_type=aux_rule__packageName_4}
+            |           |           |   |   |   |       |___Token:System{id=69,slot_type=Identifier}
+            |           |           |   |   |   |       |___Token:.{id=70,slot_type=DOT}
+            |           |           |   |   |   |___Token:out{id=67,slot_type=Identifier}
             |           |           |   |   |___Token:.{id=39,slot_type=DOT}
-            |           |           |   |   |___altnt_block__methodInvocation_13{id=40,slot_type=altnt_block__methodInvocation_13}
+            |           |           |   |   |___alt_block__methodInvocation_13{id=40,slot_type=alt_block__methodInvocation_13}
             |           |           |   |       |___Token:println{id=41,slot_type=Identifier}
             |           |           |   |       |___Token:({id=42,slot_type=LPAREN}
             |           |           |   |       |___(?){id=43,slot_type=optional__explicitConstructorInvocation_2}
-            |           |           |   |           |___Token:message{id=64,slot_type=[argumentList,expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,expressionName,Identifier]}
+            |           |           |   |           |___Token:message{id=64,slot_type=[argumentList,expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,expressionName,Identifier]}
             |           |           |   |___Token:){id=36,slot_type=RPAREN}
             |           |           |___Token:;{id=33,slot_type=SEMI}
             |           |___Token:}{id=22,slot_type=RBRACE}
@@ -651,7 +657,7 @@ FixPt[1][node_priority][DFS](26/45)  Try deleting [0-1]#2: Interesting. Local ra
 ================The best program is updated.================
 
 token count change 26 -> 12
-Edit: [delete: 108,149]
+Edit: [delete: 107,147]
 ------------------------------------------------------------
 
 
@@ -662,7 +668,7 @@ Succeeded to reduce node 24 from 35 to 12
 ------------------------------------------------------------
 
 
-=================Reducing node 74, size=12==================
+=================Reducing node 73, size=12==================
 
 The current best program is the following
 
@@ -687,11 +693,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 74
+Failed to reduce node 73
 ------------------------------------------------------------
 
 
-=================Reducing node 77, size=12==================
+=================Reducing node 76, size=12==================
 
 The current best program is the following
 
@@ -706,7 +712,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 77
+Failed to reduce node 76
 ------------------------------------------------------------
 
 
@@ -753,7 +759,7 @@ FixPt[1][node_priority][DFS](12/45)  Try deleting [0-1]#2: Interesting. Local ra
 ================The best program is updated.================
 
 token count change 12 -> 10
-Edit: [delete: 216,217]
+Edit: [delete: 214,215]
 ------------------------------------------------------------
 
 
@@ -764,7 +770,7 @@ Succeeded to reduce node 7 from 12 to 10
 ------------------------------------------------------------
 
 
-=================Reducing node 213, size=10=================
+=================Reducing node 211, size=10=================
 
 The current best program is the following
 
@@ -779,11 +785,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 213
+Failed to reduce node 211
 ------------------------------------------------------------
 
 
-=================Reducing node 105, size=10=================
+=================Reducing node 104, size=10=================
 
 The current best program is the following
 
@@ -798,26 +804,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 105
-------------------------------------------------------------
-
-
-=================Reducing node 103, size=10=================
-
-The current best program is the following
-
-    --file: HelloJava20.java.txt--
-                  class HelloJava20 {
-                                             {
-        message = "!!world";
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 103
+Failed to reduce node 104
 ------------------------------------------------------------
 
 
@@ -840,7 +827,7 @@ Failed to reduce node 102
 ------------------------------------------------------------
 
 
-=================Reducing node 76, size=10==================
+=================Reducing node 101, size=10=================
 
 The current best program is the following
 
@@ -855,7 +842,26 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 76
+Failed to reduce node 101
+------------------------------------------------------------
+
+
+=================Reducing node 75, size=10==================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class HelloJava20 {
+                                             {
+        message = "!!world";
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 75
 ------------------------------------------------------------
 
 
@@ -959,32 +965,32 @@ Failed to reduce node 8
 
 Parser Facade: class org.perses.grammar.java.Java20ParserFacade
 The spar-tree is the following.
-(|:compilationUnit){id=219,slot_type=compilationUnit}
-|___(*){id=221,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
-    |___normalClassDeclaration{id=224,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
-        |___Token:class{id=225,slot_type=CLASS}
-        |___Token:HelloJava20{id=274,slot_type=[typeIdentifier,Identifier]}
-        |___classBody{id=227,slot_type=classBody}
-            |___Token:{{id=228,slot_type=LBRACE}
-            |___(*){id=229,slot_type=kleene_star__classBody_1}
-            |   |___block{id=233,slot_type=[classBodyDeclaration,instanceInitializer,block]}
-            |       |___Token:{{id=234,slot_type=LBRACE}
-            |       |___(?){id=235,slot_type=optional__block_1}
-            |       |   |___(+){id=238,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
-            |       |       |___expressionStatement{id=242,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |       |           |___assignment{id=245,slot_type=[statementExpression,assignment]}
-            |       |           |   |___Token:message{id=273,slot_type=[leftHandSide,expressionName,Identifier]}
-            |       |           |   |___Token:={id=271,slot_type=[assignmentOperator,ASSIGN]}
-            |       |           |   |___Token:"!!world"{id=270,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
-            |       |           |___Token:;{id=244,slot_type=SEMI}
-            |       |___Token:}{id=236,slot_type=RBRACE}
-            |___Token:}{id=230,slot_type=RBRACE}
+(|:compilationUnit){id=217,slot_type=compilationUnit}
+|___(*){id=219,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration{id=222,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=223,slot_type=CLASS}
+        |___Token:HelloJava20{id=272,slot_type=[typeIdentifier,Identifier]}
+        |___classBody{id=225,slot_type=classBody}
+            |___Token:{{id=226,slot_type=LBRACE}
+            |___(*){id=227,slot_type=kleene_star__classBody_1}
+            |   |___block{id=231,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{{id=232,slot_type=LBRACE}
+            |       |___(?){id=233,slot_type=optional__block_1}
+            |       |   |___(+){id=236,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement{id=240,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment{id=243,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:message{id=271,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:={id=269,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"!!world"{id=268,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,alt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:;{id=242,slot_type=SEMI}
+            |       |___Token:}{id=234,slot_type=RBRACE}
+            |___Token:}{id=228,slot_type=RBRACE}
 ------------------------------------------------------------
 
 
 FixPt[2][node_priority](10/45)  Starting to retrieve the semantics provider
 FixPt[2][node_priority](10/45)  Retrieved semantics provider null
-=================Reducing node 221, size=10=================
+=================Reducing node 219, size=10=================
 
 The current best program is the following
 
@@ -1010,11 +1016,11 @@ FixPt[2][node_priority][DFS](10/45)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](10/45)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 221
+Failed to reduce node 219
 ------------------------------------------------------------
 
 
-=================Reducing node 224, size=10=================
+=================Reducing node 222, size=10=================
 
 The current best program is the following
 
@@ -1029,18 +1035,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_224]
+    structure: [delete_222]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 224
+Failed to reduce node 222
 ------------------------------------------------------------
 
 
-=================Reducing node 227, size=10=================
+=================Reducing node 225, size=10=================
 
 The current best program is the following
 
@@ -1055,11 +1061,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 227
+Failed to reduce node 225
 ------------------------------------------------------------
 
 
-=================Reducing node 229, size=10=================
+=================Reducing node 227, size=10=================
 
 The current best program is the following
 
@@ -1088,11 +1094,11 @@ FixPt[2][node_priority][DFS](10/45)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](10/45)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 229
+Failed to reduce node 227
 ------------------------------------------------------------
 
 
-=================Reducing node 233, size=10=================
+=================Reducing node 231, size=10=================
 
 The current best program is the following
 
@@ -1107,18 +1113,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_233]
+    structure: [delete_231]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 233
+Failed to reduce node 231
 ------------------------------------------------------------
 
 
-=================Reducing node 235, size=10=================
+=================Reducing node 233, size=10=================
 
 The current best program is the following
 
@@ -1149,11 +1155,11 @@ FixPt[2][node_priority][DFS](10/45)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](10/45)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 235
+Failed to reduce node 233
 ------------------------------------------------------------
 
 
-=================Reducing node 238, size=10=================
+=================Reducing node 236, size=10=================
 
 The current best program is the following
 
@@ -1168,7 +1174,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_238]
+    structure: [delete_236]
     context: [kleene_plus:kleene_plus__blockStatements_2]can be epsilon
 ------------------------------------------------------------
 
@@ -1190,11 +1196,11 @@ FixPt[2][node_priority][DFS](10/45)  There is only one element in the input, and
 FixPt[2][node_priority][DFS](10/45)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 238
+Failed to reduce node 236
 ------------------------------------------------------------
 
 
-=================Reducing node 242, size=10=================
+=================Reducing node 240, size=10=================
 
 The current best program is the following
 
@@ -1209,18 +1215,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_242]
+    structure: [delete_240]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 242
+Failed to reduce node 240
 ------------------------------------------------------------
 
 
-=================Reducing node 245, size=10=================
+=================Reducing node 243, size=10=================
 
 The current best program is the following
 
@@ -1235,11 +1241,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 245
+Failed to reduce node 243
 ------------------------------------------------------------
 
 
-=================Reducing node 274, size=10=================
+=================Reducing node 272, size=10=================
 
 The current best program is the following
 
@@ -1254,26 +1260,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 274
-------------------------------------------------------------
-
-
-=================Reducing node 273, size=10=================
-
-The current best program is the following
-
-    --file: HelloJava20.java.txt--
-                  class HelloJava20 {
-                                             {
-        message = "!!world";
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 273
+Failed to reduce node 272
 ------------------------------------------------------------
 
 
@@ -1296,7 +1283,7 @@ Failed to reduce node 271
 ------------------------------------------------------------
 
 
-=================Reducing node 270, size=10=================
+=================Reducing node 269, size=10=================
 
 The current best program is the following
 
@@ -1311,11 +1298,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 270
+Failed to reduce node 269
 ------------------------------------------------------------
 
 
-=================Reducing node 244, size=10=================
+=================Reducing node 268, size=10=================
 
 The current best program is the following
 
@@ -1330,11 +1317,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 244
+Failed to reduce node 268
 ------------------------------------------------------------
 
 
-=================Reducing node 236, size=10=================
+=================Reducing node 242, size=10=================
 
 The current best program is the following
 
@@ -1349,7 +1336,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 236
+Failed to reduce node 242
 ------------------------------------------------------------
 
 
@@ -1372,7 +1359,7 @@ Failed to reduce node 234
 ------------------------------------------------------------
 
 
-=================Reducing node 230, size=10=================
+=================Reducing node 232, size=10=================
 
 The current best program is the following
 
@@ -1387,7 +1374,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 230
+Failed to reduce node 232
 ------------------------------------------------------------
 
 
@@ -1410,7 +1397,7 @@ Failed to reduce node 228
 ------------------------------------------------------------
 
 
-=================Reducing node 225, size=10=================
+=================Reducing node 226, size=10=================
 
 The current best program is the following
 
@@ -1425,7 +1412,26 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 225
+Failed to reduce node 226
+------------------------------------------------------------
+
+
+=================Reducing node 223, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class HelloJava20 {
+                                             {
+        message = "!!world";
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 223
 ------------------------------------------------------------
 
 
@@ -1434,26 +1440,26 @@ Failed to reduce node 225
 
 Parser Facade: class org.perses.grammar.java.Java20ParserFacade
 The spar-tree is the following.
-(|:compilationUnit){id=219,slot_type=compilationUnit}
-|___(*){id=221,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
-    |___normalClassDeclaration{id=224,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
-        |___Token:class{id=225,slot_type=CLASS}
-        |___Token:HelloJava20{id=274,slot_type=[typeIdentifier,Identifier]}
-        |___classBody{id=227,slot_type=classBody}
-            |___Token:{{id=228,slot_type=LBRACE}
-            |___(*){id=229,slot_type=kleene_star__classBody_1}
-            |   |___block{id=233,slot_type=[classBodyDeclaration,instanceInitializer,block]}
-            |       |___Token:{{id=234,slot_type=LBRACE}
-            |       |___(?){id=235,slot_type=optional__block_1}
-            |       |   |___(+){id=238,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
-            |       |       |___expressionStatement{id=242,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |       |           |___assignment{id=245,slot_type=[statementExpression,assignment]}
-            |       |           |   |___Token:message{id=273,slot_type=[leftHandSide,expressionName,Identifier]}
-            |       |           |   |___Token:={id=271,slot_type=[assignmentOperator,ASSIGN]}
-            |       |           |   |___Token:"!!world"{id=270,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
-            |       |           |___Token:;{id=244,slot_type=SEMI}
-            |       |___Token:}{id=236,slot_type=RBRACE}
-            |___Token:}{id=230,slot_type=RBRACE}
+(|:compilationUnit){id=217,slot_type=compilationUnit}
+|___(*){id=219,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration{id=222,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=223,slot_type=CLASS}
+        |___Token:HelloJava20{id=272,slot_type=[typeIdentifier,Identifier]}
+        |___classBody{id=225,slot_type=classBody}
+            |___Token:{{id=226,slot_type=LBRACE}
+            |___(*){id=227,slot_type=kleene_star__classBody_1}
+            |   |___block{id=231,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{{id=232,slot_type=LBRACE}
+            |       |___(?){id=233,slot_type=optional__block_1}
+            |       |   |___(+){id=236,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement{id=240,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment{id=243,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:message{id=271,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:={id=269,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"!!world"{id=268,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,alt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:;{id=242,slot_type=SEMI}
+            |       |___Token:}{id=234,slot_type=RBRACE}
+            |___Token:}{id=228,slot_type=RBRACE}
 ------------------------------------------------------------
 
 
@@ -1484,7 +1490,7 @@ The spar-tree is the following.
 ================The best program is updated.================
 
 token count change 10 -> 10
-Edit: AnyNodeReplace:[replace_274_with_276]
+Edit: AnyNodeReplace:[replace_272_with_274]
 ------------------------------------------------------------
 
 
@@ -1515,7 +1521,7 @@ Edit: AnyNodeReplace:[replace_274_with_276]
 ================The best program is updated.================
 
 token count change 10 -> 10
-Edit: AnyNodeReplace:[replace_273_with_278]
+Edit: AnyNodeReplace:[replace_271_with_276]
 ------------------------------------------------------------
 
 
@@ -1604,7 +1610,7 @@ It took less than 1 second to cancel the task.
 ================The best program is updated.================
 
 token count change 10 -> 10
-Edit: AnyNodeReplace:[replace_270_with_284]
+Edit: AnyNodeReplace:[replace_268_with_282]
 ------------------------------------------------------------
 
 
@@ -1681,7 +1687,7 @@ It took less than 1 second to cancel the task.
 ================The best program is updated.================
 
 token count change 10 -> 10
-Edit: AnyNodeReplace:[replace_284_with_300]
+Edit: AnyNodeReplace:[replace_282_with_298]
 ------------------------------------------------------------
 
 
@@ -1881,32 +1887,32 @@ Edit: AnyNodeReplace:[replace_284_with_300]
 
 Parser Facade: class org.perses.grammar.java.Java20ParserFacade
 The spar-tree is the following.
-(|:compilationUnit){id=344,slot_type=compilationUnit}
-|___(*){id=346,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
-    |___normalClassDeclaration{id=349,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
-        |___Token:class{id=350,slot_type=CLASS}
-        |___Token:A{id=399,slot_type=[typeIdentifier,Identifier]}
-        |___classBody{id=352,slot_type=classBody}
-            |___Token:{{id=353,slot_type=LBRACE}
-            |___(*){id=354,slot_type=kleene_star__classBody_1}
-            |   |___block{id=358,slot_type=[classBodyDeclaration,instanceInitializer,block]}
-            |       |___Token:{{id=359,slot_type=LBRACE}
-            |       |___(?){id=360,slot_type=optional__block_1}
-            |       |   |___(+){id=363,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
-            |       |       |___expressionStatement{id=367,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |       |           |___assignment{id=370,slot_type=[statementExpression,assignment]}
-            |       |           |   |___Token:a{id=398,slot_type=[leftHandSide,expressionName,Identifier]}
-            |       |           |   |___Token:={id=396,slot_type=[assignmentOperator,ASSIGN]}
-            |       |           |   |___Token:"world"{id=395,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
-            |       |           |___Token:;{id=369,slot_type=SEMI}
-            |       |___Token:}{id=361,slot_type=RBRACE}
-            |___Token:}{id=355,slot_type=RBRACE}
+(|:compilationUnit){id=342,slot_type=compilationUnit}
+|___(*){id=344,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration{id=347,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=348,slot_type=CLASS}
+        |___Token:A{id=397,slot_type=[typeIdentifier,Identifier]}
+        |___classBody{id=350,slot_type=classBody}
+            |___Token:{{id=351,slot_type=LBRACE}
+            |___(*){id=352,slot_type=kleene_star__classBody_1}
+            |   |___block{id=356,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{{id=357,slot_type=LBRACE}
+            |       |___(?){id=358,slot_type=optional__block_1}
+            |       |   |___(+){id=361,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement{id=365,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment{id=368,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:a{id=396,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:={id=394,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"world"{id=393,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,alt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:;{id=367,slot_type=SEMI}
+            |       |___Token:}{id=359,slot_type=RBRACE}
+            |___Token:}{id=353,slot_type=RBRACE}
 ------------------------------------------------------------
 
 
 FixPt[4][node_priority](10/45)  Starting to retrieve the semantics provider
 FixPt[4][node_priority](10/45)  Retrieved semantics provider null
-=================Reducing node 346, size=10=================
+=================Reducing node 344, size=10=================
 
 The current best program is the following
 
@@ -1932,11 +1938,11 @@ FixPt[4][node_priority][DFS](10/45)  There is only one element in the input, and
 FixPt[4][node_priority][DFS](10/45)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 346
+Failed to reduce node 344
 ------------------------------------------------------------
 
 
-=================Reducing node 349, size=10=================
+=================Reducing node 347, size=10=================
 
 The current best program is the following
 
@@ -1951,18 +1957,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_349]
+    structure: [delete_347]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 349
+Failed to reduce node 347
 ------------------------------------------------------------
 
 
-=================Reducing node 352, size=10=================
+=================Reducing node 350, size=10=================
 
 The current best program is the following
 
@@ -1977,11 +1983,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 352
+Failed to reduce node 350
 ------------------------------------------------------------
 
 
-=================Reducing node 354, size=10=================
+=================Reducing node 352, size=10=================
 
 The current best program is the following
 
@@ -2010,11 +2016,11 @@ FixPt[4][node_priority][DFS](10/45)  There is only one element in the input, and
 FixPt[4][node_priority][DFS](10/45)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 354
+Failed to reduce node 352
 ------------------------------------------------------------
 
 
-=================Reducing node 358, size=10=================
+=================Reducing node 356, size=10=================
 
 The current best program is the following
 
@@ -2029,18 +2035,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_358]
+    structure: [delete_356]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 358
+Failed to reduce node 356
 ------------------------------------------------------------
 
 
-=================Reducing node 360, size=10=================
+=================Reducing node 358, size=10=================
 
 The current best program is the following
 
@@ -2071,11 +2077,11 @@ FixPt[4][node_priority][DFS](10/45)  There is only one element in the input, and
 FixPt[4][node_priority][DFS](10/45)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 360
+Failed to reduce node 358
 ------------------------------------------------------------
 
 
-=================Reducing node 363, size=10=================
+=================Reducing node 361, size=10=================
 
 The current best program is the following
 
@@ -2090,7 +2096,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_363]
+    structure: [delete_361]
     context: [kleene_plus:kleene_plus__blockStatements_2]can be epsilon
 ------------------------------------------------------------
 
@@ -2112,11 +2118,11 @@ FixPt[4][node_priority][DFS](10/45)  There is only one element in the input, and
 FixPt[4][node_priority][DFS](10/45)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:10/45=22.22%
 ===================Node reduction is done===================
 
-Failed to reduce node 363
+Failed to reduce node 361
 ------------------------------------------------------------
 
 
-=================Reducing node 367, size=10=================
+=================Reducing node 365, size=10=================
 
 The current best program is the following
 
@@ -2131,18 +2137,18 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_367]
+    structure: [delete_365]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 367
+Failed to reduce node 365
 ------------------------------------------------------------
 
 
-=================Reducing node 370, size=10=================
+=================Reducing node 368, size=10=================
 
 The current best program is the following
 
@@ -2157,11 +2163,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 370
+Failed to reduce node 368
 ------------------------------------------------------------
 
 
-=================Reducing node 399, size=10=================
+=================Reducing node 397, size=10=================
 
 The current best program is the following
 
@@ -2176,26 +2182,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 399
-------------------------------------------------------------
-
-
-=================Reducing node 398, size=10=================
-
-The current best program is the following
-
-    --file: HelloJava20.java.txt--
-                  class A           {
-                                             {
-        a       = "world"  ;
-      }
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 398
+Failed to reduce node 397
 ------------------------------------------------------------
 
 
@@ -2218,7 +2205,7 @@ Failed to reduce node 396
 ------------------------------------------------------------
 
 
-=================Reducing node 395, size=10=================
+=================Reducing node 394, size=10=================
 
 The current best program is the following
 
@@ -2233,11 +2220,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 395
+Failed to reduce node 394
 ------------------------------------------------------------
 
 
-=================Reducing node 369, size=10=================
+=================Reducing node 393, size=10=================
 
 The current best program is the following
 
@@ -2252,11 +2239,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 369
+Failed to reduce node 393
 ------------------------------------------------------------
 
 
-=================Reducing node 361, size=10=================
+=================Reducing node 367, size=10=================
 
 The current best program is the following
 
@@ -2271,7 +2258,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 361
+Failed to reduce node 367
 ------------------------------------------------------------
 
 
@@ -2294,7 +2281,7 @@ Failed to reduce node 359
 ------------------------------------------------------------
 
 
-=================Reducing node 355, size=10=================
+=================Reducing node 357, size=10=================
 
 The current best program is the following
 
@@ -2309,7 +2296,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 355
+Failed to reduce node 357
 ------------------------------------------------------------
 
 
@@ -2332,7 +2319,7 @@ Failed to reduce node 353
 ------------------------------------------------------------
 
 
-=================Reducing node 350, size=10=================
+=================Reducing node 351, size=10=================
 
 The current best program is the following
 
@@ -2347,7 +2334,26 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 350
+Failed to reduce node 351
+------------------------------------------------------------
+
+
+=================Reducing node 348, size=10=================
+
+The current best program is the following
+
+    --file: HelloJava20.java.txt--
+                  class A           {
+                                             {
+        a       = "world"  ;
+      }
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 348
 ------------------------------------------------------------
 
 
@@ -2356,26 +2362,26 @@ Failed to reduce node 350
 
 Parser Facade: class org.perses.grammar.java.Java20ParserFacade
 The spar-tree is the following.
-(|:compilationUnit){id=344,slot_type=compilationUnit}
-|___(*){id=346,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
-    |___normalClassDeclaration{id=349,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
-        |___Token:class{id=350,slot_type=CLASS}
-        |___Token:A{id=399,slot_type=[typeIdentifier,Identifier]}
-        |___classBody{id=352,slot_type=classBody}
-            |___Token:{{id=353,slot_type=LBRACE}
-            |___(*){id=354,slot_type=kleene_star__classBody_1}
-            |   |___block{id=358,slot_type=[classBodyDeclaration,instanceInitializer,block]}
-            |       |___Token:{{id=359,slot_type=LBRACE}
-            |       |___(?){id=360,slot_type=optional__block_1}
-            |       |   |___(+){id=363,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
-            |       |       |___expressionStatement{id=367,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |       |           |___assignment{id=370,slot_type=[statementExpression,assignment]}
-            |       |           |   |___Token:a{id=398,slot_type=[leftHandSide,expressionName,Identifier]}
-            |       |           |   |___Token:={id=396,slot_type=[assignmentOperator,ASSIGN]}
-            |       |           |   |___Token:"world"{id=395,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
-            |       |           |___Token:;{id=369,slot_type=SEMI}
-            |       |___Token:}{id=361,slot_type=RBRACE}
-            |___Token:}{id=355,slot_type=RBRACE}
+(|:compilationUnit){id=342,slot_type=compilationUnit}
+|___(*){id=344,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration{id=347,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=348,slot_type=CLASS}
+        |___Token:A{id=397,slot_type=[typeIdentifier,Identifier]}
+        |___classBody{id=350,slot_type=classBody}
+            |___Token:{{id=351,slot_type=LBRACE}
+            |___(*){id=352,slot_type=kleene_star__classBody_1}
+            |   |___block{id=356,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{{id=357,slot_type=LBRACE}
+            |       |___(?){id=358,slot_type=optional__block_1}
+            |       |   |___(+){id=361,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement{id=365,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment{id=368,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:a{id=396,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:={id=394,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"world"{id=393,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,alt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:;{id=367,slot_type=SEMI}
+            |       |___Token:}{id=359,slot_type=RBRACE}
+            |___Token:}{id=353,slot_type=RBRACE}
 ------------------------------------------------------------
 
 
@@ -2571,26 +2577,26 @@ The spar-tree is the following.
 
 Parser Facade: class org.perses.grammar.java.Java20ParserFacade
 The spar-tree is the following.
-(|:compilationUnit){id=344,slot_type=compilationUnit}
-|___(*){id=346,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
-    |___normalClassDeclaration{id=349,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
-        |___Token:class{id=350,slot_type=CLASS}
-        |___Token:A{id=399,slot_type=[typeIdentifier,Identifier]}
-        |___classBody{id=352,slot_type=classBody}
-            |___Token:{{id=353,slot_type=LBRACE}
-            |___(*){id=354,slot_type=kleene_star__classBody_1}
-            |   |___block{id=358,slot_type=[classBodyDeclaration,instanceInitializer,block]}
-            |       |___Token:{{id=359,slot_type=LBRACE}
-            |       |___(?){id=360,slot_type=optional__block_1}
-            |       |   |___(+){id=363,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
-            |       |       |___expressionStatement{id=367,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
-            |       |           |___assignment{id=370,slot_type=[statementExpression,assignment]}
-            |       |           |   |___Token:a{id=398,slot_type=[leftHandSide,expressionName,Identifier]}
-            |       |           |   |___Token:={id=396,slot_type=[assignmentOperator,ASSIGN]}
-            |       |           |   |___Token:"world"{id=395,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,altnt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,altnt_block__primaryNoNewArray_53,StringLiteral]}
-            |       |           |___Token:;{id=369,slot_type=SEMI}
-            |       |___Token:}{id=361,slot_type=RBRACE}
-            |___Token:}{id=355,slot_type=RBRACE}
+(|:compilationUnit){id=342,slot_type=compilationUnit}
+|___(*){id=344,slot_type=[ordinaryCompilationUnit,kleene_star__ordinaryCompilationUnit_3]}
+    |___normalClassDeclaration{id=347,slot_type=[topLevelClassOrInterfaceDeclaration,classDeclaration,normalClassDeclaration]}
+        |___Token:class{id=348,slot_type=CLASS}
+        |___Token:A{id=397,slot_type=[typeIdentifier,Identifier]}
+        |___classBody{id=350,slot_type=classBody}
+            |___Token:{{id=351,slot_type=LBRACE}
+            |___(*){id=352,slot_type=kleene_star__classBody_1}
+            |   |___block{id=356,slot_type=[classBodyDeclaration,instanceInitializer,block]}
+            |       |___Token:{{id=357,slot_type=LBRACE}
+            |       |___(?){id=358,slot_type=optional__block_1}
+            |       |   |___(+){id=361,slot_type=[blockStatements,kleene_plus__blockStatements_2]}
+            |       |       |___expressionStatement{id=365,slot_type=[blockStatement,statement,statementWithoutTrailingSubstatement,expressionStatement]}
+            |       |           |___assignment{id=368,slot_type=[statementExpression,assignment]}
+            |       |           |   |___Token:a{id=396,slot_type=[leftHandSide,expressionName,Identifier]}
+            |       |           |   |___Token:={id=394,slot_type=[assignmentOperator,ASSIGN]}
+            |       |           |   |___Token:"world"{id=393,slot_type=[expression,conditionalExpression,aux_rule__conditionalExpression_3,conditionalOrExpression,conditionalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,unaryExpression,aux_rule__unaryExpression_3,unaryExpressionNotPlusMinus,postfixExpression,alt_block__postfixExpression_3,primary,primaryNoNewArray,aux_rule__primaryNoNewArray_65,alt_block__primaryNoNewArray_53,StringLiteral]}
+            |       |           |___Token:;{id=367,slot_type=SEMI}
+            |       |___Token:}{id=359,slot_type=RBRACE}
+            |___Token:}{id=353,slot_type=RBRACE}
 ------------------------------------------------------------
 
 

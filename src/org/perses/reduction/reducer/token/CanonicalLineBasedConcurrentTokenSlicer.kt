@@ -25,7 +25,7 @@ import org.perses.reduction.ReducerAnnotation
 import org.perses.reduction.ReducerContext
 import org.perses.spartree.ContextDescription
 import org.perses.spartree.LexerRuleSparTreeNode
-import org.perses.util.Util
+import org.perses.util.CollectionUtil
 import org.perses.util.toImmutableList
 
 /**
@@ -81,7 +81,7 @@ class CanonicalLineBasedConcurrentTokenSlicer(
     fun computeLines(
       tokens: ImmutableList<LexerRuleSparTreeNode>,
     ): ImmutableList<ImmutableList<LexerRuleSparTreeNode>> =
-      Util.mergeContinuousElementsIntoRegions(tokens) { a, b ->
+      CollectionUtil.mergeContinuousElementsIntoRegions(tokens) { a, b ->
         a.token
           .asAntlrToken()
           .position.line ==

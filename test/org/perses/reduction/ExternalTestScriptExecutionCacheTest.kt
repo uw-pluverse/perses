@@ -44,14 +44,14 @@ class ExternalTestScriptExecutionCacheTest :
     val outputManager = outputManagerFactory.createManagerFor(program)
     assertThat(cache.getCachedResultOrNull(outputManager)).isNull()
 
-    val propertyTestResult = PropertyTestResult(exitCode = ExitCode.ZERO, elapsedMillis = 1)
-    cache.cacheTestScriptResult(outputManager, propertyTestResult)
+    val testScriptVerdict = TestScriptVerdict(exitCode = ExitCode.ZERO, elapsedMillis = 1)
+    cache.cacheTestScriptResult(outputManager, testScriptVerdict)
     cache
       .getCachedResultOrNull(
         outputManagerFactory.createManagerFor(program),
       ).let {
-        assertThat(it!!.exitCode.intValue).isSameInstanceAs(propertyTestResult.exitCode.intValue)
-        assertThat(it.elapsedMillis).isEqualTo(propertyTestResult.elapsedMillis)
+        assertThat(it!!.exitCode.intValue).isSameInstanceAs(testScriptVerdict.exitCode.intValue)
+        assertThat(it.elapsedMillis).isEqualTo(testScriptVerdict.elapsedMillis)
       }
 
     val resultFile = workingDir.resolve("result.csv")
@@ -61,8 +61,8 @@ class ExternalTestScriptExecutionCacheTest :
 
     val anotherCache = GlobalExecutionCache.createFromHistoryCvsFile(shaAlgorithm, resultFile)
     anotherCache.getCachedResultOrNull(outputManager)!!.let {
-      assertThat(it.exitCode.intValue).isEqualTo(propertyTestResult.exitCode.intValue)
-      assertThat(it.elapsedMillis).isEqualTo(propertyTestResult.elapsedMillis)
+      assertThat(it.exitCode.intValue).isEqualTo(testScriptVerdict.exitCode.intValue)
+      assertThat(it.elapsedMillis).isEqualTo(testScriptVerdict.elapsedMillis)
     }
   }
 }
