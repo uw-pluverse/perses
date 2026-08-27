@@ -6,7 +6,10 @@ load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 kt_jvm_library(
     name = "AbstractReductionTestData",
     srcs = ["AbstractReductionTestData.kt"],
-    visibility = ["//test:__subpackages__"],
+    visibility = [
+        "//astra:__subpackages__",
+        "//test:__subpackages__",
+    ],
     deps = [
         "//:guava",
         "//src/org/perses/program",

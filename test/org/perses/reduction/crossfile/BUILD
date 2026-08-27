@@ -6,6 +6,10 @@ kt_jvm_library(
     name = "crossfile_test_data",
     testonly = True,
     srcs = ["CrossFileReductionTestData.kt"],
+    visibility = [
+        "//astra:__subpackages__",
+        "//test:__subpackages__",
+    ],
     deps = [
         "//:guava",
         "//src/org/perses/program",
@@ -15,21 +19,6 @@ kt_jvm_library(
         "//src/org/perses/reduction/crossfile:crossfile_output_manager",
         "//src/org/perses/reduction/crossfile:crossfile_reduction_driver",
         "//src/org/perses/reduction/crossfile:crossfile_transformation",
-        "//test/org/perses/reduction/io:AbstractReductionTestData",
-    ],
-)
-
-kt_jvm_test(
-    name = "RemoveOverrideAcrossFilesFunctionalTest",
-    srcs = ["RemoveOverrideAcrossFilesFunctionalTest.kt"],
-    deps = [
-        ":crossfile_test_data",
-        "//:guava",
-        "//:truth",
-        "//astra/java/src/org/perses/astra/java",
-        "//src/org/perses/grammar/java:language_kind",
-        "//src/org/perses/program",
-        "//src/org/perses/reduction/crossfile:crossfile_reduction_driver",
         "//test/org/perses/reduction/io:AbstractReductionTestData",
     ],
 )

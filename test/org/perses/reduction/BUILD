@@ -54,8 +54,6 @@ kt_jvm_library(
     name = "AbstractPersesReducerTest",
     srcs = ["AbstractPersesReducerTest.kt"],
     data = [
-        "//benchmark_v2/benchmark_c/gcc-59903:files",
-        "//benchmark_v2/benchmark_c/gcc-71626:files",
         "//test_data/child_tree_1",
         "//test_data/child_tree_2",
         "//test_data/child_tree_3",

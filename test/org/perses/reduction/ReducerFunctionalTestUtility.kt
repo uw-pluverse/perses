@@ -131,23 +131,6 @@ class ReducerFunctionalTestUtility(
   }
 
   companion object {
-    fun runBenchmarkSubject(
-      reductionFolder: String,
-      reducerAnnotation: ReducerAnnotation,
-      cmdCustomizer: (PersesCommandOptions) -> Unit = {},
-      expected: String,
-    ) {
-      ReducerFunctionalTestUtility(
-        reductionFolder = reductionFolder,
-        testScript = "r.sh",
-        sourceFile = "small.c",
-        reducerAnnotation = reducerAnnotation,
-        cmdCustomizer = cmdCustomizer,
-      ).use { utility ->
-        utility.runReducerAndTest(expected)
-      }
-    }
-
     fun runCTestSubject(
       reductionFolder: String,
       reducerAnnotation: ReducerAnnotation,

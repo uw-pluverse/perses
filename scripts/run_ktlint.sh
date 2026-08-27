@@ -93,7 +93,16 @@ fi
 if [[ "${JAVA_FILE_COUNT}" -eq 0 ]]; then
   echo "No changed Java files to format."
 else
-  java -jar bazel-bin/google_java_format_deploy.jar "@${FLAG_FILE}"
+  # google-java-format reaches into javac internals, which JDK 16+ strong
+  # encapsulation blocks without these exports.
+  java \
+    --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
+    --add-exports jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED \
+    --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
+    --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
+    --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
+    --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
+    -jar bazel-bin/google_java_format_deploy.jar "@${FLAG_FILE}"
 fi
 
 echo "google-java-format is done."

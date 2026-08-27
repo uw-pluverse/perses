@@ -6,6 +6,10 @@ set -o pipefail
 readonly SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 source "${SCRIPT_DIR}/constants.sh" || exit 1
 
+# Hooks are versioned in .githooks; installing here means every clone that runs
+# presubmit gets them without a separate setup step.
+./scripts/install_hooks.sh || exit 1
+
 ./scripts/cleanup.sh || exit 1
 
 # //benchmark_v2 is listed target by target rather than as //benchmark_v2/...:

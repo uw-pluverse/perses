@@ -16,6 +16,7 @@ BAZEL_DIRS=(
   "astra"
   "antlropt"
   "copyright"
+  "mimir/test"
   "kitten/src"
   "kitten/test"
   "latra/src"

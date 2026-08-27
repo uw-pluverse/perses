@@ -1,24 +1,10 @@
 #!/usr/bin/env bash
 
-set -o nounset
-set -o pipefail
-set -o errexit
-set -o xtrace
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 
-if [[ ! -e "WORKSPACE" ]]; then
-  echo "ERROR: This script should be run in the root folder of the project."
-  exit 1
-fi
+source "${SCRIPT_DIR}/constants.sh" || exit 1
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null 2>&1 && pwd)"
-
-readonly PRESUBMIT_SCRIPT=".git/hooks/pre-commit"
-
-cat > "${PRESUBMIT_SCRIPT}" << EOF
-#!/usr/bin/env bash
-
-./scripts/cleanup.sh
-
-EOF
-
-chmod +x "${PRESUBMIT_SCRIPT}"
+# The hooks live in the versioned .githooks directory, so improving a hook
+# propagates to every clone on pull; this script only has to point the clone at
+# them, and presubmit.sh runs it so any clone that runs presubmit is covered.
+git config core.hooksPath .githooks

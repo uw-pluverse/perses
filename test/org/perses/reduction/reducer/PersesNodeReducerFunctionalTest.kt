@@ -86,18 +86,6 @@ class PersesNodeReducerFunctionalTest {
     )
   }
 
-  fun debug() {
-    ReducerFunctionalTestUtility.runBenchmarkSubject(
-      reductionFolder = "benchmark_v2/benchmark_c/gcc-71626",
-      reducerAnnotation = PersesNodeReducerAnnotations.PrioritizedDfs,
-      cmdCustomizer = {},
-      expected =
-        "typedeflongllong;test1char8(c){}" +
-          "typedefllongvllong1__attribute__((__vector_size__(sizeof(llong))));" +
-          "vllong1test2llong1(p){llongc=test1char8;vllong1v={c};returnv;}main(){}",
-    )
-  }
-
   private fun test(
     folder: String,
     expected: String,
