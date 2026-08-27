@@ -17,12 +17,37 @@ def check_tools() -> None:
         raise Exception("Error: command 'gh' is not installed (https://cli.github.com)")
 
 
+def check_version_file(tag_name) -> None:
+    # Fails before the build if the bump was forgotten; the built jar's
+    # --version output is still the authoritative check afterwards.
+    version = open('version/org/perses/version/VERSION').read().strip()
+    if f'v{version}' != tag_name:
+        raise Exception(
+            f"ERROR: the VERSION file says {version} but the release is "
+            f"{tag_name}. Run ./scripts/bump_version.py and commit first.")
+    print("===== * PASSED : VERSION file matches the release")
+
+
 def create_tag() -> str:
-    subprocess.check_call(['git', 'fetch', '--tags'])
     current_tag = generate_release_notes.latest_release_tag()
     new_tag = generate_release_notes.next_release_tag(current_tag)
     print(f"===== New tag created: {new_tag}")
     return new_tag
+
+
+def check_head_is_pushed() -> str:
+    # The release tags whatever commit is released, so HEAD must already be on
+    # the remote master: releasing an unpushed HEAD would tag a commit whose
+    # source does not match the released jar.
+    subprocess.check_call(['git', 'fetch', '--quiet', 'origin', 'master'])
+    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+    remote = subprocess.check_output(['git', 'rev-parse', 'FETCH_HEAD'], text=True).strip()
+    if head != remote:
+        raise Exception(
+            f"ERROR: HEAD ({head[:9]}) is not the remote master ({remote[:9]}). "
+            "Push (or pull --rebase) first, then rerun the release.")
+    print("===== * PASSED : HEAD is the pushed remote master")
+    return head
 
 
 def _build_binary(binary_name:str, build_path:str) -> None:
@@ -60,6 +85,7 @@ def check_version(jar_path: str, release_version: str):
 
     print(f"===== Perses version: v{perses_version_number}; Release version: {release_version}")
 
+    assert release_version.startswith('v'), release_version
     if perses_version_number != release_version[1:]:
         raise Exception("Error: Perses version check fails. Update version info in source code and commit.")
     print("===== * PASSED : Version check")
@@ -79,14 +105,17 @@ def check_repository():
     return
 
 
-def call_gh_release(attachments:List[str], notes_file, tag):
+def call_gh_release(attachments:List[str], notes_file, tag, target_commit):
     # The first line of the notes file is the release title, the rest the body.
     with open(notes_file) as file:
         title, body = (file.read().split('\n', 1) + [''])[:2]
     with tempfile.NamedTemporaryFile(mode='w', suffix='.md') as body_file:
         body_file.write(body.lstrip('\n'))
         body_file.flush()
+        # --target pins the tag to the verified commit instead of whatever the
+        # remote HEAD is by the time the release request lands.
         release_command = ['gh', 'release', 'create', tag,
+                           f'--target={target_commit}',
                            f'--title={title}',
                            f'--notes-file={body_file.name}'] + attachments
         subprocess.check_call(release_command)
@@ -126,15 +155,16 @@ def main():
     # check prerequisite tools
     check_tools()
 
+    check_repository()
+    target_commit = check_head_is_pushed()
+
     tag_name = create_tag()
+    check_version_file(tag_name)
     notes_file = prepare_notes_file(flags.notes_file, tag_name)
 
     # get built binary path
     perses_binary_path = build_perses_binary()
-
-    # check pre-submit conditions
     check_version(perses_binary_path, tag_name)
-    check_repository()
 
     kitten_binary_path = build_kitten_binary()
     kitten_organizer_binary_path = build_kitten_organizer_binary()
@@ -143,7 +173,8 @@ def main():
     call_gh_release(
         attachments=[perses_binary_path, kitten_binary_path, kitten_organizer_binary_path],
         notes_file=notes_file,
-        tag=tag_name
+        tag=tag_name,
+        target_commit=target_commit
     )
 
     print("Released successfully!")

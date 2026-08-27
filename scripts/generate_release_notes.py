@@ -13,6 +13,7 @@ import subprocess
 from typing import Dict, List, Optional, Tuple
 
 TAG_PATTERN = re.compile(r'^v(\d+)\.(\d+)$')
+UPSTREAM_PATTERN = re.compile(r'github\.com[:/]uw-pluverse/perses(\.git)?/?$')
 # type(scope)!: description
 SUBJECT_PATTERN = re.compile(r'^(?P<type>[a-z]+)(\([^)]+\))?(?P<breaking>!)?: (?P<description>.+)$')
 
@@ -44,18 +45,45 @@ def parse_tag(tag: str) -> Optional[Tuple[int, int]]:
 
 
 def latest_release_tag() -> str:
-    versions = [v for v in
-                (parse_tag(t) for t in _run(['git', 'tag']).splitlines())
-                if v is not None]
+    """Returns the highest released version tag, as GitHub knows it.
+
+    The tags are listed from the remote rather than the local clone, so a
+    stale clone cannot compute a version that is already released. The tag is
+    also fetched, so callers can use it as a git range endpoint.
+    """
+    check_origin_is_upstream()
+    versions = []
+    for line in _run(['git', 'ls-remote', '--tags', 'origin']).splitlines():
+        ref = line.split('\t')[1]
+        if ref.endswith('^{}'):
+            continue
+        version = parse_tag(ref.removeprefix('refs/tags/'))
+        if version is not None:
+            versions.append(version)
     if not versions:
-        raise Exception('Error: found no tag matching vMAJOR.MINOR.')
-    return 'v%d.%d' % max(versions)
+        raise Exception('Error: found no remote tag matching vMAJOR.MINOR.')
+    tag = 'v%d.%d' % max(versions)
+    _run(['git', 'fetch', '--quiet', 'origin', 'tag', tag])
+    return tag
 
 
 def next_release_tag(current_tag: str) -> str:
     major, minor = parse_tag(current_tag)
     increment, new_minor = divmod(minor + 1, 10)
     return f'v{major + increment}.{new_minor}'
+
+
+def check_origin_is_upstream() -> None:
+    """Fails unless origin is the upstream perses repo (not a fork).
+
+    All version arithmetic and the release itself operate on origin; in a fork
+    clone they would silently use the fork's tags and release to the fork.
+    """
+    url = _run(['git', 'remote', 'get-url', 'origin']).strip()
+    if not UPSTREAM_PATTERN.search(url):
+        raise Exception(
+            f'Error: origin ({url}) is not the upstream perses repo; refusing '
+            'to compute release versions against a fork.')
 
 
 def commit_subjects(since_tag: str) -> List[str]:
