@@ -215,6 +215,33 @@ class FullFunctionalLatraRewriterBuilder internal constructor(
             continue
           }
 
+        // Mirror the empty-binding handling of resolveHolesIfPossible on the with-side:
+        // an earlier zero-match clause binds its holes to empty lists, and a with-template
+        // referencing such a hole cannot be rewritten. Holes re-bound by this clause's own
+        // match are excluded, as performOneGlobalReplace binds them before rewriting.
+        val holeNamesBoundByThisClauseMatch =
+          patternToReplace.pattern.holes.mapTo(mutableSetOf()) { it.holeName }
+        val emptyBoundHoleInWithClause =
+          replaceClause.with.pattern.holes.firstOrNull { hole ->
+            val willBeReboundByThisClauseMatch =
+              hole.holeName in holeNamesBoundByThisClauseMatch
+            val isBoundToNothing =
+              holeBindings.getHoleBinding(hole.holeName)?.isEmpty() == true
+            !willBeReboundByThisClauseMatch && isBoundToNothing
+          }
+        if (emptyBoundHoleInWithClause != null) {
+          if (replaceClause.mustMatch) {
+            throw LatraException(
+              "The hole $emptyBoundHoleInWithClause is bound to nothing, so the mandatory " +
+                "clause cannot be applied in the transformation ${definition.name}",
+            )
+          }
+          logger.ktFine {
+            "Skip the clause: the hole $emptyBoundHoleInWithClause is bound to nothing."
+          }
+          continue
+        }
+
         val matches =
           TransformationUtility.looseMatch(
             pattern = patternToReplace.pattern,

@@ -17,6 +17,7 @@
 package org.perses.reduction.reducer.latra
 
 import com.google.common.collect.ImmutableList
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.perses.TestUtility
 import org.perses.grammar.c.OrigCParserFacade
@@ -76,20 +77,22 @@ class FullFunctionalLatraRewriterBuilderTest {
     program: String,
     definition: LatraTransformationDefinition,
   ): FullFunctionalLatraRewriterBuilder {
+    // Share one factory between tree building and latra, as production does in
+    // AbstractProgramReductionDriver: node ids created by latra must not collide
+    // with the ids already in the tree.
+    val sparTreeNodeFactory = SparTreeNodeFactory(parserFacade)
     val sparTree =
       TestUtility.createSparTreeFromString(
         program,
         parserFacade,
         false,
+        sparTreeNodeFactory,
       )
 
     val parsingRelatedArguments =
       LatraArguments(
         parserFacade,
-        sparTreeNodeFactory =
-          SparTreeNodeFactory(
-            parserFacade,
-          ),
+        sparTreeNodeFactory = sparTreeNodeFactory,
         IProgramPrinter.create(parserFacade),
         prefixLabelFromRootToHere = "[test]",
       )
@@ -271,12 +274,137 @@ class FullFunctionalLatraRewriterBuilderTest {
       location = "after",
       expected =
         """
-        void func_1 ( int a , char b , int c ) { 
-          for ( p_131 . f0 = 0 ; p_131 . f0 << 2 ; p_131 . f0 += 1 ) { } 
+        void func_1 ( int a , char b , int c ) {
+          for ( p_131 . f0 = 0 ; p_131 . f0 << 2 ; p_131 . f0 += 1 ) { }
           int d = 0;
           int newVar;
         }
         """.trimIndent(),
     )
+  }
+
+  // Regression tests for https://github.com/chengniansun/perses-private/issues/1037.
+  //
+  // The function definition matches the from-clause, but the only call site has a
+  // different arity, so the call-site clause matches nothing and binds paramCall1 and
+  // paramCall2 to empty lists. The clause substituting :[param2] with :[paramCall2]
+  // inside the body then used to crash the reducer with LatraEmptyHoleBindingException;
+  // it must be skipped instead.
+  private val inliningInputWithMismatchedCallSite =
+    """
+    int func_1 ( int a , int b ) {
+      d = b ;
+    }
+    int main ( ) {
+      func_1 ( 1 ) ;
+      return 0 ;
+    }
+    """.trimIndent()
+
+  private val inliningDefinitionWithoutMustMatch =
+    LatraTransformationDefinition.parse(
+      RawDefinition(
+        name = "FunctionInlining2ArgsWithoutMustMatch",
+        from =
+          """
+          :[retType] :[name] ( :[type1] :[param1] , :[type2] :[param2] ) {
+            :[block+]
+          }
+          """.trimIndent(),
+        to = "",
+        global_replace =
+          ImmutableList.of(
+            RawGlobalReplaceClause(
+              pattern = ":[name] ( :[paramCall1] , :[paramCall2+] )",
+              with = ":[block]",
+            ),
+            RawGlobalReplaceClause(
+              pattern = ":[param1]",
+              inside = "block",
+              with = ":[paramCall1]",
+            ),
+            RawGlobalReplaceClause(
+              pattern = ":[param2]",
+              inside = "block",
+              with = ":[paramCall2]",
+            ),
+          ),
+      ),
+      parserFacade,
+    )
+
+  @Test
+  fun testGlobalReplaceSkipsClauseWhoseWithHoleIsBoundToNothing() {
+    val builder =
+      getBuilder(inliningInputWithMismatchedCallSite, inliningDefinitionWithoutMustMatch)
+        .createSingleMatchLatraRewriterBuilder()
+        .single()
+    val holeBindings = builder.createInitialHoleBindings()
+    builder.processToClauseOnSparTreeCopy(holeBindings)
+    builder.processGlobalReplaceClauseOnSparTreeCopy(holeBindings)
+    val replacingNode = builder.treeCopy.result.detachRootFromTree()
+    replacingNode.fixLinkIntegrity()
+    val outcome = replacingNode.leafNodeSequence().joinToString(" ") { it.token.lexemeText }
+    LatraTestUtil.assertHaveSameTokens(
+      actualProgram = outcome,
+      expectedProgram =
+        """
+        int main ( ) {
+          func_1 ( 1 ) ;
+          return 0 ;
+        }
+        """.trimIndent(),
+      facade = parserFacade,
+    )
+  }
+
+  @Test
+  fun testBuildSucceedsWhenTheCallSiteClauseMatchesNothing() {
+    val actionSet =
+      getBuilder(inliningInputWithMismatchedCallSite, inliningDefinitionWithoutMustMatch)
+        .build()
+    assertThat(actionSet).isNotNull()
+  }
+
+  private val declarationOnlyInput =
+    """
+    void func_1 ( ) {
+      int d ;
+    }
+    """.trimIndent()
+
+  // The zero-match global-replace clause binds callArgument to an empty list, and the
+  // insert clause then rewrites with it. build() must abandon the transformation
+  // gracefully instead of propagating LatraEmptyHoleBindingException.
+  private val insertionUsingHoleBoundToNothingDefinition =
+    LatraTransformationDefinition.parse(
+      RawDefinition(
+        name = "InsertionUsingHoleBoundToNothing",
+        from = ":[type] :[name] ;",
+        to = ":[type] :[name] = 0 ;",
+        global_replace =
+          ImmutableList.of(
+            RawGlobalReplaceClause(
+              pattern = ":[name] ( :[callArgument+] )",
+              with = "",
+            ),
+          ),
+        insert =
+          ImmutableList.of(
+            RawInsertClause(
+              pattern = "int newVar = :[callArgument] ;",
+              location = "bottom",
+            ),
+          ),
+      ),
+      parserFacade,
+    )
+
+  @Test
+  fun testBuildAbandonsTransformationOnEmptyHoleBindingInInsertClause() {
+    val actionSet =
+      getBuilder(declarationOnlyInput, insertionUsingHoleBoundToNothingDefinition)
+        .build()
+    assertThat(actionSet).isNull()
   }
 }

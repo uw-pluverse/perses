@@ -16,7 +16,7 @@
  */
 package org.perses.reduction.reducer.latra
 
-class LatraException : Exception {
+open class LatraException : Exception {
   constructor() : super()
 
   constructor(message: String?) : super(message)

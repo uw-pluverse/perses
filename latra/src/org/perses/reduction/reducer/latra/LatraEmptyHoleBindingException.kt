@@ -16,7 +16,14 @@
  */
 package org.perses.reduction.reducer.latra
 
-class LatraEmptyHoleBindingException : Exception {
+/**
+ * Thrown when a hole is used for rewriting but is bound to nothing. This is a recoverable
+ * state, not a template error: a non-mustMatch global-replace clause that matches nothing
+ * deliberately binds its holes to empty lists. It extends [LatraException] so that
+ * [FullFunctionalLatraRewriterBuilder.build] abandons the transformation gracefully
+ * instead of crashing the reducer.
+ */
+class LatraEmptyHoleBindingException : LatraException {
   constructor() : super()
 
   constructor(message: String?) : super(message)
