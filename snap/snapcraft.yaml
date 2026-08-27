@@ -17,7 +17,7 @@ description: |
   installed developer tool. See internal_doc/snap_classic_confinement_request.md
   for the store-review justification.
 
-license: Apache-2.0
+license: GPL-3.0-or-later
 grade: stable
 confinement: classic
 
