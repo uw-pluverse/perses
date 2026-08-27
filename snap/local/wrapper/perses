@@ -1,0 +1,11 @@
+#!/bin/sh
+# Launcher for the Perses snap. Runs the bundled fat jar with the bundled JRE.
+set -e
+
+JVM_DIR=$(ls -d "$SNAP"/usr/lib/jvm/java-17-openjdk-* 2>/dev/null | head -n1)
+if [ -z "$JVM_DIR" ]; then
+  echo "perses: bundled JRE not found under \$SNAP/usr/lib/jvm" >&2
+  exit 1
+fi
+
+exec "$JVM_DIR/bin/java" -jar "$SNAP/jar/perses_deploy.jar" "$@"

@@ -1,0 +1,2 @@
+# Build output: the Bazel fat jar staged for snap packaging.
+*.jar

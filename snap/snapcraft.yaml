@@ -1,0 +1,69 @@
+name: perses
+base: core22
+adopt-info: perses
+summary: Syntax-directed program reducer
+description: |
+  Perses is a language-agnostic program reducer. It minimizes a program with
+  respect to a set of constraints expressed as a test script, leveraging the
+  Antlr grammar to prune the search space and avoid generating syntactically
+  invalid variants.
+
+  Usage:
+    perses --test-script <test-script.sh> --input-file <program-file>
+
+  Because Perses runs the user's test script — which typically invokes system
+  toolchains (gcc, clang, javac, ...) and reads and writes files at arbitrary
+  paths — this snap uses classic confinement so it behaves like a normally
+  installed developer tool. See internal_doc/snap_classic_confinement_request.md
+  for the store-review justification.
+
+license: Apache-2.0
+grade: stable
+confinement: classic
+
+apps:
+  perses:
+    command: bin/perses
+
+parts:
+  # The version-controlled launcher. Kept separate from the (build-time) jar so
+  # the source tree never contains a copy of the jar.
+  wrapper:
+    plugin: dump
+    source: snap/local/wrapper
+    organize:
+      perses: bin/perses
+    stage:
+      - bin/perses
+
+  # The fat "deploy" jar, built by Bazel and dropped into dist/ before packing.
+  # See packaging/snap/build-snap.sh, which produces dist/perses_deploy.jar.
+  perses:
+    after: [wrapper]
+    plugin: dump
+    source: snap/local/dist
+    organize:
+      perses_deploy.jar: jar/perses_deploy.jar
+    stage:
+      - jar/perses_deploy.jar
+    override-pull: |
+      craftctl default
+      # Snap versions are limited to 32 chars and a restricted charset, so use a
+      # clean static default. Override at build time with SNAPCRAFT_PERSES_VERSION
+      # (e.g. to match a release tag: SNAPCRAFT_PERSES_VERSION=2.5).
+      craftctl set version="${SNAPCRAFT_PERSES_VERSION:-2.5}"
+
+  # Bundle a full JDK (not just a JRE) so users need no Java on the host AND the
+  # in-process compiler API works: perses calls ToolProvider.getSystemJavaCompiler()
+  # / com.sun.source.* (JavacWrapper in AntlrCompiler, and the mimir javac path),
+  # which live in the jdk.compiler module absent from a headless JRE.
+  jdk:
+    plugin: nil
+    stage-packages:
+      - openjdk-17-jdk-headless
+    prime:
+      - -usr/lib/jvm/*/jmods          # jlink-only; javac and the compiler API work without it
+    # classic snaps need explicit ELF patching so the bundled JRE resolves its
+    # own libraries instead of the host's.
+    build-attributes:
+      - enable-patchelf
