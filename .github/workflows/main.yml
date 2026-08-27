@@ -19,44 +19,20 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v4
 
-    # scala is not installed: the bazel toolchains fetch their own, and the
-    # package no longer exists on ubuntu-latest.
-    - name: Install Prerequisite Software
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y creduce clang-format
-
-    # Runs a single command using the runners shell
     - name: Mount bazel cache
       uses: actions/cache@v4
       with:
         path: "/home/runner/.cache/bazel"
         key: bazel
 
-    - name: Build
+    # Loading + analysis of every shipped package, without executing any build
+    # action. This is the boundary check: a reference to a package that only
+    # exists in the private overlay fails here within seconds.
+    - name: Analyze all shipped targets
       run: |
-        bazelisk build //src/... //antlropt/... //test/... //copyright/... //ppr/...
+        bazelisk build --nobuild //src/... //antlropt/... //test/... //copyright/... //ppr/...
 
-#    - name: Test Toy Benchmarks
-#      run: |
-#        bazelisk test --test_output=errors //test/org/perses/benchmark_toys/...
-
-    #- name: Test Reducers
-    #  run: |
-    #    bazelisk test //test/org/perses/reduction/...
-
-    #- name: Test Antlr OPT
-    #  run: |
-    #    bazelisk test //antlropt/...
-
-    #- name: Test Pair-Wise Program Reduction
-    #  run: |
-    #    bazelisk test //ppr/...
-
-    #- name: Test
-    #  run: |
-    #    ./scripts/presubmit.sh
-
+    # Builds the perses binary and smoke-runs `perses --help`.
     - name: Test Installation
       run: |
         ./scripts/test_install_perses.sh
