@@ -26,8 +26,21 @@ import kotlin.io.path.readLines
 import kotlin.io.path.writeText
 
 object VersionClassGenerator {
-  private const val MAJOR_VERSION = "2"
-  private const val MINOR_VERSION = "7"
+  private val VERSION_PATTERN = Regex("""^(\d+)\.(\d)$""")
+
+  // The VERSION file is bundled as a resource, so the version flows into the
+  // generated class without any extra genrule wiring; bazel reruns the
+  // generation because editing VERSION rebuilds this generator.
+  private const val VERSION_RESOURCE = "version/org/perses/version/VERSION"
+
+  @JvmStatic
+  fun loadVersion(): String {
+    val stream =
+      checkNotNull(javaClass.classLoader.getResourceAsStream(VERSION_RESOURCE)) {
+        "The resource $VERSION_RESOURCE is missing."
+      }
+    return stream.bufferedReader(StandardCharsets.UTF_8).use { it.readText() }.trim()
+  }
 
   @JvmStatic
   fun generate(args: Array<String>) {
@@ -35,13 +48,18 @@ object VersionClassGenerator {
     val lines = Paths.get(args[0]).readLines(StandardCharsets.UTF_8)
     val map = parse(lines)
     val outputFile = Paths.get(args[1])
-    writeVersionClass(map, outputFile)
+    writeVersionClass(map, loadVersion(), outputFile)
   }
 
   private fun writeVersionClass(
     map: ImmutableMultimap<String, String>,
+    version: String,
     outputFile: Path,
   ) {
+    val (majorVersion, minorVersion) =
+      requireNotNull(VERSION_PATTERN.find(version)) {
+        "The version must be MAJOR.MINOR with a single-digit minor, but is '$version'."
+      }.destructured
     val branch: String = map.get("PERSES_GIT_BRANCH").single()
     val hash: String = map.get("PERSES_GIT_COMMIT_HASH").single()
     val status: String = map.get("PERSES_GIT_STATUS").single()
@@ -61,10 +79,10 @@ object VersionClassGenerator {
       |  val STATUS = "$status"
       |  
       |  @JvmStatic
-      |  val MAJOR_VERSION = "$MAJOR_VERSION"
-      |  
+      |  val MAJOR_VERSION = "$majorVersion"
+      |
       |  @JvmStatic
-      |  val MINOR_VERSION = "$MINOR_VERSION"
+      |  val MINOR_VERSION = "$minorVersion"
       |  
       |  @JvmStatic
       |  val BUILD_TIME = "$timestamp"

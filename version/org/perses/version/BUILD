@@ -11,6 +11,7 @@ kt_jvm_library(
         "VersionClassGenerator.kt",
         "VersionClassGeneratorMain.kt",
     ],
+    resources = ["VERSION"],
     deps = [
         "//:guava",
     ],
