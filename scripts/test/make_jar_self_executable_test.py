@@ -21,7 +21,7 @@ import threading
 import unittest
 from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parent / "make_jar_self_executable.sh"
+SCRIPT = Path("scripts/make_jar_self_executable.sh").resolve()
 
 HEADER = b'#!/usr/bin/env bash \nexec java -jar "$0" "$@"\n'
 
