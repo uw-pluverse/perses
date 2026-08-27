@@ -17,15 +17,18 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
 
+    # scala is not installed: the bazel toolchains fetch their own, and the
+    # package no longer exists on ubuntu-latest.
     - name: Install Prerequisite Software
       run: |
-        sudo apt-get install scala creduce clang-format
+        sudo apt-get update
+        sudo apt-get install -y creduce clang-format
 
     # Runs a single command using the runners shell
     - name: Mount bazel cache
-      uses: actions/cache@v1
+      uses: actions/cache@v4
       with:
         path: "/home/runner/.cache/bazel"
         key: bazel
