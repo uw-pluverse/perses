@@ -83,10 +83,13 @@ maven.install(
         "org.ow2.asm:asm-util:9.3",
         "org.ow2.asm:asm:9.3",
     ],
+    # The GCS mirror comes first: repo1.maven.org rate-limits the shared IPs of
+    # CI providers (HTTP 403), which broke every fetch on GitHub Actions.
+    # jcenter is gone (shut down in 2021).
     repositories = [
+        "https://maven-central.storage-download.googleapis.com/maven2",
         "https://repo1.maven.org/maven2",
         "https://maven.google.com",
-        "https://jcenter.bintray.com",
     ],
     fetch_sources = True,
 )
