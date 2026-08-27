@@ -24,6 +24,7 @@ BAZEL_DIRS=(
   "lpr"
   "ppr"
   "readme_generator"
+  "scripts"
   "sfc/src"
   "sfc/test"
   "src"

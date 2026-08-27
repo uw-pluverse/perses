@@ -12,7 +12,9 @@ import re
 import subprocess
 from typing import Dict, List, Optional, Tuple
 
-TAG_PATTERN = re.compile(r'^v(\d+)\.(\d+)$')
+# The minor version is a single digit by policy; when it would pass 9, the
+# major version is bumped instead (see next_release_tag).
+TAG_PATTERN = re.compile(r'^v(\d+)\.(\d)$')
 UPSTREAM_PATTERN = re.compile(r'github\.com[:/]uw-pluverse/perses(\.git)?/?$')
 # type(scope)!: description
 SUBJECT_PATTERN = re.compile(r'^(?P<type>[a-z]+)(\([^)]+\))?(?P<breaking>!)?: (?P<description>.+)$')
@@ -52,8 +54,15 @@ def latest_release_tag() -> str:
     also fetched, so callers can use it as a git range endpoint.
     """
     check_origin_is_upstream()
+    tag = parse_latest_tag_from_ls_remote(
+        _run(['git', 'ls-remote', '--tags', 'origin']).splitlines())
+    _run(['git', 'fetch', '--quiet', 'origin', 'tag', tag])
+    return tag
+
+
+def parse_latest_tag_from_ls_remote(lines: List[str]) -> str:
     versions = []
-    for line in _run(['git', 'ls-remote', '--tags', 'origin']).splitlines():
+    for line in lines:
         ref = line.split('\t')[1]
         if ref.endswith('^{}'):
             continue
@@ -62,9 +71,7 @@ def latest_release_tag() -> str:
             versions.append(version)
     if not versions:
         raise Exception('Error: found no remote tag matching vMAJOR.MINOR.')
-    tag = 'v%d.%d' % max(versions)
-    _run(['git', 'fetch', '--quiet', 'origin', 'tag', tag])
-    return tag
+    return 'v%d.%d' % max(versions)
 
 
 def next_release_tag(current_tag: str) -> str:
