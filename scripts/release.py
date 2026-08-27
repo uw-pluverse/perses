@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
-import re
 import subprocess
+import tempfile
 from typing import List
+
+# release.py is run as a script, so its directory is on sys.path.
+import generate_release_notes
 
 
 def check_tools() -> None:
@@ -15,23 +19,8 @@ def check_tools() -> None:
 
 def create_tag() -> str:
     subprocess.check_call(['git', 'fetch', '--tags'])
-    # create new tag as per current release
-    command = ['git', 'tag']
-    tags = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.read()
-
-    tags = tags.decode(encoding='utf-8')
-    current_tag = tags.splitlines()[-1]
-
-    if not re.match("^v[0-9]+[.][0-9]", current_tag):
-        raise Exception("Error: tag name does not follow expected pattern.")
-
-    version = current_tag[1:].split('.')
-
-    major_version = int(version[0])
-    minor_version = int(version[1])
-    increment, new_minor_version = divmod(minor_version + 1, 10)
-
-    new_tag = f"v{major_version + increment}.{new_minor_version}"
+    current_tag = generate_release_notes.latest_release_tag()
+    new_tag = generate_release_notes.next_release_tag(current_tag)
     print(f"===== New tag created: {new_tag}")
     return new_tag
 
@@ -90,9 +79,10 @@ def check_repository():
     return
 
 
-def call_hub_release(attachments:List[str], message, tag):
+def call_hub_release(attachments:List[str], notes_file, tag):
     try:
-        release_command = ['hub', 'release', 'create', '--browse', f'--message={message}', tag] + \
+        # The first line of the notes file is the release title, the rest the body.
+        release_command = ['hub', 'release', 'create', '--browse', f'--file={notes_file}', tag] + \
             ['--attach=' + s for s in attachments]
         pipe = None
         subprocess.check_call(
@@ -108,7 +98,28 @@ def call_hub_release(attachments:List[str], message, tag):
         raise e
 
 
+def prepare_notes_file(notes_file, tag_name) -> str:
+    if notes_file:
+        return notes_file
+    notes = generate_release_notes.render_notes(
+        tag_name,
+        generate_release_notes.commit_subjects(
+            generate_release_notes.latest_release_tag()))
+    print("===== Release notes:\n" + notes)
+    with tempfile.NamedTemporaryFile(
+            mode='w', suffix='.md', delete=False) as file:
+        file.write(notes)
+        return file.name
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--notes-file',
+        help='release title (first line) and notes; default: generated from '
+             'the conventional-commit history since the previous tag')
+    flags = parser.parse_args()
+
     # ensure in root folder
     if not os.path.exists("WORKSPACE"):
         raise Exception('ERROR: This script should be run in the root folder of the project.')
@@ -122,7 +133,7 @@ def main():
     check_tools()
 
     tag_name = create_tag()
-    title = f"Perses {tag_name}"
+    notes_file = prepare_notes_file(flags.notes_file, tag_name)
 
     # get built binary path
     perses_binary_path = build_perses_binary()
@@ -137,7 +148,7 @@ def main():
     # release
     call_hub_release(
         attachments=[perses_binary_path, kitten_binary_path, kitten_organizer_binary_path],
-        message=title,
+        notes_file=notes_file,
         tag=tag_name
     )
 
