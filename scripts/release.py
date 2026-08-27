@@ -11,10 +11,10 @@ import generate_release_notes
 
 
 def check_tools() -> None:
-    command = ['which', 'hub']
+    command = ['which', 'gh']
     ret_code = subprocess.call(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if ret_code != 0:
-        raise Exception("Error: command 'hub' is not installed")
+        raise Exception("Error: command 'gh' is not installed (https://cli.github.com)")
 
 
 def create_tag() -> str:
@@ -79,23 +79,17 @@ def check_repository():
     return
 
 
-def call_hub_release(attachments:List[str], notes_file, tag):
-    try:
-        # The first line of the notes file is the release title, the rest the body.
-        release_command = ['hub', 'release', 'create', '--browse', f'--file={notes_file}', tag] + \
-            ['--attach=' + s for s in attachments]
-        pipe = None
-        subprocess.check_call(
-            release_command,
-            stdout=pipe,
-            stderr=pipe)
-    except subprocess.CalledProcessError as e:
-        print("Error: hub release failed", e)
-        print("If it is username/password related:")
-        print("\t1. go to https://github.com/settings/tokens/, and create a token.")
-        print("\t2. the token should be in the repo and gist scope.")
-        print("\t3. input the token as the password.")
-        raise e
+def call_gh_release(attachments:List[str], notes_file, tag):
+    # The first line of the notes file is the release title, the rest the body.
+    with open(notes_file) as file:
+        title, body = (file.read().split('\n', 1) + [''])[:2]
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.md') as body_file:
+        body_file.write(body.lstrip('\n'))
+        body_file.flush()
+        release_command = ['gh', 'release', 'create', tag,
+                           f'--title={title}',
+                           f'--notes-file={body_file.name}'] + attachments
+        subprocess.check_call(release_command)
 
 
 def prepare_notes_file(notes_file, tag_name) -> str:
@@ -146,7 +140,7 @@ def main():
     kitten_organizer_binary_path = build_kitten_organizer_binary()
 
     # release
-    call_hub_release(
+    call_gh_release(
         attachments=[perses_binary_path, kitten_binary_path, kitten_organizer_binary_path],
         notes_file=notes_file,
         tag=tag_name
