@@ -44,9 +44,6 @@ class ConcurrentStateBasedLineSlicer(
 
   // The line grammar can lex any program, so this slicer does not require the canonical facade to
   // be able to parse the candidate program.
-  override val parseCheckNeeded: Boolean
-    get() = false
-
   override fun getPreferredParserFacade(): AbstractParserFacade = LineParserFacade()
 
   override fun createInputSequence(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> =

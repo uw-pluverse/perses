@@ -1,5 +1,1 @@
-    main
-                      (
-                                         )  {
-          printf("world\n");
-         }
+ printf("world\n");

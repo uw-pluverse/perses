@@ -37,9 +37,6 @@ class ConcurrentStateBasedTokenSlicer(
     require(slicerAnnotation.granularity > 0) { "$slicerAnnotation" }
   }
 
-  override val parseCheckNeeded: Boolean
-    get() = true
-
   override fun createInputSequence(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> =
     tree.remainingLexerRuleNodes
 

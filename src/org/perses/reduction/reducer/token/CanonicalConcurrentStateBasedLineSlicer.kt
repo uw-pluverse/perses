@@ -50,9 +50,6 @@ class CanonicalConcurrentStateBasedLineSlicer(
     require(slicerAnnotation.granularity > 0) { "$slicerAnnotation" }
   }
 
-  override val parseCheckNeeded: Boolean
-    get() = true
-
   override fun createInputSequence(tree: SparTree): ImmutableList<CanonicalLine> =
     computeLines(tree.remainingLexerRuleNodes)
 

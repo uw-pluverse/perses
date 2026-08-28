@@ -17,8 +17,6 @@
 package org.perses.reduction.reducer.token
 
 import com.google.common.collect.ImmutableList
-import org.perses.program.TokenizedProgram
-import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.EditTestPayload
 import org.perses.reduction.FixpointReductionState
@@ -34,7 +32,6 @@ import org.perses.spartree.NodeActionSetCacheResult
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
 import org.perses.util.lazyAssert
-import org.perses.util.shell.ExitCode
 
 abstract class AbstractStateBasedConcurrentReducer<
   ConcurrentState : IConcurrentState<ConcurrentState>,
@@ -43,8 +40,6 @@ abstract class AbstractStateBasedConcurrentReducer<
   meta: ReducerAnnotation,
   reducerContext: ReducerContext,
 ) : AbstractSparTreeReducer(meta, reducerContext) {
-  abstract val parseCheckNeeded: Boolean
-
   private var state: ConcurrentState? = null
 
   private val numWorkers: Int
@@ -88,7 +83,7 @@ abstract class AbstractStateBasedConcurrentReducer<
       activeFutures.add(
         executorService.testProgramAsync(
           ALWAYS_TRUE_PRECHECK,
-          if (parseCheckNeeded) createParsabilityPostCheck() else IDENTITY_POST_CHECK,
+          IDENTITY_POST_CHECK,
           outputManagerCreator(state!!, tree, sequence),
         ),
       )
@@ -241,37 +236,10 @@ abstract class AbstractStateBasedConcurrentReducer<
     }
   }
 
-  private fun createParsabilityPostCheck(): (
-    existingResult: TestScriptVerdict,
-    payload: ConcurrentStateEditTestPayload<ConcurrentState>,
-  ) -> TestScriptVerdict =
-    { existing, payload ->
-      if (existing.isNotInteresting || isProgramParsable(payload.editTestPayload.edit.program)) {
-        existing
-      } else {
-        TestScriptVerdict(
-          exitCode = INVALID_SYNTAX_EXIT_CODE,
-          elapsedMillis = -1,
-        )
-      }
-    }
-
-  private fun isProgramParsable(testProgram: TokenizedProgram) =
-    reducerContext.configuration.canonicalParserFacade.isSourceCodeParsable(
-      PrinterRegistry
-        .getPrinter(reducerContext.getDefaultProgramFormat())
-        .print(testProgram)
-        .sourceCode,
-    )
-
   data class ConcurrentStateEditTestPayload<State : IConcurrentState<State>>(
     val concurrentState: State,
     val editTestPayload: EditTestPayload,
   )
-
-  companion object {
-    val INVALID_SYNTAX_EXIT_CODE = ExitCode(99)
-  }
 }
 
 interface IConcurrentState<T> {

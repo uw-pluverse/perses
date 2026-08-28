@@ -34,9 +34,9 @@ class ConcurrentStateBasedTokenSlicerTest {
       cmdCustomizer = {},
     ).use {
       it.runReducerAndTest(
-        // It is not possible to get only the string literal, because our token slicer
-        // checks syntactical validity before each property test.
-        expected = """printf { ("world\n");}""",
+        // The slicer no longer requires variants to parse: the oracle alone decides, so it
+        // reaches the bare string literal, exactly as C-Reduce's rm-toks would.
+        expected = """"world\n"""",
       )
     }
   }

@@ -30,9 +30,6 @@ class ConcurrentStateBasedDeltaReducer(
     META,
     reducerContext,
   ) {
-  override val parseCheckNeeded: Boolean
-    get() = false
-
   override fun createInputSequence(tree: SparTree): ImmutableList<LexerRuleSparTreeNode> =
     tree.remainingLexerRuleNodes
 
