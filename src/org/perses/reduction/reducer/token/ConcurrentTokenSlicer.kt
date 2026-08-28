@@ -72,7 +72,7 @@ class ConcurrentTokenSlicer(
     private const val NAME_PREFIX = "concurrent_token_slicer"
 
     val REDUCER_ANNOTATIONS =
-      IntRange(start = 1, endInclusive = 14)
+      IntRange(start = 1, endInclusive = MAX_SLICING_GRANULARITY)
         .asSequence()
         .map { ConcurrentTokenSlicerAnnotation(granularity = it) }
         .toImmutableList()

@@ -1059,7 +1059,7 @@ FixPt[14][canonical_line_based_concurrent_token_slicer@14][WINDOWED_SLICER](5/56
 FixPt[14][canonical_line_based_concurrent_token_slicer@14][WINDOWED_SLICER](5/56)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
 FixPt[14][canonical_line_based_concurrent_token_slicer@14][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
 (5/56)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
-=Fixpoint iteration 15. Reducer: canonical_line_based_concurrent_token_slicer@1
+=Fixpoint iteration 15. Reducer: canonical_line_based_concurrent_token_slicer@15
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
@@ -1083,9 +1083,83 @@ compilationUnit{id=1,slot_type=compilationUnit}
 ------------------------------------------------------------
 
 
-FixPt[15][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:5/56=8.93%
-FixPt[15][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Testing the empty input is disabled. Global ratio:5/56=8.93%
-FixPt[15][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Window size: 1 Global ratio:5/56=8.93%
+FixPt[15][canonical_line_based_concurrent_token_slicer@15][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:5/56=8.93%
+FixPt[15][canonical_line_based_concurrent_token_slicer@15][WINDOWED_SLICER](5/56)  Testing the empty input is disabled. Global ratio:5/56=8.93%
+FixPt[15][canonical_line_based_concurrent_token_slicer@15][WINDOWED_SLICER](5/56)  Window size: 15 Global ratio:5/56=8.93%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 53,75,77,97,98]
+    context: WINDOWED_SLICER in canonical_line_based_concurrent_token_slicer@15(CanonicalLineBasedConcurrentTokenSlicer)[canonical_line_based_concurrent_token_slicer]dd@#nodes=5,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[15][canonical_line_based_concurrent_token_slicer@15][WINDOWED_SLICER](5/56)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
+FixPt[15][canonical_line_based_concurrent_token_slicer@15][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
+(5/56)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
+=Fixpoint iteration 16. Reducer: canonical_line_based_concurrent_token_slicer@16
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___(?){id=12,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+            |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |___expressionStatement{id=51,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                    |___(?){id=52,slot_type=optional__postfixExpression_1}
+                    |   |___postfixExpression{id=70,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                    |       |___Token:printf{id=98,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                    |       |___(*){id=72,slot_type=kleene_star__postfixExpression_2}
+                    |           |___aux_rule__postfixExpression_11{id=74,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                    |               |___Token:({id=75,slot_type=LeftParen}
+                    |               |___(?){id=76,slot_type=optional__postfixExpression_1}
+                    |               |   |___(+){id=96,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |               |       |___Token:"world\n"{id=97,slot_type=StringLiteral}
+                    |               |___Token:){id=77,slot_type=RightParen}
+                    |___Token:;{id=53,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[16][canonical_line_based_concurrent_token_slicer@16][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:5/56=8.93%
+FixPt[16][canonical_line_based_concurrent_token_slicer@16][WINDOWED_SLICER](5/56)  Testing the empty input is disabled. Global ratio:5/56=8.93%
+FixPt[16][canonical_line_based_concurrent_token_slicer@16][WINDOWED_SLICER](5/56)  Window size: 16 Global ratio:5/56=8.93%
+==============Node edit action set cache hit.===============
+
+    structure: [delete: 53,75,77,97,98]
+    context: WINDOWED_SLICER in canonical_line_based_concurrent_token_slicer@16(CanonicalLineBasedConcurrentTokenSlicer)[canonical_line_based_concurrent_token_slicer]dd@#nodes=5,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[16][canonical_line_based_concurrent_token_slicer@16][WINDOWED_SLICER](5/56)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
+FixPt[16][canonical_line_based_concurrent_token_slicer@16][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
+(5/56)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
+=Fixpoint iteration 17. Reducer: canonical_line_based_concurrent_token_slicer@1
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___(?){id=12,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+            |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |___expressionStatement{id=51,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement]}
+                    |___(?){id=52,slot_type=optional__postfixExpression_1}
+                    |   |___postfixExpression{id=70,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression]}
+                    |       |___Token:printf{id=98,slot_type=[aux_rule__postfixExpression_4,Identifier]}
+                    |       |___(*){id=72,slot_type=kleene_star__postfixExpression_2}
+                    |           |___aux_rule__postfixExpression_11{id=74,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11]}
+                    |               |___Token:({id=75,slot_type=LeftParen}
+                    |               |___(?){id=76,slot_type=optional__postfixExpression_1}
+                    |               |   |___(+){id=96,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                    |               |       |___Token:"world\n"{id=97,slot_type=StringLiteral}
+                    |               |___Token:){id=77,slot_type=RightParen}
+                    |___Token:;{id=53,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[17][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:5/56=8.93%
+FixPt[17][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Testing the empty input is disabled. Global ratio:5/56=8.93%
+FixPt[17][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Window size: 1 Global ratio:5/56=8.93%
 ==============Node edit action set cache hit.===============
 
     structure: [delete: 53,75,77,97,98]
@@ -1093,8 +1167,8 @@ FixPt[15][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)
 ------------------------------------------------------------
 
 
-FixPt[15][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
-FixPt[15][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
+FixPt[17][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
+FixPt[17][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/56=8.93%
 (56/56)  [Pass Caching]: The reducer canonical_line_based_concurrent_token_slicer@2 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer canonical_line_based_concurrent_token_slicer@3 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer canonical_line_based_concurrent_token_slicer@4 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
@@ -1108,8 +1182,10 @@ FixPt[15][canonical_line_based_concurrent_token_slicer@1][WINDOWED_SLICER](5/56)
 (56/56)  [Pass Caching]: The reducer canonical_line_based_concurrent_token_slicer@12 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer canonical_line_based_concurrent_token_slicer@13 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer canonical_line_based_concurrent_token_slicer@14 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer canonical_line_based_concurrent_token_slicer@15 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer canonical_line_based_concurrent_token_slicer@16 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (5/56)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
-====Fixpoint iteration 16. Reducer: FineGritLatraReducer====
+====Fixpoint iteration 18. Reducer: FineGritLatraReducer====
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
@@ -1133,9 +1209,9 @@ compilationUnit{id=1,slot_type=compilationUnit}
 ------------------------------------------------------------
 
 
-FixPt[16][FineGritLatraReducer](5/56)  For c, there are 46 transformations.
-FixPt[16][FineGritLatraReducer](5/56)  Reparsing the best spartree to faithfully reflect the syntactic structure.
-FixPt[16][FineGritLatraReducer](5/56)  Failed to re-parse the input within Latra. AntlrFailureException: Error in parsing file: <unknown>
+FixPt[18][FineGritLatraReducer](5/56)  For c, there are 46 transformations.
+FixPt[18][FineGritLatraReducer](5/56)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+FixPt[18][FineGritLatraReducer](5/56)  Failed to re-parse the input within Latra. AntlrFailureException: Error in parsing file: <unknown>
 Details: Failed to parse the following input.
 ---------------------------------------
  printf("world\n");
@@ -1151,52 +1227,52 @@ UTF chars: []
 \nThis is a rethrown exception to track the current stack trace.
 Method = public final org.perses.grammar.c.PnfCParser$CompilationUnitContext org.perses.grammar.c.PnfCParser.compilationUnit() throws org.antlr.v4.runtime.RecognitionException
 
-FixPt[16][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](5/56)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
-FixPt[16][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](5/56)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
-FixPt[16][FineGritLatraReducer][DivideOperationSimplification](5/56)  Found matches: 0 in transformation DivideOperationSimplification
-FixPt[16][FineGritLatraReducer][MultiplyOperationSimplification](5/56)  Found matches: 0 in transformation MultiplyOperationSimplification
-FixPt[16][FineGritLatraReducer][MinusOperationSimplification](5/56)  Found matches: 0 in transformation MinusOperationSimplification
-FixPt[16][FineGritLatraReducer][PlusOperationSimplification](5/56)  Found matches: 0 in transformation PlusOperationSimplification
-FixPt[16][FineGritLatraReducer][LocalToGlobalTransformation](5/56)  Found matches: 0 in transformation LocalToGlobalTransformation
-FixPt[16][FineGritLatraReducer][UnionToStruct](5/56)  Found matches: 0 in transformation UnionToStruct
-FixPt[16][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](5/56)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
-FixPt[16][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](5/56)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
-FixPt[16][FineGritLatraReducer][FunctionInlining4Args](5/56)  Found matches: 0 in transformation FunctionInlining4Args
-FixPt[16][FineGritLatraReducer][FunctionInlining4ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
-FixPt[16][FineGritLatraReducer][FunctionInliningLatraTransformation](5/56)  Found matches: 0 in transformation FunctionInliningLatraTransformation
-FixPt[16][FineGritLatraReducer][FunctionInlining3ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
-FixPt[16][FineGritLatraReducer][FunctionInlining2Args](5/56)  Found matches: 0 in transformation FunctionInlining2Args
-FixPt[16][FineGritLatraReducer][FunctionInlining2ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
-FixPt[16][FineGritLatraReducer][FunctionInlining1Arg](5/56)  Found matches: 0 in transformation FunctionInlining1Arg
-FixPt[16][FineGritLatraReducer][FunctionInlining1ArgNoType](5/56)  Found matches: 0 in transformation FunctionInlining1ArgNoType
-FixPt[16][FineGritLatraReducer][FunctionInliningNoArg](5/56)  Found matches: 0 in transformation FunctionInliningNoArg
-FixPt[16][FineGritLatraReducer][LiftAssignmentExpr](5/56)  Found matches: 0 in transformation LiftAssignmentExpr
-FixPt[16][FineGritLatraReducer][CopyPropagation](5/56)  Found matches: 0 in transformation CopyPropagation
-FixPt[16][FineGritLatraReducer][CallExprToValue](5/56)  Found matches: 0 in transformation CallExprToValue
-FixPt[16][FineGritLatraReducer][ReplaceCallExpr1Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr1Arg
-FixPt[16][FineGritLatraReducer][ReplaceCallExpr2Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr2Arg
-FixPt[16][FineGritLatraReducer][ReplaceCallExpr3Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr3Arg
-FixPt[16][FineGritLatraReducer][SimplifyCallExpr](5/56)  Found matches: 0 in transformation SimplifyCallExpr
-FixPt[16][FineGritLatraReducer][SimplifyIf](5/56)  Found matches: 0 in transformation SimplifyIf
-FixPt[16][FineGritLatraReducer][SimplifyIf2](5/56)  Found matches: 0 in transformation SimplifyIf2
-FixPt[16][FineGritLatraReducer][ReduceArrayDim3](5/56)  Found matches: 0 in transformation ReduceArrayDim3
-FixPt[16][FineGritLatraReducer][ReduceArrayDim2](5/56)  Found matches: 0 in transformation ReduceArrayDim2
-FixPt[16][FineGritLatraReducer][ReduceArrayDim](5/56)  Found matches: 0 in transformation ReduceArrayDim
-FixPt[16][FineGritLatraReducer][MoveFuncDefToDecl](5/56)  Found matches: 0 in transformation MoveFuncDefToDecl
-FixPt[16][FineGritLatraReducer][MoveFuncDefToDecl2](5/56)  Found matches: 0 in transformation MoveFuncDefToDecl2
-FixPt[16][FineGritLatraReducer][MoveFuncDefToDeclNoParam](5/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
-FixPt[16][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](5/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
-FixPt[16][FineGritLatraReducer][SimplifyComma](5/56)  Found matches: 0 in transformation SimplifyComma
-FixPt[16][FineGritLatraReducer][TypeDefTransform](5/56)  Found matches: 0 in transformation TypeDefTransform
-FixPt[16][FineGritLatraReducer][EmptyStructToInt](5/56)  Found matches: 0 in transformation EmptyStructToInt
-FixPt[16][FineGritLatraReducer][RemoveAssignment](5/56)  Found matches: 0 in transformation RemoveAssignment
-FixPt[16][FineGritLatraReducer][RemoveAddrTaken](5/56)  Found matches: 0 in transformation RemoveAddrTaken
-FixPt[16][FineGritLatraReducer][ReplaceArrayAccessWithIndex](5/56)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
-FixPt[16][FineGritLatraReducer][SimplifyUnionDecl](5/56)  Found matches: 0 in transformation SimplifyUnionDecl
-FixPt[16][FineGritLatraReducer][SimplifyStructDecl](5/56)  Found matches: 0 in transformation SimplifyStructDecl
-FixPt[16][FineGritLatraReducer][ReplaceDefByDecl](5/56)  Found matches: 0 in transformation ReplaceDefByDecl
-FixPt[16][FineGritLatraReducer][CombineLocalVarDecl](5/56)  Found matches: 0 in transformation CombineLocalVarDecl
-FixPt[16][FineGritLatraReducer][UnifyFunctionDecl](5/56)  Found matches: 0 in transformation UnifyFunctionDecl
+FixPt[18][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](5/56)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[18][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](5/56)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[18][FineGritLatraReducer][DivideOperationSimplification](5/56)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[18][FineGritLatraReducer][MultiplyOperationSimplification](5/56)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[18][FineGritLatraReducer][MinusOperationSimplification](5/56)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[18][FineGritLatraReducer][PlusOperationSimplification](5/56)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[18][FineGritLatraReducer][LocalToGlobalTransformation](5/56)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[18][FineGritLatraReducer][UnionToStruct](5/56)  Found matches: 0 in transformation UnionToStruct
+FixPt[18][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](5/56)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[18][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](5/56)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[18][FineGritLatraReducer][FunctionInlining4Args](5/56)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[18][FineGritLatraReducer][FunctionInlining4ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[18][FineGritLatraReducer][FunctionInliningLatraTransformation](5/56)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[18][FineGritLatraReducer][FunctionInlining3ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[18][FineGritLatraReducer][FunctionInlining2Args](5/56)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[18][FineGritLatraReducer][FunctionInlining2ArgsNoType](5/56)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[18][FineGritLatraReducer][FunctionInlining1Arg](5/56)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[18][FineGritLatraReducer][FunctionInlining1ArgNoType](5/56)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[18][FineGritLatraReducer][FunctionInliningNoArg](5/56)  Found matches: 0 in transformation FunctionInliningNoArg
+FixPt[18][FineGritLatraReducer][LiftAssignmentExpr](5/56)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[18][FineGritLatraReducer][CopyPropagation](5/56)  Found matches: 0 in transformation CopyPropagation
+FixPt[18][FineGritLatraReducer][CallExprToValue](5/56)  Found matches: 0 in transformation CallExprToValue
+FixPt[18][FineGritLatraReducer][ReplaceCallExpr1Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[18][FineGritLatraReducer][ReplaceCallExpr2Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[18][FineGritLatraReducer][ReplaceCallExpr3Arg](5/56)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[18][FineGritLatraReducer][SimplifyCallExpr](5/56)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[18][FineGritLatraReducer][SimplifyIf](5/56)  Found matches: 0 in transformation SimplifyIf
+FixPt[18][FineGritLatraReducer][SimplifyIf2](5/56)  Found matches: 0 in transformation SimplifyIf2
+FixPt[18][FineGritLatraReducer][ReduceArrayDim3](5/56)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[18][FineGritLatraReducer][ReduceArrayDim2](5/56)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[18][FineGritLatraReducer][ReduceArrayDim](5/56)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[18][FineGritLatraReducer][MoveFuncDefToDecl](5/56)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[18][FineGritLatraReducer][MoveFuncDefToDecl2](5/56)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[18][FineGritLatraReducer][MoveFuncDefToDeclNoParam](5/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
+FixPt[18][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](5/56)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
+FixPt[18][FineGritLatraReducer][SimplifyComma](5/56)  Found matches: 0 in transformation SimplifyComma
+FixPt[18][FineGritLatraReducer][TypeDefTransform](5/56)  Found matches: 0 in transformation TypeDefTransform
+FixPt[18][FineGritLatraReducer][EmptyStructToInt](5/56)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[18][FineGritLatraReducer][RemoveAssignment](5/56)  Found matches: 0 in transformation RemoveAssignment
+FixPt[18][FineGritLatraReducer][RemoveAddrTaken](5/56)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[18][FineGritLatraReducer][ReplaceArrayAccessWithIndex](5/56)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[18][FineGritLatraReducer][SimplifyUnionDecl](5/56)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[18][FineGritLatraReducer][SimplifyStructDecl](5/56)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[18][FineGritLatraReducer][ReplaceDefByDecl](5/56)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[18][FineGritLatraReducer][CombineLocalVarDecl](5/56)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[18][FineGritLatraReducer][UnifyFunctionDecl](5/56)  Found matches: 0 in transformation UnifyFunctionDecl
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
 ID                                         Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
@@ -1214,8 +1290,10 @@ ID                                         Reducer Worked #NonDeletions #Tokens 
 11 canonical_line_based_concurrent_token_slicer@12      0             0       0              0       0   time-hidden
 12 canonical_line_based_concurrent_token_slicer@13      0             0       0              0       0   time-hidden
 13 canonical_line_based_concurrent_token_slicer@14      0             0       0              0       0   time-hidden
-14  canonical_line_based_concurrent_token_slicer@1      0             0       0              0       0   time-hidden
-15                            FineGritLatraReducer      0             0       0              0       0   time-hidden
+14 canonical_line_based_concurrent_token_slicer@15      0             0       0              0       0   time-hidden
+15 canonical_line_based_concurrent_token_slicer@16      0             0       0              0       0   time-hidden
+16  canonical_line_based_concurrent_token_slicer@1      0             0       0              0       0   time-hidden
+17                            FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
                                         Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
@@ -1226,6 +1304,8 @@ canonical_line_based_concurrent_token_slicer@11     1      0             0      
 canonical_line_based_concurrent_token_slicer@12     1      0             0       0              0       0   time-hidden
 canonical_line_based_concurrent_token_slicer@13     1      0             0       0              0       0   time-hidden
 canonical_line_based_concurrent_token_slicer@14     1      0             0       0              0       0   time-hidden
+canonical_line_based_concurrent_token_slicer@15     1      0             0       0              0       0   time-hidden
+canonical_line_based_concurrent_token_slicer@16     1      0             0       0              0       0   time-hidden
  canonical_line_based_concurrent_token_slicer@2     1      0             0       0              0       1   time-hidden
  canonical_line_based_concurrent_token_slicer@3     1      0             0       0              0       0   time-hidden
  canonical_line_based_concurrent_token_slicer@4     1      0             0       0              0       0   time-hidden
@@ -1243,5 +1323,5 @@ canonical_line_based_concurrent_token_slicer@1.Deletion      8             0    
 #test failure = 2
 #test result cache hits = 0
 #test execution cancelled = 0
-#node edit action set cache hits = 13
+#node edit action set cache hits = 15
 #external test execution cache hits = 0

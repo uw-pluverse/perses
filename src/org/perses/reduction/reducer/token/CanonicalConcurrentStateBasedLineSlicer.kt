@@ -116,7 +116,7 @@ class CanonicalConcurrentStateBasedLineSlicer(
       }
 
     val REDUCER_ANNOTATIONS =
-      IntRange(start = 1, endInclusive = 14)
+      IntRange(start = 1, endInclusive = MAX_SLICING_GRANULARITY)
         .asSequence()
         .map { CanonicalConcurrentStateLineSlicerAnnotation(NAME_PREFIX, granularity = it) }
         .toImmutableList()

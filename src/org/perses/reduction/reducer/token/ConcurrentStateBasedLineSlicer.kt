@@ -97,7 +97,7 @@ class ConcurrentStateBasedLineSlicer(
     private const val NAME_PREFIX = "concurrent_state_line_slicer"
 
     val REDUCER_ANNOTATIONS =
-      IntRange(start = 1, endInclusive = 14)
+      IntRange(start = 1, endInclusive = MAX_SLICING_GRANULARITY)
         .asSequence()
         .map { ConcurrentStateLineSlicerAnnotation(NAME_PREFIX, granularity = it) }
         .toImmutableList()

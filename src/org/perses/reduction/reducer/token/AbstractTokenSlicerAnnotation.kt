@@ -19,6 +19,16 @@ package org.perses.reduction.reducer.token
 import com.google.common.base.Objects
 import org.perses.reduction.ReducerAnnotation
 
+/**
+ * The largest sliding-window size the slicer families register, matching C-Reduce's
+ * `rm-toks-16` ceiling (C-Reduce goes to 32 only in its opt-in `--sllooww` mode). The
+ * previous ceiling of 14 demonstrably lost reductions to C-Reduce: on the Vulcan-suite
+ * subject rust-66851, the decisive cross-subtree deletion (the receiver and method
+ * selector of `max_min[to!{i, usize}][0].min(...)`, keeping the argument) is a 15-token
+ * window.
+ */
+const val MAX_SLICING_GRANULARITY = 16
+
 /** The annotation for a token slicer that runs at a fixed sliding-window size ([windowSize]). */
 abstract class AbstractTokenSlicerAnnotation(
   val namePrefix: String,

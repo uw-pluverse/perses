@@ -91,7 +91,7 @@ class CanonicalLineBasedConcurrentTokenSlicer(
       }
 
     val REDUCER_ANNOTATIONS =
-      IntRange(start = 1, endInclusive = 14)
+      IntRange(start = 1, endInclusive = MAX_SLICING_GRANULARITY)
         .asSequence()
         .map { CanonicalLineBasedConcurrentTokenSlicerAnnotation(granularity = it) }
         .toImmutableList()

@@ -1418,7 +1418,7 @@ FixPt[16][concurrent_token_slicer@14][WINDOWED_SLICER](1/29)  Window size: 14 Gl
 FixPt[16][concurrent_token_slicer@14][WINDOWED_SLICER](1/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 FixPt[16][concurrent_token_slicer@14][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 (1/29)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
-=======Fixpoint iteration 17. Reducer: node_priority========
+=Fixpoint iteration 17. Reducer: concurrent_token_slicer@15=
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
@@ -1430,8 +1430,58 @@ compilationUnit{id=181,slot_type=compilationUnit}
 ------------------------------------------------------------
 
 
-FixPt[17][node_priority](1/29)  Starting to retrieve the semantics provider
-FixPt[17][node_priority](1/29)  Retrieved semantics provider null
+FixPt[17][concurrent_token_slicer@15][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/29=3.45%
+FixPt[17][concurrent_token_slicer@15][WINDOWED_SLICER](1/29)  Testing the empty input is disabled. Global ratio:1/29=3.45%
+FixPt[17][concurrent_token_slicer@15][WINDOWED_SLICER](1/29)  Window size: 15 Global ratio:1/29=3.45%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_212]
+    context: WINDOWED_SLICER in concurrent_token_slicer@15(ConcurrentTokenSlicer)[concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[17][concurrent_token_slicer@15][WINDOWED_SLICER](1/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[17][concurrent_token_slicer@15][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+(1/29)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
+=Fixpoint iteration 18. Reducer: concurrent_token_slicer@16=
+
+Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
+The spar-tree is the following.
+compilationUnit{id=181,slot_type=compilationUnit}
+|___(+){id=182,slot_type=topStatSeq}
+    |___(?){id=193,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,alt_block__tmplDef_3,aux_rule__tmplDef_7,objectDef,classTemplateOpt,optional__classTemplateOpt_3]}
+        |___(+){id=197,slot_type=[aux_rule__classTemplateOpt_2,templateBody,kleene_plus__templateBody_3]}
+            |___Token:"Hello, world"{id=212,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+------------------------------------------------------------
+
+
+FixPt[18][concurrent_token_slicer@16][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/29=3.45%
+FixPt[18][concurrent_token_slicer@16][WINDOWED_SLICER](1/29)  Testing the empty input is disabled. Global ratio:1/29=3.45%
+FixPt[18][concurrent_token_slicer@16][WINDOWED_SLICER](1/29)  Window size: 16 Global ratio:1/29=3.45%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_212]
+    context: WINDOWED_SLICER in concurrent_token_slicer@16(ConcurrentTokenSlicer)[concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[18][concurrent_token_slicer@16][WINDOWED_SLICER](1/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[18][concurrent_token_slicer@16][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+(1/29)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
+=======Fixpoint iteration 19. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
+The spar-tree is the following.
+compilationUnit{id=181,slot_type=compilationUnit}
+|___(+){id=182,slot_type=topStatSeq}
+    |___(?){id=193,slot_type=[topStat,aux_rule__topStat_5,tmplDef,aux_rule__tmplDef_5,alt_block__tmplDef_3,aux_rule__tmplDef_7,objectDef,classTemplateOpt,optional__classTemplateOpt_3]}
+        |___(+){id=197,slot_type=[aux_rule__classTemplateOpt_2,templateBody,kleene_plus__templateBody_3]}
+            |___Token:"Hello, world"{id=212,slot_type=[templateStat,expr,expr1,aux_rule__expr1_25,postfixExpr,infixExpr,prefixExpr,alt_block__expr1_18,aux_rule__expr1_32,simpleExpr1,aux_rule__simpleExpr1_6,literal,StringLiteral]}
+------------------------------------------------------------
+
+
+FixPt[19][node_priority](1/29)  Starting to retrieve the semantics provider
+FixPt[19][node_priority](1/29)  Retrieved semantics provider null
 =================Reducing node 182, size=1==================
 
 The current best program is the following
@@ -1441,17 +1491,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[17][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
 ------------------------------------------------------------
 
 
-FixPt[17][node_priority][DFS](1/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  There is only one element in the input, and the empty input has been tested. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  There is only one element in the input, and the empty input has been tested. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 182
@@ -1467,17 +1517,17 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[17][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Hello.sc--
 ------------------------------------------------------------
 
 
-FixPt[17][node_priority][DFS](1/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  There is only one element in the input, and the empty input has been tested. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  There is only one element in the input, and the empty input has been tested. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 193
@@ -1500,8 +1550,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[17][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Testing the empty input. Global ratio:1/29=3.45%
 ==============Node edit action set cache hit.===============
 
     structure: [delete_212]
@@ -1509,9 +1559,9 @@ FixPt[17][node_priority][DFS](1/29)  Testing the empty input. Global ratio:1/29=
 ------------------------------------------------------------
 
 
-FixPt[17][node_priority][DFS](1/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  There is only one element in the input, and the empty input has been tested. Global ratio:1/29=3.45%
-FixPt[17][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  There is only one element in the input, and the empty input has been tested. Global ratio:1/29=3.45%
+FixPt[19][node_priority][DFS](1/29)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 ===================Node reduction is done===================
 
 Failed to reduce node 197
@@ -1534,7 +1584,7 @@ Failed to reduce node 212
 
 
 (1/29)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
-=Fixpoint iteration 18. Reducer: concurrent_token_slicer@1==
+=Fixpoint iteration 20. Reducer: concurrent_token_slicer@1==
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
@@ -1546,9 +1596,9 @@ compilationUnit{id=181,slot_type=compilationUnit}
 ------------------------------------------------------------
 
 
-FixPt[18][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/29=3.45%
-FixPt[18][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Testing the empty input is disabled. Global ratio:1/29=3.45%
-FixPt[18][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Window size: 1 Global ratio:1/29=3.45%
+FixPt[20][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/29=3.45%
+FixPt[20][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Testing the empty input is disabled. Global ratio:1/29=3.45%
+FixPt[20][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Window size: 1 Global ratio:1/29=3.45%
 ==============Node edit action set cache hit.===============
 
     structure: [delete_212]
@@ -1556,8 +1606,8 @@ FixPt[18][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Window size: 1 Glob
 ------------------------------------------------------------
 
 
-FixPt[18][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
-FixPt[18][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[20][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
+FixPt[20][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/29=3.45%
 (29/29)  [Pass Caching]: The reducer concurrent_token_slicer@2 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (29/29)  [Pass Caching]: The reducer concurrent_token_slicer@3 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (29/29)  [Pass Caching]: The reducer concurrent_token_slicer@4 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
@@ -1571,8 +1621,10 @@ FixPt[18][concurrent_token_slicer@1][WINDOWED_SLICER](1/29)  Minimizer WindowedS
 (29/29)  [Pass Caching]: The reducer concurrent_token_slicer@12 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (29/29)  [Pass Caching]: The reducer concurrent_token_slicer@13 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (29/29)  [Pass Caching]: The reducer concurrent_token_slicer@14 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(29/29)  [Pass Caching]: The reducer concurrent_token_slicer@15 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(29/29)  [Pass Caching]: The reducer concurrent_token_slicer@16 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (1/29)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
-====Fixpoint iteration 19. Reducer: FineGritLatraReducer====
+====Fixpoint iteration 21. Reducer: FineGritLatraReducer====
 
 Parser Facade: class org.perses.grammar.scala.PnfScalaParserFacade
 The spar-tree is the following.
@@ -1584,7 +1636,7 @@ compilationUnit{id=181,slot_type=compilationUnit}
 ------------------------------------------------------------
 
 
-FixPt[19][FineGritLatraReducer](1/29)  Latra does not support LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
+FixPt[21][FineGritLatraReducer](1/29)  Latra does not support LanguageScala{name=scala, extensions=[scala, sc], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
 ID                    Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
@@ -1604,9 +1656,11 @@ ID                    Reducer Worked #NonDeletions #Tokens #NonBlankChars Querie
 13 concurrent_token_slicer@12      0             0       0              0       0   time-hidden
 14 concurrent_token_slicer@13      0             0       0              0       0   time-hidden
 15 concurrent_token_slicer@14      0             0       0              0       0   time-hidden
-16              node_priority      0             0       0              0       0   time-hidden
-17  concurrent_token_slicer@1      0             0       0              0       0   time-hidden
-18       FineGritLatraReducer      0             0       0              0       0   time-hidden
+16 concurrent_token_slicer@15      0             0       0              0       0   time-hidden
+17 concurrent_token_slicer@16      0             0       0              0       0   time-hidden
+18              node_priority      0             0       0              0       0   time-hidden
+19  concurrent_token_slicer@1      0             0       0              0       0   time-hidden
+20       FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
                    Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
@@ -1618,6 +1672,8 @@ concurrent_token_slicer@11     1      0             0       0              0    
 concurrent_token_slicer@12     1      0             0       0              0       0   time-hidden
 concurrent_token_slicer@13     1      0             0       0              0       0   time-hidden
 concurrent_token_slicer@14     1      0             0       0              0       0   time-hidden
+concurrent_token_slicer@15     1      0             0       0              0       0   time-hidden
+concurrent_token_slicer@16     1      0             0       0              0       0   time-hidden
  concurrent_token_slicer@2     1      0             0       0              0       0   time-hidden
  concurrent_token_slicer@3     1      0             0       0              0       0   time-hidden
  concurrent_token_slicer@4     1      0             0       0              0       0   time-hidden
@@ -1636,5 +1692,5 @@ concurrent_token_slicer@1.Deletion      4             0      -4            -13
 #test failure = 7
 #test result cache hits = 8
 #test execution cancelled = 0
-#node edit action set cache hits = 17
-#external test execution cache hits = 36
+#node edit action set cache hits = 19
+#external test execution cache hits = 38

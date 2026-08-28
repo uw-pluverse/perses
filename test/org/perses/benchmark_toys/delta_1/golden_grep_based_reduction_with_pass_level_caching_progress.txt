@@ -2467,7 +2467,7 @@ FixPt[14][concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Window size: 14 Gl
 FixPt[14][concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 FixPt[14][concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
-=Fixpoint iteration 15. Reducer: concurrent_token_slicer@1==
+=Fixpoint iteration 15. Reducer: concurrent_token_slicer@15=
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
@@ -2484,18 +2484,78 @@ compilationUnit{id=1,slot_type=compilationUnit}
 ------------------------------------------------------------
 
 
-FixPt[15][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[15][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[15][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Window size: 1 Global ratio:1/56=1.79%
+FixPt[15][concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[15][concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[15][concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Window size: 15 Global ratio:1/56=1.79%
 ==========Testing the following program (69): fail==========
+
+// edit action set type: WINDOWED_SLICER in concurrent_token_slicer@15(ConcurrentTokenSlicer)[concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[15][concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[15][concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+(1/56)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
+=Fixpoint iteration 16. Reducer: concurrent_token_slicer@16=
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___(?){id=12,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+            |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |___(?){id=52,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                    |___(*){id=72,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,kleene_star__postfixExpression_2]}
+                        |___(?){id=76,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11,optional__postfixExpression_1]}
+                            |___(+){id=96,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                                |___Token:"world\n"{id=97,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+FixPt[16][concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[16][concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[16][concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Window size: 16 Global ratio:1/56=1.79%
+==========Testing the following program (70): fail==========
+
+// edit action set type: WINDOWED_SLICER in concurrent_token_slicer@16(ConcurrentTokenSlicer)[concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[16][concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[16][concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+(1/56)  Rebuilding spar-tree: The program is not parsable; the current spar-tree is kept.
+=Fixpoint iteration 17. Reducer: concurrent_token_slicer@1==
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___(?){id=12,slot_type=[aux_rule__translationUnit_2,functionDefinition,compoundStatement,optional__compoundStatement_1]}
+            |___(+){id=15,slot_type=[blockItemList,kleene_plus__blockItemList_3]}
+                |___(?){id=52,slot_type=[aux_rule__blockItemList_2,statement,aux_rule__statement_3,expressionStatement,optional__postfixExpression_1]}
+                    |___(*){id=72,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,kleene_star__postfixExpression_2]}
+                        |___(?){id=76,slot_type=[aux_rule__postfixExpression_3,aux_rule__postfixExpression_11,optional__postfixExpression_1]}
+                            |___(+){id=96,slot_type=[expression,assignmentExpression,conditionalExpression,logicalOrExpression,logicalAndExpression,inclusiveOrExpression,exclusiveOrExpression,andExpression,equalityExpression,relationalExpression,shiftExpression,additiveExpression,multiplicativeExpression,castExpression,unaryExpression,aux_rule__unaryExpression_3,postfixExpression,aux_rule__postfixExpression_4,kleene_plus__primaryExpression_1]}
+                                |___Token:"world\n"{id=97,slot_type=StringLiteral}
+------------------------------------------------------------
+
+
+FixPt[17][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[17][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[17][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Window size: 1 Global ratio:1/56=1.79%
+==========Testing the following program (71): fail==========
 
 // edit action set type: WINDOWED_SLICER in concurrent_token_slicer@1(ConcurrentTokenSlicer)[concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[15][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[15][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[17][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[17][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@2 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@3 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@4 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
@@ -2509,7 +2569,9 @@ FixPt[15][concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedS
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@12 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@13 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@14 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
-=Fixpoint iteration 16. Reducer: line_based_concurrent_token_slicer@1
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@15 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@16 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+=Fixpoint iteration 18. Reducer: line_based_concurrent_token_slicer@1
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2519,20 +2581,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[16][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[16][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[16][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Window size: 1 Global ratio:1/56=1.79%
-==========Testing the following program (70): fail==========
+FixPt[18][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[18][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[18][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Window size: 1 Global ratio:1/56=1.79%
+==========Testing the following program (72): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@1(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[16][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[16][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[18][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[18][line_based_concurrent_token_slicer@1][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 17. Reducer: line_based_concurrent_token_slicer@2
+=Fixpoint iteration 19. Reducer: line_based_concurrent_token_slicer@2
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2542,20 +2604,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[17][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[17][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[17][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Window size: 2 Global ratio:1/56=1.79%
-==========Testing the following program (71): fail==========
+FixPt[19][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[19][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[19][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Window size: 2 Global ratio:1/56=1.79%
+==========Testing the following program (73): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@2(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[17][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[17][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[19][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[19][line_based_concurrent_token_slicer@2][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 18. Reducer: line_based_concurrent_token_slicer@3
+=Fixpoint iteration 20. Reducer: line_based_concurrent_token_slicer@3
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2565,20 +2627,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[18][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[18][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[18][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Window size: 3 Global ratio:1/56=1.79%
-==========Testing the following program (72): fail==========
+FixPt[20][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[20][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[20][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Window size: 3 Global ratio:1/56=1.79%
+==========Testing the following program (74): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@3(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[18][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[18][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[20][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[20][line_based_concurrent_token_slicer@3][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 19. Reducer: line_based_concurrent_token_slicer@4
+=Fixpoint iteration 21. Reducer: line_based_concurrent_token_slicer@4
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2588,20 +2650,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[19][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[19][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[19][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Window size: 4 Global ratio:1/56=1.79%
-==========Testing the following program (73): fail==========
+FixPt[21][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[21][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[21][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Window size: 4 Global ratio:1/56=1.79%
+==========Testing the following program (75): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@4(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[19][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[19][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[21][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[21][line_based_concurrent_token_slicer@4][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 20. Reducer: line_based_concurrent_token_slicer@5
+=Fixpoint iteration 22. Reducer: line_based_concurrent_token_slicer@5
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2611,20 +2673,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[20][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[20][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[20][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Window size: 5 Global ratio:1/56=1.79%
-==========Testing the following program (74): fail==========
+FixPt[22][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[22][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[22][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Window size: 5 Global ratio:1/56=1.79%
+==========Testing the following program (76): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@5(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[20][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[20][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[22][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[22][line_based_concurrent_token_slicer@5][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 21. Reducer: line_based_concurrent_token_slicer@6
+=Fixpoint iteration 23. Reducer: line_based_concurrent_token_slicer@6
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2634,20 +2696,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[21][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[21][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[21][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Window size: 6 Global ratio:1/56=1.79%
-==========Testing the following program (75): fail==========
+FixPt[23][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[23][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[23][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Window size: 6 Global ratio:1/56=1.79%
+==========Testing the following program (77): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@6(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[21][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[21][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[23][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[23][line_based_concurrent_token_slicer@6][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 22. Reducer: line_based_concurrent_token_slicer@7
+=Fixpoint iteration 24. Reducer: line_based_concurrent_token_slicer@7
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2657,20 +2719,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[22][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[22][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[22][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Window size: 7 Global ratio:1/56=1.79%
-==========Testing the following program (76): fail==========
+FixPt[24][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[24][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[24][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Window size: 7 Global ratio:1/56=1.79%
+==========Testing the following program (78): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@7(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[22][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[22][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[24][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[24][line_based_concurrent_token_slicer@7][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 23. Reducer: line_based_concurrent_token_slicer@8
+=Fixpoint iteration 25. Reducer: line_based_concurrent_token_slicer@8
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2680,20 +2742,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[23][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[23][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[23][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Window size: 8 Global ratio:1/56=1.79%
-==========Testing the following program (77): fail==========
+FixPt[25][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[25][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[25][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Window size: 8 Global ratio:1/56=1.79%
+==========Testing the following program (79): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@8(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[23][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[23][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[25][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[25][line_based_concurrent_token_slicer@8][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 24. Reducer: line_based_concurrent_token_slicer@9
+=Fixpoint iteration 26. Reducer: line_based_concurrent_token_slicer@9
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2703,20 +2765,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[24][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[24][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[24][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Window size: 9 Global ratio:1/56=1.79%
-==========Testing the following program (78): fail==========
+FixPt[26][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[26][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[26][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Window size: 9 Global ratio:1/56=1.79%
+==========Testing the following program (80): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@9(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[24][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[24][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[26][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[26][line_based_concurrent_token_slicer@9][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 25. Reducer: line_based_concurrent_token_slicer@10
+=Fixpoint iteration 27. Reducer: line_based_concurrent_token_slicer@10
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2726,20 +2788,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[25][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[25][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[25][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Window size: 10 Global ratio:1/56=1.79%
-==========Testing the following program (79): fail==========
+FixPt[27][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[27][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[27][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Window size: 10 Global ratio:1/56=1.79%
+==========Testing the following program (81): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@10(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[25][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[25][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[27][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[27][line_based_concurrent_token_slicer@10][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 26. Reducer: line_based_concurrent_token_slicer@11
+=Fixpoint iteration 28. Reducer: line_based_concurrent_token_slicer@11
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2749,20 +2811,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[26][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[26][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[26][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Window size: 11 Global ratio:1/56=1.79%
-==========Testing the following program (80): fail==========
+FixPt[28][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[28][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[28][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Window size: 11 Global ratio:1/56=1.79%
+==========Testing the following program (82): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@11(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[26][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[26][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[28][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[28][line_based_concurrent_token_slicer@11][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 27. Reducer: line_based_concurrent_token_slicer@12
+=Fixpoint iteration 29. Reducer: line_based_concurrent_token_slicer@12
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2772,20 +2834,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[27][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[27][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[27][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Window size: 12 Global ratio:1/56=1.79%
-==========Testing the following program (81): fail==========
+FixPt[29][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[29][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[29][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Window size: 12 Global ratio:1/56=1.79%
+==========Testing the following program (83): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@12(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[27][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[27][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[29][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[29][line_based_concurrent_token_slicer@12][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 28. Reducer: line_based_concurrent_token_slicer@13
+=Fixpoint iteration 30. Reducer: line_based_concurrent_token_slicer@13
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2795,20 +2857,20 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[28][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[28][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[28][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Window size: 13 Global ratio:1/56=1.79%
-==========Testing the following program (82): fail==========
+FixPt[30][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[30][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[30][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Window size: 13 Global ratio:1/56=1.79%
+==========Testing the following program (84): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@13(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[28][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[28][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[30][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[30][line_based_concurrent_token_slicer@13][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 29. Reducer: line_based_concurrent_token_slicer@14
+=Fixpoint iteration 31. Reducer: line_based_concurrent_token_slicer@14
 
 Parser Facade: class org.perses.grammar.line.LineParserFacade
 The spar-tree is the following.
@@ -2818,18 +2880,64 @@ lines{id=1,slot_type=lines}
 ------------------------------------------------------------
 
 
-FixPt[29][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
-FixPt[29][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
-FixPt[29][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Window size: 14 Global ratio:1/56=1.79%
-==========Testing the following program (83): fail==========
+FixPt[31][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[31][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[31][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Window size: 14 Global ratio:1/56=1.79%
+==========Testing the following program (85): fail==========
 
 // edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@14(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
     --file: t.c--
 ------------------------------------------------------------
 
 
-FixPt[29][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
-FixPt[29][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[31][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[31][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+(1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 32. Reducer: line_based_concurrent_token_slicer@15
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:        "world\n"{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[32][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[32][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[32][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Window size: 15 Global ratio:1/56=1.79%
+==========Testing the following program (86): fail==========
+
+// edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@15(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[32][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[32][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+(1/56)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 33. Reducer: line_based_concurrent_token_slicer@16
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:        "world\n"{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[33][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/56=1.79%
+FixPt[33][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Testing the empty input is disabled. Global ratio:1/56=1.79%
+FixPt[33][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Window size: 16 Global ratio:1/56=1.79%
+==========Testing the following program (87): fail==========
+
+// edit action set type: WINDOWED_SLICER in line_based_concurrent_token_slicer@16(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[33][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
+FixPt[33][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/56)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/56=1.79%
 (1/56)  The reducer tree_slicer is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@1 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@2 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
@@ -2845,6 +2953,8 @@ FixPt[29][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/56)  Minimiz
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@12 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@13 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (56/56)  [Pass Caching]: The reducer concurrent_token_slicer@14 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@15 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
+(56/56)  [Pass Caching]: The reducer concurrent_token_slicer@16 is skipped, because the input has been reduced the reducer by before andthe input has not changed.
 (1/56)  The reducer FineGritLatraReducer is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
 (1/56)  The reducer spartree_root_replacement_reducer is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
 ----------------------- Reduction History and Statistics -----------------------
@@ -2864,21 +2974,25 @@ ID                               Reducer Worked #NonDeletions #Tokens #NonBlankC
 11            concurrent_token_slicer@12      0             0       0              0       1   time-hidden
 12            concurrent_token_slicer@13      0             0       0              0       1   time-hidden
 13            concurrent_token_slicer@14      0             0       0              0       1   time-hidden
-14             concurrent_token_slicer@1      0             0       0              0       1   time-hidden
-15  line_based_concurrent_token_slicer@1      0             0       0              0       1   time-hidden
-16  line_based_concurrent_token_slicer@2      0             0       0              0       1   time-hidden
-17  line_based_concurrent_token_slicer@3      0             0       0              0       1   time-hidden
-18  line_based_concurrent_token_slicer@4      0             0       0              0       1   time-hidden
-19  line_based_concurrent_token_slicer@5      0             0       0              0       1   time-hidden
-20  line_based_concurrent_token_slicer@6      0             0       0              0       1   time-hidden
-21  line_based_concurrent_token_slicer@7      0             0       0              0       1   time-hidden
-22  line_based_concurrent_token_slicer@8      0             0       0              0       1   time-hidden
-23  line_based_concurrent_token_slicer@9      0             0       0              0       1   time-hidden
-24 line_based_concurrent_token_slicer@10      0             0       0              0       1   time-hidden
-25 line_based_concurrent_token_slicer@11      0             0       0              0       1   time-hidden
-26 line_based_concurrent_token_slicer@12      0             0       0              0       1   time-hidden
-27 line_based_concurrent_token_slicer@13      0             0       0              0       1   time-hidden
-28 line_based_concurrent_token_slicer@14      0             0       0              0       1   time-hidden
+14            concurrent_token_slicer@15      0             0       0              0       1   time-hidden
+15            concurrent_token_slicer@16      0             0       0              0       1   time-hidden
+16             concurrent_token_slicer@1      0             0       0              0       1   time-hidden
+17  line_based_concurrent_token_slicer@1      0             0       0              0       1   time-hidden
+18  line_based_concurrent_token_slicer@2      0             0       0              0       1   time-hidden
+19  line_based_concurrent_token_slicer@3      0             0       0              0       1   time-hidden
+20  line_based_concurrent_token_slicer@4      0             0       0              0       1   time-hidden
+21  line_based_concurrent_token_slicer@5      0             0       0              0       1   time-hidden
+22  line_based_concurrent_token_slicer@6      0             0       0              0       1   time-hidden
+23  line_based_concurrent_token_slicer@7      0             0       0              0       1   time-hidden
+24  line_based_concurrent_token_slicer@8      0             0       0              0       1   time-hidden
+25  line_based_concurrent_token_slicer@9      0             0       0              0       1   time-hidden
+26 line_based_concurrent_token_slicer@10      0             0       0              0       1   time-hidden
+27 line_based_concurrent_token_slicer@11      0             0       0              0       1   time-hidden
+28 line_based_concurrent_token_slicer@12      0             0       0              0       1   time-hidden
+29 line_based_concurrent_token_slicer@13      0             0       0              0       1   time-hidden
+30 line_based_concurrent_token_slicer@14      0             0       0              0       1   time-hidden
+31 line_based_concurrent_token_slicer@15      0             0       0              0       1   time-hidden
+32 line_based_concurrent_token_slicer@16      0             0       0              0       1   time-hidden
 
 ----------------------------------- Summary ------------------------------------
                               Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
@@ -2888,6 +3002,8 @@ ID                               Reducer Worked #NonDeletions #Tokens #NonBlankC
            concurrent_token_slicer@12     1      0             0       0              0       1   time-hidden
            concurrent_token_slicer@13     1      0             0       0              0       1   time-hidden
            concurrent_token_slicer@14     1      0             0       0              0       1   time-hidden
+           concurrent_token_slicer@15     1      0             0       0              0       1   time-hidden
+           concurrent_token_slicer@16     1      0             0       0              0       1   time-hidden
             concurrent_token_slicer@2     1      0             0       0              0       1   time-hidden
             concurrent_token_slicer@3     1      0             0       0              0       1   time-hidden
             concurrent_token_slicer@4     1      0             0       0              0       1   time-hidden
@@ -2902,6 +3018,8 @@ line_based_concurrent_token_slicer@11     1      0             0       0        
 line_based_concurrent_token_slicer@12     1      0             0       0              0       1   time-hidden
 line_based_concurrent_token_slicer@13     1      0             0       0              0       1   time-hidden
 line_based_concurrent_token_slicer@14     1      0             0       0              0       1   time-hidden
+line_based_concurrent_token_slicer@15     1      0             0       0              0       1   time-hidden
+line_based_concurrent_token_slicer@16     1      0             0       0              0       1   time-hidden
  line_based_concurrent_token_slicer@2     1      0             0       0              0       1   time-hidden
  line_based_concurrent_token_slicer@3     1      0             0       0              0       1   time-hidden
  line_based_concurrent_token_slicer@4     1      0             0       0              0       1   time-hidden
@@ -2916,7 +3034,7 @@ line_based_concurrent_token_slicer@14     1      0             0       0        
 concurrent_token_slicer@1.Deletion     55             0     -55           -124
 ------------------------------------- End --------------------------------------
 #test success = 55
-#test failure = 29
+#test failure = 33
 #test result cache hits = 0
 #test execution cancelled = 0
 #node edit action set cache hits = 0
