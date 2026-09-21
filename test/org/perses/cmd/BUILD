@@ -19,6 +19,7 @@ kt_jvm_test(
     name = "ListMinimizerMicrobenchmarkingFlagGroupTest",
     srcs = ["ListMinimizerMicrobenchmarkingFlagGroupTest.kt"],
     deps = [
+        "//:jcommander",
         "//:truth",
         "//src/org/perses/cmd:reduction_flags",
         "//src/org/perses/listminimizer:enum_list_input_minimizer_type",

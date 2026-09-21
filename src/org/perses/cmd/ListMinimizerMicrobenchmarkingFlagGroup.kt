@@ -73,11 +73,14 @@ class ListMinimizerMicrobenchmarkingFlagGroup :
   var microbenchmarkFile: Path? = null
 
   @Parameter(
-    names = ["--evaluation-minimizer"],
-    description = "EVALUATE: the list minimizer to evaluate. Exactly one per invocation.",
+    names = ["--list-minimizers-to-evaluate"],
+    description =
+      "EVALUATE: the list minimizers to evaluate, comma-separated or by repeating the flag. " +
+        "Each writes to <--evaluation-output>/<MINIMIZER>/. A list because one process is about " +
+        "to measure several against the same recorded problem; until then, name exactly one.",
     order = 50,
   )
-  var minimizerUnderEvaluation: EnumListMinimizerType? = null
+  var listMinimizersToEvaluate: List<EnumListMinimizerType> = listOf()
 
   @Parameter(
     names = ["--evaluation-output"],
@@ -104,7 +107,9 @@ class ListMinimizerMicrobenchmarkingFlagGroup :
         microbenchmarkOutputDirectory?.let { add("--list-minimizer-microbenchmark-output") }
         maxMicrobenchmarksToRecord?.let { add("--max-microbenchmarks-to-record") }
         microbenchmarkFile?.let { add("--evaluation-microbenchmark") }
-        minimizerUnderEvaluation?.let { add("--evaluation-minimizer") }
+        if (listMinimizersToEvaluate.isNotEmpty()) {
+          add("--list-minimizers-to-evaluate")
+        }
         evaluationOutputDirectory?.let { add("--evaluation-output") }
         if (minListSizeToRecord != DEFAULT_MIN_LIST_SIZE_TO_RECORD) {
           add("--min-list-size-to-record")
@@ -135,8 +140,14 @@ class ListMinimizerMicrobenchmarkingFlagGroup :
     check(Files.isRegularFile(problem)) {
       "The problem file $problem is not a file."
     }
-    check(minimizerUnderEvaluation != null) {
-      "EVALUATE requires --evaluation-minimizer."
+    check(listMinimizersToEvaluate.isNotEmpty()) {
+      "EVALUATE requires --list-minimizers-to-evaluate."
+    }
+    // Lifted once one process can measure several minimizers. Checked here rather than left to
+    // the consumer's single(), whose message names neither the flag nor the reason.
+    check(listMinimizersToEvaluate.size == 1) {
+      "--list-minimizers-to-evaluate names ${listMinimizersToEvaluate.size} minimizers, " +
+        "but a process still measures exactly one."
     }
     check(evaluationOutputDirectory != null) {
       "EVALUATE requires --evaluation-output."
@@ -149,7 +160,7 @@ class ListMinimizerMicrobenchmarkingFlagGroup :
   private fun checkEvaluateFlagsAreUnset() {
     check(
       microbenchmarkFile == null &&
-        minimizerUnderEvaluation == null &&
+        listMinimizersToEvaluate.isEmpty() &&
         evaluationOutputDirectory == null,
     ) {
       "EVALUATE flags cannot be combined with --list-minimizer-microbenchmarking-mode RECORD."

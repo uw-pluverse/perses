@@ -110,7 +110,8 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: "microbenchmark.yaml"
-  minimizerUnderEvaluation: "WINDOWED_SLICER"
+  listMinimizersToEvaluate:
+  - "WINDOWED_SLICER"
   evaluationOutputDirectory: "metrics"
 experimentFlags:
   groupName: "Experiment Control"

@@ -93,8 +93,8 @@ recordingContext:
     \ \"SHA256\"\nlistMinimizerMicrobenchmarkingFlags:\n  groupName: \"List Minimizer\
     \ Microbenchmarking\"\n  mode: \"RECORD\"\n  microbenchmarkOutputDirectory: \"\
     recorded\"\n  minListSizeToRecord: 1\n  maxMicrobenchmarksToRecord: null\n  microbenchmarkFile:\
-    \ null\n  minimizerUnderEvaluation: null\n  evaluationOutputDirectory: null\n\
-    experimentFlags:\n  groupName: \"Experiment Control\"\n  onDemandFineGritReducerAnnotationClasses:\
+    \ null\n  listMinimizersToEvaluate: []\n  evaluationOutputDirectory: null\nexperimentFlags:\n\
+    \  groupName: \"Experiment Control\"\n  onDemandFineGritReducerAnnotationClasses:\
     \ []\n  onDemandMediumGritReducerAnnotationClasses: []\n  onDemandCoarseGritReducerAnnotationClasses:\
     \ []\n  keepReductionHistory: false\n  enableErrorTolerantGrammar: true\n  dyckNodeReducer:\
     \ \"AUTO\"\nlprFlags:\n  groupName: \"LPR Reducer Control\"\n  enableLPR: false\n\

@@ -16,8 +16,11 @@
  */
 package org.perses.cmd
 
+import com.beust.jcommander.JCommander
+import com.beust.jcommander.ParameterException
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -38,6 +41,16 @@ class ListMinimizerMicrobenchmarkingFlagGroupTest {
   }
 
   private fun flags() = ListMinimizerMicrobenchmarkingFlagGroup()
+
+  /** Drives the real JCommander, which is the only thing that can answer how a flag is spelled. */
+  private fun parse(vararg args: String) =
+    flags().also {
+      JCommander
+        .newBuilder()
+        .addObject(it)
+        .build()
+        .parse(*args)
+    }
 
   /** The failure [validate] raises, or null when it accepts the flags. */
   private fun failureOf(customize: ListMinimizerMicrobenchmarkingFlagGroup.() -> Unit): Throwable? {
@@ -127,13 +140,13 @@ class ListMinimizerMicrobenchmarkingFlagGroupTest {
         mode = EnumListMinimizerMicrobenchmarkingMode.EVALUATE
         microbenchmarkFile = this@ListMinimizerMicrobenchmarkingFlagGroupTest.microbenchmarkFile
       },
-    ).hasMessageThat().contains("--evaluation-minimizer")
+    ).hasMessageThat().contains("--list-minimizers-to-evaluate")
 
     assertThat(
       failureOf {
         mode = EnumListMinimizerMicrobenchmarkingMode.EVALUATE
         microbenchmarkFile = this@ListMinimizerMicrobenchmarkingFlagGroupTest.microbenchmarkFile
-        minimizerUnderEvaluation = EnumListMinimizerType.CDD
+        listMinimizersToEvaluate = listOf(EnumListMinimizerType.CDD)
       },
     ).hasMessageThat().contains("--evaluation-output")
   }
@@ -144,7 +157,7 @@ class ListMinimizerMicrobenchmarkingFlagGroupTest {
       failureOf {
         mode = EnumListMinimizerMicrobenchmarkingMode.EVALUATE
         microbenchmarkFile = tempDir.resolve("absent.yaml")
-        minimizerUnderEvaluation = EnumListMinimizerType.CDD
+        listMinimizersToEvaluate = listOf(EnumListMinimizerType.CDD)
         evaluationOutputDirectory = tempDir
       },
     ).hasMessageThat().contains("is not a file")
@@ -156,7 +169,7 @@ class ListMinimizerMicrobenchmarkingFlagGroupTest {
       failureOf {
         mode = EnumListMinimizerMicrobenchmarkingMode.EVALUATE
         microbenchmarkFile = this@ListMinimizerMicrobenchmarkingFlagGroupTest.microbenchmarkFile
-        minimizerUnderEvaluation = EnumListMinimizerType.CDD
+        listMinimizersToEvaluate = listOf(EnumListMinimizerType.CDD)
         evaluationOutputDirectory = tempDir
       },
     ).isNull()
@@ -169,7 +182,7 @@ class ListMinimizerMicrobenchmarkingFlagGroupTest {
       failureOf {
         mode = EnumListMinimizerMicrobenchmarkingMode.RECORD
         microbenchmarkOutputDirectory = tempDir
-        minimizerUnderEvaluation = EnumListMinimizerType.CDD
+        listMinimizersToEvaluate = listOf(EnumListMinimizerType.CDD)
       },
     ).hasMessageThat().contains("EVALUATE flags cannot be combined")
 
@@ -177,10 +190,62 @@ class ListMinimizerMicrobenchmarkingFlagGroupTest {
       failureOf {
         mode = EnumListMinimizerMicrobenchmarkingMode.EVALUATE
         microbenchmarkFile = this@ListMinimizerMicrobenchmarkingFlagGroupTest.microbenchmarkFile
-        minimizerUnderEvaluation = EnumListMinimizerType.CDD
+        listMinimizersToEvaluate = listOf(EnumListMinimizerType.CDD)
         evaluationOutputDirectory = tempDir
         microbenchmarkOutputDirectory = tempDir
       },
     ).hasMessageThat().contains("RECORD flags cannot be combined")
+  }
+
+  /**
+   * The comma form is not a nicety: `perses.bzl` renders a golden test's extra flags from a dict,
+   * which cannot hold a repeated key, so a golden test could not name two minimizers without it.
+   */
+  @Test
+  fun testMinimizersCanBeGivenCommaSeparated() {
+    assertThat(parse("--list-minimizers-to-evaluate", "WDD,CDD").listMinimizersToEvaluate)
+      .containsExactly(EnumListMinimizerType.WDD, EnumListMinimizerType.CDD)
+      .inOrder()
+  }
+
+  @Test
+  fun testMinimizersCanBeGivenByRepeatingTheFlag() {
+    assertThat(
+      parse(
+        "--list-minimizers-to-evaluate",
+        "WDD",
+        "--list-minimizers-to-evaluate",
+        "CDD",
+      ).listMinimizersToEvaluate,
+    ).containsExactly(EnumListMinimizerType.WDD, EnumListMinimizerType.CDD).inOrder()
+  }
+
+  @Test
+  fun testNoMinimizerIsRequestedByDefault() {
+    assertThat(parse().listMinimizersToEvaluate).isEmpty()
+  }
+
+  @Test
+  fun testAnUnknownMinimizerIsRejectedByTheParser() {
+    // The sweep script mirrors this enum as a plain list of strings, and relies on a name it got
+    // wrong failing here rather than being silently dropped out of a comma-separated value.
+    val failure =
+      assertThrows(ParameterException::class.java) {
+        parse("--list-minimizers-to-evaluate", "WDD,NOT_A_MINIMIZER")
+      }
+    assertThat(failure).hasMessageThat().contains("--list-minimizers-to-evaluate")
+  }
+
+  @Test
+  fun testEvaluateModeStillMeasuresExactlyOneMinimizerPerProcess() {
+    assertThat(
+      failureOf {
+        mode = EnumListMinimizerMicrobenchmarkingMode.EVALUATE
+        microbenchmarkFile = this@ListMinimizerMicrobenchmarkingFlagGroupTest.microbenchmarkFile
+        listMinimizersToEvaluate =
+          listOf(EnumListMinimizerType.CDD, EnumListMinimizerType.WDD)
+        evaluationOutputDirectory = tempDir
+      },
+    ).hasMessageThat().contains("measures exactly one")
   }
 }

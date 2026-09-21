@@ -343,9 +343,12 @@ Usage: org.perses.Main [options]
       bound. 
     --evaluation-microbenchmark
       EVALUATE: the microbenchmark.yaml of the recorded problem to evaluate.
-    --evaluation-minimizer
-      EVALUATE: the list minimizer to evaluate. Exactly one per invocation.
-      Possible Values: [PRISTINE_DDMIN, PERSES_VARIANT_OF_PRISTINE, DFS, BFS, CDD, WEIGHTED_DFS, WEIGHTED_BFS, PROBDD, WDD, WPROBDD, WINDOWED_SLICER, LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION, ONE_BY_ONE, ADAPTIVE_GAIN_DRIVEN]
+    --list-minimizers-to-evaluate
+      EVALUATE: the list minimizers to evaluate, comma-separated or by 
+      repeating the flag. Each writes to <--evaluation-output>/<MINIMIZER>/. A 
+      list because one process is about to measure several against the same 
+      recorded problem; until then, name exactly one.
+      Default: []
     --evaluation-output
       EVALUATE: the directory to write the metrics CSVs to.
 

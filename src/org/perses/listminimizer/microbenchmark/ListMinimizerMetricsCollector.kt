@@ -64,7 +64,7 @@ class ListMinimizerMetricsCollector(
    */
   private val hideTimings: Boolean,
   /**
-   * The [org.perses.listminimizer.EnumListMinimizerType] name, i.e. what `--evaluation-minimizer`
+   * The [org.perses.listminimizer.EnumListMinimizerType] name, i.e. what `--list-minimizers-to-evaluate`
    * was given. Reported alongside the minimizer's qualified class name because they answer
    * different questions: this is the dimension a sweep groups by, the class name is what ran.
    */
@@ -272,7 +272,7 @@ class ListMinimizerMetricsCollector(
     val microbenchmarkId: String,
     /** The minimizer's qualified class name. `queries.jsonl` joins to this. */
     val minimizer: String,
-    /** The `--evaluation-minimizer` value, e.g. `WINDOWED_SLICER`. */
+    /** The `--list-minimizers-to-evaluate` value, e.g. `WINDOWED_SLICER`. */
     val minimizerType: String,
     val originalElementCount: Int,
     val originalWeight: Int,

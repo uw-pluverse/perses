@@ -109,7 +109,7 @@ reduction_golden_test(
     other_flags = {
         "--list-minimizer-microbenchmarking-mode": "EVALUATE",
         "--evaluation-microbenchmark": "$(location %s)" % RECORDED_MICROBENCHMARK,
-        "--evaluation-minimizer": EVALUATED_MINIMIZER,
+        "--list-minimizers-to-evaluate": EVALUATED_MINIMIZER,
         "--evaluation-output": "$(RULEDIR)/" + METRICS_DIR,
     },
     source_file = "t.c",

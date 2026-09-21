@@ -545,7 +545,7 @@ abstract class AbstractMain<
     val flags = cmd.listMinimizerMicrobenchmarkingFlags
     val microbenchmark = ListMinimizationMicrobenchmark.readFrom(flags.microbenchmarkFile!!)
     val targetFile = findRecordedTargetFile(microbenchmark)
-    val minimizerType = flags.minimizerUnderEvaluation!!
+    val minimizerType = flags.listMinimizersToEvaluate.single()
     return ListMinimizerEvaluationDriver.create(
       params = createReductionDriverParams(reductionStartEvent),
       mainFile = targetFile,

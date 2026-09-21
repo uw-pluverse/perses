@@ -111,7 +111,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -734,7 +734,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -937,7 +937,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -1138,7 +1138,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -4233,7 +4233,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -6875,7 +6875,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -7249,7 +7249,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -7452,7 +7452,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -7653,7 +7653,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
@@ -10295,7 +10295,7 @@ listMinimizerMicrobenchmarkingFlags:
   minListSizeToRecord: 6
   maxMicrobenchmarksToRecord: null
   microbenchmarkFile: null
-  minimizerUnderEvaluation: null
+  listMinimizersToEvaluate: []
   evaluationOutputDirectory: null
 experimentFlags:
   groupName: "Experiment Control"
