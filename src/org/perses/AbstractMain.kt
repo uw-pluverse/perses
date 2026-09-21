@@ -545,6 +545,7 @@ abstract class AbstractMain<
     val flags = cmd.listMinimizerMicrobenchmarkingFlags
     val microbenchmark = ListMinimizationMicrobenchmark.readFrom(flags.microbenchmarkFile!!)
     val targetFile = findRecordedTargetFile(microbenchmark)
+    val minimizerType = flags.minimizerUnderEvaluation!!
     return ListMinimizerEvaluationDriver.create(
       params = createReductionDriverParams(reductionStartEvent),
       mainFile = targetFile,
@@ -555,8 +556,14 @@ abstract class AbstractMain<
       resolvedParserFacade =
         defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind),
       microbenchmark = microbenchmark,
-      minimizerType = flags.minimizerUnderEvaluation!!,
-      outputDirectory = FileSystemUtil.ensureDirExists(flags.evaluationOutputDirectory!!),
+      minimizerType = minimizerType,
+      // A directory per minimizer under --evaluation-output, rather than the output root itself:
+      // the metrics file names are fixed and their streams truncate, so two measurements sharing a
+      // directory would leave only the second one's numbers.
+      outputDirectory =
+        FileSystemUtil.ensureDirExists(
+          flags.evaluationOutputDirectory!!.resolve(minimizerType.name),
+        ),
     )
   }
 

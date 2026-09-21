@@ -75,9 +75,15 @@ golden_test(
 
 METRICS_DIR = "metrics"
 
-QUERIES_JSONL = METRICS_DIR + "/queries.jsonl"
+EVALUATED_MINIMIZER = "WINDOWED_SLICER"
 
-SUMMARY_JSONL = METRICS_DIR + "/summary.jsonl"
+# Each measurement writes into a directory named after its minimizer, so that the several
+# minimizers of one problem cannot overwrite each other's fixed-name metrics files.
+MINIMIZER_OUTPUT_DIR = METRICS_DIR + "/" + EVALUATED_MINIMIZER
+
+QUERIES_JSONL = MINIMIZER_OUTPUT_DIR + "/queries.jsonl"
+
+SUMMARY_JSONL = MINIMIZER_OUTPUT_DIR + "/summary.jsonl"
 
 # Both are goldened. Durations -- the only nondeterministic thing these files carry -- are reported
 # as null under --hide-timestamps, which perses.bzl passes to every reduction genrule, so what is
@@ -100,7 +106,7 @@ reduction_golden_test(
     other_flags = {
         "--list-minimizer-microbenchmarking-mode": "EVALUATE",
         "--evaluation-microbenchmark": "$(location %s)" % RECORDED_MICROBENCHMARK,
-        "--evaluation-minimizer": "WINDOWED_SLICER",
+        "--evaluation-minimizer": EVALUATED_MINIMIZER,
         "--evaluation-output": "$(RULEDIR)/" + METRICS_DIR,
     },
     source_file = "t.c",
