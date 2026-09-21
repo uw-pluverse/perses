@@ -972,6 +972,52 @@ FixPt[16][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/26)  Window 
 
 FixPt[16][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/26)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/26=3.85%
 FixPt[16][line_based_concurrent_token_slicer@14][WINDOWED_SLICER](1/26)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/26=3.85%
+(1/26)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 17. Reducer: line_based_concurrent_token_slicer@15
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep_MARKER{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[17][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/26)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/26=3.85%
+FixPt[17][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/26)  Testing the empty input is disabled. Global ratio:1/26=3.85%
+FixPt[17][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/26)  Window size: 15 Global ratio:1/26=3.85%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@15(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[17][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/26)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/26=3.85%
+FixPt[17][line_based_concurrent_token_slicer@15][WINDOWED_SLICER](1/26)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/26=3.85%
+(1/26)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+=Fixpoint iteration 18. Reducer: line_based_concurrent_token_slicer@16
+
+Parser Facade: class org.perses.grammar.line.LineParserFacade
+The spar-tree is the following.
+lines{id=1,slot_type=lines}
+|___(*){id=2,slot_type=kleene_star__lines_1}
+    |___Token:    keep_MARKER{id=3,slot_type=LINE}
+------------------------------------------------------------
+
+
+FixPt[18][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/26)  Minimizer WindowedSlicer starts. Input=[0]#1. Global ratio:1/26=3.85%
+FixPt[18][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/26)  Testing the empty input is disabled. Global ratio:1/26=3.85%
+FixPt[18][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/26)  Window size: 16 Global ratio:1/26=3.85%
+==============Node edit action set cache hit.===============
+
+    structure: [delete_3]
+    context: WINDOWED_SLICER in line_based_concurrent_token_slicer@16(LineBasedConcurrentTokenSlicer)[line_based_concurrent_token_slicer]dd@#nodes=1,#parts=1#total-parts=1
+------------------------------------------------------------
+
+
+FixPt[18][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/26)  Try deleting [0]#1: Skipped. Local ratio: 1/1=100.00%. Global ratio:1/26=3.85%
+FixPt[18][line_based_concurrent_token_slicer@16][WINDOWED_SLICER](1/26)  Minimizer WindowedSlicer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:1/26=3.85%
 (1/26)  The reducer spartree_root_replacement_reducer is skipped, because the current program is not parsable by its preferred parser facade PnfCParserFacade.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
@@ -992,6 +1038,8 @@ ID                               Reducer Worked #NonDeletions #Tokens #NonBlankC
 13 line_based_concurrent_token_slicer@12      0             0       0              0       0   time-hidden
 14 line_based_concurrent_token_slicer@13      0             0       0              0       0   time-hidden
 15 line_based_concurrent_token_slicer@14      0             0       0              0       0   time-hidden
+16 line_based_concurrent_token_slicer@15      0             0       0              0       0   time-hidden
+17 line_based_concurrent_token_slicer@16      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
                               Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
@@ -1002,6 +1050,8 @@ line_based_concurrent_token_slicer@11     1      0             0       0        
 line_based_concurrent_token_slicer@12     1      0             0       0              0       0   time-hidden
 line_based_concurrent_token_slicer@13     1      0             0       0              0       0   time-hidden
 line_based_concurrent_token_slicer@14     1      0             0       0              0       0   time-hidden
+line_based_concurrent_token_slicer@15     1      0             0       0              0       0   time-hidden
+line_based_concurrent_token_slicer@16     1      0             0       0              0       0   time-hidden
  line_based_concurrent_token_slicer@2     1      0             0       0              0       0   time-hidden
  line_based_concurrent_token_slicer@3     1      0             0       0              0       0   time-hidden
  line_based_concurrent_token_slicer@4     1      0             0       0              0       0   time-hidden
@@ -1019,5 +1069,5 @@ dyck_node_reducer.Deletion      5             0     -25            -52
 #test failure = 3
 #test result cache hits = 10
 #test execution cancelled = 0
-#node edit action set cache hits = 16
+#node edit action set cache hits = 18
 #external test execution cache hits = 0
