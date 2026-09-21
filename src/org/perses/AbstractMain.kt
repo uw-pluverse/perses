@@ -253,29 +253,47 @@ abstract class AbstractMain<
    * real grammar is still measured rather than crashing the size report -- consistent with the
    * tolerant-grammar fallback the reduction itself uses. A mixed-language set is measured per file; a
    * file already removed by the terminal file-deletion phase is absent from the folder and reports
-   * [ProgramSize.ZERO]. Called only at the reduction's start and end, so re-resolving facades here is
-   * negligible.
+   * [ProgramSize.ZERO]. Facades come from [defaultRealParserFacadeFor], so the start and end passes
+   * share the one instance.
    */
   private fun computeWholeReductionSizeMetrics(): PerFileSizeMetrics {
     val inputs = originalReductionInputs as AbstractOriginalReductionInputs
-    val realFacadeByLanguage = HashMap<LanguageKind, AbstractParserFacade>()
     return PerFileSizeMetrics(
       inputs,
       inputs.mutableFiles.transformToImmutableList { file ->
         val absPath = resultFolder.computeAbsPathForOrigFile(file)
         if (Files.exists(absPath)) {
-          val language = computeLanguageForFile(absPath)
-          val realFacade =
-            realFacadeByLanguage.getOrPut(language) {
-              computePlausibleParserFacades(language).defaultParserFacade.create()
-            }
-          computeProgramSizeTolerantly(realFacade, absPath)
+          computeProgramSizeTolerantly(
+            defaultRealParserFacadeFor(computeLanguageForFile(absPath)),
+            absPath,
+          )
         } else {
           ProgramSize.ZERO
         }
       },
     )
   }
+
+  /**
+   * The default real-grammar facade for [language], built at most once per process.
+   *
+   * Worth memoizing because a facade is expensive to construct and free to share. Each
+   * instantiation re-reads the language's PNF `.g4` out of the jar, parses it, and eagerly builds
+   * the whole [org.perses.antlr.GrammarHierarchy] from it, while
+   * `AbstractParserFacadeFactory.ParserFacadeCreator.create()` is a bare `createInstance()` that
+   * memoizes nothing -- so the two size-metric passes and the list-minimizer evaluation driver used
+   * to construct three independent copies of the same grammar in one run. A facade carries no
+   * mutable per-reduction state (its `lexerAtnWrapper` is itself a memoizing `by lazy`), which is
+   * what makes one instance serve every caller.
+   *
+   * Not thread-safe, and does not need to be: every caller is on the reduction's own thread.
+   */
+  private val realParserFacadeByLanguage = HashMap<LanguageKind, AbstractParserFacade>()
+
+  protected fun defaultRealParserFacadeFor(language: LanguageKind): AbstractParserFacade =
+    realParserFacadeByLanguage.getOrPut(language) {
+      computePlausibleParserFacades(language).defaultParserFacade.create()
+    }
 
   // Size [absPath] with [realFacade] when it can lex the content, else walk down the tolerant fallback
   // ladder (the adaptive Dyck rung always lexes). Only an unparsable/unlexable file leaves the real
@@ -527,17 +545,15 @@ abstract class AbstractMain<
     val flags = cmd.listMinimizerMicrobenchmarkingFlags
     val microbenchmark = ListMinimizationMicrobenchmark.readFrom(flags.microbenchmarkFile!!)
     val targetFile = findRecordedTargetFile(microbenchmark)
-    val languageKind = targetFile.dataKind as LanguageKind
-    // The default facade, not one resolved by probing: evaluation needs the lexer, and resolving a
-    // canonical facade would mean parsing the very program that may not parse.
     return ListMinimizerEvaluationDriver.create(
       params = createReductionDriverParams(reductionStartEvent),
       mainFile = targetFile,
       // The default facade, not one resolved by probing: it decides how candidates are printed and
       // how tokens are counted, while the driver builds its tree with FlatTokenList so the recorded
-      // program is never parsed under this grammar.
+      // program is never parsed under this grammar. Probing would mean parsing the very program
+      // that may not parse.
       resolvedParserFacade =
-        computePlausibleParserFacades(languageKind).defaultParserFacade.create(),
+        defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind),
       microbenchmark = microbenchmark,
       minimizerType = flags.minimizerUnderEvaluation!!,
       outputDirectory = FileSystemUtil.ensureDirExists(flags.evaluationOutputDirectory!!),
