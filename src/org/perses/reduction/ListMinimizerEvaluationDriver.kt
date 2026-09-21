@@ -190,6 +190,14 @@ class ListMinimizerEvaluationDriver private constructor(
    */
   override fun reduce() {
     warnIfTheRecordedLanguageDisagrees()
+    // A measurement must not inherit another measurement's answers. The query cache is owned by the
+    // main and outlives every driver, so a second evaluation in the same process would find the
+    // previous minimizer's rejected candidates already recorded and skip executing them. The query
+    // *counts* would survive that -- a cache hit still reaches the listener -- but
+    // scriptExecutionCount and every oracle duration would describe whichever minimizer happened to
+    // run first. Clearing here makes each run start as empty as a fresh process does, which is what
+    // lets several runs share one process and stay comparable with runs that did not.
+    queryCache.clearCache()
     logger.ktFine { "Evaluating $minimizerType on ${microbenchmark.microbenchmarkId}." }
     // The base class saves the starting program, registers the tree-edit listeners and drives the
     // plan above; the collector has written summary.jsonl by the time this returns.

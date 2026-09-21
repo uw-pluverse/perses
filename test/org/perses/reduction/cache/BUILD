@@ -42,6 +42,21 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "ContentShaHashBasedFormatQueryCacheTest",
+    srcs = ["ContentShaHashBasedFormatQueryCacheTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/grammar:facade_factory",
+        "//src/org/perses/grammar/c:parser_facade",
+        "//src/org/perses/reduction/cache:query_cache",
+        "//src/org/perses/reduction/cache:sha_hash_cache",
+        "//test/org/perses:test_util",
+        "//test/org/perses/reduction/io:CommonReductionIOManagerData",
+    ],
+)
+
+kt_jvm_test(
     name = "IntervalArrayExpanderTest",
     srcs = ["IntervalArrayExpanderTest.kt"],
     deps = [
