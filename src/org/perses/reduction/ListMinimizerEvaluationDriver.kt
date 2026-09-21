@@ -93,10 +93,20 @@ class ListMinimizerEvaluationDriver private constructor(
    * emits, so a recorded mid-reduction program that no longer parses under its real grammar still
    * yields a tree. The canonical facade still decides the token counts and, through
    * [outputManagerFactory], how candidates are printed.
+   *
+   * Read from the recorded input rather than from the result folder, which is where every other
+   * driver reads its starting program. A measurement must start from the program the ranges were
+   * recorded against, and the result folder does not stay that program: a committed best is written
+   * there (`AbstractProgramReductionDriver`'s edit listener), so a second measurement in the same
+   * process would start from the first one's reduced output and the recorded ranges would no longer
+   * land on token boundaries. The input is the one copy nothing writes to --
+   * [org.perses.reduction.io.AbstractOriginalReductionInputs.checkOutputDirectoryIsNotInPlace]
+   * guarantees the output directory cannot overlap it. For the first measurement the two are
+   * byte-identical, since the result folder is populated from these very bytes.
    */
   override var inputRepresentation: InputRepresentation =
     createInputRepresentation(
-      sourceFile = ioManager.resultFolder.computeAbsPathForOrigFile(mainFile),
+      sourceFile = mainFile.file,
       fileRepresentedByTree = mainFile,
       otherMutableFileContents = otherMutableFileContents,
       surrogateParserFacade =
