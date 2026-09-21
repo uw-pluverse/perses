@@ -51,8 +51,8 @@ import java.nio.file.Path
  * lifecycle fires once, so the statistics summary and progress dump would describe an average of
  * several algorithms rather than any one of them.
  *
- * The program itself comes from the result folder, through the base class's
- * [inputRepresentation] -- the same place every other driver reads its starting program.
+ * The program itself comes from the recorded input, through [inputRepresentation] -- not from the
+ * result folder that every other driver starts from, for the reason given there.
  */
 class ListMinimizerEvaluationDriver private constructor(
   globalContext: GlobalContext,
