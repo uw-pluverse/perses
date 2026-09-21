@@ -1,0 +1,325 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 15
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_evaluate_mode_golden_test_node_priority_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "AUTO"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "_evaluate_mode_golden_test_by_default_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: "EVALUATE"
+  microbenchmarkOutputDirectory: null
+  minListSizeToRecord: 6
+  maxMicrobenchmarksToRecord: null
+  microbenchmarkFile: "microbenchmark.yaml"
+  minimizerUnderEvaluation: "WINDOWED_SLICER"
+  evaluationOutputDirectory: "metrics"
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "AUTO"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: true
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(15/15)  The reducer execution plan is listed below.
+    list_minimizer_evaluation.WINDOWED_SLICER
+
+
+=Fixpoint iteration 1. Reducer: list_minimizer_evaluation.WINDOWED_SLICER
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=63,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=64,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=74,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:keep_me{id=71,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=65,slot_type=Semi}
+        |___aux_rule__declaration_3{id=50,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=51,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=61,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:a{id=58,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=52,slot_type=Semi}
+        |___aux_rule__declaration_3{id=37,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=38,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=48,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:b{id=45,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=39,slot_type=Semi}
+        |___aux_rule__declaration_3{id=24,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=25,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=35,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:c{id=32,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=26,slot_type=Semi}
+        |___aux_rule__declaration_3{id=11,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=12,slot_type=declarationSpecifiers}
+            |   |___Token:int{id=22,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |   |___Token:d{id=19,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=13,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](15/15)  Minimizer WindowedSlicer starts. Input=[0-14]#15. Global ratio:15/15=100.00%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](15/15)  Testing the empty input. Global ratio:15/15=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: WINDOWED_SLICER in list_minimizer_evaluation.WINDOWED_SLICER(ListMinimizerEvaluationReducer)[[evaluation]]dd@#nodes=15,#parts=15#total-parts=15
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](15/15)  Try deleting [0-14]#15: Uninteresting. Local ratio: 15/15=100.00%. Global ratio:15/15=100.00%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](15/15)  Window size: 14 Global ratio:15/15=100.00%
+==========Testing the following program (1): fail===========
+
+// edit action set type: WINDOWED_SLICER in list_minimizer_evaluation.WINDOWED_SLICER(ListMinimizerEvaluationReducer)[[evaluation]]dd@#nodes=14,#parts=14#total-parts=15
+    --file: t.c--
+    int
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](15/15)  Try deleting [1-14]#14: Uninteresting. Local ratio: 15/15=100.00%. Global ratio:15/15=100.00%
+==========Testing the following program (2): fail===========
+
+// edit action set type: WINDOWED_SLICER in list_minimizer_evaluation.WINDOWED_SLICER(ListMinimizerEvaluationReducer)[[evaluation]]dd@#nodes=14,#parts=14#total-parts=15
+    --file: t.c--
+                              ;
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](15/15)  Try deleting [0-13]#14: Uninteresting. Local ratio: 15/15=100.00%. Global ratio:15/15=100.00%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](15/15)  Window size: 13 Global ratio:15/15=100.00%
+==========Testing the following program (3): pass===========
+
+// edit action set type: WINDOWED_SLICER in list_minimizer_evaluation.WINDOWED_SLICER(ListMinimizerEvaluationReducer)[[evaluation]]dd@#nodes=13,#parts=13#total-parts=15
+    --file: t.c--
+    int keep_me
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](15/15)  Try deleting [2-14]#13: Interesting. Local ratio: 15/15=100.00%. Global ratio:15/15=100.00%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 3 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 4
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 15 -> 2
+Edit: [delete: 13,19,22,26,32,35,39,45,48,52,58,61,65]
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/15=13.33%. Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 12 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 11 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 10 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 9 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 8 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 7 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 6 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 5 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 4 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 3 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 2 Global ratio:2/15=13.33%
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Window size: 1 Global ratio:2/15=13.33%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: t.c--
+    int
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Try deleting [1]#1: Uninteresting. Local ratio: 2/15=13.33%. Global ratio:2/15=13.33%
+==========Testing the following program (4): pass===========
+
+// edit action set type: WINDOWED_SLICER in list_minimizer_evaluation.WINDOWED_SLICER(ListMinimizerEvaluationReducer)[[evaluation]]dd@#nodes=1,#parts=1#total-parts=2
+    --file: t.c--
+        keep_me
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](2/15)  Try deleting [0]#1: Interesting. Local ratio: 2/15=13.33%. Global ratio:2/15=13.33%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 3 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 3
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 2 -> 1
+Edit: [delete_74]
+------------------------------------------------------------
+
+
+FixPt[1][list_minimizer_evaluation.WINDOWED_SLICER][WINDOWED_SLICER](1/15)  Minimizer WindowedSlicer ends. Result=[1]#1. Local ratio: 1/15=6.67%. Global ratio:1/15=6.67%
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID                                   Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0 list_minimizer_evaluation.WINDOWED_SLICER      2             0     -14            -24       5   time-hidden
+
+----------------------------------- Summary ------------------------------------
+                                  Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+list_minimizer_evaluation.WINDOWED_SLICER     1      2             0     -14            -24       5   time-hidden
+
+------------------------------- Transformations --------------------------------
+                                    Transformation Worked #NonDeletions #Tokens #NonBlankChars
+list_minimizer_evaluation.WINDOWED_SLICER.Deletion      2             0     -14            -24
+------------------------------------- End --------------------------------------
+#test success = 2
+#test failure = 3
+#test result cache hits = 2
+#test execution cancelled = 0
+#node edit action set cache hits = 0
+#external test execution cache hits = 0

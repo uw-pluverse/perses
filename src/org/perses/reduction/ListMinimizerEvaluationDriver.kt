@@ -150,10 +150,16 @@ class ListMinimizerEvaluationDriver private constructor(
    * The injection point for the recorded list. The scheduler instantiates a reducer from its
    * annotation, so the annotation is an instance field of this driver, closing over the microbenchmark --
    * which is also why this reducer can never be reached by `--alg`.
+   *
+   * The minimizer is part of the short name because the statistics summary and the progress dump
+   * key their per-reducer tables on it, and those are process-wide: several measurements sharing
+   * one process would otherwise roll up into a single row describing none of them. Safe to vary
+   * because nothing registers this annotation with [ReducerFactory], so no `--alg` or `--list-algs`
+   * name changes with it.
    */
   private val evaluationReducerAnnotation =
     object : ReducerAnnotation(
-      shortName = "list_minimizer_evaluation",
+      shortName = "list_minimizer_evaluation.$minimizerType",
       description = "Runs one list minimizer over one recorded list, to measure it.",
       deterministic = false,
       reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,

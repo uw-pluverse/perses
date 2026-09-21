@@ -102,6 +102,9 @@ ALL_METRICS = [
 reduction_golden_test(
     name = "evaluate_mode_golden_test",
     extra_output_files = ALL_METRICS,
+    # Pins the reducer name the statistics tables are keyed on. Those tables are process-wide, so
+    # once several minimizers share a process this is what keeps their rows apart.
+    golden_progress_file = "golden_evaluation_progress.txt",
     golden_reduced_file = "golden_evaluated_t.c",
     other_flags = {
         "--list-minimizer-microbenchmarking-mode": "EVALUATE",
