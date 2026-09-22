@@ -19,11 +19,15 @@ package org.perses
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.apache.commons.lang3.StringUtils
+import org.perses.cmd.EnumListMinimizerMicrobenchmarkingMode
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil.createParserFacadeFactory
+import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmark
+import org.perses.program.LanguageKind
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.LanguageProfile
+import org.perses.reduction.MicrobenchmarkEvaluation
 import org.perses.reduction.PerFileReductionDriver
 import org.perses.reduction.ReducerFactory
 import org.perses.reduction.crossfile.CrossFileOutputManagerFactory
@@ -31,6 +35,7 @@ import org.perses.reduction.crossfile.CrossFileReducerFactory
 import org.perses.reduction.crossfile.CrossFileReductionDriver
 import org.perses.reduction.crossfile.CrossFileReductionIOManager
 import org.perses.reduction.event.ReductionStartEvent
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.util.IoUtil
 import org.perses.util.cmd.CommandLineProcessor
@@ -172,11 +177,50 @@ class Main(
     )
   }
 
+  /**
+   * EVALUATE replaces the reduction stages, not the lifecycle. Overriding here rather than
+   * branching in [AbstractMain.internalRun] keeps the sanity check -- which, pointed at a recorded
+   * folder, is exactly the check that the recording is still interesting -- and keeps both
+   * reduction events, and with them every listener this binary builds. It also keeps a research
+   * mode out of the base class the ppr mains share, which can neither run it nor honour its flags.
+   */
+  override fun runContentReductionToFixpoint(reductionStartEvent: ReductionStartEvent) {
+    if (isEvaluatingListMinimizers()) {
+      evaluateListMinimizers(reductionStartEvent)
+      return
+    }
+    super.runContentReductionToFixpoint(reductionStartEvent)
+  }
+
+  /**
+   * Reads the recorded problem and hands it to [MicrobenchmarkEvaluation], which measures every
+   * requested minimizer against it.
+   */
+  private fun evaluateListMinimizers(reductionStartEvent: ReductionStartEvent) {
+    val microbenchmark =
+      ListMinimizationMicrobenchmark.readFrom(
+        cmd.listMinimizerMicrobenchmarkingFlags.microbenchmarkFile!!,
+      )
+    val targetFile = findRecordedTargetFile(microbenchmark)
+    MicrobenchmarkEvaluation(
+      params = createReductionDriverParams(reductionStartEvent),
+      mainFile = targetFile,
+      // The default facade, not one resolved by probing: it decides how candidates are printed and
+      // how tokens are counted, while a driver builds its tree with FlatTokenList so the recorded
+      // program is never parsed under this grammar. Probing would mean parsing the very program
+      // that may not parse.
+      parserFacade = defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind),
+      microbenchmark = microbenchmark,
+      restoreResultFolder = ::restoreResultFolderToTheOriginalInputs,
+    ).run()
+  }
+
   // The strictly-terminal phase (see AbstractMain.internalRun): drop any whole mutable file that
   // proves unnecessary, in its own driver placed last. A multi-file cleanup, so it only runs when
   // there is more than one mutable file.
   override fun runFileDeletion(reductionStartEvent: ReductionStartEvent) {
-    if (originalReductionInputs.mutableFiles.size <= 1) {
+    // Evaluation must not delete the very program the recorded ranges index into.
+    if (isEvaluatingListMinimizers() || originalReductionInputs.mutableFiles.size <= 1) {
       return
     }
     runCrossFileDriver(
@@ -184,6 +228,36 @@ class Main(
       reductionStartEvent,
     )
   }
+
+  private fun isEvaluatingListMinimizers() =
+    cmd.listMinimizerMicrobenchmarkingFlags.mode ==
+      EnumListMinimizerMicrobenchmarkingMode.EVALUATE
+
+  /**
+   * Puts the original content back into the result folder, undoing what the previous measurement
+   * left there.
+   *
+   * A committed best is written to the result folder by the driver's edit listener, and a driver
+   * reads the target's siblings from that folder when it is built. Without this, the second
+   * measurement of a multi-file recorded problem would start from the first one's reduced siblings
+   * -- a different problem, silently. The target file itself is safe either way, since the tree is
+   * read from the recorded input.
+   */
+  private fun restoreResultFolderToTheOriginalInputs() {
+    AbstractOutputManager
+      .createForOriginalInput(originalReductionInputs, globalContext.shaAlgorithm)
+      .write(resultFolder)
+  }
+
+  private fun findRecordedTargetFile(microbenchmark: ListMinimizationMicrobenchmark) =
+    originalReductionInputs.mutableFiles.singleOrNull {
+      originalReductionInputs.getRelativePathForOrigFile(it).toString() ==
+        microbenchmark.targetFilePath
+    } ?: error(
+      "The recorded target file '${microbenchmark.targetFilePath}' is not among the mutable " +
+        "files ${originalReductionInputs.relativePathSequence().toList()}. Point --input at the " +
+        "problem's own input/ directory.",
+    )
 
   private fun runCrossFileDriver(
     reducerFactories: ImmutableList<CrossFileReducerFactory>,

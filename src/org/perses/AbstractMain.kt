@@ -18,29 +18,19 @@ package org.perses
 
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
-import org.perses.cmd.EnumListMinimizerMicrobenchmarkingMode
 import org.perses.grammar.AbstractParserFacade
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.CompositeParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.TolerantFallbackParserFacades
-import org.perses.listminimizer.AbstractListMinimizerListener
-import org.perses.listminimizer.EnumListMinimizerType
-import org.perses.listminimizer.ListMinimizerProgressListener
-import org.perses.listminimizer.NullListMinimizerListener
-import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmark
-import org.perses.listminimizer.microbenchmark.ListMinimizerEvaluationRunLog
-import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 import org.perses.program.ProgramSize
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
-import org.perses.reduction.InputRepresentation
 import org.perses.reduction.LanguageProfile
-import org.perses.reduction.ListMinimizerEvaluationDriver
 import org.perses.reduction.QueryCacheManager
 import org.perses.reduction.ReducerFactory
 import org.perses.reduction.ReductionDriverParams
@@ -52,7 +42,6 @@ import org.perses.reduction.createSnapshot
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.io.AbstractOriginalReductionInputs
-import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.PerFileSizeMetrics
@@ -222,24 +211,8 @@ abstract class AbstractMain<
       )
     listenerManager.onReductionStart(reductionStartEvent)
     try {
-      if (
-        cmd.listMinimizerMicrobenchmarkingFlags.mode ==
-        EnumListMinimizerMicrobenchmarkingMode.EVALUATE
-      ) {
-        // EVALUATE replaces the reduction stages, not the lifecycle. Branching here keeps the
-        // sanity check -- which, pointed at a recorded folder, is exactly the check that the
-        // recording is still interesting -- and keeps both reduction events, and with them every
-        // listener this binary builds: the statistics summary, the size trend, the progress dump.
-        //
-        // The evaluator is built here rather than returned from [createReductionDriver], so the
-        // mode is decided in exactly one place. Neither the content fixpoint nor the cross-file and
-        // file-deletion phases run: a fixpoint would re-run an identical measurement, and the other
-        // two would reduce the very program the recorded ranges index into.
-        runListMinimizerEvaluation(reductionStartEvent)
-      } else {
-        runContentReductionToFixpoint(reductionStartEvent)
-        runFileDeletion(reductionStartEvent)
-      }
+      runContentReductionToFixpoint(reductionStartEvent)
+      runFileDeletion(reductionStartEvent)
     } finally {
       val finalMetrics =
         runCatching { computeWholeReductionSizeMetrics() }
@@ -357,7 +330,7 @@ abstract class AbstractMain<
    * File deletion is excluded -- it is the strictly-terminal stage (see [internalRun]) -- so the
    * folder's mutable-file set is complete on every round here.
    */
-  private fun runContentReductionToFixpoint(reductionStartEvent: ReductionStartEvent) {
+  protected open fun runContentReductionToFixpoint(reductionStartEvent: ReductionStartEvent) {
     var sizeAtPreviousRoundEnd = nonBlankCharCountOf(resultFolder.readLiveMutableFileContents())
     var countOfNonShrinkingRounds = 0
     while (true) {
@@ -535,176 +508,6 @@ abstract class AbstractMain<
         }
     }
   }
-
-  /**
-   * Measures each of `--list-minimizers-to-evaluate` against the one recorded problem.
-   *
-   * Lives here rather than in a subclass because it needs nothing a subclass owns: [Cmd] is bound by
-   * [PersesCommandOptions], so the flag group is visible, and every collaborator it uses is declared
-   * here. Recording is likewise handled once, in [AbstractProgramReductionDriver], so putting the
-   * wiring in one binary's `Main` would split one feature across two levels of the hierarchy.
-   *
-   * Everything a measurement does not own is resolved once, above the loop: the recorded problem,
-   * the file its ranges index into, the real-grammar facade -- whose construction re-parses a whole
-   * PNF grammar (see [defaultRealParserFacadeFor]) and is the cost that made a process per
-   * measurement untenable -- and the `--profile-list-minimizer` trace, which is one file the
-   * measurements append to in turn.
-   *
-   * What a measurement does own is rebuilt per minimizer, because a minimizer commits its accepted
-   * bests to the tree: the next one must start from the recorded program again, and from a result
-   * folder holding the original content rather than the previous measurement's output.
-   */
-  private fun runListMinimizerEvaluation(reductionStartEvent: ReductionStartEvent) {
-    val flags = cmd.listMinimizerMicrobenchmarkingFlags
-    val microbenchmark = ListMinimizationMicrobenchmark.readFrom(flags.microbenchmarkFile!!)
-    val targetFile = findRecordedTargetFile(microbenchmark)
-    val params = createReductionDriverParams(reductionStartEvent)
-    // The default facade, not one resolved by probing: it decides how candidates are printed and
-    // how tokens are counted, while a driver builds its tree with FlatTokenList so the recorded
-    // program is never parsed under this grammar. Probing would mean parsing the very program that
-    // may not parse.
-    val parserFacade = defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind)
-    val outputRoot = FileSystemUtil.ensureDirExists(flags.evaluationOutputDirectory!!)
-    var failureCount = 0
-    // Built by the first measurement and copied by the rest: parsing the recorded program is the
-    // last per-measurement cost of any size, and a copy inherits everything a parse would recompute.
-    var prototypeInputRepresentation: InputRepresentation? = null
-    createListMinimizerProgressListener().use { progressListener ->
-      ListMinimizerEvaluationRunLog(
-        file = outputRoot.resolve(ListMinimizerEvaluationRunLog.RUN_LOG_FILE_NAME),
-        hideTimings = cmd.verbosityFlags.hideTimestamps,
-      ).use { runLog ->
-        for (minimizerType in flags.listMinimizersToEvaluate) {
-          val measurement =
-            measureOneMinimizer(
-              minimizerType = minimizerType,
-              params = params,
-              targetFile = targetFile,
-              parserFacade = parserFacade,
-              microbenchmark = microbenchmark,
-              outputRoot = outputRoot,
-              progressListener = progressListener,
-              runLog = runLog,
-              prototypeInputRepresentation = prototypeInputRepresentation,
-            )
-          prototypeInputRepresentation = prototypeInputRepresentation ?: measurement.prototype
-          if (!measurement.succeeded) {
-            ++failureCount
-          }
-        }
-      }
-    }
-    // One bad minimizer must not cost the others their measurement, but a process where nothing
-    // could be measured is a broken invocation rather than a result, and should not exit zero.
-    check(failureCount < flags.listMinimizersToEvaluate.size) {
-      "Every one of the $failureCount requested measurement(s) failed; see the log above and " +
-        "${ListMinimizerEvaluationRunLog.RUN_LOG_FILE_NAME} in $outputRoot."
-    }
-  }
-
-  /**
-   * One measurement, returning whether it succeeded.
-   *
-   * A failure is contained rather than propagated: the minimizers after this one are independent
-   * measurements of the same recorded problem, and there is no reason a sweep should lose them.
-   * What can arrive here is narrower than it looks -- `callReducer` already catches and reports
-   * what a reducer throws -- so this is the sanity check on the rendered tree, the driver's own
-   * "ran exactly once" assertion, and anything thrown while the driver is being built.
-   */
-  private fun measureOneMinimizer(
-    minimizerType: EnumListMinimizerType,
-    params: ReductionDriverParams,
-    targetFile: AbstractReductionFile<*, *>,
-    parserFacade: AbstractParserFacade,
-    microbenchmark: ListMinimizationMicrobenchmark,
-    outputRoot: Path,
-    progressListener: AbstractListMinimizerListener,
-    runLog: ListMinimizerEvaluationRunLog,
-    prototypeInputRepresentation: InputRepresentation?,
-  ): Measurement {
-    val startMillis = System.currentTimeMillis()
-    var prototype: InputRepresentation? = null
-    try {
-      restoreResultFolderToTheOriginalInputs()
-      ListMinimizerEvaluationDriver
-        .create(
-          params = params,
-          mainFile = targetFile,
-          resolvedParserFacade = parserFacade,
-          microbenchmark = microbenchmark,
-          minimizerType = minimizerType,
-          // A directory per minimizer under --evaluation-output, rather than the output root
-          // itself: the metrics file names are fixed and their streams truncate, so two
-          // measurements sharing a directory would leave only the second one's numbers.
-          outputDirectory = FileSystemUtil.ensureDirExists(outputRoot.resolve(minimizerType.name)),
-          sharedProgressListener = progressListener,
-          prototypeInputRepresentation = prototypeInputRepresentation,
-        ).use { driver ->
-          // Copied before the run, not after: this measurement is about to commit its accepted
-          // bests into that very tree, and what the next one needs is the program as recorded.
-          if (prototypeInputRepresentation == null) {
-            prototype = driver.inputRepresentation.withPrivateTreeCopy()
-          }
-          driver.reduce()
-        }
-    } catch (failure: Exception) {
-      // Logged rather than reported through listenerManager.onCriticalException: that channel
-      // means the reduction hit something it cannot continue past, and the pipeline rethrows what
-      // it is given once the run ends -- which would undo the containment this method exists for.
-      // A measurement that failed is a result, recorded in the run log like any other.
-      logger.atWarning().withCause(failure).log(
-        "Measuring %s failed; the remaining minimizers are unaffected.",
-        minimizerType,
-      )
-      runLog.recordFailure(minimizerType, System.currentTimeMillis() - startMillis, failure)
-      return Measurement(succeeded = false, prototype = prototype)
-    }
-    runLog.recordSuccess(minimizerType, System.currentTimeMillis() - startMillis)
-    return Measurement(succeeded = true, prototype = prototype)
-  }
-
-  /**
-   * What one measurement leaves behind: whether it succeeded, and -- for the first one only -- the
-   * pristine representation the measurements after it copy instead of parsing. Carried out even
-   * from a failed measurement, since the parse is what failed to be reused, not the program.
-   */
-  private class Measurement(
-    val succeeded: Boolean,
-    val prototype: InputRepresentation?,
-  )
-
-  private fun createListMinimizerProgressListener(): AbstractListMinimizerListener =
-    cmd.profilingFlags.profileListMinimizer
-      ?.let { ListMinimizerProgressListener(it) }
-      ?: NullListMinimizerListener
-
-  /**
-   * Puts the original content back into the result folder, undoing what the previous measurement
-   * left there.
-   *
-   * A committed best is written to the result folder by the driver's edit listener, and a driver
-   * reads the target's siblings from that folder when it is built. Without this, the second
-   * measurement of a multi-file recorded problem would start from the first one's reduced siblings
-   * -- a different problem, silently. The target file itself is safe either way, since the tree is
-   * read from the recorded input.
-   */
-  private fun restoreResultFolderToTheOriginalInputs() {
-    AbstractOutputManager
-      .createForOriginalInput(
-        originalReductionInputs as AbstractOriginalReductionInputs,
-        globalContext.shaAlgorithm,
-      ).write(resultFolder)
-  }
-
-  private fun findRecordedTargetFile(microbenchmark: ListMinimizationMicrobenchmark) =
-    originalReductionInputs.mutableFiles.singleOrNull {
-      originalReductionInputs.getRelativePathForOrigFile(it).toString() ==
-        microbenchmark.targetFilePath
-    } ?: error(
-      "The recorded target file '${microbenchmark.targetFilePath}' is not among the mutable " +
-        "files ${originalReductionInputs.relativePathSequence().toList()}. Point --input at the " +
-        "problem's own input/ directory.",
-    )
 
   /**
    * The profile whose extra reducers a driver may run, and the factory that resolves `--alg`.
