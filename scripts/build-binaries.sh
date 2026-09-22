@@ -11,11 +11,15 @@ set -o nounset
 readonly BINARIES_SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 source "${BINARIES_SCRIPT_DIR}/constants.sh" || exit 1
 
+# Only targets this repository actually contains. //astra/... used to be here, but astra is not
+# part of the public tree: it reaches a build through the wrapper's symlink overlay, so naming it
+# here made this script fail on any checkout that has only the public repo -- with
+# "no such package 'astra/cxx/src'", which points nowhere near the cause. Nothing in the benchmark
+# harnesses consumes the astra jars; build them from the wrapper when you want the perses_java or
+# perses_cxx CLI.
 declare -A target_hashmap
 target_hashmap["//src/org/perses:perses_deploy.jar"]="bazel-bin/src/org/perses/perses_deploy.jar"
 target_hashmap["//src/org/perses:token_counter_deploy.jar"]="bazel-bin/src/org/perses/token_counter_deploy.jar"
-target_hashmap["//astra/java/src:perses_java_deploy.jar"]="bazel-bin/astra/java/src/perses_java_deploy.jar"
-target_hashmap["//astra/cxx/src:perses_cxx_deploy.jar"]="bazel-bin/astra/cxx/src/perses_cxx_deploy.jar"
 # target_hashmap["//mimir/src/org/perses/mimir:mimir_deploy.jar"]="bazel-bin/mimir/src/org/perses/mimir/mimir_deploy.jar"
 
 readonly BIN_DIR="${WORKSPACE_ROOT}/bin/"
