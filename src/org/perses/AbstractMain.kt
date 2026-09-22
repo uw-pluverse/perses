@@ -224,10 +224,10 @@ abstract class AbstractMain<
         // listener this binary builds: the statistics summary, the size trend, the progress dump.
         //
         // The evaluator is built here rather than returned from [createReductionDriver], so the
-        // mode is decided in exactly one place. It runs once: evaluation commits nothing, so a
-        // content fixpoint would re-run an identical measurement, and the cross-file and
-        // file-deletion phases would reduce the very program the recorded ranges index into.
-        createListMinimizerEvaluationDriver(reductionStartEvent).use { it.reduce() }
+        // mode is decided in exactly one place. Neither the content fixpoint nor the cross-file and
+        // file-deletion phases run: a fixpoint would re-run an identical measurement, and the other
+        // two would reduce the very program the recorded ranges index into.
+        runListMinimizerEvaluation(reductionStartEvent)
       } else {
         runContentReductionToFixpoint(reductionStartEvent)
         runFileDeletion(reductionStartEvent)
@@ -529,42 +529,47 @@ abstract class AbstractMain<
   }
 
   /**
-   * Builds the driver that evaluates one recorded problem with one list minimizer.
+   * Measures each of `--list-minimizers-to-evaluate` against the one recorded problem.
    *
    * Lives here rather than in a subclass because it needs nothing a subclass owns: [Cmd] is bound by
    * [PersesCommandOptions], so the flag group is visible, and every collaborator it uses is declared
    * here. Recording is likewise handled once, in [AbstractProgramReductionDriver], so putting the
    * wiring in one binary's `Main` would split one feature across two levels of the hierarchy.
    *
-   * The program is never parsed under its real grammar -- only lexed -- which matters because a
-   * mid-reduction program need not parse cleanly.
+   * Everything a measurement does not own is resolved once, above the loop: the recorded problem,
+   * the file its ranges index into, and the real-grammar facade -- whose construction re-parses a
+   * whole PNF grammar (see [defaultRealParserFacadeFor]) and is the cost that made a process per
+   * measurement untenable. What a measurement does own is rebuilt per minimizer, because a minimizer
+   * commits its accepted bests to the tree and the next one must start from the recorded program
+   * again.
    */
-  private fun createListMinimizerEvaluationDriver(
-    reductionStartEvent: ReductionStartEvent,
-  ): ListMinimizerEvaluationDriver {
+  private fun runListMinimizerEvaluation(reductionStartEvent: ReductionStartEvent) {
     val flags = cmd.listMinimizerMicrobenchmarkingFlags
     val microbenchmark = ListMinimizationMicrobenchmark.readFrom(flags.microbenchmarkFile!!)
     val targetFile = findRecordedTargetFile(microbenchmark)
-    val minimizerType = flags.listMinimizersToEvaluate.single()
-    return ListMinimizerEvaluationDriver.create(
-      params = createReductionDriverParams(reductionStartEvent),
-      mainFile = targetFile,
-      // The default facade, not one resolved by probing: it decides how candidates are printed and
-      // how tokens are counted, while the driver builds its tree with FlatTokenList so the recorded
-      // program is never parsed under this grammar. Probing would mean parsing the very program
-      // that may not parse.
-      resolvedParserFacade =
-        defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind),
-      microbenchmark = microbenchmark,
-      minimizerType = minimizerType,
-      // A directory per minimizer under --evaluation-output, rather than the output root itself:
-      // the metrics file names are fixed and their streams truncate, so two measurements sharing a
-      // directory would leave only the second one's numbers.
-      outputDirectory =
-        FileSystemUtil.ensureDirExists(
-          flags.evaluationOutputDirectory!!.resolve(minimizerType.name),
-        ),
-    )
+    val params = createReductionDriverParams(reductionStartEvent)
+    // The default facade, not one resolved by probing: it decides how candidates are printed and
+    // how tokens are counted, while a driver builds its tree with FlatTokenList so the recorded
+    // program is never parsed under this grammar. Probing would mean parsing the very program that
+    // may not parse.
+    val parserFacade = defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind)
+    for (minimizerType in flags.listMinimizersToEvaluate) {
+      ListMinimizerEvaluationDriver
+        .create(
+          params = params,
+          mainFile = targetFile,
+          resolvedParserFacade = parserFacade,
+          microbenchmark = microbenchmark,
+          minimizerType = minimizerType,
+          // A directory per minimizer under --evaluation-output, rather than the output root
+          // itself: the metrics file names are fixed and their streams truncate, so two
+          // measurements sharing a directory would leave only the second one's numbers.
+          outputDirectory =
+            FileSystemUtil.ensureDirExists(
+              flags.evaluationOutputDirectory!!.resolve(minimizerType.name),
+            ),
+        ).use { it.reduce() }
+    }
   }
 
   private fun findRecordedTargetFile(microbenchmark: ListMinimizationMicrobenchmark) =
