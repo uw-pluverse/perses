@@ -345,9 +345,10 @@ Usage: org.perses.Main [options]
       EVALUATE: the microbenchmark.yaml of the recorded problem to evaluate.
     --list-minimizers-to-evaluate
       EVALUATE: the list minimizers to evaluate, comma-separated or by 
-      repeating the flag. Each writes to <--evaluation-output>/<MINIMIZER>/. A 
-      list because one process is about to measure several against the same 
-      recorded problem; until then, name exactly one.
+      repeating the flag. All of them are measured against the same recorded 
+      problem in one process, in the order given, each from a pristine tree 
+      and an empty query cache, and each writing to 
+      <--evaluation-output>/<MINIMIZER>/. 
       Default: []
     --evaluation-output
       EVALUATE: the directory to write the metrics CSVs to.
