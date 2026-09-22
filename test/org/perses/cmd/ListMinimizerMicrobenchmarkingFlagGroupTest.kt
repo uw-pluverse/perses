@@ -237,15 +237,28 @@ class ListMinimizerMicrobenchmarkingFlagGroupTest {
   }
 
   @Test
-  fun testEvaluateModeStillMeasuresExactlyOneMinimizerPerProcess() {
+  fun testEvaluateModeAcceptsSeveralMinimizers() {
+    assertThat(
+      failureOf {
+        mode = EnumListMinimizerMicrobenchmarkingMode.EVALUATE
+        microbenchmarkFile = this@ListMinimizerMicrobenchmarkingFlagGroupTest.microbenchmarkFile
+        listMinimizersToEvaluate = listOf(EnumListMinimizerType.CDD, EnumListMinimizerType.WDD)
+        evaluationOutputDirectory = tempDir
+      },
+    ).isNull()
+  }
+
+  /** Both runs would write to the same per-minimizer directory, so only the second would survive. */
+  @Test
+  fun testEvaluateModeRejectsARepeatedMinimizer() {
     assertThat(
       failureOf {
         mode = EnumListMinimizerMicrobenchmarkingMode.EVALUATE
         microbenchmarkFile = this@ListMinimizerMicrobenchmarkingFlagGroupTest.microbenchmarkFile
         listMinimizersToEvaluate =
-          listOf(EnumListMinimizerType.CDD, EnumListMinimizerType.WDD)
+          listOf(EnumListMinimizerType.CDD, EnumListMinimizerType.WDD, EnumListMinimizerType.CDD)
         evaluationOutputDirectory = tempDir
       },
-    ).hasMessageThat().contains("measures exactly one")
+    ).hasMessageThat().contains("CDD more than once")
   }
 }

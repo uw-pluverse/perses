@@ -130,3 +130,81 @@ golden_test(
     golden_file = "golden_summary.jsonl",
     test_file = SUMMARY_JSONL,
 )
+
+# The acceptance criterion of measuring several minimizers in one process: a minimizer measured
+# alongside others must produce exactly what it produces alone.
+#
+# Nothing here is checked in. The two solo runs ARE the goldens, so there is no hand-maintained
+# copy to drift -- the same reason the EVALUATE test above consumes the recording RECORD just made.
+#
+# Both orders are run, and that is what turns "passed by luck" into "there is no cross-run state":
+# a single order can pass while a leak exists, if the first minimizer's behaviour happens to be a
+# prefix of the second's.
+#
+# summary.jsonl must be diffed, not just queries.jsonl. A query-cache hit still reaches the
+# listener, so a leak between measurements would leave the whole query trace intact and show up
+# only in scriptExecutionCount -- which, under the --hide-timestamps that perses.bzl passes to
+# every reduction genrule, is the sole cache-sensitive field that is not nulled.
+METRICS_FILE_NAMES = [
+    "queries.jsonl",
+    "summary.jsonl",
+]
+
+# Each measures one minimizer per process, as the sweep used to do for every measurement; together
+# they are the goldens the combined runs below are diffed against.
+SOLO_EVALUATION_RUNS = {
+    "solo_wdd": ["WDD"],
+    "solo_cdd": ["CDD"],
+}
+
+COMBINED_EVALUATION_RUNS = {
+    "wdd_then_cdd": [
+        "WDD",
+        "CDD",
+    ],
+    "cdd_then_wdd": [
+        "CDD",
+        "WDD",
+    ],
+}
+
+[
+    reduction_golden_test(
+        name = "evaluate_%s" % name,
+        extra_output_files = [
+            "%s/%s/%s" % (name, minimizer, metrics)
+            for minimizer in minimizers
+            for metrics in METRICS_FILE_NAMES
+        ],
+        golden_reduced_file = "golden_evaluated_t.c",
+        other_flags = {
+            "--list-minimizer-microbenchmarking-mode": "EVALUATE",
+            "--evaluation-microbenchmark": "$(location %s)" % RECORDED_MICROBENCHMARK,
+            "--list-minimizers-to-evaluate": ",".join(minimizers),
+            "--evaluation-output": "$(RULEDIR)/" + name,
+        },
+        source_file = "t.c",
+        test_script = "r.sh",
+        deps = [RECORDED_MICROBENCHMARK],
+    )
+    for name, minimizers in SOLO_EVALUATION_RUNS.items() + COMBINED_EVALUATION_RUNS.items()
+]
+
+[
+    golden_test(
+        name = "%s_%s_%s_matches_its_solo_run" % (
+            combined_name,
+            minimizer.lower(),
+            metrics.split(".")[0],
+        ),
+        golden_file = "solo_%s/%s/%s" % (
+            minimizer.lower(),
+            minimizer,
+            metrics,
+        ),
+        test_file = "%s/%s/%s" % (combined_name, minimizer, metrics),
+    )
+    for combined_name, minimizers in COMBINED_EVALUATION_RUNS.items()
+    for minimizer in minimizers
+    for metrics in METRICS_FILE_NAMES
+]

@@ -71,6 +71,17 @@ class ListMinimizerEvaluationDriver private constructor(
   private val microbenchmark: ListMinimizationMicrobenchmark,
   private val minimizerType: EnumListMinimizerType,
   private val outputDirectory: Path,
+  /**
+   * The `--profile-list-minimizer` trace, owned by the caller and shared by every measurement of
+   * this process.
+   *
+   * Shared rather than built here, because [ListMinimizerProgressListener] truncates the file it
+   * opens: one per driver would leave only the last measurement's trace at the path the user named.
+   * One file is the better artifact anyway -- each run's block opens with its algorithm and its
+   * description prefix, which carries the minimizer's name -- and it is the file the flag asked
+   * for. Not registered for close here, for the same reason: it outlives this driver.
+   */
+  private val sharedProgressListener: AbstractListMinimizerListener,
 ) : AbstractProgramReductionDriver(
     globalContext = globalContext,
     cmd = cmd,
@@ -142,7 +153,7 @@ class ListMinimizerEvaluationDriver private constructor(
 
   override fun createListMinimizerListener() =
     AbstractListMinimizerListener.smartCombine(
-      super.createListMinimizerListener(),
+      sharedProgressListener,
       registerToClose(metricsCollector),
     )
 
@@ -268,6 +279,7 @@ class ListMinimizerEvaluationDriver private constructor(
       microbenchmark: ListMinimizationMicrobenchmark,
       minimizerType: EnumListMinimizerType,
       outputDirectory: Path,
+      sharedProgressListener: AbstractListMinimizerListener,
     ): ListMinimizerEvaluationDriver {
       val components =
         RegularProgramReductionDriver.buildComponents(params, mainFile, resolvedParserFacade)
@@ -288,6 +300,7 @@ class ListMinimizerEvaluationDriver private constructor(
         microbenchmark = microbenchmark,
         minimizerType = minimizerType,
         outputDirectory = outputDirectory,
+        sharedProgressListener = sharedProgressListener,
       )
     }
   }

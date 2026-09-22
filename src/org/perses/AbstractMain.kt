@@ -25,6 +25,9 @@ import org.perses.grammar.CompositeParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.TolerantFallbackParserFacades
+import org.perses.listminimizer.AbstractListMinimizerListener
+import org.perses.listminimizer.ListMinimizerProgressListener
+import org.perses.listminimizer.NullListMinimizerListener
 import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmark
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
@@ -45,6 +48,7 @@ import org.perses.reduction.createSnapshot
 import org.perses.reduction.event.ReductionStartEvent
 import org.perses.reduction.event.SanityCheckEvent
 import org.perses.reduction.io.AbstractOriginalReductionInputs
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractReductionIOManager
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.PerFileSizeMetrics
@@ -537,11 +541,14 @@ abstract class AbstractMain<
    * wiring in one binary's `Main` would split one feature across two levels of the hierarchy.
    *
    * Everything a measurement does not own is resolved once, above the loop: the recorded problem,
-   * the file its ranges index into, and the real-grammar facade -- whose construction re-parses a
-   * whole PNF grammar (see [defaultRealParserFacadeFor]) and is the cost that made a process per
-   * measurement untenable. What a measurement does own is rebuilt per minimizer, because a minimizer
-   * commits its accepted bests to the tree and the next one must start from the recorded program
-   * again.
+   * the file its ranges index into, the real-grammar facade -- whose construction re-parses a whole
+   * PNF grammar (see [defaultRealParserFacadeFor]) and is the cost that made a process per
+   * measurement untenable -- and the `--profile-list-minimizer` trace, which is one file the
+   * measurements append to in turn.
+   *
+   * What a measurement does own is rebuilt per minimizer, because a minimizer commits its accepted
+   * bests to the tree: the next one must start from the recorded program again, and from a result
+   * folder holding the original content rather than the previous measurement's output.
    */
   private fun runListMinimizerEvaluation(reductionStartEvent: ReductionStartEvent) {
     val flags = cmd.listMinimizerMicrobenchmarkingFlags
@@ -553,23 +560,50 @@ abstract class AbstractMain<
     // program is never parsed under this grammar. Probing would mean parsing the very program that
     // may not parse.
     val parserFacade = defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind)
-    for (minimizerType in flags.listMinimizersToEvaluate) {
-      ListMinimizerEvaluationDriver
-        .create(
-          params = params,
-          mainFile = targetFile,
-          resolvedParserFacade = parserFacade,
-          microbenchmark = microbenchmark,
-          minimizerType = minimizerType,
-          // A directory per minimizer under --evaluation-output, rather than the output root
-          // itself: the metrics file names are fixed and their streams truncate, so two
-          // measurements sharing a directory would leave only the second one's numbers.
-          outputDirectory =
-            FileSystemUtil.ensureDirExists(
-              flags.evaluationOutputDirectory!!.resolve(minimizerType.name),
-            ),
-        ).use { it.reduce() }
+    createListMinimizerProgressListener().use { progressListener ->
+      for (minimizerType in flags.listMinimizersToEvaluate) {
+        restoreResultFolderToTheOriginalInputs()
+        ListMinimizerEvaluationDriver
+          .create(
+            params = params,
+            mainFile = targetFile,
+            resolvedParserFacade = parserFacade,
+            microbenchmark = microbenchmark,
+            minimizerType = minimizerType,
+            // A directory per minimizer under --evaluation-output, rather than the output root
+            // itself: the metrics file names are fixed and their streams truncate, so two
+            // measurements sharing a directory would leave only the second one's numbers.
+            outputDirectory =
+              FileSystemUtil.ensureDirExists(
+                flags.evaluationOutputDirectory!!.resolve(minimizerType.name),
+              ),
+            sharedProgressListener = progressListener,
+          ).use { it.reduce() }
+      }
     }
+  }
+
+  private fun createListMinimizerProgressListener(): AbstractListMinimizerListener =
+    cmd.profilingFlags.profileListMinimizer
+      ?.let { ListMinimizerProgressListener(it) }
+      ?: NullListMinimizerListener
+
+  /**
+   * Puts the original content back into the result folder, undoing what the previous measurement
+   * left there.
+   *
+   * A committed best is written to the result folder by the driver's edit listener, and a driver
+   * reads the target's siblings from that folder when it is built. Without this, the second
+   * measurement of a multi-file recorded problem would start from the first one's reduced siblings
+   * -- a different problem, silently. The target file itself is safe either way, since the tree is
+   * read from the recorded input.
+   */
+  private fun restoreResultFolderToTheOriginalInputs() {
+    AbstractOutputManager
+      .createForOriginalInput(
+        originalReductionInputs as AbstractOriginalReductionInputs,
+        globalContext.shaAlgorithm,
+      ).write(resultFolder)
   }
 
   private fun findRecordedTargetFile(microbenchmark: ListMinimizationMicrobenchmark) =

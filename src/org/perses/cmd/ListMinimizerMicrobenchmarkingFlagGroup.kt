@@ -76,8 +76,9 @@ class ListMinimizerMicrobenchmarkingFlagGroup :
     names = ["--list-minimizers-to-evaluate"],
     description =
       "EVALUATE: the list minimizers to evaluate, comma-separated or by repeating the flag. " +
-        "Each writes to <--evaluation-output>/<MINIMIZER>/. A list because one process is about " +
-        "to measure several against the same recorded problem; until then, name exactly one.",
+        "All of them are measured against the same recorded problem in one process, in the order " +
+        "given, each from a pristine tree and an empty query cache, and each writing to " +
+        "<--evaluation-output>/<MINIMIZER>/.",
     order = 50,
   )
   var listMinimizersToEvaluate: List<EnumListMinimizerType> = listOf()
@@ -143,11 +144,17 @@ class ListMinimizerMicrobenchmarkingFlagGroup :
     check(listMinimizersToEvaluate.isNotEmpty()) {
       "EVALUATE requires --list-minimizers-to-evaluate."
     }
-    // Lifted once one process can measure several minimizers. Checked here rather than left to
-    // the consumer's single(), whose message names neither the flag nor the reason.
-    check(listMinimizersToEvaluate.size == 1) {
-      "--list-minimizers-to-evaluate names ${listMinimizersToEvaluate.size} minimizers, " +
-        "but a process still measures exactly one."
+    // Each minimizer writes into a directory named after itself, so a repeat would measure the
+    // same thing twice and keep only the second set of numbers.
+    val duplicates =
+      listMinimizersToEvaluate
+        .groupingBy { it }
+        .eachCount()
+        .filterValues { it > 1 }
+        .keys
+    check(duplicates.isEmpty()) {
+      "--list-minimizers-to-evaluate names ${duplicates.joinToString()} more than once, but a " +
+        "minimizer is measured once per problem and the repeat would overwrite its own output."
     }
     check(evaluationOutputDirectory != null) {
       "EVALUATE requires --evaluation-output."
