@@ -23,6 +23,7 @@ import org.perses.program.TokenizedProgram
 import org.perses.reduction.io.AbstractOriginalReductionInputs
 import org.perses.reduction.io.PerFileSizeMetrics
 import org.perses.reduction.semantics.ISemanticsProvider
+import org.perses.spartree.AbstractTreeNode
 import org.perses.spartree.SparTree
 import org.perses.spartree.SparTreeSimplifier
 import org.perses.util.transformToImmutableList
@@ -105,6 +106,38 @@ class InputRepresentation(
 
   fun simplifySparTree() {
     SparTreeSimplifier.simplify(tree)
+  }
+
+  /**
+   * This representation over a private copy of [tree], for a second reduction of the same starting
+   * program in the same process.
+   *
+   * The point is to buy the tree without paying for it again: building one re-reads the file, runs
+   * the real lexer over it twice (once to tokenize, once for the canonical token count) and then
+   * simplifies, whereas a copy is a walk over nodes that already exist and inherits the canonical
+   * count. The list-minimizer evaluation does exactly this -- measure several minimizers against
+   * one recorded problem, each needing the program as recorded, because a minimizer commits its
+   * accepted bests to the tree it is given.
+   *
+   * The copy is independent where it must be: [SparTree.deepCopy] builds a new tree, so the node
+   * action-set cache starts empty and no edit listener carries over, and `ReuseNodeIdStrategy`
+   * keeps the node ids, which order the nodes. Everything else is immutable content and is shared.
+   *
+   * Refused when [semantics] are present: a semantics provider is mapped onto a particular tree's
+   * nodes by token position, so handing it a different tree would silently associate facts with the
+   * wrong nodes. Nothing that computes semantics reduces the same program twice today.
+   */
+  fun withPrivateTreeCopy(): InputRepresentation {
+    check(semantics == null) {
+      "Cannot copy a representation that carries semantics: they are bound to $tree's nodes."
+    }
+    return InputRepresentation(
+      originalReductionInputs = originalReductionInputs,
+      tree = tree.deepCopy(AbstractTreeNode.NodeIdCopyStrategy.ReuseNodeIdStrategy).result,
+      fileRepresentedByTree = fileRepresentedByTree,
+      otherMutableFileContents = otherMutableFileContents,
+      semantics = null,
+    )
   }
 
   /** The [metrics] last computed by [computePerFileSizeMetrics] and the tree [snapshot] they

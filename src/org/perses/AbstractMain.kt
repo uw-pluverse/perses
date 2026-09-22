@@ -38,6 +38,7 @@ import org.perses.program.ProgramSize
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.IReductionDriver
+import org.perses.reduction.InputRepresentation
 import org.perses.reduction.LanguageProfile
 import org.perses.reduction.ListMinimizerEvaluationDriver
 import org.perses.reduction.QueryCacheManager
@@ -565,13 +566,17 @@ abstract class AbstractMain<
     val parserFacade = defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind)
     val outputRoot = FileSystemUtil.ensureDirExists(flags.evaluationOutputDirectory!!)
     var failureCount = 0
+    // Built by the first measurement and copied by the rest: parsing the recorded program is the
+    // last per-measurement cost of any size, and a copy inherits everything a parse would recompute.
+    var prototypeInputRepresentation: InputRepresentation? = null
     createListMinimizerProgressListener().use { progressListener ->
       ListMinimizerEvaluationRunLog(
         file = outputRoot.resolve(ListMinimizerEvaluationRunLog.RUN_LOG_FILE_NAME),
         hideTimings = cmd.verbosityFlags.hideTimestamps,
       ).use { runLog ->
         for (minimizerType in flags.listMinimizersToEvaluate) {
-          if (!measureOneMinimizer(
+          val measurement =
+            measureOneMinimizer(
               minimizerType = minimizerType,
               params = params,
               targetFile = targetFile,
@@ -580,8 +585,10 @@ abstract class AbstractMain<
               outputRoot = outputRoot,
               progressListener = progressListener,
               runLog = runLog,
+              prototypeInputRepresentation = prototypeInputRepresentation,
             )
-          ) {
+          prototypeInputRepresentation = prototypeInputRepresentation ?: measurement.prototype
+          if (!measurement.succeeded) {
             ++failureCount
           }
         }
@@ -613,8 +620,10 @@ abstract class AbstractMain<
     outputRoot: Path,
     progressListener: AbstractListMinimizerListener,
     runLog: ListMinimizerEvaluationRunLog,
-  ): Boolean {
+    prototypeInputRepresentation: InputRepresentation?,
+  ): Measurement {
     val startMillis = System.currentTimeMillis()
+    var prototype: InputRepresentation? = null
     try {
       restoreResultFolderToTheOriginalInputs()
       ListMinimizerEvaluationDriver
@@ -629,7 +638,15 @@ abstract class AbstractMain<
           // measurements sharing a directory would leave only the second one's numbers.
           outputDirectory = FileSystemUtil.ensureDirExists(outputRoot.resolve(minimizerType.name)),
           sharedProgressListener = progressListener,
-        ).use { it.reduce() }
+          prototypeInputRepresentation = prototypeInputRepresentation,
+        ).use { driver ->
+          // Copied before the run, not after: this measurement is about to commit its accepted
+          // bests into that very tree, and what the next one needs is the program as recorded.
+          if (prototypeInputRepresentation == null) {
+            prototype = driver.inputRepresentation.withPrivateTreeCopy()
+          }
+          driver.reduce()
+        }
     } catch (failure: Exception) {
       // Logged rather than reported through listenerManager.onCriticalException: that channel
       // means the reduction hit something it cannot continue past, and the pipeline rethrows what
@@ -640,11 +657,21 @@ abstract class AbstractMain<
         minimizerType,
       )
       runLog.recordFailure(minimizerType, System.currentTimeMillis() - startMillis, failure)
-      return false
+      return Measurement(succeeded = false, prototype = prototype)
     }
     runLog.recordSuccess(minimizerType, System.currentTimeMillis() - startMillis)
-    return true
+    return Measurement(succeeded = true, prototype = prototype)
   }
+
+  /**
+   * What one measurement leaves behind: whether it succeeded, and -- for the first one only -- the
+   * pristine representation the measurements after it copy instead of parsing. Carried out even
+   * from a failed measurement, since the parse is what failed to be reused, not the program.
+   */
+  private class Measurement(
+    val succeeded: Boolean,
+    val prototype: InputRepresentation?,
+  )
 
   private fun createListMinimizerProgressListener(): AbstractListMinimizerListener =
     cmd.profilingFlags.profileListMinimizer

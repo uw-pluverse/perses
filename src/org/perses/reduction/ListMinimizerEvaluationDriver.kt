@@ -72,6 +72,13 @@ class ListMinimizerEvaluationDriver private constructor(
   private val minimizerType: EnumListMinimizerType,
   private val outputDirectory: Path,
   /**
+   * A pristine representation of the recorded program to copy, or null to build one by parsing.
+   *
+   * Only the first measurement of a process parses; the rest copy, which is what keeps the lexing
+   * and the tree build off the per-measurement bill. See [InputRepresentation.withPrivateTreeCopy].
+   */
+  private val prototypeInputRepresentation: InputRepresentation?,
+  /**
    * The `--profile-list-minimizer` trace, owned by the caller and shared by every measurement of
    * this process.
    *
@@ -116,7 +123,7 @@ class ListMinimizerEvaluationDriver private constructor(
    * byte-identical, since the result folder is populated from these very bytes.
    */
   override var inputRepresentation: InputRepresentation =
-    createInputRepresentation(
+    prototypeInputRepresentation?.withPrivateTreeCopy() ?: createInputRepresentation(
       sourceFile = mainFile.file,
       fileRepresentedByTree = mainFile,
       otherMutableFileContents = otherMutableFileContents,
@@ -280,6 +287,7 @@ class ListMinimizerEvaluationDriver private constructor(
       minimizerType: EnumListMinimizerType,
       outputDirectory: Path,
       sharedProgressListener: AbstractListMinimizerListener,
+      prototypeInputRepresentation: InputRepresentation?,
     ): ListMinimizerEvaluationDriver {
       val components =
         RegularProgramReductionDriver.buildComponents(params, mainFile, resolvedParserFacade)
@@ -301,6 +309,7 @@ class ListMinimizerEvaluationDriver private constructor(
         minimizerType = minimizerType,
         outputDirectory = outputDirectory,
         sharedProgressListener = sharedProgressListener,
+        prototypeInputRepresentation = prototypeInputRepresentation,
       )
     }
   }
