@@ -26,9 +26,12 @@ import org.perses.grammar.SingleParserFacadeFactory
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.TolerantFallbackParserFacades
 import org.perses.listminimizer.AbstractListMinimizerListener
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.ListMinimizerProgressListener
 import org.perses.listminimizer.NullListMinimizerListener
 import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmark
+import org.perses.listminimizer.microbenchmark.ListMinimizerEvaluationRunLog
+import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 import org.perses.program.ProgramSize
@@ -560,27 +563,87 @@ abstract class AbstractMain<
     // program is never parsed under this grammar. Probing would mean parsing the very program that
     // may not parse.
     val parserFacade = defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind)
+    val outputRoot = FileSystemUtil.ensureDirExists(flags.evaluationOutputDirectory!!)
+    var failureCount = 0
     createListMinimizerProgressListener().use { progressListener ->
-      for (minimizerType in flags.listMinimizersToEvaluate) {
-        restoreResultFolderToTheOriginalInputs()
-        ListMinimizerEvaluationDriver
-          .create(
-            params = params,
-            mainFile = targetFile,
-            resolvedParserFacade = parserFacade,
-            microbenchmark = microbenchmark,
-            minimizerType = minimizerType,
-            // A directory per minimizer under --evaluation-output, rather than the output root
-            // itself: the metrics file names are fixed and their streams truncate, so two
-            // measurements sharing a directory would leave only the second one's numbers.
-            outputDirectory =
-              FileSystemUtil.ensureDirExists(
-                flags.evaluationOutputDirectory!!.resolve(minimizerType.name),
-              ),
-            sharedProgressListener = progressListener,
-          ).use { it.reduce() }
+      ListMinimizerEvaluationRunLog(
+        file = outputRoot.resolve(ListMinimizerEvaluationRunLog.RUN_LOG_FILE_NAME),
+        hideTimings = cmd.verbosityFlags.hideTimestamps,
+      ).use { runLog ->
+        for (minimizerType in flags.listMinimizersToEvaluate) {
+          if (!measureOneMinimizer(
+              minimizerType = minimizerType,
+              params = params,
+              targetFile = targetFile,
+              parserFacade = parserFacade,
+              microbenchmark = microbenchmark,
+              outputRoot = outputRoot,
+              progressListener = progressListener,
+              runLog = runLog,
+            )
+          ) {
+            ++failureCount
+          }
+        }
       }
     }
+    // One bad minimizer must not cost the others their measurement, but a process where nothing
+    // could be measured is a broken invocation rather than a result, and should not exit zero.
+    check(failureCount < flags.listMinimizersToEvaluate.size) {
+      "Every one of the $failureCount requested measurement(s) failed; see the log above and " +
+        "${ListMinimizerEvaluationRunLog.RUN_LOG_FILE_NAME} in $outputRoot."
+    }
+  }
+
+  /**
+   * One measurement, returning whether it succeeded.
+   *
+   * A failure is contained rather than propagated: the minimizers after this one are independent
+   * measurements of the same recorded problem, and there is no reason a sweep should lose them.
+   * What can arrive here is narrower than it looks -- `callReducer` already catches and reports
+   * what a reducer throws -- so this is the sanity check on the rendered tree, the driver's own
+   * "ran exactly once" assertion, and anything thrown while the driver is being built.
+   */
+  private fun measureOneMinimizer(
+    minimizerType: EnumListMinimizerType,
+    params: ReductionDriverParams,
+    targetFile: AbstractReductionFile<*, *>,
+    parserFacade: AbstractParserFacade,
+    microbenchmark: ListMinimizationMicrobenchmark,
+    outputRoot: Path,
+    progressListener: AbstractListMinimizerListener,
+    runLog: ListMinimizerEvaluationRunLog,
+  ): Boolean {
+    val startMillis = System.currentTimeMillis()
+    try {
+      restoreResultFolderToTheOriginalInputs()
+      ListMinimizerEvaluationDriver
+        .create(
+          params = params,
+          mainFile = targetFile,
+          resolvedParserFacade = parserFacade,
+          microbenchmark = microbenchmark,
+          minimizerType = minimizerType,
+          // A directory per minimizer under --evaluation-output, rather than the output root
+          // itself: the metrics file names are fixed and their streams truncate, so two
+          // measurements sharing a directory would leave only the second one's numbers.
+          outputDirectory = FileSystemUtil.ensureDirExists(outputRoot.resolve(minimizerType.name)),
+          sharedProgressListener = progressListener,
+        ).use { it.reduce() }
+    } catch (failure: Exception) {
+      // Logged rather than reported through listenerManager.onCriticalException: that channel
+      // means the reduction hit something it cannot continue past, and the pipeline rethrows what
+      // it is given once the run ends -- which would undo the containment this method exists for.
+      // A measurement that failed is a result, recorded in the run log like any other.
+      logger.atWarning().withCause(failure).log(
+        "Measuring %s failed; the remaining minimizers are unaffected.",
+        minimizerType,
+      )
+      runLog.recordFailure(minimizerType, System.currentTimeMillis() - startMillis, failure)
+      return false
+    }
+    runLog.recordSuccess(minimizerType, System.currentTimeMillis() - startMillis)
+    return true
   }
 
   private fun createListMinimizerProgressListener(): AbstractListMinimizerListener =

@@ -83,3 +83,14 @@ kt_jvm_test(
         "//test/org/perses/listminimizer:AbstractListMinimizerTest",
     ],
 )
+
+kt_jvm_test(
+    name = "ListMinimizerEvaluationRunLogTest",
+    srcs = ["ListMinimizerEvaluationRunLogTest.kt"],
+    deps = [
+        "//:truth",
+        "//src/org/perses/listminimizer:enum_list_input_minimizer_type",
+        "//src/org/perses/listminimizer/microbenchmark:list_minimizer_evaluation_run_log",
+        "//src/org/perses/util",
+    ],
+)

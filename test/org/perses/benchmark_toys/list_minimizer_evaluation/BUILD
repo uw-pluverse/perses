@@ -175,7 +175,7 @@ COMBINED_EVALUATION_RUNS = {
             "%s/%s/%s" % (name, minimizer, metrics)
             for minimizer in minimizers
             for metrics in METRICS_FILE_NAMES
-        ],
+        ] + ["%s/runs.jsonl" % name],
         golden_reduced_file = "golden_evaluated_t.c",
         other_flags = {
             "--list-minimizer-microbenchmarking-mode": "EVALUATE",
@@ -208,3 +208,12 @@ COMBINED_EVALUATION_RUNS = {
     for minimizer in minimizers
     for metrics in METRICS_FILE_NAMES
 ]
+
+# What became of each minimizer the process was asked to measure. Goldened on the combined run, so
+# the pin covers several records rather than one, and their order. Durations are null under the
+# --hide-timestamps that perses.bzl passes, which is what makes this file goldenable at all.
+golden_test(
+    name = "run_log_golden_test",
+    golden_file = "golden_runs.jsonl",
+    test_file = "wdd_then_cdd/runs.jsonl",
+)

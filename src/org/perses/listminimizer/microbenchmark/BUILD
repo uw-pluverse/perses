@@ -65,3 +65,15 @@ kt_jvm_library(
         "//src/org/perses/util:timeutil",
     ],
 )
+
+kt_jvm_library(
+    name = "list_minimizer_evaluation_run_log",
+    srcs = [
+        "ListMinimizerEvaluationRunLog.kt",
+    ],
+    deps = [
+        "//src/org/perses/listminimizer:enum_list_input_minimizer_type",
+        "//src/org/perses/util",
+        "//src/org/perses/util:Serialization",
+    ],
+)
