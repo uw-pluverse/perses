@@ -49,8 +49,19 @@ class ListMinimizerEvaluationRunLog(
   fun recordSuccess(
     minimizerType: EnumListMinimizerType,
     wallClockMillis: Long,
+    oneMinimalityViolationCount: Int,
+    programTokensBefore: Int,
+    programTokensAfter: Int,
   ) {
-    record(minimizerType, STATUS_OK, wallClockMillis, failure = null)
+    record(
+      minimizerType,
+      STATUS_OK,
+      wallClockMillis,
+      failure = null,
+      oneMinimalityViolationCount = oneMinimalityViolationCount,
+      programTokensBefore = programTokensBefore,
+      programTokensAfter = programTokensAfter,
+    )
   }
 
   fun recordFailure(
@@ -65,6 +76,9 @@ class ListMinimizerEvaluationRunLog(
       STATUS_FAILED,
       wallClockMillis,
       failure = "${failure::class.simpleName}: ${failure.message}",
+      oneMinimalityViolationCount = null,
+      programTokensBefore = null,
+      programTokensAfter = null,
     )
   }
 
@@ -73,6 +87,9 @@ class ListMinimizerEvaluationRunLog(
     status: String,
     wallClockMillis: Long,
     failure: String?,
+    oneMinimalityViolationCount: Int?,
+    programTokensBefore: Int?,
+    programTokensAfter: Int?,
   ) {
     stream.println(
       Serialization.toJsonString(
@@ -81,6 +98,9 @@ class ListMinimizerEvaluationRunLog(
           status = status,
           wallClockMillis = wallClockMillis.takeUnless { hideTimings },
           failure = failure,
+          oneMinimalityViolationCount = oneMinimalityViolationCount,
+          programTokensBefore = programTokensBefore,
+          programTokensAfter = programTokensAfter,
         ),
       ),
     )
@@ -99,6 +119,22 @@ class ListMinimizerEvaluationRunLog(
     val wallClockMillis: Long?,
     /** The failure's type and message, or null when the measurement succeeded. */
     val failure: String?,
+    /**
+     * Kept elements whose removal, on its own, still satisfies the oracle: zero means the result is
+     * 1-minimal. Null when the measurement failed.
+     *
+     * The quality axis. Several minimizers guarantee 1-minimality by construction and several do
+     * not, so two results of the same size are not equally good and cost alone does not rank them.
+     * Not a size delta -- see [org.perses.reduction.ListMinimizerEvaluationReducer.OneMinimalityReport].
+     *
+     * How large the result is belongs to summary.jsonl, which reports what the minimizer's listener
+     * saw; this file reports what had to be measured afterwards, with the oracle and the tree.
+     */
+    val oneMinimalityViolationCount: Int?,
+    /** The program's token count when the measurement started. Null when it failed. */
+    val programTokensBefore: Int?,
+    /** And when it finished -- the whole program, not just the kept elements' tokens. */
+    val programTokensAfter: Int?,
   )
 
   companion object {

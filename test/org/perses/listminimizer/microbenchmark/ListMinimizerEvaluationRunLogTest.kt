@@ -42,7 +42,15 @@ class ListMinimizerEvaluationRunLogTest {
 
   @Test
   fun test_a_measured_minimizer_is_recorded_as_ok_with_no_failure() {
-    createLog().use { it.recordSuccess(EnumListMinimizerType.WDD, wallClockMillis = 12) }
+    createLog().use {
+      it.recordSuccess(
+        EnumListMinimizerType.WDD,
+        wallClockMillis = 12,
+        oneMinimalityViolationCount = 0,
+        programTokensBefore = 100,
+        programTokensAfter = 5,
+      )
+    }
 
     val records = logFile.readLines()
     assertThat(records).hasSize(1)
@@ -70,9 +78,21 @@ class ListMinimizerEvaluationRunLogTest {
   @Test
   fun test_one_line_per_attempt_in_the_order_they_were_attempted() {
     createLog().use {
-      it.recordSuccess(EnumListMinimizerType.WDD, wallClockMillis = 1)
+      it.recordSuccess(
+        EnumListMinimizerType.WDD,
+        wallClockMillis = 1,
+        oneMinimalityViolationCount = 0,
+        programTokensBefore = 100,
+        programTokensAfter = 5,
+      )
       it.recordFailure(EnumListMinimizerType.CDD, wallClockMillis = 2, failure = Exception("no"))
-      it.recordSuccess(EnumListMinimizerType.DFS, wallClockMillis = 3)
+      it.recordSuccess(
+        EnumListMinimizerType.DFS,
+        wallClockMillis = 3,
+        oneMinimalityViolationCount = 0,
+        programTokensBefore = 100,
+        programTokensAfter = 5,
+      )
     }
 
     assertThat(
@@ -89,18 +109,70 @@ class ListMinimizerEvaluationRunLogTest {
   @Test
   fun test_every_record_is_readable_before_the_log_is_closed() {
     createLog().use { log ->
-      log.recordSuccess(EnumListMinimizerType.WDD, wallClockMillis = 1)
+      log.recordSuccess(
+        EnumListMinimizerType.WDD,
+        wallClockMillis = 1,
+        oneMinimalityViolationCount = 0,
+        programTokensBefore = 100,
+        programTokensAfter = 5,
+      )
       assertThat(logFile.readLines()).hasSize(1)
 
-      log.recordSuccess(EnumListMinimizerType.CDD, wallClockMillis = 2)
+      log.recordSuccess(
+        EnumListMinimizerType.CDD,
+        wallClockMillis = 2,
+        oneMinimalityViolationCount = 0,
+        programTokensBefore = 100,
+        programTokensAfter = 5,
+      )
       assertThat(logFile.readLines()).hasSize(2)
     }
+  }
+
+  /**
+   * The quality axis, and the reason it is recorded separately from the result size: two results of
+   * the same size are not equally good if one of them is keeping elements nothing needs.
+   */
+  @Test
+  fun test_a_result_that_is_not_one_minimal_is_recorded_as_such() {
+    createLog().use {
+      it.recordSuccess(
+        EnumListMinimizerType.WINDOWED_SLICER,
+        wallClockMillis = 5,
+        oneMinimalityViolationCount = 2,
+        programTokensBefore = 300,
+        programTokensAfter = 42,
+      )
+    }
+
+    val record = logFile.readLines().single()
+    assertThat(record).contains("\"oneMinimalityViolationCount\":2")
+    assertThat(record).contains("\"programTokensBefore\":300")
+    assertThat(record).contains("\"programTokensAfter\":42")
+  }
+
+  /** A failed measurement produced no result, so it has no size and no 1-minimality to report. */
+  @Test
+  fun test_a_failed_measurement_reports_no_result_size() {
+    createLog().use {
+      it.recordFailure(EnumListMinimizerType.CDD, wallClockMillis = 1, failure = Exception("no"))
+    }
+
+    val record = logFile.readLines().single()
+    assertThat(record).contains("\"oneMinimalityViolationCount\":null")
+    assertThat(record).contains("\"programTokensAfter\":null")
   }
 
   @Test
   fun test_durations_are_reported_when_timestamps_are_not_hidden() {
     createLog(hideTimings = false).use {
-      it.recordSuccess(EnumListMinimizerType.WDD, wallClockMillis = 42)
+      it.recordSuccess(
+        EnumListMinimizerType.WDD,
+        wallClockMillis = 42,
+        oneMinimalityViolationCount = 0,
+        programTokensBefore = 100,
+        programTokensAfter = 5,
+      )
     }
 
     assertThat(logFile.readLines().single()).contains("\"wallClockMillis\":42")
@@ -110,7 +182,13 @@ class ListMinimizerEvaluationRunLogTest {
   @Test
   fun test_durations_are_null_when_timestamps_are_hidden() {
     createLog(hideTimings = true).use {
-      it.recordSuccess(EnumListMinimizerType.WDD, wallClockMillis = 42)
+      it.recordSuccess(
+        EnumListMinimizerType.WDD,
+        wallClockMillis = 42,
+        oneMinimalityViolationCount = 0,
+        programTokensBefore = 100,
+        programTokensAfter = 5,
+      )
     }
 
     assertThat(logFile.readLines().single()).contains("\"wallClockMillis\":null")

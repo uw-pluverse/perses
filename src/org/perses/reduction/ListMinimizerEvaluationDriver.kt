@@ -145,6 +145,29 @@ class ListMinimizerEvaluationDriver private constructor(
     )
 
   /**
+   * How 1-minimal this measurement's result turned out, or null until the minimizer has produced
+   * one. Measured by the reducer after the run, and read by the caller once [reduce] returns.
+   */
+  var oneMinimality: ListMinimizerEvaluationReducer.OneMinimalityReport? = null
+    private set
+
+  /**
+   * The program's token count before and after this measurement, or null until it has run.
+   *
+   * The program, not the list: a recorded list covers one reducer's worklist, so the program also
+   * holds every token no element owns. `resultWeight` counts the kept elements' tokens and cannot
+   * be turned into this without knowing that remainder -- and cannot at all when elements overlap,
+   * since it then counts shared tokens twice.
+   *
+   * Read from the FlatTokenList tree, where one node is one real token.
+   */
+  var programTokensBefore: Int? = null
+    private set
+
+  var programTokensAfter: Int? = null
+    private set
+
+  /**
    * The metrics collector, combined with whatever human-readable trace `--profile-list-minimizer`
    * asked for, so both observe the same event stream. Registered for close by the base class.
    */
@@ -197,6 +220,7 @@ class ListMinimizerEvaluationDriver private constructor(
             reducerContext = reducerContext,
             rangesPerElement = microbenchmark.inputList.elements.map { it.ranges },
             minimizerType = minimizerType,
+            reportOneMinimality = { this@ListMinimizerEvaluationDriver.oneMinimality = it },
           ),
         )
     }
@@ -230,10 +254,12 @@ class ListMinimizerEvaluationDriver private constructor(
     // run first. Clearing here makes each run start as empty as a fresh process does, which is what
     // lets several runs share one process and stay comparable with runs that did not.
     queryCache.clearCache()
+    programTokensBefore = inputRepresentation.tree.programSnapshot.surrogateTokenCount
     logger.ktFine { "Evaluating $minimizerType on ${microbenchmark.microbenchmarkId}." }
     // The base class saves the starting program, registers the tree-edit listeners and drives the
     // plan above; the collector has written summary.jsonl by the time this returns.
     super.reduce()
+    programTokensAfter = inputRepresentation.tree.programSnapshot.surrogateTokenCount
     checkTheMinimizerRanExactlyOnce()
   }
 

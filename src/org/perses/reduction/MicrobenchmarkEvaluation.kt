@@ -122,6 +122,9 @@ class MicrobenchmarkEvaluation(
   ): Measurement {
     val startMillis = System.currentTimeMillis()
     var prototype: InputRepresentation? = null
+    var oneMinimality: ListMinimizerEvaluationReducer.OneMinimalityReport? = null
+    var programTokensBefore: Int? = null
+    var programTokensAfter: Int? = null
     try {
       restoreResultFolder()
       ListMinimizerEvaluationDriver
@@ -144,6 +147,9 @@ class MicrobenchmarkEvaluation(
             prototype = driver.inputRepresentation.withPrivateTreeCopy()
           }
           driver.reduce()
+          oneMinimality = driver.oneMinimality
+          programTokensBefore = driver.programTokensBefore
+          programTokensAfter = driver.programTokensAfter
         }
     } catch (failure: Exception) {
       // Logged rather than reported through listenerManager.onCriticalException: that channel
@@ -159,7 +165,14 @@ class MicrobenchmarkEvaluation(
       runLog.recordFailure(minimizerType, System.currentTimeMillis() - startMillis, failure)
       return Measurement(succeeded = false, prototype = prototype)
     }
-    runLog.recordSuccess(minimizerType, System.currentTimeMillis() - startMillis)
+    val measured = checkNotNull(oneMinimality) { "$minimizerType produced no result to assess." }
+    runLog.recordSuccess(
+      minimizerType,
+      System.currentTimeMillis() - startMillis,
+      oneMinimalityViolationCount = measured.violationCount,
+      programTokensBefore = checkNotNull(programTokensBefore),
+      programTokensAfter = checkNotNull(programTokensAfter),
+    )
     return Measurement(succeeded = true, prototype = prototype)
   }
 

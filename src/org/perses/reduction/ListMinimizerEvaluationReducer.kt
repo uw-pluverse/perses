@@ -16,9 +16,13 @@
  */
 package org.perses.reduction
 
+import com.google.common.collect.ImmutableList
 import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.microbenchmark.RecordedProgramTokenizer
+import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.ContextDescription
+import org.perses.spartree.NodeDeletionActionSet
+import org.perses.spartree.SparTree
 import org.perses.util.Interval
 
 /**
@@ -52,26 +56,75 @@ class ListMinimizerEvaluationReducer(
    */
   private val rangesPerElement: List<Iterable<Interval>>,
   private val minimizerType: EnumListMinimizerType,
+  /** Receives the 1-minimality of the result, once the minimizer has produced one. */
+  private val reportOneMinimality: (OneMinimalityReport) -> Unit,
 ) : AbstractSparTreeReducer(reducerAnnotation, reducerContext) {
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
     if (rangesPerElement.isEmpty()) {
       return
     }
     val tree = fixpointReductionState.inputRepresentation.tree
-    runListMinimizerOverListsOfNodes(
-      // Testing the empty list is part of what an algorithm does, so a measurement lets it. Whether
-      // the originating reducer would have allowed it is a property of that reducer, not of the
-      // recorded problem, and is not recorded.
-      needToTestEmpty = true,
-      tree = tree,
-      input =
-        RecordedProgramTokenizer.resolveElements(
-          tree = tree,
-          rangesPerElement = rangesPerElement,
-        ),
-      fixpointReductionState = fixpointReductionState,
-      actionsDescriptionPostfix = ContextDescription.of("[evaluation]"),
-      specifiedMinimizerType = minimizerType,
-    )
+    val result =
+      runListMinimizerOverListsOfNodes(
+        // Testing the empty list is part of what an algorithm does, so a measurement lets it. Whether
+        // the originating reducer would have allowed it is a property of that reducer, not of the
+        // recorded problem, and is not recorded.
+        needToTestEmpty = true,
+        tree = tree,
+        input =
+          RecordedProgramTokenizer.resolveElements(
+            tree = tree,
+            rangesPerElement = rangesPerElement,
+          ),
+        fixpointReductionState = fixpointReductionState,
+        actionsDescriptionPostfix = ContextDescription.of("[evaluation]"),
+        specifiedMinimizerType = minimizerType,
+      )
+    reportOneMinimality(measureOneMinimality(tree, result))
   }
+
+  /**
+   * How many of the kept elements could still be deleted on their own.
+   *
+   * A result is 1-minimal when removing any single element breaks the property. Several minimizers
+   * guarantee that by construction -- ONE_BY_ONE ends by trying exactly this, and ddmin runs to
+   * granularity n -- while the windowed and probabilistic ones do not, so it is the axis on which
+   * their results differ in quality rather than only in cost.
+   *
+   * Measured after the minimizer has finished, which is also after the listener's `endReduction`:
+   * these probes are the price of the *metric*, not of the algorithm, and counting them in the
+   * algorithm's script total would make a thorough minimizer look expensive for being checked.
+   * The query cache answers for free any deletion the run already tried and rejected.
+   */
+  private fun measureOneMinimality(
+    tree: SparTree,
+    result: ImmutableList<ImmutableList<out AbstractSparTreeNode>>,
+  ): OneMinimalityReport {
+    var violations = 0
+    for (element in result) {
+      val actionSet =
+        NodeDeletionActionSet
+          .Builder("one-minimality probe")
+          .deleteNodes(element)
+          .build()
+      val outcome = testOneTreeEditAndGetOutcome(tree.createNodeDeletionEdit(actionSet))
+      if (outcome is CandidateOutcome.Interesting) {
+        ++violations
+      }
+    }
+    return OneMinimalityReport(violationCount = violations)
+  }
+
+  /** The 1-minimality of one measurement's result. */
+  data class OneMinimalityReport(
+    /**
+     * Kept elements whose removal, **on its own**, still satisfies the oracle. Zero means the
+     * result is 1-minimal.
+     *
+     * Not a size delta, and deliberately not named as one: individually removable is not jointly
+     * removable. A result keeping two alternatives, either of which alone would do, scores two
+     * violations but can only shrink by one.
+     */
+    val violationCount: Int,
+  )
 }
