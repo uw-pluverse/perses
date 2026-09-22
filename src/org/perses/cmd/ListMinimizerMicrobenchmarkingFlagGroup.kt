@@ -23,8 +23,8 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 /**
- * Records list-minimization problems from a real reduction, and evaluates one minimizer against one
- * recorded problem. See `internal_doc/list_minimizer_microbenchmarking.md`.
+ * Records list-minimization problems from a real reduction, and measures list minimizers against
+ * one recorded problem. See `internal_doc/list_minimizer_microbenchmarking.md`.
  *
  * A group of its own rather than more knobs on [ProfilingFlagGroup]: this is a self-contained
  * research feature with its own validation rules, and that group is already ten unrelated dump-file
@@ -85,7 +85,9 @@ class ListMinimizerMicrobenchmarkingFlagGroup :
 
   @Parameter(
     names = ["--evaluation-output"],
-    description = "EVALUATE: the directory to write the metrics CSVs to.",
+    description =
+      "EVALUATE: the root to write the metrics under, one directory per minimizer, each holding " +
+        "summary.jsonl and queries.jsonl. runs.jsonl at the root says what became of each.",
     order = 60,
   )
   var evaluationOutputDirectory: Path? = null

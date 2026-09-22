@@ -197,7 +197,9 @@ Usage: org.perses.Main [options]
       <--evaluation-output>/<MINIMIZER>/. 
       Default: []
     --evaluation-output
-      EVALUATE: the directory to write the metrics CSVs to.
+      EVALUATE: the root to write the metrics under, one directory per 
+      minimizer, each holding summary.jsonl and queries.jsonl. runs.jsonl at 
+      the root says what became of each.
 
 [Experiment Control]  Options:
     --keep-reduction-history

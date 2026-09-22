@@ -46,10 +46,18 @@ import java.nio.file.Path
  * a program, and what it produces is metrics rather than a smaller program, but the shape -- run
  * until done, then close -- is the pipeline's.
  *
- * One driver means one (microbenchmark x minimizer) measurement. Evaluating several minimizers in one
- * process would blend them: the executor's statistics accumulate process-wide and the reduction
- * lifecycle fires once, so the statistics summary and progress dump would describe an average of
- * several algorithms rather than any one of them.
+ * One driver means one (microbenchmark x minimizer) measurement, but a process runs several of
+ * them in turn -- setup is what a process per measurement was paying for, not isolation. What
+ * keeps two measurements from blending is threefold: each driver builds its own tree (copied from
+ * the first, since a minimizer commits its accepted bests into the tree it is given), clears the
+ * query cache when it starts, and writes into a directory named after its minimizer. The reducer
+ * annotation carries the minimizer's name too, so the statistics tables, which key on it, report a
+ * row per measurement rather than an average.
+ *
+ * What genuinely remains process-wide is the reduction lifecycle: `onReductionStart`/`onReductionEnd`
+ * fire once, so the progress dump interleaves the measurements and the end-of-run size metrics
+ * describe only the last. The per-minimizer numbers anyone analyses are in `summary.jsonl` and
+ * `queries.jsonl`, which are fully separated; the blended files are diagnostics.
  *
  * The program itself comes from the recorded input, through [inputRepresentation] -- not from the
  * result folder that every other driver starts from, for the reason given there.
@@ -265,14 +273,6 @@ class ListMinimizerEvaluationDriver private constructor(
   }
 
   companion object {
-    // The production defaults of --min-slicing-window-size, --max-slicing-window-size, Vulcan's
-    // --window-size and --anticipated-result-token-count, so an evaluated minimizer behaves as it
-    // does inside a real reduction.
-    private const val MIN_SLIDING_WINDOW_SIZE = 1
-    private const val MAX_SLIDING_WINDOW_SIZE = 14
-    private const val LOCAL_EXHAUST_WINDOW_SIZE = 4
-    private const val ANTICIPATED_TOKEN_COUNT_IN_RESULT = 150
-
     private val logger = FluentLogger.forEnclosingClass()
 
     /**
