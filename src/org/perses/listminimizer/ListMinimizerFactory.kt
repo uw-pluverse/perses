@@ -84,6 +84,10 @@ object ListMinimizerFactory {
       EnumListMinimizerType.ADAPTIVE_GAIN_DRIVEN -> {
         AdaptiveGainDrivenListMinimizer(arguments)
       }
+
+      EnumListMinimizerType.DRDD -> {
+        DeferredRestartDeltaDebugger(arguments)
+      }
     }
 
   fun <T : Any, Payload> create(

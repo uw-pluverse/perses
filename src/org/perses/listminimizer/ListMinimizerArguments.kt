@@ -40,6 +40,8 @@ data class ListMinimizerArguments<T : Any, PropertyPayload>(
     null,
   val adaptiveGainDrivenMinimizerArguments: AdaptiveGainDrivenMinimizerArguments =
     AdaptiveGainDrivenMinimizerArguments.NULL,
+  val deferredRestartDeltaDebuggerArguments: DeferredRestartDeltaDebuggerArguments =
+    DeferredRestartDeltaDebuggerArguments(),
   // The number of property tests a concurrency-capable minimizer may keep in flight. Values greater
   // than 1 only help when [propertyTester] overrides IPropertyTester.submitProperty to be truly
   // asynchronous.
@@ -150,6 +152,25 @@ data class OneByOneMinimizerArguments(
   val deleteFromFrontToBack: Boolean = false,
   val repeatForFixpoint: Boolean = false,
 )
+
+/**
+ * The parameters R, S_max and S_min of drdd. The defaults (R = S_max = |I|, S_min = 1) are the
+ * paper's, under which the result is 1-minimal; a bounded [restartBudget] caps the single-element
+ * sweeps and trades that guarantee for an O(n * R) worst case.
+ */
+data class DeferredRestartDeltaDebuggerArguments(
+  val restartBudget: Int = Int.MAX_VALUE,
+  val maxPartitionSize: Int = Int.MAX_VALUE,
+  val minPartitionSize: Int = 1,
+) {
+  init {
+    require(restartBudget >= 0) { "restartBudget must be non-negative: $restartBudget" }
+    require(minPartitionSize >= 1) { "minPartitionSize must be positive: $minPartitionSize" }
+    require(maxPartitionSize >= minPartitionSize) {
+      "maxPartitionSize ($maxPartitionSize) must be >= minPartitionSize ($minPartitionSize)"
+    }
+  }
+}
 
 data class AdaptiveGainDrivenMinimizerArguments(
   val getCurrentTotalTokenCount: () -> Int,

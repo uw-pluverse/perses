@@ -54,6 +54,7 @@ kt_jvm_library(
     srcs = [
         "AdaptiveGainDrivenListMinimizer.kt",
         "CounterBasedDeltaDebugger.kt",
+        "DeferredRestartDeltaDebugger.kt",
         "OneByOneMinimizer.kt",
         "PristineDeltaDebugger.kt",
         "PristineProbabilisticDeltaDebugger.kt",

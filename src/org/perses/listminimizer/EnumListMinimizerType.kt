@@ -31,4 +31,5 @@ enum class EnumListMinimizerType {
   LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION,
   ONE_BY_ONE,
   ADAPTIVE_GAIN_DRIVEN,
+  DRDD,
 }
