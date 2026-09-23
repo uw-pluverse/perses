@@ -17,7 +17,6 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
-import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -29,18 +28,7 @@ class WeightedProbabilisticDeltaDebuggerTest : AbstractWeightedMinimizerTest() {
     testWProbDD(property = listOf(), expected = listOf())
     testWProbDD(property = listOf(1, 2, 3, 5, 10), expected = listOf(1, 2, 3, 5, 10))
     testWProbDD(property = listOf(1), expected = listOf(1))
-    testWProbDD(property = listOf(1, 5, 10), expected = listOf(1, 5, 10)).let { testHistory ->
-      assertThat(testHistory)
-        .containsExactly(
-          "",
-          "123",
-          "1235",
-          "1210",
-          "1510",
-          "110",
-          "510",
-        ).inOrder()
-    }
+    testWProbDD(property = listOf(1, 5, 10), expected = listOf(1, 5, 10))
   }
 
   private fun testWProbDD(

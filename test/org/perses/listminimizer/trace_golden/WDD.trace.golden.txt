@@ -1,0 +1,275 @@
+== five_elements_a_e
+input: a b c d e
+property: interesting iff it contains a and e
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING a b
+  3 UNINTERESTING c d e
+  4 UNINTERESTING c d e
+  5 UNINTERESTING a b
+  6 UNINTERESTING a
+  7 UNINTERESTING b
+  8 UNINTERESTING c
+  9 UNINTERESTING d e
+ 10 UNINTERESTING b c d e
+ 11 INTERESTING   a c d e
+ 12 UNINTERESTING c d e
+ 13 INTERESTING   a d e
+ 14 UNINTERESTING d e
+ 15 UNINTERESTING a
+ 16 UNINTERESTING d
+ 17 UNINTERESTING e
+ 18 INTERESTING   a e
+ 19 UNINTERESTING a
+ 20 UNINTERESTING e
+ 21 UNINTERESTING a
+result: a e
+
+== seven_elements_a
+input: a b c d e f g
+property: interesting iff it contains a
+  1 UNINTERESTING (empty)
+  2 INTERESTING   a b c
+  3 INTERESTING   a
+  4 UNINTERESTING (empty)
+result: a
+
+== eight_elements_a_e
+input: a b c d e f g h
+property: interesting iff it contains a and e
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING a b c d
+  3 UNINTERESTING e f g h
+  4 UNINTERESTING e f g h
+  5 UNINTERESTING a b c d
+  6 UNINTERESTING a b
+  7 UNINTERESTING c d
+  8 UNINTERESTING e f
+  9 UNINTERESTING g h
+ 10 UNINTERESTING c d e f g h
+ 11 INTERESTING   a b e f g h
+ 12 UNINTERESTING e f g h
+ 13 UNINTERESTING a b g h
+ 14 INTERESTING   a b e f
+ 15 UNINTERESTING e f
+ 16 UNINTERESTING a b
+ 17 UNINTERESTING a
+ 18 UNINTERESTING b
+ 19 UNINTERESTING e
+ 20 UNINTERESTING f
+ 21 UNINTERESTING b e f
+ 22 INTERESTING   a e f
+ 23 UNINTERESTING e f
+ 24 UNINTERESTING a f
+ 25 INTERESTING   a e
+ 26 UNINTERESTING e
+ 27 UNINTERESTING a
+ 28 UNINTERESTING e
+ 29 UNINTERESTING a
+result: a e
+
+== eight_elements_c_h
+input: a b c d e f g h
+property: interesting iff it contains c and h
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING a b c d
+  3 UNINTERESTING e f g h
+  4 UNINTERESTING e f g h
+  5 UNINTERESTING a b c d
+  6 UNINTERESTING a b
+  7 UNINTERESTING c d
+  8 UNINTERESTING e f
+  9 UNINTERESTING g h
+ 10 INTERESTING   c d e f g h
+ 11 UNINTERESTING e f g h
+ 12 INTERESTING   c d g h
+ 13 UNINTERESTING g h
+ 14 UNINTERESTING c d
+ 15 UNINTERESTING c
+ 16 UNINTERESTING d
+ 17 UNINTERESTING g
+ 18 UNINTERESTING h
+ 19 UNINTERESTING d g h
+ 20 INTERESTING   c g h
+ 21 UNINTERESTING g h
+ 22 INTERESTING   c h
+ 23 UNINTERESTING h
+ 24 UNINTERESTING c
+ 25 UNINTERESTING h
+ 26 UNINTERESTING c
+result: c h
+
+== eight_elements_c_d_h
+input: a b c d e f g h
+property: interesting iff it contains c, d and h
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING a b c d
+  3 UNINTERESTING e f g h
+  4 UNINTERESTING e f g h
+  5 UNINTERESTING a b c d
+  6 UNINTERESTING a b
+  7 UNINTERESTING c d
+  8 UNINTERESTING e f
+  9 UNINTERESTING g h
+ 10 INTERESTING   c d e f g h
+ 11 UNINTERESTING e f g h
+ 12 INTERESTING   c d g h
+ 13 UNINTERESTING g h
+ 14 UNINTERESTING c d
+ 15 UNINTERESTING c
+ 16 UNINTERESTING d
+ 17 UNINTERESTING g
+ 18 UNINTERESTING h
+ 19 UNINTERESTING d g h
+ 20 UNINTERESTING c g h
+ 21 INTERESTING   c d h
+ 22 UNINTERESTING d h
+ 23 UNINTERESTING c h
+ 24 UNINTERESTING c d
+ 25 UNINTERESTING d h
+ 26 UNINTERESTING c h
+ 27 UNINTERESTING c d
+result: c d h
+
+== eight_elements_a_c_e_f
+input: a b c d e f g h
+property: interesting iff it contains a, c, e and f
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING a b c d
+  3 UNINTERESTING e f g h
+  4 UNINTERESTING e f g h
+  5 UNINTERESTING a b c d
+  6 UNINTERESTING a b
+  7 UNINTERESTING c d
+  8 UNINTERESTING e f
+  9 UNINTERESTING g h
+ 10 UNINTERESTING c d e f g h
+ 11 UNINTERESTING a b e f g h
+ 12 UNINTERESTING a b c d g h
+ 13 INTERESTING   a b c d e f
+ 14 UNINTERESTING c d e f
+ 15 UNINTERESTING a b e f
+ 16 UNINTERESTING a b c d
+ 17 UNINTERESTING a
+ 18 UNINTERESTING b
+ 19 UNINTERESTING c
+ 20 UNINTERESTING d
+ 21 UNINTERESTING e
+ 22 UNINTERESTING f
+ 23 UNINTERESTING b c d e f
+ 24 INTERESTING   a c d e f
+ 25 UNINTERESTING c d e f
+ 26 UNINTERESTING a d e f
+ 27 INTERESTING   a c e f
+ 28 UNINTERESTING c e f
+ 29 UNINTERESTING a e f
+ 30 UNINTERESTING a c f
+ 31 UNINTERESTING a c e
+ 32 UNINTERESTING c e f
+ 33 UNINTERESTING a e f
+ 34 UNINTERESTING a c f
+ 35 UNINTERESTING a c e
+result: a c e f
+
+== sixteen_elements_c_l
+input: a b c d e f g h i j k l m n o p
+property: interesting iff it contains c and l
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING a b c d e f g h
+  3 UNINTERESTING i j k l m n o p
+  4 UNINTERESTING i j k l m n o p
+  5 UNINTERESTING a b c d e f g h
+  6 UNINTERESTING a b c d
+  7 UNINTERESTING e f g h
+  8 UNINTERESTING i j k l
+  9 UNINTERESTING m n o p
+ 10 UNINTERESTING e f g h i j k l m n o p
+ 11 INTERESTING   a b c d i j k l m n o p
+ 12 UNINTERESTING i j k l m n o p
+ 13 UNINTERESTING a b c d m n o p
+ 14 INTERESTING   a b c d i j k l
+ 15 UNINTERESTING i j k l
+ 16 UNINTERESTING a b c d
+ 17 UNINTERESTING a b
+ 18 UNINTERESTING c d
+ 19 UNINTERESTING i j
+ 20 UNINTERESTING k l
+ 21 INTERESTING   c d i j k l
+ 22 UNINTERESTING i j k l
+ 23 INTERESTING   c d k l
+ 24 UNINTERESTING k l
+ 25 UNINTERESTING c d
+ 26 UNINTERESTING c
+ 27 UNINTERESTING d
+ 28 UNINTERESTING k
+ 29 UNINTERESTING l
+ 30 UNINTERESTING d k l
+ 31 INTERESTING   c k l
+ 32 UNINTERESTING k l
+ 33 INTERESTING   c l
+ 34 UNINTERESTING l
+ 35 UNINTERESTING c
+ 36 UNINTERESTING l
+ 37 UNINTERESTING c
+result: c l
+
+== weighted_2_5_10
+input: 1 2 3 5 10
+property: each element weighs its value; interesting iff it contains 2, 5 and 10
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING 1 2 3 5
+  3 UNINTERESTING 10
+  4 UNINTERESTING 10
+  5 UNINTERESTING 1 2 3 5
+  6 UNINTERESTING 1 2 3
+  7 UNINTERESTING 5
+  8 UNINTERESTING 5 10
+  9 UNINTERESTING 1 2 3 10
+ 10 UNINTERESTING 1 2
+ 11 UNINTERESTING 3
+ 12 UNINTERESTING 3 5 10
+ 13 INTERESTING   1 2 5 10
+ 14 UNINTERESTING 5 10
+ 15 UNINTERESTING 1
+ 16 UNINTERESTING 2
+ 17 INTERESTING   2 5 10
+ 18 UNINTERESTING 5 10
+ 19 UNINTERESTING 5 10
+ 20 UNINTERESTING 2 10
+ 21 UNINTERESTING 2 5
+result: 2 5 10
+
+== weighted_1_5_10
+input: 1 2 3 5 10
+property: each element weighs its value; interesting iff it contains 1, 5 and 10
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING 1 2 3 5
+  3 UNINTERESTING 10
+  4 UNINTERESTING 10
+  5 UNINTERESTING 1 2 3 5
+  6 UNINTERESTING 1 2 3
+  7 UNINTERESTING 5
+  8 UNINTERESTING 5 10
+  9 UNINTERESTING 1 2 3 10
+ 10 UNINTERESTING 1 2
+ 11 UNINTERESTING 3
+ 12 UNINTERESTING 3 5 10
+ 13 INTERESTING   1 2 5 10
+ 14 UNINTERESTING 5 10
+ 15 UNINTERESTING 1
+ 16 UNINTERESTING 2
+ 17 UNINTERESTING 2 5 10
+ 18 INTERESTING   1 5 10
+ 19 UNINTERESTING 5 10
+ 20 UNINTERESTING 5 10
+ 21 UNINTERESTING 1 10
+ 22 UNINTERESTING 1 5
+result: 1 5 10
+
+== causal_chain
+input: x 1 2 3 4
+property: interesting iff it contains x and its digits are exactly 1..k, so digit k is removable only once digit k+1 is gone
+  1 UNINTERESTING (empty)
+  2 INTERESTING   x 1
+  3 INTERESTING   x
+  4 UNINTERESTING (empty)
+result: x

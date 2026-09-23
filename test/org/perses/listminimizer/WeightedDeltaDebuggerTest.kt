@@ -17,7 +17,6 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
-import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -30,32 +29,7 @@ class WeightedDeltaDebuggerTest : AbstractWeightedMinimizerTest() {
     testWdd(property = listOf(1, 2, 3, 5, 10), expected = listOf(1, 2, 3, 5, 10))
     testWdd(property = listOf(1), expected = listOf(1))
     testWdd(property = listOf(3), expected = listOf(3))
-    testWdd(property = listOf(2, 5, 10), expected = listOf(2, 5, 10)).let { testHistory ->
-      assertThat(testHistory)
-        .containsExactly(
-          "",
-          "1235",
-          "10",
-          "10",
-          "1235",
-          "123",
-          "5",
-          "510",
-          "12310",
-          "12",
-          "3",
-          "3510",
-          "12510",
-          "510",
-          "1",
-          "2",
-          "2510",
-          "510",
-          "510",
-          "210",
-          "25",
-        ).inOrder()
-    }
+    testWdd(property = listOf(2, 5, 10), expected = listOf(2, 5, 10))
   }
 
   @Test
@@ -71,27 +45,7 @@ class WeightedDeltaDebuggerTest : AbstractWeightedMinimizerTest() {
       property = listOf(2, 5, 10),
       expected = listOf(2, 5, 10),
       enableCache = true,
-    ).let { testHistory ->
-      assertThat(testHistory)
-        .containsExactly(
-          "",
-          "1235",
-          "10",
-          "123",
-          "5",
-          "510",
-          "12310",
-          "12",
-          "3",
-          "3510",
-          "12510",
-          "1",
-          "2",
-          "2510",
-          "210",
-          "25",
-        ).inOrder()
-    }
+    )
   }
 
   private fun testWdd(

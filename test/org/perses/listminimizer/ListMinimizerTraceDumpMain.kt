@@ -26,7 +26,7 @@ import kotlin.io.path.absolute
 import kotlin.io.path.bufferedWriter
 
 /**
- * Runs one list minimizer on every [scenarios] entry and writes each property test it performs, in
+ * Runs one list minimizer configuration on every [scenarios] entry and writes each property test it performs, in
  * order, followed by its result. Backs the `golden_test_list_minimizer_trace_*` golden tests, one
  * per minimizer over the same scenarios, so that diffing two goldens shows how two minimizers
  * differ; regenerate a golden with its `..._update` target.
@@ -46,36 +46,61 @@ object ListMinimizerTraceDumpMain {
   private val scenarios =
     listOf(
       Scenario(
-        name = "five_elements",
+        name = "five_elements_a_e",
         input = "abcde".map { it.toString() },
         description = "interesting iff it contains a and e",
         isInteresting = containing(listOf("a", "e")),
       ),
       Scenario(
-        name = "eight_elements",
-        input = "abcdefgh".map { it.toString() },
-        description = "interesting iff it contains a and e",
-        isInteresting = containing(listOf("a", "e")),
-      ),
-      Scenario(
         // 7 elements do not split evenly, so balanced and fixed-stride blocks differ.
-        name = "seven_elements",
+        name = "seven_elements_a",
         input = "abcdefg".map { it.toString() },
         description = "interesting iff it contains a",
         isInteresting = containing(listOf("a")),
       ),
       Scenario(
-        name = "sixteen_elements_sparse",
+        name = "eight_elements_a_e",
+        input = "abcdefgh".map { it.toString() },
+        description = "interesting iff it contains a and e",
+        isInteresting = containing(listOf("a", "e")),
+      ),
+      Scenario(
+        name = "eight_elements_c_h",
+        input = "abcdefgh".map { it.toString() },
+        description = "interesting iff it contains c and h",
+        isInteresting = containing(listOf("c", "h")),
+      ),
+      Scenario(
+        name = "eight_elements_c_d_h",
+        input = "abcdefgh".map { it.toString() },
+        description = "interesting iff it contains c, d and h",
+        isInteresting = containing(listOf("c", "d", "h")),
+      ),
+      Scenario(
+        name = "eight_elements_a_c_e_f",
+        input = "abcdefgh".map { it.toString() },
+        description = "interesting iff it contains a, c, e and f",
+        isInteresting = containing(listOf("a", "c", "e", "f")),
+      ),
+      Scenario(
+        name = "sixteen_elements_c_l",
         input = "abcdefghijklmnop".map { it.toString() },
         description = "interesting iff it contains c and l",
         isInteresting = containing(listOf("c", "l")),
       ),
       Scenario(
-        name = "weighted",
+        name = "weighted_2_5_10",
         input = listOf("1", "2", "3", "5", "10"),
         description = "each element weighs its value; interesting iff it contains 2, 5 and 10",
         weight = { it.toInt() },
         isInteresting = containing(listOf("2", "5", "10")),
+      ),
+      Scenario(
+        name = "weighted_1_5_10",
+        input = listOf("1", "2", "3", "5", "10"),
+        description = "each element weighs its value; interesting iff it contains 1, 5 and 10",
+        weight = { it.toInt() },
+        isInteresting = containing(listOf("1", "5", "10")),
       ),
       Scenario(
         name = "causal_chain",
@@ -90,11 +115,35 @@ object ListMinimizerTraceDumpMain {
       ),
     )
 
+  private fun interface MinimizerCreator {
+    fun create(
+      arguments: ListMinimizerArguments<String, String>,
+    ): AbstractListMinimizer<String, String>
+  }
+
+  /**
+   * Every [EnumListMinimizerType] as the factory builds it, plus configurations the enum cannot
+   * reach. The extra arguments some minimizers require are fixed here: the command-line defaults,
+   * except that [AdaptiveGainDrivenMinimizerArguments.anticipatedTokenCountInResult] is scaled
+   * down to these tiny inputs, where the default of 150 would make every probability 1.
+   */
+  private val configurations: Map<String, MinimizerCreator> =
+    EnumListMinimizerType.entries.associate { type ->
+      type.name to MinimizerCreator { ListMinimizerFactory.create(type, it) }
+    } +
+      mapOf(
+        "PRISTINE_DDMIN_WITH_CACHE" to
+          MinimizerCreator { PristineDeltaDebugger(it, enableCache = true) },
+        "WDD_WITH_CACHE" to MinimizerCreator { WeightedDeltaDebugger(it, enableCache = true) },
+        "WPROBDD_TERMINATION_THRESHOLD_1" to
+          MinimizerCreator { WeightedProbabilisticDeltaDebugger(it, terminationThreshold = 1.0) },
+      )
+
   private fun format(elements: List<String>): String =
     if (elements.isEmpty()) "(empty)" else elements.joinToString(separator = " ")
 
   private fun dump(
-    type: EnumListMinimizerType,
+    creator: MinimizerCreator,
     scenario: Scenario,
   ): String =
     buildString {
@@ -102,10 +151,10 @@ object ListMinimizerTraceDumpMain {
       appendLine("input: ${format(scenario.input)}")
       appendLine("property: ${scenario.description}")
       var countOfTests = 0
+      var currentTotalWeight = scenario.input.sumOf(scenario.weight)
       val minimizer =
-        ListMinimizerFactory.create(
-          type,
-          ListMinimizerArguments<String, String>(
+        creator.create(
+          ListMinimizerArguments(
             needToTestEmpty = true,
             input = ImmutableList.copyOf(scenario.input),
             isElementDeletedElsewhere = { false },
@@ -114,9 +163,9 @@ object ListMinimizerTraceDumpMain {
               val interesting = scenario.isInteresting(candidate)
               ++countOfTests
               appendLine(
-                "%3d %s %s".format(
+                "%3d %-13s %s".format(
                   countOfTests,
-                  if (interesting) "PASS" else "FAIL",
+                  if (interesting) "INTERESTING" else "UNINTERESTING",
                   format(candidate),
                 ),
               )
@@ -128,9 +177,19 @@ object ListMinimizerTraceDumpMain {
                 },
               )
             },
-            onBestUpdateHandler = { _, _ -> },
+            onBestUpdateHandler = { newBest, _ ->
+              currentTotalWeight = newBest.sumOf { scenario.weight(it.element) }
+            },
             descriptionPrefix = scenario.name,
             weightProvider = { scenario.weight(it) },
+            windowedSlicerSpecificArguments =
+              WindowedSlicerSpecificArguments(minSlidingWindowSize = 1, maxSlidingWindowSize = 14),
+            localExhaustMinimizerArguments = LocalExhaustMinimizerArguments(windowSize = 4),
+            adaptiveGainDrivenMinimizerArguments =
+              AdaptiveGainDrivenMinimizerArguments(
+                getCurrentTotalTokenCount = { currentTotalWeight },
+                anticipatedTokenCountInResult = 2,
+              ),
           ),
         )
       appendLine("result: ${format(minimizer.reduce())}")
@@ -139,13 +198,15 @@ object ListMinimizerTraceDumpMain {
   @JvmStatic
   fun main(args: Array<String>) {
     require(args.size == 2) {
-      "Expected two arguments (list minimizer type, output file), got: ${args.toList()}"
+      "Expected two arguments (list minimizer configuration, output file), got: ${args.toList()}"
     }
-    val type = EnumListMinimizerType.valueOf(args[0])
+    val creator =
+      configurations[args[0]]
+        ?: error("Unknown configuration ${args[0]}; known: ${configurations.keys}")
     val outputFile = Paths.get(args[1]).absolute()
     FileSystemUtil.ensureDirExists(outputFile.parent)
     outputFile.bufferedWriter().use { writer ->
-      writer.append(scenarios.joinToString(separator = "\n") { dump(type, it) })
+      writer.append(scenarios.joinToString(separator = "\n") { dump(creator, it) })
     }
   }
 }

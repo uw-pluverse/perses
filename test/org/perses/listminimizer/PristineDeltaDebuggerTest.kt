@@ -61,32 +61,7 @@ class PristineDeltaDebuggerTest : AbstractListMinimizerTest<String>() {
       enableCache = true,
     )
 
-    // cache effectiveness
     test(property = listOf("a", "e"), expected = listOf("a", "e"), enableCache = true)
-      .let { testHistory ->
-        assertThat(testHistory)
-          .containsExactly(
-            // n = 1
-            "",
-            // n = 2
-            "abc",
-            "de",
-            // n = 4
-            "ab",
-            "c",
-            "d",
-            "e",
-            "cde",
-            "abde",
-            // n = 3
-            "abe",
-            // n = 3
-            "a",
-            "b",
-            "be",
-            "ae",
-          ).inOrder()
-      }
   }
 
   private fun createWrapperList(vararg elements: String): ImmutableList<ElementWrapper<String>> =

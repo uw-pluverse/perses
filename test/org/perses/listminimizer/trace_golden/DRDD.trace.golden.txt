@@ -1,100 +1,176 @@
-== five_elements
+== five_elements_a_e
 input: a b c d e
 property: interesting iff it contains a and e
-  1 FAIL (empty)
-  2 FAIL c d e
-  3 PASS a b e
-  4 FAIL a b
-  5 FAIL b e
-  6 PASS a e
-  7 FAIL a
-  8 FAIL e
-  9 FAIL a
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING c d e
+  3 INTERESTING   a b e
+  4 UNINTERESTING a b
+  5 UNINTERESTING b e
+  6 INTERESTING   a e
+  7 UNINTERESTING a
+  8 UNINTERESTING e
+  9 UNINTERESTING a
 result: a e
 
-== eight_elements
-input: a b c d e f g h
-property: interesting iff it contains a and e
-  1 FAIL (empty)
-  2 FAIL e f g h
-  3 FAIL a b c d
-  4 FAIL c d e f g h
-  5 PASS a b e f g h
-  6 FAIL a b g h
-  7 PASS a b e f
-  8 FAIL b e f
-  9 PASS a e f
- 10 FAIL a f
- 11 PASS a e
- 12 FAIL e
- 13 FAIL a
-result: a e
-
-== seven_elements
+== seven_elements_a
 input: a b c d e f g
 property: interesting iff it contains a
-  1 FAIL (empty)
-  2 FAIL d e f g
-  3 PASS a b c f g
-  4 PASS a b c
-  5 FAIL b c
-  6 PASS a c
-  7 PASS a
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING d e f g
+  3 INTERESTING   a b c f g
+  4 INTERESTING   a b c
+  5 UNINTERESTING b c
+  6 INTERESTING   a c
+  7 INTERESTING   a
 result: a
 
-== sixteen_elements_sparse
+== eight_elements_a_e
+input: a b c d e f g h
+property: interesting iff it contains a and e
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h
+  3 UNINTERESTING a b c d
+  4 UNINTERESTING c d e f g h
+  5 INTERESTING   a b e f g h
+  6 UNINTERESTING a b g h
+  7 INTERESTING   a b e f
+  8 UNINTERESTING b e f
+  9 INTERESTING   a e f
+ 10 UNINTERESTING a f
+ 11 INTERESTING   a e
+ 12 UNINTERESTING e
+ 13 UNINTERESTING a
+result: a e
+
+== eight_elements_c_h
+input: a b c d e f g h
+property: interesting iff it contains c and h
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h
+  3 UNINTERESTING a b c d
+  4 INTERESTING   c d e f g h
+  5 UNINTERESTING e f g h
+  6 INTERESTING   c d g h
+  7 UNINTERESTING c d
+  8 UNINTERESTING d g h
+  9 INTERESTING   c g h
+ 10 INTERESTING   c h
+ 11 UNINTERESTING c
+ 12 UNINTERESTING h
+ 13 UNINTERESTING c
+result: c h
+
+== eight_elements_c_d_h
+input: a b c d e f g h
+property: interesting iff it contains c, d and h
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h
+  3 UNINTERESTING a b c d
+  4 INTERESTING   c d e f g h
+  5 UNINTERESTING e f g h
+  6 INTERESTING   c d g h
+  7 UNINTERESTING c d
+  8 UNINTERESTING d g h
+  9 UNINTERESTING c g h
+ 10 INTERESTING   c d h
+ 11 UNINTERESTING c d
+ 12 UNINTERESTING d h
+ 13 UNINTERESTING c h
+ 14 UNINTERESTING c d
+result: c d h
+
+== eight_elements_a_c_e_f
+input: a b c d e f g h
+property: interesting iff it contains a, c, e and f
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h
+  3 UNINTERESTING a b c d
+  4 UNINTERESTING c d e f g h
+  5 UNINTERESTING a b e f g h
+  6 UNINTERESTING a b c d g h
+  7 INTERESTING   a b c d e f
+  8 UNINTERESTING b c d e f
+  9 INTERESTING   a c d e f
+ 10 UNINTERESTING a d e f
+ 11 INTERESTING   a c e f
+ 12 UNINTERESTING a c f
+ 13 UNINTERESTING a c e
+ 14 UNINTERESTING c e f
+ 15 UNINTERESTING a e f
+ 16 UNINTERESTING a c f
+ 17 UNINTERESTING a c e
+result: a c e f
+
+== sixteen_elements_c_l
 input: a b c d e f g h i j k l m n o p
 property: interesting iff it contains c and l
-  1 FAIL (empty)
-  2 FAIL i j k l m n o p
-  3 FAIL a b c d e f g h
-  4 FAIL e f g h i j k l m n o p
-  5 PASS a b c d i j k l m n o p
-  6 FAIL a b c d m n o p
-  7 PASS a b c d i j k l
-  8 PASS c d i j k l
-  9 FAIL i j k l
- 10 PASS c d k l
- 11 FAIL c d
- 12 FAIL d k l
- 13 PASS c k l
- 14 PASS c l
- 15 FAIL c
- 16 FAIL l
- 17 FAIL c
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING i j k l m n o p
+  3 UNINTERESTING a b c d e f g h
+  4 UNINTERESTING e f g h i j k l m n o p
+  5 INTERESTING   a b c d i j k l m n o p
+  6 UNINTERESTING a b c d m n o p
+  7 INTERESTING   a b c d i j k l
+  8 INTERESTING   c d i j k l
+  9 UNINTERESTING i j k l
+ 10 INTERESTING   c d k l
+ 11 UNINTERESTING c d
+ 12 UNINTERESTING d k l
+ 13 INTERESTING   c k l
+ 14 INTERESTING   c l
+ 15 UNINTERESTING c
+ 16 UNINTERESTING l
+ 17 UNINTERESTING c
 result: c l
 
-== weighted
+== weighted_2_5_10
 input: 1 2 3 5 10
 property: each element weighs its value; interesting iff it contains 2, 5 and 10
-  1 FAIL (empty)
-  2 FAIL 3 5 10
-  3 FAIL 1 2 10
-  4 FAIL 1 2 3 5
-  5 PASS 2 3 5 10
-  6 FAIL 3 5 10
-  7 PASS 2 5 10
-  8 FAIL 2 10
-  9 FAIL 2 5
- 10 FAIL 5 10
- 11 FAIL 2 10
- 12 FAIL 2 5
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING 3 5 10
+  3 UNINTERESTING 1 2 10
+  4 UNINTERESTING 1 2 3 5
+  5 INTERESTING   2 3 5 10
+  6 UNINTERESTING 3 5 10
+  7 INTERESTING   2 5 10
+  8 UNINTERESTING 2 10
+  9 UNINTERESTING 2 5
+ 10 UNINTERESTING 5 10
+ 11 UNINTERESTING 2 10
+ 12 UNINTERESTING 2 5
 result: 2 5 10
+
+== weighted_1_5_10
+input: 1 2 3 5 10
+property: each element weighs its value; interesting iff it contains 1, 5 and 10
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING 3 5 10
+  3 UNINTERESTING 1 2 10
+  4 UNINTERESTING 1 2 3 5
+  5 UNINTERESTING 2 3 5 10
+  6 INTERESTING   1 3 5 10
+  7 INTERESTING   1 5 10
+  8 UNINTERESTING 1 10
+  9 UNINTERESTING 1 5
+ 10 UNINTERESTING 5 10
+ 11 UNINTERESTING 1 10
+ 12 UNINTERESTING 1 5
+result: 1 5 10
 
 == causal_chain
 input: x 1 2 3 4
 property: interesting iff it contains x and its digits are exactly 1..k, so digit k is removable only once digit k+1 is gone
-  1 FAIL (empty)
-  2 FAIL 2 3 4
-  3 FAIL x 1 4
-  4 PASS x 1 2 3
-  5 FAIL 1 2 3
-  6 FAIL x 2 3
-  7 FAIL x 1 3
-  8 PASS x 1 2
-  9 FAIL 1 2
- 10 FAIL x 2
- 11 PASS x 1
- 12 FAIL 1
- 13 PASS x
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING 2 3 4
+  3 UNINTERESTING x 1 4
+  4 INTERESTING   x 1 2 3
+  5 UNINTERESTING 1 2 3
+  6 UNINTERESTING x 2 3
+  7 UNINTERESTING x 1 3
+  8 INTERESTING   x 1 2
+  9 UNINTERESTING 1 2
+ 10 UNINTERESTING x 2
+ 11 INTERESTING   x 1
+ 12 UNINTERESTING 1
+ 13 INTERESTING   x
 result: x

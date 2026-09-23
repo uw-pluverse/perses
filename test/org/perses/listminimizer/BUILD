@@ -243,12 +243,29 @@ java_binary(
     runtime_deps = [":ListMinimizerTraceDumpMain"],
 )
 
-# One golden per list minimizer, each running the same scenarios (see ListMinimizerTraceDumpMain),
-# so that diffing two goldens shows how two minimizers differ. Cover another minimizer by adding its
-# EnumListMinimizerType name here and running the generated
+# One golden per list minimizer configuration, each running the same scenarios (see
+# ListMinimizerTraceDumpMain), so that diffing two goldens shows how two minimizers differ. Every
+# EnumListMinimizerType is a configuration, plus the named ones ListMinimizerTraceDumpMain adds for
+# what the enum cannot reach. Add one here and run the generated
 # golden_test_list_minimizer_trace_<NAME>_update target.
 TRACED_LIST_MINIMIZERS = [
     "PRISTINE_DDMIN",
+    "PRISTINE_DDMIN_WITH_CACHE",
+    "PERSES_VARIANT_OF_PRISTINE",
+    "DFS",
+    "BFS",
+    "CDD",
+    "WEIGHTED_DFS",
+    "WEIGHTED_BFS",
+    "PROBDD",
+    "WDD",
+    "WDD_WITH_CACHE",
+    "WPROBDD",
+    "WPROBDD_TERMINATION_THRESHOLD_1",
+    "WINDOWED_SLICER",
+    "LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION",
+    "ONE_BY_ONE",
+    "ADAPTIVE_GAIN_DRIVEN",
     "DRDD",
     "WDRDD",
     "PRISTINE_DRDD",

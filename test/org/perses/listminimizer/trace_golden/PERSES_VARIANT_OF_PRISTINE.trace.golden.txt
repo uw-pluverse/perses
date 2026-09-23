@@ -2,27 +2,32 @@
 input: a b c d e
 property: interesting iff it contains a and e
   1 UNINTERESTING (empty)
-  2 UNINTERESTING c d e
-  3 UNINTERESTING a b
-  4 UNINTERESTING b c d e
-  5 INTERESTING   a c d e
-  6 INTERESTING   a d e
-  7 UNINTERESTING a
-  8 UNINTERESTING d e
-  9 INTERESTING   a e
- 10 UNINTERESTING a
- 11 UNINTERESTING e
- 12 UNINTERESTING a
+  2 UNINTERESTING d e
+  3 UNINTERESTING a b c
+  4 UNINTERESTING c d e
+  5 INTERESTING   a b d e
+  6 INTERESTING   a b e
+  7 UNINTERESTING a b
+  8 UNINTERESTING e
+  9 UNINTERESTING a b
+ 10 UNINTERESTING b e
+ 11 INTERESTING   a e
+ 12 UNINTERESTING e
 result: a e
 
 == seven_elements_a
 input: a b c d e f g
 property: interesting iff it contains a
   1 UNINTERESTING (empty)
-  2 UNINTERESTING d e f g
-  3 INTERESTING   a b c
-  4 UNINTERESTING b c
-  5 INTERESTING   a
+  2 UNINTERESTING e f g
+  3 INTERESTING   a b c d
+  4 UNINTERESTING (empty)
+  5 UNINTERESTING c d
+  6 INTERESTING   a b
+  7 UNINTERESTING (empty)
+  8 UNINTERESTING b
+  9 INTERESTING   a
+ 10 UNINTERESTING (empty)
 result: a
 
 == eight_elements_a_e
@@ -35,12 +40,14 @@ property: interesting iff it contains a and e
   5 INTERESTING   a b e f g h
   6 UNINTERESTING a b g h
   7 INTERESTING   a b e f
-  8 UNINTERESTING b e f
-  9 INTERESTING   a e f
- 10 UNINTERESTING a f
- 11 INTERESTING   a e
- 12 UNINTERESTING e
- 13 UNINTERESTING a
+  8 UNINTERESTING e f
+  9 UNINTERESTING a b
+ 10 UNINTERESTING b e f
+ 11 INTERESTING   a e f
+ 12 UNINTERESTING a f
+ 13 INTERESTING   a e
+ 14 UNINTERESTING e
+ 15 UNINTERESTING a
 result: a e
 
 == eight_elements_c_h
@@ -53,12 +60,14 @@ property: interesting iff it contains c and h
   5 UNINTERESTING e f g h
   6 INTERESTING   c d g h
   7 UNINTERESTING c d
-  8 UNINTERESTING d g h
-  9 INTERESTING   c g h
- 10 INTERESTING   c h
- 11 UNINTERESTING c
- 12 UNINTERESTING h
+  8 UNINTERESTING g h
+  9 UNINTERESTING c d
+ 10 UNINTERESTING d g h
+ 11 INTERESTING   c g h
+ 12 INTERESTING   c h
  13 UNINTERESTING c
+ 14 UNINTERESTING h
+ 15 UNINTERESTING c
 result: c h
 
 == eight_elements_c_d_h
@@ -71,13 +80,15 @@ property: interesting iff it contains c, d and h
   5 UNINTERESTING e f g h
   6 INTERESTING   c d g h
   7 UNINTERESTING c d
-  8 UNINTERESTING d g h
-  9 UNINTERESTING c g h
- 10 INTERESTING   c d h
- 11 UNINTERESTING c d
- 12 UNINTERESTING d h
- 13 UNINTERESTING c h
- 14 UNINTERESTING c d
+  8 UNINTERESTING g h
+  9 UNINTERESTING c d
+ 10 UNINTERESTING d g h
+ 11 UNINTERESTING c g h
+ 12 INTERESTING   c d h
+ 13 UNINTERESTING c d
+ 14 UNINTERESTING d h
+ 15 UNINTERESTING c h
+ 16 UNINTERESTING c d
 result: c d h
 
 == eight_elements_a_c_e_f
@@ -90,16 +101,19 @@ property: interesting iff it contains a, c, e and f
   5 UNINTERESTING a b e f g h
   6 UNINTERESTING a b c d g h
   7 INTERESTING   a b c d e f
-  8 UNINTERESTING b c d e f
-  9 INTERESTING   a c d e f
- 10 UNINTERESTING a d e f
- 11 INTERESTING   a c e f
- 12 UNINTERESTING a c f
- 13 UNINTERESTING a c e
- 14 UNINTERESTING c e f
- 15 UNINTERESTING a e f
- 16 UNINTERESTING a c f
- 17 UNINTERESTING a c e
+  8 UNINTERESTING c d e f
+  9 UNINTERESTING a b e f
+ 10 UNINTERESTING a b c d
+ 11 UNINTERESTING b c d e f
+ 12 INTERESTING   a c d e f
+ 13 UNINTERESTING a d e f
+ 14 INTERESTING   a c e f
+ 15 UNINTERESTING a c f
+ 16 UNINTERESTING a c e
+ 17 UNINTERESTING c e f
+ 18 UNINTERESTING a e f
+ 19 UNINTERESTING a c f
+ 20 UNINTERESTING a c e
 result: a c e f
 
 == sixteen_elements_c_l
@@ -112,68 +126,69 @@ property: interesting iff it contains c and l
   5 INTERESTING   a b c d i j k l m n o p
   6 UNINTERESTING a b c d m n o p
   7 INTERESTING   a b c d i j k l
-  8 INTERESTING   c d i j k l
-  9 UNINTERESTING i j k l
- 10 INTERESTING   c d k l
- 11 UNINTERESTING c d
- 12 UNINTERESTING d k l
- 13 INTERESTING   c k l
- 14 INTERESTING   c l
- 15 UNINTERESTING c
- 16 UNINTERESTING l
- 17 UNINTERESTING c
+  8 UNINTERESTING i j k l
+  9 UNINTERESTING a b c d
+ 10 INTERESTING   c d i j k l
+ 11 UNINTERESTING i j k l
+ 12 INTERESTING   c d k l
+ 13 UNINTERESTING c d
+ 14 UNINTERESTING k l
+ 15 UNINTERESTING c d
+ 16 UNINTERESTING d k l
+ 17 INTERESTING   c k l
+ 18 INTERESTING   c l
+ 19 UNINTERESTING c
+ 20 UNINTERESTING l
+ 21 UNINTERESTING c
 result: c l
 
 == weighted_2_5_10
 input: 1 2 3 5 10
 property: each element weighs its value; interesting iff it contains 2, 5 and 10
   1 UNINTERESTING (empty)
-  2 UNINTERESTING 10
-  3 UNINTERESTING 1 2 3 5
-  4 UNINTERESTING 5 10
-  5 UNINTERESTING 1 2 3 10
-  6 UNINTERESTING 1 2 3 5
-  7 UNINTERESTING 3 5 10
-  8 INTERESTING   1 2 5 10
+  2 UNINTERESTING 5 10
+  3 UNINTERESTING 1 2 3
+  4 UNINTERESTING 3 5 10
+  5 INTERESTING   1 2 5 10
+  6 UNINTERESTING 1 2 10
+  7 UNINTERESTING 1 2 5
+  8 UNINTERESTING 5 10
   9 UNINTERESTING 1 2 10
  10 UNINTERESTING 1 2 5
  11 INTERESTING   2 5 10
  12 UNINTERESTING 5 10
- 13 UNINTERESTING 2 10
- 14 UNINTERESTING 2 5
- 15 UNINTERESTING 5 10
- 16 UNINTERESTING 2 10
- 17 UNINTERESTING 2 5
+ 13 UNINTERESTING 5 10
 result: 2 5 10
 
 == weighted_1_5_10
 input: 1 2 3 5 10
 property: each element weighs its value; interesting iff it contains 1, 5 and 10
   1 UNINTERESTING (empty)
-  2 UNINTERESTING 10
-  3 UNINTERESTING 1 2 3 5
-  4 UNINTERESTING 5 10
-  5 UNINTERESTING 1 2 3 10
-  6 UNINTERESTING 1 2 3 5
-  7 UNINTERESTING 3 5 10
-  8 INTERESTING   1 2 5 10
+  2 UNINTERESTING 5 10
+  3 UNINTERESTING 1 2 3
+  4 UNINTERESTING 3 5 10
+  5 INTERESTING   1 2 5 10
+  6 UNINTERESTING 1 2 10
+  7 UNINTERESTING 1 2 5
+  8 UNINTERESTING 5 10
   9 UNINTERESTING 1 2 10
  10 UNINTERESTING 1 2 5
  11 UNINTERESTING 2 5 10
  12 INTERESTING   1 5 10
- 13 UNINTERESTING 1 10
- 14 UNINTERESTING 1 5
- 15 UNINTERESTING 5 10
- 16 UNINTERESTING 1 10
- 17 UNINTERESTING 1 5
+ 13 UNINTERESTING 5 10
 result: 1 5 10
 
 == causal_chain
 input: x 1 2 3 4
 property: interesting iff it contains x and its digits are exactly 1..k, so digit k is removable only once digit k+1 is gone
   1 UNINTERESTING (empty)
-  2 UNINTERESTING 2 3 4
-  3 INTERESTING   x 1
-  4 UNINTERESTING 1
-  5 INTERESTING   x
+  2 UNINTERESTING 3 4
+  3 INTERESTING   x 1 2
+  4 UNINTERESTING (empty)
+  5 UNINTERESTING 2
+  6 INTERESTING   x 1
+  7 UNINTERESTING (empty)
+  8 UNINTERESTING 1
+  9 INTERESTING   x
+ 10 UNINTERESTING (empty)
 result: x

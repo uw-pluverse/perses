@@ -17,7 +17,6 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
-import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -48,22 +47,7 @@ class AbstractProbabilisticDeltaDebuggerTest : AbstractListMinimizerTest<String>
       expected = listOf("a", "b", "c", "d", "e"),
       true,
     )
-    test(property = listOf("c", "h"), expected = listOf("c", "h"), true).let { testHistory ->
-      assertThat(testHistory)
-        .containsExactly(
-          "",
-          "efgh",
-          "abcd",
-          "cdefgh",
-          "efgh",
-          "cdgh",
-          "cd",
-          "dgh",
-          "cgh",
-          "ch",
-          "c",
-        ).inOrder()
-    }
+    test(property = listOf("c", "h"), expected = listOf("c", "h"), true)
 
     test(property = listOf("c", "h"), expected = listOf("c", "h"), true).let { delHistory ->
       assert(checkOrder(delHistory))
@@ -88,22 +72,7 @@ class AbstractProbabilisticDeltaDebuggerTest : AbstractListMinimizerTest<String>
       expected = listOf("a", "b", "c", "d", "e"),
       false,
     )
-    test(property = listOf("c", "h"), expected = listOf("c", "h"), false).let { testHistory ->
-      assertThat(testHistory)
-        .containsExactly(
-          "",
-          "efgh",
-          "abcd",
-          "cdefgh",
-          "efgh",
-          "cdgh",
-          "cd",
-          "dgh",
-          "cgh",
-          "ch",
-          "c",
-        ).inOrder()
-    }
+    test(property = listOf("c", "h"), expected = listOf("c", "h"), false)
 
     test(property = listOf("c", "h"), expected = listOf("c", "h"), false).let { delHistory ->
       assert(checkOrder(delHistory))
@@ -126,22 +95,7 @@ class AbstractProbabilisticDeltaDebuggerTest : AbstractListMinimizerTest<String>
       property = listOf("c", "d", "h"),
       expected = listOf("c", "d", "h"),
       false,
-    ).let { testHistory ->
-      assertThat(testHistory)
-        .containsExactly(
-          "",
-          "efgh",
-          "abcd",
-          "cdefgh",
-          "efgh",
-          "cdgh",
-          "cd",
-          "dgh",
-          "cgh",
-          "cdh",
-          "cd",
-        ).inOrder()
-    }
+    )
   }
 
   @Test
@@ -150,24 +104,7 @@ class AbstractProbabilisticDeltaDebuggerTest : AbstractListMinimizerTest<String>
       property = listOf("a", "c", "e", "f"),
       expected = listOf("a", "c", "e", "f"),
       false,
-    ).let { testHistory ->
-      assertThat(testHistory)
-        .containsExactly(
-          "",
-          "efgh",
-          "abcd",
-          "cdefgh",
-          "abefgh",
-          "abcdgh",
-          "abcdef",
-          "bcdef",
-          "acdef",
-          "adef",
-          "acef",
-          "acf",
-          "ace",
-        ).inOrder()
-    }
+    )
   }
 
   private fun test(
