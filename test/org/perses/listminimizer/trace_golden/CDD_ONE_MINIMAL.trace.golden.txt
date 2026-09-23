@@ -24,7 +24,6 @@ property: interesting iff it contains a
   5 INTERESTING   a f g
   6 INTERESTING   a
   7 UNINTERESTING (empty)
-  8 UNINTERESTING (empty)
 result: a
 
 == eight_elements_a_e
@@ -170,5 +169,4 @@ property: interesting iff it contains x and its digits are exactly 1..k, so digi
   7 INTERESTING   x 1
   8 UNINTERESTING 1
   9 INTERESTING   x
- 10 UNINTERESTING (empty)
 result: x

@@ -138,6 +138,17 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "EnsureOneMinimalTest",
+    srcs = ["EnsureOneMinimalTest.kt"],
+    deps = [
+        ":AbstractListMinimizerTest",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer:interfaces",
+    ],
+)
+
+kt_jvm_test(
     name = "OneMinimalCounterBasedDeltaDebuggerTest",
     srcs = ["OneMinimalCounterBasedDeltaDebuggerTest.kt"],
     deps = [

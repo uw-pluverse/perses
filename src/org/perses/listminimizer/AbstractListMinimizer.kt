@@ -141,26 +141,34 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
     return countOfDeletedBlocks
   }
 
+  /**
+   * Tries deleting each element of [best] alone, continuing past a deletion and wrapping around
+   * rather than restarting from the front: the elements before a deletion must be retested anyway,
+   * but once, a lap later, instead of after every deletion. A full lap of failures against an
+   * unchanged best means every element has failed alone against it, i.e. [best] is 1-minimal.
+   */
   protected fun ensureOneMinimal() {
-    var restart = true
-    while (restart) {
-      restart = false
-      for (element in best) {
-        val complement = best.filter { it != element }.toImmutableList()
-        val outcome =
-          testProperty(
-            Candidate.SublistFromOriginal(original = best, candidate_ = complement),
-          ).get()
-        // A NotTested complement is skipped like a rejected one, which means the one-minimality
-        // this function is named for is not actually established for that element: nothing ran to
-        // establish it. Pre-existing, and left alone here because closing it changes behaviour --
-        // but it is only expressible at all because the result type reaches this call site.
-        if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
-          continue
-        }
+    var position = 0
+    var countOfConsecutiveFailures = 0
+    // Deleting the last element tests the empty list, which reduce() owns.
+    while (best.size > 1 && countOfConsecutiveFailures < best.size) {
+      position %= best.size
+      val element = best[position]
+      val complement = best.filter { it != element }.toImmutableList()
+      val outcome =
+        testProperty(
+          Candidate.SublistFromOriginal(original = best, candidate_ = complement),
+        ).get()
+      // A NotTested complement is skipped like a rejected one, which means the one-minimality
+      // this function is named for is not actually established for that element: nothing ran to
+      // establish it. Pre-existing, and left alone here because closing it changes behaviour --
+      // but it is only expressible at all because the result type reaches this call site.
+      if (outcome is CandidateOutcome.Interesting<PropertyPayload>) {
         updateBest(complement, outcome.payload)
-        restart = true
-        break
+        countOfConsecutiveFailures = 0
+      } else {
+        ++countOfConsecutiveFailures
+        ++position
       }
     }
   }

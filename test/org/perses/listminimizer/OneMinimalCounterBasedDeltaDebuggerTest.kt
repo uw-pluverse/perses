@@ -104,10 +104,9 @@ class OneMinimalCounterBasedDeltaDebuggerTest : AbstractListMinimizerTest<String
     val run = run(input, isInteresting) { OneMinimalCounterBasedDeltaDebugger(it) }
     assertThat(run.result).containsExactly("x")
     // CDD found x and 1 necessary against [x 1 2] and then deleted 2, so both are retested against
-    // [x 1]: x is still necessary, 1 no longer is. ensureOneMinimal then deletes x from [x] too,
-    // retesting the empty list reduce() already rejected.
-    assertThat(run.testHistory.takeLast(3))
-      .containsExactly(listOf("1"), listOf("x"), listOf<String>())
+    // [x 1]: x is still necessary, 1 no longer is.
+    assertThat(run.testHistory.takeLast(2))
+      .containsExactly(listOf("1"), listOf("x"))
       .inOrder()
   }
 
