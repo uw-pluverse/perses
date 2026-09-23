@@ -23,15 +23,9 @@ package org.perses.listminimizer
  */
 class PristineDeferredRestartDeltaDebugger<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
-) : AbstractDeferredRestartDeltaDebugger<T, PropertyPayload>(arguments) {
-  private var partitionSize: Int? = null
+) : AbstractHalvingScheduleDeferredRestartDeltaDebugger<T, PropertyPayload>(arguments) {
+  override fun computeInitialGranularity(): Int = best.size
 
-  override fun computeNextCoarseRound(): CoarseRound<T>? {
-    val size = (partitionSize ?: best.size) / 2
-    partitionSize = size
-    if (size == 0) {
-      return null
-    }
-    return CoarseRound(granularity = size, blocks = best.chunked(size))
-  }
+  override fun partitionIntoBlocks(granularity: Int): List<List<ElementWrapper<T>>> =
+    best.chunked(granularity)
 }

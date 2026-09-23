@@ -53,6 +53,7 @@ kt_jvm_library(
     name = "listminimizer",
     srcs = [
         "AbstractDeferredRestartDeltaDebugger.kt",
+        "AbstractHalvingScheduleDeferredRestartDeltaDebugger.kt",
         "AdaptiveGainDrivenListMinimizer.kt",
         "CounterBasedDeltaDebugger.kt",
         "DeferredRestartDeltaDebugger.kt",

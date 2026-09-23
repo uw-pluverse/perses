@@ -27,81 +27,61 @@ import org.perses.reduction.TestScriptVerdict.Companion.INTERESTING
 import org.perses.reduction.TestScriptVerdict.Companion.NON_INTERESTING
 import kotlin.random.Random
 
+/**
+ * What every drdd variant must satisfy regardless of how it cuts blocks. The exact test sequences
+ * each variant performs are pinned by the golden_test_list_minimizer_trace_* goldens instead.
+ */
 @RunWith(JUnit4::class)
-class DeferredRestartDeltaDebuggerTest : AbstractListMinimizerTest<String>() {
-  private val input = ImmutableList.of("a", "b", "c", "d", "e", "f", "g", "h")
-
-  private fun test(
-    property: List<String>,
-    expected: List<String>,
-  ): List<String> =
-    runMinimizerTest(input = input, property = property, expected = expected) {
-      DeferredRestartDeltaDebugger(it)
-    }
+class DeferredRestartDeltaDebuggerTest : AbstractListMinimizerTest<Int>() {
+  private val drddTypes =
+    listOf(
+      EnumListMinimizerType.DRDD,
+      EnumListMinimizerType.WDRDD,
+      EnumListMinimizerType.PRISTINE_DRDD,
+      EnumListMinimizerType.PRISTINE_WDRDD,
+    )
 
   @Test
   fun testResultIsExactlyTheProperty() {
-    test(property = listOf(), expected = listOf())
-    test(property = listOf("a"), expected = listOf("a"))
-    test(property = listOf("h"), expected = listOf("h"))
-    test(property = input, expected = input)
-    test(property = listOf("b", "g"), expected = listOf("b", "g"))
-  }
-
-  @Test
-  fun testCoarseSweepsDoNotRestart() {
-    assertThat(test(property = listOf("a", "e"), expected = listOf("a", "e")))
-      .containsExactly(
-        "",
-        // S = 4
-        "efgh",
-        "abcd",
-        // S = 2: a successful deletion does not restart the sweep.
-        "cdefgh",
-        "abefgh",
-        "abgh",
-        "abef",
-        // Single-element sweep #1 deletes b and f.
-        "bef",
-        "aef",
-        "af",
-        "ae",
-        // Single-element sweep #2 reaches the fixpoint.
-        "e",
-        "a",
-      ).inOrder()
-  }
-
-  @Test
-  fun testBlocksAreBalanced() {
-    val history =
-      runMinimizerTest(
-        input = ImmutableList.of("a", "b", "c", "d", "e", "f", "g"),
-        property = listOf("a"),
-        expected = listOf("a"),
-      ) {
-        DeferredRestartDeltaDebugger(it)
+    val random = Random(20260923)
+    for (type in drddTypes) {
+      repeat(100) {
+        val input = ImmutableList.copyOf((1..random.nextInt(1, 40)).toList())
+        val weights = input.associateWith { random.nextInt(1, 20) }
+        val property =
+          when (it) {
+            0 -> listOf()
+            1 -> input
+            else -> input.filter { random.nextInt(5) == 0 }
+          }
+        runMinimizerTest(
+          input = input,
+          property = property,
+          expected = property,
+          weightProvider = { element -> weights.getValue(element) },
+        ) { arguments ->
+          ListMinimizerFactory.create(type, arguments)
+        }
       }
-    assertThat(history)
-      .containsExactly(
-        "",
-        // S = 3 cuts 7 elements into [a b c] [d e] [f g], not [a b c] [d e f] [g].
-        "defg",
-        "abcfg",
-        "abc",
-        // Single-element sweep #1; sweep #2 has nothing but the whole list to delete.
-        "bc",
-        "ac",
-        "a",
-      ).inOrder()
+    }
   }
 
   @Test
-  fun testRandomContainmentPropertiesAreMinimizedExactly() {
-    val random = Random(20260922)
-    repeat(200) {
-      val property = input.filter { random.nextInt(4) == 0 }
-      test(property = property, expected = property)
+  fun testUnitWeightsMakePristineWdrddPerformExactlyTheTestsOfPristineDrdd() {
+    val random = Random(20260923)
+    repeat(100) {
+      val input = ImmutableList.copyOf((1..random.nextInt(1, 40)).toList())
+      val property = input.filter { random.nextInt(5) == 0 }
+      val histories =
+        listOf(
+          EnumListMinimizerType.PRISTINE_WDRDD,
+          EnumListMinimizerType.PRISTINE_DRDD,
+        ).map { type ->
+          runMinimizerTest(input = input, property = property, expected = property) { arguments ->
+            ListMinimizerFactory.create(type, arguments)
+          }
+        }
+      assertThat(histories[0]).containsExactlyElementsIn(histories[1]).inOrder()
     }
   }
 
@@ -109,19 +89,23 @@ class DeferredRestartDeltaDebuggerTest : AbstractListMinimizerTest<String>() {
    * A causal chain: digit k is removable only once digit k+1 is gone, so each forward
    * single-element sweep removes only the last remaining digit.
    */
-  private fun runOnCausalChain(restartBudget: Int): List<String> {
-    val chainInput = ImmutableList.of("x", "1", "2", "3", "4")
+  private fun runOnCausalChain(
+    type: EnumListMinimizerType,
+    restartBudget: Int,
+  ): List<Int> {
+    val xMarker = 0
     val minimizer =
-      DeferredRestartDeltaDebugger(
+      ListMinimizerFactory.create(
+        type,
         ListMinimizerArguments(
           needToTestEmpty = true,
-          input = chainInput,
+          input = ImmutableList.of(xMarker, 1, 2, 3, 4),
           isElementDeletedElsewhere = { false },
           propertyTester = { configuration ->
             val candidate = configuration.getCandidateOrFail()
-            val digits = candidate.filter { it != "x" }.map { it.toInt() }
+            val digits = candidate.filter { it != xMarker }
             ImmediatePropertyTestHandle(
-              if ("x" in candidate && digits == (1..digits.size).toList()) {
+              if (xMarker in candidate && digits == (1..digits.size).toList()) {
                 CandidateOutcome.Interesting("", INTERESTING)
               } else {
                 CandidateOutcome.Uninteresting.Rejected(NON_INTERESTING)
@@ -143,16 +127,20 @@ class DeferredRestartDeltaDebuggerTest : AbstractListMinimizerTest<String>() {
 
   @Test
   fun testUnboundedRestartBudgetResolvesCausalChain() {
-    assertThat(runOnCausalChain(restartBudget = Int.MAX_VALUE)).containsExactly("x")
+    for (type in drddTypes) {
+      assertThat(runOnCausalChain(type, restartBudget = Int.MAX_VALUE)).containsExactly(0)
+    }
   }
 
   @Test
   fun testRestartBudgetBoundsSingleElementSweeps() {
-    assertThat(
-      runOnCausalChain(restartBudget = 0),
-    ).containsExactly("x", "1", "2", "3", "4").inOrder()
-    assertThat(runOnCausalChain(restartBudget = 1)).containsExactly("x", "1", "2", "3").inOrder()
-    assertThat(runOnCausalChain(restartBudget = 3)).containsExactly("x", "1").inOrder()
+    for (type in drddTypes) {
+      assertThat(runOnCausalChain(type, restartBudget = 0))
+        .containsExactly(0, 1, 2, 3, 4)
+        .inOrder()
+      assertThat(runOnCausalChain(type, restartBudget = 1)).containsExactly(0, 1, 2, 3).inOrder()
+      assertThat(runOnCausalChain(type, restartBudget = 3)).containsExactly(0, 1).inOrder()
+    }
   }
 
   @Test

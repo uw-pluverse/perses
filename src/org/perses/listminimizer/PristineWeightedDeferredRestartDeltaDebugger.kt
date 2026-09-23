@@ -25,36 +25,31 @@ package org.perses.listminimizer
  */
 class PristineWeightedDeferredRestartDeltaDebugger<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
-) : AbstractDeferredRestartDeltaDebugger<T, PropertyPayload>(arguments) {
-  private var granularity: Int? = null
-
+) : AbstractHalvingScheduleDeferredRestartDeltaDebugger<T, PropertyPayload>(arguments) {
   override fun createElementWrapperFor(
     index: Int,
     element: T,
   ): ElementWrapper<T> = ElementWrapper(index, element, arguments.weightProvider.weight(element))
 
-  override fun computeNextCoarseRound(): CoarseRound<T>? {
-    val weight = (granularity ?: WeightedDeltaDebugger.computeSum(best)) / 2
-    granularity = weight
-    if (weight == 0) {
-      return null
-    }
+  override fun computeInitialGranularity(): Int = WeightedDeltaDebugger.computeSum(best)
+
+  override fun partitionIntoBlocks(granularity: Int): List<List<ElementWrapper<T>>> {
     val blocks = mutableListOf<List<ElementWrapper<T>>>()
     var currentBlock = mutableListOf<ElementWrapper<T>>()
     var currentWeight = 0
     for (element in best) {
-      val elementWeight = WeightedDeltaDebugger.getWeight(element)
-      if (currentBlock.isNotEmpty() && currentWeight + elementWeight > weight) {
+      val weight = WeightedDeltaDebugger.getWeight(element)
+      if (currentBlock.isNotEmpty() && currentWeight + weight > granularity) {
         blocks.add(currentBlock)
         currentBlock = mutableListOf()
         currentWeight = 0
       }
       currentBlock.add(element)
-      currentWeight += elementWeight
+      currentWeight += weight
     }
     if (currentBlock.isNotEmpty()) {
       blocks.add(currentBlock)
     }
-    return CoarseRound(granularity = weight, blocks = blocks)
+    return blocks
   }
 }

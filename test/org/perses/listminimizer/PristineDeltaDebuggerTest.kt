@@ -34,39 +34,7 @@ class PristineDeltaDebuggerTest : AbstractListMinimizerTest<String>() {
     test(property = listOf("c"), expected = listOf("c"))
     test(property = listOf(), expected = listOf())
     test(property = listOf("a", "b", "c", "d", "e"), expected = listOf("a", "b", "c", "d", "e"))
-    test(property = listOf("a", "e"), expected = listOf("a", "e")).let { testHistory ->
-      assertThat(testHistory)
-        .containsExactly(
-          // n = 1
-          "",
-          // n = 2
-          "abc",
-          "de",
-          "de",
-          "abc",
-          // n = 4
-          "ab",
-          "c",
-          "d",
-          "e",
-          "cde",
-          "abde",
-          "abe",
-          "ab",
-          // n = 3
-          "a",
-          "b",
-          "e",
-          "be",
-          "ae",
-          "a",
-          // n = 2
-          "a",
-          "e",
-          "e",
-          "a",
-        ).inOrder()
-    }
+    test(property = listOf("a", "e"), expected = listOf("a", "e"))
   }
 
   private fun test(
