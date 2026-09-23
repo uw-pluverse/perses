@@ -92,6 +92,14 @@ object ListMinimizerFactory {
       EnumListMinimizerType.WDRDD -> {
         WeightedDeferredRestartDeltaDebugger(arguments)
       }
+
+      EnumListMinimizerType.PRISTINE_DRDD -> {
+        PristineDeferredRestartDeltaDebugger(arguments)
+      }
+
+      EnumListMinimizerType.PRISTINE_WDRDD -> {
+        PristineWeightedDeferredRestartDeltaDebugger(arguments)
+      }
     }
 
   fun <T : Any, Payload> create(

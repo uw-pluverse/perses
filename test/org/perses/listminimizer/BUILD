@@ -147,6 +147,30 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "PristineDeferredRestartDeltaDebuggerTest",
+    srcs = ["PristineDeferredRestartDeltaDebuggerTest.kt"],
+    deps = [
+        ":AbstractListMinimizerTest",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer",
+    ],
+)
+
+kt_jvm_test(
+    name = "PristineWeightedDeferredRestartDeltaDebuggerTest",
+    srcs = ["PristineWeightedDeferredRestartDeltaDebuggerTest.kt"],
+    deps = [
+        ":AbstractListMinimizerTest",
+        ":AbstractWeightedMinimizerTest",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer",
+        "//src/org/perses/listminimizer:interfaces",
+    ],
+)
+
+kt_jvm_test(
     name = "AbstractProbabilisticDeltaDebuggerTest",
     srcs = ["AbstractProbabilisticDeltaDebuggerTest.kt"],
     deps = [

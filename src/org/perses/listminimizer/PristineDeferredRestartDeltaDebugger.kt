@@ -16,23 +16,22 @@
  */
 package org.perses.listminimizer
 
-enum class EnumListMinimizerType {
-  PRISTINE_DDMIN,
-  PERSES_VARIANT_OF_PRISTINE,
-  DFS,
-  BFS,
-  CDD,
-  WEIGHTED_DFS,
-  WEIGHTED_BFS,
-  PROBDD,
-  WDD,
-  WPROBDD,
-  WINDOWED_SLICER,
-  LOCAL_EXHAUSTIVE_PATTERN_ENUMERATION,
-  ONE_BY_ONE,
-  ADAPTIVE_GAIN_DRIVEN,
-  DRDD,
-  WDRDD,
-  PRISTINE_DRDD,
-  PRISTINE_WDRDD,
+/**
+ * drdd exactly as the paper's pseudocode cuts blocks: fixed-stride blocks of S elements, the last
+ * one holding the remainder. Kept beside [DeferredRestartDeltaDebugger], which balances the blocks
+ * instead, to measure whether the block shape matters.
+ */
+class PristineDeferredRestartDeltaDebugger<T : Any, PropertyPayload>(
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
+) : AbstractDeferredRestartDeltaDebugger<T, PropertyPayload>(arguments) {
+  private var partitionSize: Int? = null
+
+  override fun computeNextCoarseRound(): CoarseRound<T>? {
+    val size = (partitionSize ?: best.size) / 2
+    partitionSize = size
+    if (size == 0) {
+      return null
+    }
+    return CoarseRound(granularity = size, blocks = best.chunked(size))
+  }
 }

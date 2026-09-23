@@ -63,6 +63,12 @@ class DeltaDebuggerFactoryTest {
     ListMinimizerFactory.create(EnumListMinimizerType.WDRDD, args).let {
       assertThat(it).isInstanceOf(WeightedDeferredRestartDeltaDebugger::class.java)
     }
+    ListMinimizerFactory.create(EnumListMinimizerType.PRISTINE_DRDD, args).let {
+      assertThat(it).isInstanceOf(PristineDeferredRestartDeltaDebugger::class.java)
+    }
+    ListMinimizerFactory.create(EnumListMinimizerType.PRISTINE_WDRDD, args).let {
+      assertThat(it).isInstanceOf(PristineWeightedDeferredRestartDeltaDebugger::class.java)
+    }
   }
 
   @Test
