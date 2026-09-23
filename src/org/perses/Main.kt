@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils
 import org.perses.cmd.EnumListMinimizerMicrobenchmarkingMode
 import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil.createParserFacadeFactory
+import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmark
 import org.perses.program.LanguageKind
 import org.perses.reduction.AsyncReductionListenerManager
@@ -112,6 +113,10 @@ class Main(
     if (cmd.algorithmControlFlags.listAllReductionAlgorithms) {
       println("All available reduction algorithms: ")
       println(reducerFactory.printAllReductionAlgorithms())
+      return HelpRequestProcessingDecision.EXIT
+    }
+    if (cmd.algorithmControlFlags.listAllListMinimizers) {
+      EnumListMinimizerType.entries.forEach { println(it.name) }
       return HelpRequestProcessingDecision.EXIT
     }
     if (cmd.languageControlFlags.listParserFacades) {

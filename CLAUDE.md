@@ -11,6 +11,16 @@
   tests, show me what changed, and wait for my explicit "commit" before running
   `git commit`.
 
+## Linear history: rebase, never merge
+
+- Keep the revision history linear. Integrate upstream work with `git pull --rebase` or
+  `git fetch` followed by `git rebase origin/master`; never `git merge`, never a plain
+  `git pull`, and never create a merge commit.
+- Before every push, `git fetch` and check `git log --oneline HEAD..origin/master`. If the
+  remote has moved, rebase onto it first, then push.
+- Never `--force` a push to get past a rejection: that discards the other side's work.
+- This applies to every repository here: this wrapper, `public/`, and ReductionBench.
+
 ## Generated docs
 
 - Put every doc you generate (design notes, findings, investigations, handoffs)

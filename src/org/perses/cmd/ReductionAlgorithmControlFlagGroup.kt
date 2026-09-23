@@ -51,6 +51,15 @@ class ReductionAlgorithmControlFlagGroup :
   )
   var listAllReductionAlgorithms = false
 
+  @JvmField
+  @Parameter(
+    names = ["--list-list-minimizers"],
+    description = "list all the list minimizers, one per line.",
+    help = true,
+    order = 15,
+  )
+  var listAllListMinimizers = false
+
   @Parameter(
     names = ["--reparse-each-iteration"],
     description = "Reparse the program before the start of each fixpoint iteration.",

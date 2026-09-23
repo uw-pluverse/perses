@@ -45,6 +45,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -668,6 +669,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -871,6 +873,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -1072,6 +1075,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -4167,6 +4171,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -6809,6 +6814,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -7183,6 +7189,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -7386,6 +7393,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -7587,6 +7595,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false
@@ -10229,6 +10238,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "node_priority"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: false
   enableTokenSlicer: false
   enableTreeSlicer: false

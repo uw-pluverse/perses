@@ -68,33 +68,33 @@ recordingContext:
     \  groupName: \"Output Refining Control\"\n  callFormatter: false\n  formatCmd:\
     \ \"\"\n  callCReduce: false\n  creduceCmd: \"creduce\"\nalgorithmControlFlags:\n\
     \  groupName: \"Reduction Algorithm Control\"\n  mainReductionAlgorithm: \"token_slicer\"\
-    \n  cleanupReductionAlgorithm: null\n  listAllReductionAlgorithms: false\n  rebuildParseTreeEachIteration:\
-    \ true\n  enableTokenSlicer: false\n  enableTreeSlicer: false\n  lineSlicer: \"\
-    AUTO\"\n  defaultListMinimizerTypeForHDD: \"CDD\"\n  minSlicingWindowSize: 1\n\
-    \  maxSlicingWindowSize: 14\nlanguageControlFlags:\n  groupName: \"Language Control\"\
-    \n  languageName: \"\"\n  listLangs: false\n  designatedParserFacadeClassName:\
-    \ \"\"\n  listParserFacades: false\n  languageJarFiles: []\n  underlyingLexerClassForDyckParser:\
-    \ \"\"\npersesFlags:\n  groupName: \"Classical Perses Reducer Control\"\n  enableTopDownReduction:\
-    \ true\n  enableReductionOnRegularNodes: true\n  maxEditCountForRegularRuleNode:\
-    \ 100\n  maxBfsDepthForRegularRuleNode: 5\n  enableLiteralReplacementForRegularRuleNode:\
-    \ false\n  enableLiteralReplacementForListMinimizer: false\n  stopAtFirstCompatibleChildForRegularRuleNode:\
-    \ false\n  listMinimizerTypeForKleene: \"DFS\"\n  enableReductionOnKleeneAndOptionalNodes:\
-    \ true\n  anticipatedTokenCountInResult: 150\nvulcanFlags:\n  groupName: \"Vulcan\
-    \ Reducer Control\"\n  enableVulcan: false\n  nonDeletionIterationLimit: 10\n\
-    \  windowSize: 4\n  vulcanFixpoint: false\ntrecFlags:\n  groupName: \"T-Rec Reducer\
-    \ Control\"\n  enableTRec: false\nprofilingFlags:\n  groupName: \"Profiling\"\n\
-    \  progressDumpFile: null\n  actionsetEffectProfile: null\n  statDumpFile: null\n\
-    \  profileQueryCacheTime: null\n  profileQueryCacheTimeCSV: null\n  profileQueryCacheMemory:\
-    \ null\n  actionSetProfiler: null\n  profileListMinimizer: null\n  profileProgramSizeTrend:\
-    \ null\n  profileReductionProcessDifferentialAnalysis: null\n  enableWebUi: false\n\
-    \  webUiPort: 9000\ncacheControlFlags:\n  groupName: \"Cache Control\"\n  queryCaching:\
-    \ true\n  nodeActionSetCaching: true\n  enablePassCache: true\n  enableGlobalCache:\
-    \ false\n  globalCacheFile: null\n  pathToSaveUpdatedGlobalCache: null\n  defaultShaAlgorithm:\
-    \ \"SHA256\"\nlistMinimizerMicrobenchmarkingFlags:\n  groupName: \"List Minimizer\
-    \ Microbenchmarking\"\n  mode: \"RECORD\"\n  microbenchmarkOutputDirectory: \"\
-    recorded\"\n  minListSizeToRecord: 1\n  maxMicrobenchmarksToRecord: null\n  microbenchmarkFile:\
-    \ null\n  listMinimizersToEvaluate: []\n  evaluationOutputDirectory: null\nexperimentFlags:\n\
-    \  groupName: \"Experiment Control\"\n  onDemandFineGritReducerAnnotationClasses:\
+    \n  cleanupReductionAlgorithm: null\n  listAllReductionAlgorithms: false\n  listAllListMinimizers:\
+    \ false\n  rebuildParseTreeEachIteration: true\n  enableTokenSlicer: false\n \
+    \ enableTreeSlicer: false\n  lineSlicer: \"AUTO\"\n  defaultListMinimizerTypeForHDD:\
+    \ \"CDD\"\n  minSlicingWindowSize: 1\n  maxSlicingWindowSize: 14\nlanguageControlFlags:\n\
+    \  groupName: \"Language Control\"\n  languageName: \"\"\n  listLangs: false\n\
+    \  designatedParserFacadeClassName: \"\"\n  listParserFacades: false\n  languageJarFiles:\
+    \ []\n  underlyingLexerClassForDyckParser: \"\"\npersesFlags:\n  groupName: \"\
+    Classical Perses Reducer Control\"\n  enableTopDownReduction: true\n  enableReductionOnRegularNodes:\
+    \ true\n  maxEditCountForRegularRuleNode: 100\n  maxBfsDepthForRegularRuleNode:\
+    \ 5\n  enableLiteralReplacementForRegularRuleNode: false\n  enableLiteralReplacementForListMinimizer:\
+    \ false\n  stopAtFirstCompatibleChildForRegularRuleNode: false\n  listMinimizerTypeForKleene:\
+    \ \"DFS\"\n  enableReductionOnKleeneAndOptionalNodes: true\n  anticipatedTokenCountInResult:\
+    \ 150\nvulcanFlags:\n  groupName: \"Vulcan Reducer Control\"\n  enableVulcan:\
+    \ false\n  nonDeletionIterationLimit: 10\n  windowSize: 4\n  vulcanFixpoint: false\n\
+    trecFlags:\n  groupName: \"T-Rec Reducer Control\"\n  enableTRec: false\nprofilingFlags:\n\
+    \  groupName: \"Profiling\"\n  progressDumpFile: null\n  actionsetEffectProfile:\
+    \ null\n  statDumpFile: null\n  profileQueryCacheTime: null\n  profileQueryCacheTimeCSV:\
+    \ null\n  profileQueryCacheMemory: null\n  actionSetProfiler: null\n  profileListMinimizer:\
+    \ null\n  profileProgramSizeTrend: null\n  profileReductionProcessDifferentialAnalysis:\
+    \ null\n  enableWebUi: false\n  webUiPort: 9000\ncacheControlFlags:\n  groupName:\
+    \ \"Cache Control\"\n  queryCaching: true\n  nodeActionSetCaching: true\n  enablePassCache:\
+    \ true\n  enableGlobalCache: false\n  globalCacheFile: null\n  pathToSaveUpdatedGlobalCache:\
+    \ null\n  defaultShaAlgorithm: \"SHA256\"\nlistMinimizerMicrobenchmarkingFlags:\n\
+    \  groupName: \"List Minimizer Microbenchmarking\"\n  mode: \"RECORD\"\n  microbenchmarkOutputDirectory:\
+    \ \"recorded\"\n  minListSizeToRecord: 1\n  maxMicrobenchmarksToRecord: null\n\
+    \  microbenchmarkFile: null\n  listMinimizersToEvaluate: []\n  evaluationOutputDirectory:\
+    \ null\nexperimentFlags:\n  groupName: \"Experiment Control\"\n  onDemandFineGritReducerAnnotationClasses:\
     \ []\n  onDemandMediumGritReducerAnnotationClasses: []\n  onDemandCoarseGritReducerAnnotationClasses:\
     \ []\n  keepReductionHistory: false\n  enableErrorTolerantGrammar: true\n  dyckNodeReducer:\
     \ \"AUTO\"\nlprFlags:\n  groupName: \"LPR Reducer Control\"\n  enableLPR: false\n\

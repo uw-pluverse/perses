@@ -44,6 +44,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "canonical_line_based_concurrent_token_slicer"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false

@@ -110,6 +110,21 @@ golden_test(
 )
 
 genrule(
+    name = "get_perses_supported_list_minimizer_list",
+    outs = ["perses_supported_list_minimizer_list.txt"],
+    cmd = "$(location //src/org/perses:perses) --list-list-minimizers > \"$@\" ",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+golden_test(
+    name = "golden_test_perses_supported_list_minimizer_list",
+    golden_file = "golden_perses_supported_list_minimizer_list.txt",
+    test_file = "perses_supported_list_minimizer_list.txt",
+)
+
+genrule(
     name = "get_perses_supported_parser_facade_list",
     outs = ["perses_supported_parser_facade_list.txt"],
     cmd = "$(location //src/org/perses:perses) --list-parser-facades > \"$@\" ",

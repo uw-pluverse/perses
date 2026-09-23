@@ -218,6 +218,8 @@ Usage: org.perses.Main [options]
       available algorithms.
     --list-algs
       list all the reduction algorithms.
+    --list-list-minimizers
+      list all the list minimizers, one per line.
     --reparse-each-iteration
       Reparse the program before the start of each fixpoint iteration.
       Default: true

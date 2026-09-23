@@ -44,6 +44,7 @@ algorithmControlFlags:
   mainReductionAlgorithm: "ddmin"
   cleanupReductionAlgorithm: null
   listAllReductionAlgorithms: false
+  listAllListMinimizers: false
   rebuildParseTreeEachIteration: true
   enableTokenSlicer: false
   enableTreeSlicer: false
