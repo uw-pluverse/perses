@@ -16,72 +16,27 @@
  */
 package org.perses.listminimizer
 
-import org.perses.reduction.CandidateOutcome
-import org.perses.util.toImmutableList
-
 /**
- * Deferred Restart Delta Debugging (drdd), from Kumbhakern et al., "Dr. DD: 1-Minimal Isolation of
- * Failure Causes via Deferred Restarts", ISSRE 2026.
- *
- * ddmin restarts from the coarsest granularity after every successful deletion, but restarts are
- * only needed at the single-element level to resolve causal chains and hence to guarantee
- * 1-minimality. drdd therefore sweeps every halving partition size exactly once, deleting every
- * removable block in a single pass without restarting, and then repeats single-element sweeps until
- * a fixpoint or until [DeferredRestartDeltaDebuggerArguments.restartBudget] sweeps have run.
- * With the default (unbounded) budget the result is 1-minimal.
+ * drdd with the paper's schedule: the partition size S halves from the original list size. Each
+ * round cuts the current list into ceil(|list| / S) balanced blocks, as ddmin does, instead of the
+ * paper's fixed-stride blocks of exactly S with a short remainder; block shape only steers which
+ * 1-minimal result is reached, not the guarantee.
  */
 class DeferredRestartDeltaDebugger<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
-) : AbstractListMinimizer<T, PropertyPayload>(arguments) {
-  private val extraArguments = arguments.deferredRestartDeltaDebuggerArguments
+) : AbstractDeferredRestartDeltaDebugger<T, PropertyPayload>(arguments) {
+  private var partitionSize: Int? = null
 
-  override fun reduceNonEmptyInput() {
-    var partitionSize = best.size
-    while (true) {
-      partitionSize /= 2
-      if (partitionSize <= extraArguments.minPartitionSize) {
-        break
-      }
-      // The schedule halves from the original size while the list shrinks under it; a block
-      // covering the whole list would only test the empty list, which reduce() owns.
-      if (partitionSize <= extraArguments.maxPartitionSize && partitionSize < best.size) {
-        fullComplementScan(partitionSize)
-      }
+  override fun computeNextCoarseRound(): CoarseRound<T>? {
+    val size = (partitionSize ?: best.size) / 2
+    partitionSize = size
+    if (size == 0) {
+      return null
     }
-    causalChainScan()
-  }
-
-  private fun causalChainScan() {
-    var remainingSweeps = extraArguments.restartBudget
-    while (remainingSweeps > 0 && best.isNotEmpty()) {
-      if (!fullComplementScan(partitionSize = 1)) {
-        break
-      }
-      --remainingSweeps
-    }
-  }
-
-  /** Returns whether any block was deleted. */
-  private fun fullComplementScan(partitionSize: Int): Boolean {
-    arguments.log {
-      "Complement scan with partition size $partitionSize over ${best.size} elements"
-    }
-    var changed = false
-    for (block in best.chunked(partitionSize)) {
-      // [best] may have lost elements of this block to deletions elsewhere since the scan started.
-      val liveBlock = block.filter { !it.deleted }.toImmutableList()
-      if (liveBlock.isEmpty() || liveBlock.size == best.size) {
-        continue
-      }
-      val candidate = Candidate.DeletionsFromOriginal(original = best, deleted_ = liveBlock)
-      val outcome = testProperty(candidate).get()
-      if (outcome !is CandidateOutcome.Interesting) {
-        continue
-      }
-      candidate.deletedWrappers.forEach { it.markAsDeleted() }
-      updateBest(candidate.candidateWrappers, outcome.payload)
-      changed = true
-    }
-    return changed
+    val countOfBlocks = (best.size + size - 1) / size
+    return CoarseRound(
+      granularity = size,
+      blocks = PristineDeltaDebugger.countBasedPartition(best, countOfBlocks).partitions,
+    )
   }
 }

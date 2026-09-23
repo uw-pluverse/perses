@@ -16,7 +16,6 @@
  */
 package org.perses.listminimizer
 
-import org.perses.util.lazyAssert
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.CandidateOutcome
 import org.perses.util.lazyAssert
@@ -126,23 +125,11 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
       Candidate.SublistFromOriginal(original = best, candidate_ = complement),
     ).get()
 
-  private fun reduceComplements(originalPartitionList: PartitionList<ElementWrapper<T>>): Int {
+  private fun reduceComplements(partitionList: PartitionList<ElementWrapper<T>>): Int {
     arguments.log {
-      "Reducing complements: ${toCompactString(originalPartitionList)}"
+      "Reducing complements: ${toCompactString(partitionList)}"
     }
-    var currentPartitionList = originalPartitionList
-    var countOfDeletedPartitions = 0
-    for (partition in currentPartitionList.partitions) {
-      val complement = computeComplement(partition)
-      val outcome = testComplement(complement)
-      if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
-        continue
-      }
-      ++countOfDeletedPartitions
-      updateBest(complement, outcome.payload)
-      currentPartitionList = currentPartitionList.duplicateByRemovePartition(partition)
-    }
-    return countOfDeletedPartitions
+    return deleteRemovableBlocksInOnePass(partitionList.partitions)
   }
 
   abstract fun partition(

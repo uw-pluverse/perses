@@ -32,4 +32,5 @@ enum class EnumListMinimizerType {
   ONE_BY_ONE,
   ADAPTIVE_GAIN_DRIVEN,
   DRDD,
+  WDRDD,
 }

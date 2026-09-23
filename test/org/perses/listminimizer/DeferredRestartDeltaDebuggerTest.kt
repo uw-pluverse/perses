@@ -73,6 +73,30 @@ class DeferredRestartDeltaDebuggerTest : AbstractListMinimizerTest<String>() {
   }
 
   @Test
+  fun testBlocksAreBalanced() {
+    val history =
+      runMinimizerTest(
+        input = ImmutableList.of("a", "b", "c", "d", "e", "f", "g"),
+        property = listOf("a"),
+        expected = listOf("a"),
+      ) {
+        DeferredRestartDeltaDebugger(it)
+      }
+    assertThat(history)
+      .containsExactly(
+        "",
+        // S = 3 cuts 7 elements into [a b c] [d e] [f g], not [a b c] [d e f] [g].
+        "defg",
+        "abcfg",
+        "abc",
+        // Single-element sweep #1; sweep #2 has nothing but the whole list to delete.
+        "bc",
+        "ac",
+        "a",
+      ).inOrder()
+  }
+
+  @Test
   fun testRandomContainmentPropertiesAreMinimizedExactly() {
     val random = Random(20260922)
     repeat(200) {

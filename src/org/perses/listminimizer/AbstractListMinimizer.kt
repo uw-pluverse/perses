@@ -19,6 +19,7 @@ package org.perses.listminimizer
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Sets
 import org.perses.reduction.CandidateOutcome
+import org.perses.util.toImmutableList
 import org.perses.util.transformToImmutableList
 
 abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
@@ -111,6 +112,33 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
       configuration,
       sizeOfCurrentMinimizationResult = best.size,
     )
+  }
+
+  /**
+   * Tries deleting each block from [best] in turn, keeping every deletion that preserves the
+   * property and moving on to the next block without restarting (the "full complement scan" of
+   * drdd). The blocks must be contiguous in [best] when the scan starts. Returns the number of
+   * blocks deleted.
+   */
+  protected fun deleteRemovableBlocksInOnePass(blocks: List<List<ElementWrapper<T>>>): Int {
+    var countOfDeletedBlocks = 0
+    for (block in blocks) {
+      // [best] may have lost elements of this block to deletions elsewhere since the scan started.
+      val liveBlock = block.filter { !it.deleted }.toImmutableList()
+      // A block covering the whole list would only test the empty list, which reduce() owns.
+      if (liveBlock.isEmpty() || liveBlock.size == best.size) {
+        continue
+      }
+      val candidate = Candidate.DeletionsFromOriginal(original = best, deleted_ = liveBlock)
+      val outcome = testProperty(candidate).get()
+      if (outcome !is CandidateOutcome.Interesting) {
+        continue
+      }
+      candidate.deletedWrappers.forEach { it.markAsDeleted() }
+      updateBest(candidate.candidateWrappers, outcome.payload)
+      ++countOfDeletedBlocks
+    }
+    return countOfDeletedBlocks
   }
 
   fun reduce(): ImmutableList<out T> {

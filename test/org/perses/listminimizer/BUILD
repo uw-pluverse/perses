@@ -134,6 +134,19 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "WeightedDeferredRestartDeltaDebuggerTest",
+    srcs = ["WeightedDeferredRestartDeltaDebuggerTest.kt"],
+    deps = [
+        ":AbstractListMinimizerTest",
+        ":AbstractWeightedMinimizerTest",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer",
+        "//src/org/perses/listminimizer:interfaces",
+    ],
+)
+
+kt_jvm_test(
     name = "AbstractProbabilisticDeltaDebuggerTest",
     srcs = ["AbstractProbabilisticDeltaDebuggerTest.kt"],
     deps = [
