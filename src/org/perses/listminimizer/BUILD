@@ -58,6 +58,7 @@ kt_jvm_library(
         "CounterBasedDeltaDebugger.kt",
         "DeferredRestartDeltaDebugger.kt",
         "OneByOneMinimizer.kt",
+        "OneMinimalCounterBasedDeltaDebugger.kt",
         "PristineDeferredRestartDeltaDebugger.kt",
         "PristineDeltaDebugger.kt",
         "PristineProbabilisticDeltaDebugger.kt",

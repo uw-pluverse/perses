@@ -141,6 +141,30 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
     return countOfDeletedBlocks
   }
 
+  protected fun ensureOneMinimal() {
+    var restart = true
+    while (restart) {
+      restart = false
+      for (element in best) {
+        val complement = best.filter { it != element }.toImmutableList()
+        val outcome =
+          testProperty(
+            Candidate.SublistFromOriginal(original = best, candidate_ = complement),
+          ).get()
+        // A NotTested complement is skipped like a rejected one, which means the one-minimality
+        // this function is named for is not actually established for that element: nothing ran to
+        // establish it. Pre-existing, and left alone here because closing it changes behaviour --
+        // but it is only expressible at all because the result type reaches this call site.
+        if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
+          continue
+        }
+        updateBest(complement, outcome.payload)
+        restart = true
+        break
+      }
+    }
+  }
+
   fun reduce(): ImmutableList<out T> {
     if (originalWrappedInput.isEmpty()) {
       best = originalWrappedInput

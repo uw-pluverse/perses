@@ -100,6 +100,10 @@ object ListMinimizerFactory {
       EnumListMinimizerType.PRISTINE_WDRDD -> {
         PristineWeightedDeferredRestartDeltaDebugger(arguments)
       }
+
+      EnumListMinimizerType.CDD_ONE_MINIMAL -> {
+        OneMinimalCounterBasedDeltaDebugger(arguments)
+      }
     }
 
   fun <T : Any, Payload> create(

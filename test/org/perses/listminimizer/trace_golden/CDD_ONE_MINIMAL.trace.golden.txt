@@ -1,0 +1,174 @@
+== five_elements_a_e
+input: a b c d e
+property: interesting iff it contains a and e
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e
+  3 UNINTERESTING d
+  4 UNINTERESTING a b c
+  5 UNINTERESTING b c d e
+  6 INTERESTING   a c d e
+  7 INTERESTING   a d e
+  8 INTERESTING   a e
+  9 UNINTERESTING a
+ 10 UNINTERESTING e
+ 11 UNINTERESTING a
+result: a e
+
+== seven_elements_a
+input: a b c d e f g
+property: interesting iff it contains a
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g
+  3 UNINTERESTING b c d
+  4 INTERESTING   a d e f g
+  5 INTERESTING   a f g
+  6 INTERESTING   a
+  7 UNINTERESTING (empty)
+  8 UNINTERESTING (empty)
+result: a
+
+== eight_elements_a_e
+input: a b c d e f g h
+property: interesting iff it contains a and e
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h
+  3 UNINTERESTING a b c d
+  4 UNINTERESTING c d e f g h
+  5 INTERESTING   a b e f g h
+  6 UNINTERESTING a b g h
+  7 INTERESTING   a b e f
+  8 UNINTERESTING b e f
+  9 INTERESTING   a e f
+ 10 UNINTERESTING a f
+ 11 INTERESTING   a e
+ 12 UNINTERESTING e
+ 13 UNINTERESTING a
+result: a e
+
+== eight_elements_c_h
+input: a b c d e f g h
+property: interesting iff it contains c and h
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h
+  3 UNINTERESTING a b c d
+  4 INTERESTING   c d e f g h
+  5 UNINTERESTING e f g h
+  6 INTERESTING   c d g h
+  7 UNINTERESTING c d
+  8 UNINTERESTING d g h
+  9 INTERESTING   c g h
+ 10 INTERESTING   c h
+ 11 UNINTERESTING c
+ 12 UNINTERESTING h
+ 13 UNINTERESTING c
+result: c h
+
+== eight_elements_c_d_h
+input: a b c d e f g h
+property: interesting iff it contains c, d and h
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h
+  3 UNINTERESTING a b c d
+  4 INTERESTING   c d e f g h
+  5 UNINTERESTING e f g h
+  6 INTERESTING   c d g h
+  7 UNINTERESTING c d
+  8 UNINTERESTING d g h
+  9 UNINTERESTING c g h
+ 10 INTERESTING   c d h
+ 11 UNINTERESTING c d
+ 12 UNINTERESTING d h
+ 13 UNINTERESTING c h
+ 14 UNINTERESTING c d
+result: c d h
+
+== eight_elements_a_c_e_f
+input: a b c d e f g h
+property: interesting iff it contains a, c, e and f
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h
+  3 UNINTERESTING a b c d
+  4 UNINTERESTING c d e f g h
+  5 UNINTERESTING a b e f g h
+  6 UNINTERESTING a b c d g h
+  7 INTERESTING   a b c d e f
+  8 UNINTERESTING b c d e f
+  9 INTERESTING   a c d e f
+ 10 UNINTERESTING a d e f
+ 11 INTERESTING   a c e f
+ 12 UNINTERESTING a c f
+ 13 UNINTERESTING a c e
+ 14 UNINTERESTING c e f
+ 15 UNINTERESTING a e f
+ 16 UNINTERESTING a c f
+ 17 UNINTERESTING a c e
+result: a c e f
+
+== sixteen_elements_c_l
+input: a b c d e f g h i j k l m n o p
+property: interesting iff it contains c and l
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING e f g h i j k l m n o p
+  3 INTERESTING   a b c d i j k l m n o p
+  4 UNINTERESTING a b c d m n o p
+  5 INTERESTING   a b c d i j k l
+  6 INTERESTING   c d i j k l
+  7 UNINTERESTING i j k l
+  8 INTERESTING   c d k l
+  9 UNINTERESTING c d
+ 10 UNINTERESTING d k l
+ 11 INTERESTING   c k l
+ 12 INTERESTING   c l
+ 13 UNINTERESTING c
+ 14 UNINTERESTING l
+ 15 UNINTERESTING c
+result: c l
+
+== weighted_2_5_10
+input: 1 2 3 5 10
+property: each element weighs its value; interesting iff it contains 2, 5 and 10
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING 10
+  3 UNINTERESTING 5
+  4 UNINTERESTING 1 2 3
+  5 INTERESTING   2 3 5 10
+  6 UNINTERESTING 3 5 10
+  7 INTERESTING   2 5 10
+  8 UNINTERESTING 2 10
+  9 UNINTERESTING 2 5
+ 10 UNINTERESTING 5 10
+ 11 UNINTERESTING 2 10
+ 12 UNINTERESTING 2 5
+result: 2 5 10
+
+== weighted_1_5_10
+input: 1 2 3 5 10
+property: each element weighs its value; interesting iff it contains 1, 5 and 10
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING 10
+  3 UNINTERESTING 5
+  4 UNINTERESTING 1 2 3
+  5 UNINTERESTING 2 3 5 10
+  6 INTERESTING   1 3 5 10
+  7 INTERESTING   1 5 10
+  8 UNINTERESTING 1 10
+  9 UNINTERESTING 1 5
+ 10 UNINTERESTING 5 10
+ 11 UNINTERESTING 1 10
+ 12 UNINTERESTING 1 5
+result: 1 5 10
+
+== causal_chain
+input: x 1 2 3 4
+property: interesting iff it contains x and its digits are exactly 1..k, so digit k is removable only once digit k+1 is gone
+  1 UNINTERESTING (empty)
+  2 UNINTERESTING 4
+  3 UNINTERESTING 3
+  4 INTERESTING   x 1 2
+  5 UNINTERESTING 1 2
+  6 UNINTERESTING x 2
+  7 INTERESTING   x 1
+  8 UNINTERESTING 1
+  9 INTERESTING   x
+ 10 UNINTERESTING (empty)
+result: x

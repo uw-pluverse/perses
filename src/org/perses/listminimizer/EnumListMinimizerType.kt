@@ -35,4 +35,5 @@ enum class EnumListMinimizerType {
   WDRDD,
   PRISTINE_DRDD,
   PRISTINE_WDRDD,
+  CDD_ONE_MINIMAL,
 }

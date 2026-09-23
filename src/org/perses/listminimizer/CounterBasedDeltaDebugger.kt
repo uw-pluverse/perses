@@ -22,7 +22,7 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.random.Random
 
-class CounterBasedDeltaDebugger<T : Any, PropertyPayload>(
+open class CounterBasedDeltaDebugger<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
   random: Random? = null,
   private val initialProbability: Double = 0.25,
