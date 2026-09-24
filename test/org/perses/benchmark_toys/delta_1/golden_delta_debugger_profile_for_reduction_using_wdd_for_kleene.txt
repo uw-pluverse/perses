@@ -89,7 +89,6 @@ Partition count: 2. [[4]#1, [5]#1]
 Reducing partitions:  Partition count: 2. [[4]#1, [5]#1]
 Try deleting: [5]: Interesting. Local rate: 2/6=33.33%
 New best is found: [4]
-Try deleting: [4]: Uninteresting. Local rate: 1/6=16.67%
 Reduction WeightedDeltaDebugger ends. Result=[4]
 
 Reduction starts: algorithm=WeightedDeltaDebugger

@@ -772,16 +772,6 @@ Edit: [delete_24]
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
-
-    --file: t.c--
-    int printf(const char*, ...);
-    int main (int argc, char *argv[]) {
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][WDD](29/56)  Try deleting [4]#1: Uninteresting. Local ratio: 1/6=16.67%. Global ratio:29/56=51.79%
 FixPt[1][node_priority][WDD](29/56)  Minimizer WeightedDeltaDebugger ends. Result=[4]#1. Local ratio: 1/6=16.67%. Global ratio:29/56=51.79%
 ===================Node reduction is done===================
 
@@ -1062,7 +1052,7 @@ It took less than 1 second to cancel the task.
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 15
+    size before clearance = 14
 ------------------------------------------------------------
 
 
@@ -4021,7 +4011,7 @@ FineGritLatraReducer.Reparse      1             1       0              0
 ------------------------------------- End --------------------------------------
 #test success = 4
 #test failure = 42
-#test result cache hits = 45
+#test result cache hits = 44
 #test execution cancelled = 5
 #node edit action set cache hits = 46
 #external test execution cache hits = 0
