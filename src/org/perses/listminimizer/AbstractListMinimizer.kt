@@ -132,25 +132,38 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
     return countOfDeletedBlocks
   }
 
+  /** Deletes [deleted], a sublist of [best], if that preserves the property. */
+  protected fun tryDeleting(deleted: ImmutableList<ElementWrapper<T>>): Boolean =
+    tryCandidate(Candidate.DeletionsFromOriginal(original = best, deleted_ = deleted))
+
+  /** Shrinks [best] to [kept], a sublist of it, if that preserves the property. */
+  protected fun tryShrinkingTo(kept: ImmutableList<ElementWrapper<T>>): Boolean =
+    tryCandidate(Candidate.SublistFromOriginal(original = best, candidate_ = kept))
+
   /**
-   * Deletes [block], which must be contiguous in [best], if [best] without it preserves the
-   * property. Returns whether it was deleted.
-   *
-   * A NotTested outcome counts as a rejection, so a cached or cancelled test never deletes.
+   * Returns whether [candidate] preserved the property and became the new [best]. A NotTested
+   * outcome counts as a rejection, so a cached or cancelled test never changes [best].
    */
-  protected fun tryDeletingBlock(block: ImmutableList<ElementWrapper<T>>): Boolean {
-    // A block covering the whole list would only test the empty list, which reduce() owns.
-    if (block.size == best.size) {
-      return false
-    }
-    val candidate = Candidate.DeletionsFromOriginal(original = best, deleted_ = block)
+  private fun tryCandidate(candidate: Candidate<T>): Boolean {
     val outcome = testProperty(candidate).get()
     if (outcome !is CandidateOutcome.Interesting) {
       return false
     }
-    candidate.deletedWrappers.forEach { it.markAsDeleted() }
-    updateBest(candidate.candidateWrappers, outcome.payload)
+    commitDeletion(candidate, outcome.payload)
     return true
+  }
+
+  /** [tryDeleting], except that a block covering the whole list is never tried. */
+  protected fun tryDeletingBlock(block: ImmutableList<ElementWrapper<T>>): Boolean =
+    // Deleting the whole list would only test the empty list, which reduce() owns.
+    block.size != best.size && tryDeleting(block)
+
+  protected fun commitDeletion(
+    candidate: Candidate<T>,
+    payload: PropertyPayload,
+  ) {
+    candidate.deletedWrappers.forEach { it.markAsDeleted() }
+    updateBest(candidate.candidateWrappers, payload)
   }
 
   /**
@@ -190,14 +203,8 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
       // test whether the entire input can be deleted.
       if (arguments.needToTestEmpty) {
         arguments.log { "Testing the empty input." }
-        val empty = ImmutableList.of<ElementWrapper<T>>()
-        testProperty(
-          Candidate.SublistFromOriginal(original = best, candidate_ = empty),
-        ).get().let {
-          if (it is CandidateOutcome.Interesting) {
-            updateBest(empty, it.payload)
-            return convertBestAsRawElements()
-          }
+        if (tryShrinkingTo(ImmutableList.of())) {
+          return convertBestAsRawElements()
         }
         if (best.size == 1) {
           arguments.log {

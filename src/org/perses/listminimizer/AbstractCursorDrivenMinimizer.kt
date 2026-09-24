@@ -43,10 +43,7 @@ abstract class AbstractCursorDrivenMinimizer<T : Any, PropertyPayload>(
           // already hands back a handle, so no wrapping is needed.
           { candidate -> testProperty(candidate) }
         },
-      commit = { candidate, payload ->
-        candidate.deletedWrappers.forEach { it.markAsDeleted() }
-        updateBest(candidate.candidateWrappers, payload)
-      },
+      commit = ::commitDeletion,
     ).run(createCursor())
   }
 }

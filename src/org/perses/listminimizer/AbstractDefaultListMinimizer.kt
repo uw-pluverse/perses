@@ -17,7 +17,6 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.CandidateOutcome
 import org.perses.util.lazyAssert
 
 abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPayload>(
@@ -91,16 +90,9 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
     for (partition in partitionList.partitions) {
       val elements = partition.asImmutableList()
       lazyAssert { elements.isNotEmpty() }
-      val outcome =
-        testProperty(
-          Candidate.SublistFromOriginal(original = best, candidate_ = elements),
-        ).get()
-
-      if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
-        continue
+      if (tryShrinkingTo(elements)) {
+        return true
       }
-      updateBest(elements, outcome.payload)
-      return true
     }
     return false
   }
@@ -117,13 +109,6 @@ abstract class AbstractDefaultListMinimizer<T : Any, PropertyPayload, ElementPay
     }
     return result.build()
   }
-
-  protected fun testComplement(
-    complement: ImmutableList<ElementWrapper<T>>,
-  ): CandidateOutcome<PropertyPayload> =
-    testProperty(
-      Candidate.SublistFromOriginal(original = best, candidate_ = complement),
-    ).get()
 
   private fun reduceComplements(partitionList: PartitionList<ElementWrapper<T>>): Int {
     arguments.log {

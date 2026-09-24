@@ -16,8 +16,6 @@
  */
 package org.perses.listminimizer
 
-import org.perses.reduction.CandidateOutcome
-import org.perses.util.CollectionUtil
 import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 import kotlin.random.Random
@@ -57,17 +55,7 @@ abstract class AbstractProbabilisticDeltaDebugger<T : Any, PropertyPayload, Payl
         hasTriedDeleteAll = true
       }
 
-      val config =
-        Candidate.DeletionsFromOriginal(
-          original = best,
-          deleted_ = toBeDeleted.toImmutableList(),
-        )
-
-      val outcome = testProperty(config).get()
-      if (outcome is CandidateOutcome.Interesting<PropertyPayload>) {
-        val newBest = CollectionUtil.computeDifference(best, toBeDeleted)
-        updateBest(newBest, outcome.payload)
-      } else {
+      if (!tryDeleting(toBeDeleted.toImmutableList())) {
         updatePayload(toBeDeleted)
       }
     }

@@ -17,7 +17,6 @@
 package org.perses.listminimizer
 
 import com.google.common.collect.ImmutableList
-import org.perses.reduction.CandidateOutcome
 import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 
@@ -97,13 +96,10 @@ class WeightedDeltaDebugger<T : Any, PropertyPayload>(
     while (restart) {
       restart = false
       for (partition in currentPartitionList.partitions) {
-        val complement = computeComplement(partition)
-        val outcome = testComplement(complement)
-        if (outcome !is CandidateOutcome.Interesting<PropertyPayload>) {
+        if (!tryShrinkingTo(computeComplement(partition))) {
           continue
         }
         ++countOfDeletedPartitions
-        updateBest(complement, outcome.payload)
         val partitions = currentPartitionList.partitions.toMutableList()
         partitions.remove(partition)
         currentPartitionList = PartitionList(partitions.toImmutableList())

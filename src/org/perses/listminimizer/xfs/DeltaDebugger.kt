@@ -17,12 +17,9 @@
 package org.perses.listminimizer.xfs
 
 import org.perses.listminimizer.AbstractListMinimizer
-import org.perses.listminimizer.Candidate.DeletionsFromOriginal
 import org.perses.listminimizer.ElementWrapper
 import org.perses.listminimizer.ListMinimizerArguments
 import org.perses.listminimizer.Partition
-import org.perses.reduction.CandidateOutcome
-import org.perses.util.CollectionUtil
 import org.perses.util.lazyAssert
 import org.perses.util.toImmutableList
 import java.util.LinkedList
@@ -43,16 +40,9 @@ class DeltaDebugger<T : Any, PropertyPayload>(
         val iterator = worklist.iterator()
         while (iterator.hasNext()) {
           val partition = iterator.next()
-          val deletedInThisIteration = partition.asSequence().toImmutableList()
-          val testResult =
-            testProperty(
-              DeletionsFromOriginal(original = best, deleted_ = deletedInThisIteration),
-            ).get()
-          if (testResult !is CandidateOutcome.Interesting) {
+          if (!tryDeleting(partition.asSequence().toImmutableList())) {
             continue
           }
-          val newBest = CollectionUtil.computeDifference(best, deletedInThisIteration)
-          updateBest(newBest, testResult.payload)
           iterator.remove()
           shouldContinue = true
         }
