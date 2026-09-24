@@ -18,6 +18,7 @@ package org.perses.listminimizer
 
 import org.perses.listminimizer.localexhaust.LocalExhaustWindowedMinimizer
 import org.perses.listminimizer.xfs.DeltaDebugger
+import org.perses.listminimizer.xfs.OneMinimalDfsListMinimizer
 import org.perses.listminimizer.xfs.UnweightedBfsListMinimizer
 import org.perses.listminimizer.xfs.UnweightedDfsListMinimizer
 import org.perses.listminimizer.xfs.WeightedBfsListMinimizer
@@ -107,6 +108,10 @@ object ListMinimizerFactory {
 
       EnumListMinimizerType.LITHIUM_MINIMIZE -> {
         LithiumMinimizer(arguments)
+      }
+
+      EnumListMinimizerType.DFS_ONE_MINIMAL -> {
+        OneMinimalDfsListMinimizer(arguments)
       }
     }
 

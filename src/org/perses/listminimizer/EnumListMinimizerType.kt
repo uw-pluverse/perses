@@ -37,4 +37,5 @@ enum class EnumListMinimizerType {
   PRISTINE_WDRDD,
   CDD_ONE_MINIMAL,
   LITHIUM_MINIMIZE,
+  DFS_ONE_MINIMAL,
 }

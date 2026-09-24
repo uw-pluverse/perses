@@ -162,6 +162,19 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "OneMinimalDfsListMinimizerTest",
+    srcs = ["OneMinimalDfsListMinimizerTest.kt"],
+    deps = [
+        ":AbstractListMinimizerTest",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer:interfaces",
+        "//src/org/perses/listminimizer/xfs",
+        "//src/org/perses/reduction:property_test_result",
+    ],
+)
+
+kt_jvm_test(
     name = "OneMinimalCounterBasedDeltaDebuggerTest",
     srcs = ["OneMinimalCounterBasedDeltaDebuggerTest.kt"],
     deps = [
@@ -309,6 +322,7 @@ TRACED_LIST_MINIMIZERS = [
     "PRISTINE_WDRDD",
     "CDD_ONE_MINIMAL",
     "LITHIUM_MINIMIZE",
+    "DFS_ONE_MINIMAL",
 ]
 
 [

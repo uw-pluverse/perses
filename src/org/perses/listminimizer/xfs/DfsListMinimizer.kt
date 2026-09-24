@@ -49,3 +49,19 @@ class UnweightedDfsListMinimizer<T : Any, PropertyPayload>(
 class WeightedDfsListMinimizer<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
 ) : AbstractDfsListMinimizer<T, PropertyPayload>(arguments, SplitPolicy.WEIGHTED_EVEN)
+
+/**
+ * [UnweightedDfsListMinimizer] with a 1-minimal result.
+ *
+ * DFS tests each partition once and only splits the ones that fail, so an element found necessary
+ * alone is never retried after a later deletion makes it removable. This runs DFS unchanged and
+ * then [ensureOneMinimal], so every survivor has failed alone against the final best.
+ */
+class OneMinimalDfsListMinimizer<T : Any, PropertyPayload>(
+  arguments: ListMinimizerArguments<T, PropertyPayload>,
+) : AbstractDfsListMinimizer<T, PropertyPayload>(arguments, SplitPolicy.EVEN) {
+  override fun reduceNonEmptyInput() {
+    super.reduceNonEmptyInput()
+    ensureOneMinimal()
+  }
+}

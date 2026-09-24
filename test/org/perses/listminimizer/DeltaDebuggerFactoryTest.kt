@@ -22,6 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.listminimizer.xfs.DeltaDebugger
+import org.perses.listminimizer.xfs.OneMinimalDfsListMinimizer
 import org.perses.listminimizer.xfs.UnweightedBfsListMinimizer
 import org.perses.reduction.CandidateOutcome
 import org.perses.reduction.TestScriptVerdict
@@ -74,6 +75,9 @@ class DeltaDebuggerFactoryTest {
     }
     ListMinimizerFactory.create(EnumListMinimizerType.LITHIUM_MINIMIZE, args).let {
       assertThat(it).isInstanceOf(LithiumMinimizer::class.java)
+    }
+    ListMinimizerFactory.create(EnumListMinimizerType.DFS_ONE_MINIMAL, args).let {
+      assertThat(it).isInstanceOf(OneMinimalDfsListMinimizer::class.java)
     }
   }
 
