@@ -125,20 +125,32 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
     for (block in blocks) {
       // [best] may have lost elements of this block to deletions elsewhere since the scan started.
       val liveBlock = block.filter { !it.deleted }.toImmutableList()
-      // A block covering the whole list would only test the empty list, which reduce() owns.
-      if (liveBlock.isEmpty() || liveBlock.size == best.size) {
-        continue
+      if (liveBlock.isNotEmpty() && tryDeletingBlock(liveBlock)) {
+        ++countOfDeletedBlocks
       }
-      val candidate = Candidate.DeletionsFromOriginal(original = best, deleted_ = liveBlock)
-      val outcome = testProperty(candidate).get()
-      if (outcome !is CandidateOutcome.Interesting) {
-        continue
-      }
-      candidate.deletedWrappers.forEach { it.markAsDeleted() }
-      updateBest(candidate.candidateWrappers, outcome.payload)
-      ++countOfDeletedBlocks
     }
     return countOfDeletedBlocks
+  }
+
+  /**
+   * Deletes [block], which must be contiguous in [best], if [best] without it preserves the
+   * property. Returns whether it was deleted.
+   *
+   * A NotTested outcome counts as a rejection, so a cached or cancelled test never deletes.
+   */
+  protected fun tryDeletingBlock(block: ImmutableList<ElementWrapper<T>>): Boolean {
+    // A block covering the whole list would only test the empty list, which reduce() owns.
+    if (block.size == best.size) {
+      return false
+    }
+    val candidate = Candidate.DeletionsFromOriginal(original = best, deleted_ = block)
+    val outcome = testProperty(candidate).get()
+    if (outcome !is CandidateOutcome.Interesting) {
+      return false
+    }
+    candidate.deletedWrappers.forEach { it.markAsDeleted() }
+    updateBest(candidate.candidateWrappers, outcome.payload)
+    return true
   }
 
   /**
@@ -150,21 +162,12 @@ abstract class AbstractListMinimizer<T : Any, PropertyPayload>(
   protected fun ensureOneMinimal() {
     var position = 0
     var countOfConsecutiveFailures = 0
-    // Deleting the last element tests the empty list, which reduce() owns.
-    while (best.size > 1 && countOfConsecutiveFailures < best.size) {
+    while (countOfConsecutiveFailures < best.size) {
       position %= best.size
-      val element = best[position]
-      val complement = best.filter { it != element }.toImmutableList()
-      val outcome =
-        testProperty(
-          Candidate.SublistFromOriginal(original = best, candidate_ = complement),
-        ).get()
-      // A NotTested complement is skipped like a rejected one, which means the one-minimality
-      // this function is named for is not actually established for that element: nothing ran to
-      // establish it. Pre-existing, and left alone here because closing it changes behaviour --
-      // but it is only expressible at all because the result type reaches this call site.
-      if (outcome is CandidateOutcome.Interesting<PropertyPayload>) {
-        updateBest(complement, outcome.payload)
+      // A NotTested outcome is skipped like a rejected one, which means the one-minimality this
+      // function is named for is not actually established for that element: nothing ran to
+      // establish it. Pre-existing, and left alone here because closing it changes behaviour.
+      if (tryDeletingBlock(ImmutableList.of(best[position]))) {
         countOfConsecutiveFailures = 0
       } else {
         ++countOfConsecutiveFailures

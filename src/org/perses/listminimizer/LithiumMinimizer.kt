@@ -16,7 +16,6 @@
  */
 package org.perses.listminimizer
 
-import org.perses.reduction.CandidateOutcome
 import kotlin.math.max
 import kotlin.math.min
 
@@ -37,8 +36,7 @@ import kotlin.math.min
  *
  * Lithium de-duplicates attempts by content, which the config cache enabled here reproduces.
  *
- * One deviation: a chunk spanning the whole list is not tried, because that tests the empty list,
- * which [reduce] owns.
+ * One deviation: a chunk spanning the whole list is not tried (see [tryDeletingBlock]).
  */
 class LithiumMinimizer<T : Any, PropertyPayload>(
   arguments: ListMinimizerArguments<T, PropertyPayload>,
@@ -63,7 +61,7 @@ class LithiumMinimizer<T : Any, PropertyPayload>(
         arguments.log { "Round with chunk size $chunkSize over ${best.size} elements" }
       }
       val chunkStart = max(0, chunkEnd - chunkSize)
-      if (tryDeleting(chunkStart, chunkEnd)) {
+      if (tryDeletingBlock(best.subList(chunkStart, chunkEnd))) {
         removedChunks = true
         // An element deleted elsewhere also leaves [best], so the index may have run past its end.
         chunkEnd = min(chunkStart, best.size)
@@ -71,26 +69,6 @@ class LithiumMinimizer<T : Any, PropertyPayload>(
         chunkEnd -= if (chunkSize <= 2) 1 else chunkSize
       }
     }
-  }
-
-  private fun tryDeleting(
-    chunkStart: Int,
-    chunkEnd: Int,
-  ): Boolean {
-    if (chunkEnd - chunkStart == best.size) {
-      return false
-    }
-    val candidate =
-      Candidate.DeletionsFromOriginal(
-        original = best,
-        deleted_ = best.subList(chunkStart, chunkEnd),
-      )
-    val outcome = testProperty(candidate).get()
-    if (outcome !is CandidateOutcome.Interesting) {
-      return false
-    }
-    updateBest(candidate.candidateWrappers, outcome.payload)
-    return true
   }
 
   companion object {
