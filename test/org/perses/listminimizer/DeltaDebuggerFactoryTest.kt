@@ -72,6 +72,9 @@ class DeltaDebuggerFactoryTest {
     ListMinimizerFactory.create(EnumListMinimizerType.CDD_ONE_MINIMAL, args).let {
       assertThat(it).isInstanceOf(OneMinimalCounterBasedDeltaDebugger::class.java)
     }
+    ListMinimizerFactory.create(EnumListMinimizerType.LITHIUM_MINIMIZE, args).let {
+      assertThat(it).isInstanceOf(LithiumMinimizer::class.java)
+    }
   }
 
   @Test

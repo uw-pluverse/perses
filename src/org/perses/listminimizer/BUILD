@@ -57,6 +57,7 @@ kt_jvm_library(
         "AdaptiveGainDrivenListMinimizer.kt",
         "CounterBasedDeltaDebugger.kt",
         "DeferredRestartDeltaDebugger.kt",
+        "LithiumMinimizer.kt",
         "OneByOneMinimizer.kt",
         "OneMinimalCounterBasedDeltaDebugger.kt",
         "PristineDeferredRestartDeltaDebugger.kt",

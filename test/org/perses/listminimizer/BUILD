@@ -149,6 +149,19 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "LithiumMinimizerTest",
+    srcs = ["LithiumMinimizerTest.kt"],
+    deps = [
+        ":AbstractListMinimizerTest",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/listminimizer",
+        "//src/org/perses/listminimizer:interfaces",
+        "//src/org/perses/reduction:property_test_result",
+    ],
+)
+
+kt_jvm_test(
     name = "OneMinimalCounterBasedDeltaDebuggerTest",
     srcs = ["OneMinimalCounterBasedDeltaDebuggerTest.kt"],
     deps = [
@@ -295,6 +308,7 @@ TRACED_LIST_MINIMIZERS = [
     "PRISTINE_DRDD",
     "PRISTINE_WDRDD",
     "CDD_ONE_MINIMAL",
+    "LITHIUM_MINIMIZE",
 ]
 
 [

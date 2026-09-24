@@ -104,6 +104,10 @@ object ListMinimizerFactory {
       EnumListMinimizerType.CDD_ONE_MINIMAL -> {
         OneMinimalCounterBasedDeltaDebugger(arguments)
       }
+
+      EnumListMinimizerType.LITHIUM_MINIMIZE -> {
+        LithiumMinimizer(arguments)
+      }
     }
 
   fun <T : Any, Payload> create(
