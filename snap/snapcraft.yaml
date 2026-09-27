@@ -37,7 +37,7 @@ parts:
       - bin/perses
 
   # The fat "deploy" jar, built by Bazel and dropped into dist/ before packing.
-  # See packaging/snap/build-snap.sh, which produces dist/perses_deploy.jar.
+  # See snap/local/build-snap.sh, which produces dist/perses_deploy.jar.
   perses:
     after: [wrapper]
     plugin: dump
@@ -50,8 +50,8 @@ parts:
       craftctl default
       # Snap versions are limited to 32 chars and a restricted charset, so use a
       # clean static default. Override at build time with SNAPCRAFT_PERSES_VERSION
-      # (e.g. to match a release tag: SNAPCRAFT_PERSES_VERSION=2.5).
-      craftctl set version="${SNAPCRAFT_PERSES_VERSION:-2.5}"
+      # (e.g. to match a release tag: SNAPCRAFT_PERSES_VERSION=2.7).
+      craftctl set version="${SNAPCRAFT_PERSES_VERSION:-2.7}"
 
   # Bundle a full JDK (not just a JRE) so users need no Java on the host AND the
   # in-process compiler API works: perses calls ToolProvider.getSystemJavaCompiler()

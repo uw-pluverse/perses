@@ -58,11 +58,12 @@ SNAPCRAFT_BUILD_ENVIRONMENT=multipass snap/local/build-snap.sh
 
 ### Versioning
 
-The version defaults to `2.5`. Override it at build time (e.g. to match a release
-tag):
+The version defaults to `2.7`; keep it in sync with
+`version/org/perses/version/VERSION`. Override it at build time (e.g. to match a
+release tag):
 
 ```bash
-SNAPCRAFT_PERSES_VERSION=2.6 snap/local/build-snap.sh
+SNAPCRAFT_PERSES_VERSION=2.8 snap/local/build-snap.sh
 ```
 
 Snap versions are capped at 32 characters and a restricted charset, so keep it a
@@ -74,7 +75,7 @@ short, clean string (not a raw `git describe`).
 snap's confinement:
 
 ```bash
-sudo snap install --classic --dangerous ./perses_2.5_amd64.snap
+sudo snap install --classic --dangerous ./perses_*.snap
 perses --help
 sudo snap remove perses          # when done
 ```
@@ -109,7 +110,7 @@ First-time publishers must create a Snap Store developer account — see
 2. Upload and release to a channel:
 
    ```bash
-   snapcraft upload --release=stable ./perses_2.5_amd64.snap
+   snapcraft upload --release=stable ./perses_*.snap
    ```
 
    Channels: `stable`, `candidate`, `beta`, `edge`. Use `edge`/`beta` for
@@ -121,4 +122,6 @@ First-time publishers must create a Snap Store developer account — see
 A classic snap cannot be released until a store reviewer approves it. Post the
 justification in `internal_doc/snap_classic_confinement_request.md` to the
 [Snapcraft forum](https://forum.snapcraft.io/) under the *store-requests*
-category. This is a one-time gate, not per-release.
+category. This is a one-time gate, not per-release. The forum does not accept
+Ubuntu One logins; it needs its own account, and new sign-ups wait for moderator
+approval.
