@@ -121,7 +121,8 @@ First-time publishers must create a Snap Store developer account — see
 
 A classic snap cannot be released until a store reviewer approves it. Post the
 justification in `internal_doc/snap_classic_confinement_request.md` to the
-[Snapcraft forum](https://forum.snapcraft.io/) under the *store-requests*
-category. This is a one-time gate, not per-release. The forum does not accept
+[Snapcraft forum](https://forum.snapcraft.io/c/store-requests/classic-confinement/26)
+under *store-requests / classic-confinement*, using the mandatory template that
+doc already follows. This is a one-time gate, not per-release. The forum does not accept
 Ubuntu One logins; it needs its own account, and new sign-ups wait for moderator
 approval.
