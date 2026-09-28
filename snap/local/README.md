@@ -58,16 +58,16 @@ SNAPCRAFT_BUILD_ENVIRONMENT=multipass snap/local/build-snap.sh
 
 ### Versioning
 
-The version defaults to `2.7`; keep it in sync with
-`version/org/perses/version/VERSION`. Override it at build time (e.g. to match a
-release tag):
+`snapcraft.yaml` reads the snap version from
+`version/org/perses/version/VERSION`, the same file the jar's `Version` class is
+generated from, so the snap's version and `perses --version` cannot disagree as
+long as the jar and the snap are built from the same tree (which
+`build-snap.sh` guarantees). There is no override: to change the version, run
+`scripts/bump_version.py` and rebuild. `verify-snap.sh` checks that the
+installed snap's version equals what the binary reports.
 
-```bash
-SNAPCRAFT_PERSES_VERSION=2.8 snap/local/build-snap.sh
-```
-
-Snap versions are capped at 32 characters and a restricted charset, so keep it a
-short, clean string (not a raw `git describe`).
+Snap versions are capped at 32 characters and a restricted charset; the
+`MAJOR.MINOR` form of the VERSION file fits comfortably.
 
 ## Install and test locally
 
@@ -84,8 +84,9 @@ sudo snap remove perses          # when done
 
 `verify-snap.sh` installs the snap (sudo), runs functional checks, and removes
 it again. It verifies the launcher runs, the bundled JDK's `javac` /
-`jdk.compiler` are present, and an end-to-end out-of-place reduction produces a
-smaller result that still passes its interestingness test:
+`jdk.compiler` are present, an end-to-end out-of-place reduction produces a
+smaller result that still passes its interestingness test, and the snap's
+version equals what `perses --version` reports:
 
 ```bash
 snap/local/verify-snap.sh                 # verifies the newest perses_*.snap

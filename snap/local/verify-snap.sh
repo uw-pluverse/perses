@@ -15,6 +15,8 @@
 #      present (the reason we bundle a JDK, not a JRE).
 #   3. End-to-end out-of-place reduction produces a smaller result that still
 #      satisfies a self-contained interestingness test.
+#   4. The snap's version (from snapcraft.yaml, which reads the VERSION file)
+#      equals the version the bundled jar reports.
 set -uo pipefail
 
 ROOT="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
@@ -113,6 +115,15 @@ else
   work=""   # keep the dir for debugging
 fi
 [ -n "$work" ] && rm -rf "$work"
+
+# --- 4. Snap version == binary version ------------------------------------
+snap_version="$(snap list "$SNAP_NAME" 2>/dev/null | awk 'NR==2{print $2}')"
+binary_version="$("$BIN" --version 2>&1 | awk '/ version [0-9]/{print $NF; exit}')"
+if [ -n "$snap_version" ] && [ "$snap_version" = "$binary_version" ]; then
+  ok "snap version matches perses --version ($snap_version)"
+else
+  bad "snap version '$snap_version' != perses --version '$binary_version'"
+fi
 
 # --- Summary ---------------------------------------------------------------
 echo ">> Result: $pass passed, $fail failed"

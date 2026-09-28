@@ -48,10 +48,16 @@ parts:
       - jar/perses_deploy.jar
     override-pull: |
       craftctl default
-      # Snap versions are limited to 32 chars and a restricted charset, so use a
-      # clean static default. Override at build time with SNAPCRAFT_PERSES_VERSION
-      # (e.g. to match a release tag: SNAPCRAFT_PERSES_VERSION=2.7).
-      craftctl set version="${SNAPCRAFT_PERSES_VERSION:-2.7}"
+      # The VERSION file is the single source the jar's Version class is generated
+      # from, so reading it here is what keeps the snap's version equal to what
+      # `perses --version` reports. No override: an override is how it drifts.
+      version_file="$CRAFT_PROJECT_DIR/version/org/perses/version/VERSION"
+      version="$(tr -d '[:space:]' < "$version_file")"
+      if [ -z "$version" ]; then
+        echo "error: $version_file is missing or empty" >&2
+        exit 1
+      fi
+      craftctl set version="$version"
 
   # Bundle a full JDK (not just a JRE) so users need no Java on the host AND the
   # in-process compiler API works: perses calls ToolProvider.getSystemJavaCompiler()

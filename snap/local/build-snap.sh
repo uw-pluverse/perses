@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Build the Perses fat jar and pack it into a snap.
 #
-#   snap/local/build-snap.sh                        # build + pack
-#   SNAPCRAFT_PERSES_VERSION=2.7 snap/local/build-snap.sh
+#   snap/local/build-snap.sh
+#
+# The snap's version is read from version/org/perses/version/VERSION by
+# snapcraft.yaml; bump it with scripts/bump_version.py, never by hand here.
 #
 # Requires: bazelisk, snapcraft. On hosts without LXD, prefix with
 # SNAPCRAFT_BUILD_ENVIRONMENT=multipass.
