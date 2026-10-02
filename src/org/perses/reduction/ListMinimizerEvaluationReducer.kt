@@ -17,6 +17,7 @@
 package org.perses.reduction
 
 import com.google.common.collect.ImmutableList
+import org.perses.grammar.AbstractParserFacade
 import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.microbenchmark.RecordedProgramTokenizer
 import org.perses.spartree.AbstractSparTreeNode
@@ -59,6 +60,17 @@ class ListMinimizerEvaluationReducer(
   /** Receives the 1-minimality of the result, once the minimizer has produced one. */
   private val reportOneMinimality: (OneMinimalityReport) -> Unit,
 ) : AbstractSparTreeReducer(reducerAnnotation, reducerContext) {
+  /**
+   * The facade of the tree the driver built: the FlatTokenList surrogate, one node per token, which
+   * cannot reject a recorded program the real grammar no longer parses. The scheduler rebuilds the
+   * tree with a reducer's preferred facade before running it, and without this override it
+   * substitutes the canonical grammar: a recording that still parses is then silently measured on
+   * that tree instead, and one that does not parse is skipped, which the driver reports as the
+   * minimizer having run zero times.
+   */
+  override fun getPreferredParserFacade(): AbstractParserFacade =
+    reducerContext.sparTreeNodeFactory.parserFacade
+
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
     if (rangesPerElement.isEmpty()) {
       return
