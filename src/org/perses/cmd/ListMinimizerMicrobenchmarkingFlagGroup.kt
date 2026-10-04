@@ -35,7 +35,10 @@ class ListMinimizerMicrobenchmarkingFlagGroup :
   @Parameter(
     names = ["--list-minimizer-microbenchmarking-mode"],
     description =
-      "RECORD captures each list minimization problem encountered. EVALUATE runs one minimizer " +
+      "RECORD captures each list minimization problem the main reduction algorithm encounters, " +
+        "and refuses to run while any other stage is on (--enable-latra false --enable-trec " +
+        "false --dyck-node-reducer OFF --line-slicer OFF turn off the ones on by default). " +
+        "EVALUATE runs one minimizer " +
         "against one recorded problem and reports its cost and result. Unset (the default) runs " +
         "a normal reduction.",
     order = 0,

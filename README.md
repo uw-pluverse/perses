@@ -328,9 +328,12 @@ Usage: org.perses.Main [options]
 
 [List Minimizer Microbenchmarking]  Options:
     --list-minimizer-microbenchmarking-mode
-      RECORD captures each list minimization problem encountered. EVALUATE 
-      runs one minimizer against one recorded problem and reports its cost and 
-      result. Unset (the default) runs a normal reduction.
+      RECORD captures each list minimization problem the main reduction 
+      algorithm encounters, and refuses to run while any other stage is on 
+      (--enable-latra false --enable-trec false --dyck-node-reducer OFF 
+      --line-slicer OFF turn off the ones on by default). EVALUATE runs one 
+      minimizer against one recorded problem and reports its cost and result. 
+      Unset (the default) runs a normal reduction.
       Possible Values: [RECORD, EVALUATE]
     --list-minimizer-microbenchmark-output
       RECORD: the directory to write recorded microbenchmarks to, one folder 

@@ -122,6 +122,20 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "RecordingPlanCheckTest",
+    srcs = ["RecordingPlanCheckTest.kt"],
+    associates = [
+        "//src/org/perses/reduction:reduction_driver",
+    ],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/reduction:abstract_reducer",
+        "//src/org/perses/reduction/scheduler",
+    ],
+)
+
+kt_jvm_test(
     name = "ReducerFactoryTest",
     srcs = ["ReducerFactoryTest.kt"],
     deps = [

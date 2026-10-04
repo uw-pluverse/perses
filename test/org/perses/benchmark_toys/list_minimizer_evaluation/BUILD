@@ -43,9 +43,15 @@ reduction_golden_test(
         RECORDED_PROGRAM,
         RECORDED_SCRIPT,
     ],
+    # The progress dump pins that only the main algorithm ran; RECORD mode refuses any other stage.
+    golden_progress_file = "golden_record_progress.txt",
     golden_reduced_file = "golden_reduced_t.c",
     other_flags = {
         "--list-minimizer-microbenchmarking-mode": "RECORD",
+        # The macro itself turns T-Rec and Vulcan off; Perses rejects a repeated flag.
+        "--enable-latra": "false",
+        "--dyck-node-reducer": "OFF",
+        "--line-slicer": "OFF",
         "--list-minimizer-microbenchmark-output": "$(RULEDIR)/recorded",
         # Below the default of 4, so a program this small still records.
         "--min-list-size-to-record": "1",

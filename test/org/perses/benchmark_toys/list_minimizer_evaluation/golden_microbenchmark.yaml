@@ -70,7 +70,7 @@ recordingContext:
     \  groupName: \"Reduction Algorithm Control\"\n  mainReductionAlgorithm: \"token_slicer\"\
     \n  cleanupReductionAlgorithm: null\n  listAllReductionAlgorithms: false\n  listAllListMinimizers:\
     \ false\n  rebuildParseTreeEachIteration: true\n  enableTokenSlicer: false\n \
-    \ enableTreeSlicer: false\n  lineSlicer: \"AUTO\"\n  defaultListMinimizerTypeForHDD:\
+    \ enableTreeSlicer: false\n  lineSlicer: \"OFF\"\n  defaultListMinimizerTypeForHDD:\
     \ \"CDD\"\n  minSlicingWindowSize: 1\n  maxSlicingWindowSize: 14\nlanguageControlFlags:\n\
     \  groupName: \"Language Control\"\n  languageName: \"\"\n  listLangs: false\n\
     \  designatedParserFacadeClassName: \"\"\n  listParserFacades: false\n  languageJarFiles:\
@@ -83,10 +83,10 @@ recordingContext:
     \ 150\nvulcanFlags:\n  groupName: \"Vulcan Reducer Control\"\n  enableVulcan:\
     \ false\n  nonDeletionIterationLimit: 10\n  windowSize: 4\n  vulcanFixpoint: false\n\
     trecFlags:\n  groupName: \"T-Rec Reducer Control\"\n  enableTRec: false\nprofilingFlags:\n\
-    \  groupName: \"Profiling\"\n  progressDumpFile: null\n  actionsetEffectProfile:\
-    \ null\n  statDumpFile: null\n  profileQueryCacheTime: null\n  profileQueryCacheTimeCSV:\
-    \ null\n  profileQueryCacheMemory: null\n  actionSetProfiler: null\n  profileListMinimizer:\
-    \ null\n  profileProgramSizeTrend: null\n  profileReductionProcessDifferentialAnalysis:\
+    \  groupName: \"Profiling\"\n  progressDumpFile: \"_record_mode_golden_test_by_default_progress.txt\"\
+    \n  actionsetEffectProfile: null\n  statDumpFile: null\n  profileQueryCacheTime:\
+    \ null\n  profileQueryCacheTimeCSV: null\n  profileQueryCacheMemory: null\n  actionSetProfiler:\
+    \ null\n  profileListMinimizer: null\n  profileProgramSizeTrend: null\n  profileReductionProcessDifferentialAnalysis:\
     \ null\n  enableWebUi: false\n  webUiPort: 9000\ncacheControlFlags:\n  groupName:\
     \ \"Cache Control\"\n  queryCaching: true\n  nodeActionSetCaching: true\n  enablePassCache:\
     \ true\n  enableGlobalCache: false\n  globalCacheFile: null\n  pathToSaveUpdatedGlobalCache:\
@@ -97,9 +97,9 @@ recordingContext:
     \ null\nexperimentFlags:\n  groupName: \"Experiment Control\"\n  onDemandFineGritReducerAnnotationClasses:\
     \ []\n  onDemandMediumGritReducerAnnotationClasses: []\n  onDemandCoarseGritReducerAnnotationClasses:\
     \ []\n  keepReductionHistory: false\n  enableErrorTolerantGrammar: true\n  dyckNodeReducer:\
-    \ \"AUTO\"\nlprFlags:\n  groupName: \"LPR Reducer Control\"\n  enableLPR: false\n\
+    \ \"OFF\"\nlprFlags:\n  groupName: \"LPR Reducer Control\"\n  enableLPR: false\n\
     \  lprFixpoint: false\n  llmClientPath: null\nlatraFlags:\n  groupName: \"Latra\
-    \ Reducer Control\"\n  enableLatra: true\n  enableFixpoint: true\n  transformationListMinimizer:\
+    \ Reducer Control\"\n  enableLatra: false\n  enableFixpoint: true\n  transformationListMinimizer:\
     \ \"WPROBDD\"\nsfcFlags:\n  groupName: \"SFC (Structure Form Conversion) Reducer\
     \ Control\"\n  enableSfc: false\n  enableFixpoint: true\n  subtreeTokenCountLimit:\
     \ 64\n  candidateLimit: 64\nmimirFlags:\n  groupName: \"Mimir Reducer Control\"\

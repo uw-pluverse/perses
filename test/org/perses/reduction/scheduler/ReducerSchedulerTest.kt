@@ -36,7 +36,9 @@ import org.perses.reduction.scheduler.ExecutionPlanYamlDefinition.SequenceDef
 import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.ContinueOnChange
 import org.perses.reduction.scheduler.ReducerExecutionPlan.AbstractCondition.ContinueOnSmallSize
 import org.perses.reduction.scheduler.ReducerExecutionPlan.Companion.atomic
+import org.perses.reduction.scheduler.ReducerExecutionPlan.Companion.concatenate
 import org.perses.reduction.scheduler.ReducerExecutionPlan.Companion.fixpoint
+import org.perses.reduction.scheduler.ReducerExecutionPlan.Companion.ifProgressed
 import org.perses.reduction.scheduler.ReducerScheduler.FixpointDecision
 import org.perses.util.hashing.EnumShaAlgorithm
 
@@ -273,6 +275,24 @@ class ReducerSchedulerTest {
     assertThat(iterations).isEqualTo(3)
   }
 
+  @Test
+  fun testAPlanListsEveryReducerItCanRunInOrder() {
+    val plan =
+      ReducerExecutionPlan(
+        steps =
+          concatenate(
+            atomic(FAKE_REDUCER),
+            fixpoint(continueCondition = ContinueOnChange(maxCountOfAllowedChanges = 2)) {
+              atomic(OTHER_REDUCER)
+            },
+            ifProgressed(atomic(FAKE_REDUCER)) { atomic(OTHER_REDUCER) },
+          ),
+      )
+    val visited = mutableListOf<String>()
+    plan.steps.visitReducers { visited.add(it.shortName) }
+    assertThat(visited).containsExactly("fake", "other", "fake", "other").inOrder()
+  }
+
   /**
    * Runs one fixpoint loop whose body is a single reducer, feeding it [trace] one snapshot per
    * reducer call, and returns how many times the body ran.
@@ -336,10 +356,13 @@ class ReducerSchedulerTest {
     private const val LIMIT = 10
 
     /** Never asked to create anything: the scheduler under test is given the reducers directly. */
-    private val FAKE_REDUCER =
+    private val FAKE_REDUCER = fakeReducer("fake")
+    private val OTHER_REDUCER = fakeReducer("other")
+
+    private fun fakeReducer(name: String) =
       object : ReducerAnnotation(
-        shortName = "fake",
-        description = "fake",
+        shortName = name,
+        description = name,
         deterministic = true,
         reductionResultSizeTrend = ReductionResultSizeTrend.BEST_RESULT_SIZE_DECREASE,
       ) {

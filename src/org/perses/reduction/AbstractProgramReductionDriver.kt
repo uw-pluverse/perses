@@ -283,9 +283,16 @@ abstract class AbstractProgramReductionDriver(
       CReduceReducerAnnotation(cmd.outputRefiningFlags.creduceCmd)
         .takeIf { cmd.outputRefiningFlags.callCReduce }
         ?.let { AtomicReducerStep(reducer = it) }
-    return ReducerExecutionPlan(
-      steps = concatenate(mainPlan, creduceStep),
-    )
+    val plan =
+      ReducerExecutionPlan(
+        steps = concatenate(mainPlan, creduceStep),
+      )
+    if (cmd.listMinimizerMicrobenchmarkingFlags.mode ==
+      EnumListMinimizerMicrobenchmarkingMode.RECORD
+    ) {
+      checkRecordingPlanRunsOnlyTheMainReducer(plan, atomicMainReducerStep.reducer)
+    }
+    return plan
   }
 
   /**
@@ -1024,6 +1031,30 @@ abstract class AbstractProgramReductionDriver(
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
+
+    /**
+     * A recording is of the lists the main algorithm asks about, and a sweep replays each list on
+     * its own, so no other stage contributes anything a recording needs -- while two of them have
+     * cost recordings: T-Rec's token canonicalizer, quadratic in the number of identifiers, held an
+     * SMT subject at a fixed size for days, and the Dyck and line stages rebuild the tree with their
+     * own facades. Refused rather than silently dropped from the plan, so that a stage flag always
+     * means what it says and the caller chooses the plan it records under.
+     */
+    internal fun checkRecordingPlanRunsOnlyTheMainReducer(
+      plan: ReducerExecutionPlan,
+      mainReducer: ReducerAnnotation,
+    ) {
+      val others = LinkedHashSet<String>()
+      plan.steps.visitReducers { if (it != mainReducer) others.add(it.shortName) }
+      check(others.isEmpty()) {
+        "RECORD mode records the main reduction algorithm alone, but the plan also runs " +
+          "${others.toList()}. Turn the other stages off -- --enable-latra false " +
+          "--enable-trec false --dyck-node-reducer OFF --line-slicer OFF, and " +
+          "--enable-token-slicer, --enable-tree-slicer, --enable-vulcan, --enable-sfc, " +
+          "--enable-lpr and --cleanup-reduction-algorithm if set -- or unset " +
+          "--list-minimizer-microbenchmarking-mode."
+      }
+    }
 
     @JvmStatic
     private fun createSparTreeEditListeners(

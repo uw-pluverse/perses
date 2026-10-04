@@ -65,12 +65,17 @@ class ReducerExecutionPlan(
 
   sealed class AbstractExecutionPlanStep {
     abstract fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef
+
+    /** Calls [visitor] on every reducer this step can run, in plan order, repeats included. */
+    abstract fun visitReducers(visitor: (ReducerAnnotation) -> Unit)
   }
 
   class FixpointLoopStep(
     val body: AbstractExecutionPlanStep,
     val continueCondition: AbstractCondition,
   ) : AbstractExecutionPlanStep() {
+    override fun visitReducers(visitor: (ReducerAnnotation) -> Unit) = body.visitReducers(visitor)
+
     override fun toDefinition(): ExecutionPlanYamlDefinition.FixpointLoopStepDef =
       ExecutionPlanYamlDefinition.FixpointLoopStepDef(
         body = body.toDefinition(),
@@ -91,6 +96,8 @@ class ReducerExecutionPlan(
   class AtomicReducerStep(
     val reducer: ReducerAnnotation,
   ) : AbstractExecutionPlanStep() {
+    override fun visitReducers(visitor: (ReducerAnnotation) -> Unit) = visitor(reducer)
+
     override fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef =
       ExecutionPlanYamlDefinition.AtomicReducerStepDef(
         reducer = reducer.shortName,
@@ -101,6 +108,11 @@ class ReducerExecutionPlan(
     val condition: AbstractExecutionPlanStep,
     val then: AbstractExecutionPlanStep,
   ) : AbstractExecutionPlanStep() {
+    override fun visitReducers(visitor: (ReducerAnnotation) -> Unit) {
+      condition.visitReducers(visitor)
+      then.visitReducers(visitor)
+    }
+
     override fun toDefinition(): ExecutionPlanYamlDefinition.IfProgressedThenStepDef =
       ExecutionPlanYamlDefinition.IfProgressedThenStepDef(
         condition = condition.toDefinition(),
@@ -114,6 +126,9 @@ class ReducerExecutionPlan(
     init {
       require(reducers.size > 1) { reducers }
     }
+
+    override fun visitReducers(visitor: (ReducerAnnotation) -> Unit) =
+      reducers.forEach { it.visitReducers(visitor) }
 
     override fun toDefinition(): ExecutionPlanYamlDefinition.AbstractExecutionPlanStepDef =
       ExecutionPlanYamlDefinition.SequenceDef(
