@@ -101,6 +101,33 @@ Exits non-zero if any check fails.
 First-time publishers must create a Snap Store developer account — see
 `internal_doc/snap_publishing_account_setup.md`.
 
+### Always package the GitHub release jar
+
+A store revision must contain exactly the `perses_deploy.jar` attached to the
+matching GitHub release, never a jar built from the working tree. The snap and
+the release are then the same bytes, the snap's version (read from `VERSION`)
+names the release it was built from, and the revision is reproducible from the
+public artifact alone. `build-snap.sh` is only for testing unreleased changes
+locally; a jar it produces reports `Git Status: Modified` in `perses --version`
+and must not be uploaded.
+
+Stage the release asset in place of the Bazel output, check it against the
+digest GitHub publishes for the asset, and pack:
+
+```bash
+v="$(tr -d '[:space:]' < version/org/perses/version/VERSION)"   # must equal the release tag minus "v"
+rm -f snap/local/dist/perses_deploy.jar
+curl -sSL -o snap/local/dist/perses_deploy.jar \
+  "https://github.com/uw-pluverse/perses/releases/download/v$v/perses_deploy.jar"
+gh api "repos/uw-pluverse/perses/releases/tags/v$v" \
+  --jq '.assets[]|select(.name=="perses_deploy.jar")|.digest'   # sha256:...
+sha256sum snap/local/dist/perses_deploy.jar                      # must match
+snapcraft pack                                                   # SNAPCRAFT_BUILD_ENVIRONMENT=multipass without LXD
+```
+
+Publish only after `scripts/bump_version.py` and the GitHub release for that
+version exist, in that order, so the VERSION file and the tag agree.
+
 1. Reserve the name (one-time):
 
    ```bash
@@ -108,11 +135,15 @@ First-time publishers must create a Snap Store developer account — see
    snapcraft register perses      # if taken, pick e.g. perses-reducer and update name: in snapcraft.yaml
    ```
 
-2. Upload and release to a channel:
+2. Upload, then release to a channel:
 
    ```bash
-   snapcraft upload --release=stable ./perses_*.snap
+   snapcraft upload ./perses_*.snap                 # prints the revision number
+   snapcraft release perses <revision> stable
    ```
+
+   Keep the two steps separate: a classic revision waits in manual review
+   until the store grants it, and `--release` would only fail at that step.
 
    Channels: `stable`, `candidate`, `beta`, `edge`. Use `edge`/`beta` for
    pre-releases and promote later with

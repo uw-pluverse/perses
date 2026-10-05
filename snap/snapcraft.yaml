@@ -14,8 +14,8 @@ description: |
   Because Perses runs the user's test script — which typically invokes system
   toolchains (gcc, clang, javac, ...) and reads and writes files at arbitrary
   paths — this snap uses classic confinement so it behaves like a normally
-  installed developer tool. See internal_doc/snap_classic_confinement_request.md
-  for the store-review justification.
+  installed developer tool. The store-review justification is at
+  https://forum.snapcraft.io/t/classic-confinement-request-for-perses/53408.
 
 license: GPL-3.0-or-later
 grade: stable
@@ -67,8 +67,20 @@ parts:
     plugin: nil
     stage-packages:
       - openjdk-17-jdk-headless
+    # Debian ships lib/security/cacerts as a symlink to /etc/ssl/certs/java/cacerts,
+    # a file that ca-certificates-java generates at install time. The store rejects
+    # symlinks that leave the snap, so generate the keystore in the build VM (the
+    # package's postinst needs a JRE present) and copy the real file into place.
+    build-packages:
+      - openjdk-17-jre-headless
+      - ca-certificates-java
     prime:
       - -usr/lib/jvm/*/jmods          # jlink-only; javac and the compiler API work without it
+    override-prime: |
+      craftctl default
+      cacerts=usr/lib/jvm/java-17-openjdk-amd64/lib/security/cacerts
+      rm -f "$cacerts"
+      cp /etc/ssl/certs/java/cacerts "$cacerts"
     # classic snaps need explicit ELF patching so the bundled JRE resolves its
     # own libraries instead of the host's.
     build-attributes:
