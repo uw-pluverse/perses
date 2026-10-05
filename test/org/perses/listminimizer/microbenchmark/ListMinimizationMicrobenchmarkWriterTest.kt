@@ -28,6 +28,7 @@ import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltin
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
 import org.perses.grammar.line.LineParserFacade
+import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmarkWriter.TokenLocation
 import org.perses.program.AbstractPersesToken
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
@@ -390,20 +391,24 @@ class ListMinimizationMicrobenchmarkWriterTest {
   ): Recorded {
     val sourceCode = printer.print(program).sourceCode
     val tree = RecordedProgramTokenizer.buildFlatTokenListTree(sourceCode, PnfCLexer::class.java)
-    val tokenRangeMap = IdentityHashMap<AbstractPersesToken, Interval>()
+    val tokenLocationMap = IdentityHashMap<AbstractPersesToken, TokenLocation>()
     program.tokens.forEachIndexed { index, token ->
       val node = tree.remainingLexerRuleNodes[index]
-      tokenRangeMap[token] =
-        Interval(
-          leftInclusive = RecordedProgramTokenizer.inclusiveStartOffsetOf(node),
-          rightExclusive = RecordedProgramTokenizer.exclusiveEndOffsetOf(node),
+      tokenLocationMap[token] =
+        TokenLocation(
+          indexInBaseProgram = index,
+          rangeInRenderedProgram =
+            Interval(
+              leftInclusive = RecordedProgramTokenizer.inclusiveStartOffsetOf(node),
+              rightExclusive = RecordedProgramTokenizer.exclusiveEndOffsetOf(node),
+            ),
         )
     }
     return Recorded(
       sourceCode,
       ListMinimizationMicrobenchmarkWriter.computeRecordedElements(
         elementTokenGroups = elementTokenGroups,
-        tokenRangeMap = tokenRangeMap,
+        tokenLocationMap = tokenLocationMap,
       ),
     )
   }
@@ -453,27 +458,43 @@ class ListMinimizationMicrobenchmarkWriterTest {
     ).isEqualTo(sourceCode.indexOf("return"))
   }
 
-  /** Adjacent tokens collapse to one range; a gap stays a boundary. */
+  /**
+   * Consecutive tokens collapse to one range, spaced or not. A token between them that is not the
+   * element's -- here one in no element at all -- splits it: a range spanning it would resolve to
+   * it too.
+   */
   @Test
-  fun testTouchingTokensMergeAndGapsDoNot() {
+  fun testConsecutiveTokensMergeAcrossWhitespaceButNotAcrossTokensOutsideTheElement() {
     val program = programFrom("int x = 1;")
     val tokens = program.tokens
 
-    val adjacent = record(program, listOf(listOf(tokens[3], tokens[4])))
-    assertThat(
-      adjacent.elements
-        .single()
-        .ranges,
-    ).hasSize(1)
-    assertThat(textOf(adjacent, 0)).isEqualTo("1;")
+    val touching = record(program, listOf(listOf(tokens[3], tokens[4])))
+    assertThat(touching.elements.single().ranges).hasSize(1)
+    assertThat(textOf(touching, 0)).isEqualTo("1;")
 
-    val separated = record(program, listOf(listOf(tokens[0], tokens[4])))
-    assertThat(
-      separated.elements
-        .single()
-        .ranges,
-    ).hasSize(2)
-    assertThat(textOf(separated, 0)).isEqualTo("int;")
+    val spaced = record(program, listOf(listOf(tokens[0], tokens[1], tokens[2])))
+    assertThat(spaced.elements.single().ranges).hasSize(1)
+    assertThat(textOf(spaced, 0)).isEqualTo("int x =")
+
+    val interrupted = record(program, listOf(listOf(tokens[0], tokens[4])))
+    assertThat(interrupted.elements.single().ranges).hasSize(2)
+    assertThat(textOf(interrupted, 0)).isEqualTo("int;")
+  }
+
+  /**
+   * A minimizer such as ProbDD hands the elements over shuffled. Adjacency is a property of the
+   * program, so each element's tokens still merge, and the elements keep the order the list had.
+   */
+  @Test
+  fun testShuffledElementsStillMergeTheirAdjacentTokensAndKeepListOrder() {
+    val program = programFrom("int x = 1;")
+    val tokens = program.tokens
+
+    val recorded =
+      record(program, listOf(listOf(tokens[4], tokens[3]), listOf(tokens[1], tokens[0])))
+
+    assertThat(recorded.elements.map { it.ranges.size }).containsExactly(1, 1).inOrder()
+    assertThat((0 until 2).map { textOf(recorded, it) }).containsExactly("1;", "int x").inOrder()
   }
 
   @Test
@@ -550,27 +571,27 @@ class ListMinimizationMicrobenchmarkWriterTest {
     const val REAL_PROGRAM_SAMPLE_SIZE = 25
   }
 
-  // ---- tokenRangesFromPlacement: each token's range in the rendered program, from the printer ----
+  // ---- locateTokens: each token's range in the rendered program, from the printer ----
 
-  private fun placementRanges(
+  private fun locate(
     sourceCode: String,
-  ): Pair<TokenizedProgram, IdentityHashMap<AbstractPersesToken, Interval>> {
+  ): Pair<TokenizedProgram, IdentityHashMap<AbstractPersesToken, TokenLocation>> {
     val program = programFrom(sourceCode)
     val placements = TokenPlacementRecorder()
     val text = printer.print(program, placements).sourceCode
-    return program to writer().tokenRangesFromPlacement(text, placements, program.tokens)
+    return program to writer().locateTokens(text, placements, program.tokens)
   }
 
   @Test
   fun testEachComputedRangeSpansItsTokenInTheRenderedProgram() {
     val sourceCode = "int x = 1; int yy = 22;"
-    val (program, tokenRangeMap) = placementRanges(sourceCode)
+    val (program, tokenLocationMap) = locate(sourceCode)
 
-    assertThat(tokenRangeMap).hasSize(program.tokenCount)
+    assertThat(tokenLocationMap).hasSize(program.tokenCount)
     val text = printer.print(program).sourceCode
     // Keyed by the program's own tokens, so the assertion needs no parallel indexing.
     program.tokens.forEach { token ->
-      val range = checkNotNull(tokenRangeMap[token])
+      val range = checkNotNull(tokenLocationMap[token]).rangeInRenderedProgram
       assertThat(text.substring(range.leftInclusive, range.rightExclusive))
         .isEqualTo(token.lexemeText)
     }
@@ -579,21 +600,21 @@ class ListMinimizationMicrobenchmarkWriterTest {
   /** Distinct tokens with the same lexeme must not collide, which identity keying is what ensures. */
   @Test
   fun testTokensSharingALexemeGetTheirOwnRanges() {
-    val (program, tokenRangeMap) = placementRanges("int x = 1; int y = 2;")
+    val (program, tokenLocationMap) = locate("int x = 1; int y = 2;")
     val intTokens = program.tokens.filter { it.lexemeText == "int" }
     assertThat(intTokens).hasSize(2)
 
-    assertThat(tokenRangeMap[intTokens[0]]).isNotEqualTo(tokenRangeMap[intTokens[1]])
+    assertThat(tokenLocationMap[intTokens[0]]).isNotEqualTo(tokenLocationMap[intTokens[1]])
   }
 
   @Test
   fun testRangesAreCountedInCodePointsLikeTheLexer() {
     // The lexer indexes code points; a non-BMP character before a token must not shift its range.
     val sourceCode = "int x = 1; /* \uD83D\uDE00 */ int y = 2;"
-    val (program, tokenRangeMap) = placementRanges(sourceCode)
+    val (program, tokenLocationMap) = locate(sourceCode)
     val text = printer.print(program).sourceCode
     val yToken = program.tokens.single { it.lexemeText == "y" }
-    val range = checkNotNull(tokenRangeMap[yToken])
+    val range = checkNotNull(tokenLocationMap[yToken]).rangeInRenderedProgram
 
     assertThat(text.codePointCount(0, text.indexOf(" y ") + 1)).isEqualTo(range.leftInclusive)
     assertThat(range.rightExclusive - range.leftInclusive).isEqualTo(1)
@@ -608,7 +629,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
 
     val failure =
       assertThrows(IllegalStateException::class.java) {
-        writer().tokenRangesFromPlacement(text, placements, longerProgram.tokens)
+        writer().locateTokens(text, placements, longerProgram.tokens)
       }
 
     assertThat(failure).hasMessageThat().contains("did not place the token")

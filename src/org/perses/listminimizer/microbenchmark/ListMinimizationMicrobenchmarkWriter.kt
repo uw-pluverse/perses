@@ -184,7 +184,7 @@ class ListMinimizationMicrobenchmarkWriter(
     val elements =
       computeRecordedElements(
         elementTokenGroups = elementTokenGroups,
-        tokenRangeMap = tokenRangesFromPlacement(renderedProgram, placements, baseProgramTokens),
+        tokenLocationMap = locateTokens(renderedProgram, placements, baseProgramTokens),
       )
     // What a recording promises is that the evaluator can resolve its ranges, and the evaluator
     // resolves them against the real lexer's tokens of the written file. Checked here with the
@@ -229,27 +229,28 @@ class ListMinimizationMicrobenchmarkWriter(
   }
 
   /**
-   * The range of each token in [renderedProgram], from where the printer placed it.
+   * Where each of [tokens] is: its index in that list, and its range in [renderedProgram] from
+   * where the printer placed it.
    *
    * Offsets are in code points, because that is what the evaluator's lexer counts
    * (`CharStreams.fromString`); the printer reports columns in UTF-16 units. [tokens] is in program
    * order, so the conversion walks the text once with a cursor instead of recounting from the start
    * for every token.
    */
-  internal fun tokenRangesFromPlacement(
+  internal fun locateTokens(
     renderedProgram: String,
     placements: TokenPlacementRecorder,
     tokens: List<AbstractPersesToken>,
-  ): IdentityHashMap<AbstractPersesToken, Interval> {
+  ): IdentityHashMap<AbstractPersesToken, TokenLocation> {
     val lineStartOffsets =
       ArrayList<Int>().apply {
         add(0)
         renderedProgram.forEachIndexed { index, char -> if (char == '\n') add(index + 1) }
       }
-    val tokenRangeMap = IdentityHashMap<AbstractPersesToken, Interval>(tokens.size)
+    val tokenLocationMap = IdentityHashMap<AbstractPersesToken, TokenLocation>(tokens.size)
     var cursor = 0
     var cursorInCodePoints = 0
-    tokens.forEach { token ->
+    tokens.forEachIndexed { index, token ->
       val position =
         checkNotNull(placements.getPositionOrNull(token)) {
           "The printer did not place the token '${token.lexemeText}'."
@@ -265,12 +266,24 @@ class ListMinimizationMicrobenchmarkWriter(
       }
       val startInCodePoints = cursorInCodePoints + renderedProgram.codePointCount(cursor, start)
       val endInCodePoints = startInCodePoints + renderedProgram.codePointCount(start, end)
-      tokenRangeMap[token] = Interval(startInCodePoints, endInCodePoints)
+      tokenLocationMap[token] =
+        TokenLocation(
+          indexInBaseProgram = index,
+          rangeInRenderedProgram = Interval(startInCodePoints, endInCodePoints),
+        )
       cursor = end
       cursorInCodePoints = endInCodePoints
     }
-    return tokenRangeMap
+    return tokenLocationMap
   }
+
+  /** Where a token of the base program is, in two coordinates. */
+  data class TokenLocation(
+    /** The token's position in the base program's token sequence, 0-based. */
+    val indexInBaseProgram: Int,
+    /** The token's character range in the rendered program, in code points. */
+    val rangeInRenderedProgram: Interval,
+  )
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
@@ -279,57 +292,54 @@ class ListMinimizationMicrobenchmarkWriter(
     const val STAGING_SUFFIX = ".incomplete"
 
     /**
-     * Expresses each list element as character ranges into the recorded program, given the range of
-     * each of that program's tokens.
+     * Expresses each list element as character ranges into the recorded program.
      *
-     * Those token ranges come from where the printer placed each token in the file that was written
-     * (see [tokenRangesFromPlacement]). Offsets cannot be taken from the tokens themselves: a base
-     * program is the *edited* token list of a reduction in progress, so its tokens still carry
+     * An element's tokens are grouped by their index in the base program: a run of consecutive
+     * indices is one range, so an element's size on disk follows its shape, not its token count. A
+     * range may span whitespace because the evaluator resolves it to the tokens it contains; it may
+     * not span a token outside the element -- of another element, or of none, as with a kleene
+     * node's siblings that are not in the list -- which it would swallow, and an index gap is
+     * exactly such a token. The order the elements arrive in, and of the tokens within one, is
+     * irrelevant to the ranges; the element order is kept, being part of the problem recorded.
+     *
+     * Ranges come from [tokenLocationMap] (see [locateTokens]), not from the tokens themselves: a
+     * base program is the *edited* token list of a reduction in progress, so its tokens still carry
      * `startIndex`/`stopIndex` pointing into the pre-edit file.
      *
      * @param elementTokenGroups the tokens of each element, in element order. Tokens rather than
      *   tree nodes: the correspondence is between text and tokens, and taking nodes here would pull
      *   the spar tree into a computation that does not need it.
-     * @param tokenRangeMap the range of each of the recorded program's tokens, keyed by identity
+     * @param tokenLocationMap where each token of the recorded program is, keyed by identity
      */
     fun computeRecordedElements(
       elementTokenGroups: List<List<AbstractPersesToken>>,
-      tokenRangeMap: IdentityHashMap<AbstractPersesToken, Interval>,
+      tokenLocationMap: IdentityHashMap<AbstractPersesToken, TokenLocation>,
     ): ImmutableList<RecordedElement> =
       elementTokenGroups.transformToImmutableList { tokens ->
-        RecordedElement(computeRangesOfElement(tokens, tokenRangeMap))
+        RecordedElement(computeRangesOfElement(tokens, tokenLocationMap))
       }
 
     private fun computeRangesOfElement(
       tokens: List<AbstractPersesToken>,
-      tokenRangeMap: IdentityHashMap<AbstractPersesToken, Interval>,
+      tokenLocationMap: IdentityHashMap<AbstractPersesToken, TokenLocation>,
     ): ImmutableList<Interval> {
       require(tokens.isNotEmpty()) { "An element must own at least one token." }
-      val sorted =
+      val locations =
         tokens
           .map { token ->
-            checkNotNull(tokenRangeMap[token]) {
+            checkNotNull(tokenLocationMap[token]) {
               "The token '${token.lexemeText}' is not one of the recorded program's tokens."
             }
-          }.sortedBy { it.leftInclusive }
-      return mergeTouchingRanges(sorted)
-    }
-
-    /**
-     * Merges only ranges that touch, so a run of adjacent tokens becomes one range while a gap --
-     * the inter-token whitespace of a non-contiguous element -- stays a boundary. Both forms
-     * resolve, but merging keeps a recording readable and its range count proportional to the
-     * element's shape rather than to its token count.
-     */
-    private fun mergeTouchingRanges(sorted: List<Interval>): ImmutableList<Interval> =
-      CollectionUtil
-        .mergeContinuousElementsIntoRegions(sorted) { previous, current ->
-          previous.rightExclusive == current.leftInclusive
+          }.sortedBy { it.indexInBaseProgram }
+      return CollectionUtil
+        .mergeContinuousElementsIntoRegions(locations) { previous, current ->
+          current.indexInBaseProgram == previous.indexInBaseProgram + 1
         }.transformToImmutableList { run ->
           Interval(
-            leftInclusive = run.first().leftInclusive,
-            rightExclusive = run.last().rightExclusive,
+            leftInclusive = run.first().rangeInRenderedProgram.leftInclusive,
+            rightExclusive = run.last().rangeInRenderedProgram.rightExclusive,
           )
         }
+    }
   }
 }
