@@ -21,6 +21,7 @@ import org.perses.ppr.diff.DiffOriginalReductionInputs
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenPlacementListener
 import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.reduction.InputRepresentation
 import org.perses.reduction.io.AbstractOutputManager
@@ -53,8 +54,10 @@ class TreeDiffOutputManagerFactory(
     lexerAtnWrapper,
     shaAlgorithm,
   ) {
-  override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager =
-    OutputManager(program, defaultProgramPrinter)
+  override fun createManagerFor(
+    program: TokenizedProgram,
+    tokenPlacementListener: AbstractTokenPlacementListener?,
+  ): AbstractOutputManager = OutputManager(program, defaultProgramPrinter, tokenPlacementListener)
 
   // A sibling factory in a different code format: same collaborators (incl. the same represented
   // file), new printer. Enables adaptive code-format selection (see AbstractProgramReductionDriver)
@@ -75,6 +78,7 @@ class TreeDiffOutputManagerFactory(
   inner class OutputManager(
     private val program: TokenizedProgram,
     private val printer: AbstractTokenizedProgramPrinter,
+    private val tokenPlacementListener: AbstractTokenPlacementListener? = null,
   ) : AbstractOutputManager(originalReductionInputs, shaAlgorithm) {
     // The file being reduced is rendered from the live [program]; the other mutable file is rendered
     // from its spar tree's current snapshot. Because the seed pass runs before the variant pass, the
@@ -89,7 +93,7 @@ class TreeDiffOutputManagerFactory(
     ): String =
       when (origReductionFile) {
         fileRepresentedByProgram -> {
-          printer.print(program).sourceCode
+          printer.print(program, tokenPlacementListener).sourceCode
         }
 
         originalReductionInputs.seedFile -> {

@@ -201,6 +201,7 @@ kt_jvm_library(
         "//src/org/perses/listminimizer/microbenchmark:list_minimization_microbenchmark",
         "//src/org/perses/listminimizer/microbenchmark:list_minimization_microbenchmark_writer",
         "//src/org/perses/program",
+        "//src/org/perses/program/printer",
         "//src/org/perses/reduction/event",
         "//src/org/perses/reduction/io:reduction_inputs",
         "//src/org/perses/reduction/io/token:token_reduction_io_manager",

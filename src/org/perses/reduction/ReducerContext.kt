@@ -22,6 +22,7 @@ import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmarkWri
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenPlacementListener
 import org.perses.reduction.cache.AbstractQueryCache
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.PerFileSizeMetrics
@@ -62,8 +63,11 @@ class ReducerContext(
   /** Render [program] as the file under reduction, using the active code format. Reducers call this
    * instead of the IO manager, so rendering is owned by the factory (via the context), not the IO
    * manager. */
-  fun createOutputManager(program: TokenizedProgram): AbstractOutputManager =
-    outputManagerFactoryProvider().createManagerFor(program)
+  fun createOutputManager(
+    program: TokenizedProgram,
+    tokenPlacementListener: AbstractTokenPlacementListener? = null,
+  ): AbstractOutputManager =
+    outputManagerFactoryProvider().createManagerFor(program, tokenPlacementListener)
 
   /** The original input rendered in the active code format. */
   fun createOutputManagerForOriginalInput(): AbstractOutputManager =

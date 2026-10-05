@@ -39,6 +39,7 @@ kt_jvm_library(
     deps = [
         ":token_output_manager_factory_interface",
         "//src/org/perses/program",
+        "//src/org/perses/program/printer",
         "//src/org/perses/reduction/io:reduction_folder",
         "//src/org/perses/reduction/io:reduction_inputs",
     ],

@@ -60,6 +60,7 @@ kt_jvm_library(
     ],
     deps = [
         "//ppr/src/org/perses/ppr/diff:reduction_inputs",
+        "//src/org/perses/program/printer",
         "//src/org/perses/reduction:abstract_reducer",
         "//src/org/perses/reduction/io:reduction_inputs",
     ],

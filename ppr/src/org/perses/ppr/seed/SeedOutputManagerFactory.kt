@@ -21,6 +21,7 @@ import org.perses.program.AbstractPersesToken
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenPlacementListener
 import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.token.AbstractTokenOutputManagerFactory
@@ -39,8 +40,11 @@ class SeedOutputManagerFactory(
     lexerAtnWrapper,
     shaAlgorithm,
   ) {
-  override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager =
-    OutputManager(program, defaultProgramPrinter, listAlignment)
+  override fun createManagerFor(
+    program: TokenizedProgram,
+    tokenPlacementListener: AbstractTokenPlacementListener?,
+  ): AbstractOutputManager =
+    OutputManager(program, defaultProgramPrinter, listAlignment, tokenPlacementListener)
 
   // A sibling factory in a different code format: same collaborators, new printer. Enables adaptive
   // code-format selection (see AbstractProgramReductionDriver) for the seed reduction.
@@ -59,13 +63,14 @@ class SeedOutputManagerFactory(
     private val seedProgram: TokenizedProgram,
     private val printer: AbstractTokenizedProgramPrinter,
     val listAlignment: ListAlignment<AbstractPersesToken>,
+    private val tokenPlacementListener: AbstractTokenPlacementListener? = null,
   ) : AbstractOutputManager(originalReductionInputs, shaAlgorithm) {
     override fun internalComputeContentForFile(
       origReductionFile: AbstractReductionFile<*, *>,
     ): String =
       when (origReductionFile) {
         originalReductionInputs.seedFile -> {
-          printer.print(seedProgram).sourceCode
+          printer.print(seedProgram, tokenPlacementListener).sourceCode
         }
 
         originalReductionInputs.variantFile -> {

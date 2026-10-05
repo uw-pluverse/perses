@@ -51,6 +51,7 @@ kt_jvm_test(
         "//:truth",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar/c:parser_facade",
+        "//src/org/perses/grammar/line:parser_facade",
         "//src/org/perses/listminimizer/microbenchmark:list_minimization_microbenchmark",
         "//src/org/perses/listminimizer/microbenchmark:recorded_program_tokenizer",
         "//src/org/perses/program",

@@ -19,8 +19,10 @@ package org.perses.reduction.io.token
 import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenPlacementListener
 import org.perses.program.printer.PrinterRegistry
 import org.perses.reduction.io.AbstractOriginalReductionInputs
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.AbstractOutputManagerFactory
 import org.perses.util.hashing.EnumShaAlgorithm
 
@@ -32,6 +34,19 @@ abstract class AbstractTokenOutputManagerFactory(
 ) : AbstractOutputManagerFactory<TokenizedProgram>(originalReductionInputs, shaAlgorithm) {
   protected val defaultProgramPrinter =
     PrinterRegistry.getPrinter(defaultCodeFormatControl, lexerAtnWrapper)
+
+  final override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager =
+    createManagerFor(program, tokenPlacementListener = null)
+
+  /**
+   * [tokenPlacementListener], if given, is told where the printer puts every token of [program]
+   * when the manager renders the file under reduction. The microbenchmark recorder uses this to
+   * take token ranges from the one rendering that is written, instead of rendering again.
+   */
+  abstract fun createManagerFor(
+    program: TokenizedProgram,
+    tokenPlacementListener: AbstractTokenPlacementListener?,
+  ): AbstractOutputManager
 
   /**
    * Returns an immutable sibling factory identical to this one but printing in [codeFormat], or

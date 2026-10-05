@@ -46,6 +46,7 @@ kt_jvm_library(
         "//:antlr_runtime",
         "//:flogger",
         "//src/org/perses/program",
+        "//src/org/perses/program/printer",
         "//src/org/perses/util",
         "//src/org/perses/util:Interval",
     ],

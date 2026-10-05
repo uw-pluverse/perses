@@ -825,13 +825,14 @@ abstract class AbstractSparTreeReducer protected constructor(
           fixpointIteration = fixpointReductionState.fixpointIterationStartEvent.iteration,
           commandLineOptions = writer.commandLineOptions,
         ),
-    ) { inputDirectory ->
-      // Constructing the folder is what writes the test script and every immutable dependency file;
-      // rendering the mutable files then fills in the rest.
-      reducerContext
-        .createOutputManager(baseProgram)
-        .write(ReductionFolder(originalReductionInputs, inputDirectory))
-    }
+      writeProgramFilesTo = { inputDirectory, tokenPlacementListener ->
+        // Constructing the folder is what writes the test script and every immutable dependency
+        // file; rendering the mutable files then fills in the rest.
+        reducerContext
+          .createOutputManager(baseProgram, tokenPlacementListener)
+          .write(ReductionFolder(originalReductionInputs, inputDirectory))
+      },
+    )
   }
 
   private fun createListMinimizerArguments(

@@ -27,10 +27,12 @@ import org.perses.TestUtility
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCLexer
+import org.perses.grammar.line.LineParserFacade
 import org.perses.program.AbstractPersesToken
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
 import org.perses.program.printer.PrinterRegistry
+import org.perses.program.printer.TokenPlacementRecorder
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.ReductionFolder
 import org.perses.util.AtomicSequenceGenerator
@@ -116,6 +118,13 @@ class ListMinimizationMicrobenchmarkWriterTest {
   private fun program(): TokenizedProgram =
     TestUtility.createTokenizedProgramFromString(sourceFile.readText(), LanguageC)
 
+  /** The program as the line slicer's tree holds it: one token per line. */
+  private fun lineProgram(sourceCode: String): TokenizedProgram =
+    RecordedProgramTokenizer
+      .buildFlatTokenListTree(sourceCode, LineParserFacade().lexerClass)
+      .programSnapshot
+      .payload
+
   private fun write(
     writer: ListMinimizationMicrobenchmarkWriter,
     program: TokenizedProgram = program(),
@@ -126,10 +135,10 @@ class ListMinimizationMicrobenchmarkWriterTest {
       elementTokenGroups = elementTokenGroups,
       targetFilePath = sourceFile.fileName.toString(),
       recordingContext = recordingContext,
-    ) { inputDirectory ->
+    ) { inputDirectory, listener ->
       ReductionFolder(inputs, inputDirectory)
         .computeAbsPathForOrigFile(inputs.mutableFiles.single())
-        .writeText(printer.print(program).sourceCode)
+        .writeText(printer.print(program, listener).sourceCode)
     }
 
   @Test
@@ -284,6 +293,57 @@ class ListMinimizationMicrobenchmarkWriterTest {
 
     assertThat(recorded.microbenchmarkDirectory).isNull()
     assertThat(recorded.explanation).contains("could not be recorded")
+    assertThat(Files.list(workDir.resolve("microbenchmarks")).use { it.toList() }).isEmpty()
+  }
+
+  /**
+   * A reducer on a surrogate tree hands over tokens the language's lexer cannot reproduce -- the
+   * line slicer's are whole lines -- so their ranges come from where the printer placed them, and
+   * a line is recorded as one range that the evaluator resolves to the real tokens inside it.
+   */
+  @Test
+  fun testLineTokensAreRecordedAsLineRanges() {
+    sourceFile.writeText("int aaa;\nint bbb;\n")
+    val lines = lineProgram(sourceFile.readText())
+    assertThat(lines.tokens.map { it.lexemeText }).containsExactly("int aaa;", "int bbb;").inOrder()
+
+    val microbenchmarkDirectory =
+      checkNotNull(write(writer(), lines, lines.tokens.map { listOf(it) }).microbenchmarkDirectory)
+
+    val microbenchmark =
+      ListMinimizationMicrobenchmark.readFrom(
+        microbenchmarkDirectory.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME),
+      )
+    assertThat(microbenchmark.inputList.elements.map { it.ranges.single() })
+      .containsExactly(Interval(0, 8), Interval(9, 17))
+      .inOrder()
+    val recordedProgramText =
+      microbenchmarkDirectory
+        .resolve(ListMinimizationMicrobenchmark.INPUT_FOLDER_NAME)
+        .resolve(microbenchmark.targetFilePath)
+        .readText()
+    val resolved =
+      RecordedProgramTokenizer.resolveElements(
+        RecordedProgramTokenizer.buildFlatTokenListTree(recordedProgramText, PnfCLexer::class.java),
+        microbenchmark.inputList.elements.map { it.ranges },
+      )
+    assertThat(resolved.map { element -> element.joinToString(" ") { it.token.lexemeText } })
+      .containsExactly("int aaa ;", "int bbb ;")
+      .inOrder()
+  }
+
+  @Test
+  fun testALineCuttingThroughARealTokenIsSkippedAndLeavesNothing() {
+    // The first line ends inside a block comment, so its range ends inside a token of the C lexer.
+    sourceFile.writeText("int aaa; /* x\n y */ int bbb;\n")
+    val lines = lineProgram(sourceFile.readText())
+    assertThat(lines.tokens).hasSize(2)
+
+    val recorded = write(writer(), lines, lines.tokens.map { listOf(it) })
+
+    assertThat(recorded.microbenchmarkDirectory).isNull()
+    assertThat(recorded.explanation).contains("does not end at a token boundary")
+    assertThat(Files.list(workDir.resolve("microbenchmarks")).use { it.toList() }).isEmpty()
   }
 
   /**
@@ -301,7 +361,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
           elementTokenGroups = program.tokens.map { listOf(it) },
           targetFilePath = sourceFile.fileName.toString(),
           recordingContext = recordingContext,
-        ) { throw OutOfMemoryError("simulated") }
+        ) { _, _ -> throw OutOfMemoryError("simulated") }
       }
 
     assertThat(thrown).hasMessageThat().isEqualTo("simulated")
@@ -490,23 +550,24 @@ class ListMinimizationMicrobenchmarkWriterTest {
     const val REAL_PROGRAM_SAMPLE_SIZE = 25
   }
 
-  // ---- relexWrittenFileForTokenRanges: the lexing fixpoint, asserted where a problem is created ----
+  // ---- tokenRangesFromPlacement: each token's range in the rendered program, from the printer ----
 
-  private fun writeProgramFile(sourceCode: String) =
-    FileSystemUtil.ensureDirExists(workDir.resolve("lexed")).resolve("program.c").apply {
-      writeText(printer.print(programFrom(sourceCode)).sourceCode)
-    }
+  private fun placementRanges(
+    sourceCode: String,
+  ): Pair<TokenizedProgram, IdentityHashMap<AbstractPersesToken, Interval>> {
+    val program = programFrom(sourceCode)
+    val placements = TokenPlacementRecorder()
+    val text = printer.print(program, placements).sourceCode
+    return program to writer().tokenRangesFromPlacement(text, placements, program.tokens)
+  }
 
   @Test
-  fun testEachComputedRangeSpansItsTokenInTheWrittenFile() {
+  fun testEachComputedRangeSpansItsTokenInTheRenderedProgram() {
     val sourceCode = "int x = 1; int yy = 22;"
-    val file = writeProgramFile(sourceCode)
-    val program = programFrom(sourceCode)
-
-    val tokenRangeMap = writer().relexWrittenFileForTokenRanges(file, program.tokens)
+    val (program, tokenRangeMap) = placementRanges(sourceCode)
 
     assertThat(tokenRangeMap).hasSize(program.tokenCount)
-    val text = file.readText()
+    val text = printer.print(program).sourceCode
     // Keyed by the program's own tokens, so the assertion needs no parallel indexing.
     program.tokens.forEach { token ->
       val range = checkNotNull(tokenRangeMap[token])
@@ -518,45 +579,38 @@ class ListMinimizationMicrobenchmarkWriterTest {
   /** Distinct tokens with the same lexeme must not collide, which identity keying is what ensures. */
   @Test
   fun testTokensSharingALexemeGetTheirOwnRanges() {
-    val sourceCode = "int x = 1; int y = 2;"
-    val file = writeProgramFile(sourceCode)
-    val program = programFrom(sourceCode)
+    val (program, tokenRangeMap) = placementRanges("int x = 1; int y = 2;")
     val intTokens = program.tokens.filter { it.lexemeText == "int" }
     assertThat(intTokens).hasSize(2)
-
-    val tokenRangeMap = writer().relexWrittenFileForTokenRanges(file, program.tokens)
 
     assertThat(tokenRangeMap[intTokens[0]]).isNotEqualTo(tokenRangeMap[intTokens[1]])
   }
 
-  /**
-   * The fixpoint check. A token list that disagrees with the file cannot be evaluated later either,
-   * so recording must fail here rather than leave an unusable problem in the corpus.
-   */
   @Test
-  fun testATokenCountDisagreeingWithTheFileIsRejected() {
-    val file = writeProgramFile("int x = 1;")
+  fun testRangesAreCountedInCodePointsLikeTheLexer() {
+    // The lexer indexes code points; a non-BMP character before a token must not shift its range.
+    val sourceCode = "int x = 1; /* \uD83D\uDE00 */ int y = 2;"
+    val (program, tokenRangeMap) = placementRanges(sourceCode)
+    val text = printer.print(program).sourceCode
+    val yToken = program.tokens.single { it.lexemeText == "y" }
+    val range = checkNotNull(tokenRangeMap[yToken])
+
+    assertThat(text.codePointCount(0, text.indexOf(" y ") + 1)).isEqualTo(range.leftInclusive)
+    assertThat(range.rightExclusive - range.leftInclusive).isEqualTo(1)
+  }
+
+  @Test
+  fun testATokenThePrinterDidNotPlaceIsRejected() {
+    val program = programFrom("int x = 1;")
+    val placements = TokenPlacementRecorder()
+    val text = printer.print(program, placements).sourceCode
     val longerProgram = programFrom("int x = 1; int y = 2;")
 
     val failure =
       assertThrows(IllegalStateException::class.java) {
-        writer().relexWrittenFileForTokenRanges(file, longerProgram.tokens)
+        writer().tokenRangesFromPlacement(text, placements, longerProgram.tokens)
       }
 
-    assertThat(failure).hasMessageThat().contains("Re-lexing the recorded program yielded")
-  }
-
-  /** Same token count, different lexemes -- the case a count comparison alone would let through. */
-  @Test
-  fun testALexemeDisagreeingWithTheFileIsRejected() {
-    val file = writeProgramFile("int x = 1;")
-    val differentProgram = programFrom("int y = 1;")
-
-    val failure =
-      assertThrows(IllegalStateException::class.java) {
-        writer().relexWrittenFileForTokenRanges(file, differentProgram.tokens)
-      }
-
-    assertThat(failure).hasMessageThat().contains("Re-lexing disagrees at token 1")
+    assertThat(failure).hasMessageThat().contains("did not place the token")
   }
 }

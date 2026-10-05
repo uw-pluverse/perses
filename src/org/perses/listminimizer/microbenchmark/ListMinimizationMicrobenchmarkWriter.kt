@@ -20,11 +20,14 @@ import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
 import org.antlr.v4.runtime.Lexer
 import org.perses.program.AbstractPersesToken
+import org.perses.program.printer.AbstractTokenPlacementListener
+import org.perses.program.printer.TokenPlacementRecorder
 import org.perses.util.AtomicSequenceGenerator
 import org.perses.util.CollectionUtil
 import org.perses.util.FileSystemUtil
 import org.perses.util.Interval
 import org.perses.util.transformToImmutableList
+import java.nio.file.Files
 import java.nio.file.Path
 import java.util.IdentityHashMap
 import kotlin.io.path.readText
@@ -85,16 +88,17 @@ class ListMinimizationMicrobenchmarkWriter(
    * which is why every outcome carries an explanation.
    *
    * @param elementTokenGroups the leaf tokens of each element, in the order the minimizer sees them
-   * @param writeProgramFilesTo populates the given directory with the program files. The caller
-   *   supplies it because rendering, and knowing which files a reduction has, belong to the reducer
-   *   rather than here -- this only decides where they go
+   * @param writeProgramFilesTo populates the given directory with the program files, telling the
+   *   given listener where the target file's rendering puts every token. The caller supplies it
+   *   because rendering, and knowing which files a reduction has, belong to the reducer rather than
+   *   here -- this only decides where they go and reads the ranges off the one rendering written
    */
   fun writeProblem(
     baseProgramTokens: List<AbstractPersesToken>,
     elementTokenGroups: List<List<AbstractPersesToken>>,
     targetFilePath: String,
     recordingContext: RecordingContext,
-    writeProgramFilesTo: (Path) -> Unit,
+    writeProgramFilesTo: (Path, AbstractTokenPlacementListener) -> Unit,
   ): Result {
     if (elementTokenGroups.size < minListSizeToRecord) {
       return Result(
@@ -114,9 +118,14 @@ class ListMinimizationMicrobenchmarkWriter(
       )
     }
     val microbenchmarkId = microbenchmarkIdGenerator.next()
+    // Written here and renamed into place only once complete, so that whatever fails in between --
+    // a range that does not resolve, a yaml that cannot be written -- leaves no folder that looks
+    // like a problem but is not one.
+    val stagingDirectory = rootDirectory.resolve(microbenchmarkId + STAGING_SUFFIX)
     return try {
       writeProblemFolder(
         microbenchmarkId = microbenchmarkId,
+        stagingDirectory = stagingDirectory,
         baseProgramTokens = baseProgramTokens,
         elementTokenGroups = elementTokenGroups,
         targetFilePath = targetFilePath,
@@ -127,6 +136,9 @@ class ListMinimizationMicrobenchmarkWriter(
       // Exception, not Throwable: a problem this cannot express should be skipped, but an Error --
       // out of memory, a stack overflow -- must not be reported as a skipped recording while the
       // reduction limps on in whatever state produced it.
+      if (Files.exists(stagingDirectory)) {
+        FileSystemUtil.deleteRecursively(stagingDirectory)
+      }
       logger.atWarning().withCause(failure).log("Skipped recording problem %s.", microbenchmarkId)
       Result(
         microbenchmarkDirectory = null,
@@ -148,41 +160,68 @@ class ListMinimizationMicrobenchmarkWriter(
 
   private fun writeProblemFolder(
     microbenchmarkId: String,
+    stagingDirectory: Path,
     baseProgramTokens: List<AbstractPersesToken>,
     elementTokenGroups: List<List<AbstractPersesToken>>,
     targetFilePath: String,
     recordingContext: RecordingContext,
-    writeProgramFilesTo: (Path) -> Unit,
+    writeProgramFilesTo: (Path, AbstractTokenPlacementListener) -> Unit,
   ): Result {
-    // Just the id. The originating reducer is already in microbenchmark.yaml, under its qualified name;
-    // repeating a simple-name copy here would be a second place to keep in step, and one that goes
-    // quietly stale when a reducer is renamed. A directory name only has to be unique and to sort
-    // in issue order, which the zero-padded id already does.
-    val microbenchmarkDirectory = FileSystemUtil.ensureDirExists(rootDirectory.resolve(microbenchmarkId))
     val inputDirectory =
       FileSystemUtil.ensureDirExists(
-        microbenchmarkDirectory.resolve(ListMinimizationMicrobenchmark.INPUT_FOLDER_NAME),
+        FileSystemUtil
+          .ensureDirExists(stagingDirectory)
+          .resolve(ListMinimizationMicrobenchmark.INPUT_FOLDER_NAME),
       )
-    writeProgramFilesTo(inputDirectory)
+    // The ranges come from where the printer put each token while rendering the file that is
+    // written, read back here so they index the bytes on disk. The alternative, re-lexing the
+    // written file to locate the tokens, only works when the tokens are the language's own: a
+    // reducer running on a surrogate tree -- the line slicer's, where a token is a line -- hands
+    // over tokens the real lexer cannot reproduce.
+    val placements = TokenPlacementRecorder()
+    writeProgramFilesTo(inputDirectory, placements)
+    val renderedProgram = inputDirectory.resolve(targetFilePath).readText()
+    val elements =
+      computeRecordedElements(
+        elementTokenGroups = elementTokenGroups,
+        tokenRangeMap = tokenRangesFromPlacement(renderedProgram, placements, baseProgramTokens),
+      )
+    // What a recording promises is that the evaluator can resolve its ranges, and the evaluator
+    // resolves them against the real lexer's tokens of the written file. Checked here with the
+    // evaluator's own resolution, so a range that starts or ends inside a real token -- a line
+    // through a block comment -- is refused now rather than failing every measurement later.
+    RecordedProgramTokenizer.resolveElements(
+      tree = RecordedProgramTokenizer.buildFlatTokenListTree(renderedProgram, underlyingLexerClass),
+      rangesPerElement = elements.map { it.ranges },
+    )
 
     ListMinimizationMicrobenchmark(
       microbenchmarkId = microbenchmarkId,
       targetFilePath = targetFilePath,
-      inputList =
-        RecordedInputList(
-          computeRecordedElements(
-            elementTokenGroups = elementTokenGroups,
-            tokenRangeMap =
-              relexWrittenFileForTokenRanges(
-                inputDirectory.resolve(targetFilePath),
-                baseProgramTokens,
-              ),
-          ),
-        ),
+      inputList = RecordedInputList(elements),
       recordingContext = recordingContext,
     ).writeTo(
-      microbenchmarkDirectory.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME),
+      stagingDirectory.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME),
     )
+    // Just the id. The originating reducer is already in microbenchmark.yaml, under its qualified name;
+    // repeating a simple-name copy here would be a second place to keep in step, and one that goes
+    // quietly stale when a reducer is renamed. A directory name only has to be unique and to sort
+    // in issue order, which the zero-padded id already does.
+    val microbenchmarkDirectory = rootDirectory.resolve(microbenchmarkId)
+    if (Files.exists(microbenchmarkDirectory)) {
+      // A build system that declares the problem's files as outputs creates their directories
+      // beforehand, down to input/; anything that already holds a file is a problem recorded under
+      // this id, which must not be overwritten.
+      check(
+        Files.walk(microbenchmarkDirectory).use { paths ->
+          paths.noneMatch { Files.isRegularFile(it) }
+        },
+      ) {
+        "A problem is already recorded at $microbenchmarkDirectory."
+      }
+      FileSystemUtil.deleteRecursively(microbenchmarkDirectory)
+    }
+    Files.move(stagingDirectory, microbenchmarkDirectory)
     return Result(
       microbenchmarkDirectory = microbenchmarkDirectory,
       explanation = "Recorded ${elementTokenGroups.size} element(s) as problem $microbenchmarkId.",
@@ -190,39 +229,45 @@ class ListMinimizationMicrobenchmarkWriter(
   }
 
   /**
-   * Each token's range in the file just written, obtained by lexing that file with the same facade
-   * the evaluation uses. Reading the offsets back out of the written text, rather than asking the
-   * printer where it put things, is what makes the two halves agree by construction.
+   * The range of each token in [renderedProgram], from where the printer placed it.
    *
-   * The lexeme-by-lexeme check is the lexing fixpoint, asserted where the problem is *created*: a
-   * program whose re-lex disagrees with its token list cannot be evaluated later either, so it is
-   * better to fail here than to leave an unusable problem in the corpus.
+   * Offsets are in code points, because that is what the evaluator's lexer counts
+   * (`CharStreams.fromString`); the printer reports columns in UTF-16 units. [tokens] is in program
+   * order, so the conversion walks the text once with a cursor instead of recounting from the start
+   * for every token.
    */
-  internal fun relexWrittenFileForTokenRanges(
-    writtenFile: Path,
-    expectedTokens: List<AbstractPersesToken>,
+  internal fun tokenRangesFromPlacement(
+    renderedProgram: String,
+    placements: TokenPlacementRecorder,
+    tokens: List<AbstractPersesToken>,
   ): IdentityHashMap<AbstractPersesToken, Interval> {
-    val tree =
-      RecordedProgramTokenizer.buildFlatTokenListTree(writtenFile.readText(), underlyingLexerClass)
-    val lexed = tree.remainingLexerRuleNodes
-    check(lexed.size == expectedTokens.size) {
-      "Re-lexing the recorded program yielded ${lexed.size} token(s), but its token list has " +
-        "${expectedTokens.size}."
-    }
-    // Keyed by the *expected* token, not the re-lexed one: an element holds the program's own token
-    // objects. IdentityHashMap rather than a plain Map because two tokens with the same lexeme are
-    // distinct tokens -- and returning the concrete type says so, where a Map would not.
-    val tokenRangeMap = IdentityHashMap<AbstractPersesToken, Interval>(expectedTokens.size)
-    lexed.forEachIndexed { index, node ->
-      check(node.token.lexemeText == expectedTokens[index].lexemeText) {
-        "Re-lexing disagrees at token $index: '${node.token.lexemeText}' versus " +
-          "'${expectedTokens[index].lexemeText}'."
+    val lineStartOffsets =
+      ArrayList<Int>().apply {
+        add(0)
+        renderedProgram.forEachIndexed { index, char -> if (char == '\n') add(index + 1) }
       }
-      tokenRangeMap[expectedTokens[index]] =
-        Interval(
-          leftInclusive = RecordedProgramTokenizer.inclusiveStartOffsetOf(node),
-          rightExclusive = RecordedProgramTokenizer.exclusiveEndOffsetOf(node),
-        )
+    val tokenRangeMap = IdentityHashMap<AbstractPersesToken, Interval>(tokens.size)
+    var cursor = 0
+    var cursorInCodePoints = 0
+    tokens.forEach { token ->
+      val position =
+        checkNotNull(placements.getPositionOrNull(token)) {
+          "The printer did not place the token '${token.lexemeText}'."
+        }
+      val start = lineStartOffsets[position.line - 1] + position.charPositionInLine
+      val end = start + token.lexemeText.length
+      check(start >= cursor) {
+        "The token '${token.lexemeText}' at $start precedes the previous token, which ends at $cursor."
+      }
+      check(renderedProgram.regionMatches(start, token.lexemeText, 0, token.lexemeText.length)) {
+        "The printer placed '${token.lexemeText}' at $start, but the rendered program has " +
+          "'${renderedProgram.substring(start, minOf(end, renderedProgram.length))}' there."
+      }
+      val startInCodePoints = cursorInCodePoints + renderedProgram.codePointCount(cursor, start)
+      val endInCodePoints = startInCodePoints + renderedProgram.codePointCount(start, end)
+      tokenRangeMap[token] = Interval(startInCodePoints, endInCodePoints)
+      cursor = end
+      cursorInCodePoints = endInCodePoints
     }
     return tokenRangeMap
   }
@@ -230,13 +275,15 @@ class ListMinimizationMicrobenchmarkWriter(
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
 
+    /** A problem folder being written; renamed to the bare id once complete. */
+    const val STAGING_SUFFIX = ".incomplete"
+
     /**
      * Expresses each list element as character ranges into the recorded program, given the range of
      * each of that program's tokens.
      *
-     * Those token ranges come from lexing the file that was written, which is the same source of
-     * offsets the evaluation side uses -- so the two halves agree by construction rather than by two
-     * conventions being kept in step. Offsets cannot be taken from the tokens themselves: a base
+     * Those token ranges come from where the printer placed each token in the file that was written
+     * (see [tokenRangesFromPlacement]). Offsets cannot be taken from the tokens themselves: a base
      * program is the *edited* token list of a reduction in progress, so its tokens still carry
      * `startIndex`/`stopIndex` pointing into the pre-edit file.
      *

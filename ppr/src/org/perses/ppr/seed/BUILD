@@ -54,6 +54,7 @@ kt_jvm_library(
     deps = [
         "//ppr/src/org/perses/ppr/diff:reduction_inputs",
         "//src/org/perses/program",
+        "//src/org/perses/program/printer",
         "//src/org/perses/reduction/io/token:token_output_manager_factory_interface",
         "//src/org/perses/util:perses_diffutil",
     ],

@@ -21,6 +21,7 @@ import org.perses.antlr.atn.LexerAtnWrapper
 import org.perses.program.AbstractReductionFile
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenPlacementListener
 import org.perses.reduction.io.AbstractOriginalReductionInputs
 import org.perses.reduction.io.AbstractOutputManager
 import org.perses.reduction.io.SuppliedContentOutputManager
@@ -42,13 +43,18 @@ class RegularOutputManagerFactory(
     lexerAtnWrapper,
     shaAlgorithm,
   ) {
-  override fun createManagerFor(program: TokenizedProgram): AbstractOutputManager =
+  override fun createManagerFor(
+    program: TokenizedProgram,
+    tokenPlacementListener: AbstractTokenPlacementListener?,
+  ): AbstractOutputManager =
     SuppliedContentOutputManager(
       originalReductionInputs,
       shaAlgorithm,
       fileRepresentedByProgram,
       otherMutableFileContents,
-      renderFileRepresentedByProgram = { defaultProgramPrinter.print(program).sourceCode },
+      renderFileRepresentedByProgram = {
+        defaultProgramPrinter.print(program, tokenPlacementListener).sourceCode
+      },
     )
 
   // A sibling factory in a different code format: same file-management collaborators, new printer.
