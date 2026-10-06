@@ -22,7 +22,8 @@ import org.perses.grammar.flattokenlist.FlatTokenListParserFacade
 
 /**
  * The FlatTokenList facade over a [RecordedRangeLexer]: a tree with one leaf per recorded range
- * and per gap between ranges, built from the text alone.
+ * and per gap between ranges, built from the text alone. Its language is [LanguageRecordedRanges],
+ * so a driver built on it prints verbatim.
  *
  * The underlying lexer class the base class asks for is the range lexer itself: this facade never
  * lexes with a language's rules, and nothing of the recorded language enters the evaluation through
@@ -31,7 +32,10 @@ import org.perses.grammar.flattokenlist.FlatTokenListParserFacade
  */
 class RecordedRangeParserFacade(
   private val cutOffsets: IntArray,
-) : FlatTokenListParserFacade(underlyingLexerClass = RecordedRangeLexer::class.java) {
+) : FlatTokenListParserFacade(
+    underlyingLexerClass = RecordedRangeLexer::class.java,
+    language = LanguageRecordedRanges,
+  ) {
   override fun createLexer(inputStream: CharStream): Lexer =
     RecordedRangeLexer(inputStream, cutOffsets)
 }

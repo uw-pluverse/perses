@@ -20,6 +20,7 @@ import com.google.common.primitives.ImmutableIntArray
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.Lexer
 import org.perses.grammar.AbstractLexerAdaptingParserFacade
+import org.perses.program.LanguageKind
 
 /**
  * Parses any input into a flat list of tokens under the `start : TOKEN* EOF` grammar, reusing the
@@ -28,8 +29,9 @@ import org.perses.grammar.AbstractLexerAdaptingParserFacade
  */
 open class FlatTokenListParserFacade(
   underlyingLexerClass: Class<out Lexer>,
+  language: LanguageKind = LanguageFlatTokenList,
 ) : AbstractLexerAdaptingParserFacade(
-    language = LanguageFlatTokenList,
+    language = language,
     antlrGrammar =
       createSeparateAntlrParserGrammarOnly(
         startRuleName = "start",

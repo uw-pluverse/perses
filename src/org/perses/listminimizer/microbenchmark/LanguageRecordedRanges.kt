@@ -14,21 +14,23 @@
  * You should have received a copy of the GNU General Public License along with
  * Perses; see the file LICENSE.  If not see <http://www.gnu.org/licenses/>.
  */
-package org.perses.grammar.flattokenlist
+package org.perses.listminimizer.microbenchmark
 
 import com.google.common.collect.ImmutableSet
 import org.perses.program.EnumFormatControl
 import org.perses.program.LanguageKind
 
-object LanguageFlatTokenList : LanguageKind(
-  name = "flat-token-list",
-  extensions = ImmutableSet.of("flat_token_list"),
-  defaultCodeFormatControl = EnumFormatControl.COMPACT_ORIG_FORMAT,
-  origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
-  allowedCodeFormatControl =
-    ImmutableSet.of(
-      EnumFormatControl.ORIG_FORMAT,
-      EnumFormatControl.COMPACT_ORIG_FORMAT,
-    ),
+/**
+ * The "language" of a recorded program cut at its ranges: pieces of text that carry their own
+ * whitespace. Its one code format is [EnumFormatControl.VERBATIM], because concatenating the
+ * pieces is the only rendering that reproduces the text and removes exactly a deleted element's
+ * span; any format that spaces tokens would alter the program under measurement.
+ */
+object LanguageRecordedRanges : LanguageKind(
+  name = "recorded-ranges",
+  extensions = ImmutableSet.of("recorded_ranges"),
+  defaultCodeFormatControl = EnumFormatControl.VERBATIM,
+  origCodeFormatControl = EnumFormatControl.VERBATIM,
+  allowedCodeFormatControl = ImmutableSet.of(EnumFormatControl.VERBATIM),
   hidden = true,
 )

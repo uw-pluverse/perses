@@ -19,6 +19,7 @@ kt_jvm_library(
 kt_jvm_library(
     name = "recorded_program_tokenizer",
     srcs = [
+        "LanguageRecordedRanges.kt",
         "RecordedProgramTokenizer.kt",
         "RecordedRangeParserFacade.kt",
     ],
@@ -27,6 +28,8 @@ kt_jvm_library(
         ":recorded_range_lexer",
         "//:antlr_runtime",
         "//:guava",
+        "//src/org/perses/program:enum_format_control",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/flattokenlist:parser_facade",
         "//src/org/perses/spartree",
