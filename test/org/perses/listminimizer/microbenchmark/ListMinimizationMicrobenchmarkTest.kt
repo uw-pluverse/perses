@@ -115,9 +115,9 @@ class ListMinimizationMicrobenchmarkTest {
     assertThat(descending.inputList.elementsAreOffsetAscending).isFalse()
   }
 
-  /** The corpora recorded before the counts existed must stay readable: the counts read as null. */
+  /** Every corpus was backfilled; a recording without counts is malformed, not legacy. */
   @Test
-  fun testARecordingWithoutTokenCountsReadsBackWithNullCounts() {
+  fun testARecordingWithoutTokenCountsIsRejected() {
     val microbenchmarkFile =
       tempDir.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME)
     createMicrobenchmark().writeTo(microbenchmarkFile)
@@ -125,24 +125,36 @@ class ListMinimizationMicrobenchmarkTest {
       microbenchmarkFile
         .readText()
         .lines()
-        .filterNot {
-          it.trim().startsWith(
-            "tokenCount:",
-          ) ||
-            it.startsWith("wholeProgramTokenCount:")
-        }.joinToString("\n")
+        .filterNot { it.trim().startsWith("tokenCount:") }
+        .joinToString("\n")
     microbenchmarkFile.writeText(withoutCounts)
 
-    val read = ListMinimizationMicrobenchmark.readFrom(microbenchmarkFile)
+    val failure =
+      assertThrows(Exception::class.java) {
+        ListMinimizationMicrobenchmark.readFrom(microbenchmarkFile)
+      }
+    assertThat(failure).hasMessageThat().contains("tokenCount")
+  }
 
-    assertThat(read.wholeProgramTokenCount).isNull()
-    assertThat(read.inputList.elements.map { it.tokenCount }).containsExactly(null, null)
-    assertThat(read.inputList.elements.map { element -> element.ranges.map { it.toInterval() } })
-      .isEqualTo(
-        createMicrobenchmark().inputList.elements.map { element ->
-          element.ranges.map { it.toInterval() }
-        },
-      )
+  @Test
+  fun testARecordingWithoutTheWholeProgramCountIsRejected() {
+    val microbenchmarkFile =
+      tempDir.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME)
+    createMicrobenchmark().writeTo(microbenchmarkFile)
+    microbenchmarkFile.writeText(
+      microbenchmarkFile
+        .readText()
+        .lines()
+        .filterNot {
+          it.startsWith("wholeProgramTokenCount:")
+        }.joinToString("\n"),
+    )
+
+    val failure =
+      assertThrows(Exception::class.java) {
+        ListMinimizationMicrobenchmark.readFrom(microbenchmarkFile)
+      }
+    assertThat(failure).hasMessageThat().contains("wholeProgramTokenCount")
   }
 
   @Test

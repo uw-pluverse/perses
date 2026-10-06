@@ -83,15 +83,11 @@ object RecordedProgramTokenizer {
       require(range.rightExclusive <= length) {
         "The range $range is outside the text, which has $length code point(s)."
       }
-      val tokenCount =
-        requireNotNull(range.tokenCount) {
-          "The range $range has no token count; the recording predates them."
-        }
       // One leaf per token: the first tokenCount - 1 pieces are one code point each and the last
       // takes the rest of the range, which is always possible because a range holds at least as
       // many code points as tokens. Where the cuts fall does not matter -- the element is only
       // ever deleted whole -- but how many there are does, since the leaf count is the weight.
-      for (cut in range.leftInclusive..range.leftInclusive + tokenCount - 1) {
+      for (cut in range.leftInclusive..range.leftInclusive + range.tokenCount - 1) {
         cuts.add(cut)
       }
       cuts.add(range.rightExclusive)

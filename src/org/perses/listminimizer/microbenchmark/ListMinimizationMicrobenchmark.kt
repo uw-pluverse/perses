@@ -45,15 +45,22 @@ data class ListMinimizationMicrobenchmark(
   val targetFilePath: String,
   /**
    * How many tokens the recorded program has, as the reducer tokenized it. With
-   * [RecordedElement.tokenCount] this is what lets the evaluation measure sizes without
-   * tokenizing anything: a list minimizer only deletes whole elements, so the size after a
-   * minimization is this minus the deleted elements' counts. Null in recordings made before the
-   * field existed.
+   * [RecordedRange.tokenCount] this is what lets the evaluation measure sizes without tokenizing
+   * anything: a list minimizer only deletes whole elements, so the size after a minimization is
+   * this minus the deleted elements' counts.
    */
-  val wholeProgramTokenCount: Int?,
+  val wholeProgramTokenCount: Int,
   val inputList: RecordedInputList,
   val recordingContext: RecordingContext,
 ) {
+  init {
+    // Jackson reads a missing Int as 0, so this is also what rejects a recording without the count.
+    require(wholeProgramTokenCount >= inputList.elements.sumOf { it.tokenCount }) {
+      "wholeProgramTokenCount is $wholeProgramTokenCount, fewer than the " +
+        "${inputList.elements.sumOf { it.tokenCount }} token(s) the elements hold."
+    }
+  }
+
   fun writeTo(microbenchmarkFile: Path) {
     Serialization.toYamlFile(this, microbenchmarkFile)
   }
@@ -117,10 +124,10 @@ data class RecordedInputList(
 data class RecordedElement(
   val ranges: ImmutableList<RecordedRange>,
 ) {
-  /** The element's weight, or null in a recording made before ranges carried token counts. */
+  /** The element's weight. */
   @get:JsonIgnore
-  val tokenCount: Int?
-    get() = if (ranges.all { it.tokenCount != null }) ranges.sumOf { it.tokenCount!! } else null
+  val tokenCount: Int
+    get() = ranges.sumOf { it.tokenCount }
 }
 
 /**
@@ -129,20 +136,23 @@ data class RecordedElement(
  *
  * The count is recorded per range because the evaluation does not tokenize the program: it treats
  * the file as text cut at the ranges, and cuts each range into as many pieces as it has tokens, so
- * that the tree's own leaf counts are the reducer's token counts. Null in recordings made before
- * the field existed.
+ * that the tree's own leaf counts are the reducer's token counts. Every corpus carries the counts;
+ * the ones recorded before they existed were backfilled once by lexing them the way the evaluation
+ * used to, so a recording without them is simply malformed.
  */
 data class RecordedRange(
   val leftInclusive: Int,
   val rightExclusive: Int,
-  val tokenCount: Int?,
+  val tokenCount: Int,
 ) {
   init {
     require(0 <= leftInclusive && leftInclusive < rightExclusive) {
       "A range must be non-empty and start at or after 0: [$leftInclusive, $rightExclusive)"
     }
-    require(tokenCount == null || tokenCount in 1..(rightExclusive - leftInclusive)) {
-      "A range of ${rightExclusive - leftInclusive} character(s) cannot hold $tokenCount token(s)."
+    // Jackson reads a missing Int as 0, so this is also what rejects a recording without counts.
+    require(tokenCount in 1..(rightExclusive - leftInclusive)) {
+      "tokenCount of the range [$leftInclusive, $rightExclusive) is $tokenCount; it must be " +
+        "between 1 and the range's ${rightExclusive - leftInclusive} character(s)."
     }
   }
 

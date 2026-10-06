@@ -207,18 +207,6 @@ class RecordedProgramTokenizerTest {
     assertThat(failure).hasMessageThat().contains("overlap")
   }
 
-  @Test
-  fun testARangeWithoutATokenCountIsRejected() {
-    val failure =
-      assertThrows(IllegalArgumentException::class.java) {
-        RecordedProgramTokenizer.buildRecordedRangeTree(
-          "abc",
-          listOf(element(RecordedRange(0, 1, null))),
-        )
-      }
-    assertThat(failure).hasMessageThat().contains("no token count")
-  }
-
   /** The whole point of the text path: a deleted element leaves the text minus exactly its span. */
   @Test
   fun testDeletingAnElementAndPrintingVerbatimSplicesItsSpanOut() {
