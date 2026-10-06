@@ -5,6 +5,18 @@ package(default_visibility = [
 ])
 
 kt_jvm_test(
+    name = "RecordedRangeLexerTest",
+    srcs = ["RecordedRangeLexerTest.kt"],
+    deps = [
+        "//:antlr_runtime",
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/grammar/flattokenlist:pnf_flat_token_list_parser_codegen",
+        "//src/org/perses/listminimizer/microbenchmark:recorded_range_lexer",
+    ],
+)
+
+kt_jvm_test(
     name = "RecordedProgramTokenizerTest",
     srcs = [
         "RecordedProgramTokenizerTest.kt",

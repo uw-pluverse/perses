@@ -5,6 +5,18 @@ package(default_visibility = [
 ])
 
 kt_jvm_library(
+    name = "recorded_range_lexer",
+    srcs = ["RecordedRangeLexer.kt"],
+    deps = [
+        "//:antlr_runtime",
+        "//:guava",
+        "//src/org/perses/grammar:lexer_adaptor",
+        "//src/org/perses/grammar/flattokenlist:lexer",
+        "//src/org/perses/grammar/flattokenlist:pnf_flat_token_list_parser_codegen",
+    ],
+)
+
+kt_jvm_library(
     name = "recorded_program_tokenizer",
     srcs = [
         "RecordedProgramTokenizer.kt",
