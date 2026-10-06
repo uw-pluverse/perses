@@ -24,6 +24,7 @@ kt_jvm_library(
         "OrigFormatPrintingVisitor.kt",
         "PrinterRegistry.kt",
         "SingleTokenPerLinePrinter.kt",
+        "VerbatimPrinter.kt",
     ],
     deps = [
         ":YamlTokenizedProgramPrinter",

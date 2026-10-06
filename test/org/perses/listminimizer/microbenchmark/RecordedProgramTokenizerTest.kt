@@ -29,6 +29,7 @@ import org.perses.listminimizer.microbenchmark.RecordedProgramTokenizer.inclusiv
 import org.perses.program.EnumFormatControl
 import org.perses.program.printer.PrinterRegistry
 import org.perses.spartree.LexerRuleSparTreeNode
+import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
 import org.perses.util.Interval
 import kotlin.io.path.readText
@@ -216,6 +217,21 @@ class RecordedProgramTokenizerTest {
         )
       }
     assertThat(failure).hasMessageThat().contains("no token count")
+  }
+
+  /** The whole point of the text path: a deleted element leaves the text minus exactly its span. */
+  @Test
+  fun testDeletingAnElementAndPrintingVerbatimSplicesItsSpanOut() {
+    val sourceCode = "<a>foo<b/>bar</a>"
+    val b = range(sourceCode, "<b/>")
+    val tree = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, listOf(element(b)))
+    val builder = NodeDeletionActionSet.Builder("delete b")
+    tree.resolveOne(b.toInterval()).forEach { builder.deleteNode(it) }
+    tree.applyEdit(tree.createNodeDeletionEdit(builder.build()), canonicalTokenCount = null)
+
+    val printed =
+      PrinterRegistry.getPrinter(EnumFormatControl.VERBATIM).print(tree.programSnapshot.payload)
+    assertThat(printed.sourceCode).isEqualTo("<a>foobar</a>")
   }
 
   // ---- buildFlatTokenListTree: the lexer-based path the existing corpora still use ----

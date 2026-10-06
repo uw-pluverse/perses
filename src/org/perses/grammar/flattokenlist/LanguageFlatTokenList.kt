@@ -29,6 +29,7 @@ object LanguageFlatTokenList : LanguageKind(
     ImmutableSet.of(
       EnumFormatControl.ORIG_FORMAT,
       EnumFormatControl.COMPACT_ORIG_FORMAT,
+      EnumFormatControl.VERBATIM,
     ),
   hidden = true,
 )

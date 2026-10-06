@@ -23,4 +23,10 @@ enum class EnumFormatControl {
   PYTHON3_FORMAT,
   COMPACT_PYTHON3_FORMAT,
   YAML_FORMAT,
+
+  /**
+   * The tokens' text concatenated with nothing between them. Only right for a program whose tokens
+   * carry their own whitespace, such as a recorded microbenchmark cut from a text at its ranges.
+   */
+  VERBATIM,
 }

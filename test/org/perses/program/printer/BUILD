@@ -20,6 +20,18 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
+    name = "VerbatimPrinterTest",
+    srcs = ["VerbatimPrinterTest.kt"],
+    deps = [
+        "//:guava",
+        "//:truth",
+        "//src/org/perses/program",
+        "//src/org/perses/program:enum_format_control",
+        "//src/org/perses/program/printer",
+    ],
+)
+
+kt_jvm_test(
     name = "AbstractOrigFormatVisitorTest",
     srcs = ["AbstractOrigFormatVisitorTest.kt"],
     deps = [
