@@ -26,7 +26,7 @@ import org.perses.grammar.AbstractLexerAdaptingParserFacade
  * target language's real lexer via [FlatTokenListLexer]. The real lexer class is threaded in so the
  * same tokenization the canonical facade produced is replayed here; see [underlyingLexerClass].
  */
-class FlatTokenListParserFacade(
+open class FlatTokenListParserFacade(
   underlyingLexerClass: Class<out Lexer>,
 ) : AbstractLexerAdaptingParserFacade(
     language = LanguageFlatTokenList,

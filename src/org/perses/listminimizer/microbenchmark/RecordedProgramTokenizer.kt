@@ -42,6 +42,63 @@ import org.perses.util.transformToImmutableList
  * because the caller needs it for exactly that.
  */
 object RecordedProgramTokenizer {
+  /**
+   * The tree the text-based evaluation runs on, cut from [sourceCode] at the recorded ranges with
+   * no lexer involved. A range of n tokens becomes n leaves -- its two ends plus n - 1 cuts inside
+   * it, placed arbitrarily since the element is only ever deleted whole -- and each gap between
+   * ranges one leaf. So every range begins and ends at a leaf boundary by construction, which makes
+   * [resolveElements] infallible here whatever the language, and an element's leaf count is its
+   * recorded token count, which makes every consumer that sums leaf counts -- the containers, the
+   * weights, the metrics -- right without knowing about recordings.
+   *
+   * Ranges must not overlap: an element's leaves are its weight, and a token under two elements
+   * would be weighed twice. No recorded corpus has an overlap.
+   */
+  fun buildRecordedRangeTree(
+    sourceCode: String,
+    elements: List<RecordedElement>,
+  ): SparTree =
+    SparTreeParserUtility.buildSparTree(
+      sourceCode = sourceCode,
+      parserFacade = RecordedRangeParserFacade(cutOffsetsOf(sourceCode, elements)),
+      specifiedSparTreeNodeFactory = null,
+      simplifyTree = true,
+      canonicalTokenCountComputer = { null },
+      errorMode = ParseErrorHandling.TOLERANT,
+    )
+
+  internal fun cutOffsetsOf(
+    sourceCode: String,
+    elements: List<RecordedElement>,
+  ): IntArray {
+    val length = sourceCode.codePointCount(0, sourceCode.length)
+    val ranges = elements.flatMap { it.ranges }.sortedBy { it.leftInclusive }
+    ranges.zipWithNext().forEach { (previous, next) ->
+      require(previous.rightExclusive <= next.leftInclusive) {
+        "The ranges $previous and $next overlap; an element's leaves are its weight."
+      }
+    }
+    val cuts = sortedSetOf(0, length)
+    ranges.forEach { range ->
+      require(range.rightExclusive <= length) {
+        "The range $range is outside the text, which has $length code point(s)."
+      }
+      val tokenCount =
+        requireNotNull(range.tokenCount) {
+          "The range $range has no token count; the recording predates them."
+        }
+      // One leaf per token: the first tokenCount - 1 pieces are one code point each and the last
+      // takes the rest of the range, which is always possible because a range holds at least as
+      // many code points as tokens. Where the cuts fall does not matter -- the element is only
+      // ever deleted whole -- but how many there are does, since the leaf count is the weight.
+      for (cut in range.leftInclusive..range.leftInclusive + tokenCount - 1) {
+        cuts.add(cut)
+      }
+      cuts.add(range.rightExclusive)
+    }
+    return cuts.toIntArray()
+  }
+
   fun buildFlatTokenListTree(
     sourceCode: String,
     underlyingLexerClass: Class<out Lexer>,

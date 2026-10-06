@@ -20,8 +20,11 @@ kt_jvm_library(
     name = "recorded_program_tokenizer",
     srcs = [
         "RecordedProgramTokenizer.kt",
+        "RecordedRangeParserFacade.kt",
     ],
     deps = [
+        ":list_minimization_microbenchmark",
+        ":recorded_range_lexer",
         "//:antlr_runtime",
         "//:guava",
         "//src/org/perses/grammar:parser_facade_interface",

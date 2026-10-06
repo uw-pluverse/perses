@@ -16,7 +16,9 @@
  */
 package org.perses.listminimizer.microbenchmark
 
+import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -49,6 +51,174 @@ class RecordedProgramTokenizerTest {
     check(start >= 0) { "'$substring' is not in the source" }
     return Interval(start, start + substring.length)
   }
+
+  private fun element(vararg ranges: RecordedRange) = RecordedElement(ImmutableList.copyOf(ranges))
+
+  private fun range(
+    sourceCode: String,
+    substring: String,
+    tokenCount: Int = 1,
+  ): RecordedRange {
+    val span = spanOf(sourceCode, substring)
+    return RecordedRange(span.leftInclusive, span.rightExclusive, tokenCount)
+  }
+
+  private fun cutTexts(
+    sourceCode: String,
+    vararg elements: RecordedElement,
+  ): List<String> =
+    texts(
+      RecordedProgramTokenizer
+        .buildRecordedRangeTree(sourceCode, elements.toList())
+        .remainingLexerRuleNodes,
+    )
+
+  // ---- buildRecordedRangeTree: the text cut at the ranges, no lexer ----
+
+  @Test
+  fun testTheTextIsCutAtTheRangesAndTheGapsAreLeavesToo() {
+    val sourceCode = "int x = 1;\n"
+
+    assertThat(
+      cutTexts(sourceCode, element(range(sourceCode, "x")), element(range(sourceCode, "1"))),
+    ).containsExactly("int ", "x", " = ", "1", ";\n")
+      .inOrder()
+  }
+
+  @Test
+  fun testTheLeavesReassembleTheTextAndEveryRangeResolves() {
+    val sourceCode = "<a>foo<b/>bar</a>"
+    val elements =
+      listOf(
+        element(range(sourceCode, "foo")),
+        element(range(sourceCode, "<b/>")),
+        element(range(sourceCode, "bar")),
+      )
+    val tree = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, elements)
+
+    assertThat(texts(tree.remainingLexerRuleNodes).joinToString("")).isEqualTo(sourceCode)
+    val resolved =
+      RecordedProgramTokenizer.resolveElements(
+        tree,
+        elements.map { element -> element.ranges.map { it.toInterval() } },
+      )
+    assertThat(resolved.map { texts(it) })
+      .containsExactly(listOf("foo"), listOf("<b/>"), listOf("bar"))
+      .inOrder()
+  }
+
+  /** A range of n tokens is n leaves, so the element's leaf count is its recorded weight. */
+  @Test
+  fun testARangeIsCutIntoAsManyLeavesAsItsTokenCount() {
+    val sourceCode = "int x = 1;"
+    val declaration = range(sourceCode, "int x =", tokenCount = 3)
+    val tree =
+      RecordedProgramTokenizer.buildRecordedRangeTree(
+        sourceCode,
+        listOf(element(declaration)),
+      )
+
+    val leaves = tree.resolveOne(declaration.toInterval())
+    assertThat(leaves).hasSize(3)
+    assertThat(texts(leaves).joinToString("")).isEqualTo("int x =")
+    assertThat(leaves.sumOf { it.leafTokenCount }).isEqualTo(3)
+  }
+
+  @Test
+  fun testAMultiRangeElementWeighsTheSumOfItsRanges() {
+    val sourceCode = "a b c d e"
+    val tree =
+      RecordedProgramTokenizer.buildRecordedRangeTree(
+        sourceCode,
+        listOf(
+          element(range(sourceCode, "a b", tokenCount = 2), range(sourceCode, "e", tokenCount = 1)),
+        ),
+      )
+
+    val leaves = tree.resolveOne(Interval(0, 3), Interval(8, 9))
+    assertThat(leaves.sumOf { it.leafTokenCount }).isEqualTo(3)
+    assertThat(
+      texts(tree.remainingLexerRuleNodes),
+    ).containsExactly("a", " b", " c d ", "e").inOrder()
+  }
+
+  @Test
+  fun testTouchingRangesAndRangesAtTheTextEndsNeedNoGaps() {
+    assertThat(cutTexts("ab", element(RecordedRange(0, 1, 1)), element(RecordedRange(1, 2, 1))))
+      .containsExactly("a", "b")
+      .inOrder()
+  }
+
+  @Test
+  fun testOffsetsAreCodePointsSoANonBmpCharacterBeforeARangeDoesNotShiftIt() {
+    // The emoji is two UTF-16 units but one code point; the recorded offsets count code points.
+    val sourceCode = "/* \uD83D\uDE00 */ x"
+    val x =
+      RecordedRange(
+        sourceCode.codePointCount(0, sourceCode.indexOf("x")),
+        sourceCode.codePointCount(0, sourceCode.length),
+        tokenCount = 1,
+      )
+    val tree = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, listOf(element(x)))
+
+    assertThat(texts(tree.resolveOne(x.toInterval()))).containsExactly("x")
+    assertThat(texts(tree.remainingLexerRuleNodes).joinToString("")).isEqualTo(sourceCode)
+  }
+
+  @Test
+  fun testLeavesCarryLineAndColumn() {
+    val sourceCode = "a\nbc\n d"
+    val d = range(sourceCode, "d")
+    val tree = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, listOf(element(d)))
+
+    val leaf =
+      tree
+        .resolveOne(d.toInterval())
+        .single()
+        .token
+        .asAntlrToken()
+    assertThat(leaf.position.line).isEqualTo(3)
+    assertThat(leaf.position.charPositionInLine).isEqualTo(1)
+  }
+
+  @Test
+  fun testARangeOutsideTheTextIsRejected() {
+    val failure =
+      assertThrows(IllegalArgumentException::class.java) {
+        RecordedProgramTokenizer.buildRecordedRangeTree(
+          "abc",
+          listOf(element(RecordedRange(2, 9, 1))),
+        )
+      }
+    assertThat(failure).hasMessageThat().contains("outside the text")
+  }
+
+  @Test
+  fun testOverlappingRangesAreRejected() {
+    val sourceCode = "f(g(1), 2)"
+    val failure =
+      assertThrows(IllegalArgumentException::class.java) {
+        RecordedProgramTokenizer.buildRecordedRangeTree(
+          sourceCode,
+          listOf(element(range(sourceCode, "g(1), 2")), element(range(sourceCode, "1"))),
+        )
+      }
+    assertThat(failure).hasMessageThat().contains("overlap")
+  }
+
+  @Test
+  fun testARangeWithoutATokenCountIsRejected() {
+    val failure =
+      assertThrows(IllegalArgumentException::class.java) {
+        RecordedProgramTokenizer.buildRecordedRangeTree(
+          "abc",
+          listOf(element(RecordedRange(0, 1, null))),
+        )
+      }
+    assertThat(failure).hasMessageThat().contains("no token count")
+  }
+
+  // ---- buildFlatTokenListTree: the lexer-based path the existing corpora still use ----
 
   @Test
   fun testOneTokenNodePerRealToken() {
