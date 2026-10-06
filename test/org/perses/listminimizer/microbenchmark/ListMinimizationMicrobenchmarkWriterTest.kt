@@ -206,7 +206,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     val resolved =
       RecordedProgramTokenizer.resolveElements(
         tree,
-        microbenchmark.inputList.elements.map { it.ranges },
+        microbenchmark.inputList.elements.map { element -> element.ranges.map { it.toInterval() } },
       )
 
     assertThat(resolved).hasSize(microbenchmark.inputList.elementCount)
@@ -316,7 +316,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
         microbenchmarkDirectory.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME),
       )
     assertThat(microbenchmark.inputList.elements.map { it.ranges.single() })
-      .containsExactly(Interval(0, 8), Interval(9, 17))
+      .containsExactly(RecordedRange(0, 8, tokenCount = 1), RecordedRange(9, 17, tokenCount = 1))
       .inOrder()
     // Counted as the reducer tokenized the program: one line is one token.
     assertThat(microbenchmark.wholeProgramTokenCount).isEqualTo(2)
@@ -329,7 +329,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     val resolved =
       RecordedProgramTokenizer.resolveElements(
         RecordedProgramTokenizer.buildFlatTokenListTree(recordedProgramText, PnfCLexer::class.java),
-        microbenchmark.inputList.elements.map { it.ranges },
+        microbenchmark.inputList.elements.map { element -> element.ranges.map { it.toInterval() } },
       )
     assertThat(resolved.map { element -> element.joinToString(" ") { it.token.lexemeText } })
       .containsExactly("int aaa ;", "int bbb ;")
@@ -562,7 +562,10 @@ class ListMinimizationMicrobenchmarkWriterTest {
     val tree =
       RecordedProgramTokenizer.buildFlatTokenListTree(recorded.sourceCode, PnfCLexer::class.java)
     val resolved =
-      RecordedProgramTokenizer.resolveElements(tree, recorded.elements.map { it.ranges })
+      RecordedProgramTokenizer.resolveElements(
+        tree,
+        recorded.elements.map { element -> element.ranges.map { it.toInterval() } },
+      )
 
     assertThat(resolved).hasSize(program.tokenCount)
     resolved.forEachIndexed { index, nodes ->

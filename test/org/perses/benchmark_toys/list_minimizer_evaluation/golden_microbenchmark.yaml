@@ -7,63 +7,63 @@ inputList:
   - ranges:
     - leftInclusive: 0
       rightExclusive: 3
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 4
       rightExclusive: 11
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 11
       rightExclusive: 12
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 13
       rightExclusive: 16
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 17
       rightExclusive: 18
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 18
       rightExclusive: 19
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 20
       rightExclusive: 23
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 24
       rightExclusive: 25
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 25
       rightExclusive: 26
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 27
       rightExclusive: 30
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 31
       rightExclusive: 32
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 32
       rightExclusive: 33
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 34
       rightExclusive: 37
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 38
       rightExclusive: 39
-    tokenCount: 1
+      tokenCount: 1
   - ranges:
     - leftInclusive: 39
       rightExclusive: 40
-    tokenCount: 1
+      tokenCount: 1
 recordingContext:
   languageName: "c"
   parserFacadeClassName: "org.perses.grammar.c.PnfCParserFacade"

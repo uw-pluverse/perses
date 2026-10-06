@@ -17,7 +17,6 @@
 package org.perses.listminimizer.microbenchmark
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.google.common.collect.ImmutableList
 import org.perses.util.Interval
 import org.perses.util.Serialization
@@ -114,22 +113,41 @@ data class RecordedInputList(
  * One element of the list, as a set of character ranges. A set rather than a single span because
  * `runListMinimizerOverListsOfNodes` gives an element several tree nodes, which need not be
  * contiguous.
- *
- * [Interval.length] is derived, so Jackson would write it out and then reject it as unknown on read.
- * Suppressing it here rather than annotating [Interval] keeps that widely-reused leaf free of a
- * Jackson dependency.
  */
 data class RecordedElement(
-  @field:JsonIgnoreProperties("length")
-  val ranges: ImmutableList<Interval>,
-  /**
-   * The element's weight: how many of the recorded program's tokens it owns, as the reducer
-   * tokenized them. Recorded because the evaluation does not tokenize the program -- it treats the
-   * file as text cut at the ranges -- so this is the only source of the token sizes the
-   * measurements report. Null in recordings made before the field existed.
-   */
+  val ranges: ImmutableList<RecordedRange>,
+) {
+  /** The element's weight, or null in a recording made before ranges carried token counts. */
+  @get:JsonIgnore
+  val tokenCount: Int?
+    get() = if (ranges.all { it.tokenCount != null }) ranges.sumOf { it.tokenCount!! } else null
+}
+
+/**
+ * A run of consecutive tokens of one element, as the character range it occupies in the recorded
+ * program and how many of the program's tokens it holds, as the reducer tokenized them.
+ *
+ * The count is recorded per range because the evaluation does not tokenize the program: it treats
+ * the file as text cut at the ranges, and cuts each range into as many pieces as it has tokens, so
+ * that the tree's own leaf counts are the reducer's token counts. Null in recordings made before
+ * the field existed.
+ */
+data class RecordedRange(
+  val leftInclusive: Int,
+  val rightExclusive: Int,
   val tokenCount: Int?,
-)
+) {
+  init {
+    require(0 <= leftInclusive && leftInclusive < rightExclusive) {
+      "A range must be non-empty and start at or after 0: [$leftInclusive, $rightExclusive)"
+    }
+    require(tokenCount == null || tokenCount in 1..(rightExclusive - leftInclusive)) {
+      "A range of ${rightExclusive - leftInclusive} character(s) cannot hold $tokenCount token(s)."
+    }
+  }
+
+  fun toInterval() = Interval(leftInclusive, rightExclusive)
+}
 
 /**
  * The reduction that produced this problem: what is needed to interpret the recording, and what is

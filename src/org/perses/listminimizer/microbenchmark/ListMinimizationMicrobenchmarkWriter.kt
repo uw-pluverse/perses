@@ -192,7 +192,7 @@ class ListMinimizationMicrobenchmarkWriter(
     // through a block comment -- is refused now rather than failing every measurement later.
     RecordedProgramTokenizer.resolveElements(
       tree = RecordedProgramTokenizer.buildFlatTokenListTree(renderedProgram, underlyingLexerClass),
-      rangesPerElement = elements.map { it.ranges },
+      rangesPerElement = elements.map { element -> element.ranges.map { it.toInterval() } },
     )
 
     ListMinimizationMicrobenchmark(
@@ -317,16 +317,13 @@ class ListMinimizationMicrobenchmarkWriter(
       tokenLocationMap: IdentityHashMap<AbstractPersesToken, TokenLocation>,
     ): ImmutableList<RecordedElement> =
       elementTokenGroups.transformToImmutableList { tokens ->
-        RecordedElement(
-          ranges = computeRangesOfElement(tokens, tokenLocationMap),
-          tokenCount = tokens.size,
-        )
+        RecordedElement(ranges = computeRangesOfElement(tokens, tokenLocationMap))
       }
 
     private fun computeRangesOfElement(
       tokens: List<AbstractPersesToken>,
       tokenLocationMap: IdentityHashMap<AbstractPersesToken, TokenLocation>,
-    ): ImmutableList<Interval> {
+    ): ImmutableList<RecordedRange> {
       require(tokens.isNotEmpty()) { "An element must own at least one token." }
       val locations =
         tokens
@@ -339,9 +336,10 @@ class ListMinimizationMicrobenchmarkWriter(
         .mergeContinuousElementsIntoRegions(locations) { previous, current ->
           current.indexInBaseProgram == previous.indexInBaseProgram + 1
         }.transformToImmutableList { run ->
-          Interval(
+          RecordedRange(
             leftInclusive = run.first().rangeInRenderedProgram.leftInclusive,
             rightExclusive = run.last().rangeInRenderedProgram.rightExclusive,
+            tokenCount = run.size,
           )
         }
     }

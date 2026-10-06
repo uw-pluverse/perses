@@ -92,9 +92,9 @@ class ListMinimizationMicrobenchmarkTest {
         inputList =
           RecordedInputList(
             ImmutableList.of(
-              RecordedElement(ImmutableList.of(Interval(10, 40)), tokenCount = 8),
+              RecordedElement(ImmutableList.of(RecordedRange(10, 40, tokenCount = 8))),
               // Nested inside the first element, as a parser node inside its ancestor would be.
-              RecordedElement(ImmutableList.of(Interval(20, 30)), tokenCount = 3),
+              RecordedElement(ImmutableList.of(RecordedRange(20, 30, tokenCount = 3))),
             ),
           ),
       )
@@ -106,8 +106,8 @@ class ListMinimizationMicrobenchmarkTest {
         inputList =
           RecordedInputList(
             ImmutableList.of(
-              RecordedElement(ImmutableList.of(Interval(50, 60)), tokenCount = 2),
-              RecordedElement(ImmutableList.of(Interval(10, 20)), tokenCount = 2),
+              RecordedElement(ImmutableList.of(RecordedRange(50, 60, tokenCount = 2))),
+              RecordedElement(ImmutableList.of(RecordedRange(10, 20, tokenCount = 2))),
             ),
           ),
       )
@@ -137,8 +137,12 @@ class ListMinimizationMicrobenchmarkTest {
 
     assertThat(read.wholeProgramTokenCount).isNull()
     assertThat(read.inputList.elements.map { it.tokenCount }).containsExactly(null, null)
-    assertThat(read.inputList.elements.map { it.ranges })
-      .isEqualTo(createMicrobenchmark().inputList.elements.map { it.ranges })
+    assertThat(read.inputList.elements.map { element -> element.ranges.map { it.toInterval() } })
+      .isEqualTo(
+        createMicrobenchmark().inputList.elements.map { element ->
+          element.ranges.map { it.toInterval() }
+        },
+      )
   }
 
   @Test
@@ -162,12 +166,14 @@ class ListMinimizationMicrobenchmarkTest {
         RecordedInputList(
           ImmutableList.of(
             RecordedElement(
-              ranges = ImmutableList.of(Interval(120, 123)),
-              tokenCount = 1,
+              ranges = ImmutableList.of(RecordedRange(120, 123, tokenCount = 1)),
             ),
             RecordedElement(
-              ranges = ImmutableList.of(Interval(900, 905), Interval(1204, 1210)),
-              tokenCount = 3,
+              ranges =
+                ImmutableList.of(
+                  RecordedRange(900, 905, tokenCount = 2),
+                  RecordedRange(1204, 1210, tokenCount = 1),
+                ),
             ),
           ),
         ),

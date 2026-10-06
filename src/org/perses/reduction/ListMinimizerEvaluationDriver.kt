@@ -218,7 +218,10 @@ class ListMinimizerEvaluationDriver private constructor(
           ListMinimizerEvaluationReducer(
             reducerAnnotation = this,
             reducerContext = reducerContext,
-            rangesPerElement = microbenchmark.inputList.elements.map { it.ranges },
+            rangesPerElement =
+              microbenchmark.inputList.elements.map { element ->
+                element.ranges.map { it.toInterval() }
+              },
             minimizerType = minimizerType,
             reportOneMinimality = { this@ListMinimizerEvaluationDriver.oneMinimality = it },
           ),
