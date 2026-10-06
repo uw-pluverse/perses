@@ -27,6 +27,7 @@ import org.perses.util.FileSystemUtil
 import org.perses.util.Interval
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.readText
+import kotlin.io.path.writeText
 
 @RunWith(JUnit4::class)
 class ListMinimizationMicrobenchmarkTest {
@@ -91,9 +92,9 @@ class ListMinimizationMicrobenchmarkTest {
         inputList =
           RecordedInputList(
             ImmutableList.of(
-              RecordedElement(ImmutableList.of(Interval(10, 40))),
+              RecordedElement(ImmutableList.of(Interval(10, 40)), tokenCount = 8),
               // Nested inside the first element, as a parser node inside its ancestor would be.
-              RecordedElement(ImmutableList.of(Interval(20, 30))),
+              RecordedElement(ImmutableList.of(Interval(20, 30)), tokenCount = 3),
             ),
           ),
       )
@@ -105,13 +106,39 @@ class ListMinimizationMicrobenchmarkTest {
         inputList =
           RecordedInputList(
             ImmutableList.of(
-              RecordedElement(ImmutableList.of(Interval(50, 60))),
-              RecordedElement(ImmutableList.of(Interval(10, 20))),
+              RecordedElement(ImmutableList.of(Interval(50, 60)), tokenCount = 2),
+              RecordedElement(ImmutableList.of(Interval(10, 20)), tokenCount = 2),
             ),
           ),
       )
     assertThat(descending.inputList.elementsAreDisjoint).isTrue()
     assertThat(descending.inputList.elementsAreOffsetAscending).isFalse()
+  }
+
+  /** The corpora recorded before the counts existed must stay readable: the counts read as null. */
+  @Test
+  fun testARecordingWithoutTokenCountsReadsBackWithNullCounts() {
+    val microbenchmarkFile =
+      tempDir.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME)
+    createMicrobenchmark().writeTo(microbenchmarkFile)
+    val withoutCounts =
+      microbenchmarkFile
+        .readText()
+        .lines()
+        .filterNot {
+          it.trim().startsWith(
+            "tokenCount:",
+          ) ||
+            it.startsWith("wholeProgramTokenCount:")
+        }.joinToString("\n")
+    microbenchmarkFile.writeText(withoutCounts)
+
+    val read = ListMinimizationMicrobenchmark.readFrom(microbenchmarkFile)
+
+    assertThat(read.wholeProgramTokenCount).isNull()
+    assertThat(read.inputList.elements.map { it.tokenCount }).containsExactly(null, null)
+    assertThat(read.inputList.elements.map { it.ranges })
+      .isEqualTo(createMicrobenchmark().inputList.elements.map { it.ranges })
   }
 
   @Test
@@ -130,14 +157,17 @@ class ListMinimizationMicrobenchmarkTest {
     ListMinimizationMicrobenchmark(
       microbenchmarkId = "0000",
       targetFilePath = "small.c",
+      wholeProgramTokenCount = 400,
       inputList =
         RecordedInputList(
           ImmutableList.of(
             RecordedElement(
               ranges = ImmutableList.of(Interval(120, 123)),
+              tokenCount = 1,
             ),
             RecordedElement(
               ranges = ImmutableList.of(Interval(900, 905), Interval(1204, 1210)),
+              tokenCount = 3,
             ),
           ),
         ),

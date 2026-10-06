@@ -198,6 +198,7 @@ class ListMinimizationMicrobenchmarkWriter(
     ListMinimizationMicrobenchmark(
       microbenchmarkId = microbenchmarkId,
       targetFilePath = targetFilePath,
+      wholeProgramTokenCount = baseProgramTokens.size,
       inputList = RecordedInputList(elements),
       recordingContext = recordingContext,
     ).writeTo(
@@ -316,7 +317,10 @@ class ListMinimizationMicrobenchmarkWriter(
       tokenLocationMap: IdentityHashMap<AbstractPersesToken, TokenLocation>,
     ): ImmutableList<RecordedElement> =
       elementTokenGroups.transformToImmutableList { tokens ->
-        RecordedElement(computeRangesOfElement(tokens, tokenLocationMap))
+        RecordedElement(
+          ranges = computeRangesOfElement(tokens, tokenLocationMap),
+          tokenCount = tokens.size,
+        )
       }
 
     private fun computeRangesOfElement(

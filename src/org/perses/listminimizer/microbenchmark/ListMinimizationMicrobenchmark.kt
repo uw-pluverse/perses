@@ -44,6 +44,14 @@ data class ListMinimizationMicrobenchmark(
    * would not survive being moved.
    */
   val targetFilePath: String,
+  /**
+   * How many tokens the recorded program has, as the reducer tokenized it. With
+   * [RecordedElement.tokenCount] this is what lets the evaluation measure sizes without
+   * tokenizing anything: a list minimizer only deletes whole elements, so the size after a
+   * minimization is this minus the deleted elements' counts. Null in recordings made before the
+   * field existed.
+   */
+  val wholeProgramTokenCount: Int?,
   val inputList: RecordedInputList,
   val recordingContext: RecordingContext,
 ) {
@@ -107,12 +115,6 @@ data class RecordedInputList(
  * `runListMinimizerOverListsOfNodes` gives an element several tree nodes, which need not be
  * contiguous.
  *
- * Deliberately carries no token count. The weight the minimizers use comes from the tree the
- * evaluation builds (`NodeContainerForListMinimizer.tokenCount`), and a recorded count would be a
- * weaker integrity check than the one the ranges already support: every range boundary must
- * coincide with a token boundary, which a mismatched tokenization cannot satisfy even when the
- * counts happen to agree.
- *
  * [Interval.length] is derived, so Jackson would write it out and then reject it as unknown on read.
  * Suppressing it here rather than annotating [Interval] keeps that widely-reused leaf free of a
  * Jackson dependency.
@@ -120,6 +122,13 @@ data class RecordedInputList(
 data class RecordedElement(
   @field:JsonIgnoreProperties("length")
   val ranges: ImmutableList<Interval>,
+  /**
+   * The element's weight: how many of the recorded program's tokens it owns, as the reducer
+   * tokenized them. Recorded because the evaluation does not tokenize the program -- it treats the
+   * file as text cut at the ranges -- so this is the only source of the token sizes the
+   * measurements report. Null in recordings made before the field existed.
+   */
+  val tokenCount: Int?,
 )
 
 /**

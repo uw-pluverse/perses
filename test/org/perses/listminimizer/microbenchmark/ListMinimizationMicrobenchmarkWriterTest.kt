@@ -318,6 +318,9 @@ class ListMinimizationMicrobenchmarkWriterTest {
     assertThat(microbenchmark.inputList.elements.map { it.ranges.single() })
       .containsExactly(Interval(0, 8), Interval(9, 17))
       .inOrder()
+    // Counted as the reducer tokenized the program: one line is one token.
+    assertThat(microbenchmark.wholeProgramTokenCount).isEqualTo(2)
+    assertThat(microbenchmark.inputList.elements.map { it.tokenCount }).containsExactly(1, 1)
     val recordedProgramText =
       microbenchmarkDirectory
         .resolve(ListMinimizationMicrobenchmark.INPUT_FOLDER_NAME)
@@ -475,6 +478,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     val spaced = record(program, listOf(listOf(tokens[0], tokens[1], tokens[2])))
     assertThat(spaced.elements.single().ranges).hasSize(1)
     assertThat(textOf(spaced, 0)).isEqualTo("int x =")
+    assertThat(spaced.elements.single().tokenCount).isEqualTo(3)
 
     val interrupted = record(program, listOf(listOf(tokens[0], tokens[4])))
     assertThat(interrupted.elements.single().ranges).hasSize(2)
