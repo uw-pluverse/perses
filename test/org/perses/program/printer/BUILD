@@ -12,6 +12,7 @@ kt_jvm_test(
         "//test_data/parentheses",
     ],
     deps = [
+        "//:antlr_runtime",
         "//:guava",
         "//:truth",
         "//src/org/perses/program",

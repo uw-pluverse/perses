@@ -29,34 +29,95 @@ abstract class AbstractOrigFormatPrintingVisitor(
     tokenPositionProvider,
     tokenPlacementListener,
   ) {
+  /** The source line the output is on, counting the newlines inside lexed tokens' own text. */
   private var currentLineNumber = 1
+
+  /** How the last printed line ended, which decides how the next line starts. */
+  private enum class LastLineEnding {
+    /**
+     * No line break is owed: nothing printed yet, the line's last lexed token ended in a newline,
+     * or the line held plain text only.
+     */
+    NO_LINE_BREAK_OWED,
+
+    /** The line still owes its line break, emitted before the next line starts or at the end. */
+    LINE_BREAK_OWED,
+
+    /**
+     * As [LINE_BREAK_OWED], but the line ends after a lexed token that spans lines, such as XML's
+     * whitespace between elements or a multi-line string. A next line starting on the source line
+     * where that token ended continues the output line from the real column; starting a new one
+     * would print the token's newline twice.
+     *
+     * Only lexed tokens count. Plain-text tokens, such as the line breaks Latra writes into a
+     * rewrite, have no source position for a next line to continue from.
+     */
+    LINE_BREAK_OWED_AFTER_A_LEXED_TOKEN_SPANNING_LINES,
+  }
+
+  private var lastLineEnding = LastLineEnding.NO_LINE_BREAK_OWED
 
   private fun getLineNumber(line: List<AbstractPersesToken>): Int? =
     line.firstOrNull { it is AbstractPersesToken.AntlrToken }?.let {
       tokenPositionProvider.getLine(it)
     }
 
+  private fun emitOwedLineBreak(builder: FastStringBuilder) {
+    if (lastLineEnding != LastLineEnding.NO_LINE_BREAK_OWED) {
+      builder.append('\n')
+      ++currentLineNumber
+      lastLineEnding = LastLineEnding.NO_LINE_BREAK_OWED
+    }
+  }
+
   override fun visitLine(line: List<AbstractPersesToken>) {
     if (line.isEmpty()) {
       return
     }
-
+    val builder = result
     val lineNumber: Int? = getLineNumber(line)
     if (lineNumber == null) {
-      printNonEmptyLine(line, result)
+      emitOwedLineBreak(builder)
+      printNonEmptyLine(line, builder)
       ++currentLineNumber
       return
     }
-    val builder = result
-    while (lineNumber > currentLineNumber) {
-      if (keepBlankLines || (builder.isNotEmpty() && builder.lastCharOrThrow() != '\n')) {
-        builder.append('\n')
+    if (lastLineEnding == LastLineEnding.LINE_BREAK_OWED_AFTER_A_LEXED_TOKEN_SPANNING_LINES &&
+      lineNumber == currentLineNumber
+    ) {
+      printNonEmptyLine(
+        startPositionInLine = builder.charPositionInLine,
+        line = line,
+        builder = builder,
+      )
+    } else {
+      emitOwedLineBreak(builder)
+      while (lineNumber > currentLineNumber) {
+        if (keepBlankLines || (builder.isNotEmpty() && builder.lastCharOrThrow() != '\n')) {
+          builder.append('\n')
+        }
+        ++currentLineNumber
       }
-      ++currentLineNumber
+      printNonEmptyLine(line, builder)
     }
-    printNonEmptyLine(line, builder)
-    builder.append('\n')
-    ++currentLineNumber
+    val newlinesInLexedTokens =
+      line.sumOf { token ->
+        if (token is AbstractPersesToken.AntlrToken) token.lexemeText.count { it == '\n' } else 0
+      }
+    currentLineNumber += newlinesInLexedTokens
+    val lastToken: AbstractPersesToken = line.last()
+    lastLineEnding =
+      when {
+        lastToken is AbstractPersesToken.AntlrToken && lastToken.lexemeText.endsWith('\n') ->
+          LastLineEnding.NO_LINE_BREAK_OWED
+        newlinesInLexedTokens > 0 ->
+          LastLineEnding.LINE_BREAK_OWED_AFTER_A_LEXED_TOKEN_SPANNING_LINES
+        else -> LastLineEnding.LINE_BREAK_OWED
+      }
+  }
+
+  override fun onVisitEnd() {
+    emitOwedLineBreak(result)
   }
 
   protected abstract fun printNonEmptyLine(
@@ -136,8 +197,11 @@ abstract class AbstractOrigFormatPrintingVisitor(
         builder.currentLineNo,
         builder.charPositionInLine,
       )
-      builder.append(token.lexemeText)
-      positionInLineCurrent += token.lexemeText.length
+      val text = token.lexemeText
+      builder.append(text)
+      val lastNewline = text.lastIndexOf('\n')
+      positionInLineCurrent =
+        if (lastNewline < 0) positionInLineCurrent + text.length else text.length - lastNewline - 1
       previousTokenInLine = token
     }
   }

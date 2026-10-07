@@ -249,7 +249,7 @@ FixPt[1][node_priority][DFS](17/17)  Try deleting [2-3]#2: Interesting. Local ra
 
 ================The best program is updated.================
 
-token count change 17 -> 13
+token count change 17 -> 11
 Edit: [delete: 7,20]
 ------------------------------------------------------------
 
@@ -260,7 +260,7 @@ Edit: [delete: 7,20]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](13/17)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/4=50.00%. Global ratio:13/17=76.47%
+FixPt[1][node_priority][DFS](11/17)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/4=50.00%. Global ratio:11/17=64.71%
 ==========Testing the following program (2): pass===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=2
@@ -269,7 +269,7 @@ FixPt[1][node_priority][DFS](13/17)  Try deleting [0-1]#2: Uninteresting. Local 
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](13/17)  Try deleting [1]#1: Interesting. Local ratio: 2/4=50.00%. Global ratio:13/17=76.47%
+FixPt[1][node_priority][DFS](11/17)  Try deleting [1]#1: Interesting. Local ratio: 2/4=50.00%. Global ratio:11/17=64.71%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 1 --> 1.
@@ -284,7 +284,7 @@ FixPt[1][node_priority][DFS](13/17)  Try deleting [1]#1: Interesting. Local rati
 
 ================The best program is updated.================
 
-token count change 13 -> 8
+token count change 11 -> 7
 Edit: [delete_21]
 ------------------------------------------------------------
 
@@ -295,15 +295,15 @@ Edit: [delete_21]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](8/17)  Try deleting [0]#1: Uninteresting. Local ratio: 1/4=25.00%. Global ratio:8/17=47.06%
-FixPt[1][node_priority][DFS](8/17)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/4=25.00%. Global ratio:8/17=47.06%
+FixPt[1][node_priority][DFS](7/17)  Try deleting [0]#1: Uninteresting. Local ratio: 1/4=25.00%. Global ratio:7/17=41.18%
+FixPt[1][node_priority][DFS](7/17)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/4=25.00%. Global ratio:7/17=41.18%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 2 from 17 to 8
+Succeeded to reduce node 2 from 17 to 7
 ------------------------------------------------------------
 
 
-==================Reducing node 30, size=8==================
+==================Reducing node 30, size=7==================
 
 The current best program is the following
 
@@ -332,7 +332,7 @@ Failed to reduce node 30
 ------------------------------------------------------------
 
 
-==================Reducing node 31, size=8==================
+==================Reducing node 31, size=7==================
 
 The current best program is the following
 
@@ -349,15 +349,15 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](8/17)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-5]#6. Global ratio:8/17=47.06%
-FixPt[1][node_priority][DFS](8/17)  Testing the empty input. Global ratio:8/17=47.06%
+FixPt[1][node_priority][DFS](7/17)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-5]#6. Global ratio:7/17=41.18%
+FixPt[1][node_priority][DFS](7/17)  Testing the empty input. Global ratio:7/17=41.18%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](8/17)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:8/17=47.06%
+FixPt[1][node_priority][DFS](7/17)  Try deleting [0-5]#6: Uninteresting. Local ratio: 6/6=100.00%. Global ratio:7/17=41.18%
 ==========Testing the following program (5): pass===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=3,#parts=3#total-parts=6
@@ -366,7 +366,7 @@ FixPt[1][node_priority][DFS](8/17)  Try deleting [0-5]#6: Uninteresting. Local r
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](8/17)  Try deleting [3-5]#3: Interesting. Local ratio: 6/6=100.00%. Global ratio:8/17=47.06%
+FixPt[1][node_priority][DFS](7/17)  Try deleting [3-5]#3: Interesting. Local ratio: 6/6=100.00%. Global ratio:7/17=41.18%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 3 --> 3.
@@ -381,7 +381,7 @@ FixPt[1][node_priority][DFS](8/17)  Try deleting [3-5]#3: Interesting. Local rat
 
 ================The best program is updated.================
 
-token count change 8 -> 5
+token count change 7 -> 4
 Edit: [delete: 39,40,41]
 ------------------------------------------------------------
 
@@ -392,7 +392,7 @@ Edit: [delete: 39,40,41]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](5/17)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/6=50.00%. Global ratio:5/17=29.41%
+FixPt[1][node_priority][DFS](4/17)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/6=50.00%. Global ratio:4/17=23.53%
 ==========Testing the following program (6): fail===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
@@ -401,7 +401,7 @@ FixPt[1][node_priority][DFS](5/17)  Try deleting [0-2]#3: Uninteresting. Local r
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](5/17)  Try deleting [2]#1: Uninteresting. Local ratio: 3/6=50.00%. Global ratio:5/17=29.41%
+FixPt[1][node_priority][DFS](4/17)  Try deleting [2]#1: Uninteresting. Local ratio: 3/6=50.00%. Global ratio:4/17=23.53%
 ==========Testing the following program (7): pass===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
@@ -410,7 +410,7 @@ FixPt[1][node_priority][DFS](5/17)  Try deleting [2]#1: Uninteresting. Local rat
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](5/17)  Try deleting [0-1]#2: Interesting. Local ratio: 3/6=50.00%. Global ratio:5/17=29.41%
+FixPt[1][node_priority][DFS](4/17)  Try deleting [0-1]#2: Interesting. Local ratio: 3/6=50.00%. Global ratio:4/17=23.53%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 4 --> 4.
@@ -425,19 +425,19 @@ FixPt[1][node_priority][DFS](5/17)  Try deleting [0-1]#2: Interesting. Local rat
 
 ================The best program is updated.================
 
-token count change 5 -> 3
+token count change 4 -> 2
 Edit: [delete: 43,44]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](3/17)  Minimizer UnweightedDfsListMinimizer ends. Result=[2]#1. Local ratio: 1/6=16.67%. Global ratio:3/17=17.65%
+FixPt[1][node_priority][DFS](2/17)  Minimizer UnweightedDfsListMinimizer ends. Result=[2]#1. Local ratio: 1/6=16.67%. Global ratio:2/17=11.76%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 31 from 8 to 3
+Succeeded to reduce node 31 from 7 to 2
 ------------------------------------------------------------
 
 
-==================Reducing node 42, size=3==================
+==================Reducing node 42, size=2==================
 
 The current best program is the following
 
@@ -452,7 +452,7 @@ Failed to reduce node 42
 ------------------------------------------------------------
 
 
-==================Reducing node 32, size=3==================
+==================Reducing node 32, size=2==================
 
 The current best program is the following
 
@@ -467,24 +467,23 @@ Failed to reduce node 32
 ------------------------------------------------------------
 
 
-(3/17)  Rebuilding spar-tree: The spartree is rebuilt.
+(2/17)  Rebuilding spar-tree: The spartree is rebuilt.
 ========Fixpoint iteration 2. Reducer: node_priority========
 
 Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
 makefile{id=46,slot_type=makefile}
 |___(*){id=47,slot_type=kleene_star__makefile_1}
-    |___textLine{id=52,slot_type=[item,textLine]}
-    |   |___(+){id=53,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:keep.c{id=56,slot_type=[word,WORD]}
-    |   |___Token:\n{id=54,slot_type=NEWLINE}
-    |___Token:\n{id=51,slot_type=[item,blankLine,NEWLINE]}
+    |___textLine{id=49,slot_type=[item,textLine]}
+        |___(+){id=50,slot_type=kleene_plus__lastLine_1}
+        |   |___Token:keep.c{id=53,slot_type=[word,WORD]}
+        |___Token:\n{id=51,slot_type=NEWLINE}
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority](3/17)  Starting to retrieve the semantics provider
-FixPt[2][node_priority](3/17)  Retrieved semantics provider null
-==================Reducing node 47, size=3==================
+FixPt[2][node_priority](2/17)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](2/17)  Retrieved semantics provider null
+==================Reducing node 47, size=2==================
 
 The current best program is the following
 
@@ -493,58 +492,24 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](3/17)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:3/17=17.65%
-FixPt[2][node_priority][DFS](3/17)  Testing the empty input. Global ratio:3/17=17.65%
+FixPt[2][node_priority][DFS](2/17)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:2/17=11.76%
+FixPt[2][node_priority][DFS](2/17)  Testing the empty input. Global ratio:2/17=11.76%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](3/17)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:3/17=17.65%
-==========Testing the following program (8): pass===========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=2
-    --file: Makefile--
-           keep.c
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/17)  Try deleting [1]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:3/17=17.65%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 4 --> 4.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 2
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 3 -> 3
-Edit: [delete_51]
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/17)  Try deleting [0]#1: Uninteresting. Local ratio: 1/2=50.00%. Global ratio:3/17=17.65%
-FixPt[2][node_priority][DFS](3/17)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:3/17=17.65%
+FixPt[2][node_priority][DFS](2/17)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:2/17=11.76%
+FixPt[2][node_priority][DFS](2/17)  There is only one element in the input, and the empty input has been tested. Global ratio:2/17=11.76%
+FixPt[2][node_priority][DFS](2/17)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:2/17=11.76%
 ===================Node reduction is done===================
 
 Failed to reduce node 47
 ------------------------------------------------------------
 
 
-==================Reducing node 52, size=3==================
+==================Reducing node 49, size=2==================
 
 The current best program is the following
 
@@ -555,7 +520,7 @@ The current best program is the following
 
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_52]
+    structure: [delete_49]
     context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
@@ -568,11 +533,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 52
+Failed to reduce node 49
 ------------------------------------------------------------
 
 
-==================Reducing node 54, size=3==================
+==================Reducing node 51, size=2==================
 
 The current best program is the following
 
@@ -583,11 +548,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 54
+Failed to reduce node 51
 ------------------------------------------------------------
 
 
-==================Reducing node 53, size=3==================
+==================Reducing node 50, size=2==================
 
 The current best program is the following
 
@@ -596,24 +561,24 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](3/17)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/17=17.65%
-FixPt[2][node_priority][DFS](3/17)  Testing the empty input. Global ratio:3/17=17.65%
+FixPt[2][node_priority][DFS](2/17)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:2/17=11.76%
+FixPt[2][node_priority][DFS](2/17)  Testing the empty input. Global ratio:2/17=11.76%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](3/17)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:3/17=17.65%
-FixPt[2][node_priority][DFS](3/17)  There is only one element in the input, and the empty input has been tested. Global ratio:3/17=17.65%
-FixPt[2][node_priority][DFS](3/17)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/17=17.65%
+FixPt[2][node_priority][DFS](2/17)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:2/17=11.76%
+FixPt[2][node_priority][DFS](2/17)  There is only one element in the input, and the empty input has been tested. Global ratio:2/17=11.76%
+FixPt[2][node_priority][DFS](2/17)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:2/17=11.76%
 ===================Node reduction is done===================
 
-Failed to reduce node 53
+Failed to reduce node 50
 ------------------------------------------------------------
 
 
-==================Reducing node 56, size=3==================
+==================Reducing node 53, size=2==================
 
 The current best program is the following
 
@@ -624,82 +589,44 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 56
+Failed to reduce node 53
 ------------------------------------------------------------
 
 
-(3/17)  Rebuilding spar-tree: The spartree is rebuilt.
+(2/17)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
 Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
-makefile{id=58,slot_type=makefile}
-|___(*){id=59,slot_type=kleene_star__makefile_1}
-    |___textLine{id=64,slot_type=[item,textLine]}
-    |   |___(+){id=65,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:keep.c{id=68,slot_type=[word,WORD]}
-    |   |___Token:\n{id=66,slot_type=NEWLINE}
-    |___Token:\n{id=63,slot_type=[item,blankLine,NEWLINE]}
+makefile{id=46,slot_type=makefile}
+|___(*){id=47,slot_type=kleene_star__makefile_1}
+    |___textLine{id=49,slot_type=[item,textLine]}
+        |___(+){id=50,slot_type=kleene_plus__lastLine_1}
+        |   |___Token:keep.c{id=53,slot_type=[word,WORD]}
+        |___Token:\n{id=51,slot_type=NEWLINE}
 ------------------------------------------------------------
 
 
-FixPt[3][FineGritLatraReducer](3/17)  Latra does not support LanguageMakefile{name=makefile, extensions=[mk], defaultCodeFormatControl=ORIG_FORMAT} langauge yet.
-(3/17)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 4. Reducer: spartree_root_replacement_reducer
-
-Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
-The spar-tree is the following.
-makefile{id=58,slot_type=makefile}
-|___(*){id=59,slot_type=kleene_star__makefile_1}
-    |___textLine{id=64,slot_type=[item,textLine]}
-    |   |___(+){id=65,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:keep.c{id=68,slot_type=[word,WORD]}
-    |   |___Token:\n{id=66,slot_type=NEWLINE}
-    |___Token:\n{id=63,slot_type=[item,blankLine,NEWLINE]}
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 4 --> 4.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 3 -> 3
-Edit: AnyNodeReplace:[replace_58_with_1]
-------------------------------------------------------------
-
-
+FixPt[3][FineGritLatraReducer](2/17)  Latra does not support LanguageMakefile{name=makefile, extensions=[mk], defaultCodeFormatControl=ORIG_FORMAT} langauge yet.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
- 0                     node_priority      4             0     -14            -69       8   time-hidden
- 1                     node_priority      1             1       0              0       1   time-hidden
- 2              FineGritLatraReducer      0             0       0              0       0   time-hidden
- 3 spartree_root_replacement_reducer      1             1       0              0       0   time-hidden
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      4             0     -15            -69       8   time-hidden
+ 1        node_priority      0             0       0              0       0   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-                          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
-                    node_priority     2      5             1     -14            -69       9   time-hidden
-             FineGritLatraReducer     1      0             0       0              0       0   time-hidden
-spartree_root_replacement_reducer     1      1             1       0              0       0   time-hidden
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      4             0     -15            -69       8   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
 
 ------------------------------- Transformations --------------------------------
-                                   Transformation Worked #NonDeletions #Tokens #NonBlankChars
-                           node_priority.Deletion      5             1     -14            -69
-spartree_root_replacement_reducer.RootReplacement      1             1       0              0
+        Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Deletion      4             0     -15            -69
 ------------------------------------- End --------------------------------------
-#test success = 5
+#test success = 4
 #test failure = 4
-#test result cache hits = 8
+#test result cache hits = 7
 #test execution cancelled = 0
 #node edit action set cache hits = 2
 #external test execution cache hits = 0

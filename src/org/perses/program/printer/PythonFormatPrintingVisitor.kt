@@ -89,6 +89,7 @@ class PythonFormatPrintingVisitor(
   }
 
   override fun onVisitEnd() {
+    super.onVisitEnd()
     check(indentLevel == 0) { indentLevel }
   }
 }

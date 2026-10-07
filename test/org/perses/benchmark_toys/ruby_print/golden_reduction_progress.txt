@@ -331,18 +331,18 @@ It took less than 1 second to cancel the task.
 
 ================The best program is updated.================
 
-token count change 27 -> 12
+token count change 27 -> 9
 Edit: HoistEdit:[replace_2_with_76]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 2 from 27 to 12
+Succeeded to reduce node 2 from 27 to 9
 ------------------------------------------------------------
 
 
-=================Reducing node 76, size=12==================
+==================Reducing node 76, size=9==================
 
 The current best program is the following
 
@@ -396,7 +396,7 @@ Failed to reduce node 76
 ------------------------------------------------------------
 
 
-=================Reducing node 78, size=12==================
+==================Reducing node 78, size=9==================
 
 The current best program is the following
 
@@ -407,8 +407,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](12/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:12/27=44.44%
-FixPt[1][node_priority][DFS](12/27)  Testing the empty input. Global ratio:12/27=44.44%
+FixPt[1][node_priority][DFS](9/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:9/27=33.33%
+FixPt[1][node_priority][DFS](9/27)  Testing the empty input. Global ratio:9/27=33.33%
 ==========Testing the following program (12): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__statement_list_terms_1]dd@#nodes=2,#parts=2#total-parts=2
@@ -417,7 +417,7 @@ FixPt[1][node_priority][DFS](12/27)  Testing the empty input. Global ratio:12/27
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](12/27)  Try deleting [0-1]#2: Skipped LiteralReplacement. Local ratio: 2/2=100.00%. Global ratio:12/27=44.44%
+FixPt[1][node_priority][DFS](9/27)  Try deleting [0-1]#2: Skipped LiteralReplacement. Local ratio: 2/2=100.00%. Global ratio:9/27=33.33%
 ==========Testing the following program (13): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__statement_list_terms_1]dd@#nodes=1,#parts=1#total-parts=2
@@ -427,7 +427,7 @@ FixPt[1][node_priority][DFS](12/27)  Try deleting [0-1]#2: Skipped LiteralReplac
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](12/27)  Try deleting [1]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:12/27=44.44%
+FixPt[1][node_priority][DFS](9/27)  Try deleting [1]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:9/27=33.33%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 0 --> 0.
@@ -442,7 +442,7 @@ FixPt[1][node_priority][DFS](12/27)  Try deleting [1]#1: Interesting. Local rati
 
 ================The best program is updated.================
 
-token count change 12 -> 8
+token count change 9 -> 6
 Edit: [delete_80]
 ------------------------------------------------------------
 
@@ -455,15 +455,15 @@ Edit: [delete_80]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](8/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/2=50.00%. Global ratio:8/27=29.63%
-FixPt[1][node_priority][DFS](8/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:8/27=29.63%
+FixPt[1][node_priority][DFS](6/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/2=50.00%. Global ratio:6/27=22.22%
+FixPt[1][node_priority][DFS](6/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:6/27=22.22%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 78 from 12 to 8
+Succeeded to reduce node 78 from 9 to 6
 ------------------------------------------------------------
 
 
-==================Reducing node 79, size=8==================
+==================Reducing node 79, size=6==================
 
 The current best program is the following
 
@@ -487,7 +487,7 @@ Failed to reduce node 79
 ------------------------------------------------------------
 
 
-==================Reducing node 77, size=8==================
+==================Reducing node 77, size=6==================
 
 The current best program is the following
 
@@ -527,18 +527,18 @@ It took less than 1 second to cancel the task.
 
 ================The best program is updated.================
 
-token count change 8 -> 6
+token count change 6 -> 5
 Edit: LatraEdit:[replace_77_with_163]
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Succeeded to reduce node 77 from 8 to 6
+Succeeded to reduce node 77 from 6 to 5
 ------------------------------------------------------------
 
 
-=================Reducing node 110, size=6==================
+=================Reducing node 110, size=5==================
 
 The current best program is the following
 
@@ -581,7 +581,7 @@ Failed to reduce node 110
 ------------------------------------------------------------
 
 
-=================Reducing node 163, size=6==================
+=================Reducing node 163, size=5==================
 
 The current best program is the following
 
@@ -597,7 +597,7 @@ Failed to reduce node 163
 ------------------------------------------------------------
 
 
-=================Reducing node 126, size=6==================
+=================Reducing node 126, size=5==================
 
 The current best program is the following
 
@@ -613,7 +613,7 @@ Failed to reduce node 126
 ------------------------------------------------------------
 
 
-=================Reducing node 121, size=6==================
+=================Reducing node 121, size=5==================
 
 The current best program is the following
 
@@ -623,8 +623,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](6/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:6/27=22.22%
-FixPt[1][node_priority][DFS](6/27)  Testing the empty input. Global ratio:6/27=22.22%
+FixPt[1][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/27=18.52%
+FixPt[1][node_priority][DFS](5/27)  Testing the empty input. Global ratio:5/27=18.52%
 ==========Testing the following program (20): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:string]dd@#nodes=1,#parts=1#total-parts=1
@@ -634,16 +634,16 @@ FixPt[1][node_priority][DFS](6/27)  Testing the empty input. Global ratio:6/27=2
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](6/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:6/27=22.22%
-FixPt[1][node_priority][DFS](6/27)  There is only one element in the input, and the empty input has been tested. Global ratio:6/27=22.22%
-FixPt[1][node_priority][DFS](6/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:6/27=22.22%
+FixPt[1][node_priority][DFS](5/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
+FixPt[1][node_priority][DFS](5/27)  There is only one element in the input, and the empty input has been tested. Global ratio:5/27=18.52%
+FixPt[1][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
 ===================Node reduction is done===================
 
 Failed to reduce node 121
 ------------------------------------------------------------
 
 
-=================Reducing node 122, size=6==================
+=================Reducing node 122, size=5==================
 
 The current best program is the following
 
@@ -659,7 +659,7 @@ Failed to reduce node 122
 ------------------------------------------------------------
 
 
-=================Reducing node 105, size=6==================
+=================Reducing node 105, size=5==================
 
 The current best program is the following
 
@@ -669,8 +669,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](6/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:6/27=22.22%
-FixPt[1][node_priority][DFS](6/27)  Testing the empty input. Global ratio:6/27=22.22%
+FixPt[1][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/27=18.52%
+FixPt[1][node_priority][DFS](5/27)  Testing the empty input. Global ratio:5/27=18.52%
 ==========Testing the following program (21): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:terms]dd@#nodes=1,#parts=1#total-parts=1
@@ -680,7 +680,7 @@ FixPt[1][node_priority][DFS](6/27)  Testing the empty input. Global ratio:6/27=2
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](6/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:6/27=22.22%
+FixPt[1][node_priority][DFS](5/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 0 --> 0.
@@ -695,7 +695,7 @@ FixPt[1][node_priority][DFS](6/27)  Try deleting [0]#1: Interesting. Local ratio
 
 ================The best program is updated.================
 
-token count change 6 -> 5
+token count change 5 -> 5
 Edit: [delete_107]
 ------------------------------------------------------------
 
@@ -703,7 +703,7 @@ Edit: [delete_107]
 FixPt[1][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:5/27=18.52%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 105 from 6 to 5
+Failed to reduce node 105
 ------------------------------------------------------------
 
 
@@ -762,14 +762,6 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (25): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-        ;
-------------------------------------------------------------
-
-
 ===================Node reduction is done===================
 
 Failed to reduce node 166
@@ -788,7 +780,7 @@ The current best program is the following
 
 FixPt[2][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/27=18.52%
 FixPt[2][node_priority][DFS](5/27)  Testing the empty input. Global ratio:5/27=18.52%
-==========Testing the following program (26): fail==========
+==========Testing the following program (25): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__statement_list_terms_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
@@ -815,7 +807,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (27): fail==========
+==========Testing the following program (26): fail==========
 
 // edit action set type: [regular_node]can be epsilon
     --file: hello.rb--
@@ -839,7 +831,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (28): pass==========
+==========Testing the following program (27): pass==========
 
 // edit action set type: [kleene_plus:terms]remove all except first
     --file: hello.rb--
@@ -862,14 +854,14 @@ The current best program is the following
 
 ================The best program is updated.================
 
-token count change 5 -> 6
+token count change 5 -> 5
 Edit: [delete_196]
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](6/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:6/27=22.22%
-FixPt[2][node_priority][DFS](6/27)  Testing the empty input. Global ratio:6/27=22.22%
-==========Testing the following program (29): pass==========
+FixPt[2][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/27=18.52%
+FixPt[2][node_priority][DFS](5/27)  Testing the empty input. Global ratio:5/27=18.52%
+==========Testing the following program (28): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:terms]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
@@ -877,7 +869,7 @@ FixPt[2][node_priority][DFS](6/27)  Testing the empty input. Global ratio:6/27=2
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](6/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:6/27=22.22%
+FixPt[2][node_priority][DFS](5/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 0 --> 0.
@@ -892,19 +884,19 @@ FixPt[2][node_priority][DFS](6/27)  Try deleting [0]#1: Interesting. Local ratio
 
 ================The best program is updated.================
 
-token count change 6 -> 4
+token count change 5 -> 3
 Edit: [delete_197]
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](4/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:4/27=14.81%
+FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:3/27=11.11%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 193 from 5 to 4
+Succeeded to reduce node 193 from 5 to 3
 ------------------------------------------------------------
 
 
-=================Reducing node 176, size=4==================
+=================Reducing node 176, size=3==================
 
 The current best program is the following
 
@@ -913,7 +905,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (30): fail==========
+==========Testing the following program (29): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.rb--
@@ -921,7 +913,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (31): fail==========
+==========Testing the following program (30): fail==========
 
 // edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->break
     --file: hello.rb--
@@ -929,7 +921,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (32): fail==========
+==========Testing the following program (31): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.rb--
@@ -943,7 +935,7 @@ Failed to reduce node 176
 ------------------------------------------------------------
 
 
-=================Reducing node 192, size=4==================
+=================Reducing node 192, size=3==================
 
 The current best program is the following
 
@@ -958,7 +950,7 @@ Failed to reduce node 192
 ------------------------------------------------------------
 
 
-=================Reducing node 187, size=4==================
+=================Reducing node 187, size=3==================
 
 The current best program is the following
 
@@ -967,9 +959,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](4/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/27=14.81%
-FixPt[2][node_priority][DFS](4/27)  Testing the empty input. Global ratio:4/27=14.81%
-==========Testing the following program (33): fail==========
+FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
+FixPt[2][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
+==========Testing the following program (32): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:string]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
@@ -977,16 +969,16 @@ FixPt[2][node_priority][DFS](4/27)  Testing the empty input. Global ratio:4/27=1
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](4/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:4/27=14.81%
-FixPt[2][node_priority][DFS](4/27)  There is only one element in the input, and the empty input has been tested. Global ratio:4/27=14.81%
-FixPt[2][node_priority][DFS](4/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:4/27=14.81%
+FixPt[2][node_priority][DFS](3/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
+FixPt[2][node_priority][DFS](3/27)  There is only one element in the input, and the empty input has been tested. Global ratio:3/27=11.11%
+FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
 ===================Node reduction is done===================
 
 Failed to reduce node 187
 ------------------------------------------------------------
 
 
-=================Reducing node 188, size=4==================
+=================Reducing node 188, size=3==================
 
 The current best program is the following
 
@@ -1001,7 +993,7 @@ Failed to reduce node 188
 ------------------------------------------------------------
 
 
-=================Reducing node 171, size=4==================
+=================Reducing node 171, size=3==================
 
 The current best program is the following
 
@@ -1010,9 +1002,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](4/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/27=14.81%
-FixPt[2][node_priority][DFS](4/27)  Testing the empty input. Global ratio:4/27=14.81%
-==========Testing the following program (34): pass==========
+FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
+FixPt[2][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
+==========Testing the following program (33): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:terms]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
@@ -1020,7 +1012,7 @@ FixPt[2][node_priority][DFS](4/27)  Testing the empty input. Global ratio:4/27=1
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](4/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:4/27=14.81%
+FixPt[2][node_priority][DFS](3/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 0 --> 0.
@@ -1035,7 +1027,7 @@ FixPt[2][node_priority][DFS](4/27)  Try deleting [0]#1: Interesting. Local ratio
 
 ================The best program is updated.================
 
-token count change 4 -> 3
+token count change 3 -> 3
 Edit: [delete_173]
 ------------------------------------------------------------
 
@@ -1043,7 +1035,7 @@ Edit: [delete_173]
 FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:3/27=11.11%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 171 from 4 to 3
+Failed to reduce node 171
 ------------------------------------------------------------
 
 
@@ -1075,7 +1067,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (35): fail==========
+==========Testing the following program (34): fail==========
 
 // edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement_list_terms->;
     --file: hello.rb--
@@ -1083,7 +1075,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (36): fail==========
+==========Testing the following program (35): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.rb--
@@ -1107,14 +1099,14 @@ The current best program is the following
 
 FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
 FixPt[3][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
-==========Testing the following program (37): fail==========
+==========Testing the following program (36): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__statement_list_terms_4]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
 ------------------------------------------------------------
 
 
-==========Testing the following program (38): fail==========
+==========Testing the following program (37): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__statement_list_terms_4]LiteralReplacement@1,statement->break
     --file: hello.rb--
@@ -1140,14 +1132,14 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (39): fail==========
+==========Testing the following program (38): fail==========
 
 // edit action set type: [regular_node]can be epsilon
     --file: hello.rb--
 ------------------------------------------------------------
 
 
-==========Testing the following program (40): fail==========
+==========Testing the following program (39): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.rb--
@@ -1155,7 +1147,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (41): fail==========
+==========Testing the following program (40): fail==========
 
 // edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->break
     --file: hello.rb--
@@ -1163,7 +1155,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (42): fail==========
+==========Testing the following program (41): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.rb--
@@ -1203,7 +1195,7 @@ The current best program is the following
 
 FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
 FixPt[3][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
-==========Testing the following program (43): fail==========
+==========Testing the following program (42): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:string]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
@@ -1246,7 +1238,7 @@ The current best program is the following
 
 FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
 FixPt[3][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
-==========Testing the following program (44): pass==========
+==========Testing the following program (43): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:terms]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
@@ -1338,27 +1330,27 @@ Edit: AnyNodeReplace:[replace_232_with_165]
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
 ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
- 0                     node_priority      4             0     -22            -53      22   time-hidden
- 1                     node_priority      3             1      -2             -1      13   time-hidden
+ 0                     node_priority      4             1     -22            -53      22   time-hidden
+ 1                     node_priority      3             2      -2             -1      12   time-hidden
  2                     node_priority      1             1       0              0      10   time-hidden
  3              FineGritLatraReducer      0             0       0              0       0   time-hidden
  4 spartree_root_replacement_reducer      1             1       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
                           Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
-                    node_priority     3      8             2     -24            -54      45   time-hidden
+                    node_priority     3      8             4     -24            -54      44   time-hidden
              FineGritLatraReducer     1      0             0       0              0       0   time-hidden
 spartree_root_replacement_reducer     1      1             1       0              0       0   time-hidden
 
 ------------------------------- Transformations --------------------------------
                                    Transformation Worked #NonDeletions #Tokens #NonBlankChars
-                        node_priority.Replacement      1             0     -15            -31
-                           node_priority.Deletion      6             2      -7            -13
-                 node_priority.LiteralReplacement      1             0      -2            -10
+                        node_priority.Replacement      1             0     -18            -31
+                           node_priority.Deletion      6             4      -5            -13
+                 node_priority.LiteralReplacement      1             0      -1            -10
 spartree_root_replacement_reducer.RootReplacement      1             1       0              0
 ------------------------------------- End --------------------------------------
 #test success = 8
-#test failure = 37
+#test failure = 36
 #test result cache hits = 0
 #test execution cancelled = 2
 #node edit action set cache hits = 0

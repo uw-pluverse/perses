@@ -19,6 +19,7 @@ package org.perses.program.printer
 import com.google.common.base.Joiner
 import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
+import org.antlr.v4.runtime.CommonToken
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -91,6 +92,64 @@ class TokenizedProgramPrinterTest {
       |int c = 0;
       """.trimMargin(),
     )
+  }
+
+  /** A token at [line] and [column], as a lexer that keeps whitespace as tokens emits it. */
+  private fun tokenAt(
+    text: String,
+    line: Int,
+    column: Int,
+  ): AbstractPersesToken =
+    PersesTokenFactory.createPersesToken(
+      CommonToken(1, text).apply {
+        this.line = line
+        charPositionInLine = column
+      },
+      overridingPosition = null,
+    )
+
+  private fun printBothFormats(vararg tokens: AbstractPersesToken): Pair<String, String> {
+    val program = TokenizedProgram(ImmutableList.copyOf(tokens))
+    return PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT).print(program).sourceCode to
+      PrinterRegistry.getPrinter(EnumFormatControl.COMPACT_ORIG_FORMAT).print(program).sourceCode
+  }
+
+  /** XML keeps the whitespace between elements as tokens; its newline must be printed once. */
+  @Test
+  fun testAWhitespaceTokenSpanningLinesIsPrintedOnce() {
+    val (orig, compact) =
+      printBothFormats(
+        tokenAt("<a>", 1, 0),
+        tokenAt("\n  ", 1, 3),
+        tokenAt("<b/>", 2, 2),
+        tokenAt("\n", 2, 6),
+        tokenAt("</a>", 3, 0),
+      )
+
+    assertThat(orig).isEqualTo("<a>\n  <b/>\n</a>\n")
+    assertThat(compact).isEqualTo("<a>\n  <b/>\n</a>\n")
+  }
+
+  @Test
+  fun testABlankLineAfterATokenEndingInANewlineIsKeptOnlyByTheOriginalFormat() {
+    val (orig, compact) =
+      printBothFormats(
+        tokenAt("x", 1, 0),
+        tokenAt("\n", 1, 1),
+        tokenAt("y", 3, 0),
+      )
+
+    assertThat(orig).isEqualTo("x\n\ny\n")
+    assertThat(compact).isEqualTo("x\ny\n")
+  }
+
+  /** Deleting a whitespace token still leaves the next token at its own position. */
+  @Test
+  fun testADeletedWhitespaceTokenLeavesTheLayoutToThePositions() {
+    val (orig, compact) = printBothFormats(tokenAt("<a>", 1, 0), tokenAt("<b/>", 2, 2))
+
+    assertThat(orig).isEqualTo("<a>\n  <b/>\n")
+    assertThat(compact).isEqualTo("<a>\n  <b/>\n")
   }
 
   @Test

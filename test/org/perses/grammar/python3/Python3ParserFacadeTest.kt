@@ -63,4 +63,32 @@ class Python3ParserFacadeTest {
     val code = PrinterRegistry.printToStringInPythonFormat(tokenProgram)
     assertThat(code.trim()).isEqualTo(program.trim())
   }
+
+  /**
+   * A triple-quoted string spans lines, and the call continues on its last line. The printer must
+   * keep `, b)` where the string ended rather than move it to a line of its own.
+   */
+  @Test
+  fun testCodeAfterAMultiLineStringStaysOnTheLineWhereTheStringEnds() {
+    val tripleQuote = "\"\"\""
+    val program =
+      """
+      |def f(a, b):
+      |    return g(${tripleQuote}first
+      |second$tripleQuote, b)
+      |x = 1
+      |
+      """.trimMargin()
+
+    val tokenProgram =
+      TestUtility
+        .createSparTreeFromString(
+          program,
+          LanguagePython3,
+        ).programSnapshot.payload
+
+    assertThat(
+      PrinterRegistry.printToStringInPythonFormat(tokenProgram).trim(),
+    ).isEqualTo(program.trim())
+  }
 }
