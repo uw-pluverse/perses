@@ -26,6 +26,7 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.c.LanguageC
+import org.perses.grammar.flattokenlist.FlatTokenListParserFacade
 import org.perses.grammar.line.LineParserFacade
 import org.perses.grammar.xml.PnfXMLParserFacade
 import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmarkWriter.TokenLocation
@@ -122,9 +123,12 @@ class ListMinimizationMicrobenchmarkWriterTest {
 
   /** The program as the line slicer's tree holds it: one token per line. */
   private fun lineProgram(sourceCode: String): TokenizedProgram =
-    RecordedProgramTokenizer
-      .buildFlatTokenListTree(sourceCode, LineParserFacade().lexerClass)
-      .programSnapshot
+    TestUtility
+      .createSparTreeFromString(
+        sourceCode,
+        FlatTokenListParserFacade(LineParserFacade().lexerClass),
+        simplifyTree = true,
+      ).programSnapshot
       .payload
 
   private fun write(

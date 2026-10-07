@@ -22,10 +22,7 @@ kt_jvm_test(
         "RecordedProgramTokenizerTest.kt",
     ],
     deps = [
-        "//:guava",
         "//:truth",
-        "//src/org/perses/grammar/c:parser_facade",
-        "//src/org/perses/listminimizer/microbenchmark:list_minimization_microbenchmark",
         "//src/org/perses/listminimizer/microbenchmark:recorded_program_tokenizer",
         "//src/org/perses/program",
         "//src/org/perses/program:enum_format_control",
@@ -33,7 +30,6 @@ kt_jvm_test(
         "//src/org/perses/spartree",
         "//src/org/perses/spartree:tree_node",
         "//src/org/perses/util:Interval",
-        "//test/org/perses:test_util",
     ],
 )
 
@@ -65,6 +61,7 @@ kt_jvm_test(
         "//:truth",
         "//src/org/perses/grammar:facade_factory",
         "//src/org/perses/grammar/c:parser_facade",
+        "//src/org/perses/grammar/flattokenlist:parser_facade",
         "//src/org/perses/grammar/line:parser_facade",
         "//src/org/perses/grammar/xml:parser_facade",
         "//src/org/perses/listminimizer/microbenchmark:list_minimization_microbenchmark",

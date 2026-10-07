@@ -24,7 +24,6 @@ kt_jvm_library(
         "RecordedRangeParserFacade.kt",
     ],
     deps = [
-        ":list_minimization_microbenchmark",
         ":recorded_range_lexer",
         "//:antlr_runtime",
         "//:guava",
@@ -34,8 +33,6 @@ kt_jvm_library(
         "//src/org/perses/program:language_kind",
         "//src/org/perses/spartree",
         "//src/org/perses/spartree:spar_tree_parser_utility",
-        "//src/org/perses/spartree:tree_node",
-        "//src/org/perses/util",
         "//src/org/perses/util:Interval",
     ],
 )
