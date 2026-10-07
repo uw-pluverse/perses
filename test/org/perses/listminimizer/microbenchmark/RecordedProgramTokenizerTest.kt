@@ -63,7 +63,7 @@ class RecordedProgramTokenizerTest {
 
   private fun printAtRecordedPositions(tree: SparTree) =
     PrinterRegistry
-      .getPrinter(EnumFormatControl.RECORDED_POSITION)
+      .getPrinter(EnumFormatControl.ORIG_FORMAT)
       .print(tree.programSnapshot.payload)
       .sourceCode
 

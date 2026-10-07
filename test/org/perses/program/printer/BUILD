@@ -21,19 +21,6 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
-    name = "RecordedPositionPrinterTest",
-    srcs = ["RecordedPositionPrinterTest.kt"],
-    deps = [
-        "//:antlr_runtime",
-        "//:guava",
-        "//:truth",
-        "//src/org/perses/program",
-        "//src/org/perses/program:enum_format_control",
-        "//src/org/perses/program/printer",
-    ],
-)
-
-kt_jvm_test(
     name = "AbstractOrigFormatVisitorTest",
     srcs = ["AbstractOrigFormatVisitorTest.kt"],
     deps = [

@@ -64,9 +64,6 @@ object PrinterRegistry {
         PythonPrinter.getCompactOrigFormat(tokenPositionProvider)
       }
 
-      EnumFormatControl.RECORDED_POSITION -> {
-        RecordedPositionPrinter
-      }
       EnumFormatControl.YAML_FORMAT -> {
         YamlTokenizedProgramPrinter()
       }

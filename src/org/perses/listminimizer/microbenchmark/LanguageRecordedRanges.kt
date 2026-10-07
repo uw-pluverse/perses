@@ -23,17 +23,16 @@ import org.perses.program.LanguageKind
 /**
  * The "language" of a recorded program rebuilt from its token spans: tokens at their line and
  * column in the recorded file, with the whitespace between them dropped. Its one code format is
- * [EnumFormatControl.RECORDED_POSITION], which puts every token back at its position: the
- * recorded file is printer output, so between its tokens there are only spaces and newlines, and
- * printing the full tree reproduces it, while a deleted token leaves its place blank, as in the
- * reduction that recorded the problem. The original format cannot serve: it assumes a token
- * stays on one line, which XML's whitespace tokens do not.
+ * [EnumFormatControl.ORIG_FORMAT], which puts every token back at its position: the recorded
+ * file is printer output, so between its tokens there are only spaces and newlines, and printing
+ * the full tree reproduces it, while a deleted token leaves its place blank, as in the reduction
+ * that recorded the problem. Blank lines are kept, so the compact format would not reproduce it.
  */
 object LanguageRecordedRanges : LanguageKind(
   name = "recorded-ranges",
   extensions = ImmutableSet.of("recorded_ranges"),
-  defaultCodeFormatControl = EnumFormatControl.RECORDED_POSITION,
-  origCodeFormatControl = EnumFormatControl.RECORDED_POSITION,
-  allowedCodeFormatControl = ImmutableSet.of(EnumFormatControl.RECORDED_POSITION),
+  defaultCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+  origCodeFormatControl = EnumFormatControl.ORIG_FORMAT,
+  allowedCodeFormatControl = ImmutableSet.of(EnumFormatControl.ORIG_FORMAT),
   hidden = true,
 )

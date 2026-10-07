@@ -23,10 +23,4 @@ enum class EnumFormatControl {
   PYTHON3_FORMAT,
   COMPACT_PYTHON3_FORMAT,
   YAML_FORMAT,
-
-  /**
-   * Every token at the line and column it carries, which reproduces the text the tokens were
-   * taken from when that text is printer output, such as a recorded microbenchmark's program.
-   */
-  RECORDED_POSITION,
 }

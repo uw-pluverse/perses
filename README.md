@@ -185,7 +185,7 @@ Usage: org.perses.Main [options]
       Default: auto
     --code-format
       The format of the reduced program.
-      Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT, PYTHON3_FORMAT, COMPACT_PYTHON3_FORMAT, YAML_FORMAT, RECORDED_POSITION]
+      Possible Values: [SINGLE_TOKEN_PER_LINE, ORIG_FORMAT, COMPACT_ORIG_FORMAT, PYTHON3_FORMAT, COMPACT_PYTHON3_FORMAT, YAML_FORMAT]
     --script-execution-timeout-in-seconds
       the interval in seconds to timeout the test script executions. the 
       default timeout is 600 seconds.

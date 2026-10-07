@@ -581,7 +581,6 @@ class ListMinimizationMicrobenchmarkWriterTest {
   private fun assertRoundTrip(
     program: TokenizedProgram,
     recordingPrinter: AbstractTokenizedProgramPrinter,
-    expectedReprint: (recordedText: String) -> String = { it },
   ) {
     val recorded = record(program, eachTokenSeparately(program), recordingPrinter)
 
@@ -594,17 +593,17 @@ class ListMinimizationMicrobenchmarkWriterTest {
       .inOrder()
     assertThat(
       PrinterRegistry
-        .getPrinter(EnumFormatControl.RECORDED_POSITION)
+        .getPrinter(EnumFormatControl.ORIG_FORMAT)
         .print(tree.programSnapshot.payload)
         .sourceCode,
-    ).isEqualTo(expectedReprint(recorded.sourceCode))
+    ).isEqualTo(recorded.sourceCode)
   }
 
   /**
    * XML is what the re-lexing design could not record: whitespace and text are real tokens, and
    * once deletions make two of them adjacent the printed file re-lexes them as one. The recorded
-   * offsets keep them apart, and printing them at their recorded positions gives back what the
-   * compact format Perses uses for XML wrote.
+   * offsets keep them apart, and the original format, printing each at its recorded position,
+   * gives back exactly what the compact format Perses uses for XML wrote.
    */
   @Test
   fun testRoundTripOverXmlWhoseWhitespaceAndTextTokensBecomeAdjacent() {
@@ -617,7 +616,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
         ).programSnapshot
         .payload
     val compact = PrinterRegistry.getPrinter(EnumFormatControl.COMPACT_ORIG_FORMAT)
-    assertRoundTrip(document, compact, ::endingInOneNewline)
+    assertRoundTrip(document, compact)
 
     val withoutBAndC =
       TokenizedProgram(
@@ -626,14 +625,8 @@ class ListMinimizationMicrobenchmarkWriterTest {
           .toImmutableList(),
       )
     assertThat(withoutBAndC.tokenCount).isLessThan(document.tokenCount)
-    assertRoundTrip(withoutBAndC, compact, ::endingInOneNewline)
+    assertRoundTrip(withoutBAndC, compact)
   }
-
-  /**
-   * No token position says what follows the last token, so the reprint ends in one newline; the
-   * compact format leaves blank lines there that the reprint drops.
-   */
-  private fun endingInOneNewline(text: String) = text.trimEnd() + "\n"
 
   // ---- locateTokens: each token's range in the rendered program, from the printer ----
 
