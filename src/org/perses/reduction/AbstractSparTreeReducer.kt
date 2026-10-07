@@ -958,7 +958,7 @@ abstract class AbstractSparTreeReducer protected constructor(
    * canonical token count a stable, correct function of the actual program, and is correct for
    * surrogate-facade reductions too because it always lexes with the canonical facade.
    */
-  protected fun computeCanonicalTokenCount(outputManager: AbstractOutputManager?): Int? {
+  protected open fun computeCanonicalTokenCount(outputManager: AbstractOutputManager?): Int? {
     if (outputManager == null) {
       return null
     }

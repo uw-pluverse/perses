@@ -24,75 +24,75 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.grammar.flattokenlist.PnfFlatTokenList
+import org.perses.util.Interval
 
 @RunWith(JUnit4::class)
 class RecordedRangeLexerTest {
   private fun lex(
     text: String,
-    vararg cutOffsets: Int,
+    vararg tokenSpans: Interval,
   ): List<Token> {
-    val lexer = RecordedRangeLexer(CharStreams.fromString(text), cutOffsets)
+    val lexer = RecordedRangeLexer(CharStreams.fromString(text), tokenSpans.toList())
     return generateSequence { lexer.nextToken().takeIf { it.type != Token.EOF } }.toList()
   }
 
   @Test
-  fun testEveryPieceBetweenConsecutiveCutsIsOneToken() {
-    val tokens = lex("int x = 1;", 0, 4, 5, 10)
+  fun testEverySpanIsExactlyOneTokenAndTheWhitespaceBetweenIsDropped() {
+    val tokens =
+      lex(
+        "int x = 1;\n",
+        Interval(0, 3),
+        Interval(4, 5),
+        Interval(6, 7),
+        Interval(8, 9),
+        Interval(9, 10),
+      )
 
-    assertThat(tokens.map { it.text }).containsExactly("int ", "x", " = 1;").inOrder()
-    assertThat(
-      tokens.map {
-        it.type
-      },
-    ).containsExactly(PnfFlatTokenList.TOKEN, PnfFlatTokenList.TOKEN, PnfFlatTokenList.TOKEN)
+    assertThat(tokens.map { it.text }).containsExactly("int", "x", "=", "1", ";").inOrder()
+    assertThat(tokens.map { it.type }.toSet()).containsExactly(PnfFlatTokenList.TOKEN)
     assertThat(tokens.map { it.startIndex to it.stopIndex })
-      .containsExactly(0 to 3, 4 to 4, 5 to 9)
+      .containsExactly(0 to 2, 4 to 4, 6 to 6, 8 to 8, 9 to 9)
       .inOrder()
   }
 
   @Test
-  fun testThePiecesReassembleTheText() {
-    val text = "<a>foo<b/>bar</a>"
+  fun testATokenMaySpanLines() {
+    val tokens = lex("<a>\n  </a>", Interval(0, 3), Interval(3, 6), Interval(6, 10))
 
-    assertThat(lex(text, 0, 3, 6, 10, 13, 17).joinToString("") { it.text }).isEqualTo(text)
-  }
-
-  @Test
-  fun testTheWholeTextIsOneTokenWhenThereAreNoInnerCuts() {
-    val tokens = lex("ab\ncd", 0, 5)
-
-    assertThat(tokens.map { it.text }).containsExactly("ab\ncd")
+    assertThat(tokens.map { it.text }).containsExactly("<a>", "\n  ", "</a>").inOrder()
+    assertThat(tokens.last().line).isEqualTo(2)
+    assertThat(tokens.last().charPositionInLine).isEqualTo(2)
   }
 
   @Test
   fun testAnEmptyTextLexesToNoTokens() {
-    assertThat(lex("", 0)).isEmpty()
+    assertThat(lex("")).isEmpty()
   }
 
   @Test
-  fun testLineAndColumnAreWhereEachPieceStarts() {
-    val tokens = lex("a\nbc\n d", 0, 2, 4, 6, 7)
+  fun testLineAndColumnAreWhereEachTokenStarts() {
+    val tokens = lex("a\nbc\n d", Interval(0, 1), Interval(2, 4), Interval(6, 7))
 
     assertThat(tokens.map { it.line to it.charPositionInLine })
-      .containsExactly(1 to 0, 2 to 0, 2 to 2, 3 to 1)
+      .containsExactly(1 to 0, 2 to 0, 3 to 1)
       .inOrder()
   }
 
   @Test
   fun testOffsetsCountCodePointsNotUtf16Units() {
     // The emoji is two UTF-16 units but one code point, which is what ANTLR streams index.
-    val text = "/* \uD83D\uDE00 */ x"
-    val codePoints = text.codePointCount(0, text.length)
-    val tokens = lex(text, 0, codePoints - 1, codePoints)
+    val text = "\uD83D\uDE00 x"
+    val tokens = lex(text, Interval(0, 1), Interval(2, 3))
 
-    assertThat(tokens.map { it.text }).containsExactly("/* \uD83D\uDE00 */ ", "x").inOrder()
-    assertThat(tokens.last().startIndex).isEqualTo(codePoints - 1)
-    assertThat(tokens.last().charPositionInLine).isEqualTo(codePoints - 1)
+    assertThat(tokens.map { it.text }).containsExactly("\uD83D\uDE00", "x").inOrder()
+    assertThat(tokens.last().startIndex).isEqualTo(2)
+    assertThat(tokens.last().charPositionInLine).isEqualTo(2)
   }
 
   @Test
   fun testTheLexerIsRewindable() {
-    val lexer = RecordedRangeLexer(CharStreams.fromString("ab"), intArrayOf(0, 1, 2))
+    val lexer =
+      RecordedRangeLexer(CharStreams.fromString("ab"), listOf(Interval(0, 1), Interval(1, 2)))
     val first = generateSequence { lexer.nextToken().takeIf { it.type != Token.EOF } }.count()
     lexer.reset()
     val second = generateSequence { lexer.nextToken().takeIf { it.type != Token.EOF } }.count()
@@ -102,10 +102,25 @@ class RecordedRangeLexerTest {
   }
 
   @Test
-  fun testCutsMustStartAtZeroEndAtTheLengthAndIncrease() {
-    assertThrows(IllegalArgumentException::class.java) { lex("abc", 1, 3) }
-    assertThrows(IllegalArgumentException::class.java) { lex("abc", 0, 2) }
-    assertThrows(IllegalArgumentException::class.java) { lex("abc", 0, 2, 2, 3) }
-    assertThrows(IllegalArgumentException::class.java) { lex("abc", 0, 2, 1, 3) }
+  fun testSpansMustBeNonEmptyAscendingDisjointAndInsideTheText() {
+    assertThrows(IllegalArgumentException::class.java) { lex("abc", Interval(1, 1)) }
+    assertThrows(
+      IllegalArgumentException::class.java,
+    ) { lex("abc", Interval(0, 2), Interval(1, 3)) }
+    assertThrows(
+      IllegalArgumentException::class.java,
+    ) { lex("abc", Interval(2, 3), Interval(0, 1)) }
+    assertThrows(IllegalArgumentException::class.java) { lex("abc", Interval(0, 4)) }
+  }
+
+  /** Text outside every span is dropped, so it must be what printing at positions restores. */
+  @Test
+  fun testOnlySpacesAndNewlinesMayLieOutsideTheSpans() {
+    assertThrows(IllegalArgumentException::class.java) { lex("a b", Interval(0, 1)) }
+    assertThrows(IllegalArgumentException::class.java) { lex("a b", Interval(2, 3)) }
+    assertThrows(
+      IllegalArgumentException::class.java,
+    ) { lex("a\tb", Interval(0, 1), Interval(2, 3)) }
+    assertThat(lex(" \n a \n", Interval(3, 4)).single().text).isEqualTo("a")
   }
 }

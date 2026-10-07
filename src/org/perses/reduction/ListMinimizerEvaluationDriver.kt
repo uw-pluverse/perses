@@ -21,7 +21,6 @@ import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.FluentLogger
 import org.perses.PersesCommandOptions
 import org.perses.grammar.AbstractParserFacade
-import org.perses.grammar.flattokenlist.FlatTokenListParserFacade
 import org.perses.listminimizer.AbstractListMinimizerListener
 import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmark
@@ -114,11 +113,12 @@ class ListMinimizerEvaluationDriver private constructor(
     executorService = executorService,
   ) {
   /**
-   * Built by the *surrogate* facade, not the canonical one -- the same split the tolerant Dyck and
-   * Line fallbacks use. `FlatTokenList` (`start : TOKEN* EOF`) cannot reject anything the real lexer
-   * emits, so a recorded mid-reduction program that no longer parses under its real grammar still
-   * yields a tree. The canonical facade still decides the token counts and, through
-   * [outputManagerFactory], how candidates are printed.
+   * Built by the range facade the main chose as this driver's canonical facade: the recorded file
+   * re-tokenized at the recorded token offsets under `FlatTokenList` (`start : TOKEN* EOF`), which
+   * cannot reject a program, so a recorded mid-reduction program that no longer parses under any
+   * grammar still yields a tree, with one leaf per recorded token. The same facade's language
+   * decides, through [outputManagerFactory], that candidates print each token at its recorded
+   * position.
    *
    * Read from the recorded input rather than from the result folder, which is where every other
    * driver reads its starting program. A measurement must start from the program the ranges were
@@ -135,8 +135,9 @@ class ListMinimizerEvaluationDriver private constructor(
       sourceFile = mainFile.file,
       fileRepresentedByTree = mainFile,
       otherMutableFileContents = otherMutableFileContents,
-      surrogateParserFacade =
-        FlatTokenListParserFacade(configuration.canonicalParserFacade.realLexerClass),
+      // The canonical facade already is the surrogate: it re-tokenizes the recorded file at the
+      // recorded offsets and cannot reject a program, so no FlatTokenList wrapping is needed here.
+      surrogateParserFacade = configuration.canonicalParserFacade,
       canonicalParserFacade = configuration.canonicalParserFacade,
       specifiedSparTreeNodeFactory = null,
       semanticsProviderCreator = null,
@@ -218,10 +219,7 @@ class ListMinimizerEvaluationDriver private constructor(
           ListMinimizerEvaluationReducer(
             reducerAnnotation = this,
             reducerContext = reducerContext,
-            rangesPerElement =
-              microbenchmark.inputList.elements.map { element ->
-                element.ranges.map { it.toInterval() }
-              },
+            elementTokenRanges = microbenchmark.inputList.elements.map { it.tokenRanges },
             minimizerType = minimizerType,
             reportOneMinimality = { this@ListMinimizerEvaluationDriver.oneMinimality = it },
           ),
@@ -248,7 +246,6 @@ class ListMinimizerEvaluationDriver private constructor(
    * field exists to detect.
    */
   override fun reduce() {
-    warnIfTheRecordedLanguageDisagrees()
     // A measurement must not inherit another measurement's answers. The query cache is owned by the
     // main and outlives every driver, so a second evaluation in the same process would find the
     // previous minimizer's rejected candidates already recorded and skip executing them. The query
@@ -257,6 +254,10 @@ class ListMinimizerEvaluationDriver private constructor(
     // run first. Clearing here makes each run start as empty as a fresh process does, which is what
     // lets several runs share one process and stay comparable with runs that did not.
     queryCache.clearCache()
+    check(inputRepresentation.tree.remainingLexerRuleNodes.size == microbenchmark.tokenCount) {
+      "The tree has ${inputRepresentation.tree.remainingLexerRuleNodes.size} leaves but the " +
+        "recording ${microbenchmark.tokenCount} tokens."
+    }
     programTokensBefore = inputRepresentation.tree.programSnapshot.surrogateTokenCount
     logger.ktFine { "Evaluating $minimizerType on ${microbenchmark.microbenchmarkId}." }
     // The base class saves the starting program, registers the tree-edit listeners and drives the
@@ -279,25 +280,6 @@ class ListMinimizerEvaluationDriver private constructor(
     check(runCount == 1) {
       "Evaluating $minimizerType on ${microbenchmark.microbenchmarkId} ran the minimizer " +
         "$runCount time(s), but a measurement requires exactly one run."
-    }
-  }
-
-  /**
-   * The lexer decides what the recorded ranges resolve to, so a facade other than the recorded one
-   * is the single most likely cause of a resolution failure. Warn rather than fail: the recorded
-   * name is a label, and the flags the binary was given stay authoritative.
-   */
-  private fun warnIfTheRecordedLanguageDisagrees() {
-    val actual = configuration.canonicalParserFacade::class.qualifiedName
-    val recorded = microbenchmark.recordingContext.parserFacadeClassName
-    if (actual != recorded) {
-      logger.atWarning().log(
-        "Problem %s was recorded with %s but is being evaluated with %s. " +
-          "If range resolution fails, this is why.",
-        microbenchmark.microbenchmarkId,
-        recorded,
-        actual,
-      )
     }
   }
 

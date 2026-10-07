@@ -20,9 +20,10 @@ kt_jvm_test(
 )
 
 kt_jvm_test(
-    name = "VerbatimPrinterTest",
-    srcs = ["VerbatimPrinterTest.kt"],
+    name = "RecordedPositionPrinterTest",
+    srcs = ["RecordedPositionPrinterTest.kt"],
     deps = [
+        "//:antlr_runtime",
         "//:guava",
         "//:truth",
         "//src/org/perses/program",

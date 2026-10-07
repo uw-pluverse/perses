@@ -17,9 +17,19 @@
 package org.perses.listminimizer.microbenchmark
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.google.common.collect.ImmutableList
 import org.perses.util.Interval
 import org.perses.util.Serialization
+import org.perses.util.transformToImmutableList
 import java.nio.file.Path
 
 /**
@@ -28,8 +38,9 @@ import java.nio.file.Path
  * `input/` folder that holds the program and its test script, so the folder stays a valid Perses
  * input on its own.
  *
- * The list is reconstructible from the program alone: the evaluation side re-tokenizes the program
- * with the real lexer and resolves [RecordedElement.ranges] back to token nodes.
+ * The list is reconstructible from the program and [tokenOffsets] alone: the offsets re-tokenize
+ * the program exactly as the reducer had it, and [RecordedElement.tokenRanges] are runs of those
+ * tokens.
  */
 data class ListMinimizationMicrobenchmark(
   val microbenchmarkId: String,
@@ -44,20 +55,41 @@ data class ListMinimizationMicrobenchmark(
    */
   val targetFilePath: String,
   /**
-   * How many tokens the recorded program has, as the reducer tokenized it. With
-   * [RecordedRange.tokenCount] this is what lets the evaluation measure sizes without tokenizing
-   * anything: a list minimizer only deletes whole elements, so the size after a minimization is
-   * this minus the deleted elements' counts.
+   * The reducer's own tokenization of the recorded program: token i is the target file's text
+   * from `tokenOffsets[i].leftInclusive` to `tokenOffsets[i].rightExclusive`, in code points.
+   * Ascending and non-overlapping, and only whitespace lies between two tokens, since the file is
+   * printer output. The evaluation re-tokenizes the file from these offsets alone, with no lexer
+   * and therefore whatever the language. Written as one line of `start:end` pairs: a program has
+   * thousands of tokens, and a yaml entry per token would dwarf the rest of the file.
    */
-  val wholeProgramTokenCount: Int,
+  @field:JsonSerialize(using = TokenOffsetsSerializer::class)
+  @field:JsonDeserialize(using = TokenOffsetsDeserializer::class)
+  val tokenOffsets: ImmutableList<Interval>,
   val inputList: RecordedInputList,
   val recordingContext: RecordingContext,
 ) {
+  @get:JsonIgnore
+  val tokenCount: Int
+    get() = tokenOffsets.size
+
   init {
-    // Jackson reads a missing Int as 0, so this is also what rejects a recording without the count.
-    require(wholeProgramTokenCount >= inputList.elements.sumOf { it.tokenCount }) {
-      "wholeProgramTokenCount is $wholeProgramTokenCount, fewer than the " +
-        "${inputList.elements.sumOf { it.tokenCount }} token(s) the elements hold."
+    tokenOffsets.forEachIndexed { index, offsets ->
+      require(offsets.leftInclusive >= 0 && offsets.length > 0) {
+        "tokenOffsets of token $index must be a non-empty, non-negative span: $offsets."
+      }
+    }
+    tokenOffsets.zipWithNext().forEachIndexed { index, (previous, next) ->
+      require(previous.rightExclusive <= next.leftInclusive) {
+        "tokenOffsets must be ascending and must not overlap; token ${index + 1} is $next " +
+          "after $previous."
+      }
+    }
+    inputList.elements.forEachIndexed { index, element ->
+      element.tokenRanges.forEach { range ->
+        require(range.rightExclusive <= tokenCount) {
+          "Element $index's token range $range is outside the $tokenCount recorded token(s)."
+        }
+      }
     }
   }
 
@@ -101,7 +133,7 @@ data class RecordedInputList(
   @get:JsonIgnore
   val elementsAreDisjoint: Boolean
     get() {
-      val sorted = elements.flatMap { it.ranges }.sortedBy { it.leftInclusive }
+      val sorted = elements.flatMap { it.tokenRanges }.sortedBy { it.leftInclusive }
       return sorted.zipWithNext().none { (left, right) ->
         right.leftInclusive < left.rightExclusive
       }
@@ -111,52 +143,38 @@ data class RecordedInputList(
   val elementsAreOffsetAscending: Boolean
     get() =
       elements
-        .mapNotNull { element -> element.ranges.minOfOrNull { it.leftInclusive } }
+        .mapNotNull { element -> element.tokenRanges.minOfOrNull { it.leftInclusive } }
         .zipWithNext()
         .all { (previous, next) -> previous <= next }
 }
 
 /**
- * One element of the list, as a set of character ranges. A set rather than a single span because
+ * One element of the list, as a set of token index ranges into the recorded program's tokens
+ * ([ListMinimizationMicrobenchmark.tokenOffsets]). A set rather than a single span because
  * `runListMinimizerOverListsOfNodes` gives an element several tree nodes, which need not be
  * contiguous.
+ *
+ * [Interval.length] is derived, so Jackson would write it out and then reject it as unknown on read.
+ * Suppressing it here rather than annotating [Interval] keeps that widely-reused leaf free of a
+ * Jackson dependency.
  */
 data class RecordedElement(
-  val ranges: ImmutableList<RecordedRange>,
-) {
-  /** The element's weight. */
-  @get:JsonIgnore
-  val tokenCount: Int
-    get() = ranges.sumOf { it.tokenCount }
-}
-
-/**
- * A run of consecutive tokens of one element, as the character range it occupies in the recorded
- * program and how many of the program's tokens it holds, as the reducer tokenized them.
- *
- * The count is recorded per range because the evaluation does not tokenize the program: it treats
- * the file as text cut at the ranges, and cuts each range into as many pieces as it has tokens, so
- * that the tree's own leaf counts are the reducer's token counts. Every corpus carries the counts;
- * the ones recorded before they existed were backfilled once by lexing them the way the evaluation
- * used to, so a recording without them is simply malformed.
- */
-data class RecordedRange(
-  val leftInclusive: Int,
-  val rightExclusive: Int,
-  val tokenCount: Int,
+  @field:JsonIgnoreProperties("length")
+  val tokenRanges: ImmutableList<Interval>,
 ) {
   init {
-    require(0 <= leftInclusive && leftInclusive < rightExclusive) {
-      "A range must be non-empty and start at or after 0: [$leftInclusive, $rightExclusive)"
-    }
-    // Jackson reads a missing Int as 0, so this is also what rejects a recording without counts.
-    require(tokenCount in 1..(rightExclusive - leftInclusive)) {
-      "tokenCount of the range [$leftInclusive, $rightExclusive) is $tokenCount; it must be " +
-        "between 1 and the range's ${rightExclusive - leftInclusive} character(s)."
+    require(tokenRanges.isNotEmpty()) { "An element must own at least one token." }
+    tokenRanges.forEach {
+      require(
+        it.length > 0,
+      ) { "An element's token range must not be empty: $it" }
     }
   }
 
-  fun toInterval() = Interval(leftInclusive, rightExclusive)
+  /** The element's weight: how many of the program's tokens it owns. */
+  @get:JsonIgnore
+  val tokenCount: Int
+    get() = tokenRanges.sumOf { it.length }
 }
 
 /**
@@ -193,6 +211,36 @@ data class RecordingContext(
    */
   val commandLineOptions: String,
 )
+
+/** The offsets as one line of space-separated `start:end` pairs (see `tokenOffsets`). */
+class TokenOffsetsSerializer :
+  StdSerializer<ImmutableList<Interval>>(ImmutableList::class.java, false) {
+  override fun serialize(
+    value: ImmutableList<Interval>,
+    gen: JsonGenerator,
+    provider: SerializerProvider,
+  ) {
+    gen.writeString(value.joinToString(" ") { "${it.leftInclusive}:${it.rightExclusive}" })
+  }
+}
+
+class TokenOffsetsDeserializer :
+  StdDeserializer<ImmutableList<Interval>>(ImmutableList::class.java) {
+  override fun deserialize(
+    parser: JsonParser,
+    context: DeserializationContext,
+  ): ImmutableList<Interval> {
+    val text = parser.valueAsString.trim()
+    if (text.isEmpty()) {
+      return ImmutableList.of()
+    }
+    return text.split(' ').transformToImmutableList { pair ->
+      val separator = pair.indexOf(':')
+      require(separator > 0) { "A token's offsets must be written as start:end, not '$pair'." }
+      Interval(pair.substring(0, separator).toInt(), pair.substring(separator + 1).toInt())
+    }
+  }
+}
 
 private val TYPE_REFERENCE =
   object : com.fasterxml.jackson.core.type.TypeReference<ListMinimizationMicrobenchmark>() {}

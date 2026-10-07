@@ -28,10 +28,10 @@ kt_jvm_library(
         ":recorded_range_lexer",
         "//:antlr_runtime",
         "//:guava",
-        "//src/org/perses/program:enum_format_control",
-        "//src/org/perses/program:language_kind",
         "//src/org/perses/grammar:parser_facade_interface",
         "//src/org/perses/grammar/flattokenlist:parser_facade",
+        "//src/org/perses/program:enum_format_control",
+        "//src/org/perses/program:language_kind",
         "//src/org/perses/spartree",
         "//src/org/perses/spartree:spar_tree_parser_utility",
         "//src/org/perses/spartree:tree_node",
@@ -48,6 +48,7 @@ kt_jvm_library(
     deps = [
         "//:guava",
         "//:jackson",
+        "//src/org/perses/util",
         "//src/org/perses/util:Interval",
         "//src/org/perses/util:Serialization",
     ],
@@ -60,7 +61,6 @@ kt_jvm_library(
     ],
     deps = [
         ":list_minimization_microbenchmark",
-        ":recorded_program_tokenizer",
         "//:antlr_runtime",
         "//:flogger",
         "//src/org/perses/program",

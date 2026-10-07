@@ -25,8 +25,8 @@ enum class EnumFormatControl {
   YAML_FORMAT,
 
   /**
-   * The tokens' text concatenated with nothing between them. Only right for a program whose tokens
-   * carry their own whitespace, such as a recorded microbenchmark cut from a text at its ranges.
+   * Every token at the line and column it carries, which reproduces the text the tokens were
+   * taken from when that text is printer output, such as a recorded microbenchmark's program.
    */
-  VERBATIM,
+  RECORDED_POSITION,
 }

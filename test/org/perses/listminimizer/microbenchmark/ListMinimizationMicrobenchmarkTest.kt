@@ -62,7 +62,10 @@ class ListMinimizationMicrobenchmarkTest {
     val yaml = microbenchmarkFile.readText()
     assertThat(yaml).contains("microbenchmarkId: \"0000\"")
     assertThat(yaml).contains("targetFilePath: \"small.c\"")
-    assertThat(yaml).contains("leftInclusive: 120")
+    assertThat(
+      yaml,
+    ).contains("tokenOffsets: \"0:3 4:5 6:7 8:9 10:11 12:13 14:15 16:17 18:19 20:21\"")
+    assertThat(yaml).contains("leftInclusive: 1")
   }
 
   @Test
@@ -70,8 +73,12 @@ class ListMinimizationMicrobenchmarkTest {
     val microbenchmark = createMicrobenchmark()
 
     assertThat(microbenchmark.inputList.elementCount).isEqualTo(2)
-    // The second element owns two non-contiguous spans, as a multi-node element does.
-    assertThat(microbenchmark.inputList.elements[1].ranges).hasSize(2)
+    assertThat(microbenchmark.tokenCount).isEqualTo(10)
+    // The second element owns two non-contiguous runs, as a multi-node element does.
+    assertThat(microbenchmark.inputList.elements[1].tokenRanges).hasSize(2)
+    assertThat(
+      microbenchmark.inputList.elements.map { it.tokenCount },
+    ).containsExactly(1, 3).inOrder()
   }
 
   @Test
@@ -92,9 +99,9 @@ class ListMinimizationMicrobenchmarkTest {
         inputList =
           RecordedInputList(
             ImmutableList.of(
-              RecordedElement(ImmutableList.of(RecordedRange(10, 40, tokenCount = 8))),
+              RecordedElement(ImmutableList.of(Interval(1, 8))),
               // Nested inside the first element, as a parser node inside its ancestor would be.
-              RecordedElement(ImmutableList.of(RecordedRange(20, 30, tokenCount = 3))),
+              RecordedElement(ImmutableList.of(Interval(3, 5))),
             ),
           ),
       )
@@ -106,8 +113,8 @@ class ListMinimizationMicrobenchmarkTest {
         inputList =
           RecordedInputList(
             ImmutableList.of(
-              RecordedElement(ImmutableList.of(RecordedRange(50, 60, tokenCount = 2))),
-              RecordedElement(ImmutableList.of(RecordedRange(10, 20, tokenCount = 2))),
+              RecordedElement(ImmutableList.of(Interval(7, 9))),
+              RecordedElement(ImmutableList.of(Interval(1, 3))),
             ),
           ),
       )
@@ -115,29 +122,8 @@ class ListMinimizationMicrobenchmarkTest {
     assertThat(descending.inputList.elementsAreOffsetAscending).isFalse()
   }
 
-  /** Every corpus was backfilled; a recording without counts is malformed, not legacy. */
   @Test
-  fun testARecordingWithoutTokenCountsIsRejected() {
-    val microbenchmarkFile =
-      tempDir.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME)
-    createMicrobenchmark().writeTo(microbenchmarkFile)
-    val withoutCounts =
-      microbenchmarkFile
-        .readText()
-        .lines()
-        .filterNot { it.trim().startsWith("tokenCount:") }
-        .joinToString("\n")
-    microbenchmarkFile.writeText(withoutCounts)
-
-    val failure =
-      assertThrows(Exception::class.java) {
-        ListMinimizationMicrobenchmark.readFrom(microbenchmarkFile)
-      }
-    assertThat(failure).hasMessageThat().contains("tokenCount")
-  }
-
-  @Test
-  fun testARecordingWithoutTheWholeProgramCountIsRejected() {
+  fun testARecordingWithoutTheTokenizationIsRejected() {
     val microbenchmarkFile =
       tempDir.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME)
     createMicrobenchmark().writeTo(microbenchmarkFile)
@@ -145,16 +131,37 @@ class ListMinimizationMicrobenchmarkTest {
       microbenchmarkFile
         .readText()
         .lines()
-        .filterNot {
-          it.startsWith("wholeProgramTokenCount:")
-        }.joinToString("\n"),
+        .filterNot { it.startsWith("tokenOffsets:") }
+        .joinToString("\n"),
     )
 
     val failure =
       assertThrows(Exception::class.java) {
         ListMinimizationMicrobenchmark.readFrom(microbenchmarkFile)
       }
-    assertThat(failure).hasMessageThat().contains("wholeProgramTokenCount")
+    assertThat(failure).hasMessageThat().contains("tokenOffsets")
+  }
+
+  @Test
+  fun testTheTokenizationMustBeAscendingDisjointAndCoverEveryElement() {
+    assertThrows(IllegalArgumentException::class.java) {
+      createMicrobenchmark().copy(tokenOffsets = ImmutableList.of(Interval(0, 3), Interval(2, 5)))
+    }
+    assertThrows(IllegalArgumentException::class.java) {
+      createMicrobenchmark().copy(tokenOffsets = ImmutableList.of(Interval(4, 5), Interval(0, 3)))
+    }
+    assertThrows(IllegalArgumentException::class.java) {
+      createMicrobenchmark().copy(tokenOffsets = ImmutableList.of(Interval(0, 3), Interval(4, 4)))
+    }
+    assertThrows(IllegalArgumentException::class.java) {
+      // Ten tokens recorded, but an element reaches the eleventh.
+      createMicrobenchmark().copy(
+        inputList =
+          RecordedInputList(
+            ImmutableList.of(RecordedElement(ImmutableList.of(Interval(9, 11)))),
+          ),
+      )
+    }
   }
 
   @Test
@@ -173,20 +180,25 @@ class ListMinimizationMicrobenchmarkTest {
     ListMinimizationMicrobenchmark(
       microbenchmarkId = "0000",
       targetFilePath = "small.c",
-      wholeProgramTokenCount = 400,
+      // Ten tokens: a three-character one, then single characters a space apart.
+      tokenOffsets =
+        ImmutableList.of(
+          Interval(0, 3),
+          Interval(4, 5),
+          Interval(6, 7),
+          Interval(8, 9),
+          Interval(10, 11),
+          Interval(12, 13),
+          Interval(14, 15),
+          Interval(16, 17),
+          Interval(18, 19),
+          Interval(20, 21),
+        ),
       inputList =
         RecordedInputList(
           ImmutableList.of(
-            RecordedElement(
-              ranges = ImmutableList.of(RecordedRange(120, 123, tokenCount = 1)),
-            ),
-            RecordedElement(
-              ranges =
-                ImmutableList.of(
-                  RecordedRange(900, 905, tokenCount = 2),
-                  RecordedRange(1204, 1210, tokenCount = 1),
-                ),
-            ),
+            RecordedElement(tokenRanges = ImmutableList.of(Interval(1, 2))),
+            RecordedElement(tokenRanges = ImmutableList.of(Interval(3, 5), Interval(7, 8))),
           ),
         ),
       recordingContext =

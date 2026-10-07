@@ -18,7 +18,6 @@ package org.perses.listminimizer.microbenchmark
 
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
-import org.antlr.v4.runtime.Lexer
 import org.perses.program.AbstractPersesToken
 import org.perses.program.printer.AbstractTokenPlacementListener
 import org.perses.program.printer.TokenPlacementRecorder
@@ -53,7 +52,6 @@ import kotlin.io.path.readText
 class ListMinimizationMicrobenchmarkWriter(
   private val rootDirectory: Path,
   /** The file under reduction's own lexer, used to re-read the program that was written. */
-  private val underlyingLexerClass: Class<out Lexer>,
   private val minListSizeToRecord: Int,
   private val maxMicrobenchmarksToRecord: Int?,
   /**
@@ -181,24 +179,15 @@ class ListMinimizationMicrobenchmarkWriter(
     val placements = TokenPlacementRecorder()
     writeProgramFilesTo(inputDirectory, placements)
     val renderedProgram = inputDirectory.resolve(targetFilePath).readText()
-    val elements =
-      computeRecordedElements(
-        elementTokenGroups = elementTokenGroups,
-        tokenLocationMap = locateTokens(renderedProgram, placements, baseProgramTokens),
-      )
-    // What a recording promises is that the evaluator can resolve its ranges, and the evaluator
-    // resolves them against the real lexer's tokens of the written file. Checked here with the
-    // evaluator's own resolution, so a range that starts or ends inside a real token -- a line
-    // through a block comment -- is refused now rather than failing every measurement later.
-    RecordedProgramTokenizer.resolveElements(
-      tree = RecordedProgramTokenizer.buildFlatTokenListTree(renderedProgram, underlyingLexerClass),
-      rangesPerElement = elements.map { element -> element.ranges.map { it.toInterval() } },
-    )
-
+    val tokenLocationMap = locateTokens(renderedProgram, placements, baseProgramTokens)
+    val elements = computeRecordedElements(elementTokenGroups, tokenLocationMap)
     ListMinimizationMicrobenchmark(
       microbenchmarkId = microbenchmarkId,
       targetFilePath = targetFilePath,
-      wholeProgramTokenCount = baseProgramTokens.size,
+      tokenOffsets =
+        baseProgramTokens.transformToImmutableList {
+          tokenLocationMap.getValue(it).rangeInRenderedProgram
+        },
       inputList = RecordedInputList(elements),
       recordingContext = recordingContext,
     ).writeTo(
@@ -293,23 +282,14 @@ class ListMinimizationMicrobenchmarkWriter(
     const val STAGING_SUFFIX = ".incomplete"
 
     /**
-     * Expresses each list element as character ranges into the recorded program.
-     *
-     * An element's tokens are grouped by their index in the base program: a run of consecutive
-     * indices is one range, so an element's size on disk follows its shape, not its token count. A
-     * range may span whitespace because the evaluator resolves it to the tokens it contains; it may
-     * not span a token outside the element -- of another element, or of none, as with a kleene
-     * node's siblings that are not in the list -- which it would swallow, and an index gap is
-     * exactly such a token. The order the elements arrive in, and of the tokens within one, is
-     * irrelevant to the ranges; the element order is kept, being part of the problem recorded.
-     *
-     * Ranges come from [tokenLocationMap] (see [locateTokens]), not from the tokens themselves: a
-     * base program is the *edited* token list of a reduction in progress, so its tokens still carry
-     * `startIndex`/`stopIndex` pointing into the pre-edit file.
+     * Expresses each list element as runs of consecutive token indices into the base program --
+     * the unit the minimizer deletes -- so an element's size on disk follows its shape, not its
+     * token count. The order the elements arrive in, and of the tokens within one, is irrelevant
+     * to the ranges; the element order is kept, being part of the problem recorded.
      *
      * @param elementTokenGroups the tokens of each element, in element order. Tokens rather than
-     *   tree nodes: the correspondence is between text and tokens, and taking nodes here would pull
-     *   the spar tree into a computation that does not need it.
+     *   tree nodes: the correspondence is between the program and its tokens, and taking nodes
+     *   here would pull the spar tree into a computation that does not need it.
      * @param tokenLocationMap where each token of the recorded program is, keyed by identity
      */
     fun computeRecordedElements(
@@ -317,31 +297,25 @@ class ListMinimizationMicrobenchmarkWriter(
       tokenLocationMap: IdentityHashMap<AbstractPersesToken, TokenLocation>,
     ): ImmutableList<RecordedElement> =
       elementTokenGroups.transformToImmutableList { tokens ->
-        RecordedElement(ranges = computeRangesOfElement(tokens, tokenLocationMap))
+        RecordedElement(tokenRanges = computeTokenRangesOfElement(tokens, tokenLocationMap))
       }
 
-    private fun computeRangesOfElement(
+    private fun computeTokenRangesOfElement(
       tokens: List<AbstractPersesToken>,
       tokenLocationMap: IdentityHashMap<AbstractPersesToken, TokenLocation>,
-    ): ImmutableList<RecordedRange> {
+    ): ImmutableList<Interval> {
       require(tokens.isNotEmpty()) { "An element must own at least one token." }
-      val locations =
+      val indices =
         tokens
           .map { token ->
             checkNotNull(tokenLocationMap[token]) {
               "The token '${token.lexemeText}' is not one of the recorded program's tokens."
-            }
-          }.sortedBy { it.indexInBaseProgram }
+            }.indexInBaseProgram
+          }.sorted()
       return CollectionUtil
-        .mergeContinuousElementsIntoRegions(locations) { previous, current ->
-          current.indexInBaseProgram == previous.indexInBaseProgram + 1
-        }.transformToImmutableList { run ->
-          RecordedRange(
-            leftInclusive = run.first().rangeInRenderedProgram.leftInclusive,
-            rightExclusive = run.last().rangeInRenderedProgram.rightExclusive,
-            tokenCount = run.size,
-          )
-        }
+        .mergeContinuousElementsIntoRegions(indices) { previous, current ->
+          current == previous + 1
+        }.transformToImmutableList { run -> Interval(run.first(), run.last() + 1) }
     }
   }
 }

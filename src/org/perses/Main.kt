@@ -24,7 +24,7 @@ import org.perses.grammar.AbstractParserFacadeFactory
 import org.perses.grammar.adhoc.AdhocParserFacadeFactoryUtil.createParserFacadeFactory
 import org.perses.listminimizer.EnumListMinimizerType
 import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmark
-import org.perses.program.LanguageKind
+import org.perses.listminimizer.microbenchmark.RecordedRangeParserFacade
 import org.perses.reduction.AsyncReductionListenerManager
 import org.perses.reduction.GlobalContext
 import org.perses.reduction.LanguageProfile
@@ -210,11 +210,10 @@ class Main(
     MicrobenchmarkEvaluation(
       params = createReductionDriverParams(reductionStartEvent),
       mainFile = targetFile,
-      // The default facade, not one resolved by probing: it decides how candidates are printed and
-      // how tokens are counted, while a driver builds its tree with FlatTokenList so the recorded
-      // program is never parsed under this grammar. Probing would mean parsing the very program
-      // that may not parse.
-      parserFacade = defaultRealParserFacadeFor(targetFile.dataKind as LanguageKind),
+      // The recorded file re-tokenized at the recorded token offsets, one leaf per recorded token:
+      // the reducer's own tokenization, rebuilt without a lexer and therefore whatever the
+      // language. Nothing of the file's language enters the evaluation.
+      parserFacade = RecordedRangeParserFacade(tokenSpans = microbenchmark.tokenOffsets),
       microbenchmark = microbenchmark,
       restoreResultFolder = ::restoreResultFolderToTheOriginalInputs,
     ).run()

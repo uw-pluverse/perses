@@ -970,7 +970,6 @@ abstract class AbstractProgramReductionDriver(
             "The problem output directory is null."
           },
         ),
-      underlyingLexerClass = configuration.canonicalParserFacade.realLexerClass,
       minListSizeToRecord = flags.minListSizeToRecord,
       maxMicrobenchmarksToRecord = flags.maxMicrobenchmarksToRecord,
       microbenchmarkIdGenerator = globalContext.listMinimizationProblemIdGenerator,

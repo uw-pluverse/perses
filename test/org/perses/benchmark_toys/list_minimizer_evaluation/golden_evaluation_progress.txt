@@ -160,7 +160,7 @@ Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_S
 (15/15)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 =Fixpoint iteration 1. Reducer: list_minimizer_evaluation.WINDOWED_SLICER
 
-Parser Facade: class org.perses.grammar.flattokenlist.FlatTokenListParserFacade
+Parser Facade: class org.perses.listminimizer.microbenchmark.RecordedRangeParserFacade
 The spar-tree is the following.
 start{id=1,slot_type=start}
 |___(*){id=2,slot_type=kleene_star__start_1}

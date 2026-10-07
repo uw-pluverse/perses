@@ -141,6 +141,7 @@ kt_jvm_library(
         "//src/org/perses/grammar/sysverilog:parser_facade",
         "//src/org/perses/grammar/xml:language_kind",
         "//src/org/perses/grammar/xml:parser_facade",
+        "//src/org/perses/listminimizer/microbenchmark:recorded_program_tokenizer",
         "//src/org/perses/program:language_kind",
         "//src/org/perses/program:serializable_language_kind",
         "//src/org/perses/reduction:reducer_factory",

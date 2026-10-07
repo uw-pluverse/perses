@@ -43,19 +43,19 @@ import org.perses.util.transformToImmutableList
  */
 object RecordedProgramTokenizer {
   /**
-   * The tree the evaluation runs on: [sourceCode] cut at the recorded ranges with no lexer
-   * involved (see [RecordedRangeParserFacade]). Every range begins and ends at a leaf boundary by
-   * construction, which makes [resolveElements] infallible here whatever the language, and an
-   * element's leaf count is its recorded token count, which makes every consumer that sums leaf
-   * counts -- the containers, the weights, the metrics -- right without knowing about recordings.
+   * The tree the evaluation runs on: [sourceCode] re-tokenized at the recorded token offsets with
+   * no lexer involved (see [RecordedRangeParserFacade]), so leaf i is the recorded program's token i and a
+   * recorded element is a run of leaves. Every consumer that counts leaves -- the containers, the
+   * weights, the metrics, Perses's own size bookkeeping -- is right without knowing about
+   * recordings.
    */
   fun buildRecordedRangeTree(
     sourceCode: String,
-    elements: List<RecordedElement>,
+    tokenOffsets: List<Interval>,
   ): SparTree =
     SparTreeParserUtility.buildSparTree(
       sourceCode = sourceCode,
-      parserFacade = RecordedRangeParserFacade(sourceCode, elements),
+      parserFacade = RecordedRangeParserFacade(tokenOffsets),
       specifiedSparTreeNodeFactory = null,
       simplifyTree = true,
       canonicalTokenCountComputer = { null },

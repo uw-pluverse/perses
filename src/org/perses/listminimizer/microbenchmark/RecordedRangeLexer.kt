@@ -20,53 +20,70 @@ import com.google.common.collect.ImmutableList
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.CommonToken
 import org.antlr.v4.runtime.Token
-import org.antlr.v4.runtime.misc.Interval
 import org.perses.grammar.AbstractLexerAdaptor
 import org.perses.grammar.flattokenlist.FlatTokenListLexer
 import org.perses.grammar.flattokenlist.PnfFlatTokenList
+import org.perses.util.Interval
+import org.antlr.v4.runtime.misc.Interval as AntlrInterval
 
 /**
- * Cuts the text at the given offsets and emits each piece as one `TOKEN` of the FlatTokenList
- * grammar: no language, no lexer rules. A recorded program is tokenized this way for evaluation, so
- * the pieces are exactly the recorded ranges and the gaps between them, and the file re-assembles
- * from the pieces' text verbatim.
+ * Emits each recorded token span of the text as one `TOKEN` of the FlatTokenList grammar, with
+ * the line and column it has in the text: no language, no lexer rules. The text between spans is
+ * the printer's spaces and newlines and is dropped; printing each token at its position puts it
+ * back, which is why nothing else may lie between spans.
  *
- * Offsets, like ANTLR's, count code points; that is the unit the recorded ranges are in.
+ * Offsets, like ANTLR's, count code points.
  *
- * @param cutOffsets strictly increasing, starting at 0 and ending at the stream's size
+ * @param tokenSpans non-empty, ascending and non-overlapping, within the stream, and separated by
+ *   spaces and newlines only
  */
 class RecordedRangeLexer(
   inputStream: CharStream,
-  private val cutOffsets: IntArray,
+  private val tokenSpans: List<Interval>,
 ) : AbstractLexerAdaptor(inputStream) {
   init {
-    require(cutOffsets.isNotEmpty() && cutOffsets.first() == 0) {
-      "The cut offsets must start at 0: ${cutOffsets.toList()}"
+    tokenSpans.forEach { span ->
+      require(
+        span.leftInclusive >= 0 && span.length > 0,
+      ) { "A token span must not be empty: $span" }
     }
-    require(cutOffsets.last() == inputStream.size()) {
-      "The cut offsets must end at the text's length ${inputStream.size()}: ${cutOffsets.toList()}"
+    tokenSpans.zipWithNext().forEach { (previous, next) ->
+      require(previous.rightExclusive <= next.leftInclusive) {
+        "The token spans must be ascending and must not overlap: $previous, then $next."
+      }
     }
-    require(cutOffsets.asSequence().zipWithNext().all { (a, b) -> a < b }) {
-      "The cut offsets must be strictly increasing: ${cutOffsets.toList()}"
+    require(tokenSpans.isEmpty() || tokenSpans.last().rightExclusive <= inputStream.size()) {
+      "The last token span ${tokenSpans.last()} ends outside the text, which has " +
+        "${inputStream.size()} code point(s)."
     }
   }
 
   override fun computeAllTokens(): ImmutableList<Token> {
     val stream = inputStream
-    val text = if (stream.size() == 0) "" else stream.getText(Interval.of(0, stream.size() - 1))
+    val text =
+      if (stream.size() ==
+        0
+      ) {
+        ""
+      } else {
+        stream.getText(AntlrInterval.of(0, stream.size() - 1))
+      }
     val builder = ImmutableList.builder<Token>()
     var line = 1
     var column = 0
     var codePointIndex = 0
     var textIndex = 0
-    for (pieceIndex in 0 until cutOffsets.size - 1) {
-      val start = cutOffsets[pieceIndex]
-      val end = cutOffsets[pieceIndex + 1]
-      val pieceLine = line
-      val pieceColumn = column
-      val pieceStartInText = textIndex
+
+    fun advanceTo(
+      end: Int,
+      isGap: Boolean,
+    ) {
       while (codePointIndex < end) {
         val codePoint = text.codePointAt(textIndex)
+        require(!isGap || codePoint == ' '.code || codePoint == '\n'.code) {
+          "Only spaces and newlines may separate recorded tokens, but code point " +
+            "$codePointIndex is '${String(Character.toChars(codePoint))}'."
+        }
         if (codePoint == '\n'.code) {
           ++line
           column = 0
@@ -76,15 +93,24 @@ class RecordedRangeLexer(
         textIndex += Character.charCount(codePoint)
         ++codePointIndex
       }
+    }
+
+    for (span in tokenSpans) {
+      advanceTo(span.leftInclusive, isGap = true)
+      val tokenLine = line
+      val tokenColumn = column
+      val tokenStartInText = textIndex
+      advanceTo(span.rightExclusive, isGap = false)
       builder.add(
-        CommonToken(PnfFlatTokenList.TOKEN, text.substring(pieceStartInText, textIndex)).apply {
-          this.line = pieceLine
-          charPositionInLine = pieceColumn
-          startIndex = start
-          stopIndex = end - 1
+        CommonToken(PnfFlatTokenList.TOKEN, text.substring(tokenStartInText, textIndex)).apply {
+          this.line = tokenLine
+          charPositionInLine = tokenColumn
+          startIndex = span.leftInclusive
+          stopIndex = span.rightExclusive - 1
         },
       )
     }
+    advanceTo(stream.size(), isGap = true)
     return builder.build()
   }
 

@@ -26,12 +26,13 @@ import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.SingleParserFacadeFactory.Companion.builderWithBuiltinLanguages
 import org.perses.grammar.c.LanguageC
-import org.perses.grammar.c.PnfCLexer
 import org.perses.grammar.line.LineParserFacade
+import org.perses.grammar.xml.PnfXMLParserFacade
 import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmarkWriter.TokenLocation
 import org.perses.program.AbstractPersesToken
 import org.perses.program.EnumFormatControl
 import org.perses.program.TokenizedProgram
+import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.program.printer.PrinterRegistry
 import org.perses.program.printer.TokenPlacementRecorder
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
@@ -40,6 +41,7 @@ import org.perses.util.AtomicSequenceGenerator
 import org.perses.util.FileSystemUtil
 import org.perses.util.Interval
 import org.perses.util.shell.Shells
+import org.perses.util.toImmutableList
 import java.nio.file.Files
 import java.util.IdentityHashMap
 import kotlin.io.path.createFile
@@ -109,7 +111,6 @@ class ListMinimizationMicrobenchmarkWriterTest {
     maxMicrobenchmarksToRecord: Int? = null,
   ) = ListMinimizationMicrobenchmarkWriter(
     rootDirectory = FileSystemUtil.ensureDirExists(workDir.resolve("microbenchmarks")),
-    underlyingLexerClass = PnfCLexer::class.java,
     minListSizeToRecord = minListSizeToRecord,
     maxMicrobenchmarksToRecord = maxMicrobenchmarksToRecord,
     microbenchmarkIdGenerator = AtomicSequenceGenerator(start = 0, minLengthForPadding = 6),
@@ -189,7 +190,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
    * beside them, back to the tokens they describe. A recording that fails this is silently useless.
    */
   @Test
-  fun testRecordedRangesResolveAgainstTheRecordedProgram() {
+  fun testTheRecordingRebuildsTheTokenizationWithoutALexer() {
     val microbenchmarkDirectory = checkNotNull(write(writer()).microbenchmarkDirectory)
     val microbenchmark =
       ListMinimizationMicrobenchmark.readFrom(
@@ -201,17 +202,24 @@ class ListMinimizationMicrobenchmarkWriterTest {
         .resolve(microbenchmark.targetFilePath)
         .readText()
 
-    val tree =
-      RecordedProgramTokenizer.buildFlatTokenListTree(recordedProgramText, PnfCLexer::class.java)
-    val resolved =
-      RecordedProgramTokenizer.resolveElements(
-        tree,
-        microbenchmark.inputList.elements.map { element -> element.ranges.map { it.toInterval() } },
-      )
+    val leaves =
+      RecordedProgramTokenizer
+        .buildRecordedRangeTree(recordedProgramText, microbenchmark.tokenOffsets)
+        .remainingLexerRuleNodes
 
-    assertThat(resolved).hasSize(microbenchmark.inputList.elementCount)
-    assertThat(resolved.flatten().joinToString(separator = " ") { it.token.lexemeText })
-      .isEqualTo("int aaa ; int bbb ;")
+    assertThat(leaves).hasSize(microbenchmark.tokenCount)
+    assertThat(
+      microbenchmark.inputList.elements.flatMap { element ->
+        element.tokenRanges.flatMap { range ->
+          leaves
+            .subList(
+              range.leftInclusive,
+              range.rightExclusive,
+            ).map { it.token.lexemeText.trim() }
+        }
+      },
+    ).containsExactly("int", "aaa", ";", "int", "bbb", ";")
+      .inOrder()
   }
 
   /** The explanation is what distinguishes this skip from a cap skip or a failure. */
@@ -246,7 +254,6 @@ class ListMinimizationMicrobenchmarkWriterTest {
     fun writerSharing() =
       ListMinimizationMicrobenchmarkWriter(
         rootDirectory = rootDirectory,
-        underlyingLexerClass = PnfCLexer::class.java,
         minListSizeToRecord = 1,
         maxMicrobenchmarksToRecord = null,
         microbenchmarkIdGenerator = shared,
@@ -303,7 +310,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
    * a line is recorded as one range that the evaluator resolves to the real tokens inside it.
    */
   @Test
-  fun testLineTokensAreRecordedAsLineRanges() {
+  fun testLineTokensAreRecordedAsTokensLikeAnyOthers() {
     sourceFile.writeText("int aaa;\nint bbb;\n")
     val lines = lineProgram(sourceFile.readText())
     assertThat(lines.tokens.map { it.lexemeText }).containsExactly("int aaa;", "int bbb;").inOrder()
@@ -315,39 +322,51 @@ class ListMinimizationMicrobenchmarkWriterTest {
       ListMinimizationMicrobenchmark.readFrom(
         microbenchmarkDirectory.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME),
       )
-    assertThat(microbenchmark.inputList.elements.map { it.ranges.single() })
-      .containsExactly(RecordedRange(0, 8, tokenCount = 1), RecordedRange(9, 17, tokenCount = 1))
+    // The reducer's tokenization, lines included: no lexer of the language is consulted.
+    assertThat(
+      microbenchmark.tokenOffsets,
+    ).containsExactly(Interval(0, 8), Interval(9, 17)).inOrder()
+    assertThat(microbenchmark.inputList.elements.map { it.tokenRanges.single() })
+      .containsExactly(Interval(0, 1), Interval(1, 2))
       .inOrder()
-    // Counted as the reducer tokenized the program: one line is one token.
-    assertThat(microbenchmark.wholeProgramTokenCount).isEqualTo(2)
-    assertThat(microbenchmark.inputList.elements.map { it.tokenCount }).containsExactly(1, 1)
     val recordedProgramText =
       microbenchmarkDirectory
         .resolve(ListMinimizationMicrobenchmark.INPUT_FOLDER_NAME)
         .resolve(microbenchmark.targetFilePath)
         .readText()
-    val resolved =
-      RecordedProgramTokenizer.resolveElements(
-        RecordedProgramTokenizer.buildFlatTokenListTree(recordedProgramText, PnfCLexer::class.java),
-        microbenchmark.inputList.elements.map { element -> element.ranges.map { it.toInterval() } },
-      )
-    assertThat(resolved.map { element -> element.joinToString(" ") { it.token.lexemeText } })
-      .containsExactly("int aaa ;", "int bbb ;")
-      .inOrder()
+    val leaves =
+      RecordedProgramTokenizer
+        .buildRecordedRangeTree(recordedProgramText, microbenchmark.tokenOffsets)
+        .remainingLexerRuleNodes
+    assertThat(leaves.map { it.token.lexemeText }).containsExactly("int aaa;", "int bbb;").inOrder()
   }
 
+  /** What the re-lexing check used to refuse: a line that ends inside a comment is just a token. */
   @Test
-  fun testALineCuttingThroughARealTokenIsSkippedAndLeavesNothing() {
-    // The first line ends inside a block comment, so its range ends inside a token of the C lexer.
+  fun testALineCuttingThroughACommentIsRecordedLikeAnyOtherLine() {
     sourceFile.writeText("int aaa; /* x\n y */ int bbb;\n")
     val lines = lineProgram(sourceFile.readText())
     assertThat(lines.tokens).hasSize(2)
 
-    val recorded = write(writer(), lines, lines.tokens.map { listOf(it) })
+    val microbenchmarkDirectory =
+      checkNotNull(write(writer(), lines, lines.tokens.map { listOf(it) }).microbenchmarkDirectory)
 
-    assertThat(recorded.microbenchmarkDirectory).isNull()
-    assertThat(recorded.explanation).contains("does not end at a token boundary")
-    assertThat(Files.list(workDir.resolve("microbenchmarks")).use { it.toList() }).isEmpty()
+    val microbenchmark =
+      ListMinimizationMicrobenchmark.readFrom(
+        microbenchmarkDirectory.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME),
+      )
+    val recordedProgramText =
+      microbenchmarkDirectory
+        .resolve(ListMinimizationMicrobenchmark.INPUT_FOLDER_NAME)
+        .resolve(microbenchmark.targetFilePath)
+        .readText()
+    assertThat(
+      microbenchmark.tokenOffsets.map {
+        recordedProgramText.substring(it.leftInclusive, it.rightExclusive)
+      },
+    ).containsExactlyElementsIn(lines.tokens.map { it.lexemeText })
+      .inOrder()
+    assertThat(microbenchmark.inputList.elements.map { it.tokenCount }).containsExactly(1, 1)
   }
 
   /**
@@ -371,7 +390,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     assertThat(thrown).hasMessageThat().isEqualTo("simulated")
   }
 
-  // ---- computeRecordedElements: the range mapping, exercised without touching the filesystem ----
+  // ---- computeRecordedElements: elements as runs of token indices, in memory ----
 
   private fun programFrom(sourceCode: String) =
     TestUtility.createTokenizedProgramFromString(sourceCode, LanguageC)
@@ -380,35 +399,25 @@ class ListMinimizationMicrobenchmarkWriterTest {
   private fun eachTokenSeparately(program: TokenizedProgram) = program.tokens.map { listOf(it) }
 
   private class Recorded(
+    val program: TokenizedProgram,
     val sourceCode: String,
+    val tokenOffsets: List<Interval>,
     val elements: List<RecordedElement>,
   )
 
-  /**
-   * Prints the program, lexes the printed text back, and records against those token ranges -- the
-   * same write-then-lex order production uses, so both sides read offsets from the same text.
-   */
+  /** Records against where the printer placed the tokens, as production does. */
   private fun record(
     program: TokenizedProgram,
     elementTokenGroups: List<List<AbstractPersesToken>>,
+    recordingPrinter: AbstractTokenizedProgramPrinter = printer,
   ): Recorded {
-    val sourceCode = printer.print(program).sourceCode
-    val tree = RecordedProgramTokenizer.buildFlatTokenListTree(sourceCode, PnfCLexer::class.java)
-    val tokenLocationMap = IdentityHashMap<AbstractPersesToken, TokenLocation>()
-    program.tokens.forEachIndexed { index, token ->
-      val node = tree.remainingLexerRuleNodes[index]
-      tokenLocationMap[token] =
-        TokenLocation(
-          indexInBaseProgram = index,
-          rangeInRenderedProgram =
-            Interval(
-              leftInclusive = RecordedProgramTokenizer.inclusiveStartOffsetOf(node),
-              rightExclusive = RecordedProgramTokenizer.exclusiveEndOffsetOf(node),
-            ),
-        )
-    }
+    val placements = TokenPlacementRecorder()
+    val sourceCode = recordingPrinter.print(program, placements).sourceCode
+    val tokenLocationMap = writer().locateTokens(sourceCode, placements, program.tokens)
     return Recorded(
+      program,
       sourceCode,
+      program.tokens.map { tokenLocationMap.getValue(it).rangeInRenderedProgram },
       ListMinimizationMicrobenchmarkWriter.computeRecordedElements(
         elementTokenGroups = elementTokenGroups,
         tokenLocationMap = tokenLocationMap,
@@ -416,14 +425,17 @@ class ListMinimizationMicrobenchmarkWriterTest {
     )
   }
 
+  /** The element's tokens, as the program spells them, space-separated. */
   private fun textOf(
     recorded: Recorded,
     elementIndex: Int,
   ) = recorded.elements[elementIndex]
-    .ranges
-    .joinToString(separator = "") {
-      recorded.sourceCode.substring(it.leftInclusive, it.rightExclusive)
-    }
+    .tokenRanges
+    .flatMap { range ->
+      (range.leftInclusive until range.rightExclusive).map {
+        recorded.program.tokens[it].lexemeText
+      }
+    }.joinToString(separator = " ")
 
   @Test
   fun testRangesCoverExactlyTheElementText() {
@@ -453,11 +465,14 @@ class ListMinimizationMicrobenchmarkWriterTest {
     // "return" sits on the second line; a mishandled line base would shift it.
     val returnIndex = program.tokens.indexOfFirst { it.lexemeText == "return" }
     assertThat(textOf(recorded, returnIndex)).isEqualTo("return")
+    assertThat(recorded.elements[returnIndex].tokenRanges.single()).isEqualTo(
+      Interval(
+        returnIndex,
+        returnIndex + 1,
+      ),
+    )
     assertThat(
-      recorded.elements[returnIndex]
-        .ranges
-        .single()
-        .leftInclusive,
+      recorded.tokenOffsets[returnIndex].leftInclusive,
     ).isEqualTo(sourceCode.indexOf("return"))
   }
 
@@ -472,17 +487,17 @@ class ListMinimizationMicrobenchmarkWriterTest {
     val tokens = program.tokens
 
     val touching = record(program, listOf(listOf(tokens[3], tokens[4])))
-    assertThat(touching.elements.single().ranges).hasSize(1)
-    assertThat(textOf(touching, 0)).isEqualTo("1;")
+    assertThat(touching.elements.single().tokenRanges).hasSize(1)
+    assertThat(textOf(touching, 0)).isEqualTo("1 ;")
 
     val spaced = record(program, listOf(listOf(tokens[0], tokens[1], tokens[2])))
-    assertThat(spaced.elements.single().ranges).hasSize(1)
+    assertThat(spaced.elements.single().tokenRanges).hasSize(1)
     assertThat(textOf(spaced, 0)).isEqualTo("int x =")
     assertThat(spaced.elements.single().tokenCount).isEqualTo(3)
 
     val interrupted = record(program, listOf(listOf(tokens[0], tokens[4])))
-    assertThat(interrupted.elements.single().ranges).hasSize(2)
-    assertThat(textOf(interrupted, 0)).isEqualTo("int;")
+    assertThat(interrupted.elements.single().tokenRanges).hasSize(2)
+    assertThat(textOf(interrupted, 0)).isEqualTo("int ;")
   }
 
   /**
@@ -497,8 +512,8 @@ class ListMinimizationMicrobenchmarkWriterTest {
     val recorded =
       record(program, listOf(listOf(tokens[4], tokens[3]), listOf(tokens[1], tokens[0])))
 
-    assertThat(recorded.elements.map { it.ranges.size }).containsExactly(1, 1).inOrder()
-    assertThat((0 until 2).map { textOf(recorded, it) }).containsExactly("1;", "int x").inOrder()
+    assertThat(recorded.elements.map { it.tokenRanges.size }).containsExactly(1, 1).inOrder()
+    assertThat((0 until 2).map { textOf(recorded, it) }).containsExactly("1 ;", "int x").inOrder()
   }
 
   @Test
@@ -511,7 +526,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     assertThat(
       recorded.elements
         .single()
-        .ranges
+        .tokenRanges
         .map { it.leftInclusive },
     ).isInOrder()
   }
@@ -532,7 +547,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
    * offsets cannot pass.
    */
   @Test
-  fun testRecordedRangesResolveBackToTheSameTokens() {
+  fun testTheRecordedTokenizationRebuildsTheProgramsTokens() {
     assertRoundTrip("int x = 1; int y = 2;")
     assertRoundTrip(
       """
@@ -555,28 +570,70 @@ class ListMinimizationMicrobenchmarkWriterTest {
     files.forEach { assertRoundTrip(it.readText()) }
   }
 
+  /**
+   * Re-tokenizing the printed program at the recorded offsets gives back the program's tokens
+   * exactly, and printing them at their recorded positions gives back the printed program.
+   */
   private fun assertRoundTrip(rawSourceCode: String) {
-    val program = programFrom(rawSourceCode)
-    val recorded = record(program, eachTokenSeparately(program))
+    assertRoundTrip(programFrom(rawSourceCode), printer)
+  }
+
+  private fun assertRoundTrip(
+    program: TokenizedProgram,
+    recordingPrinter: AbstractTokenizedProgramPrinter,
+    expectedReprint: (recordedText: String) -> String = { it },
+  ) {
+    val recorded = record(program, eachTokenSeparately(program), recordingPrinter)
 
     val tree =
-      RecordedProgramTokenizer.buildFlatTokenListTree(recorded.sourceCode, PnfCLexer::class.java)
-    val resolved =
-      RecordedProgramTokenizer.resolveElements(
-        tree,
-        recorded.elements.map { element -> element.ranges.map { it.toInterval() } },
+      RecordedProgramTokenizer
+        .buildRecordedRangeTree(recorded.sourceCode, recorded.tokenOffsets)
+
+    assertThat(tree.remainingLexerRuleNodes.map { it.token.lexemeText })
+      .containsExactlyElementsIn(program.tokens.map { it.lexemeText })
+      .inOrder()
+    assertThat(
+      PrinterRegistry
+        .getPrinter(EnumFormatControl.RECORDED_POSITION)
+        .print(tree.programSnapshot.payload)
+        .sourceCode,
+    ).isEqualTo(expectedReprint(recorded.sourceCode))
+  }
+
+  /**
+   * XML is what the re-lexing design could not record: whitespace and text are real tokens, and
+   * once deletions make two of them adjacent the printed file re-lexes them as one. The recorded
+   * offsets keep them apart, and printing them at their recorded positions gives back what the
+   * compact format Perses uses for XML wrote.
+   */
+  @Test
+  fun testRoundTripOverXmlWhoseWhitespaceAndTextTokensBecomeAdjacent() {
+    val document =
+      TestUtility
+        .createSparTreeFromString(
+          "<a>\n  <b>x</b>\n  text\n  <c/>\n</a>\n",
+          PnfXMLParserFacade(),
+          simplifyTree = true,
+        ).programSnapshot
+        .payload
+    val compact = PrinterRegistry.getPrinter(EnumFormatControl.COMPACT_ORIG_FORMAT)
+    assertRoundTrip(document, compact, ::endingInOneNewline)
+
+    val withoutBAndC =
+      TokenizedProgram(
+        document.tokens
+          .filterIndexed { index, _ -> index !in 3..10 && index !in 13..16 }
+          .toImmutableList(),
       )
-
-    assertThat(resolved).hasSize(program.tokenCount)
-    resolved.forEachIndexed { index, nodes ->
-      assertThat(nodes.joinToString(separator = "") { it.token.lexemeText })
-        .isEqualTo(program.tokens[index].lexemeText)
-    }
+    assertThat(withoutBAndC.tokenCount).isLessThan(document.tokenCount)
+    assertRoundTrip(withoutBAndC, compact, ::endingInOneNewline)
   }
 
-  private companion object {
-    const val REAL_PROGRAM_SAMPLE_SIZE = 25
-  }
+  /**
+   * No token position says what follows the last token, so the reprint ends in one newline; the
+   * compact format leaves blank lines there that the reprint drops.
+   */
+  private fun endingInOneNewline(text: String) = text.trimEnd() + "\n"
 
   // ---- locateTokens: each token's range in the rendered program, from the printer ----
 
@@ -640,5 +697,9 @@ class ListMinimizationMicrobenchmarkWriterTest {
       }
 
     assertThat(failure).hasMessageThat().contains("did not place the token")
+  }
+
+  private companion object {
+    const val REAL_PROGRAM_SAMPLE_SIZE = 25
   }
 }

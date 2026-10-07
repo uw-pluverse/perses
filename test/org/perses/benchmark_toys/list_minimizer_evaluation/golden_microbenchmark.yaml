@@ -1,69 +1,55 @@
 ---
 microbenchmarkId: "000000"
 targetFilePath: "t.c"
-wholeProgramTokenCount: 15
+tokenOffsets: "0:3 4:11 11:12 13:16 17:18 18:19 20:23 24:25 25:26 27:30 31:32 32:33\
+  \ 34:37 38:39 39:40"
 inputList:
   elements:
-  - ranges:
+  - tokenRanges:
     - leftInclusive: 0
+      rightExclusive: 1
+  - tokenRanges:
+    - leftInclusive: 1
+      rightExclusive: 2
+  - tokenRanges:
+    - leftInclusive: 2
       rightExclusive: 3
-      tokenCount: 1
-  - ranges:
+  - tokenRanges:
+    - leftInclusive: 3
+      rightExclusive: 4
+  - tokenRanges:
     - leftInclusive: 4
+      rightExclusive: 5
+  - tokenRanges:
+    - leftInclusive: 5
+      rightExclusive: 6
+  - tokenRanges:
+    - leftInclusive: 6
+      rightExclusive: 7
+  - tokenRanges:
+    - leftInclusive: 7
+      rightExclusive: 8
+  - tokenRanges:
+    - leftInclusive: 8
+      rightExclusive: 9
+  - tokenRanges:
+    - leftInclusive: 9
+      rightExclusive: 10
+  - tokenRanges:
+    - leftInclusive: 10
       rightExclusive: 11
-      tokenCount: 1
-  - ranges:
+  - tokenRanges:
     - leftInclusive: 11
       rightExclusive: 12
-      tokenCount: 1
-  - ranges:
+  - tokenRanges:
+    - leftInclusive: 12
+      rightExclusive: 13
+  - tokenRanges:
     - leftInclusive: 13
-      rightExclusive: 16
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 17
-      rightExclusive: 18
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 18
-      rightExclusive: 19
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 20
-      rightExclusive: 23
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 24
-      rightExclusive: 25
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 25
-      rightExclusive: 26
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 27
-      rightExclusive: 30
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 31
-      rightExclusive: 32
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 32
-      rightExclusive: 33
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 34
-      rightExclusive: 37
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 38
-      rightExclusive: 39
-      tokenCount: 1
-  - ranges:
-    - leftInclusive: 39
-      rightExclusive: 40
-      tokenCount: 1
+      rightExclusive: 14
+  - tokenRanges:
+    - leftInclusive: 14
+      rightExclusive: 15
 recordingContext:
   languageName: "c"
   parserFacadeClassName: "org.perses.grammar.c.PnfCParserFacade"

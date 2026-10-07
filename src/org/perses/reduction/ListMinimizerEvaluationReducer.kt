@@ -19,12 +19,14 @@ package org.perses.reduction
 import com.google.common.collect.ImmutableList
 import org.perses.grammar.AbstractParserFacade
 import org.perses.listminimizer.EnumListMinimizerType
-import org.perses.listminimizer.microbenchmark.RecordedProgramTokenizer
+import org.perses.reduction.io.AbstractOutputManager
 import org.perses.spartree.AbstractSparTreeNode
 import org.perses.spartree.ContextDescription
 import org.perses.spartree.NodeDeletionActionSet
 import org.perses.spartree.SparTree
 import org.perses.util.Interval
+import org.perses.util.toImmutableList
+import org.perses.util.transformToImmutableList
 
 /**
  * Runs one list minimizer over one list that was handed to it, and nothing else.
@@ -48,14 +50,15 @@ class ListMinimizerEvaluationReducer(
   reducerAnnotation: ReducerAnnotation,
   reducerContext: ReducerContext,
   /**
-   * One entry per recorded element: the character ranges it covers in the recorded program.
+   * One entry per recorded element: the runs of token indices it covers, which are runs of the
+   * tree's leaves since the tree has one leaf per recorded token.
    *
-   * Ranges, not resolved nodes. [callReducer] simplifies the tree immediately before running a
+   * Indices, not resolved nodes. [callReducer] simplifies the tree immediately before running a
    * reducer, which can replace the very nodes a caller resolved earlier -- and deleting a node that
    * is no longer in the tree changes nothing, so the minimizer would see every candidate as
    * interesting and stop after one query. Resolving here binds to the tree actually being reduced.
    */
-  private val rangesPerElement: List<Iterable<Interval>>,
+  private val elementTokenRanges: List<Iterable<Interval>>,
   private val minimizerType: EnumListMinimizerType,
   /** Receives the 1-minimality of the result, once the minimizer has produced one. */
   private val reportOneMinimality: (OneMinimalityReport) -> Unit,
@@ -71,11 +74,19 @@ class ListMinimizerEvaluationReducer(
   override fun getPreferredParserFacade(): AbstractParserFacade =
     reducerContext.sparTreeNodeFactory.parserFacade
 
+  /**
+   * No canonical count: the canonical facade tokenizes at offsets only the recorded program has,
+   * so it cannot lex a reduced one, and none is needed -- the tree has one leaf per recorded
+   * token, so its own count is the token count, which is what every size then falls back to.
+   */
+  override fun computeCanonicalTokenCount(outputManager: AbstractOutputManager?): Int? = null
+
   override fun internalReduce(fixpointReductionState: FixpointReductionState) {
-    if (rangesPerElement.isEmpty()) {
+    if (elementTokenRanges.isEmpty()) {
       return
     }
     val tree = fixpointReductionState.inputRepresentation.tree
+    val leaves = tree.remainingLexerRuleNodes
     val result =
       runListMinimizerOverListsOfNodes(
         // Testing the empty list is part of what an algorithm does, so a measurement lets it. Whether
@@ -84,10 +95,9 @@ class ListMinimizerEvaluationReducer(
         needToTestEmpty = true,
         tree = tree,
         input =
-          RecordedProgramTokenizer.resolveElements(
-            tree = tree,
-            rangesPerElement = rangesPerElement,
-          ),
+          elementTokenRanges.transformToImmutableList { ranges ->
+            ranges.flatMap { leaves.subList(it.leftInclusive, it.rightExclusive) }.toImmutableList()
+          },
         fixpointReductionState = fixpointReductionState,
         actionsDescriptionPostfix = ContextDescription.of("[evaluation]"),
         specifiedMinimizerType = minimizerType,

@@ -16,7 +16,6 @@
  */
 package org.perses.listminimizer.microbenchmark
 
-import com.google.common.collect.ImmutableList
 import com.google.common.truth.Truth.assertThat
 import org.junit.Assert.assertThrows
 import org.junit.Test
@@ -53,173 +52,150 @@ class RecordedProgramTokenizerTest {
     return Interval(start, start + substring.length)
   }
 
-  private fun element(vararg ranges: RecordedRange) = RecordedElement(ImmutableList.copyOf(ranges))
+  /** The spans of every whitespace-separated word of [sourceCode], as a printer's tokens are. */
+  private fun wordSpans(sourceCode: String): List<Interval> =
+    Regex("\\S+").findAll(sourceCode).map { Interval(it.range.first, it.range.last + 1) }.toList()
 
-  private fun range(
+  private fun tree(
     sourceCode: String,
-    substring: String,
-    tokenCount: Int = 1,
-  ): RecordedRange {
-    val span = spanOf(sourceCode, substring)
-    return RecordedRange(span.leftInclusive, span.rightExclusive, tokenCount)
-  }
+    tokenOffsets: List<Interval> = wordSpans(sourceCode),
+  ) = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, tokenOffsets)
 
-  private fun cutTexts(
-    sourceCode: String,
-    vararg elements: RecordedElement,
-  ): List<String> =
-    texts(
-      RecordedProgramTokenizer
-        .buildRecordedRangeTree(sourceCode, elements.toList())
-        .remainingLexerRuleNodes,
-    )
+  private fun printAtRecordedPositions(tree: SparTree) =
+    PrinterRegistry
+      .getPrinter(EnumFormatControl.RECORDED_POSITION)
+      .print(tree.programSnapshot.payload)
+      .sourceCode
 
-  // ---- buildRecordedRangeTree: the text cut at the ranges, no lexer ----
+  // ---- buildRecordedRangeTree: the text re-tokenized at the recorded offsets, no lexer ----
 
   @Test
-  fun testTheTextIsCutAtTheRangesAndTheGapsAreLeavesToo() {
-    val sourceCode = "int x = 1;\n"
+  fun testEachRecordedTokenIsOneLeafWithExactlyItsText() {
+    val sourceCode = "int x = 1 ;\n"
 
-    assertThat(
-      cutTexts(sourceCode, element(range(sourceCode, "x")), element(range(sourceCode, "1"))),
-    ).containsExactly("int ", "x", " = ", "1", ";\n")
+    assertThat(texts(tree(sourceCode).remainingLexerRuleNodes))
+      .containsExactly("int", "x", "=", "1", ";")
       .inOrder()
   }
 
+  /** Tokens need not be whitespace-separated: the offsets, not the text, say where one ends. */
   @Test
-  fun testTheLeavesReassembleTheTextAndEveryRangeResolves() {
+  fun testAdjacentTokensAreSplitWhereTheOffsetsSay() {
     val sourceCode = "<a>foo<b/>bar</a>"
-    val elements =
-      listOf(
-        element(range(sourceCode, "foo")),
-        element(range(sourceCode, "<b/>")),
-        element(range(sourceCode, "bar")),
-      )
-    val tree = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, elements)
-
-    assertThat(texts(tree.remainingLexerRuleNodes).joinToString("")).isEqualTo(sourceCode)
-    val resolved =
-      RecordedProgramTokenizer.resolveElements(
-        tree,
-        elements.map { element -> element.ranges.map { it.toInterval() } },
-      )
-    assertThat(resolved.map { texts(it) })
-      .containsExactly(listOf("foo"), listOf("<b/>"), listOf("bar"))
-      .inOrder()
-  }
-
-  /** A range of n tokens is n leaves, so the element's leaf count is its recorded weight. */
-  @Test
-  fun testARangeIsCutIntoAsManyLeavesAsItsTokenCount() {
-    val sourceCode = "int x = 1;"
-    val declaration = range(sourceCode, "int x =", tokenCount = 3)
-    val tree =
-      RecordedProgramTokenizer.buildRecordedRangeTree(
+    val leaves =
+      tree(
         sourceCode,
-        listOf(element(declaration)),
-      )
+        listOf(Interval(0, 3), Interval(3, 6), Interval(6, 10), Interval(10, 13), Interval(13, 17)),
+      ).remainingLexerRuleNodes
 
-    val leaves = tree.resolveOne(declaration.toInterval())
-    assertThat(leaves).hasSize(3)
-    assertThat(texts(leaves).joinToString("")).isEqualTo("int x =")
-    assertThat(leaves.sumOf { it.leafTokenCount }).isEqualTo(3)
+    assertThat(texts(leaves)).containsExactly("<a>", "foo", "<b/>", "bar", "</a>").inOrder()
+  }
+
+  /**
+   * What the evaluation relies on: a recorded file is printer output, so placing every token at
+   * its recorded line and column prints the rebuilt tree back to the file.
+   */
+  @Test
+  fun testPrintingTheRebuiltTreeAtItsPositionsReproducesTheText() {
+    val sourceCode =
+      """
+      |int main(void) {
+      |  int x = 1;
+      |
+      |    return x;
+      |}
+      |
+      """.trimMargin()
+
+    assertThat(printAtRecordedPositions(tree(sourceCode))).isEqualTo(sourceCode)
   }
 
   @Test
-  fun testAMultiRangeElementWeighsTheSumOfItsRanges() {
-    val sourceCode = "a b c d e"
-    val tree =
-      RecordedProgramTokenizer.buildRecordedRangeTree(
-        sourceCode,
-        listOf(
-          element(range(sourceCode, "a b", tokenCount = 2), range(sourceCode, "e", tokenCount = 1)),
-        ),
-      )
+  fun testTheRoundTripHoldsOverRealCProgramsPrintedByPerses() {
+    val files = TestUtility.gccTestFiles.take(REAL_PROGRAM_SAMPLE_SIZE)
+    assertThat(files).isNotEmpty()
 
-    val leaves = tree.resolveOne(Interval(0, 3), Interval(8, 9))
-    assertThat(leaves.sumOf { it.leafTokenCount }).isEqualTo(3)
-    assertThat(
-      texts(tree.remainingLexerRuleNodes),
-    ).containsExactly("a", " b", " c d ", "e").inOrder()
+    files.forEach { file ->
+      val recorded = printTokensOf(file.readText())
+      assertThat(
+        printAtRecordedPositions(tree(recorded, spansOfTokens(recorded))),
+      ).isEqualTo(recorded)
+    }
   }
 
-  @Test
-  fun testTouchingRangesAndRangesAtTheTextEndsNeedNoGaps() {
-    assertThat(cutTexts("ab", element(RecordedRange(0, 1, 1)), element(RecordedRange(1, 2, 1))))
-      .containsExactly("a", "b")
-      .inOrder()
-  }
+  /** The spans of [sourceCode]'s C tokens, as a recording would hold them. */
+  private fun spansOfTokens(sourceCode: String) =
+    tokenize(sourceCode).remainingLexerRuleNodes.map {
+      Interval(inclusiveStartOffsetOf(it), exclusiveEndOffsetOf(it))
+    }
 
   @Test
-  fun testOffsetsAreCodePointsSoANonBmpCharacterBeforeARangeDoesNotShiftIt() {
+  fun testOffsetsAreCodePointsSoANonBmpCharacterBeforeATokenDoesNotShiftIt() {
     // The emoji is two UTF-16 units but one code point; the recorded offsets count code points.
-    val sourceCode = "/* \uD83D\uDE00 */ x"
-    val x =
-      RecordedRange(
-        sourceCode.codePointCount(0, sourceCode.indexOf("x")),
-        sourceCode.codePointCount(0, sourceCode.length),
-        tokenCount = 1,
-      )
-    val tree = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, listOf(element(x)))
+    val sourceCode = "\uD83D\uDE00 x"
 
-    assertThat(texts(tree.resolveOne(x.toInterval()))).containsExactly("x")
-    assertThat(texts(tree.remainingLexerRuleNodes).joinToString("")).isEqualTo(sourceCode)
+    assertThat(
+      texts(tree(sourceCode, listOf(Interval(0, 1), Interval(2, 3))).remainingLexerRuleNodes),
+    ).containsExactly("\uD83D\uDE00", "x")
+      .inOrder()
   }
 
   @Test
   fun testLeavesCarryLineAndColumn() {
-    val sourceCode = "a\nbc\n d"
-    val d = range(sourceCode, "d")
-    val tree = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, listOf(element(d)))
-
     val leaf =
-      tree
-        .resolveOne(d.toInterval())
-        .single()
+      tree("a\nbc\n d")
+        .remainingLexerRuleNodes
+        .last()
         .token
         .asAntlrToken()
+
     assertThat(leaf.position.line).isEqualTo(3)
     assertThat(leaf.position.charPositionInLine).isEqualTo(1)
   }
 
   @Test
-  fun testARangeOutsideTheTextIsRejected() {
-    val failure =
-      assertThrows(IllegalArgumentException::class.java) {
-        RecordedProgramTokenizer.buildRecordedRangeTree(
-          "abc",
-          listOf(element(RecordedRange(2, 9, 1))),
-        )
-      }
-    assertThat(failure).hasMessageThat().contains("outside the text")
+  fun testATokenOutsideTheTextIsRejected() {
+    assertThrows(IllegalArgumentException::class.java) { tree("abc", listOf(Interval(2, 4))) }
   }
 
   @Test
-  fun testOverlappingRangesAreRejected() {
-    val sourceCode = "f(g(1), 2)"
-    val failure =
-      assertThrows(IllegalArgumentException::class.java) {
-        RecordedProgramTokenizer.buildRecordedRangeTree(
-          sourceCode,
-          listOf(element(range(sourceCode, "g(1), 2")), element(range(sourceCode, "1"))),
-        )
-      }
-    assertThat(failure).hasMessageThat().contains("overlap")
+  fun testOverlappingTokensAreRejected() {
+    assertThrows(IllegalArgumentException::class.java) {
+      tree("abcd", listOf(Interval(0, 2), Interval(1, 3)))
+    }
   }
 
-  /** The whole point of the text path: a deleted element leaves the text minus exactly its span. */
   @Test
-  fun testDeletingAnElementAndPrintingVerbatimSplicesItsSpanOut() {
-    val sourceCode = "<a>foo<b/>bar</a>"
-    val b = range(sourceCode, "<b/>")
-    val tree = RecordedProgramTokenizer.buildRecordedRangeTree(sourceCode, listOf(element(b)))
-    val builder = NodeDeletionActionSet.Builder("delete b")
-    tree.resolveOne(b.toInterval()).forEach { builder.deleteNode(it) }
+  fun testTextOutsideTheTokensMustBeSpacesAndNewlines() {
+    val failure = assertThrows(Exception::class.java) { tree("ab cd", listOf(Interval(0, 2))) }
+
+    assertThat(
+      failure,
+    ).hasMessageThat().contains("Only spaces and newlines may separate recorded tokens")
+  }
+
+  /** A deleted token leaves its place blank and every other token where it was, as in a reduction. */
+  @Test
+  fun testDeletingATokenLeavesTheOthersInPlace() {
+    val tree =
+      tree(
+        "int x = 1;\nint y;\n",
+        listOf(
+          Interval(0, 3),
+          Interval(4, 5),
+          Interval(6, 7),
+          Interval(8, 9),
+          Interval(9, 10),
+          Interval(11, 14),
+          Interval(15, 16),
+          Interval(16, 17),
+        ),
+      )
+    val builder = NodeDeletionActionSet.Builder("delete x")
+    builder.deleteNode(tree.remainingLexerRuleNodes[1])
     tree.applyEdit(tree.createNodeDeletionEdit(builder.build()), canonicalTokenCount = null)
 
-    val printed =
-      PrinterRegistry.getPrinter(EnumFormatControl.VERBATIM).print(tree.programSnapshot.payload)
-    assertThat(printed.sourceCode).isEqualTo("<a>foobar</a>")
+    assertThat(printAtRecordedPositions(tree)).isEqualTo("int   = 1;\nint y;\n")
   }
 
   // ---- buildFlatTokenListTree: the lexer-based path the existing corpora still use ----
