@@ -296,11 +296,9 @@ Parser Facade: class org.perses.grammar.xml.PnfXMLParserFacade
 The spar-tree is the following.
 document{id=19,slot_type=document}
 |___element{id=20,slot_type=element}
-|   |___Token:<{id=24,slot_type=OPEN}
-|   |___Token:title{id=25,slot_type=Name}
-|   |___Token:/>{id=28,slot_type=[alt_block__element_3,alt_block__element_4,SLASH_CLOSE]}
-|___(*){id=21,slot_type=kleene_star__document_2}
-    |___Token:\n{id=23,slot_type=[misc,SEA_WS]}
+    |___Token:<{id=23,slot_type=OPEN}
+    |___Token:title{id=24,slot_type=Name}
+    |___Token:/>{id=27,slot_type=[alt_block__element_3,alt_block__element_4,SLASH_CLOSE]}
 ------------------------------------------------------------
 
 
@@ -321,7 +319,7 @@ Failed to reduce node 20
 ------------------------------------------------------------
 
 
-==================Reducing node 28, size=4==================
+==================Reducing node 27, size=4==================
 
 The current best program is the following
 
@@ -332,22 +330,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 28
-------------------------------------------------------------
-
-
-==================Reducing node 25, size=4==================
-
-The current best program is the following
-
-    --file: hello.xml--
-    <title/>
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 25
+Failed to reduce node 27
 ------------------------------------------------------------
 
 
@@ -366,7 +349,7 @@ Failed to reduce node 24
 ------------------------------------------------------------
 
 
-==================Reducing node 21, size=4==================
+==================Reducing node 23, size=4==================
 
 The current best program is the following
 
@@ -375,114 +358,43 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority][DFS](4/8)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:4/8=50.00%
-FixPt[2][node_priority][DFS](4/8)  Testing the empty input. Global ratio:4/8=50.00%
-==========Testing the following program (1): pass===========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__document_2]dd@#nodes=1,#parts=1#total-parts=1
-    --file: hello.xml--
-    <title/>
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](4/8)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:4/8=50.00%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 1
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 4 -> 4
-Edit: [delete_23]
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](4/8)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:4/8=50.00%
 ===================Node reduction is done===================
 
-Failed to reduce node 21
+Failed to reduce node 23
 ------------------------------------------------------------
 
 
-(4/8)  Rebuilding spar-tree: The spartree is rebuilt.
+(4/8)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
 Parser Facade: class org.perses.grammar.xml.PnfXMLParserFacade
 The spar-tree is the following.
-document{id=30,slot_type=document}
-|___element{id=31,slot_type=element}
-|   |___Token:<{id=35,slot_type=OPEN}
-|   |___Token:title{id=36,slot_type=Name}
-|   |___Token:/>{id=39,slot_type=[alt_block__element_3,alt_block__element_4,SLASH_CLOSE]}
-|___(*){id=32,slot_type=kleene_star__document_2}
-    |___Token:\n{id=34,slot_type=[misc,SEA_WS]}
+document{id=19,slot_type=document}
+|___element{id=20,slot_type=element}
+    |___Token:<{id=23,slot_type=OPEN}
+    |___Token:title{id=24,slot_type=Name}
+    |___Token:/>{id=27,slot_type=[alt_block__element_3,alt_block__element_4,SLASH_CLOSE]}
 ------------------------------------------------------------
 
 
 FixPt[3][FineGritLatraReducer](4/8)  Latra does not support LanguageXML{name=xml, extensions=[xml], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
-(4/8)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 4. Reducer: spartree_root_replacement_reducer
-
-Parser Facade: class org.perses.grammar.xml.PnfXMLParserFacade
-The spar-tree is the following.
-document{id=30,slot_type=document}
-|___element{id=31,slot_type=element}
-|   |___Token:<{id=35,slot_type=OPEN}
-|   |___Token:title{id=36,slot_type=Name}
-|   |___Token:/>{id=39,slot_type=[alt_block__element_3,alt_block__element_4,SLASH_CLOSE]}
-|___(*){id=32,slot_type=kleene_star__document_2}
-    |___Token:\n{id=34,slot_type=[misc,SEA_WS]}
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 4 -> 4
-Edit: AnyNodeReplace:[replace_30_with_1]
-------------------------------------------------------------
-
-
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
- 0                     node_priority      1             0      -4            -47       1   time-hidden
- 1                     node_priority      1             1       0              0       1   time-hidden
- 2              FineGritLatraReducer      0             0       0              0       0   time-hidden
- 3 spartree_root_replacement_reducer      1             1       0              0       0   time-hidden
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      1             0      -4            -47       1   time-hidden
+ 1        node_priority      0             0       0              0       0   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-                          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
-                    node_priority     2      2             1      -4            -47       2   time-hidden
-             FineGritLatraReducer     1      0             0       0              0       0   time-hidden
-spartree_root_replacement_reducer     1      1             1       0              0       0   time-hidden
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      1             0      -4            -47       1   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
 
 ------------------------------- Transformations --------------------------------
-                                   Transformation Worked #NonDeletions #Tokens #NonBlankChars
-                 node_priority.LiteralReplacement      1             0      -4            -47
-                           node_priority.Deletion      1             1       0              0
-spartree_root_replacement_reducer.RootReplacement      1             1       0              0
+                  Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.LiteralReplacement      1             0      -4            -47
 ------------------------------------- End --------------------------------------
-#test success = 2
+#test success = 1
 #test failure = 0
 #test result cache hits = 0
 #test execution cancelled = 0

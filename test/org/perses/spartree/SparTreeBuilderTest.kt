@@ -22,9 +22,11 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.TestUtility
 import org.perses.grammar.AbstractParserFacade
+import org.perses.grammar.ParseErrorHandling
 import org.perses.grammar.c.CParserFacade
 import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.OrigCParserFacade
+import org.perses.grammar.xml.PnfXMLParserFacade
 import org.perses.program.EnumFormatControl
 import org.perses.program.printer.PrinterRegistry
 import org.perses.util.SimpleStack
@@ -109,5 +111,38 @@ class SparTreeBuilderTest {
       )
     val sparTree = builder.result
     treeComparison(builder, parseTreeWithParser.tree, sparTree.realRoot)
+  }
+
+  /**
+   * XML lexes the whitespace between elements as tokens. Left out, they are not leaves, while
+   * whitespace inside a text token is part of that token; printing in the original format puts the
+   * layout back from the positions.
+   */
+  @Test
+  fun testWhitespaceOnlyTokensCanBeLeftOutOfTheTree() {
+    val sourceCode = "<a>\n  <b>x</b>\n  text\n</a>\n"
+
+    fun tokensOf(excludeWhitespaceOnlyTokens: Boolean) =
+      SparTreeParserUtility
+        .buildSparTree(
+          sourceCode = sourceCode,
+          parserFacade = PnfXMLParserFacade(),
+          specifiedSparTreeNodeFactory = null,
+          simplifyTree = true,
+          canonicalTokenCountComputer = { null },
+          errorMode = ParseErrorHandling.STRICT,
+          excludeWhitespaceOnlyTokens = excludeWhitespaceOnlyTokens,
+        ).programSnapshot.payload
+
+    val kept = tokensOf(excludeWhitespaceOnlyTokens = false)
+    val excluded = tokensOf(excludeWhitespaceOnlyTokens = true)
+
+    assertThat(kept.tokens.map { it.lexemeText }).contains("\n  ")
+    assertThat(excluded.tokens.map { it.lexemeText })
+      .containsExactlyElementsIn(kept.tokens.map { it.lexemeText }.filter { it.isNotBlank() })
+      .inOrder()
+    assertThat(excluded.tokens.map { it.lexemeText }).contains("\n  text\n")
+    assertThat(PrinterRegistry.getPrinter(EnumFormatControl.ORIG_FORMAT).print(excluded).sourceCode)
+      .isEqualTo(sourceCode)
   }
 }

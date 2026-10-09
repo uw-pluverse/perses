@@ -179,47 +179,29 @@ Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
 makefile{id=1,slot_type=makefile}
 |___(*){id=2,slot_type=kleene_star__makefile_1}
-    |___textLine{id=59,slot_type=[item,textLine]}
-    |   |___(+){id=60,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:# top-level comment{id=63,slot_type=[word,COMMENT]}
-    |   |___Token:\n{id=61,slot_type=NEWLINE}
-    |___textLine{id=50,slot_type=[item,textLine]}
-    |   |___(+){id=51,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:KEEP{id=58,slot_type=[word,WORD]}
-    |   |   |___Token:={id=57,slot_type=[word,WORD]}
-    |   |   |___Token:interesting{id=56,slot_type=[word,WORD]}
-    |   |___Token:\n{id=52,slot_type=NEWLINE}
-    |___textLine{id=37,slot_type=[item,textLine]}
-    |   |___(+){id=38,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=49,slot_type=[word,WORD]}
-    |   |   |___Token:={id=48,slot_type=[word,WORD]}
-    |   |   |___Token:a.c{id=47,slot_type=[word,WORD]}
-    |   |   |___Token:\\n{id=46,slot_type=[word,CONTINUATION]}
-    |   |   |___Token:b.c{id=45,slot_type=[word,WORD]}
-    |   |___Token:\n{id=39,slot_type=NEWLINE}
-    |___Token:\n{id=36,slot_type=[item,blankLine,NEWLINE]}
-    |___rule{id=22,slot_type=[item,rule]}
-    |   |___textLine{id=23,slot_type=textLine}
-    |   |   |___(+){id=31,slot_type=kleene_plus__lastLine_1}
-    |   |   |   |___Token:all:{id=34,slot_type=[word,WORD]}
-    |   |   |___Token:\n{id=32,slot_type=NEWLINE}
-    |   |___(+){id=24,slot_type=kleene_plus__rule_1}
-    |       |___recipe{id=25,slot_type=recipe}
-    |       |   |___Token:\techo building{id=29,slot_type=RECIPE_LINE}
-    |       |   |___Token:\n{id=30,slot_type=NEWLINE}
-    |       |___recipe{id=26,slot_type=recipe}
-    |           |___Token:\techo done{id=27,slot_type=RECIPE_LINE}
-    |           |___Token:\n{id=28,slot_type=NEWLINE}
-    |___Token:\n{id=21,slot_type=[item,blankLine,NEWLINE]}
+    |___(+){id=51,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:# top-level comment{id=53,slot_type=[word,COMMENT]}
+    |___(+){id=43,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:KEEP{id=49,slot_type=[word,WORD]}
+    |   |___Token:={id=48,slot_type=[word,WORD]}
+    |   |___Token:interesting{id=47,slot_type=[word,WORD]}
+    |___(+){id=31,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:SRCS{id=41,slot_type=[word,WORD]}
+    |   |___Token:={id=40,slot_type=[word,WORD]}
+    |   |___Token:a.c{id=39,slot_type=[word,WORD]}
+    |   |___Token:\\n{id=38,slot_type=[word,CONTINUATION]}
+    |   |___Token:b.c{id=37,slot_type=[word,WORD]}
+    |___rule{id=19,slot_type=[item,rule]}
+    |   |___(+){id=26,slot_type=[textLine,kleene_plus__lastLine_1]}
+    |   |   |___Token:all:{id=28,slot_type=[word,WORD]}
+    |   |___(+){id=21,slot_type=kleene_plus__rule_1}
+    |       |___Token:\techo building{id=25,slot_type=[recipe,RECIPE_LINE]}
+    |       |___Token:\techo done{id=24,slot_type=[recipe,RECIPE_LINE]}
     |___rule{id=10,slot_type=[item,rule]}
-        |___textLine{id=11,slot_type=textLine}
-        |   |___(+){id=16,slot_type=kleene_plus__lastLine_1}
-        |   |   |___Token:clean:{id=19,slot_type=[word,WORD]}
-        |   |___Token:\n{id=17,slot_type=NEWLINE}
+        |___(+){id=15,slot_type=[textLine,kleene_plus__lastLine_1]}
+        |   |___Token:clean:{id=17,slot_type=[word,WORD]}
         |___(+){id=12,slot_type=kleene_plus__rule_1}
-            |___recipe{id=13,slot_type=recipe}
-                |___Token:\trm -f out{id=14,slot_type=RECIPE_LINE}
-                |___Token:\n{id=15,slot_type=NEWLINE}
+            |___Token:\trm -f out{id=14,slot_type=[recipe,RECIPE_LINE]}
 ------------------------------------------------------------
 
 
@@ -242,19 +224,19 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](24/24)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-6]#7. Global ratio:24/24=100.00%
+FixPt[1][node_priority][DFS](24/24)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-4]#5. Global ratio:24/24=100.00%
 FixPt[1][node_priority][DFS](24/24)  Testing the empty input. Global ratio:24/24=100.00%
 ==========Testing the following program (0): fail===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=7,#parts=7#total-parts=7
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=5,#parts=5#total-parts=5
     --file: Makefile--
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](24/24)  Try deleting [0-6]#7: Uninteresting. Local ratio: 7/7=100.00%. Global ratio:24/24=100.00%
+FixPt[1][node_priority][DFS](24/24)  Try deleting [0-4]#5: Uninteresting. Local ratio: 5/5=100.00%. Global ratio:24/24=100.00%
 ==========Testing the following program (1): pass===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=3,#parts=3#total-parts=7
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=5
     --file: Makefile--
     # top-level comment
     KEEP = interesting
@@ -263,7 +245,7 @@ FixPt[1][node_priority][DFS](24/24)  Try deleting [0-6]#7: Uninteresting. Local 
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](24/24)  Try deleting [4-6]#3: Interesting. Local ratio: 7/7=100.00%. Global ratio:24/24=100.00%
+FixPt[1][node_priority][DFS](24/24)  Try deleting [3-4]#2: Interesting. Local ratio: 5/5=100.00%. Global ratio:24/24=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 1 --> 1.
@@ -278,8 +260,8 @@ FixPt[1][node_priority][DFS](24/24)  Try deleting [4-6]#3: Interesting. Local ra
 
 ================The best program is updated.================
 
-token count change 24 -> 13
-Edit: [delete: 10,21,22]
+token count change 24 -> 12
+Edit: [delete: 10,19]
 ------------------------------------------------------------
 
 
@@ -289,17 +271,17 @@ Edit: [delete: 10,21,22]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](13/24)  Try deleting [0-3]#4: Uninteresting. Local ratio: 4/7=57.14%. Global ratio:13/24=54.17%
+FixPt[1][node_priority][DFS](12/24)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/5=60.00%. Global ratio:12/24=50.00%
 ==========Testing the following program (2): pass===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=4
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: Makefile--
     # top-level comment
     KEEP = interesting
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](13/24)  Try deleting [2-3]#2: Interesting. Local ratio: 4/7=57.14%. Global ratio:13/24=54.17%
+FixPt[1][node_priority][DFS](12/24)  Try deleting [2]#1: Interesting. Local ratio: 3/5=60.00%. Global ratio:12/24=50.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 1 --> 1.
@@ -314,8 +296,8 @@ FixPt[1][node_priority][DFS](13/24)  Try deleting [2-3]#2: Interesting. Local ra
 
 ================The best program is updated.================
 
-token count change 13 -> 6
-Edit: [delete: 36,37]
+token count change 12 -> 6
+Edit: [delete_31]
 ------------------------------------------------------------
 
 
@@ -325,7 +307,7 @@ Edit: [delete: 36,37]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](6/24)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/7=28.57%. Global ratio:6/24=25.00%
+FixPt[1][node_priority][DFS](6/24)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/5=40.00%. Global ratio:6/24=25.00%
 ==========Testing the following program (3): fail===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=2
@@ -334,7 +316,7 @@ FixPt[1][node_priority][DFS](6/24)  Try deleting [0-1]#2: Uninteresting. Local r
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](6/24)  Try deleting [1]#1: Uninteresting. Local ratio: 2/7=28.57%. Global ratio:6/24=25.00%
+FixPt[1][node_priority][DFS](6/24)  Try deleting [1]#1: Uninteresting. Local ratio: 2/5=40.00%. Global ratio:6/24=25.00%
 ==========Testing the following program (4): pass===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=2
@@ -343,7 +325,7 @@ FixPt[1][node_priority][DFS](6/24)  Try deleting [1]#1: Uninteresting. Local rat
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](6/24)  Try deleting [0]#1: Interesting. Local ratio: 2/7=28.57%. Global ratio:6/24=25.00%
+FixPt[1][node_priority][DFS](6/24)  Try deleting [0]#1: Interesting. Local ratio: 2/5=40.00%. Global ratio:6/24=25.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 1 entries are removed: 2 --> 1.
@@ -359,18 +341,18 @@ FixPt[1][node_priority][DFS](6/24)  Try deleting [0]#1: Interesting. Local ratio
 ================The best program is updated.================
 
 token count change 6 -> 5
-Edit: [delete_59]
+Edit: [delete_51]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](5/24)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/7=14.29%. Global ratio:5/24=20.83%
+FixPt[1][node_priority][DFS](5/24)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/5=20.00%. Global ratio:5/24=20.83%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 2 from 24 to 5
 ------------------------------------------------------------
 
 
-==================Reducing node 50, size=5==================
+==================Reducing node 43, size=5==================
 
 The current best program is the following
 
@@ -387,28 +369,6 @@ The current best program is the following
 
 ==========Testing the following program (5): fail===========
 
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 50
-------------------------------------------------------------
-
-
-==================Reducing node 51, size=5==================
-
-The current best program is the following
-
-    --file: Makefile--
-    KEEP = interesting
-------------------------------------------------------------
-
-
-==========Testing the following program (6): fail===========
-
 // edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
     --file: Makefile--
     KEEP
@@ -424,7 +384,7 @@ FixPt[1][node_priority][DFS](5/24)  Testing the empty input. Global ratio:5/24=2
 
 
 FixPt[1][node_priority][DFS](5/24)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:5/24=20.83%
-==========Testing the following program (7): fail===========
+==========Testing the following program (6): fail===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: Makefile--
@@ -433,7 +393,7 @@ FixPt[1][node_priority][DFS](5/24)  Try deleting [0-2]#3: Uninteresting. Local r
 
 
 FixPt[1][node_priority][DFS](5/24)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:5/24=20.83%
-==========Testing the following program (8): pass===========
+==========Testing the following program (7): pass===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
     --file: Makefile--
@@ -444,31 +404,31 @@ FixPt[1][node_priority][DFS](5/24)  Try deleting [2]#1: Uninteresting. Local rat
 FixPt[1][node_priority][DFS](5/24)  Try deleting [0-1]#2: Interesting. Local ratio: 3/3=100.00%. Global ratio:5/24=20.83%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 4 --> 4.
+0 entries are removed: 3 --> 3.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 6
+    size before clearance = 5
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
 token count change 5 -> 3
-Edit: [delete: 57,58]
+Edit: [delete: 48,49]
 ------------------------------------------------------------
 
 
 FixPt[1][node_priority][DFS](3/24)  Minimizer UnweightedDfsListMinimizer ends. Result=[2]#1. Local ratio: 1/3=33.33%. Global ratio:3/24=12.50%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 51 from 5 to 3
+Succeeded to reduce node 43 from 5 to 3
 ------------------------------------------------------------
 
 
-==================Reducing node 56, size=3==================
+==================Reducing node 47, size=3==================
 
 The current best program is the following
 
@@ -479,22 +439,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 56
-------------------------------------------------------------
-
-
-==================Reducing node 52, size=3==================
-
-The current best program is the following
-
-    --file: Makefile--
-           interesting
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 52
+Failed to reduce node 47
 ------------------------------------------------------------
 
 
@@ -503,122 +448,16 @@ Failed to reduce node 52
 
 Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
-makefile{id=65,slot_type=makefile}
-|___(*){id=66,slot_type=kleene_star__makefile_1}
-    |___Token:\n{id=75,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=69,slot_type=[item,textLine]}
-        |___(+){id=70,slot_type=kleene_plus__lastLine_1}
-        |   |___Token:interesting{id=73,slot_type=[word,WORD]}
-        |___Token:\n{id=71,slot_type=NEWLINE}
+makefile{id=55,slot_type=makefile}
+|___(*){id=56,slot_type=kleene_star__makefile_1}
+    |___(+){id=60,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+        |___Token:interesting{id=62,slot_type=[word,WORD]}
 ------------------------------------------------------------
 
 
 FixPt[2][node_priority](3/24)  Starting to retrieve the semantics provider
 FixPt[2][node_priority](3/24)  Retrieved semantics provider null
-==================Reducing node 66, size=3==================
-
-The current best program is the following
-
-    --file: Makefile--
-           interesting
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/24)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:3/24=12.50%
-FixPt[2][node_priority][DFS](3/24)  Testing the empty input. Global ratio:3/24=12.50%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/24)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:3/24=12.50%
-==========Testing the following program (9): fail===========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=2
-    --file: Makefile--
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/24)  Try deleting [1]#1: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:3/24=12.50%
-==========Testing the following program (10): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=2
-    --file: Makefile--
-           interesting
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/24)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:3/24=12.50%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 5 --> 5.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 3
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 3 -> 3
-Edit: [delete_75]
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/24)  Minimizer UnweightedDfsListMinimizer ends. Result=[1]#1. Local ratio: 1/2=50.00%. Global ratio:3/24=12.50%
-===================Node reduction is done===================
-
-Failed to reduce node 66
-------------------------------------------------------------
-
-
-==================Reducing node 69, size=3==================
-
-The current best program is the following
-
-    --file: Makefile--
-           interesting
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 69
-------------------------------------------------------------
-
-
-==================Reducing node 71, size=3==================
-
-The current best program is the following
-
-    --file: Makefile--
-           interesting
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 71
-------------------------------------------------------------
-
-
-==================Reducing node 70, size=3==================
+==================Reducing node 56, size=3==================
 
 The current best program is the following
 
@@ -640,11 +479,44 @@ FixPt[2][node_priority][DFS](3/24)  There is only one element in the input, and 
 FixPt[2][node_priority][DFS](3/24)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/24=12.50%
 ===================Node reduction is done===================
 
-Failed to reduce node 70
+Failed to reduce node 56
 ------------------------------------------------------------
 
 
-==================Reducing node 73, size=3==================
+==================Reducing node 60, size=3==================
+
+The current best program is the following
+
+    --file: Makefile--
+           interesting
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_60]
+    context: [kleene_plus:kleene_plus__lastLine_1]can be epsilon
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](3/24)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/24=12.50%
+FixPt[2][node_priority][DFS](3/24)  Testing the empty input. Global ratio:3/24=12.50%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Makefile--
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](3/24)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:3/24=12.50%
+FixPt[2][node_priority][DFS](3/24)  There is only one element in the input, and the empty input has been tested. Global ratio:3/24=12.50%
+FixPt[2][node_priority][DFS](3/24)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/24=12.50%
+===================Node reduction is done===================
+
+Failed to reduce node 60
+------------------------------------------------------------
+
+
+==================Reducing node 62, size=3==================
 
 The current best program is the following
 
@@ -655,26 +527,23 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 73
+Failed to reduce node 62
 ------------------------------------------------------------
 
 
-(3/24)  Rebuilding spar-tree: The spartree is rebuilt.
+(3/24)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 =====Fixpoint iteration 3. Reducer: token_canonicalizer=====
 
 Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
-makefile{id=77,slot_type=makefile}
-|___(*){id=78,slot_type=kleene_star__makefile_1}
-    |___Token:\n{id=87,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=81,slot_type=[item,textLine]}
-        |___(+){id=82,slot_type=kleene_plus__lastLine_1}
-        |   |___Token:interesting{id=85,slot_type=[word,WORD]}
-        |___Token:\n{id=83,slot_type=NEWLINE}
+makefile{id=55,slot_type=makefile}
+|___(*){id=56,slot_type=kleene_star__makefile_1}
+    |___(+){id=60,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+        |___Token:interesting{id=62,slot_type=[word,WORD]}
 ------------------------------------------------------------
 
 
-==========Testing the following program (11): fail==========
+==========Testing the following program (8): fail===========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '!'
     --file: Makefile--
@@ -682,7 +551,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (12): fail==========
+==========Testing the following program (9): fail===========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"'
     --file: Makefile--
@@ -690,7 +559,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (13): fail==========
+==========Testing the following program (10): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'i'
     --file: Makefile--
@@ -698,7 +567,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (14): fail==========
+==========Testing the following program (11): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'nteresting'
     --file: Makefile--
@@ -706,7 +575,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (15): fail==========
+==========Testing the following program (12): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'iteresting'
     --file: Makefile--
@@ -714,7 +583,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (16): fail==========
+==========Testing the following program (13): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'ineresting'
     --file: Makefile--
@@ -722,7 +591,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (17): fail==========
+==========Testing the following program (14): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'intresting'
     --file: Makefile--
@@ -730,7 +599,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (18): fail==========
+==========Testing the following program (15): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'inteesting'
     --file: Makefile--
@@ -738,7 +607,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (19): fail==========
+==========Testing the following program (16): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'intersting'
     --file: Makefile--
@@ -746,7 +615,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (20): fail==========
+==========Testing the following program (17): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'intereting'
     --file: Makefile--
@@ -754,7 +623,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (21): fail==========
+==========Testing the following program (18): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interesing'
     --file: Makefile--
@@ -762,7 +631,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (22): fail==========
+==========Testing the following program (19): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interestng'
     --file: Makefile--
@@ -770,7 +639,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (23): fail==========
+==========Testing the following program (20): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interestig'
     --file: Makefile--
@@ -778,7 +647,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (24): fail==========
+==========Testing the following program (21): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interestin'
     --file: Makefile--
@@ -786,7 +655,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (25): fail==========
+==========Testing the following program (22): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '!nteresting'
     --file: Makefile--
@@ -794,7 +663,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (26): fail==========
+==========Testing the following program (23): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme '"nteresting'
     --file: Makefile--
@@ -802,7 +671,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (27): fail==========
+==========Testing the following program (24): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'i!teresting'
     --file: Makefile--
@@ -810,7 +679,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (28): fail==========
+==========Testing the following program (25): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'i"teresting'
     --file: Makefile--
@@ -818,7 +687,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (29): fail==========
+==========Testing the following program (26): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'in!eresting'
     --file: Makefile--
@@ -826,7 +695,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (30): fail==========
+==========Testing the following program (27): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'in"eresting'
     --file: Makefile--
@@ -834,7 +703,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (31): fail==========
+==========Testing the following program (28): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'int!resting'
     --file: Makefile--
@@ -842,7 +711,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (32): fail==========
+==========Testing the following program (29): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'int"resting'
     --file: Makefile--
@@ -850,7 +719,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (33): fail==========
+==========Testing the following program (30): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'inte!esting'
     --file: Makefile--
@@ -858,7 +727,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (34): fail==========
+==========Testing the following program (31): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'inte"esting'
     --file: Makefile--
@@ -866,7 +735,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (35): fail==========
+==========Testing the following program (32): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'inter!sting'
     --file: Makefile--
@@ -874,7 +743,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (36): fail==========
+==========Testing the following program (33): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'inter"sting'
     --file: Makefile--
@@ -882,7 +751,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (37): fail==========
+==========Testing the following program (34): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'intere!ting'
     --file: Makefile--
@@ -890,7 +759,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (38): fail==========
+==========Testing the following program (35): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'intere"ting'
     --file: Makefile--
@@ -898,7 +767,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (39): fail==========
+==========Testing the following program (36): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interes!ing'
     --file: Makefile--
@@ -906,7 +775,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (40): fail==========
+==========Testing the following program (37): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interes"ing'
     --file: Makefile--
@@ -914,7 +783,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (41): fail==========
+==========Testing the following program (38): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interest!ng'
     --file: Makefile--
@@ -922,7 +791,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (42): fail==========
+==========Testing the following program (39): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interest"ng'
     --file: Makefile--
@@ -930,7 +799,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (43): fail==========
+==========Testing the following program (40): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interesti!g'
     --file: Makefile--
@@ -938,7 +807,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (44): fail==========
+==========Testing the following program (41): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interesti"g'
     --file: Makefile--
@@ -946,7 +815,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (45): fail==========
+==========Testing the following program (42): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interestin!'
     --file: Makefile--
@@ -954,7 +823,7 @@ makefile{id=77,slot_type=makefile}
 ------------------------------------------------------------
 
 
-==========Testing the following program (46): fail==========
+==========Testing the following program (43): fail==========
 
 // edit action set type: replace 1 lexer nodes with new lexeme 'interestin"'
     --file: Makefile--
@@ -967,75 +836,35 @@ makefile{id=77,slot_type=makefile}
 
 Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
-makefile{id=77,slot_type=makefile}
-|___(*){id=78,slot_type=kleene_star__makefile_1}
-    |___Token:\n{id=87,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=81,slot_type=[item,textLine]}
-        |___(+){id=82,slot_type=kleene_plus__lastLine_1}
-        |   |___Token:interesting{id=85,slot_type=[word,WORD]}
-        |___Token:\n{id=83,slot_type=NEWLINE}
+makefile{id=55,slot_type=makefile}
+|___(*){id=56,slot_type=kleene_star__makefile_1}
+    |___(+){id=60,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+        |___Token:interesting{id=62,slot_type=[word,WORD]}
 ------------------------------------------------------------
 
 
 FixPt[4][FineGritLatraReducer](3/24)  Latra does not support LanguageMakefile{name=makefile, extensions=[mk], defaultCodeFormatControl=ORIG_FORMAT} langauge yet.
-(3/24)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 5. Reducer: spartree_root_replacement_reducer
-
-Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
-The spar-tree is the following.
-makefile{id=77,slot_type=makefile}
-|___(*){id=78,slot_type=kleene_star__makefile_1}
-    |___Token:\n{id=87,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=81,slot_type=[item,textLine]}
-        |___(+){id=82,slot_type=kleene_plus__lastLine_1}
-        |   |___Token:interesting{id=85,slot_type=[word,WORD]}
-        |___Token:\n{id=83,slot_type=NEWLINE}
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-22 entries are removed: 41 --> 19.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 3 -> 3
-Edit: AnyNodeReplace:[replace_77_with_1]
-------------------------------------------------------------
-
-
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
- 0                     node_priority      4             0     -21            -71       9   time-hidden
- 1                     node_priority      1             1       0              0       2   time-hidden
- 2               token_canonicalizer      0             0       0              0      36   time-hidden
- 3              FineGritLatraReducer      0             0       0              0       0   time-hidden
- 4 spartree_root_replacement_reducer      1             1       0              0       0   time-hidden
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      4             0     -21            -71       8   time-hidden
+ 1        node_priority      0             0       0              0       0   time-hidden
+ 2  token_canonicalizer      0             0       0              0      36   time-hidden
+ 3 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-                          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
-                    node_priority     2      5             1     -21            -71      11   time-hidden
-             FineGritLatraReducer     1      0             0       0              0       0   time-hidden
-spartree_root_replacement_reducer     1      1             1       0              0       0   time-hidden
-              token_canonicalizer     1      0             0       0              0      36   time-hidden
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      4             0     -21            -71       8   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
+ token_canonicalizer     1      0             0       0              0      36   time-hidden
 
 ------------------------------- Transformations --------------------------------
-                                   Transformation Worked #NonDeletions #Tokens #NonBlankChars
-                           node_priority.Deletion      5             1     -21            -71
-spartree_root_replacement_reducer.RootReplacement      1             1       0              0
+        Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Deletion      4             0     -21            -71
 ------------------------------------- End --------------------------------------
-#test success = 5
-#test failure = 42
-#test result cache hits = 8
+#test success = 4
+#test failure = 40
+#test result cache hits = 6
 #test execution cancelled = 0
-#node edit action set cache hits = 0
+#node edit action set cache hits = 1
 #external test execution cache hits = 0

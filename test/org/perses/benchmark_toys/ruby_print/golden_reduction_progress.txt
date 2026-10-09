@@ -172,70 +172,45 @@ Parser Facade: class org.perses.grammar.ruby.PnfRubyParserFacade
 The spar-tree is the following.
 compilation_unit{id=1,slot_type=compilation_unit}
 |___statement_list_terms{id=2,slot_type=statement_list_terms}
-    |___aux_rule__statement_list_terms_3{id=3,slot_type=aux_rule__statement_list_terms_3}
-    |   |___(?){id=61,slot_type=optional__statement_list_terms_4}
-    |   |   |___function_definition{id=72,slot_type=[statement,expr,aux_rule__expr_16,function_definition]}
-    |   |       |___function_definition_header{id=73,slot_type=function_definition_header}
-    |   |       |   |___Token:def{id=151,slot_type=DEF}
-    |   |       |   |___Token:main{id=159,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |   |___(+){id=153,slot_type=terms}
-    |   |       |       |___Token:\n{id=155,slot_type=[term,CRLF]}
-    |   |       |___(?){id=74,slot_type=optional__module_definition_1}
-    |   |       |   |___statement_list_terms{id=76,slot_type=statement_list_terms}
-    |   |       |       |___aux_rule__statement_list_terms_3{id=77,slot_type=aux_rule__statement_list_terms_3}
-    |   |       |       |   |___(?){id=127,slot_type=optional__statement_list_terms_4}
-    |   |       |       |   |   |___aux_rule__expr_45{id=134,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
-    |   |       |       |   |       |___Token:puts{id=150,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |       |   |       |___(+){id=145,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
-    |   |       |       |   |           |___Token:"start"{id=146,slot_type=String}
-    |   |       |       |   |___(+){id=128,slot_type=terms}
-    |   |       |       |       |___Token:\n{id=130,slot_type=[term,CRLF]}
-    |   |       |       |___(*){id=78,slot_type=kleene_star__statement_list_terms_1}
-    |   |       |           |___aux_rule__statement_list_terms_2{id=79,slot_type=aux_rule__statement_list_terms_2}
-    |   |       |           |   |___aux_rule__expr_45{id=110,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
-    |   |       |           |   |   |___Token:puts{id=126,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |           |   |   |___(+){id=121,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
-    |   |       |           |   |       |___Token:"hello world"{id=122,slot_type=String}
-    |   |       |           |   |___(+){id=105,slot_type=terms}
-    |   |       |           |       |___Token:\n{id=107,slot_type=[term,CRLF]}
-    |   |       |           |___aux_rule__statement_list_terms_2{id=80,slot_type=aux_rule__statement_list_terms_2}
-    |   |       |               |___aux_rule__expr_45{id=87,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
-    |   |       |               |   |___Token:puts{id=103,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |   |       |               |   |___(+){id=98,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
-    |   |       |               |       |___Token:"finish"{id=99,slot_type=String}
-    |   |       |               |___(+){id=82,slot_type=terms}
-    |   |       |                   |___Token:\n{id=84,slot_type=[term,CRLF]}
-    |   |       |___Token:end{id=75,slot_type=END}
-    |   |___(+){id=62,slot_type=terms}
-    |       |___Token:\n{id=68,slot_type=[term,CRLF]}
-    |       |___Token:\n{id=67,slot_type=[term,CRLF]}
-    |       |___Token:\n{id=66,slot_type=[term,CRLF]}
+    |___(?){id=57,slot_type=[aux_rule__statement_list_terms_3,optional__statement_list_terms_4]}
+    |   |___function_definition{id=65,slot_type=[statement,expr,aux_rule__expr_16,function_definition]}
+    |       |___function_definition_header{id=66,slot_type=function_definition_header}
+    |       |   |___Token:def{id=141,slot_type=DEF}
+    |       |   |___Token:main{id=148,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+    |       |___(?){id=67,slot_type=optional__module_definition_1}
+    |       |   |___statement_list_terms{id=69,slot_type=statement_list_terms}
+    |       |       |___(?){id=118,slot_type=[aux_rule__statement_list_terms_3,optional__statement_list_terms_4]}
+    |       |       |   |___aux_rule__expr_45{id=124,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
+    |       |       |       |___Token:puts{id=140,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+    |       |       |       |___(+){id=135,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |       |       |           |___Token:"start"{id=136,slot_type=String}
+    |       |       |___(*){id=71,slot_type=kleene_star__statement_list_terms_1}
+    |       |           |___aux_rule__expr_45{id=101,slot_type=[aux_rule__statement_list_terms_2,statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
+    |       |           |   |___Token:puts{id=117,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+    |       |           |   |___(+){id=112,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |       |           |       |___Token:"hello world"{id=113,slot_type=String}
+    |       |           |___aux_rule__expr_45{id=79,slot_type=[aux_rule__statement_list_terms_2,statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
+    |       |               |___Token:puts{id=95,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+    |       |               |___(+){id=90,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+    |       |                   |___Token:"finish"{id=91,slot_type=String}
+    |       |___Token:end{id=68,slot_type=END}
     |___(*){id=4,slot_type=kleene_star__statement_list_terms_1}
-        |___aux_rule__statement_list_terms_2{id=5,slot_type=aux_rule__statement_list_terms_2}
-            |___aux_rule__expr_42{id=14,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_42]}
-            |   |___aux_rule__primary_53{id=17,slot_type=[alt_block__primary_44,aux_rule__primary_53]}
-            |   |   |___Token:if{id=18,slot_type=IF}
-            |   |   |___aux_rule__primary_57{id=20,slot_type=[alt_block__primary_45,aux_rule__primary_57]}
-            |   |       |___expr{id=21,slot_type=expr}
-            |   |       |   |___Token:__FILE__{id=60,slot_type=[aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,Identifier]}
-            |   |       |   |___(*){id=41,slot_type=kleene_star__expr_14}
-            |   |       |       |___aux_rule__expr_33{id=43,slot_type=[aux_rule__expr_15,aux_rule__expr_33]}
-            |   |       |           |___Token:=={id=56,slot_type=[alt_block__expr_20,aux_rule__expr_36,alt_block__expr_29,equalsOperator,EQUAL]}
-            |   |       |           |___aux_rule__identifier_1{id=50,slot_type=[expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,aux_rule__identifier_1]}
-            |   |       |               |___Token:${id=51,slot_type=DOLLAR}
-            |   |       |               |___Token:0{id=52,slot_type=Integer}
-            |   |       |___(+){id=37,slot_type=[then_keyword,terms]}
-            |   |       |   |___Token:\n{id=39,slot_type=[term,CRLF]}
-            |   |       |___(?){id=23,slot_type=optional__module_definition_1}
-            |   |           |___aux_rule__statement_list_terms_3{id=25,slot_type=[statement_list_terms,aux_rule__statement_list_terms_3]}
-            |   |               |___(?){id=26,slot_type=optional__statement_list_terms_4}
-            |   |               |   |___Token:main{id=36,slot_type=[statement,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,Identifier]}
-            |   |               |___(+){id=27,slot_type=terms}
-            |   |                   |___Token:\n{id=29,slot_type=[term,CRLF]}
-            |   |___Token:end{id=16,slot_type=END}
-            |___(+){id=7,slot_type=terms}
-                |___Token:\n{id=11,slot_type=[term,CRLF]}
-                |___Token:\n{id=10,slot_type=[term,CRLF]}
+        |___aux_rule__expr_42{id=12,slot_type=[aux_rule__statement_list_terms_2,statement,expr,aux_rule__expr_16,aux_rule__expr_42]}
+            |___aux_rule__primary_53{id=15,slot_type=[alt_block__primary_44,aux_rule__primary_53]}
+            |   |___Token:if{id=16,slot_type=IF}
+            |   |___aux_rule__primary_57{id=18,slot_type=[alt_block__primary_45,aux_rule__primary_57]}
+            |       |___expr{id=19,slot_type=expr}
+            |       |   |___Token:__FILE__{id=56,slot_type=[aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,Identifier]}
+            |       |   |___(*){id=37,slot_type=kleene_star__expr_14}
+            |       |       |___aux_rule__expr_33{id=39,slot_type=[aux_rule__expr_15,aux_rule__expr_33]}
+            |       |           |___Token:=={id=52,slot_type=[alt_block__expr_20,aux_rule__expr_36,alt_block__expr_29,equalsOperator,EQUAL]}
+            |       |           |___aux_rule__identifier_1{id=46,slot_type=[expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,aux_rule__identifier_1]}
+            |       |               |___Token:${id=47,slot_type=DOLLAR}
+            |       |               |___Token:0{id=48,slot_type=Integer}
+            |       |___(?){id=21,slot_type=optional__module_definition_1}
+            |           |___(?){id=24,slot_type=[statement_list_terms,aux_rule__statement_list_terms_3,optional__statement_list_terms_4]}
+            |               |___Token:main{id=33,slot_type=[statement,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,identifier,Identifier]}
+            |___Token:end{id=14,slot_type=END}
 ------------------------------------------------------------
 
 
@@ -246,7 +221,7 @@ FixPt[1][node_priority](27/27)  Retrieved semantics provider null
 The current best program is the following
 
     --file: hello.rb--
-    def main 
+    def main
         puts "start"
         puts "hello world"
         puts "finish"
@@ -265,55 +240,13 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (1): fail===========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (2): fail===========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (3): fail===========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (4): fail===========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (5): fail===========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (6): pass===========
+==========Testing the following program (1): pass===========
 
 // edit action set type: [regular node]compatible replacement
     --file: hello.rb--
         puts "start"
         puts "hello world"
         puts "finish"
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
 ------------------------------------------------------------
 
 
@@ -332,7 +265,7 @@ It took less than 1 second to cancel the task.
 ================The best program is updated.================
 
 token count change 27 -> 9
-Edit: HoistEdit:[replace_2_with_76]
+Edit: HoistEdit:[replace_2_with_69]
 ------------------------------------------------------------
 
 
@@ -342,7 +275,7 @@ Succeeded to reduce node 2 from 27 to 9
 ------------------------------------------------------------
 
 
-==================Reducing node 76, size=9==================
+==================Reducing node 69, size=9==================
 
 The current best program is the following
 
@@ -353,7 +286,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (7): fail===========
+==========Testing the following program (2): fail===========
 
 // edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement_list_terms->;
     --file: hello.rb--
@@ -361,42 +294,13 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (8): fail===========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (9): fail===========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (10): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (11): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-        puts "start"
-------------------------------------------------------------
-
-
 ===================Node reduction is done===================
 
-Failed to reduce node 76
+Failed to reduce node 69
 ------------------------------------------------------------
 
 
-==================Reducing node 78, size=9==================
+==================Reducing node 71, size=9==================
 
 The current best program is the following
 
@@ -409,7 +313,7 @@ The current best program is the following
 
 FixPt[1][node_priority][DFS](9/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:9/27=33.33%
 FixPt[1][node_priority][DFS](9/27)  Testing the empty input. Global ratio:9/27=33.33%
-==========Testing the following program (12): fail==========
+==========Testing the following program (3): fail===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__statement_list_terms_1]dd@#nodes=2,#parts=2#total-parts=2
     --file: hello.rb--
@@ -418,7 +322,7 @@ FixPt[1][node_priority][DFS](9/27)  Testing the empty input. Global ratio:9/27=3
 
 
 FixPt[1][node_priority][DFS](9/27)  Try deleting [0-1]#2: Skipped LiteralReplacement. Local ratio: 2/2=100.00%. Global ratio:9/27=33.33%
-==========Testing the following program (13): pass==========
+==========Testing the following program (4): pass===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__statement_list_terms_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: hello.rb--
@@ -443,11 +347,11 @@ FixPt[1][node_priority][DFS](9/27)  Try deleting [1]#1: Interesting. Local ratio
 ================The best program is updated.================
 
 token count change 9 -> 6
-Edit: [delete_80]
+Edit: [delete_79]
 ------------------------------------------------------------
 
 
-==========Testing the following program (14): fail==========
+==========Testing the following program (5): fail===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__statement_list_terms_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
@@ -459,11 +363,11 @@ FixPt[1][node_priority][DFS](6/27)  Try deleting [0]#1: Skipped LiteralReplaceme
 FixPt[1][node_priority][DFS](6/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/2=50.00%. Global ratio:6/27=22.22%
 ===================Node reduction is done===================
 
-Succeeded to reduce node 78 from 9 to 6
+Succeeded to reduce node 71 from 9 to 6
 ------------------------------------------------------------
 
 
-==================Reducing node 79, size=6==================
+=================Reducing node 118, size=6==================
 
 The current best program is the following
 
@@ -473,484 +377,140 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (15): fail==========
+FixPt[1][node_priority][DFS](6/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:6/27=22.22%
+FixPt[1][node_priority][DFS](6/27)  Testing the empty input. Global ratio:6/27=22.22%
+==========Testing the following program (6): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__statement_list_terms_4]dd@#nodes=1,#parts=1#total-parts=1
+    --file: hello.rb--
+        puts "hello world"
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](6/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:6/27=22.22%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 0 --> 0.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 0
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 6 -> 3
+Edit: [delete_124]
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:3/27=11.11%
+===================Node reduction is done===================
+
+Succeeded to reduce node 118 from 6 to 3
+------------------------------------------------------------
+
+
+=================Reducing node 101, size=3==================
+
+The current best program is the following
+
+    --file: hello.rb--
+        puts "hello world"
+------------------------------------------------------------
+
+
+==========Testing the following program (7): fail===========
 
 // edit action set type: [regular_node]can be epsilon
     --file: hello.rb--
-        puts "start"
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 79
+Failed to reduce node 101
 ------------------------------------------------------------
 
 
-==================Reducing node 77, size=6==================
+=================Reducing node 117, size=3==================
 
 The current best program is the following
 
     --file: hello.rb--
-        puts "start"
-        puts "hello world"
-------------------------------------------------------------
-
-
-==========Testing the following program (16): pass==========
-
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,aux_rule__statement_list_terms_3->;
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-============Test script execution is cancelled.=============
-
-It took less than 1 second to cancel the task.
-
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 6 -> 5
-Edit: LatraEdit:[replace_77_with_163]
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Succeeded to reduce node 77 from 6 to 5
-------------------------------------------------------------
-
-
-=================Reducing node 110, size=5==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-==========Testing the following program (17): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-        ;
-        puts
-------------------------------------------------------------
-
-
-==========Testing the following program (18): fail==========
-
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->break
-    --file: hello.rb--
-        ;
-        break
-------------------------------------------------------------
-
-
-==========Testing the following program (19): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-        ;
-             "hello world"
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 110
-------------------------------------------------------------
-
-
-=================Reducing node 163, size=5==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        ;
         puts "hello world"
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 163
+Failed to reduce node 117
 ------------------------------------------------------------
 
 
-=================Reducing node 126, size=5==================
+=================Reducing node 112, size=3==================
 
 The current best program is the following
 
     --file: hello.rb--
-        ;
         puts "hello world"
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
-
-Failed to reduce node 126
-------------------------------------------------------------
-
-
-=================Reducing node 121, size=5==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/27=18.52%
-FixPt[1][node_priority][DFS](5/27)  Testing the empty input. Global ratio:5/27=18.52%
-==========Testing the following program (20): fail==========
+FixPt[1][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
+FixPt[1][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
+==========Testing the following program (8): fail===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:string]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
-        ;
         puts
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](5/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
-FixPt[1][node_priority][DFS](5/27)  There is only one element in the input, and the empty input has been tested. Global ratio:5/27=18.52%
-FixPt[1][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
+FixPt[1][node_priority][DFS](3/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
+FixPt[1][node_priority][DFS](3/27)  There is only one element in the input, and the empty input has been tested. Global ratio:3/27=11.11%
+FixPt[1][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
 ===================Node reduction is done===================
 
-Failed to reduce node 121
+Failed to reduce node 112
 ------------------------------------------------------------
 
 
-=================Reducing node 122, size=5==================
+=================Reducing node 113, size=3==================
 
 The current best program is the following
 
     --file: hello.rb--
-        ;
         puts "hello world"
 ------------------------------------------------------------
 
 
 ===================Node reduction is done===================
 
-Failed to reduce node 122
+Failed to reduce node 113
 ------------------------------------------------------------
 
 
-=================Reducing node 105, size=5==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/27=18.52%
-FixPt[1][node_priority][DFS](5/27)  Testing the empty input. Global ratio:5/27=18.52%
-==========Testing the following program (21): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:terms]dd@#nodes=1,#parts=1#total-parts=1
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](5/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 5 -> 5
-Edit: [delete_107]
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:5/27=18.52%
-===================Node reduction is done===================
-
-Failed to reduce node 105
-------------------------------------------------------------
-
-
-(5/27)  Rebuilding spar-tree: The spartree is rebuilt.
+(3/27)  Rebuilding spar-tree: The spartree is rebuilt.
 ========Fixpoint iteration 2. Reducer: node_priority========
 
 Parser Facade: class org.perses.grammar.ruby.PnfRubyParserFacade
 The spar-tree is the following.
-compilation_unit{id=165,slot_type=compilation_unit}
-|___statement_list_terms{id=166,slot_type=statement_list_terms}
-    |___(+){id=193,slot_type=[aux_rule__statement_list_terms_3,terms]}
-    |   |___Token:;{id=197,slot_type=[term,SEMICOLON]}
-    |   |___Token:\n{id=196,slot_type=[term,CRLF]}
-    |___(*){id=168,slot_type=kleene_star__statement_list_terms_1}
-        |___aux_rule__statement_list_terms_2{id=169,slot_type=aux_rule__statement_list_terms_2}
-            |___aux_rule__expr_45{id=176,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
-            |   |___Token:puts{id=192,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-            |   |___(+){id=187,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
-            |       |___Token:"hello world"{id=188,slot_type=String}
-            |___(+){id=171,slot_type=terms}
-                |___Token:\n{id=173,slot_type=[term,CRLF]}
+compilation_unit{id=152,slot_type=compilation_unit}
+|___(?){id=155,slot_type=[statement_list_terms,aux_rule__statement_list_terms_3,optional__statement_list_terms_4]}
+    |___aux_rule__expr_45{id=161,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
+        |___Token:puts{id=177,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+        |___(+){id=172,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+            |___Token:"hello world"{id=173,slot_type=String}
 ------------------------------------------------------------
 
 
-FixPt[2][node_priority](5/27)  Starting to retrieve the semantics provider
-FixPt[2][node_priority](5/27)  Retrieved semantics provider null
-=================Reducing node 166, size=5==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-==========Testing the following program (22): fail==========
-
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement_list_terms->;
-    --file: hello.rb--
-        ;
-------------------------------------------------------------
-
-
-==========Testing the following program (23): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (24): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 166
-------------------------------------------------------------
-
-
-=================Reducing node 168, size=5==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/27=18.52%
-FixPt[2][node_priority][DFS](5/27)  Testing the empty input. Global ratio:5/27=18.52%
-==========Testing the following program (25): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__statement_list_terms_1]dd@#nodes=1,#parts=1#total-parts=1
-    --file: hello.rb--
-        ;
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](5/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
-FixPt[2][node_priority][DFS](5/27)  There is only one element in the input, and the empty input has been tested. Global ratio:5/27=18.52%
-FixPt[2][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
-===================Node reduction is done===================
-
-Failed to reduce node 168
-------------------------------------------------------------
-
-
-=================Reducing node 169, size=5==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-==========Testing the following program (26): fail==========
-
-// edit action set type: [regular_node]can be epsilon
-    --file: hello.rb--
-        ;
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 169
-------------------------------------------------------------
-
-
-=================Reducing node 193, size=5==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-==========Testing the following program (27): pass==========
-
-// edit action set type: [kleene_plus:terms]remove all except first
-    --file: hello.rb--
-        ;
-        puts "hello world"
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 5 -> 5
-Edit: [delete_196]
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](5/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:5/27=18.52%
-FixPt[2][node_priority][DFS](5/27)  Testing the empty input. Global ratio:5/27=18.52%
-==========Testing the following program (28): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:terms]dd@#nodes=1,#parts=1#total-parts=1
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](5/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:5/27=18.52%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 5 -> 3
-Edit: [delete_197]
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:3/27=11.11%
-===================Node reduction is done===================
-
-Succeeded to reduce node 193 from 5 to 3
-------------------------------------------------------------
-
-
-=================Reducing node 176, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-==========Testing the following program (29): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-        puts
-------------------------------------------------------------
-
-
-==========Testing the following program (30): fail==========
-
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->break
-    --file: hello.rb--
-        break
-------------------------------------------------------------
-
-
-==========Testing the following program (31): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-             "hello world"
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 176
-------------------------------------------------------------
-
-
-=================Reducing node 192, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 192
-------------------------------------------------------------
-
-
-=================Reducing node 187, size=3==================
+FixPt[2][node_priority](3/27)  Starting to retrieve the semantics provider
+FixPt[2][node_priority](3/27)  Retrieved semantics provider null
+=================Reducing node 155, size=3==================
 
 The current best program is the following
 
@@ -961,7 +521,103 @@ The current best program is the following
 
 FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
 FixPt[2][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
-==========Testing the following program (32): fail==========
+==========Testing the following program (9): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__statement_list_terms_4]dd@#nodes=1,#parts=1#total-parts=1
+    --file: hello.rb--
+------------------------------------------------------------
+
+
+==========Testing the following program (10): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__statement_list_terms_4]LiteralReplacement@1,statement->break
+    --file: hello.rb--
+        break
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](3/27)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
+FixPt[2][node_priority][DFS](3/27)  There is only one element in the input, and the empty input has been tested. Global ratio:3/27=11.11%
+FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
+===================Node reduction is done===================
+
+Failed to reduce node 155
+------------------------------------------------------------
+
+
+=================Reducing node 161, size=3==================
+
+The current best program is the following
+
+    --file: hello.rb--
+        puts "hello world"
+------------------------------------------------------------
+
+
+==========Testing the following program (11): fail==========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: hello.rb--
+------------------------------------------------------------
+
+
+==========Testing the following program (12): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+        puts
+------------------------------------------------------------
+
+
+==========Testing the following program (13): fail==========
+
+// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->break
+    --file: hello.rb--
+        break
+------------------------------------------------------------
+
+
+==========Testing the following program (14): fail==========
+
+// edit action set type: [regular node]compatible replacement
+    --file: hello.rb--
+             "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 161
+------------------------------------------------------------
+
+
+=================Reducing node 177, size=3==================
+
+The current best program is the following
+
+    --file: hello.rb--
+        puts "hello world"
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 177
+------------------------------------------------------------
+
+
+=================Reducing node 172, size=3==================
+
+The current best program is the following
+
+    --file: hello.rb--
+        puts "hello world"
+------------------------------------------------------------
+
+
+FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
+FixPt[2][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
+==========Testing the following program (15): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:string]dd@#nodes=1,#parts=1#total-parts=1
     --file: hello.rb--
@@ -974,11 +630,11 @@ FixPt[2][node_priority][DFS](3/27)  There is only one element in the input, and 
 FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
 ===================Node reduction is done===================
 
-Failed to reduce node 187
+Failed to reduce node 172
 ------------------------------------------------------------
 
 
-=================Reducing node 188, size=3==================
+=================Reducing node 173, size=3==================
 
 The current best program is the following
 
@@ -989,369 +645,45 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 188
+Failed to reduce node 173
 ------------------------------------------------------------
 
 
-=================Reducing node 171, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
-FixPt[2][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
-==========Testing the following program (33): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:terms]dd@#nodes=1,#parts=1#total-parts=1
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 3 -> 3
-Edit: [delete_173]
-------------------------------------------------------------
-
-
-FixPt[2][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:3/27=11.11%
-===================Node reduction is done===================
-
-Failed to reduce node 171
-------------------------------------------------------------
-
-
-(3/27)  Rebuilding spar-tree: The spartree is rebuilt.
-========Fixpoint iteration 3. Reducer: node_priority========
-
-Parser Facade: class org.perses.grammar.ruby.PnfRubyParserFacade
-The spar-tree is the following.
-compilation_unit{id=201,slot_type=compilation_unit}
-|___aux_rule__statement_list_terms_3{id=203,slot_type=[statement_list_terms,aux_rule__statement_list_terms_3]}
-    |___(?){id=204,slot_type=optional__statement_list_terms_4}
-    |   |___aux_rule__expr_45{id=211,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
-    |       |___Token:puts{id=227,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |       |___(+){id=222,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
-    |           |___Token:"hello world"{id=223,slot_type=String}
-    |___(+){id=205,slot_type=terms}
-        |___Token:\n{id=207,slot_type=[term,CRLF]}
-------------------------------------------------------------
-
-
-FixPt[3][node_priority](3/27)  Starting to retrieve the semantics provider
-FixPt[3][node_priority](3/27)  Retrieved semantics provider null
-=================Reducing node 203, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-==========Testing the following program (34): fail==========
-
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement_list_terms->;
-    --file: hello.rb--
-        ;
-------------------------------------------------------------
-
-
-==========Testing the following program (35): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 203
-------------------------------------------------------------
-
-
-=================Reducing node 204, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
-FixPt[3][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
-==========Testing the following program (36): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__statement_list_terms_4]dd@#nodes=1,#parts=1#total-parts=1
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (37): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__statement_list_terms_4]LiteralReplacement@1,statement->break
-    --file: hello.rb--
-        break
-------------------------------------------------------------
-
-
-FixPt[3][node_priority][DFS](3/27)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
-FixPt[3][node_priority][DFS](3/27)  There is only one element in the input, and the empty input has been tested. Global ratio:3/27=11.11%
-FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
-===================Node reduction is done===================
-
-Failed to reduce node 204
-------------------------------------------------------------
-
-
-=================Reducing node 211, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-==========Testing the following program (38): fail==========
-
-// edit action set type: [regular_node]can be epsilon
-    --file: hello.rb--
-------------------------------------------------------------
-
-
-==========Testing the following program (39): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-        puts
-------------------------------------------------------------
-
-
-==========Testing the following program (40): fail==========
-
-// edit action set type: [regular_node]literal replacement:LiteralReplacement@1,statement->break
-    --file: hello.rb--
-        break
-------------------------------------------------------------
-
-
-==========Testing the following program (41): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: hello.rb--
-             "hello world"
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 211
-------------------------------------------------------------
-
-
-=================Reducing node 227, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 227
-------------------------------------------------------------
-
-
-=================Reducing node 222, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
-FixPt[3][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
-==========Testing the following program (42): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:string]dd@#nodes=1,#parts=1#total-parts=1
-    --file: hello.rb--
-        puts
-------------------------------------------------------------
-
-
-FixPt[3][node_priority][DFS](3/27)  Try deleting [0]#1: Skipped LiteralReplacement. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
-FixPt[3][node_priority][DFS](3/27)  There is only one element in the input, and the empty input has been tested. Global ratio:3/27=11.11%
-FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
-===================Node reduction is done===================
-
-Failed to reduce node 222
-------------------------------------------------------------
-
-
-=================Reducing node 223, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 223
-------------------------------------------------------------
-
-
-=================Reducing node 205, size=3==================
-
-The current best program is the following
-
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:3/27=11.11%
-FixPt[3][node_priority][DFS](3/27)  Testing the empty input. Global ratio:3/27=11.11%
-==========Testing the following program (43): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:terms]dd@#nodes=1,#parts=1#total-parts=1
-    --file: hello.rb--
-        puts "hello world"
-------------------------------------------------------------
-
-
-FixPt[3][node_priority][DFS](3/27)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:3/27=11.11%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 3 -> 3
-Edit: [delete_207]
-------------------------------------------------------------
-
-
-FixPt[3][node_priority][DFS](3/27)  Minimizer UnweightedDfsListMinimizer ends. Result=[]#0. Local ratio: 0/1=0.00%. Global ratio:3/27=11.11%
-===================Node reduction is done===================
-
-Failed to reduce node 205
-------------------------------------------------------------
-
-
-(3/27)  Rebuilding spar-tree: The spartree is rebuilt.
-====Fixpoint iteration 4. Reducer: FineGritLatraReducer=====
-
-Parser Facade: class org.perses.grammar.ruby.PnfRubyParserFacade
-The spar-tree is the following.
-compilation_unit{id=232,slot_type=compilation_unit}
-|___aux_rule__statement_list_terms_3{id=234,slot_type=[statement_list_terms,aux_rule__statement_list_terms_3]}
-    |___(?){id=235,slot_type=optional__statement_list_terms_4}
-    |   |___aux_rule__expr_45{id=242,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
-    |       |___Token:puts{id=258,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |       |___(+){id=253,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
-    |           |___Token:"hello world"{id=254,slot_type=String}
-    |___(+){id=236,slot_type=terms}
-        |___Token:\n{id=238,slot_type=[term,CRLF]}
-------------------------------------------------------------
-
-
-FixPt[4][FineGritLatraReducer](3/27)  Latra does not support LanguageRuby{name=ruby, extensions=[rb], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
 (3/27)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 5. Reducer: spartree_root_replacement_reducer
+====Fixpoint iteration 3. Reducer: FineGritLatraReducer=====
 
 Parser Facade: class org.perses.grammar.ruby.PnfRubyParserFacade
 The spar-tree is the following.
-compilation_unit{id=232,slot_type=compilation_unit}
-|___aux_rule__statement_list_terms_3{id=234,slot_type=[statement_list_terms,aux_rule__statement_list_terms_3]}
-    |___(?){id=235,slot_type=optional__statement_list_terms_4}
-    |   |___aux_rule__expr_45{id=242,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
-    |       |___Token:puts{id=258,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
-    |       |___(+){id=253,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
-    |           |___Token:"hello world"{id=254,slot_type=String}
-    |___(+){id=236,slot_type=terms}
-        |___Token:\n{id=238,slot_type=[term,CRLF]}
+compilation_unit{id=152,slot_type=compilation_unit}
+|___(?){id=155,slot_type=[statement_list_terms,aux_rule__statement_list_terms_3,optional__statement_list_terms_4]}
+    |___aux_rule__expr_45{id=161,slot_type=[statement,expr,aux_rule__expr_16,aux_rule__expr_45]}
+        |___Token:puts{id=177,slot_type=[function_name,aux_rule__function_name_3,cpath,identifier,Identifier]}
+        |___(+){id=172,slot_type=[alt_block__expr_27,aux_rule__expr_47,func_call_parameters_no_bracket,function_call_param,expr,aux_rule__expr_16,variable_path,aux_rule__variable_path_3,literal,string]}
+            |___Token:"hello world"{id=173,slot_type=String}
 ------------------------------------------------------------
 
 
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 0 --> 0.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 3 -> 3
-Edit: AnyNodeReplace:[replace_232_with_165]
-------------------------------------------------------------
-
-
+FixPt[3][FineGritLatraReducer](3/27)  Latra does not support LanguageRuby{name=ruby, extensions=[rb], defaultCodeFormatControl=COMPACT_ORIG_FORMAT} langauge yet.
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
- 0                     node_priority      4             1     -22            -53      22   time-hidden
- 1                     node_priority      3             2      -2             -1      12   time-hidden
- 2                     node_priority      1             1       0              0      10   time-hidden
- 3              FineGritLatraReducer      0             0       0              0       0   time-hidden
- 4 spartree_root_replacement_reducer      1             1       0              0       0   time-hidden
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      3             0     -24            -54       9   time-hidden
+ 1        node_priority      0             0       0              0       7   time-hidden
+ 2 FineGritLatraReducer      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-                          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
-                    node_priority     3      8             4     -24            -54      44   time-hidden
-             FineGritLatraReducer     1      0             0       0              0       0   time-hidden
-spartree_root_replacement_reducer     1      1             1       0              0       0   time-hidden
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     2      3             0     -24            -54      16   time-hidden
+FineGritLatraReducer     1      0             0       0              0       0   time-hidden
 
 ------------------------------- Transformations --------------------------------
-                                   Transformation Worked #NonDeletions #Tokens #NonBlankChars
-                        node_priority.Replacement      1             0     -18            -31
-                           node_priority.Deletion      6             4      -5            -13
-                 node_priority.LiteralReplacement      1             0      -1            -10
-spartree_root_replacement_reducer.RootReplacement      1             1       0              0
+           Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Replacement      1             0     -18            -31
+   node_priority.Deletion      2             0      -6            -23
 ------------------------------------- End --------------------------------------
-#test success = 8
-#test failure = 36
+#test success = 3
+#test failure = 13
 #test result cache hits = 0
-#test execution cancelled = 2
+#test execution cancelled = 0
 #node edit action set cache hits = 0
 #external test execution cache hits = 0

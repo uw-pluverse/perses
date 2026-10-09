@@ -235,6 +235,7 @@ kt_jvm_test(
     test_class = "org.perses.spartree.SparTreeBuilderTest",
     deps = DEFAULT_DEPS + [
         "//src/org/perses/grammar/c:orig_parser_facade",
+        "//src/org/perses/grammar/xml:parser_facade",
     ],
 )
 

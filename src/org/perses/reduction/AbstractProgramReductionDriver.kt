@@ -137,6 +137,30 @@ abstract class AbstractProgramReductionDriver(
   @Volatile
   private var activeOutputManagerFactory: AbstractTokenOutputManagerFactory = outputManagerFactory
 
+  /**
+   * Whether this driver may leave whitespace-only tokens out of its trees, which it does when it
+   * prints in the original or compact format.
+   *
+   * Grammars such as XML's, Makefile's and Ruby's lex layout as tokens. Those two formats put every
+   * token back at its line and column, so a whitespace-only token adds nothing to the printed
+   * program and deleting it never changes that program; in the tree it only lengthens the lists the
+   * reducers work on. Only the tree changes: the tokens are still in the printed program, so the
+   * sizes Perses reports count them. Other formats need them -- single-token-per-line prints each
+   * token's own text, and the Python formats end lines on Python's NEWLINE tokens.
+   *
+   * Off unless a driver opts in: the list-minimizer evaluation must keep every recorded token, and
+   * the ppr drivers compare trees token by token.
+   */
+  protected open val allowsExcludingWhitespaceOnlyTokens: Boolean
+    get() = false
+
+  /** Whether this driver leaves whitespace-only tokens out of its trees under its active format. */
+  protected fun shouldExcludeWhitespaceOnlyTokens(): Boolean =
+    allowsExcludingWhitespaceOnlyTokens &&
+      activeOutputManagerFactory.defaultCodeFormatControl.let {
+        it == EnumFormatControl.ORIG_FORMAT || it == EnumFormatControl.COMPACT_ORIG_FORMAT
+      }
+
   init {
     // The format-sensitivity check formerly lived in TokenReductionIOManager; the code format is now
     // owned by the factory (the driver), so validate it here against the active file's own language.
@@ -610,6 +634,7 @@ abstract class AbstractProgramReductionDriver(
         enableNodeActionSetCache = cmd.cacheControlFlags.nodeActionSetCaching,
         originalReductionInputs = ioManager.originalReductionInputs,
         errorMode = errorMode,
+        excludeWhitespaceOnlyTokens = shouldExcludeWhitespaceOnlyTokens(),
       )
     } catch (_: AntlrFailureException) {
       null
@@ -1110,6 +1135,11 @@ abstract class AbstractProgramReductionDriver(
        * needs so an unbalanced program still yields a tree to reduce instead of being skipped.
        */
       errorMode: ParseErrorHandling = ParseErrorHandling.STRICT,
+      /**
+       * Whether whitespace-only tokens are left out of the tree (see
+       * [allowsExcludingWhitespaceOnlyTokens]).
+       */
+      excludeWhitespaceOnlyTokens: Boolean = false,
     ): InputRepresentation {
       val originalSourceCode = sourceFile.readText()
       val sparTree =
@@ -1140,6 +1170,7 @@ abstract class AbstractProgramReductionDriver(
               originalSourceCode,
               surrogateParserFacade,
             ),
+          excludeWhitespaceOnlyTokens = excludeWhitespaceOnlyTokens,
         )
       // Compute the semantics synchronously, here, rather than asynchronously while the driver runs.
       // The semantics provider analyzes [sourceFile] on disk (e.g. mimir runs clangd/javac on it) and

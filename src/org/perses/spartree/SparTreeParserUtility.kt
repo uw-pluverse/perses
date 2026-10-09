@@ -35,6 +35,11 @@ object SparTreeParserUtility {
     // A parse of [sourceCode] already produced by [parserFacade] (e.g. during facade resolution). When
     // given, it is reused instead of parsing again; the caller guarantees it matches [sourceCode].
     precomputedParseTree: ParseTreeWithParser? = null,
+    /**
+     * Whether whitespace-only tokens are left out (see
+     * `AbstractProgramReductionDriver.allowsExcludingWhitespaceOnlyTokens`).
+     */
+    excludeWhitespaceOnlyTokens: Boolean = false,
   ): SparTree {
     val factoryFacade = specifiedSparTreeNodeFactory?.parserFacade
     if (factoryFacade != null) {
@@ -54,6 +59,7 @@ object SparTreeParserUtility {
       simplifyTree = simplifyTree,
       canonicalTokenCountComputer = canonicalTokenCountComputer,
       enableNodeActionSetCache = enableNodeActionSetCache,
+      excludeWhitespaceOnlyTokens = excludeWhitespaceOnlyTokens,
     ).result
   }
 }

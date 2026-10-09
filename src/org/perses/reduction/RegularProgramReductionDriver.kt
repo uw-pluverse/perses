@@ -66,6 +66,9 @@ open class RegularProgramReductionDriver protected constructor(
     reductionStartEvent = reductionStartEvent,
     executorService = executorService,
   ) {
+  override val allowsExcludingWhitespaceOnlyTokens: Boolean
+    get() = true
+
   override var inputRepresentation: InputRepresentation =
     run {
       createInputRepresentation(
@@ -80,6 +83,7 @@ open class RegularProgramReductionDriver protected constructor(
         semanticsProviderCreator = configuration.mimirConfig.semanticsProviderCreator,
         enableNodeActionSetCache = cmd.cacheControlFlags.nodeActionSetCaching,
         originalReductionInputs = ioManager.originalReductionInputs,
+        excludeWhitespaceOnlyTokens = shouldExcludeWhitespaceOnlyTokens(),
       )
     }
 

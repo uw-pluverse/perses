@@ -168,80 +168,51 @@ Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
 makefile{id=1,slot_type=makefile}
 |___(*){id=2,slot_type=kleene_star__makefile_1}
-    |___textLine{id=110,slot_type=[item,textLine]}
-    |   |___(+){id=111,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:CC{id=118,slot_type=[word,WORD]}
-    |   |   |___Token:={id=117,slot_type=[word,WORD]}
-    |   |   |___Token:cc{id=116,slot_type=[word,WORD]}
-    |   |___Token:\n{id=112,slot_type=NEWLINE}
-    |___textLine{id=101,slot_type=[item,textLine]}
-    |   |___(+){id=102,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=109,slot_type=[word,WORD]}
-    |   |   |___Token:={id=108,slot_type=[word,WORD]}
-    |   |   |___Token:main.c{id=107,slot_type=[word,WORD]}
-    |   |___Token:\n{id=103,slot_type=NEWLINE}
-    |___textLine{id=92,slot_type=[item,textLine]}
-    |   |___(+){id=93,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=100,slot_type=[word,WORD]}
-    |   |   |___Token:+={id=99,slot_type=[word,WORD]}
-    |   |   |___Token:f1.c{id=98,slot_type=[word,WORD]}
-    |   |___Token:\n{id=94,slot_type=NEWLINE}
-    |___textLine{id=83,slot_type=[item,textLine]}
-    |   |___(+){id=84,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=91,slot_type=[word,WORD]}
-    |   |   |___Token:+={id=90,slot_type=[word,WORD]}
-    |   |   |___Token:f2.c{id=89,slot_type=[word,WORD]}
-    |   |___Token:\n{id=85,slot_type=NEWLINE}
-    |___textLine{id=74,slot_type=[item,textLine]}
-    |   |___(+){id=75,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=82,slot_type=[word,WORD]}
-    |   |   |___Token:+={id=81,slot_type=[word,WORD]}
-    |   |   |___Token:f3.c{id=80,slot_type=[word,WORD]}
-    |   |___Token:\n{id=76,slot_type=NEWLINE}
-    |___textLine{id=65,slot_type=[item,textLine]}
-    |   |___(+){id=66,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=73,slot_type=[word,WORD]}
-    |   |   |___Token:+={id=72,slot_type=[word,WORD]}
-    |   |   |___Token:f4.c{id=71,slot_type=[word,WORD]}
-    |   |___Token:\n{id=67,slot_type=NEWLINE}
-    |___textLine{id=56,slot_type=[item,textLine]}
-    |   |___(+){id=57,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:OBJS{id=64,slot_type=[word,WORD]}
-    |   |   |___Token:={id=63,slot_type=[word,WORD]}
-    |   |   |___Token:$(SRCS:.c=.o){id=62,slot_type=[word,VARREF]}
-    |   |___Token:\n{id=58,slot_type=NEWLINE}
-    |___Token:\n{id=55,slot_type=[item,blankLine,NEWLINE]}
-    |___rule{id=42,slot_type=[item,rule]}
-    |   |___textLine{id=43,slot_type=textLine}
-    |   |   |___(+){id=48,slot_type=kleene_plus__lastLine_1}
-    |   |   |   |___Token:prog:{id=53,slot_type=[word,WORD]}
-    |   |   |   |___Token:$(OBJS){id=52,slot_type=[word,VARREF]}
-    |   |   |___Token:\n{id=49,slot_type=NEWLINE}
-    |   |___(+){id=44,slot_type=kleene_plus__rule_1}
-    |       |___recipe{id=45,slot_type=recipe}
-    |           |___Token:\t$(CC) -o prog $(OBJS){id=46,slot_type=RECIPE_LINE}
-    |           |___Token:\n{id=47,slot_type=NEWLINE}
-    |___Token:\n{id=41,slot_type=[item,blankLine,NEWLINE]}
-    |___rule{id=28,slot_type=[item,rule]}
-    |   |___textLine{id=29,slot_type=textLine}
-    |   |   |___(+){id=34,slot_type=kleene_plus__lastLine_1}
-    |   |   |   |___Token:%.o:{id=39,slot_type=[word,WORD]}
-    |   |   |   |___Token:%.c{id=38,slot_type=[word,WORD]}
-    |   |   |___Token:\n{id=35,slot_type=NEWLINE}
-    |   |___(+){id=30,slot_type=kleene_plus__rule_1}
-    |       |___recipe{id=31,slot_type=recipe}
-    |           |___Token:\t$(CC) -c $< -o $@{id=32,slot_type=RECIPE_LINE}
-    |           |___Token:\n{id=33,slot_type=NEWLINE}
-    |___Token:\n{id=27,slot_type=[item,blankLine,NEWLINE]}
+    |___(+){id=96,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:CC{id=102,slot_type=[word,WORD]}
+    |   |___Token:={id=101,slot_type=[word,WORD]}
+    |   |___Token:cc{id=100,slot_type=[word,WORD]}
+    |___(+){id=88,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:SRCS{id=94,slot_type=[word,WORD]}
+    |   |___Token:={id=93,slot_type=[word,WORD]}
+    |   |___Token:main.c{id=92,slot_type=[word,WORD]}
+    |___(+){id=80,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:SRCS{id=86,slot_type=[word,WORD]}
+    |   |___Token:+={id=85,slot_type=[word,WORD]}
+    |   |___Token:f1.c{id=84,slot_type=[word,WORD]}
+    |___(+){id=72,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:SRCS{id=78,slot_type=[word,WORD]}
+    |   |___Token:+={id=77,slot_type=[word,WORD]}
+    |   |___Token:f2.c{id=76,slot_type=[word,WORD]}
+    |___(+){id=64,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:SRCS{id=70,slot_type=[word,WORD]}
+    |   |___Token:+={id=69,slot_type=[word,WORD]}
+    |   |___Token:f3.c{id=68,slot_type=[word,WORD]}
+    |___(+){id=56,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:SRCS{id=62,slot_type=[word,WORD]}
+    |   |___Token:+={id=61,slot_type=[word,WORD]}
+    |   |___Token:f4.c{id=60,slot_type=[word,WORD]}
+    |___(+){id=48,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:OBJS{id=54,slot_type=[word,WORD]}
+    |   |___Token:={id=53,slot_type=[word,WORD]}
+    |   |___Token:$(SRCS:.c=.o){id=52,slot_type=[word,VARREF]}
+    |___rule{id=36,slot_type=[item,rule]}
+    |   |___(+){id=41,slot_type=[textLine,kleene_plus__lastLine_1]}
+    |   |   |___Token:prog:{id=45,slot_type=[word,WORD]}
+    |   |   |___Token:$(OBJS){id=44,slot_type=[word,VARREF]}
+    |   |___(+){id=38,slot_type=kleene_plus__rule_1}
+    |       |___Token:\t$(CC) -o prog $(OBJS){id=40,slot_type=[recipe,RECIPE_LINE]}
+    |___rule{id=25,slot_type=[item,rule]}
+    |   |___(+){id=30,slot_type=[textLine,kleene_plus__lastLine_1]}
+    |   |   |___Token:%.o:{id=34,slot_type=[word,WORD]}
+    |   |   |___Token:%.c{id=33,slot_type=[word,WORD]}
+    |   |___(+){id=27,slot_type=kleene_plus__rule_1}
+    |       |___Token:\t$(CC) -c $< -o $@{id=29,slot_type=[recipe,RECIPE_LINE]}
     |___rule{id=16,slot_type=[item,rule]}
-        |___textLine{id=17,slot_type=textLine}
-        |   |___(+){id=22,slot_type=kleene_plus__lastLine_1}
-        |   |   |___Token:clean:{id=25,slot_type=[word,WORD]}
-        |   |___Token:\n{id=23,slot_type=NEWLINE}
+        |___(+){id=21,slot_type=[textLine,kleene_plus__lastLine_1]}
+        |   |___Token:clean:{id=23,slot_type=[word,WORD]}
         |___(+){id=18,slot_type=kleene_plus__rule_1}
-            |___recipe{id=19,slot_type=recipe}
-                |___Token:\trm -f $(OBJS) prog{id=20,slot_type=RECIPE_LINE}
-                |___Token:\n{id=21,slot_type=NEWLINE}
+            |___Token:\trm -f $(OBJS) prog{id=20,slot_type=[recipe,RECIPE_LINE]}
 ------------------------------------------------------------
 
 
@@ -290,11 +261,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](101/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-12]#13. Global ratio:101/101=100.00%
+FixPt[1][node_priority][DFS](101/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-9]#10. Global ratio:101/101=100.00%
 FixPt[1][node_priority][DFS](101/101)  Testing the empty input. Global ratio:101/101=100.00%
 ==========Testing the following program (0): fail===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=13,#parts=13#total-parts=13
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=10,#parts=10#total-parts=10
     --file: Makefile--
     --file: main.c--
     #include <stdio.h>
@@ -321,18 +292,16 @@ FixPt[1][node_priority][DFS](101/101)  Testing the empty input. Global ratio:101
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](101/101)  Try deleting [0-12]#13: Uninteresting. Local ratio: 13/13=100.00%. Global ratio:101/101=100.00%
+FixPt[1][node_priority][DFS](101/101)  Try deleting [0-9]#10: Uninteresting. Local ratio: 10/10=100.00%. Global ratio:101/101=100.00%
 ==========Testing the following program (1): fail===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=6,#parts=6#total-parts=13
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=5,#parts=5#total-parts=10
     --file: Makefile--
     CC = cc
     SRCS = main.c
     SRCS += f1.c
     SRCS += f2.c
     SRCS += f3.c
-    SRCS += f4.c
-    OBJS = $(SRCS:.c=.o)
     --file: main.c--
     #include <stdio.h>
     int main(void) {
@@ -358,10 +327,10 @@ FixPt[1][node_priority][DFS](101/101)  Try deleting [0-12]#13: Uninteresting. Lo
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](101/101)  Try deleting [7-12]#6: Uninteresting. Local ratio: 13/13=100.00%. Global ratio:101/101=100.00%
+FixPt[1][node_priority][DFS](101/101)  Try deleting [5-9]#5: Uninteresting. Local ratio: 10/10=100.00%. Global ratio:101/101=100.00%
 ==========Testing the following program (2): pass===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=3,#parts=3#total-parts=13
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=10
     --file: Makefile--
     CC = cc
     SRCS = main.c
@@ -397,7 +366,7 @@ FixPt[1][node_priority][DFS](101/101)  Try deleting [7-12]#6: Uninteresting. Loc
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](101/101)  Try deleting [10-12]#3: Interesting. Local ratio: 13/13=100.00%. Global ratio:101/101=100.00%
+FixPt[1][node_priority][DFS](101/101)  Try deleting [8-9]#2: Interesting. Local ratio: 10/10=100.00%. Global ratio:101/101=100.00%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 2 --> 2.
@@ -412,8 +381,8 @@ FixPt[1][node_priority][DFS](101/101)  Try deleting [10-12]#3: Interesting. Loca
 
 ================The best program is updated.================
 
-token count change 45 -> 35
-Edit: [delete: 16,27,28]
+token count change 45 -> 34
+Edit: [delete: 16,25]
 ------------------------------------------------------------
 
 
@@ -425,8 +394,6 @@ Edit: [delete: 16,27,28]
     SRCS += f1.c
     SRCS += f2.c
     SRCS += f3.c
-    SRCS += f4.c
-    OBJS = $(SRCS:.c=.o)
     --file: main.c--
     #include <stdio.h>
     int main(void) {
@@ -452,67 +419,10 @@ Edit: [delete: 16,27,28]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](91/101)  Try deleting [7-9]#3: Uninteresting. Local ratio: 10/13=76.92%. Global ratio:91/101=90.10%
-==========Testing the following program (3): pass===========
+FixPt[1][node_priority][DFS](90/101)  Try deleting [5-7]#3: Uninteresting. Local ratio: 8/10=80.00%. Global ratio:90/101=89.11%
+==========Testing the following program (3): fail===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=10
-    --file: Makefile--
-    CC = cc
-    SRCS = main.c
-    SRCS += f1.c
-    SRCS += f2.c
-    SRCS += f3.c
-    SRCS += f4.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](91/101)  Try deleting [9]#1: Interesting. Local ratio: 10/13=76.92%. Global ratio:91/101=90.10%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 2 --> 2.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 2
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 35 -> 34
-Edit: [delete_41]
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=8
     --file: Makefile--
     CC = cc
     SRCS = main.c
@@ -546,55 +456,16 @@ Edit: [delete_41]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](90/101)  Try deleting [7-8]#2: Uninteresting. Local ratio: 9/13=69.23%. Global ratio:90/101=89.11%
+FixPt[1][node_priority][DFS](90/101)  Try deleting [7]#1: Uninteresting. Local ratio: 8/10=80.00%. Global ratio:90/101=89.11%
 ==========Testing the following program (4): fail===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=9
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=8
     --file: Makefile--
     CC = cc
     SRCS = main.c
     SRCS += f1.c
     SRCS += f2.c
     SRCS += f3.c
-    SRCS += f4.c
-    OBJS = $(SRCS:.c=.o)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](90/101)  Try deleting [8]#1: Uninteresting. Local ratio: 9/13=69.23%. Global ratio:90/101=89.11%
-==========Testing the following program (5): pass===========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=9
-    --file: Makefile--
-    CC = cc
-    SRCS = main.c
-    SRCS += f1.c
-    SRCS += f2.c
-    SRCS += f3.c
-    SRCS += f4.c
-    OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
     	$(CC) -o prog $(OBJS)
     --file: main.c--
@@ -622,95 +493,8 @@ FixPt[1][node_priority][DFS](90/101)  Try deleting [8]#1: Uninteresting. Local r
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](90/101)  Try deleting [7]#1: Interesting. Local ratio: 9/13=69.23%. Global ratio:90/101=89.11%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 3 --> 3.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 3
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 34 -> 34
-Edit: [delete_55]
-------------------------------------------------------------
-
-
-==========Testing the following program (6): fail===========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=7,#parts=7#total-parts=8
-    --file: Makefile--
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](90/101)  Try deleting [0-6]#7: Uninteresting. Local ratio: 8/13=61.54%. Global ratio:90/101=89.11%
-==========Testing the following program (7): fail===========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=3,#parts=3#total-parts=8
-    --file: Makefile--
-    CC = cc
-    SRCS = main.c
-    SRCS += f1.c
-    SRCS += f2.c
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](90/101)  Try deleting [4-6]#3: Uninteresting. Local ratio: 8/13=61.54%. Global ratio:90/101=89.11%
-==========Testing the following program (8): fail===========
+FixPt[1][node_priority][DFS](90/101)  Try deleting [5-6]#2: Uninteresting. Local ratio: 8/10=80.00%. Global ratio:90/101=89.11%
+==========Testing the following program (5): fail===========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=8
     --file: Makefile--
@@ -747,15 +531,16 @@ FixPt[1][node_priority][DFS](90/101)  Try deleting [4-6]#3: Uninteresting. Local
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](90/101)  Try deleting [6]#1: Uninteresting. Local ratio: 8/13=61.54%. Global ratio:90/101=89.11%
-==========Testing the following program (9): pass===========
+FixPt[1][node_priority][DFS](90/101)  Try deleting [6]#1: Uninteresting. Local ratio: 8/10=80.00%. Global ratio:90/101=89.11%
+==========Testing the following program (6): pass===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=8
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=8
     --file: Makefile--
     CC = cc
     SRCS = main.c
     SRCS += f1.c
     SRCS += f2.c
+    SRCS += f3.c
     OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
     	$(CC) -o prog $(OBJS)
@@ -784,29 +569,29 @@ FixPt[1][node_priority][DFS](90/101)  Try deleting [6]#1: Uninteresting. Local r
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](90/101)  Try deleting [4-5]#2: Interesting. Local ratio: 8/13=61.54%. Global ratio:90/101=89.11%
+FixPt[1][node_priority][DFS](90/101)  Try deleting [5]#1: Interesting. Local ratio: 8/10=80.00%. Global ratio:90/101=89.11%
 ===========TestScriptExecutionCacheEntryEviction============
 
-1 entries are removed: 6 --> 5.
+0 entries are removed: 5 --> 5.
 ------------------------------------------------------------
 
 
 ===========Node edit action set cache is cleared.===========
 
-    size before clearance = 4
+    size before clearance = 5
 ------------------------------------------------------------
 
 
 ================The best program is updated.================
 
-token count change 34 -> 28
-Edit: [delete: 65,74]
+token count change 34 -> 31
+Edit: [delete_56]
 ------------------------------------------------------------
 
 
-==========Testing the following program (10): fail==========
+==========Testing the following program (7): fail===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=4,#parts=4#total-parts=6
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=5,#parts=5#total-parts=7
     --file: Makefile--
     OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
@@ -836,13 +621,14 @@ Edit: [delete: 65,74]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](84/101)  Try deleting [0-3]#4: Uninteresting. Local ratio: 6/13=46.15%. Global ratio:84/101=83.17%
-==========Testing the following program (11): pass==========
+FixPt[1][node_priority][DFS](87/101)  Try deleting [0-4]#5: Uninteresting. Local ratio: 7/10=70.00%. Global ratio:87/101=86.14%
+==========Testing the following program (8): pass===========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=6
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=7
     --file: Makefile--
     CC = cc
     SRCS = main.c
+    SRCS += f1.c
     OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
     	$(CC) -o prog $(OBJS)
@@ -871,7 +657,7 @@ FixPt[1][node_priority][DFS](84/101)  Try deleting [0-3]#4: Uninteresting. Local
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](84/101)  Try deleting [2-3]#2: Interesting. Local ratio: 6/13=46.15%. Global ratio:84/101=83.17%
+FixPt[1][node_priority][DFS](87/101)  Try deleting [3-4]#2: Interesting. Local ratio: 7/10=70.00%. Global ratio:87/101=86.14%
 ===========TestScriptExecutionCacheEntryEviction============
 
 3 entries are removed: 6 --> 3.
@@ -886,8 +672,8 @@ FixPt[1][node_priority][DFS](84/101)  Try deleting [2-3]#2: Interesting. Local r
 
 ================The best program is updated.================
 
-token count change 28 -> 22
-Edit: [delete: 83,92]
+token count change 31 -> 25
+Edit: [delete: 64,72]
 ------------------------------------------------------------
 
 
@@ -922,8 +708,94 @@ Edit: [delete: 83,92]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](78/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/13=30.77%. Global ratio:78/101=77.23%
-==========Testing the following program (12): fail==========
+FixPt[1][node_priority][DFS](81/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/10=50.00%. Global ratio:81/101=80.20%
+==========Testing the following program (9): pass===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=5
+    --file: Makefile--
+    CC = cc
+    SRCS = main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](81/101)  Try deleting [2]#1: Interesting. Local ratio: 5/10=50.00%. Global ratio:81/101=80.20%
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 3 --> 3.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 25 -> 22
+Edit: [delete_80]
+------------------------------------------------------------
+
+
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Makefile--
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](78/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/10=40.00%. Global ratio:78/101=77.23%
+==========Testing the following program (10): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=4
     --file: Makefile--
@@ -956,8 +828,8 @@ FixPt[1][node_priority][DFS](78/101)  Try deleting [0-1]#2: Uninteresting. Local
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](78/101)  Try deleting [1]#1: Uninteresting. Local ratio: 4/13=30.77%. Global ratio:78/101=77.23%
-==========Testing the following program (13): pass==========
+FixPt[1][node_priority][DFS](78/101)  Try deleting [1]#1: Uninteresting. Local ratio: 4/10=40.00%. Global ratio:78/101=77.23%
+==========Testing the following program (11): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=4
     --file: Makefile--
@@ -990,7 +862,7 @@ FixPt[1][node_priority][DFS](78/101)  Try deleting [1]#1: Uninteresting. Local r
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](78/101)  Try deleting [0]#1: Interesting. Local ratio: 4/13=30.77%. Global ratio:78/101=77.23%
+FixPt[1][node_priority][DFS](78/101)  Try deleting [0]#1: Interesting. Local ratio: 4/10=40.00%. Global ratio:78/101=77.23%
 ===========TestScriptExecutionCacheEntryEviction============
 
 0 entries are removed: 4 --> 4.
@@ -1006,183 +878,18 @@ FixPt[1][node_priority][DFS](78/101)  Try deleting [0]#1: Interesting. Local rat
 ================The best program is updated.================
 
 token count change 22 -> 19
-Edit: [delete_110]
+Edit: [delete_96]
 ------------------------------------------------------------
 
 
-FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[1,6,8]#3. Local ratio: 3/13=23.08%. Global ratio:75/101=74.26%
+FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[1,6-7]#3. Local ratio: 3/10=30.00%. Global ratio:75/101=74.26%
 ===================Node reduction is done===================
 
 Succeeded to reduce node 2 from 101 to 75
 ------------------------------------------------------------
 
 
-=================Reducing node 42, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (14): fail==========
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (15): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (16): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (17): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 42
-------------------------------------------------------------
-
-
-=================Reducing node 101, size=75=================
+=================Reducing node 88, size=75==================
 
 The current best program is the following
 
@@ -1247,187 +954,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (18): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 101
-------------------------------------------------------------
-
-
-=================Reducing node 56, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (19): fail==========
-
-// edit action set type: [regular_node]can be epsilon
-    --file: Makefile--
-    SRCS = main.c
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (20): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    SRCS = main.c
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 56
-------------------------------------------------------------
-
-
-=================Reducing node 102, size=75=================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (21): fail==========
+==========Testing the following program (12): fail==========
 
 // edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
     --file: Makefile--
-    SRCS         
+    SRCS
     OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
     	$(CC) -o prog $(OBJS)
@@ -1490,11 +1021,11 @@ FixPt[1][node_priority][DFS](75/101)  Testing the empty input. Global ratio:75/1
 
 
 FixPt[1][node_priority][DFS](75/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (22): fail==========
+==========Testing the following program (13): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: Makefile--
-    SRCS =       
+    SRCS =
     OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
     	$(CC) -o prog $(OBJS)
@@ -1524,7 +1055,7 @@ FixPt[1][node_priority][DFS](75/101)  Try deleting [0-2]#3: Uninteresting. Local
 
 
 FixPt[1][node_priority][DFS](75/101)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (23): fail==========
+==========Testing the following program (14): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
     --file: Makefile--
@@ -1558,7 +1089,7 @@ FixPt[1][node_priority][DFS](75/101)  Try deleting [2]#1: Uninteresting. Local r
 
 
 FixPt[1][node_priority][DFS](75/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (24): fail==========
+==========Testing the following program (15): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: Makefile--
@@ -1592,7 +1123,7 @@ FixPt[1][node_priority][DFS](75/101)  Try deleting [0-1]#2: Uninteresting. Local
 
 
 FixPt[1][node_priority][DFS](75/101)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (25): fail==========
+==========Testing the following program (16): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: Makefile--
@@ -1629,291 +1160,7 @@ FixPt[1][node_priority][DFS](75/101)  Try deleting [0]#1: Uninteresting. Local r
 FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
 ===================Node reduction is done===================
 
-Failed to reduce node 102
-------------------------------------------------------------
-
-
-=================Reducing node 57, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-==========Testing the following program (26): fail==========
-
-// edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
-    --file: Makefile--
-    SRCS = main.c
-    OBJS                
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:75/101=74.26%
-FixPt[1][node_priority][DFS](75/101)  Testing the empty input. Global ratio:75/101=74.26%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    SRCS = main.c
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](75/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (27): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-    SRCS = main.c
-    OBJS =              
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](75/101)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (28): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
-    --file: Makefile--
-    SRCS = main.c
-           $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](75/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (29): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-    SRCS = main.c
-    OBJS   $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](75/101)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (30): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-    SRCS = main.c
-         = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](75/101)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
-===================Node reduction is done===================
-
-Failed to reduce node 57
-------------------------------------------------------------
-
-
-=================Reducing node 43, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 43
+Failed to reduce node 88
 ------------------------------------------------------------
 
 
@@ -1951,13 +1198,360 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (31): fail==========
+==========Testing the following program (17): fail==========
+
+// edit action set type: [kleene_plus:kleene_plus__lastLine_1]can be epsilon
+    --file: Makefile--
+    SRCS = main.c
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (18): fail==========
+
+// edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
+    --file: Makefile--
+    SRCS = main.c
+    OBJS
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:75/101=74.26%
+FixPt[1][node_priority][DFS](75/101)  Testing the empty input. Global ratio:75/101=74.26%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Makefile--
+    SRCS = main.c
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](75/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
+==========Testing the following program (19): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+    SRCS = main.c
+    OBJS =
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](75/101)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
+==========Testing the following program (20): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
+    --file: Makefile--
+    SRCS = main.c
+           $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](75/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
+==========Testing the following program (21): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+    SRCS = main.c
+    OBJS   $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](75/101)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
+==========Testing the following program (22): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+    SRCS = main.c
+         = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](75/101)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
+FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:75/101=74.26%
+===================Node reduction is done===================
+
+Failed to reduce node 48
+------------------------------------------------------------
+
+
+=================Reducing node 36, size=75==================
+
+The current best program is the following
+
+    --file: Makefile--
+    SRCS = main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (23): fail==========
+
+// edit action set type: [regular_node]can be epsilon
+    --file: Makefile--
+    SRCS = main.c
+    OBJS = $(SRCS:.c=.o)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Failed to reduce node 36
+------------------------------------------------------------
+
+
+=================Reducing node 41, size=75==================
+
+The current best program is the following
+
+    --file: Makefile--
+    SRCS = main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+==========Testing the following program (24): fail==========
 
 // edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
     --file: Makefile--
     SRCS = main.c
     OBJS = $(SRCS:.c=.o)
-    prog:        
+    prog:
     	$(CC) -o prog $(OBJS)
     --file: main.c--
     #include <stdio.h>
@@ -1986,7 +1580,7 @@ The current best program is the following
 
 FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:75/101=74.26%
 FixPt[1][node_priority][DFS](75/101)  Testing the empty input. Global ratio:75/101=74.26%
-==========Testing the following program (32): fail==========
+==========Testing the following program (25): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=2
     --file: Makefile--
@@ -2021,13 +1615,13 @@ FixPt[1][node_priority][DFS](75/101)  Testing the empty input. Global ratio:75/1
 FixPt[1][node_priority][DFS](75/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:75/101=74.26%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_52]
+    structure: [delete_44]
     context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=2
 ------------------------------------------------------------
 
 
 FixPt[1][node_priority][DFS](75/101)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (33): fail==========
+==========Testing the following program (26): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: Makefile--
@@ -2064,87 +1658,11 @@ FixPt[1][node_priority][DFS](75/101)  Try deleting [0]#1: Uninteresting. Local r
 FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:75/101=74.26%
 ===================Node reduction is done===================
 
-Failed to reduce node 48
+Failed to reduce node 41
 ------------------------------------------------------------
 
 
-=================Reducing node 44, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:75/101=74.26%
-FixPt[1][node_priority][DFS](75/101)  Testing the empty input. Global ratio:75/101=74.26%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-FixPt[1][node_priority][DFS](75/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:75/101=74.26%
-FixPt[1][node_priority][DFS](75/101)  There is only one element in the input, and the empty input has been tested. Global ratio:75/101=74.26%
-FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:75/101=74.26%
-===================Node reduction is done===================
-
-Failed to reduce node 44
-------------------------------------------------------------
-
-
-=================Reducing node 45, size=75==================
+=================Reducing node 94, size=75==================
 
 The current best program is the following
 
@@ -2180,11 +1698,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 45
+Failed to reduce node 94
 ------------------------------------------------------------
 
 
-=================Reducing node 109, size=75=================
+=================Reducing node 93, size=75==================
 
 The current best program is the following
 
@@ -2220,11 +1738,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 109
+Failed to reduce node 93
 ------------------------------------------------------------
 
 
-=================Reducing node 108, size=75=================
+=================Reducing node 92, size=75==================
 
 The current best program is the following
 
@@ -2260,11 +1778,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 108
+Failed to reduce node 92
 ------------------------------------------------------------
 
 
-=================Reducing node 107, size=75=================
+=================Reducing node 54, size=75==================
 
 The current best program is the following
 
@@ -2300,207 +1818,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 107
-------------------------------------------------------------
-
-
-=================Reducing node 103, size=75=================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 103
-------------------------------------------------------------
-
-
-=================Reducing node 64, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 64
-------------------------------------------------------------
-
-
-=================Reducing node 63, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 63
-------------------------------------------------------------
-
-
-=================Reducing node 62, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 62
-------------------------------------------------------------
-
-
-=================Reducing node 58, size=75==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-    #include <stdio.h>
-    int main(void) {
-      printf("INTERESTING\n");
-      return 0;
-    }
-    --file: f1.c--
-    int f1(void) {
-      return 1;
-    }
-    --file: f2.c--
-    int f2(void) {
-      return 2;
-    }
-    --file: f3.c--
-    int f3(void) {
-      return 3;
-    }
-    --file: f4.c--
-    int f4(void) {
-      return 4;
-    }
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 58
+Failed to reduce node 54
 ------------------------------------------------------------
 
 
@@ -2584,7 +1902,7 @@ Failed to reduce node 52
 ------------------------------------------------------------
 
 
-=================Reducing node 49, size=75==================
+=================Reducing node 45, size=75==================
 
 The current best program is the following
 
@@ -2620,11 +1938,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 49
+Failed to reduce node 45
 ------------------------------------------------------------
 
 
-=================Reducing node 47, size=75==================
+=================Reducing node 44, size=75==================
 
 The current best program is the following
 
@@ -2660,11 +1978,88 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 47
+Failed to reduce node 44
 ------------------------------------------------------------
 
 
-=================Reducing node 46, size=75==================
+=================Reducing node 38, size=75==================
+
+The current best program is the following
+
+    --file: Makefile--
+    SRCS = main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:75/101=74.26%
+FixPt[1][node_priority][DFS](75/101)  Testing the empty input. Global ratio:75/101=74.26%
+==========Testing the following program (27): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__rule_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: Makefile--
+    SRCS = main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    --file: main.c--
+    #include <stdio.h>
+    int main(void) {
+      printf("INTERESTING\n");
+      return 0;
+    }
+    --file: f1.c--
+    int f1(void) {
+      return 1;
+    }
+    --file: f2.c--
+    int f2(void) {
+      return 2;
+    }
+    --file: f3.c--
+    int f3(void) {
+      return 3;
+    }
+    --file: f4.c--
+    int f4(void) {
+      return 4;
+    }
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](75/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:75/101=74.26%
+FixPt[1][node_priority][DFS](75/101)  There is only one element in the input, and the empty input has been tested. Global ratio:75/101=74.26%
+FixPt[1][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:75/101=74.26%
+===================Node reduction is done===================
+
+Failed to reduce node 38
+------------------------------------------------------------
+
+
+=================Reducing node 40, size=75==================
 
 The current best program is the following
 
@@ -2700,7 +2095,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 46
+Failed to reduce node 40
 ------------------------------------------------------------
 
 
@@ -2794,7 +2189,7 @@ The current best program is the following
 
 FixPt[2][node_priority][DFS](75/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:75/101=74.26%
 FixPt[2][node_priority][DFS](75/101)  Testing the empty input. Global ratio:75/101=74.26%
-==========Testing the following program (34): fail==========
+==========Testing the following program (28): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -2872,7 +2267,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (35): fail==========
+==========Testing the following program (29): fail==========
 
 // edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove all except first
     --file: Makefile--
@@ -2939,7 +2334,7 @@ FixPt[2][node_priority][DFS](75/101)  Try deleting [0-1]#2: Uninteresting. Local
 
 
 FixPt[2][node_priority][DFS](75/101)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:75/101=74.26%
-==========Testing the following program (36): pass==========
+==========Testing the following program (30): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__translationUnit_3]dd@#nodes=1,#parts=1#total-parts=2
     --file: Makefile--
@@ -2974,7 +2369,7 @@ FixPt[2][node_priority][DFS](75/101)  Try deleting [1]#1: Skipped. Local ratio: 
 FixPt[2][node_priority][DFS](75/101)  Try deleting [0]#1: Interesting. Local ratio: 2/2=100.00%. Global ratio:75/101=74.26%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 26 --> 26.
+0 entries are removed: 22 --> 22.
 ------------------------------------------------------------
 
 
@@ -3058,7 +2453,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (37): fail==========
+==========Testing the following program (31): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -3087,7 +2482,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (38): fail==========
+==========Testing the following program (32): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -3196,7 +2591,7 @@ The current best program is the following
 
 FixPt[2][node_priority][DFS](74/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:74/101=73.27%
 FixPt[2][node_priority][DFS](74/101)  Testing the empty input. Global ratio:74/101=73.27%
-==========Testing the following program (39): fail==========
+==========Testing the following program (33): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compoundStatement_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -3275,7 +2670,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (40): pass==========
+==========Testing the following program (34): pass==========
 
 // edit action set type: [kleene_plus:kleene_plus__blockItemList_3]remove all except first
     --file: Makefile--
@@ -3308,7 +2703,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 29 --> 29.
+0 entries are removed: 25 --> 25.
 ------------------------------------------------------------
 
 
@@ -3404,7 +2799,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (41): fail==========
+==========Testing the following program (35): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -3473,7 +2868,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (42): fail==========
+==========Testing the following program (36): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -3622,7 +3017,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (43): fail==========
+==========Testing the following program (37): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -3653,7 +3048,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (44): fail==========
+==========Testing the following program (38): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -3996,7 +3391,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (45): pass==========
+==========Testing the following program (39): pass==========
 
 // edit action set type: [kleene_plus:declarationSpecifiers]can be epsilon
     --file: Makefile--
@@ -4029,7 +3424,7 @@ The current best program is the following
 
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 33 --> 33.
+0 entries are removed: 29 --> 29.
 ------------------------------------------------------------
 
 
@@ -4238,7 +3633,7 @@ The current best program is the following
 
 FixPt[2][node_priority][DFS](70/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:70/101=69.31%
 FixPt[2][node_priority][DFS](70/101)  Testing the empty input. Global ratio:70/101=69.31%
-==========Testing the following program (46): fail==========
+==========Testing the following program (40): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -4582,7 +3977,7 @@ The current best program is the following
 
 FixPt[2][node_priority][DFS](70/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:70/101=69.31%
 FixPt[2][node_priority][DFS](70/101)  Testing the empty input. Global ratio:70/101=69.31%
-==========Testing the following program (47): pass==========
+==========Testing the following program (41): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__functionDefinition_2]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -4616,7 +4011,7 @@ FixPt[2][node_priority][DFS](70/101)  Testing the empty input. Global ratio:70/1
 FixPt[2][node_priority][DFS](70/101)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:70/101=69.31%
 ===========TestScriptExecutionCacheEntryEviction============
 
-1 entries are removed: 34 --> 33.
+1 entries are removed: 30 --> 29.
 ------------------------------------------------------------
 
 
@@ -4715,7 +4110,7 @@ The current best program is the following
 
 FixPt[3][node_priority][DFS](69/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:69/101=68.32%
 FixPt[3][node_priority][DFS](69/101)  Testing the empty input. Global ratio:69/101=68.32%
-==========Testing the following program (48): pass==========
+==========Testing the following program (42): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -4746,7 +4141,7 @@ FixPt[3][node_priority][DFS](69/101)  Testing the empty input. Global ratio:69/1
 FixPt[3][node_priority][DFS](69/101)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:69/101=68.32%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 33 --> 33.
+0 entries are removed: 29 --> 29.
 ------------------------------------------------------------
 
 
@@ -4842,7 +4237,7 @@ The current best program is the following
 
 FixPt[4][node_priority][DFS](59/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:59/101=58.42%
 FixPt[4][node_priority][DFS](59/101)  Testing the empty input. Global ratio:59/101=58.42%
-==========Testing the following program (49): pass==========
+==========Testing the following program (43): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -4870,7 +4265,7 @@ FixPt[4][node_priority][DFS](59/101)  Testing the empty input. Global ratio:59/1
 FixPt[4][node_priority][DFS](59/101)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:59/101=58.42%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 33 --> 33.
+0 entries are removed: 29 --> 29.
 ------------------------------------------------------------
 
 
@@ -4963,7 +4358,7 @@ The current best program is the following
 
 FixPt[5][node_priority][DFS](49/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:49/101=48.51%
 FixPt[5][node_priority][DFS](49/101)  Testing the empty input. Global ratio:49/101=48.51%
-==========Testing the following program (50): pass==========
+==========Testing the following program (44): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -4988,7 +4383,7 @@ FixPt[5][node_priority][DFS](49/101)  Testing the empty input. Global ratio:49/1
 FixPt[5][node_priority][DFS](49/101)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:49/101=48.51%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 33 --> 33.
+0 entries are removed: 29 --> 29.
 ------------------------------------------------------------
 
 
@@ -5078,7 +4473,7 @@ The current best program is the following
 
 FixPt[6][node_priority][DFS](39/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:39/101=38.61%
 FixPt[6][node_priority][DFS](39/101)  Testing the empty input. Global ratio:39/101=38.61%
-==========Testing the following program (51): pass==========
+==========Testing the following program (45): pass==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -5100,7 +4495,7 @@ FixPt[6][node_priority][DFS](39/101)  Testing the empty input. Global ratio:39/1
 FixPt[6][node_priority][DFS](39/101)  Try deleting [0]#1: Interesting. Local ratio: 1/1=100.00%. Global ratio:39/101=38.61%
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 33 --> 33.
+0 entries are removed: 29 --> 29.
 ------------------------------------------------------------
 
 
@@ -5145,34 +4540,20 @@ Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
 makefile{id=1,slot_type=makefile}
 |___(*){id=2,slot_type=kleene_star__makefile_1}
-    |___Token:\n{id=53,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=43,slot_type=[item,textLine]}
-    |   |___(+){id=44,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=51,slot_type=[word,WORD]}
-    |   |   |___Token:={id=50,slot_type=[word,WORD]}
-    |   |   |___Token:main.c{id=49,slot_type=[word,WORD]}
-    |   |___Token:\n{id=45,slot_type=NEWLINE}
-    |___Token:\n{id=42,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=40,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=38,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=36,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=26,slot_type=[item,textLine]}
-    |   |___(+){id=27,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:OBJS{id=34,slot_type=[word,WORD]}
-    |   |   |___Token:={id=33,slot_type=[word,WORD]}
-    |   |   |___Token:$(SRCS:.c=.o){id=32,slot_type=[word,VARREF]}
-    |   |___Token:\n{id=28,slot_type=NEWLINE}
-    |___Token:\n{id=25,slot_type=[item,blankLine,NEWLINE]}
+    |___(+){id=36,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:SRCS{id=42,slot_type=[word,WORD]}
+    |   |___Token:={id=41,slot_type=[word,WORD]}
+    |   |___Token:main.c{id=40,slot_type=[word,WORD]}
+    |___(+){id=24,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:OBJS{id=30,slot_type=[word,WORD]}
+    |   |___Token:={id=29,slot_type=[word,WORD]}
+    |   |___Token:$(SRCS:.c=.o){id=28,slot_type=[word,VARREF]}
     |___rule{id=12,slot_type=[item,rule]}
-        |___textLine{id=13,slot_type=textLine}
-        |   |___(+){id=18,slot_type=kleene_plus__lastLine_1}
-        |   |   |___Token:prog:{id=23,slot_type=[word,WORD]}
-        |   |   |___Token:$(OBJS){id=22,slot_type=[word,VARREF]}
-        |   |___Token:\n{id=19,slot_type=NEWLINE}
+        |___(+){id=17,slot_type=[textLine,kleene_plus__lastLine_1]}
+        |   |___Token:prog:{id=21,slot_type=[word,WORD]}
+        |   |___Token:$(OBJS){id=20,slot_type=[word,VARREF]}
         |___(+){id=14,slot_type=kleene_plus__rule_1}
-            |___recipe{id=15,slot_type=recipe}
-                |___Token:\t$(CC) -o prog $(OBJS){id=16,slot_type=RECIPE_LINE}
-                |___Token:\n{id=17,slot_type=NEWLINE}
+            |___Token:\t$(CC) -o prog $(OBJS){id=16,slot_type=[recipe,RECIPE_LINE]}
 ------------------------------------------------------------
 
 
@@ -5198,11 +4579,11 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-8]#9. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:29/101=28.71%
 FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
-==========Testing the following program (52): fail==========
+==========Testing the following program (46): fail==========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=9,#parts=9#total-parts=9
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=3,#parts=3#total-parts=3
     --file: Makefile--
     --file: main.c--
         main(    ) {
@@ -5215,27 +4596,10 @@ FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/1
 ------------------------------------------------------------
 
 
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0-8]#9: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (53): fail==========
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (47): fail==========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=4,#parts=4#total-parts=9
-    --file: Makefile--
-    SRCS = main.c
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [5-8]#4: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (54): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=9
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: Makefile--
     SRCS = main.c
     OBJS = $(SRCS:.c=.o)
@@ -5250,31 +4614,11 @@ FixPt[7][node_priority][DFS](29/101)  Try deleting [5-8]#4: Uninteresting. Local
 ------------------------------------------------------------
 
 
-FixPt[7][node_priority][DFS](29/101)  Try deleting [7-8]#2: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (55): fail==========
+FixPt[7][node_priority][DFS](29/101)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (48): fail==========
 
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=9
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=3
     --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [8]#1: Uninteresting. Local ratio: 9/9=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (56): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=9
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
     	$(CC) -o prog $(OBJS)
     --file: main.c--
@@ -5288,29 +4632,10 @@ FixPt[7][node_priority][DFS](29/101)  Try deleting [8]#1: Uninteresting. Local r
 ------------------------------------------------------------
 
 
-FixPt[7][node_priority][DFS](29/101)  Try deleting [7]#1: Interesting. Local ratio: 9/9=100.00%. Global ratio:29/101=28.71%
-===========TestScriptExecutionCacheEntryEviction============
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (49): fail==========
 
-0 entries are removed: 37 --> 37.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 5
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 19 -> 19
-Edit: [delete_25]
-------------------------------------------------------------
-
-
-==========Testing the following program (57): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=8
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: Makefile--
     SRCS = main.c
     prog: $(OBJS)
@@ -5326,67 +4651,10 @@ Edit: [delete_25]
 ------------------------------------------------------------
 
 
-FixPt[7][node_priority][DFS](29/101)  Try deleting [5-6]#2: Uninteresting. Local ratio: 8/9=88.89%. Global ratio:29/101=28.71%
-=====Cache hit for the following uninteresting program:=====
+FixPt[7][node_priority][DFS](29/101)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (50): fail==========
 
-    --file: Makefile--
-    SRCS = main.c
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [6]#1: Uninteresting. Local ratio: 8/9=88.89%. Global ratio:29/101=28.71%
-==========Testing the following program (58): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=8
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [5]#1: Interesting. Local ratio: 8/9=88.89%. Global ratio:29/101=28.71%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 38 --> 38.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 3
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 19 -> 19
-Edit: [delete_36]
-------------------------------------------------------------
-
-
-==========Testing the following program (59): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=5,#parts=5#total-parts=7
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=3
     --file: Makefile--
     OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
@@ -5402,182 +4670,317 @@ Edit: [delete_36]
 ------------------------------------------------------------
 
 
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0-4]#5: Uninteresting. Local ratio: 7/9=77.78%. Global ratio:29/101=28.71%
-==========Testing the following program (60): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=2,#parts=2#total-parts=7
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [3-4]#2: Interesting. Local ratio: 7/9=77.78%. Global ratio:29/101=28.71%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 39 --> 39.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 2
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 19 -> 19
-Edit: [delete: 38,40]
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 5/9=55.56%. Global ratio:29/101=28.71%
-==========Testing the following program (61): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=5
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [2]#1: Interesting. Local ratio: 5/9=55.56%. Global ratio:29/101=28.71%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 39 --> 39.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 2
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 19 -> 19
-Edit: [delete_42]
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/101=28.71%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [1]#1: Uninteresting. Local ratio: 4/9=44.44%. Global ratio:29/101=28.71%
-==========Testing the following program (62): pass==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_star:kleene_star__makefile_1]dd@#nodes=1,#parts=1#total-parts=4
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Interesting. Local ratio: 4/9=44.44%. Global ratio:29/101=28.71%
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 39 --> 39.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 3
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 19 -> 19
-Edit: [delete_53]
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[1,6,8]#3. Local ratio: 3/9=33.33%. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
+------------------------------------------------------------
+
+
+=================Reducing node 36, size=29==================
+
+The current best program is the following
+
+    --file: Makefile--
+    SRCS = main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_36]
+    context: [kleene_plus:kleene_plus__lastLine_1]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (51): fail==========
+
+// edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
+    --file: Makefile--
+    SRCS
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Makefile--
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (52): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+    SRCS =
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (53): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
+    --file: Makefile--
+           main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (54): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+    SRCS   main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (55): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+         = main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+===================Node reduction is done===================
+
+Failed to reduce node 36
+------------------------------------------------------------
+
+
+=================Reducing node 24, size=29==================
+
+The current best program is the following
+
+    --file: Makefile--
+    SRCS = main.c
+    OBJS = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_24]
+    context: [kleene_plus:kleene_plus__lastLine_1]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (56): fail==========
+
+// edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
+    --file: Makefile--
+    SRCS = main.c
+    OBJS
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+=====Cache hit for the following uninteresting program:=====
+
+    --file: Makefile--
+    SRCS = main.c
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (57): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+    SRCS = main.c
+    OBJS =
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (58): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
+    --file: Makefile--
+    SRCS = main.c
+           $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (59): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+    SRCS = main.c
+    OBJS   $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+==========Testing the following program (60): fail==========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
+    --file: Makefile--
+    SRCS = main.c
+         = $(SRCS:.c=.o)
+    prog: $(OBJS)
+    	$(CC) -o prog $(OBJS)
+    --file: main.c--
+        main(    ) {
+      printf("INTERESTING\n");
+    }
+    --file: f1.c--
+    --file: f2.c--
+    --file: f3.c--
+    --file: f4.c--
+------------------------------------------------------------
+
+
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
+===================Node reduction is done===================
+
+Failed to reduce node 24
 ------------------------------------------------------------
 
 
@@ -5601,71 +5004,10 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
+==============Node edit action set cache hit.===============
 
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-==========Testing the following program (63): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-==========Testing the following program (64): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-==========Testing the following program (65): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
+    structure: [delete_12]
+    context: [regular_node]can be epsilon
 ------------------------------------------------------------
 
 
@@ -5675,7 +5017,7 @@ Failed to reduce node 12
 ------------------------------------------------------------
 
 
-=================Reducing node 43, size=29==================
+=================Reducing node 17, size=29==================
 
 The current best program is the following
 
@@ -5695,453 +5037,13 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-==========Testing the following program (66): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 43
-------------------------------------------------------------
-
-
-=================Reducing node 26, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    SRCS = main.c
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-==========Testing the following program (67): fail==========
-
-// edit action set type: [regular node]compatible replacement
-    --file: Makefile--
-    SRCS = main.c
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 26
-------------------------------------------------------------
-
-
-=================Reducing node 44, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-==========Testing the following program (68): fail==========
-
-// edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
-    --file: Makefile--
-    SRCS         
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:29/101=28.71%
-FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (69): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-    SRCS =       
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (70): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
-    --file: Makefile--
-           main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (71): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-    SRCS   main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (72): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-         = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-===================Node reduction is done===================
-
-Failed to reduce node 44
-------------------------------------------------------------
-
-
-=================Reducing node 27, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-==========Testing the following program (73): fail==========
-
-// edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
-    --file: Makefile--
-    SRCS = main.c
-    OBJS                
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-2]#3. Global ratio:29/101=28.71%
-FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    SRCS = main.c
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0-2]#3: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (74): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-    SRCS = main.c
-    OBJS =              
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [2]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (75): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=3
-    --file: Makefile--
-    SRCS = main.c
-           $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (76): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-    SRCS = main.c
-    OBJS   $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [1]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (77): fail==========
-
-// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=3
-    --file: Makefile--
-    SRCS = main.c
-         = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-2]#3. Local ratio: 3/3=100.00%. Global ratio:29/101=28.71%
-===================Node reduction is done===================
-
-Failed to reduce node 27
-------------------------------------------------------------
-
-
-=================Reducing node 13, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 13
-------------------------------------------------------------
-
-
-=================Reducing node 18, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-==========Testing the following program (78): fail==========
+==========Testing the following program (61): fail==========
 
 // edit action set type: [kleene_plus:kleene_plus__lastLine_1]remove all except first
     --file: Makefile--
     SRCS = main.c
     OBJS = $(SRCS:.c=.o)
-    prog:        
+    prog:
     	$(CC) -o prog $(OBJS)
     --file: main.c--
         main(    ) {
@@ -6156,7 +5058,7 @@ The current best program is the following
 
 FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0-1]#2. Global ratio:29/101=28.71%
 FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
-==========Testing the following program (79): fail==========
+==========Testing the following program (62): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=2,#parts=2#total-parts=2
     --file: Makefile--
@@ -6177,13 +5079,13 @@ FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/1
 FixPt[7][node_priority][DFS](29/101)  Try deleting [0-1]#2: Uninteresting. Local ratio: 2/2=100.00%. Global ratio:29/101=28.71%
 ==============Node edit action set cache hit.===============
 
-    structure: [delete_22]
+    structure: [delete_20]
     context: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=2
 ------------------------------------------------------------
 
 
 FixPt[7][node_priority][DFS](29/101)  Try deleting [1]#1: Skipped. Local ratio: 2/2=100.00%. Global ratio:29/101=28.71%
-==========Testing the following program (80): fail==========
+==========Testing the following program (63): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__lastLine_1]dd@#nodes=1,#parts=1#total-parts=2
     --file: Makefile--
@@ -6206,59 +5108,11 @@ FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local r
 FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0-1]#2. Local ratio: 2/2=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
-Failed to reduce node 18
+Failed to reduce node 17
 ------------------------------------------------------------
 
 
-=================Reducing node 14, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
-=====Cache hit for the following uninteresting program:=====
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[7][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-===================Node reduction is done===================
-
-Failed to reduce node 14
-------------------------------------------------------------
-
-
-=================Reducing node 15, size=29==================
+=================Reducing node 42, size=29==================
 
 The current best program is the following
 
@@ -6280,11 +5134,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 15
+Failed to reduce node 42
 ------------------------------------------------------------
 
 
-=================Reducing node 51, size=29==================
+=================Reducing node 41, size=29==================
 
 The current best program is the following
 
@@ -6306,11 +5160,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 51
+Failed to reduce node 41
 ------------------------------------------------------------
 
 
-=================Reducing node 50, size=29==================
+=================Reducing node 40, size=29==================
 
 The current best program is the following
 
@@ -6332,11 +5186,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 50
+Failed to reduce node 40
 ------------------------------------------------------------
 
 
-=================Reducing node 49, size=29==================
+=================Reducing node 30, size=29==================
 
 The current best program is the following
 
@@ -6358,11 +5212,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 49
+Failed to reduce node 30
 ------------------------------------------------------------
 
 
-=================Reducing node 45, size=29==================
+=================Reducing node 29, size=29==================
 
 The current best program is the following
 
@@ -6384,85 +5238,7 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 45
-------------------------------------------------------------
-
-
-=================Reducing node 34, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 34
-------------------------------------------------------------
-
-
-=================Reducing node 33, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 33
-------------------------------------------------------------
-
-
-=================Reducing node 32, size=29==================
-
-The current best program is the following
-
-    --file: Makefile--
-    SRCS = main.c
-    OBJS = $(SRCS:.c=.o)
-    prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
-    --file: main.c--
-        main(    ) {
-      printf("INTERESTING\n");
-    }
-    --file: f1.c--
-    --file: f2.c--
-    --file: f3.c--
-    --file: f4.c--
-------------------------------------------------------------
-
-
-===================Node reduction is done===================
-
-Failed to reduce node 32
+Failed to reduce node 29
 ------------------------------------------------------------
 
 
@@ -6492,7 +5268,7 @@ Failed to reduce node 28
 ------------------------------------------------------------
 
 
-=================Reducing node 23, size=29==================
+=================Reducing node 21, size=29==================
 
 The current best program is the following
 
@@ -6514,11 +5290,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 23
+Failed to reduce node 21
 ------------------------------------------------------------
 
 
-=================Reducing node 22, size=29==================
+=================Reducing node 20, size=29==================
 
 The current best program is the following
 
@@ -6540,11 +5316,11 @@ The current best program is the following
 
 ===================Node reduction is done===================
 
-Failed to reduce node 22
+Failed to reduce node 20
 ------------------------------------------------------------
 
 
-=================Reducing node 19, size=29==================
+=================Reducing node 14, size=29==================
 
 The current best program is the following
 
@@ -6564,21 +5340,15 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-===================Node reduction is done===================
+FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+==========Testing the following program (64): fail==========
 
-Failed to reduce node 19
-------------------------------------------------------------
-
-
-=================Reducing node 17, size=29==================
-
-The current best program is the following
-
+// edit action set type: DFS in node_priority(PersesNodeReducer)[kleene_plus:kleene_plus__rule_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
     SRCS = main.c
     OBJS = $(SRCS:.c=.o)
     prog: $(OBJS)
-    	$(CC) -o prog $(OBJS)
     --file: main.c--
         main(    ) {
       printf("INTERESTING\n");
@@ -6590,9 +5360,12 @@ The current best program is the following
 ------------------------------------------------------------
 
 
+FixPt[7][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[7][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
-Failed to reduce node 17
+Failed to reduce node 14
 ------------------------------------------------------------
 
 
@@ -6622,102 +5395,31 @@ Failed to reduce node 16
 ------------------------------------------------------------
 
 
-(29/101)  Rebuilding spar-tree: The spartree is rebuilt.
+(29/101)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 ====Fixpoint iteration 8. Reducer: FineGritLatraReducer=====
 
 Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
 The spar-tree is the following.
-makefile{id=55,slot_type=makefile}
-|___(*){id=56,slot_type=kleene_star__makefile_1}
-    |___Token:\n{id=107,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=97,slot_type=[item,textLine]}
-    |   |___(+){id=98,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=105,slot_type=[word,WORD]}
-    |   |   |___Token:={id=104,slot_type=[word,WORD]}
-    |   |   |___Token:main.c{id=103,slot_type=[word,WORD]}
-    |   |___Token:\n{id=99,slot_type=NEWLINE}
-    |___Token:\n{id=96,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=94,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=92,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=90,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=80,slot_type=[item,textLine]}
-    |   |___(+){id=81,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:OBJS{id=88,slot_type=[word,WORD]}
-    |   |   |___Token:={id=87,slot_type=[word,WORD]}
-    |   |   |___Token:$(SRCS:.c=.o){id=86,slot_type=[word,VARREF]}
-    |   |___Token:\n{id=82,slot_type=NEWLINE}
-    |___Token:\n{id=79,slot_type=[item,blankLine,NEWLINE]}
-    |___rule{id=66,slot_type=[item,rule]}
-        |___textLine{id=67,slot_type=textLine}
-        |   |___(+){id=72,slot_type=kleene_plus__lastLine_1}
-        |   |   |___Token:prog:{id=77,slot_type=[word,WORD]}
-        |   |   |___Token:$(OBJS){id=76,slot_type=[word,VARREF]}
-        |   |___Token:\n{id=73,slot_type=NEWLINE}
-        |___(+){id=68,slot_type=kleene_plus__rule_1}
-            |___recipe{id=69,slot_type=recipe}
-                |___Token:\t$(CC) -o prog $(OBJS){id=70,slot_type=RECIPE_LINE}
-                |___Token:\n{id=71,slot_type=NEWLINE}
+makefile{id=1,slot_type=makefile}
+|___(*){id=2,slot_type=kleene_star__makefile_1}
+    |___(+){id=36,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:SRCS{id=42,slot_type=[word,WORD]}
+    |   |___Token:={id=41,slot_type=[word,WORD]}
+    |   |___Token:main.c{id=40,slot_type=[word,WORD]}
+    |___(+){id=24,slot_type=[item,textLine,kleene_plus__lastLine_1]}
+    |   |___Token:OBJS{id=30,slot_type=[word,WORD]}
+    |   |___Token:={id=29,slot_type=[word,WORD]}
+    |   |___Token:$(SRCS:.c=.o){id=28,slot_type=[word,VARREF]}
+    |___rule{id=12,slot_type=[item,rule]}
+        |___(+){id=17,slot_type=[textLine,kleene_plus__lastLine_1]}
+        |   |___Token:prog:{id=21,slot_type=[word,WORD]}
+        |   |___Token:$(OBJS){id=20,slot_type=[word,VARREF]}
+        |___(+){id=14,slot_type=kleene_plus__rule_1}
+            |___Token:\t$(CC) -o prog $(OBJS){id=16,slot_type=[recipe,RECIPE_LINE]}
 ------------------------------------------------------------
 
 
 FixPt[8][FineGritLatraReducer](29/101)  Latra does not support LanguageMakefile{name=makefile, extensions=[mk], defaultCodeFormatControl=ORIG_FORMAT} langauge yet.
-(29/101)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=Fixpoint iteration 9. Reducer: spartree_root_replacement_reducer
-
-Parser Facade: class org.perses.grammar.makefile.MakefileParserFacade
-The spar-tree is the following.
-makefile{id=55,slot_type=makefile}
-|___(*){id=56,slot_type=kleene_star__makefile_1}
-    |___Token:\n{id=107,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=97,slot_type=[item,textLine]}
-    |   |___(+){id=98,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:SRCS{id=105,slot_type=[word,WORD]}
-    |   |   |___Token:={id=104,slot_type=[word,WORD]}
-    |   |   |___Token:main.c{id=103,slot_type=[word,WORD]}
-    |   |___Token:\n{id=99,slot_type=NEWLINE}
-    |___Token:\n{id=96,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=94,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=92,slot_type=[item,blankLine,NEWLINE]}
-    |___Token:\n{id=90,slot_type=[item,blankLine,NEWLINE]}
-    |___textLine{id=80,slot_type=[item,textLine]}
-    |   |___(+){id=81,slot_type=kleene_plus__lastLine_1}
-    |   |   |___Token:OBJS{id=88,slot_type=[word,WORD]}
-    |   |   |___Token:={id=87,slot_type=[word,WORD]}
-    |   |   |___Token:$(SRCS:.c=.o){id=86,slot_type=[word,VARREF]}
-    |   |___Token:\n{id=82,slot_type=NEWLINE}
-    |___Token:\n{id=79,slot_type=[item,blankLine,NEWLINE]}
-    |___rule{id=66,slot_type=[item,rule]}
-        |___textLine{id=67,slot_type=textLine}
-        |   |___(+){id=72,slot_type=kleene_plus__lastLine_1}
-        |   |   |___Token:prog:{id=77,slot_type=[word,WORD]}
-        |   |   |___Token:$(OBJS){id=76,slot_type=[word,VARREF]}
-        |   |___Token:\n{id=73,slot_type=NEWLINE}
-        |___(+){id=68,slot_type=kleene_plus__rule_1}
-            |___recipe{id=69,slot_type=recipe}
-                |___Token:\t$(CC) -o prog $(OBJS){id=70,slot_type=RECIPE_LINE}
-                |___Token:\n{id=71,slot_type=NEWLINE}
-------------------------------------------------------------
-
-
-===========TestScriptExecutionCacheEntryEviction============
-
-0 entries are removed: 57 --> 57.
-------------------------------------------------------------
-
-
-===========Node edit action set cache is cleared.===========
-
-    size before clearance = 0
-------------------------------------------------------------
-
-
-================The best program is updated.================
-
-token count change 19 -> 19
-Edit: AnyNodeReplace:[replace_55_with_1]
-------------------------------------------------------------
-
-
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
 (29/101)  The reducer execution plan is listed below.
     fixpoint (smaller) {
@@ -6733,7 +5435,7 @@ Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_S
 
 
 (29/101)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-=======Fixpoint iteration 10. Reducer: node_priority========
+========Fixpoint iteration 9. Reducer: node_priority========
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
@@ -6767,8 +5469,8 @@ compilationUnit{id=1,slot_type=compilationUnit}
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority](29/101)  Starting to retrieve the semantics provider
-FixPt[10][node_priority](29/101)  Retrieved semantics provider null
+FixPt[9][node_priority](29/101)  Starting to retrieve the semantics provider
+FixPt[9][node_priority](29/101)  Retrieved semantics provider null
 ==================Reducing node 2, size=29==================
 
 The current best program is the following
@@ -6789,9 +5491,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
-==========Testing the following program (81): fail==========
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+==========Testing the following program (65): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -6807,9 +5509,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 2
@@ -6843,8 +5545,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
@@ -6860,9 +5562,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 4
@@ -6896,7 +5598,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (82): fail==========
+==========Testing the following program (66): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -6965,9 +5667,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
-==========Testing the following program (83): fail==========
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+==========Testing the following program (67): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compoundStatement_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -6985,9 +5687,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 10
@@ -7021,8 +5723,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
@@ -7040,9 +5742,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 13
@@ -7076,7 +5778,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (84): fail==========
+==========Testing the following program (68): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -7121,8 +5823,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
@@ -7141,9 +5843,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 18
@@ -7177,7 +5879,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (85): fail==========
+==========Testing the following program (69): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -7196,7 +5898,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (86): fail==========
+==========Testing the following program (70): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -7241,7 +5943,7 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-==========Testing the following program (87): fail==========
+==========Testing the following program (71): fail==========
 
 // edit action set type: [regular node]compatible replacement
     --file: Makefile--
@@ -7286,8 +5988,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
@@ -7306,9 +6008,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 38
@@ -7368,8 +6070,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
@@ -7388,9 +6090,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 67
@@ -7580,9 +6282,9 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
-==========Testing the following program (88): fail==========
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+==========Testing the following program (72): fail==========
 
 // edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__postfixExpression_1]dd@#nodes=1,#parts=1#total-parts=1
     --file: Makefile--
@@ -7601,9 +6303,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 42
@@ -7637,8 +6339,8 @@ The current best program is the following
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/101=28.71%
 =====Cache hit for the following uninteresting program:=====
 
     --file: Makefile--
@@ -7657,9 +6359,9 @@ FixPt[10][node_priority][DFS](29/101)  Testing the empty input. Global ratio:29/
 ------------------------------------------------------------
 
 
-FixPt[10][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
-FixPt[10][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  There is only one element in the input, and the empty input has been tested. Global ratio:29/101=28.71%
+FixPt[9][node_priority][DFS](29/101)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:29/101=28.71%
 ===================Node reduction is done===================
 
 Failed to reduce node 62
@@ -7797,7 +6499,7 @@ Failed to reduce node 9
 
 
 (29/101)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
-====Fixpoint iteration 11. Reducer: FineGritLatraReducer====
+====Fixpoint iteration 10. Reducer: FineGritLatraReducer====
 
 Parser Facade: class org.perses.grammar.c.PnfCParserFacade
 The spar-tree is the following.
@@ -7831,11 +6533,11 @@ compilationUnit{id=1,slot_type=compilationUnit}
 ------------------------------------------------------------
 
 
-FixPt[11][FineGritLatraReducer](29/101)  For c, there are 46 transformations.
-FixPt[11][FineGritLatraReducer](29/101)  Reparsing the best spartree to faithfully reflect the syntactic structure.
+FixPt[10][FineGritLatraReducer](29/101)  For c, there are 46 transformations.
+FixPt[10][FineGritLatraReducer](29/101)  Reparsing the best spartree to faithfully reflect the syntactic structure.
 ===========TestScriptExecutionCacheEntryEviction============
 
-0 entries are removed: 65 --> 65.
+0 entries are removed: 56 --> 56.
 ------------------------------------------------------------
 
 
@@ -7852,52 +6554,52 @@ Edit: AnyNodeReplace:[replace_1_with_75]
 ------------------------------------------------------------
 
 
-FixPt[11][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](29/101)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
-FixPt[11][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](29/101)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
-FixPt[11][FineGritLatraReducer][DivideOperationSimplification](29/101)  Found matches: 0 in transformation DivideOperationSimplification
-FixPt[11][FineGritLatraReducer][MultiplyOperationSimplification](29/101)  Found matches: 0 in transformation MultiplyOperationSimplification
-FixPt[11][FineGritLatraReducer][MinusOperationSimplification](29/101)  Found matches: 0 in transformation MinusOperationSimplification
-FixPt[11][FineGritLatraReducer][PlusOperationSimplification](29/101)  Found matches: 0 in transformation PlusOperationSimplification
-FixPt[11][FineGritLatraReducer][LocalToGlobalTransformation](29/101)  Found matches: 0 in transformation LocalToGlobalTransformation
-FixPt[11][FineGritLatraReducer][UnionToStruct](29/101)  Found matches: 0 in transformation UnionToStruct
-FixPt[11][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](29/101)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
-FixPt[11][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](29/101)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
-FixPt[11][FineGritLatraReducer][FunctionInlining4Args](29/101)  Found matches: 0 in transformation FunctionInlining4Args
-FixPt[11][FineGritLatraReducer][FunctionInlining4ArgsNoType](29/101)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
-FixPt[11][FineGritLatraReducer][FunctionInliningLatraTransformation](29/101)  Found matches: 0 in transformation FunctionInliningLatraTransformation
-FixPt[11][FineGritLatraReducer][FunctionInlining3ArgsNoType](29/101)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
-FixPt[11][FineGritLatraReducer][FunctionInlining2Args](29/101)  Found matches: 0 in transformation FunctionInlining2Args
-FixPt[11][FineGritLatraReducer][FunctionInlining2ArgsNoType](29/101)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
-FixPt[11][FineGritLatraReducer][FunctionInlining1Arg](29/101)  Found matches: 0 in transformation FunctionInlining1Arg
-FixPt[11][FineGritLatraReducer][FunctionInlining1ArgNoType](29/101)  Found matches: 0 in transformation FunctionInlining1ArgNoType
-FixPt[11][FineGritLatraReducer][FunctionInliningNoArg](29/101)  Found matches: 0 in transformation FunctionInliningNoArg
-FixPt[11][FineGritLatraReducer][LiftAssignmentExpr](29/101)  Found matches: 0 in transformation LiftAssignmentExpr
-FixPt[11][FineGritLatraReducer][CopyPropagation](29/101)  Found matches: 0 in transformation CopyPropagation
-FixPt[11][FineGritLatraReducer][CallExprToValue](29/101)  Found matches: 0 in transformation CallExprToValue
-FixPt[11][FineGritLatraReducer][ReplaceCallExpr1Arg](29/101)  Found matches: 0 in transformation ReplaceCallExpr1Arg
-FixPt[11][FineGritLatraReducer][ReplaceCallExpr2Arg](29/101)  Found matches: 0 in transformation ReplaceCallExpr2Arg
-FixPt[11][FineGritLatraReducer][ReplaceCallExpr3Arg](29/101)  Found matches: 0 in transformation ReplaceCallExpr3Arg
-FixPt[11][FineGritLatraReducer][SimplifyCallExpr](29/101)  Found matches: 0 in transformation SimplifyCallExpr
-FixPt[11][FineGritLatraReducer][SimplifyIf](29/101)  Found matches: 0 in transformation SimplifyIf
-FixPt[11][FineGritLatraReducer][SimplifyIf2](29/101)  Found matches: 0 in transformation SimplifyIf2
-FixPt[11][FineGritLatraReducer][ReduceArrayDim3](29/101)  Found matches: 0 in transformation ReduceArrayDim3
-FixPt[11][FineGritLatraReducer][ReduceArrayDim2](29/101)  Found matches: 0 in transformation ReduceArrayDim2
-FixPt[11][FineGritLatraReducer][ReduceArrayDim](29/101)  Found matches: 0 in transformation ReduceArrayDim
-FixPt[11][FineGritLatraReducer][MoveFuncDefToDecl](29/101)  Found matches: 0 in transformation MoveFuncDefToDecl
-FixPt[11][FineGritLatraReducer][MoveFuncDefToDecl2](29/101)  Found matches: 0 in transformation MoveFuncDefToDecl2
-FixPt[11][FineGritLatraReducer][MoveFuncDefToDeclNoParam](29/101)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
-FixPt[11][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](29/101)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
-FixPt[11][FineGritLatraReducer][SimplifyComma](29/101)  Found matches: 0 in transformation SimplifyComma
-FixPt[11][FineGritLatraReducer][TypeDefTransform](29/101)  Found matches: 0 in transformation TypeDefTransform
-FixPt[11][FineGritLatraReducer][EmptyStructToInt](29/101)  Found matches: 0 in transformation EmptyStructToInt
-FixPt[11][FineGritLatraReducer][RemoveAssignment](29/101)  Found matches: 0 in transformation RemoveAssignment
-FixPt[11][FineGritLatraReducer][RemoveAddrTaken](29/101)  Found matches: 0 in transformation RemoveAddrTaken
-FixPt[11][FineGritLatraReducer][ReplaceArrayAccessWithIndex](29/101)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
-FixPt[11][FineGritLatraReducer][SimplifyUnionDecl](29/101)  Found matches: 0 in transformation SimplifyUnionDecl
-FixPt[11][FineGritLatraReducer][SimplifyStructDecl](29/101)  Found matches: 0 in transformation SimplifyStructDecl
-FixPt[11][FineGritLatraReducer][ReplaceDefByDecl](29/101)  Found matches: 0 in transformation ReplaceDefByDecl
-FixPt[11][FineGritLatraReducer][CombineLocalVarDecl](29/101)  Found matches: 0 in transformation CombineLocalVarDecl
-FixPt[11][FineGritLatraReducer][UnifyFunctionDecl](29/101)  Found matches: 0 in transformation UnifyFunctionDecl
+FixPt[10][FineGritLatraReducer][AggregateStructToScalar1ArgTransformation](29/101)  Found matches: 0 in transformation AggregateStructToScalar1ArgTransformation
+FixPt[10][FineGritLatraReducer][AggregateStructToScalar2ArgsTransformation](29/101)  Found matches: 0 in transformation AggregateStructToScalar2ArgsTransformation
+FixPt[10][FineGritLatraReducer][DivideOperationSimplification](29/101)  Found matches: 0 in transformation DivideOperationSimplification
+FixPt[10][FineGritLatraReducer][MultiplyOperationSimplification](29/101)  Found matches: 0 in transformation MultiplyOperationSimplification
+FixPt[10][FineGritLatraReducer][MinusOperationSimplification](29/101)  Found matches: 0 in transformation MinusOperationSimplification
+FixPt[10][FineGritLatraReducer][PlusOperationSimplification](29/101)  Found matches: 0 in transformation PlusOperationSimplification
+FixPt[10][FineGritLatraReducer][LocalToGlobalTransformation](29/101)  Found matches: 0 in transformation LocalToGlobalTransformation
+FixPt[10][FineGritLatraReducer][UnionToStruct](29/101)  Found matches: 0 in transformation UnionToStruct
+FixPt[10][FineGritLatraReducer][VoidReturnFunctionDeclLatraTransformation](29/101)  Found matches: 0 in transformation VoidReturnFunctionDeclLatraTransformation
+FixPt[10][FineGritLatraReducer][VoidReturnFunctionDefLatraTransformation](29/101)  Found matches: 0 in transformation VoidReturnFunctionDefLatraTransformation
+FixPt[10][FineGritLatraReducer][FunctionInlining4Args](29/101)  Found matches: 0 in transformation FunctionInlining4Args
+FixPt[10][FineGritLatraReducer][FunctionInlining4ArgsNoType](29/101)  Found matches: 0 in transformation FunctionInlining4ArgsNoType
+FixPt[10][FineGritLatraReducer][FunctionInliningLatraTransformation](29/101)  Found matches: 0 in transformation FunctionInliningLatraTransformation
+FixPt[10][FineGritLatraReducer][FunctionInlining3ArgsNoType](29/101)  Found matches: 0 in transformation FunctionInlining3ArgsNoType
+FixPt[10][FineGritLatraReducer][FunctionInlining2Args](29/101)  Found matches: 0 in transformation FunctionInlining2Args
+FixPt[10][FineGritLatraReducer][FunctionInlining2ArgsNoType](29/101)  Found matches: 0 in transformation FunctionInlining2ArgsNoType
+FixPt[10][FineGritLatraReducer][FunctionInlining1Arg](29/101)  Found matches: 0 in transformation FunctionInlining1Arg
+FixPt[10][FineGritLatraReducer][FunctionInlining1ArgNoType](29/101)  Found matches: 0 in transformation FunctionInlining1ArgNoType
+FixPt[10][FineGritLatraReducer][FunctionInliningNoArg](29/101)  Found matches: 0 in transformation FunctionInliningNoArg
+FixPt[10][FineGritLatraReducer][LiftAssignmentExpr](29/101)  Found matches: 0 in transformation LiftAssignmentExpr
+FixPt[10][FineGritLatraReducer][CopyPropagation](29/101)  Found matches: 0 in transformation CopyPropagation
+FixPt[10][FineGritLatraReducer][CallExprToValue](29/101)  Found matches: 0 in transformation CallExprToValue
+FixPt[10][FineGritLatraReducer][ReplaceCallExpr1Arg](29/101)  Found matches: 0 in transformation ReplaceCallExpr1Arg
+FixPt[10][FineGritLatraReducer][ReplaceCallExpr2Arg](29/101)  Found matches: 0 in transformation ReplaceCallExpr2Arg
+FixPt[10][FineGritLatraReducer][ReplaceCallExpr3Arg](29/101)  Found matches: 0 in transformation ReplaceCallExpr3Arg
+FixPt[10][FineGritLatraReducer][SimplifyCallExpr](29/101)  Found matches: 0 in transformation SimplifyCallExpr
+FixPt[10][FineGritLatraReducer][SimplifyIf](29/101)  Found matches: 0 in transformation SimplifyIf
+FixPt[10][FineGritLatraReducer][SimplifyIf2](29/101)  Found matches: 0 in transformation SimplifyIf2
+FixPt[10][FineGritLatraReducer][ReduceArrayDim3](29/101)  Found matches: 0 in transformation ReduceArrayDim3
+FixPt[10][FineGritLatraReducer][ReduceArrayDim2](29/101)  Found matches: 0 in transformation ReduceArrayDim2
+FixPt[10][FineGritLatraReducer][ReduceArrayDim](29/101)  Found matches: 0 in transformation ReduceArrayDim
+FixPt[10][FineGritLatraReducer][MoveFuncDefToDecl](29/101)  Found matches: 0 in transformation MoveFuncDefToDecl
+FixPt[10][FineGritLatraReducer][MoveFuncDefToDecl2](29/101)  Found matches: 0 in transformation MoveFuncDefToDecl2
+FixPt[10][FineGritLatraReducer][MoveFuncDefToDeclNoParam](29/101)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam
+FixPt[10][FineGritLatraReducer][MoveFuncDefToDeclNoParam2](29/101)  Found matches: 0 in transformation MoveFuncDefToDeclNoParam2
+FixPt[10][FineGritLatraReducer][SimplifyComma](29/101)  Found matches: 0 in transformation SimplifyComma
+FixPt[10][FineGritLatraReducer][TypeDefTransform](29/101)  Found matches: 0 in transformation TypeDefTransform
+FixPt[10][FineGritLatraReducer][EmptyStructToInt](29/101)  Found matches: 0 in transformation EmptyStructToInt
+FixPt[10][FineGritLatraReducer][RemoveAssignment](29/101)  Found matches: 0 in transformation RemoveAssignment
+FixPt[10][FineGritLatraReducer][RemoveAddrTaken](29/101)  Found matches: 0 in transformation RemoveAddrTaken
+FixPt[10][FineGritLatraReducer][ReplaceArrayAccessWithIndex](29/101)  Found matches: 0 in transformation ReplaceArrayAccessWithIndex
+FixPt[10][FineGritLatraReducer][SimplifyUnionDecl](29/101)  Found matches: 0 in transformation SimplifyUnionDecl
+FixPt[10][FineGritLatraReducer][SimplifyStructDecl](29/101)  Found matches: 0 in transformation SimplifyStructDecl
+FixPt[10][FineGritLatraReducer][ReplaceDefByDecl](29/101)  Found matches: 0 in transformation ReplaceDefByDecl
+FixPt[10][FineGritLatraReducer][CombineLocalVarDecl](29/101)  Found matches: 0 in transformation CombineLocalVarDecl
+FixPt[10][FineGritLatraReducer][UnifyFunctionDecl](29/101)  Found matches: 0 in transformation UnifyFunctionDecl
 Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
 (29/101)  The reducer execution plan is listed below.
     fixpoint (smaller) {
@@ -7970,7 +6672,7 @@ Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_S
 (29/101)  The reducer node_priority skips f4.c: the spar-tree is empty (the file was reduced to nothing).
 (29/101)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
 (29/101)  The reducer FineGritLatraReducer skips f4.c: the spar-tree is empty (the file was reduced to nothing).
-====Fixpoint iteration 12. Reducer: multi-file-deletion=====
+====Fixpoint iteration 11. Reducer: multi-file-deletion=====
 
 The spar-tree is the following.
 Makefile: 78 characters
@@ -7984,36 +6686,33 @@ f4.c: 0 characters
 
 ----------------------- Reduction History and Statistics -----------------------
 ----------------------------------- History ------------------------------------
-ID                           Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
- 0                     node_priority      6             1     -26            -86      34   time-hidden
- 1                     node_priority      4             0      -6            -32      14   time-hidden
- 2                     node_priority      1             0     -10            -21       1   time-hidden
- 3                     node_priority      1             0     -10            -21       1   time-hidden
- 4                     node_priority      1             0     -10            -21       1   time-hidden
- 5                     node_priority      1             0     -10            -21       1   time-hidden
- 6                     node_priority      5             5       0              0      29   time-hidden
- 7              FineGritLatraReducer      0             0       0              0       0   time-hidden
- 8 spartree_root_replacement_reducer      1             1       0              0       0   time-hidden
- 9                     node_priority      0             0       0              0       8   time-hidden
-10              FineGritLatraReducer      1             1       0              0       0   time-hidden
-11               multi-file-deletion      0             0       0              0       0   time-hidden
+ID              Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0        node_priority      5             0     -26            -86      28   time-hidden
+ 1        node_priority      4             0      -6            -32      14   time-hidden
+ 2        node_priority      1             0     -10            -21       1   time-hidden
+ 3        node_priority      1             0     -10            -21       1   time-hidden
+ 4        node_priority      1             0     -10            -21       1   time-hidden
+ 5        node_priority      1             0     -10            -21       1   time-hidden
+ 6        node_priority      0             0       0              0      19   time-hidden
+ 7 FineGritLatraReducer      0             0       0              0       0   time-hidden
+ 8        node_priority      0             0       0              0       8   time-hidden
+ 9 FineGritLatraReducer      1             1       0              0       0   time-hidden
+10  multi-file-deletion      0             0       0              0       0   time-hidden
 
 ----------------------------------- Summary ------------------------------------
-                          Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
-                    node_priority     8     19             6     -72           -202      89   time-hidden
-             FineGritLatraReducer     2      1             1       0              0       0   time-hidden
-              multi-file-deletion     1      0             0       0              0       0   time-hidden
-spartree_root_replacement_reducer     1      1             1       0              0       0   time-hidden
+             Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+       node_priority     8     13             0     -72           -202      73   time-hidden
+FineGritLatraReducer     2      1             1       0              0       0   time-hidden
+ multi-file-deletion     1      0             0       0              0       0   time-hidden
 
 ------------------------------- Transformations --------------------------------
-                                   Transformation Worked #NonDeletions #Tokens #NonBlankChars
-                           node_priority.Deletion     19             6     -72           -202
-                     FineGritLatraReducer.Reparse      1             1       0              0
-spartree_root_replacement_reducer.RootReplacement      1             1       0              0
+              Transformation Worked #NonDeletions #Tokens #NonBlankChars
+      node_priority.Deletion     13             0     -72           -202
+FineGritLatraReducer.Reparse      1             1       0              0
 ------------------------------------- End --------------------------------------
-#test success = 19
-#test failure = 70
-#test result cache hits = 30
+#test success = 13
+#test failure = 60
+#test result cache hits = 21
 #test execution cancelled = 0
-#node edit action set cache hits = 18
+#node edit action set cache hits = 21
 #external test execution cache hits = 0

@@ -33,6 +33,11 @@ class SparTreeBuilder(
   val simplifyTree: Boolean,
   val canonicalTokenCountComputer: (() -> Int?),
   val enableNodeActionSetCache: Boolean = false,
+  /**
+   * Whether whitespace-only tokens are left out (see
+   * `AbstractProgramReductionDriver.allowsExcludingWhitespaceOnlyTokens`).
+   */
+  private val excludeWhitespaceOnlyTokens: Boolean = false,
 ) : ISparTreeAntlrTreeMapping {
   private val spar2antlrMap = HashBiMap.create<AbstractSparTreeNode, ParseTree>()
   private var built = false
@@ -56,6 +61,8 @@ class SparTreeBuilder(
     val rootParseTree = parseTreeWithParser.tree
     val spar2antlrMap = spar2antlrMap
     val stack = SimpleStack<AbstractSparTreeNode>()
+    var keptTokenCount = 0
+    var excludedWhitespaceOnlyTokenCount = 0
     val root = createSparTreeNode(rootParseTree)
     lazyAssert { !spar2antlrMap.containsKey(root) }
     spar2antlrMap[root] = rootParseTree
@@ -68,6 +75,13 @@ class SparTreeBuilder(
         val child = parseTree.getChild(i)
         if (isEmptyRuleNode(child) || isEOFToken(child) || isFabricatedTokenNode(child)) {
           continue
+        }
+        if (isExcludedTokenNode(child)) {
+          ++excludedWhitespaceOnlyTokenCount
+          continue
+        }
+        if (isTokenNode(child)) {
+          ++keptTokenCount
         }
         val sparChild = createSparTreeNode(child)
         lazyAssert { !spar2antlrMap.containsKey(sparChild) }
@@ -88,7 +102,14 @@ class SparTreeBuilder(
           root
         },
       sparTreeNodeFactory = sparTreeNodeFactory,
-      initialCanonicalTokenCount = canonicalTokenCountComputer?.invoke(),
+      initialCanonicalTokenCount =
+        canonicalTokenCountComputer?.invoke()
+          // The excluded tokens are still in the program, so its size counts them.
+          ?: if (excludedWhitespaceOnlyTokenCount > 0) {
+            keptTokenCount + excludedWhitespaceOnlyTokenCount
+          } else {
+            null
+          },
       enableNodeActionSetCache = enableNodeActionSetCache,
       hasSyntaxErrors = parseTreeWithParser.hasError,
     )
@@ -101,6 +122,11 @@ class SparTreeBuilder(
   // "<missing ';'>" and must not become leaves, or they would corrupt the reconstructed program.
   private fun isFabricatedTokenNode(node: ParseTree): Boolean =
     isTokenNode(node) && AbstractParserFacade.isFabricatedToken((node as TerminalNode).symbol)
+
+  private fun isExcludedTokenNode(node: ParseTree): Boolean =
+    excludeWhitespaceOnlyTokens &&
+      isTokenNode(node) &&
+      (node as TerminalNode).symbol.text.let { it.isNotEmpty() && it.isBlank() }
 
   private fun createSparTreeNode(parseTree: ParseTree): AbstractSparTreeNode {
     if (isTokenNode(parseTree)) {
