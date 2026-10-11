@@ -38,9 +38,9 @@ import org.perses.program.printer.PrinterRegistry
 import org.perses.program.printer.TokenPlacementRecorder
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.ReductionFolder
-import org.perses.util.AtomicSequenceGenerator
 import org.perses.util.FileSystemUtil
 import org.perses.util.Interval
+import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.Shells
 import org.perses.util.toImmutableList
 import java.nio.file.Files
@@ -114,7 +114,11 @@ class ListMinimizationMicrobenchmarkWriterTest {
     rootDirectory = FileSystemUtil.ensureDirExists(workDir.resolve("microbenchmarks")),
     minListSizeToRecord = minListSizeToRecord,
     maxMicrobenchmarksToRecord = maxMicrobenchmarksToRecord,
-    microbenchmarkIdGenerator = AtomicSequenceGenerator(start = 0, minLengthForPadding = 6),
+    problemRegistry =
+      ListMinimizationProblemRegistry(
+        idWidth = 6,
+        shaAlgorithm = EnumShaAlgorithm.SHA256,
+      ),
     commandLineOptions = COMMAND_LINE_OPTIONS,
   )
 
@@ -135,6 +139,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     writer: ListMinimizationMicrobenchmarkWriter,
     program: TokenizedProgram = program(),
     elementTokenGroups: List<List<AbstractPersesToken>> = program.tokens.map { listOf(it) },
+    recordingContext: RecordingContext = this.recordingContext,
   ): ListMinimizationMicrobenchmarkWriter.Result =
     writer.writeProblem(
       baseProgramTokens = program.tokens,
@@ -236,51 +241,113 @@ class ListMinimizationMicrobenchmarkWriterTest {
     assertThat(writer(minListSizeToRecord = 100).recordedProblemCount).isEqualTo(0)
   }
 
+  /** The program's tokens as one-token elements, without the last [omitted]: a distinct problem each. */
+  private fun writeDistinct(
+    writer: ListMinimizationMicrobenchmarkWriter,
+    omitted: Int,
+  ): ListMinimizationMicrobenchmarkWriter.Result {
+    val program = program()
+    return write(writer, program, program.tokens.dropLast(omitted).map { listOf(it) })
+  }
+
   @Test
   fun testRecordingStopsAtTheCap() {
     val writer = writer(maxMicrobenchmarksToRecord = 2)
 
-    assertThat(write(writer).microbenchmarkDirectory).isNotNull()
-    assertThat(write(writer).microbenchmarkDirectory).isNotNull()
+    assertThat(writeDistinct(writer, omitted = 0).microbenchmarkDirectory).isNotNull()
+    assertThat(writeDistinct(writer, omitted = 1).microbenchmarkDirectory).isNotNull()
 
-    val refused = write(writer)
+    val refused = writeDistinct(writer, omitted = 2)
     assertThat(refused.microbenchmarkDirectory).isNull()
     assertThat(refused.explanation).contains("cap of 2")
     assertThat(writer.recordedProblemCount).isEqualTo(2)
   }
 
-  /** Drivers share one generator, so a second writer continues the sequence rather than restarting. */
+  private val sharedRootDirectory by lazy {
+    FileSystemUtil.ensureDirExists(workDir.resolve("microbenchmarks"))
+  }
+
+  private fun writerSharing(problemRegistry: ListMinimizationProblemRegistry) =
+    ListMinimizationMicrobenchmarkWriter(
+      rootDirectory = sharedRootDirectory,
+      minListSizeToRecord = 1,
+      maxMicrobenchmarksToRecord = null,
+      problemRegistry = problemRegistry,
+      commandLineOptions = COMMAND_LINE_OPTIONS,
+    )
+
+  /** Drivers share one registry, so a second writer continues the sequence rather than restarting. */
   @Test
-  fun testWritersSharingAGeneratorDoNotCollide() {
-    val shared = AtomicSequenceGenerator(start = 0, minLengthForPadding = 6)
-    val rootDirectory = FileSystemUtil.ensureDirExists(workDir.resolve("microbenchmarks"))
+  fun testWritersSharingARegistryDoNotCollide() {
+    val shared =
+      ListMinimizationProblemRegistry(idWidth = 6, shaAlgorithm = EnumShaAlgorithm.SHA256)
 
-    fun writerSharing() =
-      ListMinimizationMicrobenchmarkWriter(
-        rootDirectory = rootDirectory,
-        minListSizeToRecord = 1,
-        maxMicrobenchmarksToRecord = null,
-        microbenchmarkIdGenerator = shared,
-        commandLineOptions = COMMAND_LINE_OPTIONS,
-      )
-
-    val first = checkNotNull(write(writerSharing()).microbenchmarkDirectory)
-    val second = checkNotNull(write(writerSharing()).microbenchmarkDirectory)
+    val first =
+      checkNotNull(writeDistinct(writerSharing(shared), 0).microbenchmarkDirectory)
+    val second =
+      checkNotNull(writeDistinct(writerSharing(shared), 1).microbenchmarkDirectory)
 
     assertThat(first.fileName.toString()).isNotEqualTo(second.fileName.toString())
-    assertThat(shared.issuedCount).isEqualTo(2)
+    assertThat(shared.registeredCount).isEqualTo(2)
   }
 
   @Test
   fun testProblemIdsAreDistinctAndSortChronologically() {
     val writer = writer()
-    val first = checkNotNull(write(writer).microbenchmarkDirectory)
-    val second = checkNotNull(write(writer).microbenchmarkDirectory)
+    val first = checkNotNull(writeDistinct(writer, omitted = 0).microbenchmarkDirectory)
+    val second = checkNotNull(writeDistinct(writer, omitted = 1).microbenchmarkDirectory)
 
     assertThat(first.fileName.toString()).isLessThan(second.fileName.toString())
     // Zero-padded, so a lexical sort of a corpus is also the order the problems were issued in.
     assertThat(first.fileName.toString()).isEqualTo("000000")
     assertThat(second.fileName.toString()).isEqualTo("000001")
+  }
+
+  /**
+   * The same list in the same program is one problem, wherever in the reduction it was met: HDD's
+   * last pass repeats the pass before it. The copy takes no id, so it neither leaves a gap in the
+   * sequence nor counts toward the cap.
+   */
+  @Test
+  fun testAProblemIdenticalToARecordedOneIsSkipped() {
+    val writer = writer(maxMicrobenchmarksToRecord = 2)
+    val first = checkNotNull(write(writer).microbenchmarkDirectory)
+
+    val copy = write(writer, recordingContext = recordingContext.copy(fixpointIteration = 2))
+
+    assertThat(copy.microbenchmarkDirectory).isNull()
+    assertThat(copy.explanation).contains("identical to one already recorded")
+    assertThat(writer.recordedProblemCount).isEqualTo(1)
+    assertThat(
+      Files.list(first.parent).use { paths ->
+        paths.map { it.fileName.toString() }.toList()
+      },
+    ).containsExactly("000000")
+    assertThat(
+      checkNotNull(writeDistinct(writer, omitted = 1).microbenchmarkDirectory).fileName.toString(),
+    ).isEqualTo("000001")
+  }
+
+  @Test
+  fun testTheSameProgramWithADifferentListIsADifferentProblem() {
+    val writer = writer()
+    val program = program()
+
+    write(writer, program, program.tokens.map { listOf(it) })
+    val regrouped = write(writer, program, program.tokens.chunked(3))
+
+    assertThat(regrouped.microbenchmarkDirectory).isNotNull()
+  }
+
+  /** Writers of different drivers share the registry, so a problem is skipped across drivers. */
+  @Test
+  fun testAProblemRecordedByAnotherWriterSharingTheRegistryIsSkipped() {
+    val shared =
+      ListMinimizationProblemRegistry(idWidth = 6, shaAlgorithm = EnumShaAlgorithm.SHA256)
+
+    assertThat(write(writerSharing(shared)).microbenchmarkDirectory).isNotNull()
+    assertThat(write(writerSharing(shared)).microbenchmarkDirectory).isNull()
+    assertThat(shared.registeredCount).isEqualTo(1)
   }
 
   /**

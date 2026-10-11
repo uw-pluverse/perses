@@ -219,6 +219,7 @@ kt_jvm_library(
     ],
     deps = [
         "//:guava",
+        "//src/org/perses/listminimizer/microbenchmark:list_minimization_problem_registry",
         "//src/org/perses/reduction:global_execution_cache",
         "//src/org/perses/util",
     ],

@@ -997,7 +997,7 @@ abstract class AbstractProgramReductionDriver(
         ),
       minListSizeToRecord = flags.minListSizeToRecord,
       maxMicrobenchmarksToRecord = flags.maxMicrobenchmarksToRecord,
-      microbenchmarkIdGenerator = globalContext.listMinimizationProblemIdGenerator,
+      problemRegistry = globalContext.listMinimizationProblemRegistry,
       // The same rendering AbstractMain puts on the reduction start event: the options
       // serialized with paths reduced to their basenames, so a recording made on one machine
       // does not carry that machine's directory layout into the corpus.

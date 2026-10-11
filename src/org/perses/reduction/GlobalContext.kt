@@ -18,8 +18,8 @@ package org.perses.reduction
 
 import com.google.common.flogger.FluentLogger
 import com.google.common.io.Closer
+import org.perses.listminimizer.microbenchmark.ListMinimizationProblemRegistry
 import org.perses.reduction.AbstractGlobalExecutionCache.GlobalExecutionCache
-import org.perses.util.AtomicSequenceGenerator
 import org.perses.util.FileStreamPool
 import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.ktFine
@@ -33,13 +33,11 @@ class GlobalContext(
   val shaAlgorithm: EnumShaAlgorithm,
 ) : Closeable {
   /**
-   * Issues the ids of recorded list-minimization problems, shared by every driver. Only used in
-   * RECORD mode, but held unconditionally because it is inert otherwise: a multi-file reduction runs
-   * a driver per file, and a generator each would restart the sequence, collide folder names, and
-   * turn the recording cap into a per-file limit.
+   * Only used in RECORD mode, but held unconditionally because it is inert otherwise. Held here
+   * because every driver must share it; see [ListMinimizationProblemRegistry].
    */
-  val listMinimizationProblemIdGenerator =
-    AtomicSequenceGenerator(start = 0, minLengthForPadding = PROBLEM_ID_WIDTH)
+  val listMinimizationProblemRegistry =
+    ListMinimizationProblemRegistry(idWidth = PROBLEM_ID_WIDTH, shaAlgorithm = shaAlgorithm)
 
   private val closer = Closer.create()
 

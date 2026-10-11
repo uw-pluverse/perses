@@ -58,12 +58,27 @@ kt_jvm_library(
     ],
     deps = [
         ":list_minimization_microbenchmark",
+        ":list_minimization_problem_registry",
         "//:antlr_runtime",
         "//:flogger",
+        "//:guava",
         "//src/org/perses/program",
         "//src/org/perses/program/printer",
         "//src/org/perses/util",
         "//src/org/perses/util:Interval",
+        "//src/org/perses/util/hashing",
+    ],
+)
+
+kt_jvm_library(
+    name = "list_minimization_problem_registry",
+    srcs = [
+        "ListMinimizationProblemRegistry.kt",
+    ],
+    deps = [
+        "//:guava",
+        "//src/org/perses/util",
+        "//src/org/perses/util/hashing",
     ],
 )
 

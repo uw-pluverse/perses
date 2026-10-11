@@ -18,17 +18,21 @@ package org.perses.listminimizer.microbenchmark
 
 import com.google.common.collect.ImmutableList
 import com.google.common.flogger.FluentLogger
+import org.perses.listminimizer.microbenchmark.ListMinimizationProblemRegistry.ProblemDigest
 import org.perses.program.AbstractPersesToken
 import org.perses.program.printer.AbstractTokenPlacementListener
 import org.perses.program.printer.TokenPlacementRecorder
-import org.perses.util.AtomicSequenceGenerator
+import org.perses.util.AbstractFileContent
+import org.perses.util.AbstractFileContent.BinaryFileContent
 import org.perses.util.CollectionUtil
 import org.perses.util.FileSystemUtil
 import org.perses.util.Interval
+import org.perses.util.hashing.ListToByteFunnel
 import org.perses.util.transformToImmutableList
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.IdentityHashMap
+import java.util.UUID
 import kotlin.io.path.readText
 
 /**
@@ -54,13 +58,8 @@ class ListMinimizationMicrobenchmarkWriter(
   /** The file under reduction's own lexer, used to re-read the program that was written. */
   private val minListSizeToRecord: Int,
   private val maxMicrobenchmarksToRecord: Int?,
-  /**
-   * Issues problem ids. Injected, and the only state that has to be shared: a multi-file reduction
-   * runs a driver per file, so a generator each would restart the sequence, collide folder names,
-   * and turn the cap into a per-file limit. Everything else here is configuration that any number of
-   * instances can hold identically.
-   */
-  private val microbenchmarkIdGenerator: AtomicSequenceGenerator,
+  /** Shared by every writer of a reduction; see [ListMinimizationProblemRegistry] for why. */
+  private val problemRegistry: ListMinimizationProblemRegistry,
   /**
    * The invocation every problem this writer records came from. Held here rather than passed per
    * problem because one writer belongs to one reduction, so it cannot differ between them.
@@ -75,15 +74,15 @@ class ListMinimizationMicrobenchmarkWriter(
   }
 
   val recordedProblemCount: Int
-    get() = microbenchmarkIdGenerator.issuedCount
+    get() = problemRegistry.registeredCount
 
   /**
    * Records one problem, or explains why it was not.
    *
    * Skipping is deliberately not an error: this runs inside a live reduction, and one odd call site
    * must not abort a run that is otherwise producing a useful corpus. But a silent skip leaves an
-   * empty corpus with nothing to say whether the threshold, the cap, or a failure was responsible,
-   * which is why every outcome carries an explanation.
+   * empty corpus with nothing to say whether the threshold, the cap, a duplicate, or a failure was
+   * responsible, which is why every outcome carries an explanation.
    *
    * @param elementTokenGroups the leaf tokens of each element, in the order the minimizer sees them
    * @param writeProgramFilesTo populates the given directory with the program files, telling the
@@ -107,7 +106,7 @@ class ListMinimizationMicrobenchmarkWriter(
       )
     }
     if (maxMicrobenchmarksToRecord != null &&
-      microbenchmarkIdGenerator.issuedCount >= maxMicrobenchmarksToRecord
+      problemRegistry.registeredCount >= maxMicrobenchmarksToRecord
     ) {
       return Result(
         microbenchmarkDirectory = null,
@@ -115,14 +114,13 @@ class ListMinimizationMicrobenchmarkWriter(
           "The cap of $maxMicrobenchmarksToRecord recorded microbenchmark(s) has been reached.",
       )
     }
-    val microbenchmarkId = microbenchmarkIdGenerator.next()
     // Written here and renamed into place only once complete, so that whatever fails in between --
     // a range that does not resolve, a yaml that cannot be written -- leaves no folder that looks
-    // like a problem but is not one.
-    val stagingDirectory = rootDirectory.resolve(microbenchmarkId + STAGING_SUFFIX)
+    // like a problem but is not one. Not named after the id, which is issued only once the problem
+    // is known not to be a duplicate.
+    val stagingDirectory = rootDirectory.resolve(UUID.randomUUID().toString() + STAGING_SUFFIX)
     return try {
       writeProblemFolder(
-        microbenchmarkId = microbenchmarkId,
         stagingDirectory = stagingDirectory,
         baseProgramTokens = baseProgramTokens,
         elementTokenGroups = elementTokenGroups,
@@ -137,10 +135,10 @@ class ListMinimizationMicrobenchmarkWriter(
       if (Files.exists(stagingDirectory)) {
         FileSystemUtil.deleteRecursively(stagingDirectory)
       }
-      logger.atWarning().withCause(failure).log("Skipped recording problem %s.", microbenchmarkId)
+      logger.atWarning().withCause(failure).log("Skipped recording a problem.")
       Result(
         microbenchmarkDirectory = null,
-        explanation = "Problem $microbenchmarkId could not be recorded: $failure",
+        explanation = "The problem could not be recorded: $failure",
       )
     }
   }
@@ -157,7 +155,6 @@ class ListMinimizationMicrobenchmarkWriter(
   )
 
   private fun writeProblemFolder(
-    microbenchmarkId: String,
     stagingDirectory: Path,
     baseProgramTokens: List<AbstractPersesToken>,
     elementTokenGroups: List<List<AbstractPersesToken>>,
@@ -181,13 +178,23 @@ class ListMinimizationMicrobenchmarkWriter(
     val renderedProgram = inputDirectory.resolve(targetFilePath).readText()
     val tokenLocationMap = locateTokens(renderedProgram, placements, baseProgramTokens)
     val elements = computeRecordedElements(elementTokenGroups, tokenLocationMap)
+    val tokenOffsets =
+      baseProgramTokens.transformToImmutableList {
+        tokenLocationMap.getValue(it).rangeInRenderedProgram
+      }
+    val digest = computeProblemDigest(inputDirectory, targetFilePath, tokenOffsets, elements)
+    val microbenchmarkId = problemRegistry.register(digest)
+    if (microbenchmarkId == null) {
+      FileSystemUtil.deleteRecursively(stagingDirectory)
+      return Result(
+        microbenchmarkDirectory = null,
+        explanation = "The problem is identical to one already recorded.",
+      )
+    }
     ListMinimizationMicrobenchmark(
       microbenchmarkId = microbenchmarkId,
       targetFilePath = targetFilePath,
-      tokenOffsets =
-        baseProgramTokens.transformToImmutableList {
-          tokenLocationMap.getValue(it).rangeInRenderedProgram
-        },
+      tokenOffsets = tokenOffsets,
       inputList = RecordedInputList(elements),
       recordingContext = recordingContext,
     ).writeTo(
@@ -267,6 +274,44 @@ class ListMinimizationMicrobenchmarkWriter(
     return tokenLocationMap
   }
 
+  /**
+   * What identifies a problem: the program files, the target file, the tokenization and the list.
+   * The recording context is left out. A reduction meets the same list in the same program again
+   * -- HDD's last pass, which only confirms that nothing more can be deleted, repeats the pass
+   * before it -- and a minimizer given the copy repeats exactly what it did on the original, so the
+   * copy only adds weight to whatever the original shows.
+   */
+  private fun computeProblemDigest(
+    inputDirectory: Path,
+    targetFilePath: String,
+    tokenOffsets: List<Interval>,
+    elements: List<RecordedElement>,
+  ): ProblemDigest {
+    val inputFiles = FileSystemUtil.globWithFilter(inputDirectory) { true }
+    val shaAlgorithm = problemRegistry.shaAlgorithm
+    return ProblemDigest(
+      filePaths =
+        shaAlgorithm.createFromListOfStrings(
+          listOf(targetFilePath) + inputFiles.map { inputDirectory.relativize(it).toString() },
+        ),
+      fileContents =
+        AbstractFileContent.createFromListOfFileContents(
+          shaHash = shaAlgorithm,
+          fileContents = inputFiles.map { BinaryFileContent.fromFile(it) },
+        ),
+      list =
+        shaAlgorithm.function
+          .newHasher()
+          .putObject(tokenOffsets, intervalListFunnel)
+          .putObject(
+            elements,
+            ListToByteFunnel { element, sink ->
+              intervalListFunnel.funnel(element.tokenRanges, sink)
+            },
+          ).hash(),
+    )
+  }
+
   /** Where a token of the base program is, in two coordinates. */
   data class TokenLocation(
     /** The token's position in the base program's token sequence, 0-based. */
@@ -277,6 +322,11 @@ class ListMinimizationMicrobenchmarkWriter(
 
   companion object {
     private val logger = FluentLogger.forEnclosingClass()
+
+    private val intervalListFunnel =
+      ListToByteFunnel<Interval> { interval, sink ->
+        sink.putInt(interval.leftInclusive).putInt(interval.rightExclusive)
+      }
 
     /** A problem folder being written; renamed to the bare id once complete. */
     const val STAGING_SUFFIX = ".incomplete"
