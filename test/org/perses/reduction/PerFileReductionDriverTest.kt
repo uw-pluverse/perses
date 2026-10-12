@@ -115,6 +115,7 @@ class PerFileReductionDriverTest {
       scriptExecutionTimeoutInSeconds =
         cmd.reductionControlFlags.testScriptExecutionTimeoutInSeconds,
       globalExecutionCache = globalContext.globalExecutionCache,
+      reductionStopSignal = globalContext.reductionStopSignal,
     ).also { executorsToClose.add(it) }
 
   @After

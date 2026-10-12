@@ -44,6 +44,7 @@ class ReducerContext(
   val listMinimizerListener: AbstractListMinimizerListener,
   /** Set only in RECORD mode; shared across this reduction's drivers. Null on the normal path. */
   val listMinimizationMicrobenchmarkWriter: ListMinimizationMicrobenchmarkWriter?,
+  val reductionStopSignal: ReductionStopSignal,
   /** The whole mutable-file set's current sizes; the active file's slot reflects the live tree. */
   private val perFileSizeMetricsSupplier: () -> PerFileSizeMetrics,
   val inputRepresentationCreator: (

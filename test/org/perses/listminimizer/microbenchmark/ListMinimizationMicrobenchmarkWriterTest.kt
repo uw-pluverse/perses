@@ -36,6 +36,7 @@ import org.perses.program.TokenizedProgram
 import org.perses.program.printer.AbstractTokenizedProgramPrinter
 import org.perses.program.printer.PrinterRegistry
 import org.perses.program.printer.TokenPlacementRecorder
+import org.perses.reduction.ReductionStopSignal
 import org.perses.reduction.io.DefaultLanguageOriginalReductionInputs
 import org.perses.reduction.io.ReductionFolder
 import org.perses.util.FileSystemUtil
@@ -56,6 +57,7 @@ private const val COMMAND_LINE_OPTIONS = "alg: \"token_slicer\"\nthreads: \"1\"\
 @RunWith(JUnit4::class)
 class ListMinimizationMicrobenchmarkWriterTest {
   private val workDir = FileSystemUtil.createTempDirForObject(this)
+  private val reductionStopSignal = ReductionStopSignal()
 
   private val inputDir = FileSystemUtil.ensureDirExists(workDir.resolve("input_dir"))
 
@@ -119,6 +121,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
         idWidth = 6,
         shaAlgorithm = EnumShaAlgorithm.SHA256,
       ),
+    reductionStopSignal = reductionStopSignal,
     commandLineOptions = COMMAND_LINE_OPTIONS,
   )
 
@@ -255,7 +258,9 @@ class ListMinimizationMicrobenchmarkWriterTest {
     val writer = writer(maxMicrobenchmarksToRecord = 2)
 
     assertThat(writeDistinct(writer, omitted = 0).microbenchmarkDirectory).isNotNull()
+    assertThat(reductionStopSignal.isStopRequested).isFalse()
     assertThat(writeDistinct(writer, omitted = 1).microbenchmarkDirectory).isNotNull()
+    assertThat(reductionStopSignal.stopRequests.single().reason).contains("cap of 2")
 
     val refused = writeDistinct(writer, omitted = 2)
     assertThat(refused.microbenchmarkDirectory).isNull()
@@ -273,6 +278,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
       minListSizeToRecord = 1,
       maxMicrobenchmarksToRecord = null,
       problemRegistry = problemRegistry,
+      reductionStopSignal = reductionStopSignal,
       commandLineOptions = COMMAND_LINE_OPTIONS,
     )
 

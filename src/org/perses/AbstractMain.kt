@@ -136,6 +136,7 @@ abstract class AbstractMain<
       scriptExecutionKeepTryingAfterTimeout =
         cmd.reductionControlFlags.testScriptExecutionKeepWaitingAfterTimeout,
       globalExecutionCache = globalContext.globalExecutionCache,
+      reductionStopSignal = globalContext.reductionStopSignal,
     )
   }
 
@@ -212,8 +213,13 @@ abstract class AbstractMain<
     listenerManager.onReductionStart(reductionStartEvent)
     try {
       runContentReductionToFixpoint(reductionStartEvent)
-      runFileDeletion(reductionStartEvent)
+      if (!globalContext.reductionStopSignal.isStopRequested) {
+        runFileDeletion(reductionStartEvent)
+      }
     } finally {
+      globalContext.reductionStopSignal.stopRequests.forEach { request ->
+        logger.ktInfo { "The reduction stopped early. ${request.describe()}" }
+      }
       val finalMetrics =
         runCatching { computeWholeReductionSizeMetrics() }
           .onFailure { listenerManager.onCriticalException(it as Exception) }
@@ -333,8 +339,11 @@ abstract class AbstractMain<
   protected open fun runContentReductionToFixpoint(reductionStartEvent: ReductionStartEvent) {
     var sizeAtPreviousRoundEnd = nonBlankCharCountOf(resultFolder.readLiveMutableFileContents())
     var countOfNonShrinkingRounds = 0
-    while (true) {
+    while (!globalContext.reductionStopSignal.isStopRequested) {
       runPerFileReductionToFixpoint(reductionStartEvent)
+      if (globalContext.reductionStopSignal.isStopRequested) {
+        return
+      }
       val contentsBeforeCrossFile = resultFolder.readLiveMutableFileContents()
       runCrossFileReductionToFixpoint(reductionStartEvent)
       val contentsAfterCrossFile = resultFolder.readLiveMutableFileContents()

@@ -61,6 +61,34 @@ reduction_golden_test(
     test_script = "r.sh",
 )
 
+# Recording is all a RECORD-mode reduction is for, so it winds down as soon as the cap is reached.
+# token_slicer at a cap of 1 stops after recording its first list, before minimizing it: no query
+# runs and the reduced file is t.c unchanged. node_priority at a cap of 2 stops in the middle of its
+# node worklist, which exercises the stop where the node reducers check it.
+[
+    reduction_golden_test(
+        name = "record_mode_%s_stops_at_cap_golden_test" % algorithm,
+        golden_progress_file = "golden_record_%s_stops_at_cap_progress.txt" % algorithm,
+        golden_reduced_file = golden_reduced_file,
+        other_flags = {
+            "--list-minimizer-microbenchmarking-mode": "RECORD",
+            "--enable-latra": "false",
+            "--dyck-node-reducer": "OFF",
+            "--line-slicer": "OFF",
+            "--list-minimizer-microbenchmark-output": "$(RULEDIR)/recorded_%s_with_cap" % algorithm,
+            "--min-list-size-to-record": "1",
+            "--max-microbenchmarks-to-record": str(cap),
+        },
+        reduction_algorithm = algorithm,
+        source_file = "t.c",
+        test_script = "r.sh",
+    )
+    for algorithm, cap, golden_reduced_file in [
+        ("token_slicer", 1, "t.c"),
+        ("node_priority", 2, "golden_record_node_priority_stops_at_cap_t.c"),
+    ]
+]
+
 golden_test(
     name = "recorded_microbenchmark_golden_test",
     golden_file = "golden_microbenchmark.yaml",

@@ -21,6 +21,7 @@ import org.perses.program.LanguageKind
 import org.perses.program.ScriptFile
 import org.perses.program.SourceFile
 import org.perses.reduction.AbstractGlobalExecutionCache.NullCache
+import org.perses.reduction.ReductionStopSignal
 import org.perses.reduction.TestScriptExecutorService
 import org.perses.util.AutoDeletableFolder
 import org.perses.util.FileSystemUtil
@@ -111,6 +112,7 @@ abstract class AbstractReductionTestData(
         specifiedNumOfThreads = 1,
         scriptExecutionTimeoutInSeconds = 600L,
         globalExecutionCache = NullCache(),
+        reductionStopSignal = ReductionStopSignal(),
       )
     }
   val executorService: TestScriptExecutorService by executorServiceDelegate

@@ -36,6 +36,8 @@ class TestScriptExecutorService(
   private val scriptExecutionTimeoutInSeconds: Long,
   private val scriptExecutionKeepTryingAfterTimeout: Boolean = true,
   private val globalExecutionCache: AbstractGlobalExecutionCache,
+  /** Once a stop is requested, every query is skipped without running the test script. */
+  private val reductionStopSignal: ReductionStopSignal,
 ) : Closeable {
   val statistics = Statistics()
 
@@ -128,7 +130,13 @@ class TestScriptExecutorService(
     val outputManagerCreatorFuture =
       createRestrictedFuture(
         outputManagerCreatorService.submit(
-          Callable { outputManagerCreator() },
+          Callable {
+            if (reductionStopSignal.isStopRequested) {
+              OutputManagerCreatorResult.Skip()
+            } else {
+              outputManagerCreator()
+            }
+          },
         ),
       )
 

@@ -16,7 +16,6 @@
  */
 package org.perses.reduction.reducer
 
-import org.perses.util.lazyAssert
 import com.google.common.collect.ImmutableList
 import org.perses.reduction.AbstractSparTreeReducer
 import org.perses.reduction.AsyncReductionListenerManager
@@ -82,7 +81,7 @@ abstract class AbstractNodeReducer(
   ) {
     val queue = createReductionQueue()
     initializeReductionQueue(queue, tree)
-    while (!queue.isEmpty()) {
+    while (!queue.isEmpty() && !reducerContext.reductionStopSignal.isStopRequested) {
       val node = queue.poll()
       val pendingNodes =
         reduceOneNodeWithBoilerplateAndGetPendingNodes(

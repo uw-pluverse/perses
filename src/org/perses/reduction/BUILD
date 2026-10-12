@@ -192,6 +192,7 @@ kt_jvm_library(
         ":reducer_interface",
         ":reducer_name_and_desc",
         ":reduction_configuration",
+        ":reduction_stop_signal",
         ":test_script",
         ":test_script_executor_service",
         "//:guava",
@@ -213,11 +214,17 @@ kt_jvm_library(
 )
 
 kt_jvm_library(
+    name = "reduction_stop_signal",
+    srcs = ["ReductionStopSignal.kt"],
+)
+
+kt_jvm_library(
     name = "global_context",
     srcs = [
         "GlobalContext.kt",
     ],
     deps = [
+        ":reduction_stop_signal",
         "//:guava",
         "//src/org/perses/listminimizer/microbenchmark:list_minimization_problem_registry",
         "//src/org/perses/reduction:global_execution_cache",
@@ -234,6 +241,7 @@ kt_jvm_library(
     ],
     deps = [
         ":global_execution_cache",
+        ":reduction_stop_signal",
         ":test_script",
         "//:guava",
         "//src/org/perses/grammar:parser_facade_interface",

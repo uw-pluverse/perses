@@ -64,6 +64,7 @@ kt_jvm_library(
         "//:guava",
         "//src/org/perses/program",
         "//src/org/perses/program/printer",
+        "//src/org/perses/reduction:reduction_stop_signal",
         "//src/org/perses/util",
         "//src/org/perses/util:Interval",
         "//src/org/perses/util/hashing",

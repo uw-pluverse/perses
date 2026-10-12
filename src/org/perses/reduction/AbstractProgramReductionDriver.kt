@@ -713,6 +713,11 @@ abstract class AbstractProgramReductionDriver(
     reductionStartEvent: ReductionStartEvent,
     reducer: AbstractSparTreeReducer,
   ): ReducerResult {
+    if (globalContext.reductionStopSignal.isStopRequested) {
+      // Checked before the per-reducer sanity check, which would fail once the executor refuses
+      // queries.
+      return ReducerResult.Skipped
+    }
     val reducerName = reducer.reducerAnnotation.shortName
     val preferredParserFacade = reducer.getPreferredParserFacade()
     val targetParserFacade = preferredParserFacade ?: configuration.canonicalParserFacade
@@ -998,6 +1003,7 @@ abstract class AbstractProgramReductionDriver(
       minListSizeToRecord = flags.minListSizeToRecord,
       maxMicrobenchmarksToRecord = flags.maxMicrobenchmarksToRecord,
       problemRegistry = globalContext.listMinimizationProblemRegistry,
+      reductionStopSignal = globalContext.reductionStopSignal,
       // The same rendering AbstractMain puts on the reduction start event: the options
       // serialized with paths reduced to their basenames, so a recording made on one machine
       // does not carry that machine's directory layout into the corpus.
@@ -1031,6 +1037,7 @@ abstract class AbstractProgramReductionDriver(
       sparTreeNodeFactory = inputRepresentation.tree.sparTreeNodeFactory,
       listMinimizerListener = createListMinimizerListener(),
       listMinimizationMicrobenchmarkWriter = createListMinimizationMicrobenchmarkWriterOrNull(),
+      reductionStopSignal = globalContext.reductionStopSignal,
       inputRepresentationCreator = { preferredParserFacade ->
         // Only the Dyck reparse is tolerant, so an unbalanced program still yields a Dyck tree to
         // reduce instead of throwing and being skipped. Every other preferred facade stays STRICT:

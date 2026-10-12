@@ -1,0 +1,295 @@
+The sanity check has been performed. The result is Passing
+=====================Reduction starts.======================
+
+The initial program size is 15
+The command line options are:
+---
+helpFlags:
+  groupName: "Help"
+  help: false
+verbosityFlags:
+  groupName: "Verbosity"
+  verbosity: "INFO"
+  listVerbosity: false
+  hideTimestamps: true
+  fullyDeterministicMode: false
+versionFlags:
+  groupName: "Version"
+  version: false
+resultOutputFlags:
+  groupName: "Outputs"
+  outputDir: "result_record_mode_node_priority_stops_at_cap_golden_test_node_priority_t.c"
+inputFlags:
+  groupName: "Inputs"
+  testScript: "r.sh"
+  inputFiles:
+  - "t.c"
+  deps: []
+reductionControlFlags:
+  groupName: "General Reduction Control"
+  globalFixpoint: false
+  fixpointForMainReducer: true
+  numOfThreads: 1
+  codeFormat: "COMPACT_ORIG_FORMAT"
+  testScriptExecutionTimeoutInSeconds: 600
+  testScriptExecutionKeepWaitingAfterTimeout: true
+outputRefiningFlags:
+  groupName: "Output Refining Control"
+  callFormatter: false
+  formatCmd: ""
+  callCReduce: false
+  creduceCmd: "creduce"
+algorithmControlFlags:
+  groupName: "Reduction Algorithm Control"
+  mainReductionAlgorithm: "node_priority"
+  cleanupReductionAlgorithm: null
+  listAllReductionAlgorithms: false
+  listAllListMinimizers: false
+  rebuildParseTreeEachIteration: true
+  enableTokenSlicer: false
+  enableTreeSlicer: false
+  lineSlicer: "OFF"
+  defaultListMinimizerTypeForHDD: "CDD"
+  minSlicingWindowSize: 1
+  maxSlicingWindowSize: 14
+languageControlFlags:
+  groupName: "Language Control"
+  languageName: ""
+  listLangs: false
+  designatedParserFacadeClassName: ""
+  listParserFacades: false
+  languageJarFiles: []
+  underlyingLexerClassForDyckParser: ""
+persesFlags:
+  groupName: "Classical Perses Reducer Control"
+  enableTopDownReduction: true
+  enableReductionOnRegularNodes: true
+  maxEditCountForRegularRuleNode: 100
+  maxBfsDepthForRegularRuleNode: 5
+  enableLiteralReplacementForRegularRuleNode: false
+  enableLiteralReplacementForListMinimizer: false
+  stopAtFirstCompatibleChildForRegularRuleNode: false
+  listMinimizerTypeForKleene: "DFS"
+  enableReductionOnKleeneAndOptionalNodes: true
+  anticipatedTokenCountInResult: 150
+vulcanFlags:
+  groupName: "Vulcan Reducer Control"
+  enableVulcan: false
+  nonDeletionIterationLimit: 10
+  windowSize: 4
+  vulcanFixpoint: false
+trecFlags:
+  groupName: "T-Rec Reducer Control"
+  enableTRec: false
+profilingFlags:
+  groupName: "Profiling"
+  progressDumpFile: "_record_mode_node_priority_stops_at_cap_golden_test_by_default_progress.txt"
+  actionsetEffectProfile: null
+  statDumpFile: null
+  profileQueryCacheTime: null
+  profileQueryCacheTimeCSV: null
+  profileQueryCacheMemory: null
+  actionSetProfiler: null
+  profileListMinimizer: null
+  profileProgramSizeTrend: null
+  profileReductionProcessDifferentialAnalysis: null
+  enableWebUi: false
+  webUiPort: 9000
+cacheControlFlags:
+  groupName: "Cache Control"
+  queryCaching: true
+  nodeActionSetCaching: true
+  enablePassCache: true
+  enableGlobalCache: false
+  globalCacheFile: null
+  pathToSaveUpdatedGlobalCache: null
+  defaultShaAlgorithm: "SHA256"
+listMinimizerMicrobenchmarkingFlags:
+  groupName: "List Minimizer Microbenchmarking"
+  mode: "RECORD"
+  microbenchmarkOutputDirectory: "recorded_node_priority_with_cap"
+  minListSizeToRecord: 1
+  maxMicrobenchmarksToRecord: 2
+  microbenchmarkFile: null
+  listMinimizersToEvaluate: []
+  evaluationOutputDirectory: null
+experimentFlags:
+  groupName: "Experiment Control"
+  onDemandFineGritReducerAnnotationClasses: []
+  onDemandMediumGritReducerAnnotationClasses: []
+  onDemandCoarseGritReducerAnnotationClasses: []
+  keepReductionHistory: false
+  enableErrorTolerantGrammar: true
+  dyckNodeReducer: "OFF"
+lprFlags:
+  groupName: "LPR Reducer Control"
+  enableLPR: false
+  lprFixpoint: false
+  llmClientPath: null
+latraFlags:
+  groupName: "Latra Reducer Control"
+  enableLatra: false
+  enableFixpoint: true
+  transformationListMinimizer: "WPROBDD"
+sfcFlags:
+  groupName: "SFC (Structure Form Conversion) Reducer Control"
+  enableSfc: false
+  enableFixpoint: true
+  subtreeTokenCountLimit: 64
+  candidateLimit: 64
+mimirFlags:
+  groupName: "Mimir Reducer Control"
+  nodeCountThresholdToUseOneByOne: 10
+  enableBottomUpReductionAfterMainReductionLoop: true
+  bottomUpReductionMaxDepth: 5
+  mimirReductionAlgorithm: "FINE_DAG_AS_LIST"
+  enableMimirForRegularNode: true
+  enableMimirDeleteDefWithAllItsConcreteUses: false
+  javaLanguageServerCmd: "start_jdtls.sh"
+  clanguageServerCmd: "clangd-18"
+
+------------------------------------------------------------
+
+
+Cache setting: query-caching=true, edit-caching=true, query-cache-type=CONTENT_SHA_HASH_FORMAT
+(15/15)  The reducer execution plan is listed below.
+    fixpoint (smaller) {
+        node_priority
+    }
+
+
+(15/15)  Rebuilding spar-tree: The spartree is not dirty, and thus the rebuilding is skipped.
+========Fixpoint iteration 1. Reducer: node_priority========
+
+Parser Facade: class org.perses.grammar.c.PnfCParserFacade
+The spar-tree is the following.
+compilationUnit{id=1,slot_type=compilationUnit}
+|___(?){id=2,slot_type=optional__compilationUnit_1}
+    |___(+){id=4,slot_type=[translationUnit,kleene_plus__translationUnit_3]}
+        |___aux_rule__declaration_3{id=63,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=64,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=74,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:keep_me{id=71,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=65,slot_type=Semi}
+        |___aux_rule__declaration_3{id=50,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=51,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=61,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:a{id=58,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=52,slot_type=Semi}
+        |___aux_rule__declaration_3{id=37,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=38,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=48,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:b{id=45,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=39,slot_type=Semi}
+        |___aux_rule__declaration_3{id=24,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+        |   |___(+){id=25,slot_type=declarationSpecifiers}
+        |   |   |___Token:int{id=35,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+        |   |   |___Token:c{id=32,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+        |   |___Token:;{id=26,slot_type=Semi}
+        |___aux_rule__declaration_3{id=11,slot_type=[aux_rule__translationUnit_2,declaration,aux_rule__declaration_3]}
+            |___(+){id=12,slot_type=declarationSpecifiers}
+            |   |___Token:int{id=22,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,Int]}
+            |   |___Token:d{id=19,slot_type=[declarationSpecifier,typeSpecifierWithAttrList,typeSpecifier,typedefName,Identifier]}
+            |___Token:;{id=13,slot_type=Semi}
+------------------------------------------------------------
+
+
+FixPt[1][node_priority](15/15)  Starting to retrieve the semantics provider
+FixPt[1][node_priority](15/15)  Retrieved semantics provider null
+==================Reducing node 2, size=15==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep_me;
+    int a; int b; int c; int d;
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](15/15)  Minimizer UnweightedDfsListMinimizer starts. Input=[0]#1. Global ratio:15/15=100.00%
+FixPt[1][node_priority][DFS](15/15)  Testing the empty input. Global ratio:15/15=100.00%
+==========Testing the following program (0): fail===========
+
+// edit action set type: DFS in node_priority(PersesNodeReducer)[optional:optional__compilationUnit_1]dd@#nodes=1,#parts=1#total-parts=1
+    --file: t.c--
+------------------------------------------------------------
+
+
+FixPt[1][node_priority][DFS](15/15)  Try deleting [0]#1: Uninteresting. Local ratio: 1/1=100.00%. Global ratio:15/15=100.00%
+FixPt[1][node_priority][DFS](15/15)  There is only one element in the input, and the empty input has been tested. Global ratio:15/15=100.00%
+FixPt[1][node_priority][DFS](15/15)  Minimizer UnweightedDfsListMinimizer ends. Result=[0]#1. Local ratio: 1/1=100.00%. Global ratio:15/15=100.00%
+===================Node reduction is done===================
+
+Failed to reduce node 2
+------------------------------------------------------------
+
+
+==================Reducing node 4, size=15==================
+
+The current best program is the following
+
+    --file: t.c--
+    int keep_me;
+    int a; int b; int c; int d;
+------------------------------------------------------------
+
+
+==============Node edit action set cache hit.===============
+
+    structure: [delete_4]
+    context: [kleene_plus:kleene_plus__translationUnit_3]can be epsilon
+------------------------------------------------------------
+
+
+==========Testing the following program (1): pass===========
+
+// edit action set type: [kleene_plus:kleene_plus__translationUnit_3]remove all except first
+    --file: t.c--
+    int keep_me;
+------------------------------------------------------------
+
+
+===========TestScriptExecutionCacheEntryEviction============
+
+0 entries are removed: 1 --> 1.
+------------------------------------------------------------
+
+
+===========Node edit action set cache is cleared.===========
+
+    size before clearance = 2
+------------------------------------------------------------
+
+
+================The best program is updated.================
+
+token count change 15 -> 3
+Edit: [delete: 11,24,37,50]
+------------------------------------------------------------
+
+
+===================Node reduction is done===================
+
+Succeeded to reduce node 4 from 15 to 3
+------------------------------------------------------------
+
+
+----------------------- Reduction History and Statistics -----------------------
+----------------------------------- History ------------------------------------
+ID       Reducer Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+ 0 node_priority      1             0     -12            -20       2   time-hidden
+
+----------------------------------- Summary ------------------------------------
+      Reducer Times Worked #NonDeletions #Tokens #NonBlankChars Queries Duration(sec)
+node_priority     1      1             0     -12            -20       2   time-hidden
+
+------------------------------- Transformations --------------------------------
+        Transformation Worked #NonDeletions #Tokens #NonBlankChars
+node_priority.Deletion      1             0     -12            -20
+------------------------------------- End --------------------------------------
+#test success = 1
+#test failure = 1
+#test result cache hits = 0
+#test execution cancelled = 0
+#node edit action set cache hits = 1
+#external test execution cache hits = 0

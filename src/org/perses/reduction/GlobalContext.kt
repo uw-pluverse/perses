@@ -39,6 +39,8 @@ class GlobalContext(
   val listMinimizationProblemRegistry =
     ListMinimizationProblemRegistry(idWidth = PROBLEM_ID_WIDTH, shaAlgorithm = shaAlgorithm)
 
+  val reductionStopSignal = ReductionStopSignal()
+
   private val closer = Closer.create()
 
   val fileStreamPool: FileStreamPool = closer.register(FileStreamPool())

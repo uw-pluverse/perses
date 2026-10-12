@@ -109,6 +109,7 @@ class CrossFileReductionTestData(
         scriptExecutionTimeoutInSeconds = 600L,
         scriptExecutionKeepTryingAfterTimeout = false,
         globalExecutionCache = globalContext.globalExecutionCache,
+        reductionStopSignal = globalContext.reductionStopSignal,
       )
     val driver =
       CrossFileReductionDriver(

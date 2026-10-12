@@ -22,6 +22,7 @@ import org.perses.listminimizer.microbenchmark.ListMinimizationProblemRegistry.P
 import org.perses.program.AbstractPersesToken
 import org.perses.program.printer.AbstractTokenPlacementListener
 import org.perses.program.printer.TokenPlacementRecorder
+import org.perses.reduction.ReductionStopSignal
 import org.perses.util.AbstractFileContent
 import org.perses.util.AbstractFileContent.BinaryFileContent
 import org.perses.util.CollectionUtil
@@ -60,6 +61,8 @@ class ListMinimizationMicrobenchmarkWriter(
   private val maxMicrobenchmarksToRecord: Int?,
   /** Shared by every writer of a reduction; see [ListMinimizationProblemRegistry] for why. */
   private val problemRegistry: ListMinimizationProblemRegistry,
+  /** Recording is all a RECORD-mode reduction is for, so reaching the cap stops the reduction. */
+  private val reductionStopSignal: ReductionStopSignal,
   /**
    * The invocation every problem this writer records came from. Held here rather than passed per
    * problem because one writer belongs to one reduction, so it cannot differ between them.
@@ -105,14 +108,8 @@ class ListMinimizationMicrobenchmarkWriter(
             "$minListSizeToRecord required to record.",
       )
     }
-    if (maxMicrobenchmarksToRecord != null &&
-      problemRegistry.registeredCount >= maxMicrobenchmarksToRecord
-    ) {
-      return Result(
-        microbenchmarkDirectory = null,
-        explanation =
-          "The cap of $maxMicrobenchmarksToRecord recorded microbenchmark(s) has been reached.",
-      )
+    if (isMaxMicrobenchmarksToRecordReached()) {
+      return Result(microbenchmarkDirectory = null, explanation = capReachedExplanation())
     }
     // Written here and renamed into place only once complete, so that whatever fails in between --
     // a range that does not resolve, a yaml that cannot be written -- leaves no folder that looks
@@ -142,6 +139,13 @@ class ListMinimizationMicrobenchmarkWriter(
       )
     }
   }
+
+  private fun isMaxMicrobenchmarksToRecordReached() =
+    maxMicrobenchmarksToRecord != null &&
+      problemRegistry.registeredCount >= maxMicrobenchmarksToRecord
+
+  private fun capReachedExplanation() =
+    "The cap of $maxMicrobenchmarksToRecord recorded microbenchmark(s) has been reached."
 
   /**
    * Where a problem was written, or null when it was not, and a sentence saying why either way.
@@ -219,6 +223,9 @@ class ListMinimizationMicrobenchmarkWriter(
       FileSystemUtil.deleteRecursively(microbenchmarkDirectory)
     }
     Files.move(stagingDirectory, microbenchmarkDirectory)
+    if (isMaxMicrobenchmarksToRecordReached()) {
+      reductionStopSignal.requestStop(capReachedExplanation())
+    }
     return Result(
       microbenchmarkDirectory = microbenchmarkDirectory,
       explanation = "Recorded ${elementTokenGroups.size} element(s) as problem $microbenchmarkId.",

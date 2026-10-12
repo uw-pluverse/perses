@@ -70,6 +70,7 @@ kt_jvm_test(
         "//src/org/perses/program",
         "//src/org/perses/program:enum_format_control",
         "//src/org/perses/program/printer",
+        "//src/org/perses/reduction:reduction_stop_signal",
         "//src/org/perses/reduction/io",
         "//src/org/perses/util",
         "//src/org/perses/util:Interval",

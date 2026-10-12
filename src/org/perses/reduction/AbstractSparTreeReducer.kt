@@ -782,6 +782,9 @@ abstract class AbstractSparTreeReducer protected constructor(
       contextDescription = finalActionDescription,
       fixpointReductionState = fixpointReductionState,
     )
+    if (reducerContext.reductionStopSignal.isStopRequested) {
+      return input
+    }
     val listMinimizer = ListMinimizerFactory.create(minimizerType, arguments)
     return listMinimizer.reduce()
   }

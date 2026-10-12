@@ -138,6 +138,7 @@ class TestScriptExecutorServiceTest {
         1,
         scriptExecutionTimeoutInSeconds = 1L,
         globalExecutionCache = NullCache(),
+        reductionStopSignal = ReductionStopSignal(),
       ).use {
         it
           .testProgramAsync(
@@ -166,6 +167,7 @@ class TestScriptExecutorServiceTest {
       threadCount,
       scriptExecutionTimeoutInSeconds = 4 * 60L,
       globalExecutionCache = NullCache(),
+      reductionStopSignal = ReductionStopSignal(),
     ).use {
       // TODO: refine this test.
       testPassing(it)

@@ -322,3 +322,13 @@ kt_jvm_test(
         "//src/org/perses/util/shell:ExitCode",
     ],
 )
+
+kt_jvm_test(
+    name = "ReductionStopSignalTest",
+    srcs = ["ReductionStopSignalTest.kt"],
+    test_class = "org.perses.reduction.ReductionStopSignalTest",
+    deps = [
+        "//:truth",
+        "//src/org/perses/reduction:reduction_stop_signal",
+    ],
+)
