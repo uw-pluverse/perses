@@ -101,15 +101,13 @@ class ListMinimizationMicrobenchmarkWriter(
     writeProgramFilesTo: (Path, AbstractTokenPlacementListener) -> Unit,
   ): Result {
     if (elementTokenGroups.size < minListSizeToRecord) {
-      return Result(
-        microbenchmarkDirectory = null,
-        explanation =
-          "The list has ${elementTokenGroups.size} element(s), fewer than the " +
-            "$minListSizeToRecord required to record.",
+      return Result.Skipped(
+        "The list has ${elementTokenGroups.size} element(s), fewer than the " +
+          "$minListSizeToRecord required to record.",
       )
     }
     if (isMaxMicrobenchmarksToRecordReached()) {
-      return Result(microbenchmarkDirectory = null, explanation = capReachedExplanation())
+      return Result.Skipped(capReachedExplanation())
     }
     // Written here and renamed into place only once complete, so that whatever fails in between --
     // a range that does not resolve, a yaml that cannot be written -- leaves no folder that looks
@@ -133,10 +131,7 @@ class ListMinimizationMicrobenchmarkWriter(
         FileSystemUtil.deleteRecursively(stagingDirectory)
       }
       logger.atWarning().withCause(failure).log("Skipped recording a problem.")
-      Result(
-        microbenchmarkDirectory = null,
-        explanation = "The problem could not be recorded: $failure",
-      )
+      Result.Skipped("The problem could not be recorded: $failure")
     }
   }
 
@@ -148,15 +143,23 @@ class ListMinimizationMicrobenchmarkWriter(
     "The cap of $maxMicrobenchmarksToRecord recorded microbenchmark(s) has been reached."
 
   /**
-   * Where a problem was written, or null when it was not, and a sentence saying why either way.
+   * Where a problem was written, or that it was not, with a sentence saying why either way.
    *
-   * Named [Result] rather than reusing a nullable path so that a caller -- and a test -- can tell a
-   * threshold skip from a cap skip from a failure, which all look identical as a null.
+   * The explanation is what tells a threshold skip from a cap skip, a duplicate, or a failure; a
+   * bare null directory would leave an empty corpus with nothing to say which was responsible.
    */
-  data class Result(
-    val microbenchmarkDirectory: Path?,
-    val explanation: String,
-  )
+  sealed class Result {
+    abstract val explanation: String
+
+    data class Recorded(
+      val microbenchmarkDirectory: Path,
+      override val explanation: String,
+    ) : Result()
+
+    data class Skipped(
+      override val explanation: String,
+    ) : Result()
+  }
 
   private fun writeProblemFolder(
     stagingDirectory: Path,
@@ -190,10 +193,7 @@ class ListMinimizationMicrobenchmarkWriter(
     val microbenchmarkId = problemRegistry.register(digest)
     if (microbenchmarkId == null) {
       FileSystemUtil.deleteRecursively(stagingDirectory)
-      return Result(
-        microbenchmarkDirectory = null,
-        explanation = "The problem is identical to one already recorded.",
-      )
+      return Result.Skipped("The problem is identical to one already recorded.")
     }
     ListMinimizationMicrobenchmark(
       microbenchmarkId = microbenchmarkId,
@@ -226,7 +226,7 @@ class ListMinimizationMicrobenchmarkWriter(
     if (isMaxMicrobenchmarksToRecordReached()) {
       reductionStopSignal.requestStop(capReachedExplanation())
     }
-    return Result(
+    return Result.Recorded(
       microbenchmarkDirectory = microbenchmarkDirectory,
       explanation = "Recorded ${elementTokenGroups.size} element(s) as problem $microbenchmarkId.",
     )

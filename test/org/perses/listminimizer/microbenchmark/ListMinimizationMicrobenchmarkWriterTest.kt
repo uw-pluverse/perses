@@ -29,6 +29,7 @@ import org.perses.grammar.c.LanguageC
 import org.perses.grammar.flattokenlist.FlatTokenListParserFacade
 import org.perses.grammar.line.LineParserFacade
 import org.perses.grammar.xml.PnfXMLParserFacade
+import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmarkWriter.Result
 import org.perses.listminimizer.microbenchmark.ListMinimizationMicrobenchmarkWriter.TokenLocation
 import org.perses.program.AbstractPersesToken
 import org.perses.program.EnumFormatControl
@@ -45,6 +46,7 @@ import org.perses.util.hashing.EnumShaAlgorithm
 import org.perses.util.shell.Shells
 import org.perses.util.toImmutableList
 import java.nio.file.Files
+import java.nio.file.Path
 import java.util.IdentityHashMap
 import kotlin.io.path.createFile
 import kotlin.io.path.deleteRecursively
@@ -143,7 +145,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     program: TokenizedProgram = program(),
     elementTokenGroups: List<List<AbstractPersesToken>> = program.tokens.map { listOf(it) },
     recordingContext: RecordingContext = this.recordingContext,
-  ): ListMinimizationMicrobenchmarkWriter.Result =
+  ): Result =
     writer.writeProblem(
       baseProgramTokens = program.tokens,
       elementTokenGroups = elementTokenGroups,
@@ -157,7 +159,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
 
   @Test
   fun testWritesProblemYamlBesideARunnableInputFolder() {
-    val microbenchmarkDirectory = checkNotNull(write(writer()).microbenchmarkDirectory)
+    val microbenchmarkDirectory = recordedDirectory(write(writer()))
 
     val inputFolder =
       microbenchmarkDirectory.resolve(
@@ -181,7 +183,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
   /** The recorded test script must still accept the recorded program, or the microbenchmark is unusable. */
   @Test
   fun testTheRecordedInputFolderPassesItsOwnTestScript() {
-    val microbenchmarkDirectory = checkNotNull(write(writer()).microbenchmarkDirectory)
+    val microbenchmarkDirectory = recordedDirectory(write(writer()))
     val inputFolder =
       microbenchmarkDirectory.resolve(
         ListMinimizationMicrobenchmark.INPUT_FOLDER_NAME,
@@ -203,7 +205,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
    */
   @Test
   fun testTheRecordingRebuildsTheTokenizationWithoutALexer() {
-    val microbenchmarkDirectory = checkNotNull(write(writer()).microbenchmarkDirectory)
+    val microbenchmarkDirectory = recordedDirectory(write(writer()))
     val microbenchmark =
       ListMinimizationMicrobenchmark.readFrom(
         microbenchmarkDirectory.resolve(ListMinimizationMicrobenchmark.MICROBENCHMARK_FILE_NAME),
@@ -239,16 +241,20 @@ class ListMinimizationMicrobenchmarkWriterTest {
   fun testAListShorterThanTheThresholdIsSkipped() {
     val result = write(writer(minListSizeToRecord = 100))
 
-    assertThat(result.microbenchmarkDirectory).isNull()
+    assertThat(result).isInstanceOf(Result.Skipped::class.java)
     assertThat(result.explanation).contains("fewer than the 100 required")
     assertThat(writer(minListSizeToRecord = 100).recordedProblemCount).isEqualTo(0)
   }
+
+  private fun recordedDirectory(result: Result): Path =
+    checkNotNull(result as? Result.Recorded) { result.explanation }
+      .microbenchmarkDirectory
 
   /** The program's tokens as one-token elements, without the last [omitted]: a distinct problem each. */
   private fun writeDistinct(
     writer: ListMinimizationMicrobenchmarkWriter,
     omitted: Int,
-  ): ListMinimizationMicrobenchmarkWriter.Result {
+  ): Result {
     val program = program()
     return write(writer, program, program.tokens.dropLast(omitted).map { listOf(it) })
   }
@@ -257,13 +263,13 @@ class ListMinimizationMicrobenchmarkWriterTest {
   fun testRecordingStopsAtTheCap() {
     val writer = writer(maxMicrobenchmarksToRecord = 2)
 
-    assertThat(writeDistinct(writer, omitted = 0).microbenchmarkDirectory).isNotNull()
+    assertThat(writeDistinct(writer, omitted = 0)).isInstanceOf(Result.Recorded::class.java)
     assertThat(reductionStopSignal.isStopRequested).isFalse()
-    assertThat(writeDistinct(writer, omitted = 1).microbenchmarkDirectory).isNotNull()
+    assertThat(writeDistinct(writer, omitted = 1)).isInstanceOf(Result.Recorded::class.java)
     assertThat(reductionStopSignal.stopRequests.single().reason).contains("cap of 2")
 
     val refused = writeDistinct(writer, omitted = 2)
-    assertThat(refused.microbenchmarkDirectory).isNull()
+    assertThat(refused).isInstanceOf(Result.Skipped::class.java)
     assertThat(refused.explanation).contains("cap of 2")
     assertThat(writer.recordedProblemCount).isEqualTo(2)
   }
@@ -289,9 +295,9 @@ class ListMinimizationMicrobenchmarkWriterTest {
       ListMinimizationProblemRegistry(idWidth = 6, shaAlgorithm = EnumShaAlgorithm.SHA256)
 
     val first =
-      checkNotNull(writeDistinct(writerSharing(shared), 0).microbenchmarkDirectory)
+      recordedDirectory(writeDistinct(writerSharing(shared), 0))
     val second =
-      checkNotNull(writeDistinct(writerSharing(shared), 1).microbenchmarkDirectory)
+      recordedDirectory(writeDistinct(writerSharing(shared), 1))
 
     assertThat(first.fileName.toString()).isNotEqualTo(second.fileName.toString())
     assertThat(shared.registeredCount).isEqualTo(2)
@@ -300,8 +306,8 @@ class ListMinimizationMicrobenchmarkWriterTest {
   @Test
   fun testProblemIdsAreDistinctAndSortChronologically() {
     val writer = writer()
-    val first = checkNotNull(writeDistinct(writer, omitted = 0).microbenchmarkDirectory)
-    val second = checkNotNull(writeDistinct(writer, omitted = 1).microbenchmarkDirectory)
+    val first = recordedDirectory(writeDistinct(writer, omitted = 0))
+    val second = recordedDirectory(writeDistinct(writer, omitted = 1))
 
     assertThat(first.fileName.toString()).isLessThan(second.fileName.toString())
     // Zero-padded, so a lexical sort of a corpus is also the order the problems were issued in.
@@ -317,11 +323,11 @@ class ListMinimizationMicrobenchmarkWriterTest {
   @Test
   fun testAProblemIdenticalToARecordedOneIsSkipped() {
     val writer = writer(maxMicrobenchmarksToRecord = 2)
-    val first = checkNotNull(write(writer).microbenchmarkDirectory)
+    val first = recordedDirectory(write(writer))
 
     val copy = write(writer, recordingContext = recordingContext.copy(fixpointIteration = 2))
 
-    assertThat(copy.microbenchmarkDirectory).isNull()
+    assertThat(copy).isInstanceOf(Result.Skipped::class.java)
     assertThat(copy.explanation).contains("identical to one already recorded")
     assertThat(writer.recordedProblemCount).isEqualTo(1)
     assertThat(
@@ -330,7 +336,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
       },
     ).containsExactly("000000")
     assertThat(
-      checkNotNull(writeDistinct(writer, omitted = 1).microbenchmarkDirectory).fileName.toString(),
+      recordedDirectory(writeDistinct(writer, omitted = 1)).fileName.toString(),
     ).isEqualTo("000001")
   }
 
@@ -342,7 +348,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     write(writer, program, program.tokens.map { listOf(it) })
     val regrouped = write(writer, program, program.tokens.chunked(3))
 
-    assertThat(regrouped.microbenchmarkDirectory).isNotNull()
+    assertThat(regrouped).isInstanceOf(Result.Recorded::class.java)
   }
 
   /** Writers of different drivers share the registry, so a problem is skipped across drivers. */
@@ -351,8 +357,8 @@ class ListMinimizationMicrobenchmarkWriterTest {
     val shared =
       ListMinimizationProblemRegistry(idWidth = 6, shaAlgorithm = EnumShaAlgorithm.SHA256)
 
-    assertThat(write(writerSharing(shared)).microbenchmarkDirectory).isNotNull()
-    assertThat(write(writerSharing(shared)).microbenchmarkDirectory).isNull()
+    assertThat(write(writerSharing(shared))).isInstanceOf(Result.Recorded::class.java)
+    assertThat(write(writerSharing(shared))).isInstanceOf(Result.Skipped::class.java)
     assertThat(shared.registeredCount).isEqualTo(1)
   }
 
@@ -376,7 +382,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
         elementTokenGroups = program.tokens.map { listOf(it) } + listOf(emptyList()),
       )
 
-    assertThat(recorded.microbenchmarkDirectory).isNull()
+    assertThat(recorded).isInstanceOf(Result.Skipped::class.java)
     assertThat(recorded.explanation).contains("could not be recorded")
     assertThat(Files.list(workDir.resolve("microbenchmarks")).use { it.toList() }).isEmpty()
   }
@@ -393,7 +399,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     assertThat(lines.tokens.map { it.lexemeText }).containsExactly("int aaa;", "int bbb;").inOrder()
 
     val microbenchmarkDirectory =
-      checkNotNull(write(writer(), lines, lines.tokens.map { listOf(it) }).microbenchmarkDirectory)
+      recordedDirectory(write(writer(), lines, lines.tokens.map { listOf(it) }))
 
     val microbenchmark =
       ListMinimizationMicrobenchmark.readFrom(
@@ -426,7 +432,7 @@ class ListMinimizationMicrobenchmarkWriterTest {
     assertThat(lines.tokens).hasSize(2)
 
     val microbenchmarkDirectory =
-      checkNotNull(write(writer(), lines, lines.tokens.map { listOf(it) }).microbenchmarkDirectory)
+      recordedDirectory(write(writer(), lines, lines.tokens.map { listOf(it) }))
 
     val microbenchmark =
       ListMinimizationMicrobenchmark.readFrom(
