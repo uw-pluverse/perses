@@ -12,15 +12,10 @@ source "${SCRIPT_DIR}/constants.sh" || exit 1
 
 ./scripts/cleanup.sh || exit 1
 
-# //benchmark_v2 is listed target by target rather than as //benchmark_v2/...:
-# //benchmark_v2/binaries does not load (its BUILD globs jdtls-1.33.0 and jdk21, which
-# are fetched on demand by install_*.sh and are absent in a clean checkout), so a
-# //benchmark_v2/... pattern would fail presubmit outright.
+# //benchmark_v2 is deprecated in favour of ReductionBench and is not tested here.
 readonly test_command="bazelisk test --test_output=errors \
   --test_tag_filters=-super_slow_parser_test \
   ${ALL_BAZEL_BUILD_TARGETS_STRING} \
-  //benchmark_v2:all \
-  //benchmark_v2/test:all \
   //:all"
 
 # Regenerate goldens only for the golden tests that actually failed, parsed from a captured test
