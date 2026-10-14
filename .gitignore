@@ -47,6 +47,8 @@ creduce
 /reference/
 /specimin
 
-# Packed snap artifacts produced by `snap/local/build-snap.sh`.
+# Packed snap artifacts produced by `snap/local/build-snap-from-*.sh`, and the
+# marker `snap/local/build-and-verify-snap.sh` writes once one passes every check.
 *.snap
+*.snap.verified
 paper_drafts

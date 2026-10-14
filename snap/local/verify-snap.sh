@@ -35,7 +35,7 @@ info() { printf '  ---- %s\n' "$1"; }
 # --- Preflight -------------------------------------------------------------
 command -v snap >/dev/null 2>&1 || { echo "error: 'snap' not found; install snapd." >&2; exit 2; }
 [ -n "$SNAP_FILE" ] && [ -f "$SNAP_FILE" ] || {
-  echo "error: no snap file. Build one first (snap/local/build-snap.sh) or pass a path." >&2
+  echo "error: no snap file. Build one first (snap/local/build-snap-from-release.sh) or pass a path." >&2
   exit 2
 }
 echo ">> Verifying: $SNAP_FILE (snap name: $SNAP_NAME)"

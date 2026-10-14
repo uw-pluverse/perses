@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-# Build the Perses fat jar and pack it into a snap.
+# Build the Perses fat jar from the working tree and pack it into a snap.
 #
-#   snap/local/build-snap.sh
+#   snap/local/build-snap-from-source.sh
+#
+# For testing unreleased changes only: the jar reports `Git Status: Modified`
+# and must not be uploaded. Store uploads use build-snap-from-release.sh.
 #
 # The snap's version is read from version/org/perses/version/VERSION by
 # snapcraft.yaml; bump it with scripts/bump_version.py, never by hand here.
