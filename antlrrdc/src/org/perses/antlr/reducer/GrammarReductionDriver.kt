@@ -234,6 +234,7 @@ class GrammarReductionDriver private constructor(
           scriptExecutionTimeoutInSeconds = 300L,
           scriptExecutionKeepTryingAfterTimeout = true,
           globalExecutionCache = globalContext.globalExecutionCache,
+          reductionStopSignal = globalContext.reductionStopSignal,
         )
 
       return GrammarReductionDriver(
