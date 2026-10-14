@@ -87,6 +87,7 @@ class NodeReplacementActionSetTest {
     assertThat(actionSet.actions[1]).isEqualTo(actionSet2.actions[1])
     assertThat(actionSet.equals(actionSet2)).isTrue()
     assertThat(actionSet.hashCode()).isEqualTo(actionSet2.hashCode())
+    assertThat(actionSet.computeFingerprint()).isEqualTo(actionSet2.computeFingerprint())
     val set = HashSet<NodeReplacementActionSet?>()
     set.add(actionSet)
     assertThat(set).containsExactly(actionSet2)
@@ -97,6 +98,15 @@ class NodeReplacementActionSetTest {
     val other = createByReplacingSingleNode(node72, node5, "test desc")
     assertThat(actionSet).isNotEqualTo(other)
     assertThat(actionSet.hashCode()).isNotEqualTo(other.hashCode())
+    assertThat(actionSet.computeFingerprint()).isNotEqualTo(other.computeFingerprint())
     assertThat(other.contextDescription).isEqualTo("test desc")
+  }
+
+  @Test
+  fun testReplacingWithDifferentNodesHaveDifferentFingerprints() {
+    val withNode10 = createByReplacingSingleNode(node5, node10, "")
+    val withNode72 = createByReplacingSingleNode(node5, node72, "")
+
+    assertThat(withNode10.computeFingerprint()).isNotEqualTo(withNode72.computeFingerprint())
   }
 }

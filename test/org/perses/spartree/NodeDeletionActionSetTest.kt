@@ -82,6 +82,7 @@ class NodeDeletionActionSetTest {
     assertThat(actionSet.actions[1]).isEqualTo(actionSet2.actions[1])
     assertThat(actionSet.equals(actionSet2)).isTrue()
     assertThat(actionSet.hashCode()).isEqualTo(actionSet2.hashCode())
+    assertThat(actionSet.computeFingerprint()).isEqualTo(actionSet2.computeFingerprint())
     val set = HashSet<NodeDeletionActionSet?>()
     set.add(actionSet)
     assertThat(set).containsExactly(actionSet2)
@@ -96,6 +97,29 @@ class NodeDeletionActionSetTest {
       )
     assertThat(actionSet).isNotEqualTo(other)
     assertThat(actionSet.hashCode()).isNotEqualTo(other.hashCode())
+    assertThat(actionSet.computeFingerprint()).isNotEqualTo(other.computeFingerprint())
     assertThat(other.contextDescription).isEqualTo("")
+  }
+
+  @Test
+  fun testDeletingAndReplacingTheSameNodeHaveDifferentFingerprints() {
+    val deletion = createByDeleteSingleNode(node5!!, "")
+    val replacement =
+      NodeReplacementActionSet.createByReplacingSingleNode(node5!!, node10!!, "")
+
+    assertThat(deletion.computeFingerprint()).isNotEqualTo(replacement.computeFingerprint())
+  }
+
+  @Test
+  fun testCacheMergesSetsOfDifferentKindsWithTheSameActions() {
+    val cache = NodeActionSetCache()
+    val latraDeletion =
+      checkNotNull(LatraGeneralActionSet.Builder("", "Deletion").deleteNode(node5!!).buildOrNull())
+
+    assertThat(cache.isCachedOrCacheIt(createByDeleteSingleNode(node5!!, "")))
+      .isEqualTo(NodeActionSetCacheResult.MISS_BUT_CACHED_NOW)
+    assertThat(cache.isCachedOrCacheIt(createByDeleteSingleNode(node5!!, "")))
+      .isEqualTo(NodeActionSetCacheResult.HIT)
+    assertThat(cache.isCachedOrCacheIt(latraDeletion)).isEqualTo(NodeActionSetCacheResult.HIT)
   }
 }

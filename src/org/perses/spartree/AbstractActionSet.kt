@@ -19,6 +19,8 @@ package org.perses.spartree
 import com.google.common.base.MoreObjects
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
+import com.google.common.hash.HashCode
+import com.google.common.hash.Hashing
 import org.perses.util.lazyAssert
 import org.perses.util.toImmutableMap
 
@@ -79,6 +81,13 @@ sealed class AbstractActionSet<ACTION : AbstractTreeEditAction>(
   }
 
   override fun hashCode(): Int = actions.hashCode()
+
+  /** A 128-bit digest of [actions] in order: equal for equal action sets, see [equals]. */
+  fun computeFingerprint(): HashCode {
+    val hasher = Hashing.murmur3_128().newHasher().putInt(actions.size)
+    actions.forEach { it.putIdentityInto(hasher) }
+    return hasher.hash()
+  }
 
   private fun checkSortedAndDistinct(actions: ImmutableList<ACTION>) {
     val size = actions.size

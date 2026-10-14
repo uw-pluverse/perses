@@ -17,6 +17,7 @@
 package org.perses.spartree
 
 import com.google.common.base.MoreObjects
+import com.google.common.hash.PrimitiveSink
 
 /** The base class for editing a tree.  */
 sealed class AbstractTreeEditAction : Comparable<AbstractTreeEditAction> {
@@ -43,6 +44,25 @@ sealed class AbstractTreeEditAction : Comparable<AbstractTreeEditAction> {
   abstract override fun equals(other: Any?): Boolean
 
   abstract override fun hashCode(): Int
+
+  /**
+   * Feeds into [sink] what [equals] compares, so that equal actions feed equal bytes. A node's id
+   * stands in for the node itself: every node of a tree, replacements included, comes from that
+   * tree's one [SparTreeNodeFactory], which never issues an id twice.
+   */
+  abstract fun putIdentityInto(sink: PrimitiveSink)
+
+  /**
+   * Tells the kinds apart in [putIdentityInto]: without it, deleting nodes 5 and 10 would feed the
+   * same ints as replacing node 5 with node 10.
+   */
+  enum class ActionKind {
+    EMPTY,
+    DELETION,
+    REPLACEMENT,
+  }
+
+  protected abstract val actionKind: ActionKind
 
   abstract fun apply()
 }
@@ -79,6 +99,14 @@ abstract class AbstractTargetedTreeEditAction(
   }
 
   protected abstract fun specificEquals(other: AbstractTargetedTreeEditAction): Boolean
+
+  final override fun putIdentityInto(sink: PrimitiveSink) {
+    sink.putInt(actionKind.ordinal).putInt(targetNode.nodeId)
+    putSpecificIdentityInto(sink)
+  }
+
+  /** Feeds into [sink] what [specificEquals] compares. */
+  protected abstract fun putSpecificIdentityInto(sink: PrimitiveSink)
 
   override fun hashCode(): Int =
     31 * specificHashCode() + targetNode.nodeId + javaClass.hashCode() * 31 * 31

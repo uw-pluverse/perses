@@ -16,6 +16,8 @@
  */
 package org.perses.spartree
 
+import com.google.common.hash.PrimitiveSink
+
 class NodeDeletionAction(
   targetNode: AbstractSparTreeNode,
 ) : AbstractTargetedTreeEditAction(targetNode) {
@@ -31,6 +33,11 @@ class NodeDeletionAction(
     other.javaClass == javaClass
 
   override fun specificHashCode(): Int = 0
+
+  override val actionKind: ActionKind
+    get() = ActionKind.DELETION
+
+  override fun putSpecificIdentityInto(sink: PrimitiveSink) {}
 
   override fun internalApply() {
     // TODO: Move this check to deletion action set

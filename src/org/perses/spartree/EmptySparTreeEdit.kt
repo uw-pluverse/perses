@@ -17,6 +17,7 @@
 package org.perses.spartree
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
+import com.google.common.hash.PrimitiveSink
 import org.perses.program.TokenizedProgram
 
 object EmptyTreeEditAction : AbstractTreeEditAction() {
@@ -33,6 +34,13 @@ object EmptyTreeEditAction : AbstractTreeEditAction() {
   override fun equals(other: Any?): Boolean = other === EmptyTreeEditAction
 
   override fun hashCode(): Int = this::class.hashCode()
+
+  override val actionKind: ActionKind
+    get() = ActionKind.EMPTY
+
+  override fun putIdentityInto(sink: PrimitiveSink) {
+    sink.putInt(actionKind.ordinal)
+  }
 
   override fun apply() {
     // do nothing

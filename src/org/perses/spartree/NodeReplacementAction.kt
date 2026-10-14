@@ -16,6 +16,7 @@
  */
 package org.perses.spartree
 
+import com.google.common.hash.PrimitiveSink
 import org.perses.util.lazyAssert
 import kotlin.comparisons.compareBy
 
@@ -51,6 +52,13 @@ class NodeReplacementAction(
   }
 
   override fun specificHashCode(): Int = replacingNode.nodeId
+
+  override val actionKind: ActionKind
+    get() = ActionKind.REPLACEMENT
+
+  override fun putSpecificIdentityInto(sink: PrimitiveSink) {
+    sink.putInt(replacingNode.nodeId)
+  }
 
   override fun internalApply() {
     check(!targetNode.isPermanentlyDeleted)
