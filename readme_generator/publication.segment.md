@@ -147,3 +147,26 @@ This repository contains the implementations of the techniques proposed in the f
   publisher = {},
 }
 ```
+
+#### 12. Semantic-aware and Self-improving Program Reduction via Agentic Large Language Models (arXiv preprint, [pdf](./doc/publication/2026_agentic_arxiv.pdf))
+
+```
+@misc{perses-agentic,
+  title={Semantic-aware and Self-improving Program Reduction via Agentic Large Language Models},
+  author={Zhou, Xintong and Xu, Hongxu and Liao, Chunhao and Liu, Puzhuo and Tian, Yongqiang and Sun, Chengnian},
+  year={2026},
+  eprint={2607.03766},
+  archivePrefix={arXiv},
+  primaryClass={cs.SE},
+}
+```
+
+#### 13. Program Reduction: A Comprehensive Survey (preprint, [pdf](./doc/publication/2026_survey_preprint.pdf))
+
+```
+@misc{perses-survey,
+  title={Program Reduction: A Comprehensive Survey},
+  author={Tian, Yongqiang and Xu, Zhenyang and Xu, Hongxu and Zhou, Xintong and Liao, Chunhao and Dong, Yiwen and Zhang, Mengxiao and Sun, Chengnian},
+  year={2026},
+}
+```
