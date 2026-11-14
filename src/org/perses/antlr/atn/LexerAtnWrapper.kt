@@ -526,8 +526,8 @@ class LexerAtnWrapper(
    * (`r"..."`/`b"..."`), here-documents, quoted/multi-word identifiers, and
    * keyword=value tokens such as WAT `offset=0` are all excluded.
    *
-   * This deliberately under-approximates, by design: the aggregation in
-   * [org.perses.grammar.AbstractParserFacade.aggregatedIdentifierTokenTypes] is a
+   * This deliberately under-approximates, by design: when detection is enabled,
+   * [org.perses.grammar.AbstractParserFacade.fusedIdentifierTokenTypes] is a
    * union of this result with the caller's explicit list, so a caller can only
    * *add* identifier tokens, never remove a false positive. The detector must
    * therefore err toward precision and let callers supply the recall. Tokens it
