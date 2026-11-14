@@ -35,8 +35,17 @@ search space by avoiding generating syntactically invalid programs.</p>
 </ul>
 <p>Support for other languages is coming soon.</p>
 <h3>Obtain and Run</h3>
-<p>There are three ways to obtain Perses.</p>
+<p>There are four ways to obtain Perses.</p>
 <ul>
+<li>
+<p>Install the <a href="https://snapcraft.io/perses">snap</a> on any x86-64 Linux
+distribution with <code>snapd</code>. It bundles its own JDK, so no Java is needed on
+the host; the compilers your test script invokes are still the ones on your
+host.</p>
+<pre><code class="language-bash">sudo snap install perses --classic
+perses [options]? --test-script &lt;test-script.sh&gt; --input-file &lt;program file&gt;
+</code></pre>
+</li>
 <li>
 <p>Download a prebuilt release JAR file from our <a href="https://github.com/perses-project/perses/releases">release page</a>,
 for example,</p>
