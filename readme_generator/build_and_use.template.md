@@ -118,5 +118,6 @@ Check all available command line arguments
 java -jar perses_deploy.jar  --help
 ```
 
-The following is the complete list of command line arguments.
+The complete list of command line arguments is in
+[golden_perses_cmd_usage.txt](test/org/perses/golden_perses_cmd_usage.txt).
 

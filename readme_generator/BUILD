@@ -14,19 +14,11 @@ genrule(
 )
 
 genrule(
-    name = "formatted_perses_cmd_usage",
-    srcs = [perses_cmd_usage_file],
-    outs = ["formatted_perses_cmd_usage.txt"],
-    cmd = """echo '```' > $@ && cat $(location %s) >> $@ && echo -e '```\n' >> $@""" % perses_cmd_usage_file,
-)
-
-genrule(
     name = "generate_readme",
     srcs = [
         "header.segment.md",
         "license.segment.md",
         "publication.segment.md",
-        "formatted_perses_cmd_usage.txt",
         "acknowledgement.md",
         "build_and_use.segment.md",
         "//readme_generator/org/pluverse/perses:supported_languages_segment",
@@ -35,7 +27,6 @@ genrule(
     cmd = "cat $(location header.segment.md) " +
           "$(location //readme_generator/org/pluverse/perses:supported_languages_segment) " +
           "$(location build_and_use.segment.md) " +
-          "$(location formatted_perses_cmd_usage.txt) " +
           "$(location license.segment.md) " +
           "$(location publication.segment.md) " +
           "$(location acknowledgement.md)" +
