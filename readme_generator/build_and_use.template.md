@@ -1,6 +1,16 @@
 ### Obtain and Run
 
-There are three ways to obtain Perses.
+There are four ways to obtain Perses.
+
+- Install the [snap](https://snapcraft.io/perses) on any x86-64 Linux
+  distribution with `snapd`. It bundles its own JDK, so no Java is needed on
+  the host; the compilers your test script invokes are still the ones on your
+  host.
+
+  ```bash
+  sudo snap install perses --classic
+  perses [options]? --test-script <test-script.sh> --input-file <program file>
+  ```
 
 - Download a prebuilt release JAR file from our [release page](https://github.com/perses-project/perses/releases),
   for example,
