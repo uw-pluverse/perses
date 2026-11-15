@@ -22,6 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.perses.util.cmd.AbstractCommandOptions
+import java.util.concurrent.TimeUnit
 
 @RunWith(JUnit4::class)
 class CommandOptionTest {
@@ -85,5 +86,46 @@ class CommandOptionTest {
       |      print help message
       """.trimMargin(),
     )
+  }
+
+  @Test
+  fun testMarkdownUsage() {
+    val options =
+      object : AbstractCommandOptions() {
+        @Parameter(
+          names = ["--mode", "-m"],
+          required = true,
+          description = "a|b <path> *x* snake_case",
+        )
+        var mode = TimeUnit.SECONDS
+
+        @Parameter(names = ["--name"])
+        var name = ""
+      }
+    val markdown = options.parseArguments("program_name", arrayOf("--help")).renderMarkdownUsage()
+    assertThat(markdown).startsWith(
+      """
+      |# Command Line Arguments
+      |
+      |```
+      |Usage: program_name [options]
+      |```
+      |
+      |## Options
+      |
+      || Flag | Description | Default |
+      || --- | --- | --- |
+      |
+      """.trimMargin(),
+    )
+    assertThat(markdown).contains(
+      "| `--mode`, `-m` | **Required.** a\\|b \\<path\\> \\*x\\* snake\\_case" +
+        "<br>Possible values: " +
+        TimeUnit.values().joinToString(", ") { "`$it`" } +
+        " | `SECONDS` |\n",
+    )
+    assertThat(markdown).contains("| `--name` |  | *empty string* |\n")
+    assertThat(markdown).contains("\n## Verbosity\n\n| Flag | Description | Default |\n")
+    assertThat(markdown).contains("| `-h`, `--help` | print help message |  |\n")
   }
 }

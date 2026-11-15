@@ -100,6 +100,12 @@ abstract class AbstractCommandOptions {
       return message
     }
 
+    fun renderMarkdownUsage(): String {
+      val stringBuilder = StringBuilder()
+      MarkdownUsageFormatter(jCommander).usage(stringBuilder)
+      return stringBuilder.toString()
+    }
+
     fun getLongestFlagNameToValueMap(): ImmutableMap<String, String> {
       val result = ImmutableMap.builder<String, String>()
       for (field in jCommander.fields) {
@@ -126,46 +132,12 @@ abstract class AbstractCommandOptions {
       indent: String,
       sortedParameters: List<ParameterDescription>,
     ) {
-      val identityMap =
-        IdentityHashMap<AbstractCommandLineFlagGroup, MutableList<ParameterDescription>>()
-      val ownerObject = this@AbstractCommandOptions
-      val ownerFlags = mutableListOf<ParameterDescription>()
-      sortedParameters.forEach { flag ->
-        val flagGroup = flag.`object`
-        if (flagGroup === ownerObject) {
-          ownerFlags.add(flag)
-        } else {
-          check(flagGroup is AbstractCommandLineFlagGroup) { "Flag group: ${flagGroup::class}" }
-          if (flagGroup.hidden) {
-            return@forEach
-          }
-          val groupFlagList =
-            identityMap.computeIfAbsent(flagGroup) {
-              mutableListOf()
-            }
-          groupFlagList.add(flag)
-        }
-      }
-
-      super.appendAllParametersDetails(out, indentCount, indent, ownerFlags)
+      val grouped = groupParameters(sortedParameters)
+      super.appendAllParametersDetails(out, indentCount, indent, grouped.ungroupedFlags)
       out.append("\n")
 
-      val unimportantGroups = ImmutableList.of(verbosityFlags, versionFlags, helpFlags)
-      val sortedGroupedFlags =
-        identityMap.entries
-          .partition { it.key in unimportantGroups }
-          .let { (unimportant, important) ->
-            important.sortedBy {
-              allFlags.indexOf(it.key)
-            } +
-              unimportant.sortedBy { unimportantGroups.indexOf(it.key) }
-          }
-
       var isFirst = true
-      sortedGroupedFlags.forEach { (group, flags) ->
-        if (flags.isEmpty()) {
-          return@forEach
-        }
+      grouped.groups.forEach { (group, flags) ->
         if (isFirst) {
           isFirst = false
         } else {
@@ -177,7 +149,135 @@ abstract class AbstractCommandOptions {
     }
   }
 
+  private class GroupedParameters(
+    val ungroupedFlags: List<ParameterDescription>,
+    val groups: List<Pair<AbstractCommandLineFlagGroup, List<ParameterDescription>>>,
+  )
+
+  private fun groupParameters(sortedParameters: List<ParameterDescription>): GroupedParameters {
+    val identityMap =
+      IdentityHashMap<AbstractCommandLineFlagGroup, MutableList<ParameterDescription>>()
+    val ownerObject = this
+    val ownerFlags = mutableListOf<ParameterDescription>()
+    sortedParameters.forEach { flag ->
+      val flagGroup = flag.`object`
+      if (flagGroup === ownerObject) {
+        ownerFlags.add(flag)
+      } else {
+        check(flagGroup is AbstractCommandLineFlagGroup) { "Flag group: ${flagGroup::class}" }
+        if (flagGroup.hidden) {
+          return@forEach
+        }
+        identityMap.computeIfAbsent(flagGroup) { mutableListOf() }.add(flag)
+      }
+    }
+
+    val unimportantGroups = ImmutableList.of(verbosityFlags, versionFlags, helpFlags)
+    val sortedGroups =
+      identityMap.entries
+        .partition { it.key in unimportantGroups }
+        .let { (unimportant, important) ->
+          important.sortedBy { allFlags.indexOf(it.key) } +
+            unimportant.sortedBy { unimportantGroups.indexOf(it.key) }
+        }.map { it.key to it.value }
+    return GroupedParameters(ownerFlags, sortedGroups)
+  }
+
+  /**
+   * Renders the same flags, groups and order as [PersesCmdUsageFormatter], as a
+   * markdown document with one table per flag group.
+   */
+  private inner class MarkdownUsageFormatter(
+    jCommander: JCommander,
+  ) : DefaultUsageFormatter(jCommander) {
+    override fun appendMainLine(
+      out: StringBuilder,
+      hasOptions: Boolean,
+      hasCommands: Boolean,
+      indentCount: Int,
+      indent: String,
+    ) {
+      val mainLine = StringBuilder()
+      super.appendMainLine(mainLine, hasOptions, hasCommands, indentCount, indent)
+      out.append("# Command Line Arguments\n\n")
+      out.append("```\n").append(mainLine.toString().trim()).append("\n```\n")
+    }
+
+    override fun appendAllParametersDetails(
+      out: StringBuilder,
+      indentCount: Int,
+      indent: String,
+      sortedParameters: List<ParameterDescription>,
+    ) {
+      val grouped = groupParameters(sortedParameters)
+      if (grouped.ungroupedFlags.isNotEmpty()) {
+        appendTable(out, "Options", grouped.ungroupedFlags)
+      }
+      grouped.groups.forEach { (group, flags) -> appendTable(out, group.groupName, flags) }
+    }
+
+    private fun appendTable(
+      out: StringBuilder,
+      title: String,
+      flags: List<ParameterDescription>,
+    ) {
+      out.append("\n## ").append(title).append("\n\n")
+      out.append("| Flag | Description | Default |\n")
+      out.append("| --- | --- | --- |\n")
+      flags.forEach { flag ->
+        val cells = listOf(renderNames(flag), renderDescription(flag), renderDefault(flag))
+        out.append(cells.joinToString(separator = " | ", prefix = "| ", postfix = " |\n"))
+      }
+    }
+
+    private fun renderNames(flag: ParameterDescription) =
+      flag.parameter.names().joinToString(separator = ", ") { inlineCode(it) }
+
+    private fun renderDescription(flag: ParameterDescription): String {
+      val sentences = mutableListOf<String>()
+      if (flag.parameter.required()) {
+        sentences.add("**Required.**")
+      }
+      val description = flag.description.trim().replace(WHITESPACE, " ")
+      if (description.isNotEmpty()) {
+        sentences.add(escapeText(description))
+      }
+      val lines = mutableListOf(sentences.joinToString(separator = " "))
+      val type = flag.parameterized.type
+      if (type.isEnum) {
+        val values = type.enumConstants.joinToString(separator = ", ") { inlineCode(it.toString()) }
+        lines.add("Possible values: $values")
+      }
+      return lines.filter { it.isNotEmpty() }.joinToString(separator = "<br>")
+    }
+
+    private fun renderDefault(flag: ParameterDescription): String {
+      val default = flag.default
+      if (default == null || flag.isHelp) {
+        return ""
+      }
+      val text = default.toString()
+      return when {
+        flag.parameter.password() -> "********"
+        text.isEmpty() -> "*empty string*"
+        else -> inlineCode(text)
+      }
+    }
+
+    private fun inlineCode(text: String) = "`" + text.replace("|", "\\|") + "`"
+
+    // Without the escapes, `|` would end the table cell, a `<...>` placeholder
+    // would be swallowed as an HTML tag, and `*` or `_` would start emphasis.
+    private fun escapeText(text: String) =
+      text.replace(MARKDOWN_SPECIAL_CHARACTER) {
+        "\\" +
+          it.value
+      }
+  }
+
   companion object {
     val logger: FluentLogger = FluentLogger.forEnclosingClass()
+    private val WHITESPACE = Regex("\\s+")
+    private val MARKDOWN_SPECIAL_CHARACTER = Regex("[|<>*_`\\[\\]\\\\]")
   }
 }

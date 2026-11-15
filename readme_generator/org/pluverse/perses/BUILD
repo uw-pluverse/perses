@@ -35,6 +35,17 @@ kt_binary_for_genrule(
     ],
 )
 
+kt_binary_for_genrule(
+    name = "CommandLineUsageDumpMain",
+    srcs = ["CommandLineUsageDumpMain.kt"],
+    main_class = "org.pluverse.perses.CommandLineUsageDumpMain",
+    deps = [
+        "//src/org/perses:perses_command_options",
+        "//src/org/perses:perses_lib",
+        "//src/org/perses/util/cmd",
+    ],
+)
+
 supported_languages_file = "supported_languages.segment.md"
 
 genrule(

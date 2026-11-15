@@ -14,6 +14,13 @@ genrule(
 )
 
 genrule(
+    name = "get_perses_cmd_usage_markdown",
+    outs = ["perses_cmd_usage.md"],
+    cmd = "$(location //readme_generator/org/pluverse/perses:CommandLineUsageDumpMain) \"$@\"",
+    tools = ["//readme_generator/org/pluverse/perses:CommandLineUsageDumpMain"],
+)
+
+genrule(
     name = "generate_readme",
     srcs = [
         "header.segment.md",

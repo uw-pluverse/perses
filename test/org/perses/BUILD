@@ -79,6 +79,12 @@ golden_test(
     test_file = "//readme_generator:perses_cmd_usage.txt",
 )
 
+golden_test(
+    name = "golden_perses_cmd_usage_markdown",
+    golden_file = "golden_perses_cmd_usage.md",
+    test_file = "//readme_generator:perses_cmd_usage.md",
+)
+
 genrule(
     name = "get_perses_supported_language_list",
     outs = ["perses_supported_language_list.txt"],
