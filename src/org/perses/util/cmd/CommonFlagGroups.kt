@@ -67,6 +67,14 @@ class HelpFlagGroup : AbstractCommandLineFlagGroup(groupName = "Help") {
   )
   var help: Boolean = false
 
+  @Parameter(
+    names = ["--help-completion"],
+    description = "print the bash completion script for perses",
+    help = true,
+    hidden = true,
+  )
+  var helpCompletion: Boolean = false
+
   override fun validate() {
   }
 }

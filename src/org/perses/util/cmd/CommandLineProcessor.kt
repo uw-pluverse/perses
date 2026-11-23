@@ -55,6 +55,11 @@ class CommandLineProcessor<Cmd : AbstractCommandOptions>(
         return HelpRequestProcessingDecision.EXIT
       }
 
+      cmd.helpFlags.helpCompletion -> {
+        commander.printBashCompletionScript()
+        return HelpRequestProcessingDecision.EXIT
+      }
+
       cmd.verbosityFlags.listVerbosity -> {
         cmd.verbosityFlags.printAllAllowedLoggingLevels()
         return HelpRequestProcessingDecision.EXIT

@@ -100,6 +100,12 @@ abstract class AbstractCommandOptions {
       return message
     }
 
+    fun printBashCompletionScript(): String {
+      val script = BashCompletionScriptPrinter(jCommander).print()
+      print(script)
+      return script
+    }
+
     fun renderMarkdownUsage(): String {
       val stringBuilder = StringBuilder()
       MarkdownUsageFormatter(jCommander).usage(stringBuilder)

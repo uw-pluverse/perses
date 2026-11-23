@@ -86,6 +86,28 @@ golden_test(
 )
 
 genrule(
+    name = "get_perses_bash_completion_script",
+    outs = ["perses_bash_completion_script.bash"],
+    cmd = "$(location //src/org/perses:perses) --help-completion > \"$@\" ",
+    tools = [
+        "//src/org/perses",
+    ],
+)
+
+golden_test(
+    name = "golden_test_perses_bash_completion_script",
+    golden_file = "golden_perses_bash_completion_script.bash",
+    test_file = "perses_bash_completion_script.bash",
+)
+
+sh_test(
+    name = "bash_completion_test",
+    srcs = ["bash_completion_test.sh"],
+    args = ["$(location perses_bash_completion_script.bash)"],
+    data = ["perses_bash_completion_script.bash"],
+)
+
+genrule(
     name = "get_perses_supported_language_list",
     outs = ["perses_supported_language_list.txt"],
     cmd = "$(location //src/org/perses:perses) --list-langs > \"$@\" ",

@@ -7,6 +7,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -629,6 +630,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -833,6 +835,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -1037,6 +1040,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -4133,6 +4137,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -6776,6 +6781,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -7149,6 +7155,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -7353,6 +7360,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -7557,6 +7565,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"
@@ -10200,6 +10209,7 @@ The command line options are:
 helpFlags:
   groupName: "Help"
   help: false
+  helpCompletion: false
 verbosityFlags:
   groupName: "Verbosity"
   verbosity: "INFO"

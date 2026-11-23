@@ -57,15 +57,15 @@ recordingContext:
   minimizerType: "WINDOWED_SLICER"
   contextDescription: "WINDOWED_SLICER in token_slicer(TokenSlicer)[ReducingAllTokens]"
   fixpointIteration: 1
-  commandLineOptions: "---\nhelpFlags:\n  groupName: \"Help\"\n  help: false\nverbosityFlags:\n\
-    \  groupName: \"Verbosity\"\n  verbosity: \"INFO\"\n  listVerbosity: false\n \
-    \ hideTimestamps: true\n  fullyDeterministicMode: false\nversionFlags:\n  groupName:\
-    \ \"Version\"\n  version: false\nresultOutputFlags:\n  groupName: \"Outputs\"\n\
-    \  outputDir: \"result_record_mode_golden_test_token_slicer_t.c\"\ninputFlags:\n\
-    \  groupName: \"Inputs\"\n  testScript: \"r.sh\"\n  inputFiles:\n  - \"t.c\"\n\
-    \  deps: []\nreductionControlFlags:\n  groupName: \"General Reduction Control\"\
-    \n  globalFixpoint: false\n  fixpointForMainReducer: true\n  numOfThreads: 1\n\
-    \  codeFormat: \"COMPACT_ORIG_FORMAT\"\n  testScriptExecutionTimeoutInSeconds:\
+  commandLineOptions: "---\nhelpFlags:\n  groupName: \"Help\"\n  help: false\n  helpCompletion:\
+    \ false\nverbosityFlags:\n  groupName: \"Verbosity\"\n  verbosity: \"INFO\"\n\
+    \  listVerbosity: false\n  hideTimestamps: true\n  fullyDeterministicMode: false\n\
+    versionFlags:\n  groupName: \"Version\"\n  version: false\nresultOutputFlags:\n\
+    \  groupName: \"Outputs\"\n  outputDir: \"result_record_mode_golden_test_token_slicer_t.c\"\
+    \ninputFlags:\n  groupName: \"Inputs\"\n  testScript: \"r.sh\"\n  inputFiles:\n\
+    \  - \"t.c\"\n  deps: []\nreductionControlFlags:\n  groupName: \"General Reduction\
+    \ Control\"\n  globalFixpoint: false\n  fixpointForMainReducer: true\n  numOfThreads:\
+    \ 1\n  codeFormat: \"COMPACT_ORIG_FORMAT\"\n  testScriptExecutionTimeoutInSeconds:\
     \ 600\n  testScriptExecutionKeepWaitingAfterTimeout: true\noutputRefiningFlags:\n\
     \  groupName: \"Output Refining Control\"\n  callFormatter: false\n  formatCmd:\
     \ \"\"\n  callCReduce: false\n  creduceCmd: \"creduce\"\nalgorithmControlFlags:\n\

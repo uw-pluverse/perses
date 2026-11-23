@@ -49,6 +49,7 @@ class CommandOptionTest {
     assertThat(map).containsExactly(
       "--a" to "value",
       "--help" to "false",
+      "--help-completion" to "false",
       "--list-verbosity-levels" to "false",
       "--verbosity" to "ERROR",
       "--version" to "false",

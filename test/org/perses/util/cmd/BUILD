@@ -40,3 +40,13 @@ kt_jvm_test(
         "//src/org/perses/util/cmd",
     ],
 )
+
+kt_jvm_test(
+    name = "BashCompletionScriptPrinterTest",
+    srcs = ["BashCompletionScriptPrinterTest.kt"],
+    deps = [
+        "//:jcommander",
+        "//:truth",
+        "//src/org/perses/util/cmd",
+    ],
+)
