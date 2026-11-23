@@ -24,6 +24,7 @@ confinement: classic
 apps:
   perses:
     command: bin/perses
+    completer: completion/perses-complete.bash
 
 parts:
   # The version-controlled launcher. Kept separate from the (build-time) jar so
@@ -47,6 +48,18 @@ parts:
       perses_deploy.jar: jar/perses_deploy.jar
     stage:
       - jar/perses_deploy.jar
+      - completion/perses-complete.bash
+    # The bash completion script is printed by the jar itself, so it always
+    # matches the flags of the jar it ships with. Generating it here, with the
+    # build VM's java, works the same for release and source builds and needs
+    # no java on the host.
+    build-packages:
+      - openjdk-17-jre-headless
+    override-build: |
+      craftctl default
+      mkdir -p "$CRAFT_PART_INSTALL/completion"
+      java -jar "$CRAFT_PART_BUILD/perses_deploy.jar" --help-completion \
+        > "$CRAFT_PART_INSTALL/completion/perses-complete.bash"
     override-pull: |
       craftctl default
       # The VERSION file is the single source the jar's Version class is generated

@@ -17,6 +17,8 @@
 #      satisfies a self-contained interestingness test.
 #   4. The snap's version (from snapcraft.yaml, which reads the VERSION file)
 #      equals the version the bundled jar reports.
+#   5. The packaged bash completion script completes `--tes` to the test-script
+#      flag, and snapd installed the completion hook that loads it.
 set -uo pipefail
 
 ROOT="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
@@ -123,6 +125,26 @@ if [ -n "$snap_version" ] && [ "$snap_version" = "$binary_version" ]; then
   ok "snap version matches perses --version ($snap_version)"
 else
   bad "snap version '$snap_version' != perses --version '$binary_version'"
+fi
+
+# --- 5. Bash completion ----------------------------------------------------
+completer="/snap/$SNAP_NAME/current/completion/perses-complete.bash"
+candidates="$(bash --norc --noprofile -c '
+  source "$1"
+  COMP_WORDS=(perses --tes); COMP_CWORD=1; COMPREPLY=()
+  _perses__complete
+  echo "${COMPREPLY[*]}"' _ "$completer" 2>/dev/null)"
+if [ "$candidates" = "--test-script --test" ]; then
+  ok "packaged completion script completes --tes to '$candidates'"
+else
+  bad "packaged completion script at $completer gave '$candidates' for --tes"
+fi
+# snapd links this file to its complete.sh, which runs the completer above.
+hook="/var/lib/snapd/desktop/bash-completion/completions/$SNAP_NAME"
+if [ -L "$hook" ]; then
+  ok "snapd installed the completion hook $hook"
+else
+  bad "snapd did not install the completion hook $hook"
 fi
 
 # --- Summary ---------------------------------------------------------------

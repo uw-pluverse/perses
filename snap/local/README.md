@@ -10,7 +10,12 @@ A single `perses_<version>_<arch>.snap` that bundles:
 
 - the Bazel fat jar `//src/org/perses:perses_deploy.jar`,
 - a full **JDK 17** (`openjdk-17-jdk-headless`) so no Java is needed on the host,
-- a launcher (`snap/local/wrapper/perses`) that runs the jar with the bundled JDK.
+- a launcher (`snap/local/wrapper/perses`) that runs the jar with the bundled JDK,
+- the bash completion script (`completion/perses-complete.bash`), declared as the
+  app's `completer`. The build prints it with `perses --help-completion` from the
+  jar it packs, so it always matches that jar's flags. Snapd links it into
+  `/var/lib/snapd/desktop/bash-completion/completions/perses`, so bash users get
+  completion in any new shell without setup.
 
 The snap uses **classic confinement**: Perses executes the user's test script,
 which invokes arbitrary host toolchains (`gcc`, `clang`, `javac`, ...) and reads
@@ -107,8 +112,9 @@ sudo snap remove perses          # when done
 `verify-snap.sh` installs the snap (sudo), runs functional checks, and removes
 it again. It verifies the launcher runs, the bundled JDK's `javac` /
 `jdk.compiler` are present, an end-to-end out-of-place reduction produces a
-smaller result that still passes its interestingness test, and the snap's
-version equals what `perses --version` reports:
+smaller result that still passes its interestingness test, the snap's
+version equals what `perses --version` reports, and the packaged completion
+script completes `--tes` and has its snapd hook installed:
 
 ```bash
 snap/local/verify-snap.sh                 # verifies the newest perses_*.snap
