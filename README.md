@@ -57,7 +57,7 @@ There are four ways to obtain Perses.
   for example,
 
   ```bash
-  wget https://github.com/uw-pluverse/perses/releases/download/v2.7/perses_deploy.jar
+  wget https://github.com/uw-pluverse/perses/releases/download/v2.8/perses_deploy.jar
   java -jar perses_deploy.jar [options]? --test-script <test-script.sh> --input-file <program file>
   ```
 
