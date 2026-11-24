@@ -45,4 +45,9 @@ java -jar "\${JAR}" \$@
 EOF
 chmod +x "${INSTALLED_SCRIPT}"
 
+readonly INSTALLED_COMPLETION_SCRIPT="${INSTALL_DIR}/perses-complete.bash"
+java -jar "${INSTALLED_JAR_PATH}" --help-completion 2> /dev/null > "${INSTALLED_COMPLETION_SCRIPT}"
+
 echo "Perses is successfully installed in ${INSTALL_DIR}. The command name is 'perses'."
+echo "For bash completion of its flags, add this line to ~/.bashrc:"
+echo "  source ${INSTALLED_COMPLETION_SCRIPT}"

@@ -71,6 +71,33 @@ chmod +x perses-trunk
 </code></pre>
 </li>
 </ul>
+<h4>Shell Completion</h4>
+<p>Bash completes the flags of the <code>perses</code> command and their values:
+<code>perses --tes&lt;TAB&gt;</code> gives <code>--test-script</code>, <code>perses --code-format &lt;TAB&gt;</code> lists
+the formats, and <code>perses --test-script &lt;TAB&gt;</code> lists files.</p>
+<ul>
+<li>
+<p>With the snap, completion works in any new bash shell; there is nothing to set up.</p>
+</li>
+<li>
+<p>Otherwise, write the script that <code>--help-completion</code> prints to bash-completion's
+directory. It completes a command named <code>perses</code>, such as the wrapper that
+<code>scripts/install_perses.sh</code> installs (that script also writes the completion
+script next to the jar).</p>
+<pre><code class="language-bash">mkdir -p ~/.local/share/bash-completion/completions
+java -jar perses_deploy.jar --help-completion &gt; ~/.local/share/bash-completion/completions/perses
+</code></pre>
+<p>Without the <code>bash-completion</code> package, bash does not load scripts from that
+directory; add <code>source ~/.local/share/bash-completion/completions/perses</code> to <code>~/.bashrc</code> instead.</p>
+</li>
+<li>
+<p>Zsh ignores bash-completion's directories and the snap's hook. Add these lines
+to <code>~/.zshrc</code> to load bash completion support and source the script, e.g. for the snap:</p>
+<pre><code class="language-zsh">autoload -U +X bashcompinit &amp;&amp; bashcompinit
+source /snap/perses/current/completion/perses-complete.bash
+</code></pre>
+</li>
+</ul>
 <h4>Important Flags</h4>
 <ul>
 <li>

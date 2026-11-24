@@ -40,6 +40,34 @@ There are four ways to obtain Perses.
   ./perses-trunk [options]? --test-script <test-script.sh> --input-file <program file>
   ```
 
+#### Shell Completion
+
+Bash completes the flags of the `perses` command and their values:
+`perses --tes<TAB>` gives `--test-script`, `perses --code-format <TAB>` lists
+the formats, and `perses --test-script <TAB>` lists files.
+
+- With the snap, completion works in any new bash shell; there is nothing to set up.
+- Otherwise, write the script that `--help-completion` prints to bash-completion's
+  directory. It completes a command named `perses`, such as the wrapper that
+  `scripts/install_perses.sh` installs (that script also writes the completion
+  script next to the jar).
+
+  ```bash
+  mkdir -p ~/.local/share/bash-completion/completions
+  java -jar perses_deploy.jar --help-completion > ~/.local/share/bash-completion/completions/perses
+  ```
+
+  Without the `bash-completion` package, bash does not load scripts from that
+  directory; add `source ~/.local/share/bash-completion/completions/perses` to `~/.bashrc` instead.
+
+- Zsh ignores bash-completion's directories and the snap's hook. Add these lines
+  to `~/.zshrc` to load bash completion support and source the script, e.g. for the snap:
+
+  ```zsh
+  autoload -U +X bashcompinit && bashcompinit
+  source /snap/perses/current/completion/perses-complete.bash
+  ```
+
 #### Important Flags
 
 - --test-script **&lt;test-script.sh&gt;**:
