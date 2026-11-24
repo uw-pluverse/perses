@@ -91,11 +91,20 @@ java -jar perses_deploy.jar --help-completion &gt; ~/.local/share/bash-completio
 directory; add <code>source ~/.local/share/bash-completion/completions/perses</code> to <code>~/.bashrc</code> instead.</p>
 </li>
 <li>
-<p>Zsh ignores bash-completion's directories and the snap's hook. Add these lines
-to <code>~/.zshrc</code> to load bash completion support and source the script, e.g. for the snap:</p>
-<pre><code class="language-zsh">autoload -U +X bashcompinit &amp;&amp; bashcompinit
+<p>Zsh ignores bash-completion's directories and the snap's hook. Save this as
+<code>~/.zsh/completions/_perses</code> (for the jar, source the file you wrote instead):</p>
+<pre><code class="language-zsh">#compdef perses
+autoload -U +X bashcompinit &amp;&amp; bashcompinit
 source /snap/perses/current/completion/perses-complete.bash
+_bash_complete -F _perses__complete
 </code></pre>
+<p>Then add this line near the top of <code>~/.zshrc</code>, before oh-my-zsh, antigen, or
+<code>compinit</code> runs:</p>
+<pre><code class="language-zsh">fpath=(~/.zsh/completions $fpath)
+</code></pre>
+<p><code>compinit</code> finds <code>_perses</code> on <code>fpath</code> whenever it runs, so this works however
+your setup orders it. If a new shell does not complete, delete zsh's cached
+completion dump (e.g. <code>~/.zcompdump*</code>) and start another.</p>
 </li>
 </ul>
 <h4>Important Flags</h4>

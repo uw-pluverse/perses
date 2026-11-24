@@ -101,13 +101,26 @@ the formats, and `perses --test-script <TAB>` lists files.
   Without the `bash-completion` package, bash does not load scripts from that
   directory; add `source ~/.local/share/bash-completion/completions/perses` to `~/.bashrc` instead.
 
-- Zsh ignores bash-completion's directories and the snap's hook. Add these lines
-  to `~/.zshrc` to load bash completion support and source the script, e.g. for the snap:
+- Zsh ignores bash-completion's directories and the snap's hook. Save this as
+  `~/.zsh/completions/_perses` (for the jar, source the file you wrote instead):
 
   ```zsh
+  #compdef perses
   autoload -U +X bashcompinit && bashcompinit
   source /snap/perses/current/completion/perses-complete.bash
+  _bash_complete -F _perses__complete
   ```
+
+  Then add this line near the top of `~/.zshrc`, before oh-my-zsh, antigen, or
+  `compinit` runs:
+
+  ```zsh
+  fpath=(~/.zsh/completions $fpath)
+  ```
+
+  `compinit` finds `_perses` on `fpath` whenever it runs, so this works however
+  your setup orders it. If a new shell does not complete, delete zsh's cached
+  completion dump (e.g. `~/.zcompdump*`) and start another.
 
 #### Important Flags
 
