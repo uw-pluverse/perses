@@ -10,16 +10,8 @@
 # Stops at the first failure. On success it writes <snap>.verified holding the
 # snap's sha256, which upload-snap.sh requires, so only a snap that passed all
 # three steps can be uploaded.
-#
-# Picks the Multipass build backend when SNAPCRAFT_BUILD_ENVIRONMENT is unset
-# and LXD is absent.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
-
-if [ -z "${SNAPCRAFT_BUILD_ENVIRONMENT:-}" ] && ! command -v lxc >/dev/null 2>&1 \
-  && command -v multipass >/dev/null 2>&1; then
-  export SNAPCRAFT_BUILD_ENVIRONMENT=multipass
-fi
 
 # Prompt for the password now rather than after a several-minute build.
 sudo -v

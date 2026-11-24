@@ -11,10 +11,10 @@
 # named after the release it packages. Check out the release's commit (or any
 # later one with the same VERSION) before running.
 #
-# Requires: curl, gh, sha256sum, snapcraft. On hosts without LXD, prefix with
-# SNAPCRAFT_BUILD_ENVIRONMENT=multipass.
+# Requires: curl, gh, sha256sum, snapcraft, and LXD or Multipass.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
+select_build_backend
 cd "$ROOT"
 
 echo ">> Looking up $PERSES_JAR in release $RELEASE_TAG"

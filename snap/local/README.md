@@ -66,13 +66,13 @@ snap/
 - [`bazelisk`](https://github.com/bazelbuild/bazelisk) — builds the fat jar (source builds only).
 - [`snapcraft`](https://snapcraft.io/snapcraft) — `sudo snap install snapcraft --classic`.
 - A build backend for the `core22` build VM: **LXD** (`sudo snap install lxd && lxd init --auto`)
-  or **Multipass** (`sudo snap install multipass`).
+  or **Multipass** (`sudo snap install multipass`). The build scripts use LXD when
+  it is installed and Multipass otherwise; set `SNAPCRAFT_BUILD_ENVIRONMENT` to override.
 
 ## Build
 
 Both scripts stage a jar into `snap/local/dist/` and pack the snap into the repo
-root. On a host without LXD, prefix either with
-`SNAPCRAFT_BUILD_ENVIRONMENT=multipass`.
+root.
 
 ```bash
 snap/local/build-snap-from-release.sh   # the GitHub release jar; the only build you may upload

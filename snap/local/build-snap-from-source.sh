@@ -9,11 +9,10 @@
 # The snap's version is read from version/org/perses/version/VERSION by
 # snapcraft.yaml; bump it with scripts/bump_version.py, never by hand here.
 #
-# Requires: bazelisk, snapcraft. On hosts without LXD, prefix with
-# SNAPCRAFT_BUILD_ENVIRONMENT=multipass.
+# Requires: bazelisk, snapcraft, and LXD or Multipass.
 set -euo pipefail
-
-ROOT="$(bazelisk info workspace)"
+source "$(dirname "$0")/lib.sh"
+select_build_backend
 cd "$ROOT"
 
 echo ">> Building //src/org/perses:perses_deploy.jar"

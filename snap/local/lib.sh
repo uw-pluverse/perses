@@ -10,6 +10,16 @@ RELEASE_TAG="v$VERSION"
 # The file `snapcraft pack` writes for this VERSION on this host.
 SNAP_FILE="$ROOT/${SNAP_NAME}_${VERSION}_$(dpkg --print-architecture).snap"
 
+# snapcraft defaults to the LXD backend and fails without it; fall back to
+# Multipass when that is what the host has. An explicit
+# SNAPCRAFT_BUILD_ENVIRONMENT always wins.
+select_build_backend() {
+  if [ -z "${SNAPCRAFT_BUILD_ENVIRONMENT:-}" ] && ! command -v lxc >/dev/null 2>&1 \
+    && command -v multipass >/dev/null 2>&1; then
+    export SNAPCRAFT_BUILD_ENVIRONMENT=multipass
+  fi
+}
+
 # Prints the hex sha256 GitHub publishes for the release's jar, or fails.
 release_jar_digest() {
   local digest
